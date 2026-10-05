@@ -1,0 +1,36 @@
+{
+  "exact_duplicate_file_count": 4271,
+  "exact_duplicate_group_count": 1853,
+  "files_by_extension": {
+    ".json": 609,
+    ".md": 2,
+    ".wsdl": 4,
+    ".yaml": 4858,
+    "[no extension]": 3
+  },
+  "files_by_source_category": {
+    "_root": 3,
+    "apis": 2004,
+    "apps": 28,
+    "config": 12,
+    "consumer-orgs": 57,
+    "credentials": 256,
+    "products": 2860,
+    "subscriptions": 256
+  },
+  "json_count": 609,
+  "other_count": 9,
+  "parse_failure_count": 0,
+  "schema_families_detected": {
+    "APIC_COLLECTION": 572,
+    "APIC_PRODUCT": 499,
+    "APIC_RESOURCE": 30,
+    "JSON_ARRAY": 9,
+    "OPENAPI_DOCUMENT": 4357,
+    "OTHER": 9
+  },
+  "successfully_parsed_count": 5467,
+  "total_files": 5476,
+  "unsupported_schema_count": 9,
+  "yaml_count": 4858
+}

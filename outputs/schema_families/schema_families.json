@@ -1,0 +1,61 @@
+{
+  "schema_families": [
+    {
+      "file_count": 572,
+      "schema_family": "APIC_COLLECTION",
+      "schema_versions": [],
+      "support_status_counts": {
+        "SUPPORTED_SCHEMA": 572
+      }
+    },
+    {
+      "file_count": 499,
+      "schema_family": "APIC_PRODUCT",
+      "schema_versions": [
+        "1.0.0"
+      ],
+      "support_status_counts": {
+        "SUPPORTED_SCHEMA": 499
+      }
+    },
+    {
+      "file_count": 30,
+      "schema_family": "APIC_RESOURCE",
+      "schema_versions": [
+        "2.0.0"
+      ],
+      "support_status_counts": {
+        "SUPPORTED_SCHEMA": 30
+      }
+    },
+    {
+      "file_count": 9,
+      "schema_family": "JSON_ARRAY",
+      "schema_versions": [],
+      "support_status_counts": {
+        "SUPPORTED_SCHEMA": 9
+      }
+    },
+    {
+      "file_count": 4357,
+      "schema_family": "OPENAPI_DOCUMENT",
+      "schema_versions": [
+        "2.0",
+        "3.0.0",
+        "3.0.1",
+        "3.0.3"
+      ],
+      "support_status_counts": {
+        "SUPPORTED_SCHEMA": 4357
+      }
+    },
+    {
+      "file_count": 9,
+      "schema_family": "OTHER",
+      "schema_versions": [],
+      "support_status_counts": {
+        "UNSUPPORTED_SCHEMA": 9
+      }
+    }
+  ]
+}
