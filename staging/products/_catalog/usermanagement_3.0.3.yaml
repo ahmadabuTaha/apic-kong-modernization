@@ -1,0 +1,98 @@
+info:
+  name: usermanagement
+  title: UserManagement
+  version: 3.0.3
+  description: PROD YAML
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: true
+    rate-limits:
+      QiwaPlan A:
+        value: 120/1second
+        hard-limit: true
+    apis:
+      addestablishmentusersubscription1.0.0: {}
+      addorupdateuserprivileges1.0.0: {}
+      calculateusermanagementsubscriptionprice1.0.0: {}
+      checkaddedusereligibility1.0.0: {}
+      checkusereligibility1.0.0: {}
+      checkuserestablishmentseligibility1.0.1: {}
+      createuser1.0.0: {}
+      deleteuser1.0.0: {}
+      getestablishmentauthorizeduser1.0.0: {}
+      getpaymentswithoutusersubscriptions1.0.0: {}
+      getqiwaworkspaceestablishments1.0.1: {}
+      getqiwaworkspaceestablishments2.0.0: {}
+      getsubscriptionsconfigurationsodm1.0.0: {}
+      getumservicesnonsubscribedusers1.0.0: {}
+      getusereligibleservices1.0.0: {}
+      getuserestablishmentsmlsd1.0.0: {}
+      getuserinformation1.0.0: {}
+      getusermanagementservices1.0.0: {}
+      renewusersubscription1.0.0: {}
+      searchuserssubuninum1.0.0: {}
+      searchusersubscriptions1.0.0: {}
+      subscribeusertoestablishments1.0.0: {}
+      updateorterminateusersubscription1.0.0: {}
+      updateuserinformation1.0.0: {}
+apis:
+  addestablishmentusersubscription1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/addestablishmentusersubscription_1.0.0_1.yaml
+  addorupdateuserprivileges1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/addorupdateuserprivileges_1.0.0_1.yaml
+  calculateusermanagementsubscriptionprice1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/calculateusermanagementsubscriptionprice_1.0.0_1.yaml
+  checkaddedusereligibility1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/checkaddedusereligibility_1.0.0_1.yaml
+  checkusereligibility1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/checkusereligibility_1.0.0_2.yaml
+  checkuserestablishmentseligibility1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/checkuserestablishmentseligibility_1.0.1.yaml
+  createuser1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/createuser_1.0.0_1.yaml
+  deleteuser1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/deleteuser_1.0.0_1.yaml
+  getestablishmentauthorizeduser1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getestablishmentauthorizeduser_1.0.0_1.yaml
+  getpaymentswithoutusersubscriptions1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getpaymentswithoutusersubscriptions_1.0.0_1.yaml
+  getqiwaworkspaceestablishments1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getqiwaworkspaceestablishments_1.0.1.yaml
+  getqiwaworkspaceestablishments2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getqiwaworkspaceestablishments_2.0.0.yaml
+  getsubscriptionsconfigurationsodm1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getsubscriptionsconfigurationsodm_1.0.0_1.yaml
+  getumservicesnonsubscribedusers1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getumservicesnonsubscribedusers_1.0.0_1.yaml
+  getusereligibleservices1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getusereligibleservices_1.0.0_1.yaml
+  getuserestablishmentsmlsd1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getuserestablishmentsmlsd_1.0.0_1.yaml
+  getuserinformation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getuserinformation_1.0.0_2.yaml
+  getusermanagementservices1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getusermanagementservices_1.0.0_1.yaml
+  renewusersubscription1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/renewusersubscription_1.0.0_1.yaml
+  searchuserssubuninum1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/searchuserssubuninum_1.0.0_1.yaml
+  searchusersubscriptions1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/searchusersubscriptions_1.0.0_1.yaml
+  subscribeusertoestablishments1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/subscribeusertoestablishments_1.0.0_1.yaml
+  updateorterminateusersubscription1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updateorterminateusersubscription_1.0.0_1.yaml
+  updateuserinformation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updateuserinformation_1.0.0_1.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

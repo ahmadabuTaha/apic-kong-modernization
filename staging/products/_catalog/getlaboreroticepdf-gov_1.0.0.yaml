@@ -1,0 +1,220 @@
+swagger: "2.0"
+info:
+  title: GetLaborerNoticePDF-Gov
+  x-ibm-name: getlaboreroticepdf-gov
+  version: 1.0.0
+  description: this service is used to Get Wallet Balance
+x-ibm-configuration:
+  cors:
+    enabled: false
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.2.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        http-version: HTTP/1.1
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        graphql-send-type: detect
+        websocket-upgrade: false
+        target-url: $(dp-ajeerhrs)/ajeer-hrs/api/external/qiwa-contracting/etimad-contracts/$(request.parameters.contractNumber)/laborers/$(request.parameters.laborerIdentityNumber)/notice
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\r\n\r\n// 1. Store the actual PDF binary
+          body safely out of the message context\r\nvar DPResponse = apim.getvariable('message.body');\r\napim.setvariable('DPResponse',
+          DPResponse);\r\n\r\n// 2. Critical: Store the real PDF Content-Type before
+          logging overwrites it\r\nvar originalContentType = apim.getvariable('message.headers.Content-Type');\r\napim.setvariable('OriginalContractContentType',
+          originalContentType);\r\n\r\nvar cfg = {\r\n    \"serviceCode\" : \"GLNP0001\",\r\n
+          \   \"channelId\" : \"Qiwa\",\r\n    \"requestName\" : \"GetLaborerNoticePDFRq\",\r\n
+          \   \"responseName\": \"GetLaborerNoticePDFRs\",\r\n    \"errorMap\" : {\r\n
+          \       \"ESBSCHEMA\" : {\"code\" : 400, \"msg\":\"Invalid Request\"}\r\n
+          \   }\r\n};\r\napim.setvariable('cfg', cfg);"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare-Request
+        source: "var apim = require('apim');\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\nvar appname
+          = apim.getvariable('client.app.name');\r\napim.setvariable('TransactionID1',millisecondsvalue);\r\nvar
+          appcReq = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n            \"TransactionId\"
+          : millisecondsvalue,\r\n            \"ChannelId\": cfg.channelId,\r\n            \"SessionId\":
+          apim.getvariable('message.headers.X-Request-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode,\r\n            \"DebugFlag\":
+          \"1\",\r\n            \"UserInfo\": {\r\n                \"UserId\": apim.getvariable('message.headers.UserId'),\r\n
+          \               \"IDNumber\": apim.getvariable('message.headers.IDNumber')\t\t\t\t\r\n
+          \           },\r\n            \"UDF\": {\r\n                \"KeyValueArr\":
+          [\r\n                    {\r\n                        \"key\": \"Product\",\r\n
+          \                       \"value\": \"GetLaborerNoticePDF\"\r\n                    },\r\n
+          \                   {\r\n                        \"key\": \"Client\",\r\n
+          \                       \"value\": appname\r\n                    }\r\n
+          \               ]\r\n            }\t\t\t\r\n        },\r\n        \"Body\"
+          : apim.getvariable('request.body')\r\n            \r\n    }\r\n};\r\n\r\nif
+          (typeof OperatorId !== 'undefined')\r\n    appcReq[cfg.requestName].Header.UserInfo
+          = {\r\n        \"IDNumber\" : OperatorId\r\n    };\r\napim.setvariable('payload',appcReq);
+          \    \r\n//session.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n    \r\n    \r\n\r\n    //return
+          the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour
+          + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    - gatewayscript:
+        version: 2.0.0
+        title: ReqForLogging
+        source: |-
+          var apim = require('apim');
+          var appconnectrequest = apim.getvariable('payload');
+          var Body = apim.getvariable('message.status.code');
+          var message ="";
+          var Headers = appconnectrequest.GetLaborerNoticePDFRq.Header;
+          var transactionId1 = Math.floor(1000000000 + Math.random() * 9000000000);
+          apim.setvariable('message.headers.TransactionID', transactionId1);
+          apim.setvariable('TransactionID', transactionId1);
+          var SuccessCall = {
+              "Status": "SUCCESS",
+              "Code": "00000000",
+              "ArabicMsg": "تمت العملية بنجاح",
+              "EnglishMsg": "Success Call"
+          }
+          var APIRes = {
+              "Header": Headers
+          };
+          APIRes.Header.ResponseStatus = SuccessCall;
+          var jsonData = {
+              "LogAPIData": {
+                  "GetLaborerNoticePDFRq": appconnectrequest.GetLaborerNoticePDFRq,
+                  "GetLaborerNoticePDFRs": APIRes
+              }
+          }
+          session.output.write(jsonData);
+          apim.output('application/json');
+    - invoke:
+        version: 2.2.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        http-version: HTTP/1.1
+        timeout: 60
+        verb: POST
+        chunked-uploads: true
+        persistent-connection: true
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        websocket-upgrade: false
+        target-url: $(ace-tip-internal)/external/logwrapperapidata
+        graphql-send-type: detect
+    - gatewayscript:
+        version: 2.0.0
+        title: FinalResponse
+        source: "var apim = require('apim');\r\n\r\n// Retrieve your cached original
+          data\r\nvar FinalRes = apim.getvariable('DPResponse');\r\nvar TransId =
+          apim.getvariable('TransactionID1');\r\nvar contentType = apim.getvariable('OriginalContractContentType')
+          || '';\r\n\r\n// Re-establish transaction trace\r\napim.setvariable('message.headers.TransactionID',
+          TransId);\r\n\r\nif (contentType.indexOf('application/pdf') !== -1) {\r\n
+          \   // Force the gateway to explicitly handle and send back binary stream\r\n
+          \   apim.setvariable('message.headers.Content-Type', 'application/pdf');\r\n
+          \   apim.setvariable('message.headers.Content-Disposition', 'inline; filename=\"contract.pdf\"');\r\n
+          \   \r\n    session.output.write(FinalRes);\r\n    apim.output('application/pdf');\r\n}
+          else if (contentType.indexOf('application/json') !== -1) {\r\n    session.output.write(FinalRes);\r\n
+          \   apim.output('application/json');\r\n} else {\r\n    session.output.write({\r\n
+          \       error: 'Unexpected content type from backend',\r\n        detectedContentType:
+          contentType\r\n    });\r\n    apim.output('application/json');\r\n}"
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+  categories: []
+basePath: /external/v1
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+paths:
+  /getlaborernoticepdf/contractNumber/{contractNumber}/laborerIdentityNumber/{laborerIdentityNumber}:
+    get:
+      responses:
+        "200":
+          description: A PDF file.
+          schema:
+            type: file
+      consumes: []
+      produces:
+      - application/pdf
+      - application/json
+    parameters:
+    - name: contractNumber
+      required: true
+      in: path
+      type: string
+    - name: laborerIdentityNumber
+      required: true
+      in: path
+      type: string
+    - name: X-IBM-Client-Id
+      required: true
+      in: header
+      type: string
+    - name: AttachmentFilename
+      required: true
+      in: header
+      type: string
+schemes:
+- https
+parameters: {}
+tags:
+- name: Wrapper

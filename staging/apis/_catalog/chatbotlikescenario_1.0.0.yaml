@@ -1,0 +1,271 @@
+swagger: "2.0"
+info:
+  title: ChatBotLikeScenario
+  description: This service is used to get the Like Scenario.
+  x-ibm-name: chatbotlikescenario
+  version: 1.0.0
+schemes:
+- https
+basePath: /external/v1
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+paths:
+  /likescenario:
+    parameters:
+    - $ref: '#/parameters/X-IBM-Client-Id'
+    post:
+      tags:
+      - ChatBotLikeScenario
+      description: This service is used to get the Like Scenario.
+      operationId: chatbotlikescenario
+      produces:
+      - application/json
+      responses:
+        "200":
+          $ref: '#/responses/Response200'
+        "400":
+          $ref: '#/responses/Response400'
+        "401":
+          $ref: '#/responses/Response401'
+        "403":
+          $ref: '#/responses/Response403'
+        "404":
+          $ref: '#/responses/Response404'
+        "408":
+          $ref: '#/responses/Response408'
+        "409":
+          $ref: '#/responses/Response409'
+        "429":
+          $ref: '#/responses/Response429'
+        "500":
+          $ref: '#/responses/Response500'
+        "501":
+          $ref: '#/responses/Response501'
+        "503":
+          $ref: '#/responses/Response503'
+        "510":
+          $ref: '#/responses/Response510'
+definitions:
+  RequestModel:
+    type: object
+    description: Response object returned by the get operation
+    properties:
+      message:
+        type: string
+      is_liked:
+        type: string
+      user_feedback:
+        type: boolean
+      organization:
+        type: string
+  ResponseModel:
+    type: object
+    description: Response object returned by the get operation
+    properties:
+      organization:
+        type: string
+      message:
+        type: string
+      is_liked:
+        type: boolean
+      user_feedback:
+        type: string
+      _id:
+        type: string
+      created_on:
+        type: string
+      __v:
+        type: string
+  LocaleDataModel:
+    type: object
+    additionalProperties:
+      type: string
+    example:
+      en-US: English Value
+      ar-SA: Arabic Value
+  IntegerNumberModel:
+    type: object
+    description: This object use for integer numbers
+    additionalProperties:
+      type: integer
+      example: 1
+  ErrorModel:
+    type: object
+    required:
+    - errorCode
+    - errorMessage
+    properties:
+      errorCode:
+        type: string
+        example: EXXXX000
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+parameters:
+  X-IBM-Client-Id:
+    in: header
+    name: X-IBM-Client-Id
+    description: Client id issued by security server
+    required: true
+    type: string
+  X-IBM-Client-Secret:
+    in: header
+    name: X-IBM-Client-Secret
+    description: Client secret issued by security server
+    required: false
+    type: string
+  X-Request-Id:
+    in: header
+    name: X-Request-Id
+    description: X-Request-Id returned in the response header
+    required: false
+    type: string
+  UserId:
+    in: header
+    name: UserId
+    description: UserI d
+    required: false
+    type: integer
+responses:
+  Response200:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ResponseModel'
+  Response201:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+      Location:
+        type: string
+        description: Id url encoded
+  Response204:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response400:
+    description: The request was rejected by the server due to malformed syntax. Bad
+      Request.
+  Response401:
+    description: The request could not be completed due to lack of valid credentials.
+      Authentication.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response403:
+    description: The request could not be completed because it is not authorized.
+      Authorization
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response404:
+    description: The server has not found anything matching the Request-URI.
+  Response408:
+    description: The client did not produce a request within the time that the server
+      was prepared to wait.
+  Response409:
+    description: The request could not be completed due to a conflict with the current
+      state of the resource. Usually business validation errors will be returned in
+      the body
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response429:
+    description: The request was sent too many times in a given amount of time
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response500:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response501:
+    description: The server does not support the functionality required and does not
+      recognize the request
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response503:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response510:
+    description: Extensions to the request are required for the server to fulfil it.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(dp-qiwadp-qiwahrsdrouter)/api/v1/reviews/message
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: allowlist
+          values: []
+        header-control:
+          type: blocklist
+          values: []
+        inject-proxy-headers: true
+        persistent-connection: true
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload

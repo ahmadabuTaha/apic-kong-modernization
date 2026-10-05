@@ -1,0 +1,214 @@
+swagger: "2.0"
+info:
+  title: CheckAppsAvailability
+  x-ibm-name: checkappsavailability
+  version: 1.0.0
+  description: CheckAppsAvailability
+schemes:
+- https
+basePath: /qiwalo
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-lbro-lo-appointment)/qiwalo/checkappsavailability
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        persistent-connection: true
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+definitions:
+  CheckAppsAvailabilityRq_MessageType:
+    type: object
+    properties:
+      CheckAppsAvailabilityRq:
+        $ref: '#/definitions/CheckAppsAvailabilityRq_Type'
+  CheckAppsAvailabilityRs_MessageType:
+    type: object
+    properties:
+      CheckAppsAvailabilityRs:
+        $ref: '#/definitions/CheckAppsAvailabilityRs_Type'
+  CheckAppsAvailabilityRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/CheckAppsAvailabilityRq_BodyType'
+  CheckAppsAvailabilityRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/CheckAppsAvailabilityRs_BodyType'
+  CheckAppsAvailabilityRq_BodyType:
+    type: object
+    properties:
+      OfficeID:
+        type: integer
+      StartDate:
+        format: date
+        type: string
+      EndDate:
+        format: date
+        type: string
+    required:
+    - OfficeID
+    - StartDate
+    - EndDate
+  CheckAppsAvailabilityRs_BodyType:
+    type: object
+    properties:
+      AppointmentDates:
+        type: array
+        items:
+          $ref: '#/definitions/AppointmentDates_Type'
+    required:
+    - AppointmentDates
+  AppointmentDates_Type:
+    type: object
+    properties:
+      AppointmentDate:
+        type: string
+      DailyCapacity:
+        type: integer
+      IsAvailable:
+        type: integer
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+paths:
+  /checkappsavailability:
+    post:
+      operationId: CheckAppsAvailability
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/CheckAppsAvailabilityRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Insert a Get-Appointment-Availability
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/CheckAppsAvailabilityRq_MessageType'
+        description: The request body for the operation
+        required: true

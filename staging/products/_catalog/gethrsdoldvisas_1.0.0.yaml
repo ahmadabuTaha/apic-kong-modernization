@@ -1,0 +1,363 @@
+swagger: "2.0"
+info:
+  title: GetHRSDOldVisas
+  x-ibm-name: gethrsdoldvisas
+  version: 1.0.0
+  description: This service is used to get visas list with their details from HRSD
+    for unused visas and issue date is less than two years
+schemes:
+- https
+basePath: /common
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-expv-expansiongets)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  GetHRSDOldVisasRq_MessageType:
+    type: object
+    properties:
+      GetHRSDOldVisasRq:
+        $ref: '#/definitions/GetHRSDOldVisasRq_Type'
+  GetHRSDOldVisasRs_MessageType:
+    type: object
+    properties:
+      GetHRSDOldVisasRs:
+        $ref: '#/definitions/GetHRSDOldVisasRs_Type'
+  GetHRSDOldVisasRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetHRSDOldVisasRq_BodyType'
+  GetHRSDOldVisasRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+        default: "12"
+      SequenceNumber:
+        type: integer
+        default: "176762"
+      VisaRequestStatusId:
+        type: integer
+        default: "68768712"
+      VisaRequestNumber:
+        type: string
+        default: "1867682"
+      PageSize:
+        type: integer
+        default: "1"
+      PageIndex:
+        type: integer
+        default: "100"
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+    - PageSize
+    - PageIndex
+  GetHRSDOldVisasRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetHRSDOldVisasRs_BodyType'
+  GetHRSDOldVisasRs_BodyType:
+    type: object
+    properties:
+      VisaRequestsList:
+        $ref: '#/definitions/VisaRequestsList_Type'
+      TotalRecordsCount:
+        type: integer
+    required:
+    - VisaRequestsList
+    - TotalRecordsCount
+  VisaRequestsList_Type:
+    type: object
+    properties:
+      VisaRequests:
+        type: array
+        items:
+          $ref: '#/definitions/VisaRequests_Type'
+  VisaRequests_Type:
+    type: object
+    properties:
+      RequestId:
+        type: integer
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      EstablishmentId:
+        type: integer
+      RequestYear:
+        type: string
+      RequestSequence:
+        type: integer
+      VisaRequestType:
+        $ref: '#/definitions/CodeName_Type'
+      VisaIssueDate:
+        type: integer
+      InsertDate:
+        type: string
+      VisaOutgoingNumber:
+        type: string
+      RequesterIdNo:
+        type: string
+      RequestStatus:
+        $ref: '#/definitions/CodeName_Type'
+      AvailableBalance:
+        type: integer
+      VisaList:
+        $ref: '#/definitions/VisaList_Type'
+      IssuedVisasCount:
+        type: integer
+    required:
+    - RequestId
+    - LaborOfficeId
+    - SequenceNumber
+    - EstablishmentId
+    - RequestYear
+    - RequestSequence
+    - VisaRequestType
+    - VisaIssueDate
+    - InsertDate
+    - VisaOutgoingNumber
+    - RequesterIdNo
+    - RequestStatus
+    - AvailableBalance
+    - VisaList
+    - IssuedVisasCount
+  VisaList_Type:
+    type: object
+    properties:
+      VisaDetails:
+        type: array
+        items:
+          $ref: '#/definitions/VisaDetails_Type'
+  VisaDetails_Type:
+    type: object
+    properties:
+      BorderNumber:
+        type: integer
+      Nationality:
+        $ref: '#/definitions/CodeName_Type'
+      Embassy:
+        $ref: '#/definitions/CodeName_Type'
+      Religion:
+        $ref: '#/definitions/CodeName_Type'
+      'Occupation ':
+        $ref: '#/definitions/CodeName_Type'
+      Gender:
+        $ref: '#/definitions/CodeName_Type'
+      VisaStatus:
+        $ref: '#/definitions/CodeName_Type'
+    required:
+    - BorderNumber
+    - Nationality
+    - Embassy
+    - Religion
+    - 'Occupation '
+    - Gender
+    - VisaStatus
+  CodeName_Type:
+    type: object
+    properties:
+      Id:
+        type: integer
+      NameEn:
+        type: string
+      NameAr:
+        type: string
+    required:
+    - Id
+    - NameEn
+    - NameAr
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: GHRSDOV1
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: GHRSDOV1
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+        default: "465740"
+      IDNumber:
+        type: integer
+        default: "1024812248"
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /gethrsdoldvisas:
+    post:
+      operationId: GetHRSDOldVisas
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetHRSDOldVisasRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Get HRSD Old Visas
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetHRSDOldVisasRq_MessageType'
+        description: GetHRSDOldVisasRq
+        required: true

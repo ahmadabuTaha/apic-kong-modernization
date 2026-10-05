@@ -1,0 +1,227 @@
+swagger: "2.0"
+info:
+  title: S3 Client
+  x-ibm-name: s3-client
+  version: "1.0"
+  description: S3 Client
+  termsOfService: urn:tos
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0
+host: $(catalog.host)
+schemes:
+- https
+basePath: /
+security:
+- API Secret: []
+  clientID: []
+securityDefinitions:
+  API Secret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientID:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  properties:
+    target-url:
+      value: https://localhost:8080
+      description: The URL of the target service
+      encoded: false
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: http://icp-proxy.qiwa.info:31235/$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+    catch: []
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+tags:
+- name: s-3-resource
+  description: S 3 Resource
+paths:
+  /api/s3/:
+    get:
+      tags:
+      - s-3-resource
+      summary: getBuckets
+      operationId: getBucketsUsingGET
+      produces:
+      - '*/*'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+  /api/s3/{bucket}:
+    get:
+      tags:
+      - s-3-resource
+      summary: getBucket
+      operationId: getBucketUsingGET
+      produces:
+      - '*/*'
+      parameters:
+      - name: bucket
+        in: path
+        description: bucket
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+    put:
+      tags:
+      - s-3-resource
+      summary: uploadOject
+      operationId: uploadOjectUsingPUT
+      consumes:
+      - multipart/form-data
+      produces:
+      - '*/*'
+      parameters:
+      - name: bucket
+        in: path
+        description: bucket
+        required: true
+        type: string
+      - in: body
+        name: file
+        description: file
+        required: true
+        schema:
+          type: string
+          format: binary
+      - name: folder
+        in: query
+        description: folder
+        required: false
+        type: string
+      - name: name
+        in: query
+        description: name
+        required: false
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "201":
+          description: Created
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+  /api/s3/{bucket}/{name}:
+    get:
+      tags:
+      - s-3-resource
+      summary: downloadObject
+      operationId: downloadObjectUsingGET
+      produces:
+      - application/force-download
+      parameters:
+      - name: bucket
+        in: path
+        description: bucket
+        required: true
+        type: string
+      - name: folder
+        in: query
+        description: folder
+        required: false
+        type: string
+      - name: name
+        in: path
+        description: name
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+            format: byte
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+    delete:
+      tags:
+      - s-3-resource
+      summary: deleteObject
+      operationId: deleteObjectUsingDELETE
+      produces:
+      - '*/*'
+      parameters:
+      - name: bucket
+        in: path
+        description: bucket
+        required: true
+        type: string
+      - name: folder
+        in: query
+        description: folder
+        required: false
+        type: string
+      - name: name
+        in: path
+        description: name
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "204":
+          description: No Content
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden

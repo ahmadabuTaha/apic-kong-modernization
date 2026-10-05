@@ -1,0 +1,335 @@
+swagger: "2.0"
+info:
+  title: GetAbsentRequestDetails
+  version: 1.0.0
+  description: To get absent request details if it has any absent request and to return
+    Contract and Employee Transfer details
+  x-ibm-name: getabsentrequestdetails
+paths:
+  /getabsentrequestdetails:
+    post:
+      operationId: GetAbsentRequestDetails
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetAbsentRequestDetailsRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Get absent request details
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetAbsentRequestDetailsRq_MessageType'
+        description: GetAbsentRequestDetailsRq
+        required: true
+basePath: /qiwalo
+definitions:
+  GetAbsentRequestDetailsRq_MessageType:
+    type: object
+    properties:
+      GetAbsentRequestDetailsRq:
+        $ref: '#/definitions/GetAbsentRequestDetailsRq_Type'
+  GetAbsentRequestDetailsRs_MessageType:
+    type: object
+    properties:
+      GetAbsentRequestDetailsRs:
+        $ref: '#/definitions/GetAbsentRequestDetailsRs_Type'
+  GetAbsentRequestDetailsRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetAbsentRequestDetailsRq_BodyType'
+  GetAbsentRequestDetailsRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      IDNumber:
+        type: integer
+  GetAbsentRequestDetailsRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetAbsentRequestDetailsRs_BodyType'
+  GetAbsentRequestDetailsRs_BodyType:
+    type: object
+    properties:
+      AbsentDetailsList:
+        $ref: '#/definitions/AbsentDetailsList_Type'
+      ETDetailsList:
+        $ref: '#/definitions/ETDetailsList_Type'
+      ContractList:
+        $ref: '#/definitions/ContractList_Type'
+  AbsentDetailsList_Type:
+    type: object
+    properties:
+      AbsentDetailsItem:
+        type: array
+        items:
+          $ref: '#/definitions/AbsentDetailsItems_Type'
+      TotalRecordsCount:
+        type: string
+    required:
+    - TotalRecordsCount
+  AbsentDetailsItems_Type:
+    type: object
+    properties:
+      EmployeeName:
+        type: string
+      EmployeeStatus:
+        $ref: '#/definitions/CodeName_Type'
+      IqamaNumber:
+        type: string
+      BorderNumber:
+        type: string
+      IsExtended:
+        type: integer
+      ExtendedDate:
+        type: string
+      RequestDate:
+        type: string
+      SMSmessage:
+        type: string
+      EstablishmentName:
+        type: string
+      EstablishmentNumber:
+        type: string
+    required:
+    - EmployeeName
+    - EmployeeStatus
+    - IqamaNumber
+    - BorderNumber
+    - IsExtended
+    - ExtendedDate
+    - RequestDate
+    - SMSmessage
+    - EstablishmentName
+    - EstablishmentNumber
+  ETDetailsList_Type:
+    type: object
+    properties:
+      ETDetailsItem:
+        type: array
+        items:
+          $ref: '#/definitions/ETDetailsItem_Type'
+  ETDetailsItem_Type:
+    type: object
+    properties:
+      ETRequestDate:
+        type: string
+      ETRequestNumber:
+        type: string
+      EstablishmentName:
+        type: string
+      EstablishmentNumber:
+        type: string
+      ETRequestStatus:
+        $ref: '#/definitions/CodeName_Type'
+    required:
+    - ETRequestDate
+    - ETRequestNumber
+    - EstablishmentName
+    - EstablishmentNumber
+    - ETRequestStatus
+  ContractList_Type:
+    type: object
+    properties:
+      ContractItem:
+        type: array
+        items:
+          $ref: '#/definitions/ContractItem_Type'
+  ContractItem_Type:
+    type: object
+    properties:
+      ContractId:
+        type: string
+      EstablishmentName:
+        type: string
+      EstablishmentNumber:
+        type: string
+      ContractStatus:
+        $ref: '#/definitions/CodeName_Type'
+    required:
+    - ContractId
+    - EstablishmentName
+    - EstablishmentNumber
+    - ContractStatus
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+    required:
+    - Code
+    - NameAr
+    - NameEn
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-lbro-labor-office)/qiwalo/getabsentrequestdetails
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: allowlist
+          values: []
+        header-control:
+          type: blocklist
+          values: []
+        inject-proxy-headers: true
+        persistent-connection: true
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+schemes:
+- https
+securityDefinitions:
+  X-IBM-Client-Id:
+    type: apiKey
+    x-key-type: client_id
+    name: X-IBM-Client-Id
+    in: header
+  X-IBM-Client-Secret:
+    type: apiKey
+    x-key-type: client_secret
+    name: X-IBM-Client-Secret
+    in: header
+security:
+- X-IBM-Client-Id: []
+  X-IBM-Client-Secret: []
+- {}

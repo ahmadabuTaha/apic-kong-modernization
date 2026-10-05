@@ -1,0 +1,2122 @@
+swagger: "2.0"
+info:
+  title: MOMRA_GetShopLicenseDetails
+  description: This API exposes MOMRA to get shop license details from Qiwa platform
+  x-ibm-name: momra-getshoplicensedetails
+  version: 1.0.0
+schemes:
+- https
+basePath: /momra/v1
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+paths:
+  /shoplicense/details:
+    parameters:
+    - $ref: '#/parameters/X-IBM-Client-Id'
+    - $ref: '#/parameters/X-IBM-Client-Secret'
+    - $ref: '#/parameters/unifiedNumber'
+    - $ref: '#/parameters/lookupType'
+    - $ref: '#/parameters/lookupId'
+    get:
+      tags:
+      - Shoplicense Detail
+      description: Service to Get shop license details
+      operationId: getshoplicensedetails
+      produces:
+      - application/json
+      responses:
+        "200":
+          $ref: '#/responses/Response200'
+        "400":
+          $ref: '#/responses/Response400'
+        "401":
+          $ref: '#/responses/Response401'
+        "403":
+          $ref: '#/responses/Response403'
+        "404":
+          $ref: '#/responses/Response404'
+        "408":
+          $ref: '#/responses/Response408'
+        "409":
+          $ref: '#/responses/Response409'
+        "429":
+          $ref: '#/responses/Response429'
+        "500":
+          $ref: '#/responses/Response500'
+        "501":
+          $ref: '#/responses/Response501'
+        "503":
+          $ref: '#/responses/Response503'
+        "510":
+          $ref: '#/responses/Response510'
+definitions:
+  ResponseModel:
+    type: object
+    description: This response object returned by the get operation
+    properties:
+      ownerInfo:
+        $ref: '#/definitions/OwnerInfoModel'
+      licenseInfoList:
+        type: array
+        items:
+          $ref: '#/definitions/LicenseInfoListModel'
+  OwnerInfoModel:
+    type: object
+    properties:
+      ownerName:
+        $ref: '#/definitions/LocaleDataModel'
+        type: string
+        example: "1909185441"
+  LicenseInfoListModel:
+    type: object
+    properties:
+      licenseInfo:
+        $ref: '#/definitions/LocaleDataModel'
+      unifiedLicenseNumber:
+        type: string
+        example: "3909185441"
+      amanah:
+        $ref: '#/definitions/NameCodeModel'
+      baladiaName:
+        $ref: '#/definitions/LocaleDataModel'
+        example: نطاق خدمة أمانة عسير
+      issueDate:
+        $ref: '#/definitions/HijriDateModel'
+      expiryDate:
+        $ref: '#/definitions/HijriDateModel'
+      licenseStatus:
+        type: string
+        example: سارية
+      activitiesList:
+        type: array
+        items:
+          $ref: '#/definitions/ActivitiesListModel'
+      commercialName:
+        $ref: '#/definitions/LocaleDataModel'
+      shopArea:
+        type: string
+        example: "0"
+      doorsCount:
+        $ref: '#/definitions/IntegerNumberModel'
+      shopAddress:
+        $ref: '#/definitions/LocaleDataModel'
+      locationCoordinates:
+        $ref: '#/definitions/LocationCoordinatesModel'
+  ActivitiesListModel:
+    type: object
+    properties:
+      activityIsicCode:
+        type: string
+        example: "452041"
+      activityIsicDesc:
+        type: string
+        example: تبديل الزيوت
+      activityAmanahDesc:
+        type: string
+        example: بنشر وغيار زيت
+      activityArea:
+        type: string
+        example: "0"
+      boardsList:
+        type: array
+        items:
+          $ref: '#/definitions/BoardsListModel'
+  BoardsListModel:
+    type: object
+    properties:
+      boardType:
+        type: string
+        example: إرشادية
+      boardArea:
+        type: string
+        example: "6"
+  LocationCoordinatesModel:
+    type: object
+    properties:
+      longitude:
+        type: string
+        example: "211"
+      latitude:
+        type: string
+        example: "234"
+  NameCodeModel:
+    type: object
+    description: 'This object will be used across the model '
+    properties:
+      code:
+        type: string
+        example: "1"
+      name:
+        type: string
+        example: name
+  IntegerNumberModel:
+    type: object
+    description: This object use for integer numbers
+    additionalProperties:
+      type: integer
+      example: 1
+  ErrorModel:
+    type: object
+    required:
+    - errorCode
+    - errorMessage
+    properties:
+      errorCode:
+        type: string
+        example: EXXXX000
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+  HijriDateModel:
+    type: string
+    description: This date object will be used across the model with format yyyy-MM-dd
+      for hijri dates only
+    example: "1439-12-25"
+  LocaleDataModel:
+    type: object
+    additionalProperties:
+      type: string
+    example:
+      en-US: English Value
+      ar-SA: Arabic Value
+parameters:
+  unifiedNumber:
+    in: query
+    name: unifiedNumber
+    description: Personal Identifier
+    required: false
+    type: integer
+  lookupType:
+    in: query
+    name: lookupType
+    description: Lookup type
+    required: true
+    type: string
+    enum:
+    - CR_NUM
+    - CHARITY_ID
+    - GOV_ENTITY_ID
+    - GULF_ID
+    - NATIONAL_ID
+    - SEVEN_HUNDRED_NUM
+  lookupId:
+    in: query
+    name: lookupId
+    description: Lookup id
+    required: true
+    type: string
+  X-IBM-Client-Id:
+    in: header
+    name: X-IBM-Client-Id
+    description: Client id issued by security server
+    required: true
+    type: string
+  X-IBM-Client-Secret:
+    in: header
+    name: X-IBM-Client-Secret
+    description: Client secret issued by security server
+    required: true
+    type: string
+  X-Request-Id:
+    in: header
+    name: X-Request-Id
+    description: X-Request-Id returned in the response header
+    required: false
+    type: string
+responses:
+  Response200:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ResponseModel'
+  Response400:
+    description: The request was rejected by the server due to malformed syntax. Bad
+      Request.
+  Response401:
+    description: The request could not be completed due to lack of valid credentials.
+      Authentication.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response403:
+    description: The request could not be completed because it is not authorized.
+      Authorization
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response404:
+    description: The server has not found anything matching the Request-URI.
+  Response408:
+    description: The client did not produce a request within the time that the server
+      was prepared to wait.
+  Response409:
+    description: The request could not be completed due to a conflict with the current
+      state of the resource. Usually business validation errors will be returned in
+      the body
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response429:
+    description: The request was sent too many times in a given amount of time
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response500:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response501:
+    description: The server does not support the functionality required and does not
+      recognize the request
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response503:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response510:
+    description: Extensions to the request are required for the server to fulfil it.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\r\nvar cfg={\r\n    \"serviceCode\" :
+          \"EXGSLD001\",\r\n    \"channelId\" : \"Integration\",\r\n    \"requestName\"
+          : \"GetShopLicenseDetailsRq\",\r\n    \"responseName\": \"GetShopLicenseDetailsRs\",\r\n
+          \   \"errorMap\" :{\r\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid
+          Request\"}\r\n    }\r\n    \r\n};\r\n\r\nvar Input = apim.getvariable('request.parameters');\r\nvar
+          lookuptype = Input.lookupType;\r\nvar  lookupid = Input.lookupId;\r\n//var
+          obj = {};\r\n//var res = lookuptype.substring(0, 2);\r\nvar r1 = 'crNum';\r\nvar
+          r2 = 'charityId';\r\nvar r3 = 'govEntityId';\r\nvar r4 = 'gulfId';\r\nvar
+          r5 = 'nationalId';\r\nvar r6 = 'sevenHundredNum';\r\n\r\nif (lookuptype
+          === 'CR_NUM')\r\n{\r\nvar c = {\r\n  \"ownerId\":{\r\n          [r1]: lookupid\r\n
+          \      }\r\n}\r\n}\r\nelse if(lookuptype === 'CHARITY_ID')\r\n{\r\n  var
+          c = {\r\n  \"ownerId\":{\r\n          [r2]: lookupid\r\n       }\r\n  }\r\n
+          \ \r\n  \r\n}\r\n\r\nelse if(lookuptype === 'GOV_ENTITY_ID')\r\n{\r\n  var
+          c = {\r\n  \"ownerId\":{\r\n          [r3]: lookupid\r\n       }\r\n  }\r\n
+          \ \r\n  \r\n}\r\nelse if(lookuptype === 'GULF_ID')\r\n{\r\n  var c = {\r\n
+          \ \"ownerId\":{\r\n          [r4]: lookupid\r\n       }\r\n  }\r\n  \r\n
+          \ \r\n}\r\nelse if(lookuptype === 'NATIONAL_ID')\r\n{\r\n  var c = {\r\n
+          \ \"ownerId\":{\r\n          [r5]: lookupid\r\n       }\r\n  }\r\n  \r\n
+          \ \r\n}\r\nelse if(lookuptype === 'SEVEN_HUNDRED_NUM')\r\n{\r\n  var c =
+          {\r\n  \"ownerId\":{\r\n          [r6]: lookupid\r\n       }\r\n  }\r\n
+          \ \r\n  \r\n}\r\nelse{\r\n  apim.error('MyError', 400, 'Internal Error',
+          'Invalid Input');\r\n  \r\n}\r\n\r\nsession.output.write(c);\r\napim.setvariable('cfg',cfg);\r\napim.output('application/json');\r\n"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare_Request
+        source: "var apim = require('apim');\r\n\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\n\r\nvar appcReq
+          = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n            \"TransactionId\"
+          : millisecondsvalue,\r\n            \"ChannelId\": cfg.channelId,\r\n            \"SessionId\":
+          apim.getvariable('message.headers.X-Request-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode\r\n        },\r\n
+          \       \"Body\" : apim.getvariable('message.body')\r\n            \r\n
+          \       \r\n    }\r\n};\r\n\r\nif (typeof OperatorId !== 'undefined')\r\n
+          \   appcReq[cfg.requestName].Header.UserInfo = {\r\n        \"IDNumber\"
+          : OperatorId\r\n    };\r\nsession.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n    \r\n    \r\n\r\n    //return
+          the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour
+          + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        header-control:
+          type: blacklist
+          values: []
+        parameter-control:
+          type: whitelist
+          values: []
+        timeout: 60
+        verb: POST
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        target-url: $(ace-tip-momra)/external/getshoplicensedetails
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_Headers
+        source: "var apim = require('apim');\r\napim.output('application/json');\r\nvar
+          message = apim.getvariable('message.body');\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          Header = message[cfg.responseName].Header;\r\nvar TransactionId = Header.TransactionId;\r\nvar
+          ChannelId = Header.ChannelId;\r\nvar RequestTime = Header.RequestTime;\r\nvar
+          SessionId = Header.SessionId; \r\nvar MWRequestTime = Header.MWRequestTime;\r\nvar
+          MWResponseTime = Header.MWResponseTime;\r\nvar status = Header.ResponseStatus.Status;\r\nvar
+          code = Header.ResponseStatus.Code;\r\napim.setvariable('message.headers.Transaction-Id',TransactionId,'add');\r\napim.setvariable('message.headers.Channel-Id',ChannelId,'add');\r\nif
+          (RequestTime !== 'undefined')\r\napim.setvariable('message.headers.RequestTime',RequestTime,'add');\r\nif
+          (SessionId !== 'undefined')\r\napim.setvariable('message.headers.X-Request-Id',SessionId,'add');\r\nif
+          (MWRequestTime !== 'undefined')\r\napim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');\r\nif
+          (MWResponseTime !== 'undefined')\r\napim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');\r\napim.setvariable('message.headers.Response-Status',status,'add');\r\napim.setvariable('message.headers.Response-Code',code,'add');"
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Response
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar body = message[cfg.responseName].Body;\n\n\nsession.output.write(body);\napim.output('application/json');"
+          - map:
+              version: 2.0.0
+              title: map
+              inputs:
+                "":
+                  schema:
+                    description: ""
+                    type: object
+                    properties:
+                      getShopLicenseDetails:
+                        type: object
+                        properties:
+                          getShopLicenseInfoResponseDetailObject:
+                            type: object
+                            properties:
+                              OwnerInfo:
+                                type: object
+                                properties:
+                                  OwnerName:
+                                    type: string
+                                    name: OwnerName
+                                  OwnerIdentifier:
+                                    type: object
+                                    properties:
+                                      CRNumber:
+                                        type: string
+                                        name: CRNumber
+                                    name: OwnerIdentifier
+                                name: OwnerInfo
+                              LicenseInfoList:
+                                type: object
+                                properties:
+                                  LicenseInfo:
+                                    type: array
+                                    items:
+                                      properties:
+                                        UnifiedLicenseNumber:
+                                          type: string
+                                          name: UnifiedLicenseNumber
+                                        Amanah:
+                                          type: object
+                                          properties:
+                                            AmanahCode:
+                                              type: string
+                                              name: AmanahCode
+                                            AmanahName:
+                                              type: string
+                                              name: AmanahName
+                                          name: Amanah
+                                        BaladiaName:
+                                          type: string
+                                          name: BaladiaName
+                                        IssueDate:
+                                          type: string
+                                          name: IssueDate
+                                        ExpiryDate:
+                                          type: string
+                                          name: ExpiryDate
+                                        LicenseStatus:
+                                          type: string
+                                          name: LicenseStatus
+                                        ActivitiesList:
+                                          type: object
+                                          properties:
+                                            Activity:
+                                              type: object
+                                              properties:
+                                                ActivityISICCode:
+                                                  type: string
+                                                  name: ActivityISICCode
+                                                ActivityISICDescription:
+                                                  type: string
+                                                  name: ActivityISICDescription
+                                                ActivityAmanahDescription:
+                                                  type: string
+                                                  name: ActivityAmanahDescription
+                                                ActivityArea:
+                                                  type: string
+                                                  name: ActivityArea
+                                                BoardsList:
+                                                  type: object
+                                                  properties:
+                                                    Board:
+                                                      type: object
+                                                      properties:
+                                                        BoardType:
+                                                          type: string
+                                                          name: BoardType
+                                                        BoardArea:
+                                                          type: string
+                                                          name: BoardArea
+                                                      name: Board
+                                                  name: BoardsList
+                                              name: Activity
+                                          name: ActivitiesList
+                                        CommercialName:
+                                          type: string
+                                          name: CommercialName
+                                        ShopArea:
+                                          type: string
+                                          name: ShopArea
+                                        LocationCoordinates:
+                                          type: object
+                                          properties:
+                                            Longitude:
+                                              type: string
+                                              minLength: 1
+                                              name: Longitude
+                                            Latitude:
+                                              type: string
+                                              minLength: 1
+                                              name: Latitude
+                                          required:
+                                          - Longitude
+                                          - Latitude
+                                          name: LocationCoordinates
+                                      type: object
+                                    name: LicenseInfo
+                                name: LicenseInfoList
+                            name: getShopLicenseInfoResponseDetailObject
+                        name: getShopLicenseDetails
+                    example: "{\r\n            \"getShopLicenseDetails\": {\r\n                \"getShopLicenseInfoResponseDetailObject\":
+                      {\r\n                    \"OwnerInfo\": {\r\n                        \"OwnerName\":
+                      \"شركة نصير التجاريه بيت الدونات   \",\r\n                        \"OwnerIdentifier\":
+                      {\r\n                            \"CRNumber\": \"2050039853\"\r\n
+                      \                       }\r\n                    },\r\n                    \"LicenseInfoList\":
+                      {\r\n                        \"LicenseInfo\": [\r\n                            {\r\n
+                      \                               \"UnifiedLicenseNumber\": \"3909206312\",\r\n
+                      \                               \"Amanah\": {\r\n                                    \"AmanahCode\":
+                      \"5\",\r\n                                    \"AmanahName\":
+                      \"أمانة المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"BaladiaName\": \"بلدية شرق
+                      الدمام\",\r\n                                \"IssueDate\":
+                      \"21-12-1432\",\r\n                                \"ExpiryDate\":
+                      \"20-12-1435\",\r\n                                \"LicenseStatus\":
+                      \"سارية\",\r\n                                \"ActivitiesList\":
+                      {\r\n                                    \"Activity\": {\r\n
+                      \                                       \"ActivityISICCode\":
+                      \"472161\",\r\n                                        \"ActivityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityAmanahDescription\":
+                      \"محلات بيع الحلويات\",\r\n                                        \"ActivityArea\":
+                      \"80\",\r\n                                        \"BoardsList\":
+                      {\r\n                                            \"Board\":
+                      {\r\n                                                \"BoardType\":
+                      \"إرشادية\",\r\n                                                \"BoardArea\":
+                      \"9\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"CommercialName\": \"فرع شركة
+                      نصير التجارية بيت الدونات\",\r\n                                \"ShopArea\":
+                      \"80\"\r\n                            },\r\n                            {\r\n
+                      \                               \"UnifiedLicenseNumber\": \"3909112283\",\r\n
+                      \                               \"Amanah\": {\r\n                                    \"AmanahCode\":
+                      \"5\",\r\n                                    \"AmanahName\":
+                      \"أمانة المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"BaladiaName\": \"بلدية شرق
+                      الدمام\",\r\n                                \"IssueDate\":
+                      \"21-01-1438\",\r\n                                \"ExpiryDate\":
+                      \"21-01-1441\",\r\n                                \"LicenseStatus\":
+                      \"سارية\",\r\n                                \"ActivitiesList\":
+                      {\r\n                                    \"Activity\": {\r\n
+                      \                                       \"ActivityISICCode\":
+                      \"465101\",\r\n                                        \"ActivityISICDescription\":
+                      \"البيع بالجملة للحواسيب ومستلزماتها يشمل بيع الطابعات وأحبارها\",\r\n
+                      \                                       \"ActivityAmanahDescription\":
+                      \"البيع بالجملة للحواسيب ومستلزماتها يشمل بيع الطابعات وأحبارها\",\r\n
+                      \                                       \"ActivityArea\": \"33\",\r\n
+                      \                                       \"BoardsList\": {\r\n
+                      \                                           \"Board\": {\r\n
+                      \                                               \"BoardType\":
+                      \"إرشادية\",\r\n                                                \"BoardArea\":
+                      \"4\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"CommercialName\": \"شركه مجموعه
+                      نصير التجاريه المحدوده\",\r\n                                \"ShopArea\":
+                      \"33\"\r\n                            },\r\n                            {\r\n
+                      \                               \"UnifiedLicenseNumber\": \"3909232124\",\r\n
+                      \                               \"Amanah\": {\r\n                                    \"AmanahCode\":
+                      \"5\",\r\n                                    \"AmanahName\":
+                      \"أمانة المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"BaladiaName\": \"بلدية غرب
+                      الدمام\",\r\n                                \"IssueDate\":
+                      \"04-11-1434\",\r\n                                \"ExpiryDate\":
+                      \"03-11-1437\",\r\n                                \"LicenseStatus\":
+                      \"سارية\",\r\n                                \"ActivitiesList\":
+                      {\r\n                                    \"Activity\": {\r\n
+                      \                                       \"ActivityISICCode\":
+                      \"562901\",\r\n                                        \"ActivityISICDescription\":
+                      \"أنشطة المتعهدين الذين يقدمون خدمات الطعام\",\r\n                                        \"ActivityAmanahDescription\":
+                      \"أنشطة المتعهدين الذين يقدمون خدمات الطعام\",\r\n                                        \"ActivityArea\":
+                      \"30\",\r\n                                        \"BoardsList\":
+                      {\r\n                                            \"Board\":
+                      {\r\n                                                \"BoardType\":
+                      \"إرشادية\",\r\n                                                \"BoardArea\":
+                      \"6\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"CommercialName\": \"بيت الدونات\",\r\n
+                      \                               \"ShopArea\": \"30\"\r\n                            },\r\n
+                      \                           {\r\n                                \"UnifiedLicenseNumber\":
+                      \"3909229445\",\r\n                                \"Amanah\":
+                      {\r\n                                    \"AmanahCode\": \"5\",\r\n
+                      \                                   \"AmanahName\": \"أمانة
+                      المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"BaladiaName\": \"بلدية غرب
+                      الدمام\",\r\n                                \"IssueDate\":
+                      \"05-09-1433\",\r\n                                \"ExpiryDate\":
+                      \"04-09-1436\",\r\n                                \"LicenseStatus\":
+                      \"سارية\",\r\n                                \"ActivitiesList\":
+                      {\r\n                                    \"Activity\": {\r\n
+                      \                                       \"ActivityISICCode\":
+                      \"472161\",\r\n                                        \"ActivityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityAmanahDescription\":
+                      \"محلات بيع الحلويات\",\r\n                                        \"ActivityArea\":
+                      \"40\",\r\n                                        \"BoardsList\":
+                      {\r\n                                            \"Board\":
+                      {\r\n                                                \"BoardType\":
+                      \"إرشادية\",\r\n                                                \"BoardArea\":
+                      \"6\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"CommercialName\": \"فرع شركة
+                      مجموعة نصير التجاريه بيت الدونات\",\r\n                                \"ShopArea\":
+                      \"40\"\r\n                            },\r\n                            {\r\n
+                      \                               \"UnifiedLicenseNumber\": \"3909500514\",\r\n
+                      \                               \"Amanah\": {\r\n                                    \"AmanahCode\":
+                      \"2\",\r\n                                    \"AmanahName\":
+                      \"أمانة العاصمة المقدسة\"\r\n                                },\r\n
+                      \                               \"BaladiaName\": \"بلدية الغزة
+                      الفرعية\",\r\n                                \"IssueDate\":
+                      \"15-09-1431\",\r\n                                \"ExpiryDate\":
+                      \"14-09-1432\",\r\n                                \"LicenseStatus\":
+                      \"سارية\",\r\n                                \"ActivitiesList\":
+                      {\r\n                                    \"Activity\": {\r\n
+                      \                                       \"ActivityISICCode\":
+                      \"472161\",\r\n                                        \"ActivityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityAmanahDescription\":
+                      \"محلات بيع الحلويات\",\r\n                                        \"ActivityArea\":
+                      \"4\",\r\n                                        \"BoardsList\":
+                      {\r\n                                            \"Board\":
+                      {\r\n                                                \"BoardType\":
+                      \"إعلامية\",\r\n                                                \"BoardArea\":
+                      \"5\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"CommercialName\": \"بيت الدونات\",\r\n
+                      \                               \"ShopArea\": \"4\"\r\n                            },\r\n
+                      \                           {\r\n                                \"UnifiedLicenseNumber\":
+                      \"3909515129\",\r\n                                \"Amanah\":
+                      {\r\n                                    \"AmanahCode\": \"2\",\r\n
+                      \                                   \"AmanahName\": \"أمانة
+                      العاصمة المقدسة\"\r\n                                },\r\n
+                      \                               \"BaladiaName\": \"بلدية الغزة
+                      الفرعية\",\r\n                                \"IssueDate\":
+                      \"11-05-1430\",\r\n                                \"ExpiryDate\":
+                      \"10-05-1432\",\r\n                                \"LicenseStatus\":
+                      \"سارية\",\r\n                                \"ActivitiesList\":
+                      {\r\n                                    \"Activity\": {\r\n
+                      \                                       \"ActivityISICCode\":
+                      \"472161\",\r\n                                        \"ActivityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityAmanahDescription\":
+                      \"محلات بيع الحلويات\",\r\n                                        \"ActivityArea\":
+                      \"4\",\r\n                                        \"BoardsList\":
+                      {\r\n                                            \"Board\":
+                      {\r\n                                                \"BoardType\":
+                      \"إعلامية\",\r\n                                                \"BoardArea\":
+                      \"17\"\r\n                                            }\r\n
+                      \                                       }\r\n                                    }\r\n
+                      \                               },\r\n                                \"CommercialName\":
+                      \"بيت الدونات\",\r\n                                \"ShopArea\":
+                      \"4\"\r\n                            },\r\n                            {\r\n
+                      \                               \"UnifiedLicenseNumber\": \"3909510105\",\r\n
+                      \                               \"Amanah\": {\r\n                                    \"AmanahCode\":
+                      \"2\",\r\n                                    \"AmanahName\":
+                      \"أمانة العاصمة المقدسة\"\r\n                                },\r\n
+                      \                               \"BaladiaName\": \"بلدية الغزة
+                      الفرعية\",\r\n                                \"IssueDate\":
+                      \"08-09-1432\",\r\n                                \"ExpiryDate\":
+                      \"07-09-1433\",\r\n                                \"LicenseStatus\":
+                      \"سارية\",\r\n                                \"ActivitiesList\":
+                      {\r\n                                    \"Activity\": {\r\n
+                      \                                       \"ActivityISICCode\":
+                      \"472161\",\r\n                                        \"ActivityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityAmanahDescription\":
+                      \"محلات بيع الحلويات\",\r\n                                        \"ActivityArea\":
+                      \"4\",\r\n                                        \"BoardsList\":
+                      {\r\n                                            \"Board\":
+                      {\r\n                                                \"BoardType\":
+                      \"إعلامية\",\r\n                                                \"BoardArea\":
+                      \"6\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"CommercialName\": \"بيت الدونات\",\r\n
+                      \                               \"ShopArea\": \"4\"\r\n                            },\r\n
+                      \                           {\r\n                                \"UnifiedLicenseNumber\":
+                      \"3909508691\",\r\n                                \"Amanah\":
+                      {\r\n                                    \"AmanahCode\": \"2\",\r\n
+                      \                                   \"AmanahName\": \"أمانة
+                      العاصمة المقدسة\"\r\n                                },\r\n
+                      \                               \"BaladiaName\": \"بلدية العتيبية
+                      الفرعية\",\r\n                                \"IssueDate\":
+                      \"22-02-1430\",\r\n                                \"ExpiryDate\":
+                      \"21-02-1431\",\r\n                                \"LicenseStatus\":
+                      \"سارية\",\r\n                                \"ActivitiesList\":
+                      {\r\n                                    \"Activity\": {\r\n
+                      \                                       \"ActivityISICCode\":
+                      \"472161\",\r\n                                        \"ActivityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityAmanahDescription\":
+                      \"محلات بيع الحلويات\",\r\n                                        \"ActivityArea\":
+                      \"6\",\r\n                                        \"BoardsList\":
+                      {\r\n                                            \"Board\":
+                      {\r\n                                                \"BoardType\":
+                      \"إعلامية\",\r\n                                                \"BoardArea\":
+                      \"12\"\r\n                                            }\r\n
+                      \                                       }\r\n                                    }\r\n
+                      \                               },\r\n                                \"CommercialName\":
+                      \"بيت الدونات00\",\r\n                                \"ShopArea\":
+                      \"6\"\r\n                            },\r\n                            {\r\n
+                      \                               \"UnifiedLicenseNumber\": \"3909600737\",\r\n
+                      \                               \"Amanah\": {\r\n                                    \"AmanahCode\":
+                      \"2\",\r\n                                    \"AmanahName\":
+                      \"أمانة العاصمة المقدسة\"\r\n                                },\r\n
+                      \                               \"BaladiaName\": \"بلدية اجياد
+                      الفرعية\",\r\n                                \"IssueDate\":
+                      \"18-09-1432\",\r\n                                \"ExpiryDate\":
+                      \"17-09-1433\",\r\n                                \"LicenseStatus\":
+                      \"سارية\",\r\n                                \"ActivitiesList\":
+                      {\r\n                                    \"Activity\": {\r\n
+                      \                                       \"ActivityISICCode\":
+                      \"472161\",\r\n                                        \"ActivityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityAmanahDescription\":
+                      \"محلات بيع الحلويات\",\r\n                                        \"ActivityArea\":
+                      \"9\",\r\n                                        \"BoardsList\":
+                      {\r\n                                            \"Board\":
+                      {\r\n                                                \"BoardType\":
+                      \"إعلامية\",\r\n                                                \"BoardArea\":
+                      \"12\"\r\n                                            }\r\n
+                      \                                       }\r\n                                    }\r\n
+                      \                               },\r\n                                \"CommercialName\":
+                      \"بيت الدونات\",\r\n                                \"ShopArea\":
+                      \"9\"\r\n                            },\r\n                            {\r\n
+                      \                               \"UnifiedLicenseNumber\": \"3909109719\",\r\n
+                      \                               \"Amanah\": {\r\n                                    \"AmanahCode\":
+                      \"5\",\r\n                                    \"AmanahName\":
+                      \"أمانة المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"BaladiaName\": \"بلدية غرب
+                      الدمام\",\r\n                                \"IssueDate\":
+                      \"06-01-1437\",\r\n                                \"ExpiryDate\":
+                      \"04-09-1441\",\r\n                                \"LicenseStatus\":
+                      \"ملغية\",\r\n                                \"ActivitiesList\":
+                      {\r\n                                    \"Activity\": {\r\n
+                      \                                       \"ActivityISICCode\":
+                      \"472161\",\r\n                                        \"ActivityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityAmanahDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityArea\":
+                      \"40\",\r\n                                        \"BoardsList\":
+                      {\r\n                                            \"Board\":
+                      {\r\n                                                \"BoardType\":
+                      \"إرشادية\",\r\n                                                \"BoardArea\":
+                      \"6\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"CommercialName\": \"فرع شركة
+                      مجموعة نصير التجاريه بيت الدونات\",\r\n                                \"ShopArea\":
+                      \"40\",\r\n                                \"LocationCoordinates\":
+                      {\r\n                                    \"Longitude\": \"50.094839404\",\r\n
+                      \                                   \"Latitude\": \"26.3651438050001\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"UnifiedLicenseNumber\":
+                      \"3909543775\",\r\n                                \"Amanah\":
+                      {\r\n                                    \"AmanahCode\": \"2\",\r\n
+                      \                                   \"AmanahName\": \"أمانة
+                      العاصمة المقدسة\"\r\n                                },\r\n
+                      \                               \"BaladiaName\": \"بلدية الغزة
+                      الفرعية\",\r\n                                \"IssueDate\":
+                      \"01-11-1438\",\r\n                                \"ExpiryDate\":
+                      \"29-10-1441\",\r\n                                \"LicenseStatus\":
+                      \"سارية\",\r\n                                \"ActivitiesList\":
+                      {\r\n                                    \"Activity\": {\r\n
+                      \                                       \"ActivityISICCode\":
+                      \"561021\",\r\n                                        \"ActivityISICDescription\":
+                      \"البوفيهات  الكافيتريات \",\r\n                                        \"ActivityAmanahDescription\":
+                      \"البوفيهات  الكافيتريات \",\r\n                                        \"ActivityArea\":
+                      \"16\",\r\n                                        \"BoardsList\":
+                      {\r\n                                            \"Board\":
+                      {\r\n                                                \"BoardType\":
+                      \"إرشادية\",\r\n                                                \"BoardArea\":
+                      \"21\"\r\n                                            }\r\n
+                      \                                       }\r\n                                    }\r\n
+                      \                               },\r\n                                \"CommercialName\":
+                      \"بيت الدونات\",\r\n                                \"ShopArea\":
+                      \"16\",\r\n                                \"LocationCoordinates\":
+                      {\r\n                                    \"Longitude\": \"39.82959898710162\",\r\n
+                      \                                   \"Latitude\": \"21.4338875381552\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"UnifiedLicenseNumber\":
+                      \"3909473276\",\r\n                                \"Amanah\":
+                      {\r\n                                    \"AmanahCode\": \"16\",\r\n
+                      \                                   \"AmanahName\": \"أمانة
+                      منطقة الاحساء\"\r\n                                },\r\n                                \"BaladiaName\":
+                      \"بلدية المبرز\",\r\n                                \"IssueDate\":
+                      \"18-07-1432\",\r\n                                \"ExpiryDate\":
+                      \"19-06-1443\",\r\n                                \"LicenseStatus\":
+                      \"موقوف مؤقت\",\r\n                                \"ActivitiesList\":
+                      {\r\n                                    \"Activity\": {\r\n
+                      \                                       \"ActivityISICCode\":
+                      \"107181\",\r\n                                        \"ActivityISICDescription\":
+                      \"صناعة الحلويات الشعبية والشرقية بمختلف أنواعها\",\r\n                                        \"ActivityAmanahDescription\":
+                      \"مصنع الحلويات\",\r\n                                        \"ActivityArea\":
+                      \"362\",\r\n                                        \"BoardsList\":
+                      {\r\n                                            \"Board\":
+                      {\r\n                                                \"BoardType\":
+                      \"إرشادية\",\r\n                                                \"BoardArea\":
+                      \"9\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"CommercialName\": \"محل\",\r\n
+                      \                               \"ShopArea\": \"362\",\r\n                                \"LocationCoordinates\":
+                      {\r\n                                    \"Longitude\": \"49.57045366715916\",\r\n
+                      \                                   \"Latitude\": \"25.438344050889828\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"UnifiedLicenseNumber\":
+                      \"3909112282\",\r\n                                \"Amanah\":
+                      {\r\n                                    \"AmanahCode\": \"5\",\r\n
+                      \                                   \"AmanahName\": \"أمانة
+                      المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"BaladiaName\": \"بلدية غرب
+                      الدمام\",\r\n                                \"IssueDate\":
+                      \"04-05-1438\",\r\n                                \"ExpiryDate\":
+                      \"03-11-1442\",\r\n                                \"LicenseStatus\":
+                      \"موقوف مؤقت\",\r\n                                \"ActivitiesList\":
+                      {\r\n                                    \"Activity\": {\r\n
+                      \                                       \"ActivityISICCode\":
+                      \"465101\",\r\n                                        \"ActivityISICDescription\":
+                      \"البيع بالجملة للحواسيب ومستلزماتها يشمل بيع الطابعات وأحبارها\",\r\n
+                      \                                       \"ActivityAmanahDescription\":
+                      \"البيع بالجملة للحواسيب ومستلزماتها يشمل بيع الطابعات وأحبارها\",\r\n
+                      \                                       \"ActivityArea\": \"30\",\r\n
+                      \                                       \"BoardsList\": {\r\n
+                      \                                           \"Board\": {\r\n
+                      \                                               \"BoardType\":
+                      \"إرشادية\",\r\n                                                \"BoardArea\":
+                      \"6\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"CommercialName\": \"بيت الدونات\",\r\n
+                      \                               \"ShopArea\": \"30\",\r\n                                \"LocationCoordinates\":
+                      {\r\n                                    \"Longitude\": \"50.02194261746127\",\r\n
+                      \                                   \"Latitude\": \"26.41474769565609\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"UnifiedLicenseNumber\":
+                      \"39121541615\",\r\n                                \"Amanah\":
+                      {\r\n                                    \"AmanahCode\": \"5\",\r\n
+                      \                                   \"AmanahName\": \"أمانة
+                      المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"BaladiaName\": \"بلدية القطيف\",\r\n
+                      \                               \"IssueDate\": \"04-04-1424\",\r\n
+                      \                               \"ExpiryDate\": \"06-04-1444\",\r\n
+                      \                               \"LicenseStatus\": \"سارية\",\r\n
+                      \                               \"ActivitiesList\": {\r\n                                    \"Activity\":
+                      {\r\n                                        \"ActivityISICCode\":
+                      \"472161\",\r\n                                        \"ActivityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityAmanahDescription\":
+                      \"محلات بيع الحلويات\",\r\n                                        \"ActivityArea\":
+                      \"45\",\r\n                                        \"BoardsList\":
+                      {\r\n                                            \"Board\":
+                      {\r\n                                                \"BoardType\":
+                      \"إرشادية\",\r\n                                                \"BoardArea\":
+                      \"4\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"CommercialName\": \"بيت الدونات\",\r\n
+                      \                               \"ShopArea\": \"45\",\r\n                                \"LocationCoordinates\":
+                      {\r\n                                    \"Longitude\": \"50.01548354756279\",\r\n
+                      \                                   \"Latitude\": \"26.54992070593764\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"UnifiedLicenseNumber\":
+                      \"41012573276\",\r\n                                \"Amanah\":
+                      {\r\n                                    \"AmanahCode\": \"5\",\r\n
+                      \                                   \"AmanahName\": \"أمانة
+                      المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"BaladiaName\": \"بلدية رأس
+                      تنورة\",\r\n                                \"IssueDate\": \"29-02-1430\",\r\n
+                      \                               \"ExpiryDate\": \"26-02-1444\",\r\n
+                      \                               \"LicenseStatus\": \"سارية\",\r\n
+                      \                               \"ActivitiesList\": {\r\n                                    \"Activity\":
+                      {\r\n                                        \"ActivityISICCode\":
+                      \"472161\",\r\n                                        \"ActivityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityAmanahDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityArea\":
+                      \"44\",\r\n                                        \"BoardsList\":
+                      {\r\n                                            \"Board\":
+                      {\r\n                                                \"BoardType\":
+                      \"إرشادية\",\r\n                                                \"BoardArea\":
+                      \"4\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"CommercialName\": \"شركة مجموعة
+                      نصير التجارية المحدودة\",\r\n                                \"ShopArea\":
+                      \"44\",\r\n                                \"LocationCoordinates\":
+                      {\r\n                                    \"Longitude\": \"50.05877511059107\",\r\n
+                      \                                   \"Latitude\": \"26.70374822464747\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"UnifiedLicenseNumber\":
+                      \"39121542117\",\r\n                                \"Amanah\":
+                      {\r\n                                    \"AmanahCode\": \"5\",\r\n
+                      \                                   \"AmanahName\": \"أمانة
+                      المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"BaladiaName\": \"بلدية القطيف\",\r\n
+                      \                               \"IssueDate\": \"07-04-1424\",\r\n
+                      \                               \"ExpiryDate\": \"06-04-1444\",\r\n
+                      \                               \"LicenseStatus\": \"سارية\",\r\n
+                      \                               \"ActivitiesList\": {\r\n                                    \"Activity\":
+                      {\r\n                                        \"ActivityISICCode\":
+                      \"472161\",\r\n                                        \"ActivityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityAmanahDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityArea\":
+                      \"45\",\r\n                                        \"BoardsList\":
+                      {\r\n                                            \"Board\":
+                      {\r\n                                                \"BoardType\":
+                      \"إرشادية\",\r\n                                                \"BoardArea\":
+                      \"10\"\r\n                                            }\r\n
+                      \                                       }\r\n                                    }\r\n
+                      \                               },\r\n                                \"CommercialName\":
+                      \"بيت الدونات\",\r\n                                \"ShopArea\":
+                      \"45\",\r\n                                \"LocationCoordinates\":
+                      {\r\n                                    \"Longitude\": \"50.01324549882401\",\r\n
+                      \                                   \"Latitude\": \"26.55998492738554\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"UnifiedLicenseNumber\":
+                      \"3909116265\",\r\n                                \"Amanah\":
+                      {\r\n                                    \"AmanahCode\": \"5\",\r\n
+                      \                                   \"AmanahName\": \"أمانة
+                      المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"BaladiaName\": \"بلدية شرق
+                      الدمام\",\r\n                                \"IssueDate\":
+                      \"28-07-1438\",\r\n                                \"ExpiryDate\":
+                      \"01-04-1444\",\r\n                                \"LicenseStatus\":
+                      \"سارية\",\r\n                                \"ActivitiesList\":
+                      {\r\n                                    \"Activity\": {\r\n
+                      \                                       \"ActivityISICCode\":
+                      \"472161\",\r\n                                        \"ActivityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityAmanahDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityArea\":
+                      \"28\",\r\n                                        \"BoardsList\":
+                      {\r\n                                            \"Board\":
+                      {\r\n                                                \"BoardType\":
+                      \"إرشادية\",\r\n                                                \"BoardArea\":
+                      \"5\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"CommercialName\": \"فرع شركة
+                      نصير التجارية بيت الدونات\",\r\n                                \"ShopArea\":
+                      \"28\",\r\n                                \"LocationCoordinates\":
+                      {\r\n                                    \"Longitude\": \"50.124151713652395\",\r\n
+                      \                                   \"Latitude\": \"26.447861389305338\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"UnifiedLicenseNumber\":
+                      \"3909108048\",\r\n                                \"Amanah\":
+                      {\r\n                                    \"AmanahCode\": \"5\",\r\n
+                      \                                   \"AmanahName\": \"أمانة
+                      المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"BaladiaName\": \"بلدية شرق
+                      الدمام\",\r\n                                \"IssueDate\":
+                      \"07-07-1437\",\r\n                                \"ExpiryDate\":
+                      \"08-02-1444\",\r\n                                \"LicenseStatus\":
+                      \"سارية\",\r\n                                \"ActivitiesList\":
+                      {\r\n                                    \"Activity\": {\r\n
+                      \                                       \"ActivityISICCode\":
+                      \"472161\",\r\n                                        \"ActivityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityAmanahDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityArea\":
+                      \"30\",\r\n                                        \"BoardsList\":
+                      {\r\n                                            \"Board\":
+                      {\r\n                                                \"BoardType\":
+                      \"إرشادية\",\r\n                                                \"BoardArea\":
+                      \"5\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"CommercialName\": \"فرع شركة
+                      نصير التجارية بيت الدونات\",\r\n                                \"ShopArea\":
+                      \"30\",\r\n                                \"LocationCoordinates\":
+                      {\r\n                                    \"Longitude\": \"50.10018718484342\",\r\n
+                      \                                   \"Latitude\": \"26.40271454875006\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"UnifiedLicenseNumber\":
+                      \"40031963257\",\r\n                                \"Amanah\":
+                      {\r\n                                    \"AmanahCode\": \"5\",\r\n
+                      \                                   \"AmanahName\": \"بلدية
+                      القطيف\"\r\n                                },\r\n                                \"BaladiaName\":
+                      \"بلدية سيهات\",\r\n                                \"IssueDate\":
+                      \"03-05-1423\",\r\n                                \"ExpiryDate\":
+                      \"02-05-1444\",\r\n                                \"LicenseStatus\":
+                      \"سارية\",\r\n                                \"ActivitiesList\":
+                      {\r\n                                    \"Activity\": {\r\n
+                      \                                       \"ActivityISICCode\":
+                      \"472161\",\r\n                                        \"ActivityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityAmanahDescription\":
+                      \"محلات بيع الحلويات\",\r\n                                        \"ActivityArea\":
+                      \"55\",\r\n                                        \"BoardsList\":
+                      {\r\n                                            \"Board\":
+                      {\r\n                                                \"BoardType\":
+                      \"إرشادية\",\r\n                                                \"BoardArea\":
+                      \"6\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"CommercialName\": \"بيت الدونات\",\r\n
+                      \                               \"ShopArea\": \"55\",\r\n                                \"LocationCoordinates\":
+                      {\r\n                                    \"Longitude\": \"50.04651394204684\",\r\n
+                      \                                   \"Latitude\": \"26.481302523588475\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"UnifiedLicenseNumber\":
+                      \"41012572473\",\r\n                                \"Amanah\":
+                      {\r\n                                    \"AmanahCode\": \"5\",\r\n
+                      \                                   \"AmanahName\": \"بلدية
+                      القطيف\"\r\n                                },\r\n                                \"BaladiaName\":
+                      \"بلدية صفوى \",\r\n                                \"IssueDate\":
+                      \"04-03-1426\",\r\n                                \"ExpiryDate\":
+                      \"02-03-1444\",\r\n                                \"LicenseStatus\":
+                      \"سارية\",\r\n                                \"ActivitiesList\":
+                      {\r\n                                    \"Activity\": {\r\n
+                      \                                       \"ActivityISICCode\":
+                      \"472161\",\r\n                                        \"ActivityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityAmanahDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityArea\":
+                      \"55\",\r\n                                        \"BoardsList\":
+                      {\r\n                                            \"Board\":
+                      {\r\n                                                \"BoardType\":
+                      \"إرشادية\",\r\n                                                \"BoardArea\":
+                      \"7\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"CommercialName\": \"شركه مجموعه
+                      نصير التجاريه \",\r\n                                \"ShopArea\":
+                      \"55\",\r\n                                \"LocationCoordinates\":
+                      {\r\n                                    \"Longitude\": \"49.951344330265876\",\r\n
+                      \                                   \"Latitude\": \"26.637068292957643\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"UnifiedLicenseNumber\":
+                      \"3909108492\",\r\n                                \"Amanah\":
+                      {\r\n                                    \"AmanahCode\": \"5\",\r\n
+                      \                                   \"AmanahName\": \"أمانة
+                      المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"BaladiaName\": \"بلدية شرق
+                      الدمام\",\r\n                                \"IssueDate\":
+                      \"30-07-1439\",\r\n                                \"ExpiryDate\":
+                      \"07-04-1444\",\r\n                                \"LicenseStatus\":
+                      \"سارية\",\r\n                                \"ActivitiesList\":
+                      {\r\n                                    \"Activity\": {\r\n
+                      \                                       \"ActivityISICCode\":
+                      \"472161\",\r\n                                        \"ActivityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityAmanahDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityArea\":
+                      \"80\",\r\n                                        \"BoardsList\":
+                      {\r\n                                            \"Board\":
+                      {\r\n                                                \"BoardType\":
+                      \"إرشادية\",\r\n                                                \"BoardArea\":
+                      \"9\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"CommercialName\": \"فرع شركة
+                      نصير التجارية بيت الدونات\",\r\n                                \"ShopArea\":
+                      \"80\",\r\n                                \"LocationCoordinates\":
+                      {\r\n                                    \"Longitude\": \"50.11744748793333\",\r\n
+                      \                                   \"Latitude\": \"26.414785740807496\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"UnifiedLicenseNumber\":
+                      \"40041964748\",\r\n                                \"Amanah\":
+                      {\r\n                                    \"AmanahCode\": \"5\",\r\n
+                      \                                   \"AmanahName\": \"أمانة
+                      المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"BaladiaName\": \"بلدية وسط
+                      الدمام\",\r\n                                \"IssueDate\":
+                      \"07-11-1422\",\r\n                                \"ExpiryDate\":
+                      \"20-12-1444\",\r\n                                \"LicenseStatus\":
+                      \"سارية\",\r\n                                \"ActivitiesList\":
+                      {\r\n                                    \"Activity\": {\r\n
+                      \                                       \"ActivityISICCode\":
+                      \"472161\",\r\n                                        \"ActivityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityAmanahDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityArea\":
+                      \"26\",\r\n                                        \"BoardsList\":
+                      {\r\n                                            \"Board\":
+                      {\r\n                                                \"BoardType\":
+                      \"إرشادية\",\r\n                                                \"BoardArea\":
+                      \"8\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"CommercialName\": \"بيت الدونات\",\r\n
+                      \                               \"ShopArea\": \"26\",\r\n                                \"LocationCoordinates\":
+                      {\r\n                                    \"Longitude\": \"50.07398009431129\",\r\n
+                      \                                   \"Latitude\": \"26.428660244904293\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"UnifiedLicenseNumber\":
+                      \"40041964749\",\r\n                                \"Amanah\":
+                      {\r\n                                    \"AmanahCode\": \"5\",\r\n
+                      \                                   \"AmanahName\": \"أمانة
+                      المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"BaladiaName\": \"بلدية وسط
+                      الدمام\",\r\n                                \"IssueDate\":
+                      \"21-12-1430\",\r\n                                \"ExpiryDate\":
+                      \"20-12-1444\",\r\n                                \"LicenseStatus\":
+                      \"سارية\",\r\n                                \"ActivitiesList\":
+                      {\r\n                                    \"Activity\": {\r\n
+                      \                                       \"ActivityISICCode\":
+                      \"472161\",\r\n                                        \"ActivityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityAmanahDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityArea\":
+                      \"38\",\r\n                                        \"BoardsList\":
+                      {\r\n                                            \"Board\":
+                      {\r\n                                                \"BoardType\":
+                      \"إرشادية\",\r\n                                                \"BoardArea\":
+                      \"12\"\r\n                                            }\r\n
+                      \                                       }\r\n                                    }\r\n
+                      \                               },\r\n                                \"CommercialName\":
+                      \"بيت الدونات\",\r\n                                \"ShopArea\":
+                      \"38\",\r\n                                \"LocationCoordinates\":
+                      {\r\n                                    \"Longitude\": \"50.09261033396003\",\r\n
+                      \                                   \"Latitude\": \"26.46630919329492\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"UnifiedLicenseNumber\":
+                      \"42126016615\",\r\n                                \"Amanah\":
+                      {\r\n                                    \"AmanahCode\": \"5\",\r\n
+                      \                                   \"AmanahName\": \"أمانة
+                      المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"BaladiaName\": \"بلدية أبقيق\",\r\n
+                      \                               \"IssueDate\": \"16-01-1419\",\r\n
+                      \                               \"ExpiryDate\": \"15-01-1445\",\r\n
+                      \                               \"LicenseStatus\": \"سارية\",\r\n
+                      \                               \"ActivitiesList\": {\r\n                                    \"Activity\":
+                      {\r\n                                        \"ActivityISICCode\":
+                      \"472161\",\r\n                                        \"ActivityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityAmanahDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityArea\":
+                      \"40\",\r\n                                        \"BoardsList\":
+                      {\r\n                                            \"Board\":
+                      {\r\n                                                \"BoardType\":
+                      \"إرشادية\",\r\n                                                \"BoardArea\":
+                      \"6\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"CommercialName\": \"بيت الدونات\",\r\n
+                      \                               \"ShopArea\": \"40\",\r\n                                \"LocationCoordinates\":
+                      {\r\n                                    \"Longitude\": \"49.657870613238195\",\r\n
+                      \                                   \"Latitude\": \"25.925920004814945\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"UnifiedLicenseNumber\":
+                      \"3909433793\",\r\n                                \"Amanah\":
+                      {\r\n                                    \"AmanahCode\": \"2\",\r\n
+                      \                                   \"AmanahName\": \"أمانة
+                      العاصمة المقدسة\"\r\n                                },\r\n
+                      \                               \"BaladiaName\": \"بلدية العمرة
+                      الفرعية\",\r\n                                \"IssueDate\":
+                      \"19-04-1439\",\r\n                                \"ExpiryDate\":
+                      \"18-04-1444\",\r\n                                \"LicenseStatus\":
+                      \"سارية\",\r\n                                \"ActivitiesList\":
+                      {\r\n                                    \"Activity\": {\r\n
+                      \                                       \"ActivityISICCode\":
+                      \"561021\",\r\n                                        \"ActivityISICDescription\":
+                      \"البوفيهات  الكافيتريات \",\r\n                                        \"ActivityAmanahDescription\":
+                      \"البوفيهات  الكافيتريات \",\r\n                                        \"ActivityArea\":
+                      \"20\",\r\n                                        \"BoardsList\":
+                      {\r\n                                            \"Board\":
+                      [\r\n                                                {\r\n                                                    \"BoardType\":
+                      \"إعلامية\",\r\n                                                    \"BoardArea\":
+                      \"90\"\r\n                                                },\r\n
+                      \                                               {\r\n                                                    \"BoardType\":
+                      \"إرشادية\",\r\n                                                    \"BoardArea\":
+                      \"2\"\r\n                                                }\r\n
+                      \                                           ]\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"CommercialName\": \"بيت الدونات\",\r\n
+                      \                               \"ShopArea\": \"20\",\r\n                                \"LocationCoordinates\":
+                      {\r\n                                    \"Longitude\": \"39.782570357514444\",\r\n
+                      \                                   \"Latitude\": \"21.552718357360984\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"UnifiedLicenseNumber\":
+                      \"3909475507\",\r\n                                \"Amanah\":
+                      {\r\n                                    \"AmanahCode\": \"16\",\r\n
+                      \                                   \"AmanahName\": \"أمانة
+                      منطقة الاحساء\"\r\n                                },\r\n                                \"BaladiaName\":
+                      \"بلدية المبرز\",\r\n                                \"IssueDate\":
+                      \"11-02-1434\",\r\n                                \"ExpiryDate\":
+                      \"20-04-1446\",\r\n                                \"LicenseStatus\":
+                      \"موقوف دائم\",\r\n                                \"ActivitiesList\":
+                      {\r\n                                    \"Activity\": {\r\n
+                      \                                       \"ActivityISICCode\":
+                      \"472161\",\r\n                                        \"ActivityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityAmanahDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityArea\":
+                      \"30\",\r\n                                        \"BoardsList\":
+                      {\r\n                                            \"Board\":
+                      {\r\n                                                \"BoardType\":
+                      \"إرشادية\",\r\n                                                \"BoardArea\":
+                      \"8\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"CommercialName\": \"محل\",\r\n
+                      \                               \"ShopArea\": \"30\",\r\n                                \"LocationCoordinates\":
+                      {\r\n                                    \"Longitude\": \"49.54756659971751\",\r\n
+                      \                                   \"Latitude\": \"25.41685552897838\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"UnifiedLicenseNumber\":
+                      \"3909110085\",\r\n                                \"Amanah\":
+                      {\r\n                                    \"AmanahCode\": \"5\",\r\n
+                      \                                   \"AmanahName\": \"أمانة
+                      المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"BaladiaName\": \"بلدية شرق
+                      الدمام\",\r\n                                \"IssueDate\":
+                      \"21-06-1437\",\r\n                                \"ExpiryDate\":
+                      \"19-05-1444\",\r\n                                \"LicenseStatus\":
+                      \"ملغية\",\r\n                                \"ActivitiesList\":
+                      {\r\n                                    \"Activity\": {\r\n
+                      \                                       \"ActivityISICCode\":
+                      \"472161\",\r\n                                        \"ActivityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityAmanahDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"ActivityArea\":
+                      \"16\",\r\n                                        \"BoardsList\":
+                      {\r\n                                            \"Board\":
+                      {\r\n                                                \"BoardType\":
+                      \"إرشادية\",\r\n                                                \"BoardArea\":
+                      \"1\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"CommercialName\": \"فرع شركة
+                      مجموعة نصير التجاريه بيت الدونات\",\r\n                                \"ShopArea\":
+                      \"16\",\r\n                                \"LocationCoordinates\":
+                      {\r\n                                    \"Longitude\": \"50.12896070309306\",\r\n
+                      \                                   \"Latitude\": \"26.4765351491474\"\r\n
+                      \                               }\r\n                            }\r\n
+                      \                       ]\r\n                    }\r\n                }\r\n
+                      \           }\r\n        }"
+                  variable: message.body
+                  content: application/json
+              outputs:
+                "":
+                  schema:
+                    description: ""
+                    type: object
+                    properties:
+                      getShopLicenseDetails:
+                        type: object
+                        properties:
+                          getShopLicenseInfoResponseDetailObject:
+                            type: object
+                            properties:
+                              ownerInfo:
+                                type: object
+                                properties:
+                                  ownerName:
+                                    type: string
+                                    name: ownerName
+                                  ownerIdentifier:
+                                    type: object
+                                    properties:
+                                      cRNumber:
+                                        type: string
+                                        name: cRNumber
+                                    name: ownerIdentifier
+                                name: ownerInfo
+                              licenseInfoList:
+                                type: object
+                                properties:
+                                  licenseInfo:
+                                    type: array
+                                    items:
+                                      properties:
+                                        unifiedLicenseNumber:
+                                          type: string
+                                          name: unifiedLicenseNumber
+                                        amanah:
+                                          type: object
+                                          properties:
+                                            amanahCode:
+                                              type: string
+                                              name: amanahCode
+                                            amanahName:
+                                              type: string
+                                              name: amanahName
+                                          name: amanah
+                                        baladiaName:
+                                          type: string
+                                          name: baladiaName
+                                        issueDate:
+                                          type: string
+                                          name: issueDate
+                                        expiryDate:
+                                          type: string
+                                          name: expiryDate
+                                        licenseStatus:
+                                          type: string
+                                          name: licenseStatus
+                                        activitiesList:
+                                          type: object
+                                          properties:
+                                            activity:
+                                              type: object
+                                              properties:
+                                                activityISICCode:
+                                                  type: string
+                                                  name: activityISICCode
+                                                activityISICDescription:
+                                                  type: string
+                                                  name: activityISICDescription
+                                                activityAmanahDescription:
+                                                  type: string
+                                                  name: activityAmanahDescription
+                                                activityArea:
+                                                  type: string
+                                                  name: activityArea
+                                                boardsList:
+                                                  type: object
+                                                  properties:
+                                                    board:
+                                                      type: object
+                                                      properties:
+                                                        boardType:
+                                                          type: string
+                                                          name: boardType
+                                                        boardArea:
+                                                          type: string
+                                                          name: boardArea
+                                                      name: board
+                                                  name: boardsList
+                                              name: activity
+                                          name: activitiesList
+                                        commercialName:
+                                          type: string
+                                          name: commercialName
+                                        shopArea:
+                                          type: string
+                                          name: shopArea
+                                        locationCoordinates:
+                                          type: object
+                                          properties:
+                                            longitude:
+                                              type: string
+                                              minLength: 1
+                                              name: longitude
+                                            latitude:
+                                              type: string
+                                              minLength: 1
+                                              name: latitude
+                                          required:
+                                          - longitude
+                                          - latitude
+                                          name: locationCoordinates
+                                      type: object
+                                    name: licenseInfo
+                                name: licenseInfoList
+                            name: getShopLicenseInfoResponseDetailObject
+                        name: getShopLicenseDetails
+                    example: "{\r\n            \"getShopLicenseDetails\": {\r\n                \"getShopLicenseInfoResponseDetailObject\":
+                      {\r\n                    \"ownerInfo\": {\r\n                        \"ownerName\":
+                      \"شركة نصير التجاريه بيت الدونات   \",\r\n                        \"ownerIdentifier\":
+                      {\r\n                            \"cRNumber\": \"2050039853\"\r\n
+                      \                       }\r\n                    },\r\n                    \"licenseInfoList\":
+                      {\r\n                        \"licenseInfo\": [\r\n                            {\r\n
+                      \                               \"unifiedLicenseNumber\": \"3909206312\",\r\n
+                      \                               \"amanah\": {\r\n                                    \"amanahCode\":
+                      \"5\",\r\n                                    \"amanahName\":
+                      \"أمانة المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"baladiaName\": \"بلدية شرق
+                      الدمام\",\r\n                                \"issueDate\":
+                      \"21-12-1432\",\r\n                                \"expiryDate\":
+                      \"20-12-1435\",\r\n                                \"licenseStatus\":
+                      \"سارية\",\r\n                                \"activitiesList\":
+                      {\r\n                                    \"activity\": {\r\n
+                      \                                       \"activityISICCode\":
+                      \"472161\",\r\n                                        \"activityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityAmanahDescription\":
+                      \"محلات بيع الحلويات\",\r\n                                        \"activityArea\":
+                      \"80\",\r\n                                        \"boardsList\":
+                      {\r\n                                            \"board\":
+                      {\r\n                                                \"boardType\":
+                      \"إرشادية\",\r\n                                                \"boardArea\":
+                      \"9\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"commercialName\": \"فرع شركة
+                      نصير التجارية بيت الدونات\",\r\n                                \"shopArea\":
+                      \"80\"\r\n                            },\r\n                            {\r\n
+                      \                               \"unifiedLicenseNumber\": \"3909112283\",\r\n
+                      \                               \"amanah\": {\r\n                                    \"amanahCode\":
+                      \"5\",\r\n                                    \"amanahName\":
+                      \"أمانة المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"baladiaName\": \"بلدية شرق
+                      الدمام\",\r\n                                \"issueDate\":
+                      \"21-01-1438\",\r\n                                \"expiryDate\":
+                      \"21-01-1441\",\r\n                                \"licenseStatus\":
+                      \"سارية\",\r\n                                \"activitiesList\":
+                      {\r\n                                    \"activity\": {\r\n
+                      \                                       \"activityISICCode\":
+                      \"465101\",\r\n                                        \"activityISICDescription\":
+                      \"البيع بالجملة للحواسيب ومستلزماتها يشمل بيع الطابعات وأحبارها\",\r\n
+                      \                                       \"activityAmanahDescription\":
+                      \"البيع بالجملة للحواسيب ومستلزماتها يشمل بيع الطابعات وأحبارها\",\r\n
+                      \                                       \"activityArea\": \"33\",\r\n
+                      \                                       \"boardsList\": {\r\n
+                      \                                           \"board\": {\r\n
+                      \                                               \"boardType\":
+                      \"إرشادية\",\r\n                                                \"boardArea\":
+                      \"4\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"commercialName\": \"شركه مجموعه
+                      نصير التجاريه المحدوده\",\r\n                                \"shopArea\":
+                      \"33\"\r\n                            },\r\n                            {\r\n
+                      \                               \"unifiedLicenseNumber\": \"3909232124\",\r\n
+                      \                               \"amanah\": {\r\n                                    \"amanahCode\":
+                      \"5\",\r\n                                    \"amanahName\":
+                      \"أمانة المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"baladiaName\": \"بلدية غرب
+                      الدمام\",\r\n                                \"issueDate\":
+                      \"04-11-1434\",\r\n                                \"expiryDate\":
+                      \"03-11-1437\",\r\n                                \"licenseStatus\":
+                      \"سارية\",\r\n                                \"activitiesList\":
+                      {\r\n                                    \"activity\": {\r\n
+                      \                                       \"activityISICCode\":
+                      \"562901\",\r\n                                        \"activityISICDescription\":
+                      \"أنشطة المتعهدين الذين يقدمون خدمات الطعام\",\r\n                                        \"activityAmanahDescription\":
+                      \"أنشطة المتعهدين الذين يقدمون خدمات الطعام\",\r\n                                        \"activityArea\":
+                      \"30\",\r\n                                        \"boardsList\":
+                      {\r\n                                            \"board\":
+                      {\r\n                                                \"boardType\":
+                      \"إرشادية\",\r\n                                                \"boardArea\":
+                      \"6\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"commercialName\": \"بيت الدونات\",\r\n
+                      \                               \"shopArea\": \"30\"\r\n                            },\r\n
+                      \                           {\r\n                                \"unifiedLicenseNumber\":
+                      \"3909229445\",\r\n                                \"amanah\":
+                      {\r\n                                    \"amanahCode\": \"5\",\r\n
+                      \                                   \"amanahName\": \"أمانة
+                      المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"baladiaName\": \"بلدية غرب
+                      الدمام\",\r\n                                \"issueDate\":
+                      \"05-09-1433\",\r\n                                \"expiryDate\":
+                      \"04-09-1436\",\r\n                                \"licenseStatus\":
+                      \"سارية\",\r\n                                \"activitiesList\":
+                      {\r\n                                    \"activity\": {\r\n
+                      \                                       \"activityISICCode\":
+                      \"472161\",\r\n                                        \"activityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityAmanahDescription\":
+                      \"محلات بيع الحلويات\",\r\n                                        \"activityArea\":
+                      \"40\",\r\n                                        \"boardsList\":
+                      {\r\n                                            \"board\":
+                      {\r\n                                                \"boardType\":
+                      \"إرشادية\",\r\n                                                \"boardArea\":
+                      \"6\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"commercialName\": \"فرع شركة
+                      مجموعة نصير التجاريه بيت الدونات\",\r\n                                \"shopArea\":
+                      \"40\"\r\n                            },\r\n                            {\r\n
+                      \                               \"unifiedLicenseNumber\": \"3909500514\",\r\n
+                      \                               \"amanah\": {\r\n                                    \"amanahCode\":
+                      \"2\",\r\n                                    \"amanahName\":
+                      \"أمانة العاصمة المقدسة\"\r\n                                },\r\n
+                      \                               \"baladiaName\": \"بلدية الغزة
+                      الفرعية\",\r\n                                \"issueDate\":
+                      \"15-09-1431\",\r\n                                \"expiryDate\":
+                      \"14-09-1432\",\r\n                                \"licenseStatus\":
+                      \"سارية\",\r\n                                \"activitiesList\":
+                      {\r\n                                    \"activity\": {\r\n
+                      \                                       \"activityISICCode\":
+                      \"472161\",\r\n                                        \"activityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityAmanahDescription\":
+                      \"محلات بيع الحلويات\",\r\n                                        \"activityArea\":
+                      \"4\",\r\n                                        \"boardsList\":
+                      {\r\n                                            \"board\":
+                      {\r\n                                                \"boardType\":
+                      \"إعلامية\",\r\n                                                \"boardArea\":
+                      \"5\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"commercialName\": \"بيت الدونات\",\r\n
+                      \                               \"shopArea\": \"4\"\r\n                            },\r\n
+                      \                           {\r\n                                \"unifiedLicenseNumber\":
+                      \"3909515129\",\r\n                                \"amanah\":
+                      {\r\n                                    \"amanahCode\": \"2\",\r\n
+                      \                                   \"amanahName\": \"أمانة
+                      العاصمة المقدسة\"\r\n                                },\r\n
+                      \                               \"baladiaName\": \"بلدية الغزة
+                      الفرعية\",\r\n                                \"issueDate\":
+                      \"11-05-1430\",\r\n                                \"expiryDate\":
+                      \"10-05-1432\",\r\n                                \"licenseStatus\":
+                      \"سارية\",\r\n                                \"activitiesList\":
+                      {\r\n                                    \"activity\": {\r\n
+                      \                                       \"activityISICCode\":
+                      \"472161\",\r\n                                        \"activityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityAmanahDescription\":
+                      \"محلات بيع الحلويات\",\r\n                                        \"activityArea\":
+                      \"4\",\r\n                                        \"boardsList\":
+                      {\r\n                                            \"board\":
+                      {\r\n                                                \"boardType\":
+                      \"إعلامية\",\r\n                                                \"boardArea\":
+                      \"17\"\r\n                                            }\r\n
+                      \                                       }\r\n                                    }\r\n
+                      \                               },\r\n                                \"commercialName\":
+                      \"بيت الدونات\",\r\n                                \"shopArea\":
+                      \"4\"\r\n                            },\r\n                            {\r\n
+                      \                               \"unifiedLicenseNumber\": \"3909510105\",\r\n
+                      \                               \"amanah\": {\r\n                                    \"amanahCode\":
+                      \"2\",\r\n                                    \"amanahName\":
+                      \"أمانة العاصمة المقدسة\"\r\n                                },\r\n
+                      \                               \"baladiaName\": \"بلدية الغزة
+                      الفرعية\",\r\n                                \"issueDate\":
+                      \"08-09-1432\",\r\n                                \"expiryDate\":
+                      \"07-09-1433\",\r\n                                \"licenseStatus\":
+                      \"سارية\",\r\n                                \"activitiesList\":
+                      {\r\n                                    \"activity\": {\r\n
+                      \                                       \"activityISICCode\":
+                      \"472161\",\r\n                                        \"activityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityAmanahDescription\":
+                      \"محلات بيع الحلويات\",\r\n                                        \"activityArea\":
+                      \"4\",\r\n                                        \"boardsList\":
+                      {\r\n                                            \"board\":
+                      {\r\n                                                \"boardType\":
+                      \"إعلامية\",\r\n                                                \"boardArea\":
+                      \"6\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"commercialName\": \"بيت الدونات\",\r\n
+                      \                               \"shopArea\": \"4\"\r\n                            },\r\n
+                      \                           {\r\n                                \"unifiedLicenseNumber\":
+                      \"3909508691\",\r\n                                \"amanah\":
+                      {\r\n                                    \"amanahCode\": \"2\",\r\n
+                      \                                   \"amanahName\": \"أمانة
+                      العاصمة المقدسة\"\r\n                                },\r\n
+                      \                               \"baladiaName\": \"بلدية العتيبية
+                      الفرعية\",\r\n                                \"issueDate\":
+                      \"22-02-1430\",\r\n                                \"expiryDate\":
+                      \"21-02-1431\",\r\n                                \"licenseStatus\":
+                      \"سارية\",\r\n                                \"activitiesList\":
+                      {\r\n                                    \"activity\": {\r\n
+                      \                                       \"activityISICCode\":
+                      \"472161\",\r\n                                        \"activityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityAmanahDescription\":
+                      \"محلات بيع الحلويات\",\r\n                                        \"activityArea\":
+                      \"6\",\r\n                                        \"boardsList\":
+                      {\r\n                                            \"board\":
+                      {\r\n                                                \"boardType\":
+                      \"إعلامية\",\r\n                                                \"boardArea\":
+                      \"12\"\r\n                                            }\r\n
+                      \                                       }\r\n                                    }\r\n
+                      \                               },\r\n                                \"commercialName\":
+                      \"بيت الدونات00\",\r\n                                \"shopArea\":
+                      \"6\"\r\n                            },\r\n                            {\r\n
+                      \                               \"unifiedLicenseNumber\": \"3909600737\",\r\n
+                      \                               \"amanah\": {\r\n                                    \"amanahCode\":
+                      \"2\",\r\n                                    \"amanahName\":
+                      \"أمانة العاصمة المقدسة\"\r\n                                },\r\n
+                      \                               \"baladiaName\": \"بلدية اجياد
+                      الفرعية\",\r\n                                \"issueDate\":
+                      \"18-09-1432\",\r\n                                \"expiryDate\":
+                      \"17-09-1433\",\r\n                                \"licenseStatus\":
+                      \"سارية\",\r\n                                \"activitiesList\":
+                      {\r\n                                    \"activity\": {\r\n
+                      \                                       \"activityISICCode\":
+                      \"472161\",\r\n                                        \"activityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityAmanahDescription\":
+                      \"محلات بيع الحلويات\",\r\n                                        \"activityArea\":
+                      \"9\",\r\n                                        \"boardsList\":
+                      {\r\n                                            \"board\":
+                      {\r\n                                                \"boardType\":
+                      \"إعلامية\",\r\n                                                \"boardArea\":
+                      \"12\"\r\n                                            }\r\n
+                      \                                       }\r\n                                    }\r\n
+                      \                               },\r\n                                \"commercialName\":
+                      \"بيت الدونات\",\r\n                                \"shopArea\":
+                      \"9\"\r\n                            },\r\n                            {\r\n
+                      \                               \"unifiedLicenseNumber\": \"3909109719\",\r\n
+                      \                               \"amanah\": {\r\n                                    \"amanahCode\":
+                      \"5\",\r\n                                    \"amanahName\":
+                      \"أمانة المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"baladiaName\": \"بلدية غرب
+                      الدمام\",\r\n                                \"issueDate\":
+                      \"06-01-1437\",\r\n                                \"expiryDate\":
+                      \"04-09-1441\",\r\n                                \"licenseStatus\":
+                      \"ملغية\",\r\n                                \"activitiesList\":
+                      {\r\n                                    \"activity\": {\r\n
+                      \                                       \"activityISICCode\":
+                      \"472161\",\r\n                                        \"activityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityAmanahDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityArea\":
+                      \"40\",\r\n                                        \"boardsList\":
+                      {\r\n                                            \"board\":
+                      {\r\n                                                \"boardType\":
+                      \"إرشادية\",\r\n                                                \"boardArea\":
+                      \"6\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"commercialName\": \"فرع شركة
+                      مجموعة نصير التجاريه بيت الدونات\",\r\n                                \"shopArea\":
+                      \"40\",\r\n                                \"locationCoordinates\":
+                      {\r\n                                    \"longitude\": \"50.094839404\",\r\n
+                      \                                   \"latitude\": \"26.3651438050001\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"unifiedLicenseNumber\":
+                      \"3909543775\",\r\n                                \"amanah\":
+                      {\r\n                                    \"amanahCode\": \"2\",\r\n
+                      \                                   \"amanahName\": \"أمانة
+                      العاصمة المقدسة\"\r\n                                },\r\n
+                      \                               \"baladiaName\": \"بلدية الغزة
+                      الفرعية\",\r\n                                \"issueDate\":
+                      \"01-11-1438\",\r\n                                \"expiryDate\":
+                      \"29-10-1441\",\r\n                                \"licenseStatus\":
+                      \"سارية\",\r\n                                \"activitiesList\":
+                      {\r\n                                    \"activity\": {\r\n
+                      \                                       \"activityISICCode\":
+                      \"561021\",\r\n                                        \"activityISICDescription\":
+                      \"البوفيهات  الكافيتريات \",\r\n                                        \"activityAmanahDescription\":
+                      \"البوفيهات  الكافيتريات \",\r\n                                        \"activityArea\":
+                      \"16\",\r\n                                        \"boardsList\":
+                      {\r\n                                            \"board\":
+                      {\r\n                                                \"boardType\":
+                      \"إرشادية\",\r\n                                                \"boardArea\":
+                      \"21\"\r\n                                            }\r\n
+                      \                                       }\r\n                                    }\r\n
+                      \                               },\r\n                                \"commercialName\":
+                      \"بيت الدونات\",\r\n                                \"shopArea\":
+                      \"16\",\r\n                                \"locationCoordinates\":
+                      {\r\n                                    \"longitude\": \"39.82959898710162\",\r\n
+                      \                                   \"latitude\": \"21.4338875381552\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"unifiedLicenseNumber\":
+                      \"3909473276\",\r\n                                \"amanah\":
+                      {\r\n                                    \"amanahCode\": \"16\",\r\n
+                      \                                   \"amanahName\": \"أمانة
+                      منطقة الاحساء\"\r\n                                },\r\n                                \"baladiaName\":
+                      \"بلدية المبرز\",\r\n                                \"issueDate\":
+                      \"18-07-1432\",\r\n                                \"expiryDate\":
+                      \"19-06-1443\",\r\n                                \"licenseStatus\":
+                      \"موقوف مؤقت\",\r\n                                \"activitiesList\":
+                      {\r\n                                    \"activity\": {\r\n
+                      \                                       \"activityISICCode\":
+                      \"107181\",\r\n                                        \"activityISICDescription\":
+                      \"صناعة الحلويات الشعبية والشرقية بمختلف أنواعها\",\r\n                                        \"activityAmanahDescription\":
+                      \"مصنع الحلويات\",\r\n                                        \"activityArea\":
+                      \"362\",\r\n                                        \"boardsList\":
+                      {\r\n                                            \"board\":
+                      {\r\n                                                \"boardType\":
+                      \"إرشادية\",\r\n                                                \"boardArea\":
+                      \"9\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"commercialName\": \"محل\",\r\n
+                      \                               \"shopArea\": \"362\",\r\n                                \"locationCoordinates\":
+                      {\r\n                                    \"longitude\": \"49.57045366715916\",\r\n
+                      \                                   \"latitude\": \"25.438344050889828\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"unifiedLicenseNumber\":
+                      \"3909112282\",\r\n                                \"amanah\":
+                      {\r\n                                    \"amanahCode\": \"5\",\r\n
+                      \                                   \"amanahName\": \"أمانة
+                      المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"baladiaName\": \"بلدية غرب
+                      الدمام\",\r\n                                \"issueDate\":
+                      \"04-05-1438\",\r\n                                \"expiryDate\":
+                      \"03-11-1442\",\r\n                                \"licenseStatus\":
+                      \"موقوف مؤقت\",\r\n                                \"activitiesList\":
+                      {\r\n                                    \"activity\": {\r\n
+                      \                                       \"activityISICCode\":
+                      \"465101\",\r\n                                        \"activityISICDescription\":
+                      \"البيع بالجملة للحواسيب ومستلزماتها يشمل بيع الطابعات وأحبارها\",\r\n
+                      \                                       \"activityAmanahDescription\":
+                      \"البيع بالجملة للحواسيب ومستلزماتها يشمل بيع الطابعات وأحبارها\",\r\n
+                      \                                       \"activityArea\": \"30\",\r\n
+                      \                                       \"boardsList\": {\r\n
+                      \                                           \"board\": {\r\n
+                      \                                               \"boardType\":
+                      \"إرشادية\",\r\n                                                \"boardArea\":
+                      \"6\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"commercialName\": \"بيت الدونات\",\r\n
+                      \                               \"shopArea\": \"30\",\r\n                                \"locationCoordinates\":
+                      {\r\n                                    \"longitude\": \"50.02194261746127\",\r\n
+                      \                                   \"latitude\": \"26.41474769565609\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"unifiedLicenseNumber\":
+                      \"39121541615\",\r\n                                \"amanah\":
+                      {\r\n                                    \"amanahCode\": \"5\",\r\n
+                      \                                   \"amanahName\": \"أمانة
+                      المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"baladiaName\": \"بلدية القطيف\",\r\n
+                      \                               \"issueDate\": \"04-04-1424\",\r\n
+                      \                               \"expiryDate\": \"06-04-1444\",\r\n
+                      \                               \"licenseStatus\": \"سارية\",\r\n
+                      \                               \"activitiesList\": {\r\n                                    \"activity\":
+                      {\r\n                                        \"activityISICCode\":
+                      \"472161\",\r\n                                        \"activityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityAmanahDescription\":
+                      \"محلات بيع الحلويات\",\r\n                                        \"activityArea\":
+                      \"45\",\r\n                                        \"boardsList\":
+                      {\r\n                                            \"board\":
+                      {\r\n                                                \"boardType\":
+                      \"إرشادية\",\r\n                                                \"boardArea\":
+                      \"4\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"commercialName\": \"بيت الدونات\",\r\n
+                      \                               \"shopArea\": \"45\",\r\n                                \"locationCoordinates\":
+                      {\r\n                                    \"longitude\": \"50.01548354756279\",\r\n
+                      \                                   \"latitude\": \"26.54992070593764\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"unifiedLicenseNumber\":
+                      \"41012573276\",\r\n                                \"amanah\":
+                      {\r\n                                    \"amanahCode\": \"5\",\r\n
+                      \                                   \"amanahName\": \"أمانة
+                      المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"baladiaName\": \"بلدية رأس
+                      تنورة\",\r\n                                \"issueDate\": \"29-02-1430\",\r\n
+                      \                               \"expiryDate\": \"26-02-1444\",\r\n
+                      \                               \"licenseStatus\": \"سارية\",\r\n
+                      \                               \"activitiesList\": {\r\n                                    \"activity\":
+                      {\r\n                                        \"activityISICCode\":
+                      \"472161\",\r\n                                        \"activityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityAmanahDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityArea\":
+                      \"44\",\r\n                                        \"boardsList\":
+                      {\r\n                                            \"board\":
+                      {\r\n                                                \"boardType\":
+                      \"إرشادية\",\r\n                                                \"boardArea\":
+                      \"4\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"commercialName\": \"شركة مجموعة
+                      نصير التجارية المحدودة\",\r\n                                \"shopArea\":
+                      \"44\",\r\n                                \"locationCoordinates\":
+                      {\r\n                                    \"longitude\": \"50.05877511059107\",\r\n
+                      \                                   \"latitude\": \"26.70374822464747\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"unifiedLicenseNumber\":
+                      \"39121542117\",\r\n                                \"amanah\":
+                      {\r\n                                    \"amanahCode\": \"5\",\r\n
+                      \                                   \"amanahName\": \"أمانة
+                      المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"baladiaName\": \"بلدية القطيف\",\r\n
+                      \                               \"issueDate\": \"07-04-1424\",\r\n
+                      \                               \"expiryDate\": \"06-04-1444\",\r\n
+                      \                               \"licenseStatus\": \"سارية\",\r\n
+                      \                               \"activitiesList\": {\r\n                                    \"activity\":
+                      {\r\n                                        \"activityISICCode\":
+                      \"472161\",\r\n                                        \"activityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityAmanahDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityArea\":
+                      \"45\",\r\n                                        \"boardsList\":
+                      {\r\n                                            \"board\":
+                      {\r\n                                                \"boardType\":
+                      \"إرشادية\",\r\n                                                \"boardArea\":
+                      \"10\"\r\n                                            }\r\n
+                      \                                       }\r\n                                    }\r\n
+                      \                               },\r\n                                \"commercialName\":
+                      \"بيت الدونات\",\r\n                                \"shopArea\":
+                      \"45\",\r\n                                \"locationCoordinates\":
+                      {\r\n                                    \"longitude\": \"50.01324549882401\",\r\n
+                      \                                   \"latitude\": \"26.55998492738554\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"unifiedLicenseNumber\":
+                      \"3909116265\",\r\n                                \"amanah\":
+                      {\r\n                                    \"amanahCode\": \"5\",\r\n
+                      \                                   \"amanahName\": \"أمانة
+                      المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"baladiaName\": \"بلدية شرق
+                      الدمام\",\r\n                                \"issueDate\":
+                      \"28-07-1438\",\r\n                                \"expiryDate\":
+                      \"01-04-1444\",\r\n                                \"licenseStatus\":
+                      \"سارية\",\r\n                                \"activitiesList\":
+                      {\r\n                                    \"activity\": {\r\n
+                      \                                       \"activityISICCode\":
+                      \"472161\",\r\n                                        \"activityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityAmanahDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityArea\":
+                      \"28\",\r\n                                        \"boardsList\":
+                      {\r\n                                            \"board\":
+                      {\r\n                                                \"boardType\":
+                      \"إرشادية\",\r\n                                                \"boardArea\":
+                      \"5\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"commercialName\": \"فرع شركة
+                      نصير التجارية بيت الدونات\",\r\n                                \"shopArea\":
+                      \"28\",\r\n                                \"locationCoordinates\":
+                      {\r\n                                    \"longitude\": \"50.124151713652395\",\r\n
+                      \                                   \"latitude\": \"26.447861389305338\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"unifiedLicenseNumber\":
+                      \"3909108048\",\r\n                                \"amanah\":
+                      {\r\n                                    \"amanahCode\": \"5\",\r\n
+                      \                                   \"amanahName\": \"أمانة
+                      المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"baladiaName\": \"بلدية شرق
+                      الدمام\",\r\n                                \"issueDate\":
+                      \"07-07-1437\",\r\n                                \"expiryDate\":
+                      \"08-02-1444\",\r\n                                \"licenseStatus\":
+                      \"سارية\",\r\n                                \"activitiesList\":
+                      {\r\n                                    \"activity\": {\r\n
+                      \                                       \"activityISICCode\":
+                      \"472161\",\r\n                                        \"activityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityAmanahDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityArea\":
+                      \"30\",\r\n                                        \"boardsList\":
+                      {\r\n                                            \"board\":
+                      {\r\n                                                \"boardType\":
+                      \"إرشادية\",\r\n                                                \"boardArea\":
+                      \"5\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"commercialName\": \"فرع شركة
+                      نصير التجارية بيت الدونات\",\r\n                                \"shopArea\":
+                      \"30\",\r\n                                \"locationCoordinates\":
+                      {\r\n                                    \"longitude\": \"50.10018718484342\",\r\n
+                      \                                   \"latitude\": \"26.40271454875006\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"unifiedLicenseNumber\":
+                      \"40031963257\",\r\n                                \"amanah\":
+                      {\r\n                                    \"amanahCode\": \"5\",\r\n
+                      \                                   \"amanahName\": \"بلدية
+                      القطيف\"\r\n                                },\r\n                                \"baladiaName\":
+                      \"بلدية سيهات\",\r\n                                \"issueDate\":
+                      \"03-05-1423\",\r\n                                \"expiryDate\":
+                      \"02-05-1444\",\r\n                                \"licenseStatus\":
+                      \"سارية\",\r\n                                \"activitiesList\":
+                      {\r\n                                    \"activity\": {\r\n
+                      \                                       \"activityISICCode\":
+                      \"472161\",\r\n                                        \"activityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityAmanahDescription\":
+                      \"محلات بيع الحلويات\",\r\n                                        \"activityArea\":
+                      \"55\",\r\n                                        \"boardsList\":
+                      {\r\n                                            \"board\":
+                      {\r\n                                                \"boardType\":
+                      \"إرشادية\",\r\n                                                \"boardArea\":
+                      \"6\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"commercialName\": \"بيت الدونات\",\r\n
+                      \                               \"shopArea\": \"55\",\r\n                                \"locationCoordinates\":
+                      {\r\n                                    \"longitude\": \"50.04651394204684\",\r\n
+                      \                                   \"latitude\": \"26.481302523588475\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"unifiedLicenseNumber\":
+                      \"41012572473\",\r\n                                \"amanah\":
+                      {\r\n                                    \"amanahCode\": \"5\",\r\n
+                      \                                   \"amanahName\": \"بلدية
+                      القطيف\"\r\n                                },\r\n                                \"baladiaName\":
+                      \"بلدية صفوى \",\r\n                                \"issueDate\":
+                      \"04-03-1426\",\r\n                                \"expiryDate\":
+                      \"02-03-1444\",\r\n                                \"licenseStatus\":
+                      \"سارية\",\r\n                                \"activitiesList\":
+                      {\r\n                                    \"activity\": {\r\n
+                      \                                       \"activityISICCode\":
+                      \"472161\",\r\n                                        \"activityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityAmanahDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityArea\":
+                      \"55\",\r\n                                        \"boardsList\":
+                      {\r\n                                            \"board\":
+                      {\r\n                                                \"boardType\":
+                      \"إرشادية\",\r\n                                                \"boardArea\":
+                      \"7\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"commercialName\": \"شركه مجموعه
+                      نصير التجاريه \",\r\n                                \"shopArea\":
+                      \"55\",\r\n                                \"locationCoordinates\":
+                      {\r\n                                    \"longitude\": \"49.951344330265876\",\r\n
+                      \                                   \"latitude\": \"26.637068292957643\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"unifiedLicenseNumber\":
+                      \"3909108492\",\r\n                                \"amanah\":
+                      {\r\n                                    \"amanahCode\": \"5\",\r\n
+                      \                                   \"amanahName\": \"أمانة
+                      المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"baladiaName\": \"بلدية شرق
+                      الدمام\",\r\n                                \"issueDate\":
+                      \"30-07-1439\",\r\n                                \"expiryDate\":
+                      \"07-04-1444\",\r\n                                \"licenseStatus\":
+                      \"سارية\",\r\n                                \"activitiesList\":
+                      {\r\n                                    \"activity\": {\r\n
+                      \                                       \"activityISICCode\":
+                      \"472161\",\r\n                                        \"activityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityAmanahDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityArea\":
+                      \"80\",\r\n                                        \"boardsList\":
+                      {\r\n                                            \"board\":
+                      {\r\n                                                \"boardType\":
+                      \"إرشادية\",\r\n                                                \"boardArea\":
+                      \"9\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"commercialName\": \"فرع شركة
+                      نصير التجارية بيت الدونات\",\r\n                                \"shopArea\":
+                      \"80\",\r\n                                \"locationCoordinates\":
+                      {\r\n                                    \"longitude\": \"50.11744748793333\",\r\n
+                      \                                   \"latitude\": \"26.414785740807496\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"unifiedLicenseNumber\":
+                      \"40041964748\",\r\n                                \"amanah\":
+                      {\r\n                                    \"amanahCode\": \"5\",\r\n
+                      \                                   \"amanahName\": \"أمانة
+                      المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"baladiaName\": \"بلدية وسط
+                      الدمام\",\r\n                                \"issueDate\":
+                      \"07-11-1422\",\r\n                                \"expiryDate\":
+                      \"20-12-1444\",\r\n                                \"licenseStatus\":
+                      \"سارية\",\r\n                                \"activitiesList\":
+                      {\r\n                                    \"activity\": {\r\n
+                      \                                       \"activityISICCode\":
+                      \"472161\",\r\n                                        \"activityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityAmanahDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityArea\":
+                      \"26\",\r\n                                        \"boardsList\":
+                      {\r\n                                            \"board\":
+                      {\r\n                                                \"boardType\":
+                      \"إرشادية\",\r\n                                                \"boardArea\":
+                      \"8\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"commercialName\": \"بيت الدونات\",\r\n
+                      \                               \"shopArea\": \"26\",\r\n                                \"locationCoordinates\":
+                      {\r\n                                    \"longitude\": \"50.07398009431129\",\r\n
+                      \                                   \"latitude\": \"26.428660244904293\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"unifiedLicenseNumber\":
+                      \"40041964749\",\r\n                                \"amanah\":
+                      {\r\n                                    \"amanahCode\": \"5\",\r\n
+                      \                                   \"amanahName\": \"أمانة
+                      المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"baladiaName\": \"بلدية وسط
+                      الدمام\",\r\n                                \"issueDate\":
+                      \"21-12-1430\",\r\n                                \"expiryDate\":
+                      \"20-12-1444\",\r\n                                \"licenseStatus\":
+                      \"سارية\",\r\n                                \"activitiesList\":
+                      {\r\n                                    \"activity\": {\r\n
+                      \                                       \"activityISICCode\":
+                      \"472161\",\r\n                                        \"activityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityAmanahDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityArea\":
+                      \"38\",\r\n                                        \"boardsList\":
+                      {\r\n                                            \"board\":
+                      {\r\n                                                \"boardType\":
+                      \"إرشادية\",\r\n                                                \"boardArea\":
+                      \"12\"\r\n                                            }\r\n
+                      \                                       }\r\n                                    }\r\n
+                      \                               },\r\n                                \"commercialName\":
+                      \"بيت الدونات\",\r\n                                \"shopArea\":
+                      \"38\",\r\n                                \"locationCoordinates\":
+                      {\r\n                                    \"longitude\": \"50.09261033396003\",\r\n
+                      \                                   \"latitude\": \"26.46630919329492\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"unifiedLicenseNumber\":
+                      \"42126016615\",\r\n                                \"amanah\":
+                      {\r\n                                    \"amanahCode\": \"5\",\r\n
+                      \                                   \"amanahName\": \"أمانة
+                      المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"baladiaName\": \"بلدية أبقيق\",\r\n
+                      \                               \"issueDate\": \"16-01-1419\",\r\n
+                      \                               \"expiryDate\": \"15-01-1445\",\r\n
+                      \                               \"licenseStatus\": \"سارية\",\r\n
+                      \                               \"activitiesList\": {\r\n                                    \"activity\":
+                      {\r\n                                        \"activityISICCode\":
+                      \"472161\",\r\n                                        \"activityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityAmanahDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityArea\":
+                      \"40\",\r\n                                        \"boardsList\":
+                      {\r\n                                            \"board\":
+                      {\r\n                                                \"boardType\":
+                      \"إرشادية\",\r\n                                                \"boardArea\":
+                      \"6\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"commercialName\": \"بيت الدونات\",\r\n
+                      \                               \"shopArea\": \"40\",\r\n                                \"locationCoordinates\":
+                      {\r\n                                    \"longitude\": \"49.657870613238195\",\r\n
+                      \                                   \"latitude\": \"25.925920004814945\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"unifiedLicenseNumber\":
+                      \"3909433793\",\r\n                                \"amanah\":
+                      {\r\n                                    \"amanahCode\": \"2\",\r\n
+                      \                                   \"amanahName\": \"أمانة
+                      العاصمة المقدسة\"\r\n                                },\r\n
+                      \                               \"baladiaName\": \"بلدية العمرة
+                      الفرعية\",\r\n                                \"issueDate\":
+                      \"19-04-1439\",\r\n                                \"expiryDate\":
+                      \"18-04-1444\",\r\n                                \"licenseStatus\":
+                      \"سارية\",\r\n                                \"activitiesList\":
+                      {\r\n                                    \"activity\": {\r\n
+                      \                                       \"activityISICCode\":
+                      \"561021\",\r\n                                        \"activityISICDescription\":
+                      \"البوفيهات  الكافيتريات \",\r\n                                        \"activityAmanahDescription\":
+                      \"البوفيهات  الكافيتريات \",\r\n                                        \"activityArea\":
+                      \"20\",\r\n                                        \"boardsList\":
+                      {\r\n                                            \"board\":
+                      [\r\n                                                {\r\n                                                    \"boardType\":
+                      \"إعلامية\",\r\n                                                    \"boardArea\":
+                      \"90\"\r\n                                                },\r\n
+                      \                                               {\r\n                                                    \"boardType\":
+                      \"إرشادية\",\r\n                                                    \"boardArea\":
+                      \"2\"\r\n                                                }\r\n
+                      \                                           ]\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"commercialName\": \"بيت الدونات\",\r\n
+                      \                               \"shopArea\": \"20\",\r\n                                \"locationCoordinates\":
+                      {\r\n                                    \"longitude\": \"39.782570357514444\",\r\n
+                      \                                   \"latitude\": \"21.552718357360984\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"unifiedLicenseNumber\":
+                      \"3909475507\",\r\n                                \"amanah\":
+                      {\r\n                                    \"amanahCode\": \"16\",\r\n
+                      \                                   \"amanahName\": \"أمانة
+                      منطقة الاحساء\"\r\n                                },\r\n                                \"baladiaName\":
+                      \"بلدية المبرز\",\r\n                                \"issueDate\":
+                      \"11-02-1434\",\r\n                                \"expiryDate\":
+                      \"20-04-1446\",\r\n                                \"licenseStatus\":
+                      \"موقوف دائم\",\r\n                                \"activitiesList\":
+                      {\r\n                                    \"activity\": {\r\n
+                      \                                       \"activityISICCode\":
+                      \"472161\",\r\n                                        \"activityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityAmanahDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityArea\":
+                      \"30\",\r\n                                        \"boardsList\":
+                      {\r\n                                            \"board\":
+                      {\r\n                                                \"boardType\":
+                      \"إرشادية\",\r\n                                                \"boardArea\":
+                      \"8\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"commercialName\": \"محل\",\r\n
+                      \                               \"shopArea\": \"30\",\r\n                                \"locationCoordinates\":
+                      {\r\n                                    \"longitude\": \"49.54756659971751\",\r\n
+                      \                                   \"latitude\": \"25.41685552897838\"\r\n
+                      \                               }\r\n                            },\r\n
+                      \                           {\r\n                                \"unifiedLicenseNumber\":
+                      \"3909110085\",\r\n                                \"amanah\":
+                      {\r\n                                    \"amanahCode\": \"5\",\r\n
+                      \                                   \"amanahName\": \"أمانة
+                      المنطقة الشرقية\"\r\n                                },\r\n
+                      \                               \"baladiaName\": \"بلدية شرق
+                      الدمام\",\r\n                                \"issueDate\":
+                      \"21-06-1437\",\r\n                                \"expiryDate\":
+                      \"19-05-1444\",\r\n                                \"licenseStatus\":
+                      \"ملغية\",\r\n                                \"activitiesList\":
+                      {\r\n                                    \"activity\": {\r\n
+                      \                                       \"activityISICCode\":
+                      \"472161\",\r\n                                        \"activityISICDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityAmanahDescription\":
+                      \"البيع بالتجزئة لمنتجات المخابز والحلويات السكرية\",\r\n                                        \"activityArea\":
+                      \"16\",\r\n                                        \"boardsList\":
+                      {\r\n                                            \"board\":
+                      {\r\n                                                \"boardType\":
+                      \"إرشادية\",\r\n                                                \"boardArea\":
+                      \"1\"\r\n                                            }\r\n                                        }\r\n
+                      \                                   }\r\n                                },\r\n
+                      \                               \"commercialName\": \"فرع شركة
+                      مجموعة نصير التجاريه بيت الدونات\",\r\n                                \"shopArea\":
+                      \"16\",\r\n                                \"locationCoordinates\":
+                      {\r\n                                    \"longitude\": \"50.12896070309306\",\r\n
+                      \                                   \"latitude\": \"26.4765351491474\"\r\n
+                      \                               }\r\n                            }\r\n
+                      \                       ]\r\n                    }\r\n                }\r\n
+                      \           }\r\n        }"
+                  variable: message.body
+              actions:
+              - set: .getShopLicenseDetails.getShopLicenseInfoResponseDetailObject.ownerInfo.ownerName
+                from: .getShopLicenseDetails.getShopLicenseInfoResponseDetailObject.OwnerInfo.OwnerName
+              - set: .getShopLicenseDetails.getShopLicenseInfoResponseDetailObject.ownerInfo.ownerIdentifier.cRNumber
+                from: .getShopLicenseDetails.getShopLicenseInfoResponseDetailObject.OwnerInfo.OwnerIdentifier.CRNumber
+              - create: .getShopLicenseDetails.getShopLicenseInfoResponseDetailObject.licenseInfoList.licenseInfo
+                foreach: .getShopLicenseDetails.getShopLicenseInfoResponseDetailObject.LicenseInfoList.LicenseInfo
+                from: .getShopLicenseDetails.getShopLicenseInfoResponseDetailObject.LicenseInfoList.LicenseInfo
+                actions:
+                - set: unifiedLicenseNumber
+                  from: UnifiedLicenseNumber
+                - set: amanah.amanahCode
+                  from: Amanah.AmanahCode
+                - set: amanah.amanahName
+                  from: Amanah.AmanahName
+                - set: baladiaName
+                  from: BaladiaName
+                - set: issueDate
+                  from: IssueDate
+                - set: expiryDate
+                  from: ExpiryDate
+                - set: licenseStatus
+                  from: LicenseStatus
+                - set: activitiesList.activity.activityISICCode
+                  from: ActivitiesList.Activity.ActivityISICCode
+                - set: activitiesList.activity.activityISICDescription
+                  from: ActivitiesList.Activity.ActivityISICDescription
+                - set: activitiesList.activity.activityAmanahDescription
+                  from: ActivitiesList.Activity.ActivityAmanahDescription
+                - set: activitiesList.activity.activityArea
+                  from: ActivitiesList.Activity.ActivityArea
+                - set: activitiesList.activity.boardsList.board.boardType
+                  from: ActivitiesList.Activity.BoardsList.Board.BoardType
+                - set: activitiesList.activity.boardsList.board.boardArea
+                  from: ActivitiesList.Activity.BoardsList.Board.BoardArea
+                - set: commercialName
+                  from: CommercialName
+                - set: shopArea
+                  from: ShopArea
+                - set: locationCoordinates.longitude
+                  from: LocationCoordinates.Longitude
+                - set: locationCoordinates.latitude
+                  from: LocationCoordinates.Latitude
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Error
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar error = {\n  \"errorCode\":
+                message[cfg.responseName].Header.ResponseStatus.Code,\n  \"errorMessage\":
+                {\n    \"en-US\": message[cfg.responseName].Header.ResponseStatus.EnglishMsg,\n
+                \   \"ar-SA\": message[cfg.responseName].Header.ResponseStatus.ArabicMsg\n
+                \ }\n};\n\nvar httperror=0;\nif(cfg.errorMap){\n    if(cfg.errorMap[error.errorCode]){\n
+                \      httperror = cfg.errorMap[error.errorCode].code;\n       \n
+                \      //var errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\n
+                \      //var details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\n    }\n}\nif(httperror
+                == 0){\n   httperror = 400;\n   // apim.error('ERROR',400,'Bad Request','Invalid
+                request');\n}\napim.setvariable('message.status.code',httperror,'set');\n\nsession.output.write(error);\napim.output('application/json');"
+    catch: []
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload

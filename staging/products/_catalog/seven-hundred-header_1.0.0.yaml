@@ -1,0 +1,255 @@
+swagger: "2.0"
+info:
+  title: Seven Hundred Dashboard – Header
+  x-ibm-name: seven-hundred-header
+  version: 1.0.0
+  description: |
+    Returns company-level KPIs for a given SevenHundredNumberMCI.
+    Called on page load. Always returns exactly one row.
+  contact:
+    email: a.imtiaz-c@takamol.sa
+schemes:
+- https
+basePath: /seven-hundred-dashboard
+consumes:
+- application/json
+produces:
+- application/json
+security:
+- OAuth2.0: []
+  clientID: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientID:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  properties:
+    target-url:
+      value: http://prow-700dashboard-http-ace.apps.stg.qiwa-nonprod.local/sevenhundreddashboard
+      description: ACE backend base URL for 700 Dashboard service
+      encoded: false
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  buffering: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(ace-prow-sevenhundredoverview)/seven-hundred-dashboard/header
+        follow-redirects: false
+        inject-proxy-headers: true
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+tags:
+- name: 700 Header
+  description: Company-level KPI summary for a 700 number
+definitions:
+  RequestHeader:
+    type: object
+    required:
+    - TransactionId
+    - ChannelId
+    - SessionId
+    - ServiceCode
+    properties:
+      TransactionId:
+        type: string
+        description: Unique transaction identifier
+        example: "1234434"
+      ChannelId:
+        type: string
+        description: Calling channel
+        default: Qiwa
+      SessionId:
+        type: string
+        example: "212"
+      RequestTime:
+        type: string
+        format: date-time
+        example: "2026-01-01T00:00:00.000Z"
+      MWRequestTime:
+        type: string
+        format: date-time
+        example: "2026-01-01T00:00:00.000Z"
+      ServiceCode:
+        type: string
+        description: Must be QW700001
+        default: QW700001
+      UserInfo:
+        type: object
+        properties:
+          UserId:
+            type: string
+            example: "123456"
+          IDNumber:
+            type: string
+            example: "1098765432"
+  ResponseStatus:
+    type: object
+    properties:
+      Status:
+        type: string
+        example: Success
+      Code:
+        type: string
+        example: "00000000"
+      ArabicMsg:
+        type: string
+        example: تمت العملية بنجاح
+      EnglishMsg:
+        type: string
+        example: Success
+  ResponseHeader:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        example: "1234434"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        example: "212"
+      MWResponseTime:
+        type: string
+        format: date-time
+        example: "2026-01-01T00:00:00.045Z"
+      ServiceCode:
+        type: string
+        example: QW700001
+      ResponseStatus:
+        $ref: '#/definitions/ResponseStatus'
+  Get700HeaderRequest:
+    type: object
+    properties:
+      Get700HeaderRq:
+        type: object
+        required:
+        - Header
+        - Body
+        properties:
+          Header:
+            $ref: '#/definitions/RequestHeader'
+          Body:
+            $ref: '#/definitions/Get700HeaderReqBody'
+  Get700HeaderReqBody:
+    type: object
+    required:
+    - SevenHundredNumber
+    properties:
+      SevenHundredNumber:
+        type: string
+        description: 700 unified number (MCI)
+        example: "7001648109"
+  Get700HeaderResponse:
+    type: object
+    properties:
+      Get700HeaderRs:
+        type: object
+        properties:
+          Header:
+            $ref: '#/definitions/ResponseHeader'
+          Body:
+            $ref: '#/definitions/Get700HeaderRsBody'
+  Get700HeaderRsBody:
+    type: object
+    properties:
+      CompanyName:
+        type: string
+        description: Legal name of the main company
+        example: شركة نماء للاتصالات
+      SevenHundredNumber:
+        type: string
+        description: 700 unified number (MCI)
+        example: "7001648109"
+      NumberOfEstablishments:
+        type: integer
+        description: Total number of active establishments under this 700 number
+        example: 134
+      NumberOfNitaqatEntities:
+        type: integer
+        description: Total number of Nitaqat entities under this 700 number
+        example: 3
+paths:
+  /header:
+    post:
+      tags:
+      - 700 Header
+      summary: Get 700 Dashboard Header KPIs
+      description: |
+        Returns company-level KPIs for the given SevenHundredNumberMCI.
+        Called on page load. Always returns exactly 1 row.
+      operationId: get700Header
+      parameters:
+      - name: body
+        in: body
+        required: true
+        description: Get700HeaderRq message
+        schema:
+          $ref: '#/definitions/Get700HeaderRequest'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/Get700HeaderResponse'
+          examples:
+            application/json: |
+              {
+                "Get700HeaderRs": {
+                  "Header": {
+                    "TransactionId": "1234434",
+                    "ChannelId": "Qiwa",
+                    "SessionId": "212",
+                    "MWResponseTime": "2026-01-01T00:00:00.045Z",
+                    "ServiceCode": "QW700001",
+                    "ResponseStatus": {
+                      "Status": "Success",
+                      "Code": "00000000",
+                      "ArabicMsg": "تمت العملية بنجاح",
+                      "EnglishMsg": "Success"
+                    }
+                  },
+                  "Body": {
+                    "CompanyName": "Nama Telecom Company",
+                    "SevenHundredNumber": "7001648109",
+                    "NumberOfEstablishments": 134,
+                    "NumberOfNitaqatEntities": 3
+                  }
+                }
+              }
+        "400":
+          description: Bad Request – SevenHundredNumber missing or invalid
+        "404":
+          description: Not Found – SevenHundredNumber does not exist in UnifiedNumber
+            table
+        "500":
+          description: Internal Server Error

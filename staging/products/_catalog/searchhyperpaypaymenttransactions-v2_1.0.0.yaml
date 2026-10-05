@@ -1,0 +1,328 @@
+swagger: "2.0"
+info:
+  title: SearchHyperpayPaymentTransactions V2
+  x-ibm-name: searchhyperpaypaymenttransactions-v2
+  version: 1.0.0
+  description: This service is used to search hyperpay payment transactions to get
+    specific payment details.
+schemes:
+- https
+basePath: /payment/v2
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-pay-searchpayments)/payment/searchhyperpaypaymenttransactions
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+    - gatewayscript:
+        version: 2.0.0
+        title: gatewayscript
+        source: |
+          var apim = require('apim');
+          var Response = apim.getvariable('message.body');
+          var statusCode = Response.SearchHyperpayPaymentTransactionsRs.Header.ResponseStatus.Code ;
+
+
+          if(statusCode == 'E9999998'){
+              var code = 408
+              apim.setvariable('message.status.code',code,'set');
+          }
+          else if(statusCode == '00000000'){
+              var code = 200
+              apim.setvariable('message.status.code',code,'set');
+          }else{
+                var code = 409
+              apim.setvariable('message.status.code',code,'set');
+          }
+    catch: []
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: payload
+    success-content: payload
+  application-authentication:
+    certificate: false
+  buffering: true
+definitions:
+  SearchHyperpayPaymentTransactionsRq_MessageType:
+    type: object
+    properties:
+      SearchHyperpayPaymentTransactionsRq:
+        $ref: '#/definitions/SearchHyperpayPaymentTransactionsRq_Type'
+  SearchHyperpayPaymentTransactionsRs_MessageType:
+    type: object
+    properties:
+      SearchHyperpayPaymentTransactionsRs:
+        $ref: '#/definitions/SearchHyperpayPaymentTransactionsRs_Type'
+  SearchHyperpayPaymentTransactionsRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/SearchHyperpayPaymentTransactionsRq_BodyType'
+  SearchHyperpayPaymentTransactionsRq_BodyType:
+    type: object
+    properties:
+      PaymentReference:
+        type: string
+        default: 93039FFA33B042600000000000X10000
+      ApplicationId:
+        type: integer
+        default: "1"
+      ProductId:
+        type: integer
+        default: "1"
+      ProviderId:
+        type: integer
+        default: "1"
+      IdNo:
+        type: string
+        default: "1"
+      UserId:
+        type: integer
+        default: "1"
+      CheckOutId:
+        type: string
+        default: "1"
+      PaymentId:
+        type: string
+        default: "1"
+      StatusId:
+        type: integer
+        default: "1"
+      PageSize:
+        type: integer
+        default: "1"
+      PageIndex:
+        type: integer
+        default: "1"
+    required:
+    - PaymentReference
+    - ApplicationId
+    - ProductId
+    - ProviderId
+    - IdNo
+    - UserId
+    - CheckOutId
+    - PaymentId
+    - StatusId
+    - PageSize
+    - PageIndex
+  SearchHyperpayPaymentTransactionsRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/SearchHyperpayPaymentTransactionsRs_BodyType'
+  SearchHyperpayPaymentTransactionsRs_BodyType:
+    type: object
+    properties:
+      TotalRecordsCount:
+        type: integer
+      PaymentList:
+        $ref: '#/definitions/PaymentList_Type'
+  PaymentList_Type:
+    type: object
+    properties:
+      PaymentItem:
+        $ref: '#/definitions/PaymentItem_Type'
+  PaymentItem_Type:
+    type: object
+    properties:
+      PaymentReference:
+        type: string
+      Application:
+        $ref: '#/definitions/Application_Type'
+      Product:
+        $ref: '#/definitions/Product_Type'
+      Provider:
+        $ref: '#/definitions/Provider_Type'
+      UserId:
+        type: integer
+      IdNo:
+        type: string
+      Description:
+        type: string
+      Amount:
+        type: integer
+      Currency:
+        type: integer
+      Status:
+        $ref: '#/definitions/Status_Type'
+      PaymentId:
+        type: string
+      CheckOutId:
+        type: string
+  Application_Type:
+    type: object
+    properties:
+      ApplicationId:
+        type: integer
+      ApplicationEn:
+        type: string
+      ApplicationAr:
+        type: string
+  Product_Type:
+    type: object
+    properties:
+      ProductId:
+        type: integer
+      ProductEn:
+        type: string
+      ProductAr:
+        type: string
+  Provider_Type:
+    type: object
+    properties:
+      ProviderId:
+        type: integer
+      ProviderEn:
+        type: string
+      ProviderAr:
+        type: string
+  Status_Type:
+    type: object
+    properties:
+      StatusId:
+        type: integer
+      StatusEn:
+        type: string
+      StatusAr:
+        type: string
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "200966842998"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: SHPT0001
+      DebugFlag:
+        type: integer
+        default: "1"
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: SHPT0001
+      DebugFlag:
+        type: integer
+        default: "1"
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+paths:
+  /searchhyperpaypaymenttransactions:
+    post:
+      operationId: SearchHyperpayPaymentTransactions
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/SearchHyperpayPaymentTransactionsRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Search Hyperpay Payment Transactions
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/SearchHyperpayPaymentTransactionsRq_MessageType'
+        description: SearchHyperpayPaymentTransactionsRq
+        required: true

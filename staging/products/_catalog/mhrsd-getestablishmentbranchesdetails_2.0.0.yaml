@@ -1,0 +1,502 @@
+swagger: "2.0"
+info:
+  title: MHRSD_GetEstablishmentBranchesDetails
+  description: This API exposes MHRSD  to get establishment branches details services
+    from Qiwa platform
+  x-ibm-name: mhrsd-getestablishmentbranchesdetails
+  version: 2.0.0
+schemes:
+- https
+basePath: /mhrsd/v2
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+paths:
+  /establishment/{idNumOrSevenHundred}/branches-details/:
+    parameters:
+    - $ref: '#/parameters/X-IBM-Client-Id'
+    - $ref: '#/parameters/X-IBM-Client-Secret'
+    - $ref: '#/parameters/idNumOrSevenHundred'
+    get:
+      tags:
+      - Establishment Branches
+      description: Service to get establishment branches details
+      operationId: getEstablishmentBranchesDetails - application/json
+      responses:
+        "200":
+          $ref: '#/responses/Response200'
+        "400":
+          $ref: '#/responses/Response400'
+        "401":
+          $ref: '#/responses/Response401'
+        "403":
+          $ref: '#/responses/Response403'
+        "404":
+          $ref: '#/responses/Response404'
+        "408":
+          $ref: '#/responses/Response408'
+        "409":
+          $ref: '#/responses/Response409'
+        "429":
+          $ref: '#/responses/Response429'
+        "500":
+          $ref: '#/responses/Response500'
+        "501":
+          $ref: '#/responses/Response501'
+        "503":
+          $ref: '#/responses/Response503'
+        "510":
+          $ref: '#/responses/Response510'
+definitions:
+  ResponseModel:
+    type: object
+    description: This response object returned by the get operation
+    properties:
+      cRn:
+        type: string
+        example: "1010325903"
+      economicActivity:
+        type: string
+        example: تجارة الجملة والتجزئة - تكنولوجيا، والآلات والملابس والخدمات وغيرها
+      establishmentName:
+        type: string
+        example: فرع شركة الجبر القابضة
+      laborOffice:
+        type: integer
+        example: 1
+      laborOfficeName:
+        type: string
+        example: الرياض
+      sequenceNum:
+        type: integer
+        example: 360814
+      municipalLicenseNum:
+        type: string
+        example: "360814"
+      nitaq:
+        type: string
+        example: اخضر منخفض
+      saudisCount:
+        type: integer
+        example: 34
+      size:
+        type: string
+        example: كبيرة
+      foreignersCount:
+        type: integer
+        example: 135
+  ErrorModel:
+    type: object
+    required:
+    - errorCode
+    - errorMessage
+    properties:
+      errorCode:
+        type: string
+        example: EXXXX000
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+  LocaleDataModel:
+    type: object
+    additionalProperties:
+      type: string
+    example:
+      en-US: English Value
+      ar-SA: Arabic Value
+parameters:
+  idNumOrSevenHundred:
+    in: path
+    name: idNumOrSevenHundred
+    description: laborer's identification number or seven hundred
+    required: true
+    type: string
+  X-IBM-Client-Id:
+    in: header
+    name: X-IBM-Client-Id
+    description: Client id issued by security server
+    required: true
+    type: string
+  X-IBM-Client-Secret:
+    in: header
+    name: X-IBM-Client-Secret
+    description: Client secret issued by security server
+    required: true
+    type: string
+  X-Request-Id:
+    in: header
+    name: X-Request-Id
+    description: X-Request-Id returned in the response header
+    required: false
+    type: string
+responses:
+  Response200:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ResponseModel'
+  Response400:
+    description: The request was rejected by the server due to malformed syntax. Bad
+      Request.
+  Response401:
+    description: The request could not be completed due to lack of valid credentials.
+      Authentication.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response403:
+    description: The request could not be completed because it is not authorized.
+      Authorization
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response404:
+    description: The server has not found anything matching the Request-URI.
+  Response408:
+    description: The client did not produce a request within the time that the server
+      was prepared to wait.
+  Response409:
+    description: The request could not be completed due to a conflict with the current
+      state of the resource. Usually business validation errors will be returned in
+      the body
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response429:
+    description: The request was sent too many times in a given amount of time
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response500:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response501:
+    description: The server does not support the functionality required and does not
+      recognize the request
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response503:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response510:
+    description: Extensions to the request are required for the server to fulfil it.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - map:
+        version: 2.0.0
+        title: map
+        inputs:
+          idNumOrSevenHundred:
+            schema:
+              type: string
+            variable: request.parameters.idNumOrSevenHundred
+        outputs:
+          "":
+            schema:
+              type: object
+              properties:
+                idNumOrSevenHundred:
+                  type: string
+                  name: idNumOrSevenHundred
+            variable: message.body
+        actions:
+        - set: .idNumOrSevenHundred
+          from: idNumOrSevenHundred
+        options:
+          mapEnablePostProcessingJSON: true
+          mapEmulateV4EmptyJSONObject: false
+          mapEmulateV4DefaultRequiredProps: false
+          mapReferenceLimit: 1
+          includeEmptyXMLElements: false
+          namespaceInheritance: false
+          inlineNamespaces: false
+          mapResolveApicVariables: false
+          mapOptimizeSchemaDefinition: true
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\n\nvar cfg={\n    \"serviceCode\" : \"EXGEB0001\",\n
+          \   \"channelId\" : \"Integration\",\n    \"requestName\" : \"EstablishmentBranchesDetailsRq\",\n
+          \   \"responseName\": \"EstablishmentBranchesDetailsRs\",\n    \"errorMap\"
+          :{\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid Request\"}\n
+          \   }\n    \n};\n\napim.setvariable('cfg',cfg);"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare_Request
+        source: "var apim = require('apim');\r\n\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\n\r\nvar appcReq
+          = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n            \"TransactionId\"
+          : millisecondsvalue,\r\n            \"ChannelId\": cfg.channelId,\r\n            \"SessionId\":
+          apim.getvariable('message.headers.X-Request-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode\r\n        },\r\n
+          \       \"Body\" : apim.getvariable('message.body')\r\n            \r\n
+          \       \r\n    }\r\n};\r\n\r\nif (typeof OperatorId !== 'undefined')\r\n
+          \   appcReq[cfg.requestName].Header.UserInfo = {\r\n        \"IDNumber\"
+          : OperatorId\r\n    };\r\nsession.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n    \r\n    \r\n\r\n    //return
+          the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour
+          + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        header-control:
+          type: blacklist
+          values: []
+        parameter-control:
+          type: whitelist
+          values: []
+        timeout: 60
+        verb: POST
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        target-url: $(ace-tip-mhrsd-get-establishment)/external/getestabbranchesdetails
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_Headers
+        source: "\tvar apim = require('apim');\n\t\n\tapim.output('application/json');\n\n
+          \   \n    \n    var cfg = apim.getvariable('cfg');\n    \n\tvar TransactionId
+          = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.TransactionId\");\n\tvar
+          ChannelId = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.ChannelId\");\n\tvar
+          RequestTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.RequestTime\");\n\tvar
+          SessionId = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.SessionId\");\n\tvar
+          MWRequestTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.MWRequestTime\");\n\tvar
+          MWResponseTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.MWResponseTime\");\n\tvar
+          status = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.ResponseStatus.Status\");\n\t\n\n
+          \   apim.setvariable('message.headers.Transaction-Id',TransactionId,'add');\n
+          \   apim.setvariable('message.headers.Channel-Id',ChannelId,'add');\n    if
+          (RequestTime !== 'undefined')\n\t    apim.setvariable('message.headers.RequestTime',RequestTime,'add');\n\tif
+          (SessionId !== 'undefined')\n        apim.setvariable('message.headers.X-Request-Id',SessionId,'add');\n
+          \    if (MWRequestTime !== 'undefined')\n        apim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');\n
+          \   if (MWResponseTime !== 'undefined')\n        apim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');\n\n
+          \   \n    apim.setvariable('message.headers.Response-Status',status,'add');\n
+          \   "
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Response
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar body = message[cfg.responseName].Body;\n\n\nsession.output.write(body);\napim.output('application/json');"
+          - map:
+              version: 2.0.0
+              title: map
+              inputs:
+                "":
+                  schema:
+                    description: ""
+                    type: object
+                    properties:
+                      cRn:
+                        type: string
+                        name: cRn
+                      economicActivity:
+                        type: string
+                        name: economicActivity
+                      establishmentName:
+                        type: string
+                        name: establishmentName
+                      laborOffice:
+                        type: string
+                        name: laborOffice
+                      laborOfficeName:
+                        type: string
+                        name: laborOfficeName
+                      sequenceNum:
+                        type: string
+                        name: sequenceNum
+                      municipalLicenseNum:
+                        type: string
+                        name: municipalLicenseNum
+                      nitaq:
+                        type: string
+                        name: nitaq
+                      otherLicenseNum:
+                        type: string
+                        name: otherLicenseNum
+                      otherLicenseType:
+                        type: string
+                        name: otherLicenseType
+                      saudisCount:
+                        type: string
+                        name: saudisCount
+                      size:
+                        type: string
+                        name: size
+                      foreignersCount:
+                        type: string
+                        name: foreignersCount
+                  variable: message.body
+              outputs:
+                "":
+                  schema:
+                    description: ""
+                    type: object
+                    properties:
+                      cRn:
+                        type: string
+                        name: cRn
+                      economicActivity:
+                        type: string
+                        name: economicActivity
+                      establishmentName:
+                        type: string
+                        name: establishmentName
+                      laborOffice:
+                        type: integer
+                        name: laborOffice
+                      laborOfficeName:
+                        type: string
+                        name: laborOfficeName
+                      sequenceNum:
+                        type: integer
+                        name: sequenceNum
+                      municipalLicenseNum:
+                        type: string
+                        name: municipalLicenseNum
+                      nitaq:
+                        type: string
+                        name: nitaq
+                      otherLicenseNum:
+                        type: string
+                        name: otherLicenseNum
+                      otherLicenseType:
+                        type: string
+                        name: otherLicenseType
+                      saudisCount:
+                        type: integer
+                        name: saudisCount
+                      size:
+                        type: string
+                        name: size
+                      foreignersCount:
+                        type: integer
+                        name: foreignersCount
+                  variable: message.body
+              actions:
+              - set: .cRn
+                from: .cRn
+              - set: .economicActivity
+                from: .economicActivity
+              - set: .establishmentName
+                from: .establishmentName
+              - set: .laborOffice
+                from: .laborOffice
+              - set: .laborOfficeName
+                from: .laborOfficeName
+              - set: .sequenceNum
+                from: .sequenceNum
+              - set: .municipalLicenseNum
+                from: .municipalLicenseNum
+              - set: .nitaq
+                from: .nitaq
+              - set: .otherLicenseNum
+                from: .otherLicenseNum
+              - set: .otherLicenseType
+                from: .otherLicenseType
+              - set: .saudisCount
+                from: .saudisCount
+              - set: .size
+                from: .size
+              - set: .foreignersCount
+                from: .foreignersCount
+              options:
+                mapEnablePostProcessingJSON: true
+                mapEmulateV4EmptyJSONObject: false
+                mapEmulateV4DefaultRequiredProps: false
+                mapReferenceLimit: 1
+                includeEmptyXMLElements: false
+                namespaceInheritance: false
+                inlineNamespaces: false
+                mapResolveApicVariables: false
+                mapOptimizeSchemaDefinition: true
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Error
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar error = {\n  \"errorCode\":
+                message[cfg.responseName].Header.ResponseStatus.Code,\n  \"errorMessage\":
+                {\n    \"en-US\": message[cfg.responseName].Header.ResponseStatus.EnglishMsg,\n
+                \   \"ar-SA\": message[cfg.responseName].Header.ResponseStatus.ArabicMsg\n
+                \ }\n};\n\nvar httperror=0;\nif(cfg.errorMap){\n    if(cfg.errorMap[error.errorCode]){\n
+                \      httperror = cfg.errorMap[error.errorCode].code;\n       \n
+                \      //var errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\n
+                \      //var details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\n    }\n}\nif(httperror
+                == 0){\n   httperror = 400;\n   // apim.error('ERROR',400,'Bad Request','Invalid
+                request');\n}\napim.setvariable('message.status.code',httperror,'set');\n\nsession.output.write(error);\napim.output('application/json');"
+    catch: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false

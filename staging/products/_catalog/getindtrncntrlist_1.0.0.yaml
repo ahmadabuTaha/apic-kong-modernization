@@ -1,0 +1,353 @@
+swagger: "2.0"
+info:
+  title: GetIndTrnCntrList
+  version: 1.0.0
+  description: GetIndTrnCntrList
+  x-ibm-name: getindtrncntrlist
+paths:
+  /getindtrncntrlist:
+    post:
+      operationId: GetIndTrnCntrList
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetIndTrnCntrListRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: 'GetIndTrnCntrList '
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetIndTrnCntrListRq_MessageType'
+        description: GetIndTrnCntrList
+        required: true
+basePath: /trncntr
+definitions:
+  GetIndTrnCntrListRq_MessageType:
+    type: object
+    properties:
+      GetIndTrnCntrListRq:
+        $ref: '#/definitions/GetIndTrnCntrListRq_Type'
+  GetIndTrnCntrListRs_MessageType:
+    type: object
+    properties:
+      GetIndTrnCntrListRs:
+        $ref: '#/definitions/GetIndTrnCntrListRs_Type'
+  GetIndTrnCntrListRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetIndTrnCntrListRq_BodyType'
+  GetIndTrnCntrListRq_BodyType:
+    type: object
+    properties:
+      TraineeDetails:
+        $ref: '#/definitions/Trainee_Type'
+      StatusList:
+        $ref: '#/definitions/StatusList_Type'
+      PageSize:
+        type: integer
+      PageIndex:
+        type: integer
+    required:
+    - TraineeDetails
+    - PageSize
+    - PageIndex
+  Trainee_Type:
+    type: object
+    properties:
+      TraineeIdNo:
+        type: integer
+      TraineeName:
+        type: string
+    required:
+    - TraineeIdNo
+  StatusList_Type:
+    type: object
+    properties:
+      Status:
+        type: array
+        items:
+          $ref: '#/definitions/Status_Type'
+    required:
+    - Status
+  Status_Type:
+    type: object
+    properties:
+      StatusId:
+        type: integer
+    required:
+    - StatusId
+  GetIndTrnCntrListRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetIndTrnCntrListRs_BodyType'
+  GetIndTrnCntrListRs_BodyType:
+    type: object
+    properties:
+      TrainingContractsList:
+        $ref: '#/definitions/TrainingContractsList_Type'
+      TotalRecordsCount:
+        type: integer
+    required:
+    - TotalRecordsCount
+  TrainingContractsList_Type:
+    type: object
+    properties:
+      TrainingContract:
+        type: array
+        items:
+          $ref: '#/definitions/TrainingContract_Type'
+    required:
+    - TrainingContract
+  TrainingContract_Type:
+    type: object
+    properties:
+      TrainingContractId:
+        type: integer
+      UnifiedNationalNumber:
+        type: integer
+      EstablishmentName:
+        type: string
+      RequesterName:
+        type: string
+      TraineeIdNo:
+        type: integer
+      TraineeName:
+        type: string
+      TrainingContractType:
+        $ref: '#/definitions/CodeName_Type'
+      ContractPeriod:
+        type: integer
+      NoticePeriod:
+        type: string
+      ContractStartDate:
+        type: string
+        format: date-time
+      ContractEndDate:
+        type: string
+        format: date-time
+      TrainingOccupation:
+        $ref: '#/definitions/CodeName_Type'
+      Status:
+        $ref: '#/definitions/CodeName_Type'
+    required:
+    - TrainingContractId
+    - UnifiedNationalNumber
+    - EstablishmentName
+    - RequesterName
+    - TraineeIdNo
+    - TraineeName
+    - TrainingContractType
+    - ContractPeriod
+    - NoticePeriod
+    - ContractStartDate
+    - ContractEndDate
+    - Status
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+    required:
+    - Code
+    - NameAr
+    - NameEn
+  InActiveReason_Type:
+    type: object
+    properties:
+      InActiveReasonId:
+        type: integer
+      InActiveReasonAr:
+        type: string
+      InActiveReasonEn:
+        type: string
+      TerminationReason:
+        $ref: '#/definitions/CodeName_Type'
+    required:
+    - InActiveReasonId
+    - InActiveReasonEn
+    - InActiveReasonAr
+    - TerminationReason
+  JobTitle_Type:
+    type: object
+    properties:
+      JobTitleAr:
+        type: string
+      JobTitleEn:
+        type: string
+    required:
+    - JobTitleEn
+    - JobTitleAr
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(ace-trncntr-gettrainings)$(request.path)
+        follow-redirects: false
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+schemes:
+- https
+securityDefinitions:
+  clientId:
+    type: apiKey
+    x-key-type: client_id
+    name: X-IBM-Client-Id
+    in: header
+  Oauth2.0:
+    type: oauth2
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    flow: application
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+security:
+- clientId: []
+  Oauth2.0:
+  - IntegrationScope

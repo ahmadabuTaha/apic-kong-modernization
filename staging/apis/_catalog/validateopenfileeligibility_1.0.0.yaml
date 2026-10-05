@@ -1,0 +1,426 @@
+swagger: "2.0"
+info:
+  title: ValidateOpenFileEligibility
+  x-ibm-name: validateopenfileeligibility
+  version: 1.0.0
+  description: To check the validity of the establishment that's open a file
+schemes:
+- https
+basePath: /estabmanagement
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(cat-target-hostname)$(cat-target-url-estabmanagement)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  ValidateOpenFileEligibilityRq_MessageType:
+    type: object
+    properties:
+      ValidateOpenFileEligibilityRq:
+        $ref: '#/definitions/ValidateOpenFileEligibilityRq_Type'
+  ValidateOpenFileEligibilityRs_MessageType:
+    type: object
+    properties:
+      ValidateOpenFileEligibilityRs:
+        $ref: '#/definitions/ValidateOpenFileEligibilityRs_Type'
+  ValidateOpenFileEligibilityRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/ValidateOpenFileEligibilityRq_BodyType'
+  ValidateOpenFileEligibilityRq_BodyType:
+    type: object
+    properties:
+      CRNumber:
+        type: string
+        default: "1010479191"
+    required:
+    - CRNumber
+  ValidateOpenFileEligibilityRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/ValidateOpenFileEligibilityRs_BodyType'
+  ValidateOpenFileEligibilityRs_BodyType:
+    type: object
+    properties:
+      CRInfo:
+        $ref: '#/definitions/CRInfo_Type'
+      CROwnerList:
+        $ref: '#/definitions/CROwnerList_Type'
+    required:
+    - CRInfo
+    - CROwnerList
+  CRInfo_Type:
+    type: object
+    properties:
+      CRNumber:
+        type: string
+      MainCRNumber:
+        type: string
+      CRExpiryDate:
+        $ref: '#/definitions/Date_Type'
+      CRIssueDate:
+        $ref: '#/definitions/Date_Type'
+      CRStatus:
+        $ref: '#/definitions/CRStatus_Type'
+      CRType:
+        type: string
+      CRListOfISICActivities:
+        $ref: '#/definitions/CRListOfISICActivities_Type'
+      NationalNumber:
+        type: string
+      CRCity:
+        $ref: '#/definitions/CRCity_Type'
+      CRNameAR:
+        type: string
+      CRCapital:
+        type: string
+      CRLegalType:
+        $ref: '#/definitions/CRLegalType_Type'
+      CRPhoneNo:
+        type: string
+      CRFaxNo:
+        type: string
+      CRAddress:
+        type: string
+    required:
+    - CRNumber
+    - MainCRNumber
+    - CRExpiryDate
+    - CRIssueDate
+    - CRStatus
+    - CRType
+    - CRListOfISICActivities
+    - NationalNumber
+    - CRCity
+    - CRNameAR
+    - CRCapital
+    - CRLegalType
+    - CRPhoneNo
+    - CRFaxNo
+    - CRAddress
+  Date_Type:
+    type: object
+    properties:
+      Hijri:
+        type: string
+      Gregorian:
+        type: string
+    required:
+    - Hijri
+    - Gregorian
+  CRStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      CRStatusDate:
+        type: string
+      CRStatusReason:
+        type: string
+    required:
+    - Status
+    - CRStatusDate
+    - CRStatusReason
+  CRListOfISICActivities_Type:
+    type: object
+    properties:
+      Activity:
+        type: array
+        items:
+          $ref: '#/definitions/Activity_Type'
+  Activity_Type:
+    type: object
+    properties:
+      isICCode:
+        type: string
+      isicName:
+        type: string
+    required:
+    - isICCode
+    - isicName
+  CRCity_Type:
+    type: object
+    properties:
+      CityAR:
+        type: string
+      CityEN:
+        type: string
+    required:
+    - CityAR
+    - CityEN
+  CRLegalType_Type:
+    type: object
+    properties:
+      LegalTypeAR:
+        type: string
+      LegalTypeEN:
+        type: string
+    required:
+    - LegalTypeAR
+    - LegalTypeEN
+  CROwnerList_Type:
+    type: object
+    properties:
+      CROwner:
+        type: array
+        items:
+          $ref: '#/definitions/CROwner_Type'
+  CROwner_Type:
+    type: object
+    properties:
+      Name:
+        type: string
+      ID:
+        $ref: '#/definitions/ID_Type'
+      PersonIdentifier:
+        $ref: '#/definitions/PersonIdentifier_Type'
+      PassportIdentifier:
+        $ref: '#/definitions/PassportIdentifier_Type'
+      PassportIssueDate:
+        $ref: '#/definitions/Date_Type'
+      PassportExpiryDate:
+        $ref: '#/definitions/Date_Type'
+      Nationality:
+        $ref: '#/definitions/Nationality_Type'
+      RelationType:
+        type: string
+    required:
+    - Name
+    - ID
+    - PersonIdentifier
+    - PassportIdentifier
+    - PassportIssueDate
+    - PassportExpiryDate
+    - Nationality
+    - RelationType
+  ID_Type:
+    type: object
+    properties:
+      BorderNumber:
+        type: string
+      Code700:
+        type: string
+      CRNumber:
+        type: string
+    required:
+    - BorderNumber
+    - Code700
+    - CRNumber
+  PersonIdentifier_Type:
+    type: object
+    properties:
+      NationalID:
+        type: string
+      IqamaNumber:
+        type: string
+    required:
+    - NationalID
+    - IqamaNumber
+  PassportIdentifier_Type:
+    type: object
+    properties:
+      PassportNumber:
+        type: string
+      PassportIssuePlaceName:
+        type: string
+    required:
+    - PassportNumber
+    - PassportIssuePlaceName
+  Nationality_Type:
+    type: object
+    properties:
+      NationalityAR:
+        type: string
+      NationalityEN:
+        type: string
+    required:
+    - NationalityAR
+    - NationalityEN
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "200966842998"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: VOFE0001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: VOFE0001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+        default: "23432"
+      IDNumber:
+        type: integer
+        default: "324324"
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /valopenfileelig:
+    post:
+      operationId: ValidateOpenFileEligibility
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/ValidateOpenFileEligibilityRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Approve Change Occupation Laborer or Employer
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/ValidateOpenFileEligibilityRq_MessageType'
+        description: ValidateOpenFileEligibilityRq
+        required: true

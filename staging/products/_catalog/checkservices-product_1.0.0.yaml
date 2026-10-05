@@ -1,0 +1,39 @@
+info:
+  version: 1.0.0
+  title: CheckServices Product
+  name: checkservices-product
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    rate-limits:
+      default:
+        value: 100/1hour
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    apis:
+      checkupdateinspectionvisitdate1.0.0: {}
+      updatecheckvisitresultdetails1.0.0: {}
+      updateinspectorvisitdetailscheck1.0.0: {}
+      updtinspnvstdtbyowner1.0.0: {}
+      getestabinspecvisits1.0.0: {}
+product: 1.0.0
+apis:
+  checkupdateinspectionvisitdate1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/checkupdateinspectionvisitdate_1.0.0.yaml
+  updtinspnvstdtbyowner1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updtinspnvstdtbyowner_1.0.0.yaml
+  updateinspectorvisitdetailscheck1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updateinspectorvisitdetailscheck_1.0.0.yaml
+  updatecheckvisitresultdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updatecheckvisitresultdetails_1.0.0.yaml
+  getestabinspecvisits1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getestabinspecvisits_1.0.0.yaml
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

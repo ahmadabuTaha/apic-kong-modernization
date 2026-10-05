@@ -1,0 +1,472 @@
+swagger: "2.0"
+info:
+  title: IstiqdamWorkPermitAssignment
+  x-ibm-name: istiqdamworkpermitassignment
+  version: 1.0.0
+  description: This is a wrapper API used for  Work Permit Assignment
+x-ibm-configuration:
+  cors:
+    enabled: false
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - gatewayscript:
+        version: 2.0.0
+        title: SetHttpHeaders
+        source: "var apim = require('apim');\r\nvar clientId = apim.getvariable('client.app.name');\r\nvar
+          apiKey = apim.getvariable('message.headers.API-KEY');\r\n\r\napim.setvariable('message.headers.API-KEY',apiKey);\r\napim.setvariable('message.headers.client-id',clientId);"
+    - invoke:
+        version: 2.2.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        http-version: HTTP/1.1
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        graphql-send-type: detect
+        websocket-upgrade: false
+        target-url: $(dp-qiwadp-qiwahrsdrouter)/api/protected/istiqdam/workPermitAssignment/$(request.parameters.contractId)
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\r\nvar cfg={\r\n    \"serviceCode\" :
+          \"ICC00001\",\r\n    \"channelId\" : \"Qiwa\",\r\n    \"requestName\" :
+          \"IsteqdamWorkPermitAssignmentRq\",\r\n    \"responseName\": \"IsteqdamWorkPermitAssignmentRs\",\r\n
+          \   \"errorMap\" :{\r\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid
+          Request\"}\r\n    }\r\n    \r\n};\r\nvar DPResponse = apim.getvariable('message.body');\r\napim.setvariable('DPResponse',DPResponse);\r\napim.setvariable('cfg',cfg);"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare-Request
+        source: "var apim = require('apim');\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\nvar appname
+          = apim.getvariable('client.app.name');\r\napim.setvariable('TransactionID1',millisecondsvalue);\r\nvar
+          appcReq = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n            \"TransactionId\"
+          : millisecondsvalue,\r\n            \"ChannelId\": cfg.channelId,\r\n            \"SessionId\":
+          apim.getvariable('message.headers.X-Request-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode,\r\n            \"DebugFlag\":
+          \"1\",\r\n            \"UserInfo\": {\r\n                \"UserId\": apim.getvariable('message.headers.UserId'),\r\n
+          \               \"IDNumber\": apim.getvariable('message.headers.IDNumber')\t\t\t\t\r\n
+          \           },\r\n            \"UDF\": {\r\n                \"KeyValueArr\":
+          [\r\n                    {\r\n                        \"key\": \"Product\",\r\n
+          \                       \"value\": \"TIP-Wrapper\"\r\n                    },\r\n
+          \                   {\r\n                        \"key\": \"Client\",\r\n
+          \                       \"value\": appname\r\n                    }\r\n
+          \               ]\r\n            }\t\t\t\r\n        },\r\n        \"Body\"
+          : apim.getvariable('request.body')\r\n            \r\n    }\r\n};\r\n\r\nif
+          (typeof OperatorId !== 'undefined')\r\n    appcReq[cfg.requestName].Header.UserInfo
+          = {\r\n        \"IDNumber\" : OperatorId\r\n    };\r\napim.setvariable('payload',appcReq);
+          \    \r\n//session.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n    \r\n    \r\n\r\n    //return
+          the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour
+          + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    - gatewayscript:
+        version: 2.0.0
+        title: ReqForLogging
+        source: "var apim=require('apim');\r\nvar appconnectrequest = apim.getvariable('payload');\r\nvar
+          Body = apim.getvariable('DPResponse');\r\nvar Headers = appconnectrequest.IsteqdamWorkPermitAssignmentRq.Header;\r\nvar
+          transactionId1 = Math.floor(1000000000 + Math.random() * 9000000000);\r\napim.setvariable('message.headers.TransactionID',transactionId1);\r\napim.setvariable('TransactionID',transactionId1);\r\nvar
+          SuccessCall =\r\n{\r\n                \"Status\": \"SUCCESS\",\r\n                \"Code\":
+          \"00000000\",\r\n                \"ArabicMsg\": \"تمت العملية بنجاح\",\r\n
+          \               \"EnglishMsg\": \"Success Call\"\r\n            }\r\n\r\nvar
+          APIRes = {\r\n    \"Header\": Headers,\r\n     Body\r\n};\r\nAPIRes.Header.ResponseStatus
+          = SuccessCall;\r\nvar jsonData= {\r\n\t\"LogAPIData\": {\r\n\t\t\"IsteqdamWorkPermitAssignmentRq\":
+          appconnectrequest.IsteqdamWorkPermitAssignmentRq,\r\n\t\t\"IsteqdamWorkPermitAssignmentRs\":
+          APIRes,\r\n\t}\r\n}\r\nsession.output.write(jsonData);\r\napim.output('application/json');"
+    - invoke:
+        version: 2.2.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        http-version: HTTP/1.1
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        graphql-send-type: detect
+        websocket-upgrade: false
+        target-url: $(ace-tip-internal)/external/logwrapperapidata
+    - gatewayscript:
+        version: 2.0.0
+        title: gatewayscript
+        source: "var apim = require('apim');\r\nvar FinalRes = apim.getvariable('DPResponse.body');\r\nvar
+          TransId = apim.getvariable('TransactionID1');\r\n//apim.setvariable('TransactionID1',millisecondsvalue);\r\napim.setvariable('message.headers.TransactionID',TransId);\r\nsession.output.write(FinalRes);\r\napim.output('application/json');"
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+basePath: /api/v1/external
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+paths:
+  /workPermitAssignment/{contractId}:
+    parameters:
+    - name: contractId
+      required: true
+      in: path
+      type: integer
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+schemes:
+- https
+definitions:
+  ResponseModel:
+    type: object
+    properties:
+      number:
+        type: string
+      status:
+        type: string
+      source:
+        type: string
+      startAt:
+        type: string
+      endAt:
+        type: string
+      workPermits:
+        type: array
+        items:
+          type: object
+          properties:
+            number:
+              type: string
+            status:
+              type: string
+            startAt:
+              type: string
+            endAt:
+              type: string
+            laborer:
+              type: object
+              properties:
+                name:
+                  type: string
+                iqama:
+                  type: string
+      beneficiary:
+        type: object
+        properties:
+          name:
+            type: string
+          nationalId:
+            type: string
+          iqama:
+            type: string
+          birthdate:
+            type: string
+          gender:
+            type: object
+            properties:
+              name:
+                type: object
+                properties:
+                  en:
+                    type: string
+                  ar:
+                    type: string
+              code:
+                type: number
+          nationality:
+            type: object
+            properties:
+              name:
+                type: object
+                properties:
+                  ar:
+                    type: string
+              code:
+                type: number
+          occupation:
+            type: object
+            properties:
+              name:
+                type: object
+                properties: {}
+              code:
+                type: number
+      details:
+        type: object
+        properties:
+          specialSpecification:
+            type: string
+          beneficiary:
+            type: object
+            properties:
+              address:
+                type: object
+                properties:
+                  city:
+                    type: string
+                  latitude:
+                    type: number
+                  longitude:
+                    type: number
+              contact:
+                type: object
+                properties:
+                  person:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      phoneNumber:
+                        type: string
+                  phoneNumber:
+                    type: object
+                    properties:
+                      mobile:
+                        type: string
+                      second:
+                        type: string
+                      home:
+                        type: string
+                      work:
+                        type: string
+                      redirect:
+                        type: string
+                  email:
+                    type: string
+          payment:
+            type: object
+            properties:
+              discountPercentage:
+                type: number
+              paymentMethod:
+                type: string
+              paymentDetails:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                    dueDate:
+                      type: string
+                    grossPrice:
+                      type: number
+          commitments:
+            type: object
+            properties:
+              firstParty:
+                type: object
+                properties:
+                  noticePeriod:
+                    type: number
+                  replacementTimes:
+                    type: number
+              secondParty:
+                type: object
+                properties:
+                  travelAccompaniment:
+                    type: object
+                    properties:
+                      days:
+                        type: number
+                      hours:
+                        type: number
+                  laborerTransportationCosts:
+                    type: number
+                  administrativeFeePercent:
+                    type: number
+                  terminationFee:
+                    type: number
+          points:
+            type: object
+            properties:
+              transaction:
+                type: object
+                properties:
+                  before:
+                    type: number
+                  after:
+                    type: number
+                  value:
+                    type: number
+      createdAt:
+        type: string
+      updatedAt:
+        type: string
+      package:
+        type: object
+        properties:
+          id:
+            type: number
+          duration:
+            type: object
+            properties:
+              value:
+                type: number
+              type:
+                type: string
+          gender:
+            type: object
+            properties:
+              name:
+                type: object
+                properties:
+                  en:
+                    type: string
+                  ar:
+                    type: string
+              code:
+                type: number
+          nationality:
+            type: object
+            properties:
+              name:
+                type: object
+                properties:
+                  en:
+                    type: string
+                  ar:
+                    type: string
+              code:
+                type: number
+          occupation:
+            type: object
+            properties:
+              name:
+                type: object
+                properties:
+                  en:
+                    type: string
+                  ar:
+                    type: string
+              code:
+                type: number
+          price:
+            type: object
+            properties:
+              gross:
+                type: number
+              net:
+                type: number
+              vat:
+                type: number
+          downPayment:
+            type: number
+          activationDate:
+            type: string
+          expiryDate:
+            type: string
+          createdAt:
+            type: string
+          updatedAt:
+            type: string
+          priceSpecifications:
+            type: array
+            items:
+              type: object
+              properties:
+                type:
+                  type: string
+                name:
+                  type: object
+                  properties:
+                    en:
+                      type: string
+                    ar:
+                      type: string
+                price:
+                  type: object
+                  properties:
+                    gross:
+                      type: number
+                    net:
+                      type: number
+                    vat:
+                      type: number
+                createdAt:
+                  type: string
+                updatedAt:
+                  type: string
+    example: '{"number":"8828752524","status":"ISSUED","source":"API","startAt":"2025-09-10T00:00:00","endAt":"2027-09-10T00:00:00","workPermits":[{"number":"8132997728","status":"ACTIVE","startAt":"2025-09-10T00:00:00","endAt":"2025-10-10T00:00:00","laborer":{"name":"JAMINA
+      ABDUL  IBRAHIM","iqama":"2404211951"}},{"number":"8642617340","status":"ACTIVE","startAt":"2025-10-10T00:00:00","endAt":"2025-11-10T00:00:00"},{"number":"7016758151","status":"ACTIVE","startAt":"2025-11-10T00:00:00","endAt":"2025-12-10T00:00:00"},{"number":"4530513250","status":"ACTIVE","startAt":"2025-12-10T00:00:00","endAt":"2026-01-10T00:00:00"},{"number":"7232757379","status":"ACTIVE","startAt":"2026-01-10T00:00:00","endAt":"2026-02-10T00:00:00"},{"number":"5773525492","status":"ACTIVE","startAt":"2026-02-10T00:00:00","endAt":"2026-03-10T00:00:00"},{"number":"2344279375","status":"ACTIVE","startAt":"2026-03-10T00:00:00","endAt":"2026-04-10T00:00:00"},{"number":"5656255866","status":"ACTIVE","startAt":"2026-04-10T00:00:00","endAt":"2026-05-10T00:00:00"},{"number":"1728586634","status":"ACTIVE","startAt":"2026-05-10T00:00:00","endAt":"2026-06-10T00:00:00"},{"number":"8415833631","status":"ACTIVE","startAt":"2026-06-10T00:00:00","endAt":"2026-07-10T00:00:00"},{"number":"1149269126","status":"ACTIVE","startAt":"2026-07-10T00:00:00","endAt":"2026-08-10T00:00:00"},{"number":"2786567601","status":"ACTIVE","startAt":"2026-08-10T00:00:00","endAt":"2026-09-10T00:00:00"},{"number":"5010353429","status":"ACTIVE","startAt":"2026-09-10T00:00:00","endAt":"2026-10-10T00:00:00"},{"number":"1227281025","status":"ACTIVE","startAt":"2026-10-10T00:00:00","endAt":"2026-11-10T00:00:00"},{"number":"4427122413","status":"ACTIVE","startAt":"2026-11-10T00:00:00","endAt":"2026-12-10T00:00:00"},{"number":"3562643366","status":"ACTIVE","startAt":"2026-12-10T00:00:00","endAt":"2027-01-10T00:00:00"},{"number":"4315565674","status":"ACTIVE","startAt":"2027-01-10T00:00:00","endAt":"2027-02-10T00:00:00"},{"number":"5150922476","status":"ACTIVE","startAt":"2027-02-10T00:00:00","endAt":"2027-03-10T00:00:00"},{"number":"2966904742","status":"ACTIVE","startAt":"2027-03-10T00:00:00","endAt":"2027-04-10T00:00:00"},{"number":"4591443571","status":"ACTIVE","startAt":"2027-04-10T00:00:00","endAt":"2027-05-10T00:00:00"},{"number":"7892503162","status":"ACTIVE","startAt":"2027-05-10T00:00:00","endAt":"2027-06-10T00:00:00"},{"number":"3377935064","status":"ACTIVE","startAt":"2027-06-10T00:00:00","endAt":"2027-07-10T00:00:00"},{"number":"6896877791","status":"ACTIVE","startAt":"2027-07-10T00:00:00","endAt":"2027-08-10T00:00:00"},{"number":"1128897769","status":"ACTIVE","startAt":"2027-08-10T00:00:00","endAt":"2027-09-10T00:00:00"}],"beneficiary":{"name":"الزبير
+      حمود مسعد الخرام","nationalId":"2524288038","iqama":"2524288038","birthdate":"2005-06-16","gender":{"name":{"en":"Male","ar":"ذكر"},"code":0},"nationality":{"name":{"ar":"اليمن"},"code":111},"occupation":{"name":{},"code":0}},"details":{"specialSpecification":"Special","beneficiary":{"address":{"city":"أضم","latitude":10,"longitude":22},"contact":{"person":{"name":"يحيى
+      بن عثمان","phoneNumber":"+966534201202"},"phoneNumber":{"mobile":"+966538459011","second":"+966598884847","home":"+966136504803","work":"+966166254176","redirect":"840"},"email":"yhya_bnethman@gmail.com"}},"payment":{"discountPercentage":50,"paymentMethod":"تحويل
+      بنكي","paymentDetails":[{"type":"DOWN_PAYMENT","dueDate":"2025-09-28","grossPrice":3075}]},"commitments":{"firstParty":{"noticePeriod":24,"replacementTimes":1},"secondParty":{"travelAccompaniment":{"days":1,"hours":1},"laborerTransportationCosts":1,"administrativeFeePercent":2.5,"terminationFee":2.5}},"points":{"transaction":{"before":48943,"after":48919,"value":24}}},"createdAt":"2025-06-18T09:11:13.219248","updatedAt":"2025-06-18T09:11:13.219248","package":{"id":702,"duration":{"value":24,"type":"MONTHLY"},"gender":{"name":{"en":"Male","ar":"ذكر"},"code":1},"nationality":{"name":{"en":"Ethiopia","ar":"أثيوبي"},"code":414},"occupation":{"name":{"en":"علاج
+      طبيعي خاص","ar":"Physiotherapist"},"code":6411201},"price":{"gross":3075,"net":3000,"vat":75},"downPayment":0,"activationDate":"2025-05-09T00:00:00","expiryDate":"2025-08-24T00:00:00","createdAt":"2025-06-18T09:11:13.223771","updatedAt":"2025-06-18T09:11:13.223771","priceSpecifications":[{"type":"service_costs","name":{"en":"Service
+      costs","ar":"قيمة الخدمة"},"price":{"gross":575,"net":500,"vat":75},"createdAt":"2025-06-18T09:11:13.229535","updatedAt":"2025-06-18T09:11:13.229535"},{"type":"paid_expenses","name":{"en":"External
+      recruitment costs, government costs and paid expenses","ar":"تكاليف الاستقدام
+      الخارجية والتكاليف الحكومية والمصروفات المدفوعة"},"price":{"gross":1000,"net":1000,"vat":0},"createdAt":"2025-06-18T09:11:13.230694","updatedAt":"2025-06-18T09:11:13.230694"},{"type":"laborer_salary","name":{"en":"Labore
+      salary","ar":"أجر العامل /العاملة"},"price":{"gross":1000,"net":1000,"vat":0},"createdAt":"2025-06-18T09:11:13.227088","updatedAt":"2025-06-18T09:11:13.227088"},{"type":"laborer_benefits","name":{"en":"Additional
+      benefits for the Labore","ar":"المزايا الإضافية للعامل/للعاملة"},"price":{"gross":500,"net":500,"vat":0},"createdAt":"2025-06-18T09:11:13.228361","updatedAt":"2025-06-18T09:11:13.228361"}]}}'
+  RequestModel:
+    type: object
+    properties:
+      number:
+        type: string
+      laborer:
+        type: object
+        properties:
+          id:
+            type: string
+          birthdate:
+            type: string
+    example: '{"number":"8132997728","laborer":{"id":"2404211951","birthdate":"1984-02-02"}}'
+responses: {}
+parameters: {}
+tags:
+- name: Wrapper

@@ -1,0 +1,171 @@
+info:
+  name: 1external-mhrsd-product
+  title: 1External_MHRSD_Product
+  version: 1.0.0
+apis:
+  mhrsd-validaterulesforlaborer1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-validaterulesforlaborer_1.0.0.yaml
+  mhrsd-checkestablishmentownershipbyid2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-checkestablishmentownershipbyid_2.0.0_1.yaml
+  mhrsd-submitbulkregularlaborers1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-submitbulkregularlaborers_1.0.0.yaml
+  mhrsd-submitbulkpenaltylaborerstransaction1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-submitbulkpenaltylaborerstransaction_1.0.0.yaml
+  mhrsd-calculatefeesforbulkpenaltylaborers1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-calculatefeesforbulkpenaltylaborers_1.0.0.yaml
+  mhrsd-calculatefeesforbulkregularlaborers1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-calculatefeesforbulkregularlaborers_1.0.0.yaml
+  hrsd-updatelaborerjobclassification1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/hrsd-updatelaborerjobclassification_1.0.0.yaml
+  mhrsd-getestablishmentdetailsbylicensenumber2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-getestablishmentdetailsbylicensenumber_2.0.0_1.yaml
+  mhrsd-getsaudizationstatusbyownerid2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-getsaudizationstatusbyownerid_2.0.0_1.yaml
+  mhrsd-getsaudizationstatusbycr2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-getsaudizationstatusbycr_2.0.0_1.yaml
+  mhrsd-getlaborerinformation2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-getlaborerinformation_2.0.0_1.yaml
+  mhrsd-getemployername1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-getemployername_1.0.0.yaml
+  get-industrialestablishmentdata1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/get-industrialestablishmentdata_1.0.0_1.yaml
+  mhrsd-gettawteeninfobycrnumber1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-gettawteeninfobycrnumber_1.0.0_1.yaml
+  mhrsd-getestablishmentnitaqatinfo2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-getestablishmentnitaqatinfo_2.0.0_1.yaml
+  mhrsd-getestablishmentnitaqatinfo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-getestablishmentnitaqatinfo_1.0.0_1.yaml
+  mhrsd-getsaudicertificatedetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-getsaudicertificatedetails_1.0.0.yaml
+  mhrsd-submitchangejobdescription1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-submitchangejobdescription_1.0.0.yaml
+  mhrsd-validatechangejobdescription1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-validatechangejobdescription_1.0.0.yaml
+  mhrsd-isjobchangeblocked1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-isjobchangeblocked_1.0.0_1.yaml
+  mhrsd-searchchangejobdescription1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-searchchangejobdescription_1.0.0.yaml
+  mhrsd-getobjectionattachment1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-getobjectionattachment_1.0.0.yaml
+  mhrsd-getviolationdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-getviolationdetails_1.0.0.yaml
+  getindividualwagepaymentstatus1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getindividualwagepaymentstatus_1.0.0.yaml
+  mhrsd-gettawteeninfobymunicipalitylicensenumber1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-gettawteeninfobymunicipalitylicensenumber_1.0.0_1.yaml
+  mhrsd-gettawteeninformationbycrnumber2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-gettawteeninformationbycrnumber_2.0.0_1.yaml
+  mhrsd-gettawteeninformationbyestablishmentfilenumber2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-gettawteeninformationbyestablishmentfilenumber_2.0.0_1.yaml
+  mhrsd-validatesaudicertificate1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-validatesaudicertificate_1.0.0_1.yaml
+  mhrsd-tawteeninfoestabfilenum1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-tawteeninfoestabfilenum_1.0.0_1.yaml
+  mhrsd-gettawteeninformationbymunicaplitytlicensenumber2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-gettawteeninformationbymunicaplitytlicensenumber_2.0.0_1.yaml
+  mhrsd-gettawteeninformationbyestablishmentlicensenumber2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-gettawteeninformationbyestablishmentlicensenumber_2.0.0_1.yaml
+  mhrsd-gettawteenbyowneridorsevenhundrednumber2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-gettawteenbyowneridorsevenhundrednumber_2.0.0_1.yaml
+  mhrsd-gettawteeninfobyestablicensenumber1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-gettawteeninfobyestablicensenumber_1.0.0_1.yaml
+  mhrsd-openestablishmentfilebymiras1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-openestablishmentfilebymiras_1.0.0_1.yaml
+  mhrsd-getestablishmentdetailsbylicensenumber1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-getestablishmentdetailsbylicensenumber_1.0.0_1.yaml
+  mhrsd-establishmenttawteeninfobyowneridorsevenhundrednumber1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-establishmenttawteeninfobyowneridorsevenhundrednumber_1.0.0_1.yaml
+  mhrsd-estabnitaqhistoryweekcount1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-estabnitaqhistoryweekcount_1.0.0_1.yaml
+  mhrsd-estabnitaqhistoryweekcount2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-estabnitaqhistoryweekcount_2.0.0_1.yaml
+  mhrsd-getestablishmentbranchesdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-getestablishmentbranchesdetails_1.0.0_1.yaml
+  mhrsd-getestablishmentbranchesdetails2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-getestablishmentbranchesdetails_2.0.0_1.yaml
+  mhrsd-getlaborerinformation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-getlaborerinformation_1.0.0_1.yaml
+  mhrsd-getsaudizationstatusbycr1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-getsaudizationstatusbycr_1.0.0_1.yaml
+  mhrsd-getsaudizationstatusbyownerid1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-getsaudizationstatusbyownerid_1.0.0_1.yaml
+  mhrsd-deactivateindustrialestablishment1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-deactivateindustrialestablishment_1.0.0_1.yaml
+  mhrsd-activateindustrialestablishment1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-activateindustrialestablishment_1.0.0_1.yaml
+  mhrsd-checkamicablesettlementcases2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-checkamicablesettlementcases_2.0.0_1.yaml
+  mhrsd-checkestablishmentownershipbyid1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-checkestablishmentownershipbyid_1.0.0_1.yaml
+  mhrsd-checkamicablesettlementcases1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-checkamicablesettlementcases_1.0.0_1.yaml
+  hrsd_submitworkpermittransaction1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/hrsd_submitworkpermittransaction_1.0.0.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      get-industrialestablishmentdata1.0.0: {}
+      getindividualwagepaymentstatus1.0.0: {}
+      hrsd-updatelaborerjobclassification1.0.0: {}
+      mhrsd-activateindustrialestablishment1.0.0: {}
+      mhrsd-calculatefeesforbulkpenaltylaborers1.0.0: {}
+      mhrsd-calculatefeesforbulkregularlaborers1.0.0: {}
+      mhrsd-checkamicablesettlementcases1.0.0: {}
+      mhrsd-checkamicablesettlementcases2.0.0: {}
+      mhrsd-checkestablishmentownershipbyid1.0.0: {}
+      mhrsd-checkestablishmentownershipbyid2.0.0: {}
+      mhrsd-deactivateindustrialestablishment1.0.0: {}
+      mhrsd-establishmenttawteeninfobyowneridorsevenhundrednumber1.0.0: {}
+      mhrsd-estabnitaqhistoryweekcount1.0.0: {}
+      mhrsd-estabnitaqhistoryweekcount2.0.0: {}
+      mhrsd-getemployername1.0.0: {}
+      mhrsd-getestablishmentbranchesdetails1.0.0: {}
+      mhrsd-getestablishmentbranchesdetails2.0.0: {}
+      mhrsd-getestablishmentdetailsbylicensenumber1.0.0: {}
+      mhrsd-getestablishmentdetailsbylicensenumber2.0.0: {}
+      mhrsd-getestablishmentnitaqatinfo1.0.0: {}
+      mhrsd-getestablishmentnitaqatinfo2.0.0: {}
+      mhrsd-getlaborerinformation1.0.0: {}
+      mhrsd-getlaborerinformation2.0.0: {}
+      mhrsd-getsaudicertificatedetails1.0.0: {}
+      mhrsd-getsaudizationstatusbycr1.0.0: {}
+      mhrsd-getsaudizationstatusbycr2.0.0: {}
+      mhrsd-getsaudizationstatusbyownerid1.0.0: {}
+      mhrsd-getsaudizationstatusbyownerid2.0.0: {}
+      mhrsd-gettawteenbyowneridorsevenhundrednumber2.0.0: {}
+      mhrsd-gettawteeninfobycrnumber1.0.0: {}
+      mhrsd-gettawteeninfobyestablicensenumber1.0.0: {}
+      mhrsd-gettawteeninfobymunicipalitylicensenumber1.0.0: {}
+      mhrsd-gettawteeninformationbycrnumber2.0.0: {}
+      mhrsd-gettawteeninformationbyestablishmentfilenumber2.0.0: {}
+      mhrsd-gettawteeninformationbyestablishmentlicensenumber2.0.0: {}
+      mhrsd-gettawteeninformationbymunicaplitytlicensenumber2.0.0: {}
+      mhrsd-isjobchangeblocked1.0.0: {}
+      mhrsd-openestablishmentfilebymiras1.0.0: {}
+      mhrsd-searchchangejobdescription1.0.0: {}
+      mhrsd-submitbulkpenaltylaborerstransaction1.0.0: {}
+      mhrsd-submitbulkregularlaborers1.0.0: {}
+      mhrsd-submitchangejobdescription1.0.0: {}
+      mhrsd-tawteeninfoestabfilenum1.0.0: {}
+      mhrsd-validatechangejobdescription1.0.0: {}
+      mhrsd-validatesaudicertificate1.0.0: {}
+      mhrsd-getviolationdetails1.0.0: {}
+      mhrsd-getobjectionattachment1.0.0: {}
+      mhrsd-validaterulesforlaborer1.0.0: {}
+      hrsd_submitworkpermittransaction1.0.0: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

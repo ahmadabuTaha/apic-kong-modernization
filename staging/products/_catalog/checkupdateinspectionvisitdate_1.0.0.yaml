@@ -1,0 +1,288 @@
+swagger: "2.0"
+info:
+  title: CheckUpdateInspectionVisitDate
+  x-ibm-name: checkupdateinspectionvisitdate
+  version: 1.0.0
+  description: CheckUpdateInspectionVisitDate
+schemes:
+- https
+basePath: /check
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-chmng-updates)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        persistent-connection: true
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+definitions:
+  CheckUpdateInspectionVisitDateRq_MessageType:
+    type: object
+    properties:
+      CheckUpdateInspectionVisitDateRq:
+        $ref: '#/definitions/CheckUpdateInspectionVisitDateRq_Type'
+  CheckUpdateInspectionVisitDateRs_MessageType:
+    type: object
+    properties:
+      CheckUpdateInspectionVisitDateRs:
+        $ref: '#/definitions/CheckUpdateInspectionVisitDateRs_Type'
+  CheckUpdateInspectionVisitDateRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/CheckUpdateInspectionVisitDateRq_BodyType'
+  CheckUpdateInspectionVisitDateRq_BodyType:
+    type: object
+    properties:
+      InspectionVisitID:
+        type: string
+    required:
+    - InspectionVisitID
+  CheckUpdateInspectionVisitDateRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/CheckUpdateInspectionVisitDateRs_BodyType'
+  CheckUpdateInspectionVisitDateRs_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      VisitDueDate:
+        type: string
+      IsExpired:
+        type: string
+      ExpirationDate:
+        type: string
+      IsVisitDueDateUpdated:
+        type: string
+      RequesterIdNo:
+        type: integer
+      VisitNumber:
+        type: integer
+      EstablishmentLocation:
+        type: string
+      LocationDetails:
+        $ref: '#/definitions/LocationDetails_Type'
+      InspectionRequestType:
+        type: integer
+      RequesterFirstName:
+        type: string
+      RequesterLastName:
+        type: string
+      RequesterEmail:
+        type: string
+      RequesterMobileNumber:
+        type: string
+      AllowanceEndDate:
+        type: string
+      TierTypeId:
+        type: integer
+      RequestId:
+        type: integer
+  LocationDetails_Type:
+    type: object
+    properties:
+      Latitude:
+        type: string
+      Longitude:
+        type: string
+      City:
+        type: string
+      District:
+        type: string
+      Street:
+        type: string
+      BuildingNumber:
+        type: string
+      AddressDescription:
+        type: integer
+      'InspectionCity ':
+        $ref: '#/definitions/CodeName_Type'
+  CodeName_Type:
+    type: object
+    properties:
+      Id:
+        type: integer
+      NameEn:
+        type: string
+      NameAr:
+        type: string
+    required:
+    - Id
+    - NameEn
+    - NameAr
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: string
+      IDNumber:
+        type: string
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /checkupdateinspvisitdation:
+    post:
+      operationId: CheckUpdateInspectionVisitDate
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/CheckUpdateInspectionVisitDateRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Calculate Available Visas
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/CheckUpdateInspectionVisitDateRq_MessageType'
+        description: CheckUpdateInspectionVisitDateRq
+        required: true

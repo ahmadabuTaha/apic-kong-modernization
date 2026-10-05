@@ -1,0 +1,48 @@
+info:
+  version: 1.0.0
+  title: CHECK
+  name: check
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    rate-limits:
+      default:
+        value: 100/1hour
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    apis:
+      cancelvisit1.0.0: {}
+      getfacilityreports2.0.0: {}
+      getlocationteamavailability1.0.0: {}
+      gettoken2.0.0: {}
+      updatefacilityinfo1.0.0: {}
+      visitrequest1.0.0: {}
+      changevisitdate1.0.0: {}
+      getfacilityvisits1.0.0: {}
+apis:
+  visitrequest1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/visitrequest_1.0.0.yaml
+  cancelvisit1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/cancelvisit_1.0.0.yaml
+  getlocationteamavailability1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getlocationteamavailability_1.0.0.yaml
+  gettoken2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/gettoken_2.0.0.yaml
+  updatefacilityinfo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updatefacilityinfo_1.0.0.yaml
+  getfacilityreports2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getfacilityreports_2.0.0.yaml
+  changevisitdate1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/changevisitdate_1.0.0.yaml
+  getfacilityvisits1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getfacilityvisits_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

@@ -1,0 +1,351 @@
+swagger: "2.0"
+info:
+  title: GetEstablishmentRequestedBalancesDetails
+  x-ibm-name: getestablishmentrequestedbalancesdetails
+  version: 1.0.0
+  description: GetEstablishmentRequestedBalancesDetails
+schemes:
+- https
+basePath: /visa/expansion
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-expv-expansiongets)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        persistent-connection: true
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+definitions:
+  GetEstablishmentRequestedBalancesDetailsRq_MessageType:
+    type: object
+    properties:
+      GetEstablishmentRequestedBalancesDetailsRq:
+        $ref: '#/definitions/GetEstablishmentRequestedBalancesDetailsRq_Type'
+  GetEstablishmentRequestedBalancesDetailsRs_MessageType:
+    type: object
+    properties:
+      GetEstablishmentRequestedBalancesDetailsRs:
+        $ref: '#/definitions/GetEstablishmentRequestedBalancesDetailsRs_Type'
+  GetEstablishmentRequestedBalancesDetailsRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetEstablishmentRequestedBalancesDetailsRq_BodyType'
+  GetEstablishmentRequestedBalancesDetailsRq_BodyType:
+    type: object
+    properties:
+      'LaborOfficeId ':
+        type: integer
+      SequenceNumber:
+        type: integer
+      UnifiedStatusList:
+        type: string
+      BalanceRequestId:
+        type: integer
+      RequestBalanceTypeId:
+        type: integer
+      PageSize:
+        type: integer
+      PageIndex:
+        type: integer
+    required:
+    - 'LaborOfficeId '
+    - SequenceNumber
+    - PageSize
+    - PageIndex
+  GetEstablishmentRequestedBalancesDetailsRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetEstablishmentRequestedBalancesDetailsRs_BodyType'
+  GetEstablishmentRequestedBalancesDetailsRs_BodyType:
+    type: object
+    properties:
+      RequestedBalances:
+        $ref: '#/definitions/RequestedBalances_Type'
+      TotalRecordCount:
+        type: integer
+    required:
+    - RequestedBalances
+    - TotalRecordCount
+  RequestedBalances_Type:
+    type: object
+    properties:
+      'BalanceDetails ':
+        type: array
+        items:
+          $ref: '#/definitions/BalanceDetails_Type'
+  BalanceDetails_Type:
+    type: object
+    properties:
+      RequestId:
+        type: integer
+      RequestBalanceType:
+        $ref: '#/definitions/CodeName_Type'
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      RequestStatus:
+        $ref: '#/definitions/CodeName_Type'
+      RequestDate:
+        type: string
+      TierId:
+        type: integer
+      CapptionReference:
+        type: integer
+      CapptionRejectionReason:
+        type: string
+      RequestedBalance:
+        type: string
+      BalanceStartDate:
+        type: string
+      BalanceExpirationDate:
+        type: string
+      PaymentReferenceNumber:
+        type: string
+      RefundStatus:
+        $ref: '#/definitions/CodeName_Type'
+      EstablishmentLocationId:
+        type: integer
+      RequesterMobileNumber:
+        type: string
+      LocationURL:
+        type: string
+      LocationDetails:
+        $ref: '#/definitions/LocationDetails_Type'
+    required:
+    - RequestId
+    - RequestBalanceType
+    - LaborOfficeId
+    - SequenceNumber
+    - RequestStatus
+    - RequestDate
+    - TierId
+    - CapptionReference
+    - CapptionRejectionReason
+    - RequestedBalance
+    - BalanceStartDate
+    - BalanceExpirationDate
+    - PaymentReferenceNumber
+    - EstablishmentLocationId
+    - LocationDetails
+    - RefundStatus
+    - RequesterMobileNumber
+    - LocationURL
+  CodeName_Type:
+    type: object
+    properties:
+      Id:
+        type: integer
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+    required:
+    - Id
+    - NameAr
+    - NameEn
+  LocationDetails_Type:
+    type: object
+    properties:
+      City:
+        type: string
+      District:
+        type: string
+      Street:
+        type: string
+      BuildingNumber:
+        type: string
+      POBox:
+        type: string
+      ZIPCode:
+        type: string
+      AddressDescription:
+        type: string
+      Latitude:
+        type: string
+      Longitude:
+        type: string
+    required:
+    - City
+    - District
+    - Street
+    - BuildingNumber
+    - POBox
+    - ZIPCode
+    - AddressDescription
+    - Latitude
+    - Longitude
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /getestabreqbalancesdetails:
+    post:
+      operationId: GetEstablishmentRequestedBalancesDetails
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetEstablishmentRequestedBalancesDetailsRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Validate Expansion Visa Request
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetEstablishmentRequestedBalancesDetailsRq_MessageType'
+        description: GetEstablishmentRequestedBalancesDetailsRq
+        required: true

@@ -1,0 +1,827 @@
+swagger: "2.0"
+info:
+  title: MHRSD_SearchChangeJobDescriptionPaged
+  x-ibm-name: mhrsd-searchchangejobdescriptionpaged
+  version: 1.0.0
+  description: This API exposes is used by the consumer to search a change of job
+    description paged in HRSD from External platform
+schemes:
+- https
+basePath: /mhrsd/v2
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - map:
+        version: 2.0.0
+        title: map
+        inputs:
+          laborOfficeId:
+            schema:
+              type: integer
+            variable: request.parameters.laborOfficeId
+          sequenceNumber:
+            schema:
+              type: integer
+            variable: request.parameters.sequenceNumber
+          userId:
+            schema:
+              type: integer
+            variable: request.parameters.userId
+          pageSize:
+            schema:
+              type: string
+            variable: request.parameters.pageSize
+          pageIndex:
+            schema:
+              type: string
+            variable: request.parameters.pageIndex
+        outputs:
+          "":
+            schema:
+              description: ""
+              type: object
+              properties:
+                establishment:
+                  type: object
+                  properties:
+                    laborOfficeId:
+                      type: string
+                      name: laborOfficeId
+                    sequenceNumber:
+                      type: string
+                      name: sequenceNumber
+                  name: establishment
+                pageIndex:
+                  type: string
+                  name: pageIndex
+                pageSize:
+                  type: string
+                  name: pageSize
+                userIdNo:
+                  type: string
+                  name: userIdNo
+              example: "{\r\n\r\n            \"establishment\":{\r\n\r\n                \"laborOfficeId\":\"1\",\r\n\r\n
+                \               \"sequenceNumber\":\"83069\"\r\n\r\n            },\r\n\r\n
+                \           \"pageIndex\":\"a2\",\r\n\r\n            \"pageSize\":\"2\",\r\n\r\n
+                \           \"userIdNo\":\"1015073800\" \r\n\r\n    }"
+            variable: message.body
+            content: application/json
+        actions:
+        - set: .establishment.laborOfficeId
+          from: laborOfficeId
+        - set: .establishment.sequenceNumber
+          from: sequenceNumber
+        - set: .pageIndex
+          from: pageSize
+        - set: .pageSize
+          from: pageIndex
+        - set: .userIdNo
+          from: userId
+        options:
+          mapEnablePostProcessingJSON: true
+          mapEmulateV4EmptyJSONObject: false
+          mapEmulateV4DefaultRequiredProps: false
+          mapReferenceLimit: 1
+          includeEmptyXMLElements: false
+          namespaceInheritance: false
+          inlineNamespaces: false
+          mapResolveApicVariables: false
+          mapOptimizeSchemaDefinition: true
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\n\nvar cfg={\n    \"serviceCode\" : \"EXPQSP001\",\n
+          \   \"channelId\" : \"Integration\",\n    \"requestName\" : \"SearchChangeJobDescriptionPagedRq\",\n
+          \   \"responseName\": \"SearchChangeJobDescriptionPagedRs\",\n    \"errorMap\"
+          :{\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid Request\"}\n
+          \   }\n    \n};\n\napim.setvariable('cfg',cfg);"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare_Request
+        source: "var apim = require('apim');\r\n\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\n\r\nvar appcReq
+          = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n            \"TransactionId\"
+          : millisecondsvalue,\r\n            \"ChannelId\": cfg.channelId,\r\n            \"SessionId\":
+          apim.getvariable('message.headers.X-Request-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode\r\n        },\r\n
+          \       \"Body\" : apim.getvariable('message.body')\r\n            \r\n
+          \       \r\n    }\r\n};\r\n\r\nif (typeof OperatorId !== 'undefined')\r\n
+          \   appcReq[cfg.requestName].Header.UserInfo = {\r\n        \"IDNumber\"
+          : OperatorId\r\n    };\r\nsession.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n    \r\n    \r\n\r\n    //return
+          the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour
+          + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        header-control:
+          type: blacklist
+          values: []
+        parameter-control:
+          type: whitelist
+          values: []
+        timeout: 60
+        verb: POST
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        target-url: $(ace-tip-mhrsd-check)/external/searchchangejobdescriptionpaged
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_Headers
+        source: "\tvar apim = require('apim');\n\t\n\tapim.output('application/json');\n\n
+          \   \n    \n    var cfg = apim.getvariable('cfg');\n    \n\tvar TransactionId
+          = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.TransactionId\");\n\tvar
+          ChannelId = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.ChannelId\");\n\tvar
+          RequestTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.RequestTime\");\n\tvar
+          SessionId = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.SessionId\");\n\tvar
+          MWRequestTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.MWRequestTime\");\n\tvar
+          MWResponseTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.MWResponseTime\");\n\tvar
+          status = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.ResponseStatus.Status\");\n\t\n\n
+          \   apim.setvariable('message.headers.Transaction-Id',TransactionId,'add');\n
+          \   apim.setvariable('message.headers.Channel-Id',ChannelId,'add');\n    if
+          (RequestTime !== 'undefined')\n\t    apim.setvariable('message.headers.RequestTime',RequestTime,'add');\n\tif
+          (SessionId !== 'undefined')\n        apim.setvariable('message.headers.X-Request-Id',SessionId,'add');\n
+          \    if (MWRequestTime !== 'undefined')\n        apim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');\n
+          \   if (MWResponseTime !== 'undefined')\n        apim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');\n\n
+          \   \n    apim.setvariable('message.headers.Response-Status',status,'add');\n
+          \   "
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Response
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar body = message[cfg.responseName].Body;\n\n\nsession.output.write(body);\napim.output('application/json');"
+          - map:
+              version: 2.0.0
+              title: map
+              inputs:
+                "":
+                  schema:
+                    description: ""
+                    type: object
+                    properties:
+                      ChangeJobDescriptionRequests:
+                        type: object
+                        properties:
+                          ChangeJobDescriptionRequestDetails:
+                            type: array
+                            items:
+                              properties:
+                                From:
+                                  type: object
+                                  properties:
+                                    Code:
+                                      type: string
+                                      name: Code
+                                    Name:
+                                      type: string
+                                      name: Name
+                                    NameLocal:
+                                      type: string
+                                      name: NameLocal
+                                  name: From
+                                Laborer:
+                                  type: object
+                                  properties:
+                                    IdNo:
+                                      type: string
+                                      name: IdNo
+                                    Name:
+                                      type: string
+                                      name: Name
+                                    Occupation:
+                                      type: object
+                                      properties:
+                                        Code:
+                                          type: string
+                                          name: Code
+                                        Name:
+                                          type: string
+                                          name: Name
+                                        NameLocal:
+                                          type: string
+                                          name: NameLocal
+                                      name: Occupation
+                                  name: Laborer
+                                RequestNumber:
+                                  type: object
+                                  properties:
+                                    LaborOfficeId:
+                                      type: string
+                                      name: LaborOfficeId
+                                    SequenceNumber:
+                                      type: string
+                                      name: SequenceNumber
+                                    Year:
+                                      type: string
+                                      name: Year
+                                  name: RequestNumber
+                                RequestSubmissionDate:
+                                  type: object
+                                  properties:
+                                    GregorianDate:
+                                      type: string
+                                      name: GregorianDate
+                                    GregorianDateSpecified:
+                                      type: string
+                                      name: GregorianDateSpecified
+                                    HijriDate:
+                                      type: string
+                                      name: HijriDate
+                                  name: RequestSubmissionDate
+                                Status:
+                                  type: string
+                                  name: Status
+                                To:
+                                  type: object
+                                  properties:
+                                    Code:
+                                      type: string
+                                      name: Code
+                                    Name:
+                                      type: string
+                                      name: Name
+                                    NameLocal:
+                                      type: string
+                                      name: NameLocal
+                                  name: To
+                              type: object
+                            name: ChangeJobDescriptionRequestDetails
+                        name: ChangeJobDescriptionRequests
+                    example: "{\r\n    \"ChangeJobDescriptionRequests\": {\r\n        \"ChangeJobDescriptionRequestDetails\":
+                      [\r\n            {\r\n                \"From\": {\r\n                    \"Code\":
+                      \"3215052\",\r\n                    \"Name\": \"فني في الهندسة
+                      الميكانيكة -عام\",\r\n                    \"NameLocal\": \"فني
+                      في الهندسة الميكانيكة -عام\"\r\n                },\r\n                \"Laborer\":
+                      {\r\n                    \"IdNo\": \"2220056549\",\r\n                    \"Name\":
+                      \"JUSTINE AMALRAJ ANTHONI SAMY\",\r\n                    \"Occupation\":
+                      {\r\n                        \"Code\": \"1212041\",\r\n                        \"Name\":
+                      \"مدير صيانة\",\r\n                        \"NameLocal\": \"مدير
+                      صيانة\"\r\n                    }\r\n                },\r\n                \"RequestNumber\":
+                      {\r\n                    \"LaborOfficeId\": \"1\",\r\n                    \"SequenceNumber\":
+                      \"17351\",\r\n                    \"Year\": \"1440\"\r\n                },\r\n
+                      \               \"RequestSubmissionDate\": {\r\n                    \"GregorianDate\":
+                      \"2018-10-16T14:39:36.223\",\r\n                    \"GregorianDateSpecified\":
+                      \"true\",\r\n                    \"HijriDate\": \"0\"\r\n                },\r\n
+                      \               \"Status\": \"تمت الموافقة على طلب تغيير المهنة\",\r\n
+                      \               \"To\": {\r\n                    \"Code\": \"1212041\",\r\n
+                      \                   \"Name\": \"مدير صيانة\",\r\n                    \"NameLocal\":
+                      \"مدير صيانة\"\r\n                }\r\n            },\r\n            {\r\n
+                      \               \"From\": {\r\n                    \"Code\":
+                      \"9111985\",\r\n                    \"Name\": \"مشرف عمال\",\r\n
+                      \                   \"NameLocal\": \"مشرف عمال\"\r\n                },\r\n
+                      \               \"Laborer\": {\r\n                    \"IdNo\":
+                      \"2306497237\",\r\n                    \"Name\": \"ANKIT PURBIA
+                      BHAKT RAJ PURBIA\",\r\n                    \"Occupation\": {\r\n
+                      \                       \"Code\": \"1212031\",\r\n                        \"Name\":
+                      \"مدير انتاج\",\r\n                        \"NameLocal\": \"مدير
+                      انتاج\"\r\n                    }\r\n                },\r\n                \"RequestNumber\":
+                      {\r\n                    \"LaborOfficeId\": \"1\",\r\n                    \"SequenceNumber\":
+                      \"17353\",\r\n                    \"Year\": \"1440\"\r\n                },\r\n
+                      \               \"RequestSubmissionDate\": {\r\n                    \"GregorianDate\":
+                      \"2018-10-16T14:40:40.12\",\r\n                    \"GregorianDateSpecified\":
+                      \"true\",\r\n                    \"HijriDate\": \"0\"\r\n                },\r\n
+                      \               \"Status\": \"تمت الموافقة على طلب تغيير المهنة\",\r\n
+                      \               \"To\": {\r\n                    \"Code\": \"1212031\",\r\n
+                      \                   \"Name\": \"مدير انتاج\",\r\n                    \"NameLocal\":
+                      \"مدير انتاج\"\r\n                }\r\n            },\r\n            {\r\n
+                      \               \"From\": {\r\n                    \"Code\":
+                      \"4211163\",\r\n                    \"Name\": \"كاتب تخطيط مواد\",\r\n
+                      \                   \"NameLocal\": \"كاتب تخطيط مواد\"\r\n                },\r\n
+                      \               \"Laborer\": {\r\n                    \"IdNo\":
+                      \"2373218029\",\r\n                    \"Name\": \"KANAKALAL
+                      KIZHAKKE MADATHIL MANIAN\",\r\n                    \"Occupation\":
+                      {\r\n                        \"Code\": \"1212031\",\r\n                        \"Name\":
+                      \"مدير انتاج\",\r\n                        \"NameLocal\": \"مدير
+                      انتاج\"\r\n                    }\r\n                },\r\n                \"RequestNumber\":
+                      {\r\n                    \"LaborOfficeId\": \"1\",\r\n                    \"SequenceNumber\":
+                      \"17354\",\r\n                    \"Year\": \"1440\"\r\n                },\r\n
+                      \               \"RequestSubmissionDate\": {\r\n                    \"GregorianDate\":
+                      \"2018-10-16T14:43:13.91\",\r\n                    \"GregorianDateSpecified\":
+                      \"true\",\r\n                    \"HijriDate\": \"0\"\r\n                },\r\n
+                      \               \"Status\": \"تمت الموافقة على طلب تغيير المهنة\",\r\n
+                      \               \"To\": {\r\n                    \"Code\": \"1212031\",\r\n
+                      \                   \"Name\": \"مدير انتاج\",\r\n                    \"NameLocal\":
+                      \"مدير انتاج\"\r\n                }\r\n            }\r\n        ]\r\n
+                      \   }\r\n}"
+                  variable: message.body
+                  content: application/json
+              outputs:
+                "":
+                  schema:
+                    description: ""
+                    type: object
+                    properties:
+                      changeJobDescriptionRequests:
+                        type: object
+                        properties:
+                          changeJobDescriptionRequestDetails:
+                            type: array
+                            items:
+                              properties:
+                                from:
+                                  type: object
+                                  properties:
+                                    code:
+                                      type: string
+                                      name: code
+                                    name:
+                                      type: string
+                                      name: name
+                                    nameLocal:
+                                      type: string
+                                      name: nameLocal
+                                  name: from
+                                laborer:
+                                  type: object
+                                  properties:
+                                    idNo:
+                                      type: integer
+                                      name: idNo
+                                    name:
+                                      type: string
+                                      name: name
+                                    occupation:
+                                      type: object
+                                      properties:
+                                        code:
+                                          type: string
+                                          name: code
+                                        name:
+                                          type: string
+                                          name: name
+                                        nameLocal:
+                                          type: string
+                                          name: nameLocal
+                                      name: occupation
+                                  name: laborer
+                                requestNumber:
+                                  type: object
+                                  properties:
+                                    laborOfficeId:
+                                      type: integer
+                                      name: laborOfficeId
+                                    sequenceNumber:
+                                      type: integer
+                                      name: sequenceNumber
+                                    year:
+                                      type: integer
+                                      name: year
+                                  name: requestNumber
+                                requestSubmissionDate:
+                                  type: object
+                                  properties:
+                                    gregorianDate:
+                                      type: integer
+                                      name: gregorianDate
+                                    gregorianDateSpecified:
+                                      type: string
+                                      name: gregorianDateSpecified
+                                    hijriDate:
+                                      type: string
+                                      name: hijriDate
+                                  name: requestSubmissionDate
+                                status:
+                                  type: string
+                                  name: status
+                                to:
+                                  type: object
+                                  properties:
+                                    code:
+                                      type: string
+                                      name: code
+                                    name:
+                                      type: string
+                                      name: name
+                                    nameLocal:
+                                      type: string
+                                      name: nameLocal
+                                  name: to
+                              type: object
+                            name: changeJobDescriptionRequestDetails
+                        name: changeJobDescriptionRequests
+                    example: "{\r\n    \"ChangeJobDescriptionRequests\": {\r\n        \"ChangeJobDescriptionRequestDetails\":
+                      [\r\n            {\r\n                \"From\": {\r\n                    \"Code\":
+                      \"3215052\",\r\n                    \"Name\": \"فني في الهندسة
+                      الميكانيكة -عام\",\r\n                    \"NameLocal\": \"فني
+                      في الهندسة الميكانيكة -عام\"\r\n                },\r\n                \"Laborer\":
+                      {\r\n                    \"IdNo\": \"2220056549\",\r\n                    \"Name\":
+                      \"JUSTINE AMALRAJ ANTHONI SAMY\",\r\n                    \"Occupation\":
+                      {\r\n                        \"Code\": \"1212041\",\r\n                        \"Name\":
+                      \"مدير صيانة\",\r\n                        \"NameLocal\": \"مدير
+                      صيانة\"\r\n                    }\r\n                },\r\n                \"RequestNumber\":
+                      {\r\n                    \"LaborOfficeId\": \"1\",\r\n                    \"SequenceNumber\":
+                      \"17351\",\r\n                    \"Year\": \"1440\"\r\n                },\r\n
+                      \               \"RequestSubmissionDate\": {\r\n                    \"GregorianDate\":
+                      \"2018-10-16T14:39:36.223\",\r\n                    \"GregorianDateSpecified\":
+                      \"true\",\r\n                    \"HijriDate\": \"0\"\r\n                },\r\n
+                      \               \"Status\": \"تمت الموافقة على طلب تغيير المهنة\",\r\n
+                      \               \"To\": {\r\n                    \"Code\": \"1212041\",\r\n
+                      \                   \"Name\": \"مدير صيانة\",\r\n                    \"NameLocal\":
+                      \"مدير صيانة\"\r\n                }\r\n            },\r\n            {\r\n
+                      \               \"From\": {\r\n                    \"Code\":
+                      \"9111985\",\r\n                    \"Name\": \"مشرف عمال\",\r\n
+                      \                   \"NameLocal\": \"مشرف عمال\"\r\n                },\r\n
+                      \               \"Laborer\": {\r\n                    \"IdNo\":
+                      \"2306497237\",\r\n                    \"Name\": \"ANKIT PURBIA
+                      BHAKT RAJ PURBIA\",\r\n                    \"Occupation\": {\r\n
+                      \                       \"Code\": \"1212031\",\r\n                        \"Name\":
+                      \"مدير انتاج\",\r\n                        \"NameLocal\": \"مدير
+                      انتاج\"\r\n                    }\r\n                },\r\n                \"RequestNumber\":
+                      {\r\n                    \"LaborOfficeId\": \"1\",\r\n                    \"SequenceNumber\":
+                      \"17353\",\r\n                    \"Year\": \"1440\"\r\n                },\r\n
+                      \               \"RequestSubmissionDate\": {\r\n                    \"GregorianDate\":
+                      \"2018-10-16T14:40:40.12\",\r\n                    \"GregorianDateSpecified\":
+                      \"true\",\r\n                    \"HijriDate\": \"0\"\r\n                },\r\n
+                      \               \"Status\": \"تمت الموافقة على طلب تغيير المهنة\",\r\n
+                      \               \"To\": {\r\n                    \"Code\": \"1212031\",\r\n
+                      \                   \"Name\": \"مدير انتاج\",\r\n                    \"NameLocal\":
+                      \"مدير انتاج\"\r\n                }\r\n            },\r\n            {\r\n
+                      \               \"From\": {\r\n                    \"Code\":
+                      \"4211163\",\r\n                    \"Name\": \"كاتب تخطيط مواد\",\r\n
+                      \                   \"NameLocal\": \"كاتب تخطيط مواد\"\r\n                },\r\n
+                      \               \"Laborer\": {\r\n                    \"IdNo\":
+                      \"2373218029\",\r\n                    \"Name\": \"KANAKALAL
+                      KIZHAKKE MADATHIL MANIAN\",\r\n                    \"Occupation\":
+                      {\r\n                        \"Code\": \"1212031\",\r\n                        \"Name\":
+                      \"مدير انتاج\",\r\n                        \"NameLocal\": \"مدير
+                      انتاج\"\r\n                    }\r\n                },\r\n                \"RequestNumber\":
+                      {\r\n                    \"LaborOfficeId\": \"1\",\r\n                    \"SequenceNumber\":
+                      \"17354\",\r\n                    \"Year\": \"1440\"\r\n                },\r\n
+                      \               \"RequestSubmissionDate\": {\r\n                    \"GregorianDate\":
+                      \"2018-10-16T14:43:13.91\",\r\n                    \"GregorianDateSpecified\":
+                      \"true\",\r\n                    \"HijriDate\": \"0\"\r\n                },\r\n
+                      \               \"Status\": \"تمت الموافقة على طلب تغيير المهنة\",\r\n
+                      \               \"To\": {\r\n                    \"Code\": \"1212031\",\r\n
+                      \                   \"Name\": \"مدير انتاج\",\r\n                    \"NameLocal\":
+                      \"مدير انتاج\"\r\n                }\r\n            }\r\n        ]\r\n
+                      \   }\r\n}"
+                  variable: message.body
+                  content: application/json
+              actions:
+              - set: .changeJobDescriptionRequests.changeJobDescriptionRequestDetails
+                from: .ChangeJobDescriptionRequests.ChangeJobDescriptionRequestDetails
+              options:
+                mapEnablePostProcessingJSON: true
+                mapEmulateV4EmptyJSONObject: false
+                mapEmulateV4DefaultRequiredProps: false
+                mapReferenceLimit: 1
+                includeEmptyXMLElements: false
+                namespaceInheritance: false
+                inlineNamespaces: false
+                mapResolveApicVariables: false
+                mapNullValue: true
+                mapOptimizeSchemaDefinition: true
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Error
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar error = {\n  \"errorCode\":
+                message[cfg.responseName].Header.ResponseStatus.Code,\n  \"errorMessage\":
+                {\n    \"en-US\": message[cfg.responseName].Header.ResponseStatus.EnglishMsg,\n
+                \   \"ar-SA\": message[cfg.responseName].Header.ResponseStatus.ArabicMsg\n
+                \ }\n};\n\nvar httperror=0;\nif(cfg.errorMap){\n    if(cfg.errorMap[error.errorCode]){\n
+                \      httperror = cfg.errorMap[error.errorCode].code;\n       \n
+                \      //var errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\n
+                \      //var details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\n    }\n}\nif(httperror
+                == 0){\n   httperror = 400;\n   // apim.error('ERROR',400,'Bad Request','Invalid
+                request');\n}\napim.setvariable('message.status.code',httperror,'set');\n\nsession.output.write(error);\napim.output('application/json');"
+    catch: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+parameters:
+  X-IBM-Client-Id:
+    in: header
+    name: X-IBM-Client-Id
+    description: Client id issued by security server
+    required: true
+    type: string
+  X-IBM-Client-Secret:
+    in: header
+    name: X-IBM-Client-Secret
+    description: Client secret issued by security server
+    required: true
+    type: string
+  X-Request-Id:
+    in: header
+    name: X-Request-Id
+    description: X-Request-Id returned in the response header
+    required: false
+    type: string
+  laborOfficeId:
+    in: path
+    name: laborOfficeId
+    description: Laborer office identification
+    required: true
+    type: integer
+    format: int32
+  sequenceNumber:
+    in: path
+    name: sequenceNumber
+    description: Sequence number
+    required: true
+    type: integer
+    format: int32
+  userId:
+    in: path
+    name: userId
+    description: user identification
+    required: true
+    type: integer
+    format: int32
+  pageIndex:
+    in: query
+    name: pageIndex
+    description: page index
+    required: false
+    type: string
+  pageSize:
+    in: query
+    name: pageSize
+    description: page size
+    required: false
+    type: string
+definitions:
+  ResponseModel:
+    type: object
+    properties:
+      ChangeJobDescriptionRequests:
+        $ref: '#/definitions/ChangeJobDescriptionRequests'
+  ChangeJobDescriptionRequests:
+    type: object
+    properties:
+      changeJobDescriptionRequestDetails:
+        type: array
+        items:
+          $ref: '#/definitions/ChangeJobDescriptionRequestDetails'
+  ChangeJobDescriptionRequestDetails:
+    type: object
+    properties:
+      from:
+        $ref: '#/definitions/LookupStructure'
+      laborer:
+        $ref: '#/definitions/Laborer'
+      requestNumber:
+        $ref: '#/definitions/RequestNumber'
+      requestSubmissionDate:
+        $ref: '#/definitions/HijriGregorianDateModel'
+      status:
+        type: string
+        example: active
+      to:
+        $ref: '#/definitions/LookupStructure'
+  LookupStructure:
+    type: object
+    properties:
+      code:
+        type: string
+        example: 10
+      name:
+        $ref: '#/definitions/LocaleDataModel'
+  Laborer:
+    type: object
+    properties:
+      idNo:
+        type: string
+        example: 2526404111
+      name:
+        $ref: '#/definitions/LocaleDataModel'
+      occupation:
+        $ref: '#/definitions/LookupStructure'
+  RequestNumber:
+    type: object
+    properties:
+      laborOfficeId:
+        type: integer
+        format: int32
+        example: 112526
+      sequenceNumber:
+        type: integer
+        format: int64
+        example: 1211
+      year:
+        type: integer
+        format: int32
+        example: 2008
+  ErrorModel:
+    type: object
+    required:
+    - errorCode
+    - errorMessage
+    properties:
+      errorCode:
+        type: string
+        example: EXXXX000
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+  LocaleDataModel:
+    type: object
+    additionalProperties:
+      type: string
+    example:
+      en-US: English Value
+      ar-SA: Arabic Value
+  HijriGregorianDateModel:
+    type: object
+    description: This date object will be used across the model with format dd/mm/yyyy
+      for gregorian and yyyy/mm/dd for hijri
+    properties:
+      hijriDate:
+        $ref: '#/definitions/HijriDateModel'
+      gregorianDate:
+        $ref: '#/definitions/GregorianDateModel'
+  GregorianDateModel:
+    type: string
+    description: This date object will be used across the model with format dd/mm/yyyy
+      for gregorian dates only
+    example: 31/12/2017
+  HijriDateModel:
+    type: string
+    description: This date object will be used across the model with format yyyy/mm/dd
+      for hijri dates only
+    example: 1439/12/25
+paths:
+  /labor-office/{laborOfficeId}/seq-no/{sequenceNumber}/user/{userId}/job-description:
+    parameters:
+    - $ref: '#/parameters/X-IBM-Client-Id'
+    - $ref: '#/parameters/X-IBM-Client-Secret'
+    - $ref: '#/parameters/laborOfficeId'
+    - $ref: '#/parameters/sequenceNumber'
+    - $ref: '#/parameters/userId'
+    - $ref: '#/parameters/pageSize'
+    - $ref: '#/parameters/pageIndex'
+    get:
+      tags:
+      - Job Description
+      description: Service to search a change of job description paged
+      operationId: getJobDescriptionChangedByPagination
+      produces:
+      - application/json
+      responses:
+        "200":
+          $ref: '#/responses/Response200'
+        "400":
+          $ref: '#/responses/Response400'
+        "401":
+          $ref: '#/responses/Response401'
+        "403":
+          $ref: '#/responses/Response403'
+        "404":
+          $ref: '#/responses/Response404'
+        "408":
+          $ref: '#/responses/Response408'
+        "409":
+          $ref: '#/responses/Response409'
+        "429":
+          $ref: '#/responses/Response429'
+        "500":
+          $ref: '#/responses/Response500'
+        "501":
+          $ref: '#/responses/Response501'
+        "503":
+          $ref: '#/responses/Response503'
+        "510":
+          $ref: '#/responses/Response510'
+responses:
+  Response200:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ResponseModel'
+  Response204:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response400:
+    description: The request was rejected by the server due to malformed syntax. Bad
+      Request.
+  Response401:
+    description: The request could not be completed due to lack of valid credentials.
+      Authentication.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response403:
+    description: The request could not be completed because it is not authorized.
+      Authorization
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response404:
+    description: The server has not found anything matching the Request-URI.
+  Response408:
+    description: The client did not produce a request within the time that the server
+      was prepared to wait.
+  Response409:
+    description: The request could not be completed due to a conflict with the current
+      state of the resource. Usually business validation errors will be returned in
+      the body
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response429:
+    description: The request was sent too many times in a given amount of time
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response500:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response501:
+    description: The server does not support the functionality required and does not
+      recognize the request
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response503:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response510:
+    description: Extensions to the request are required for the server to fulfil it.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'

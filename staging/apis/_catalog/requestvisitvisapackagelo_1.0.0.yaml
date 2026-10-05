@@ -1,0 +1,250 @@
+swagger: "2.0"
+info:
+  title: RequestVisitVisaPackageLO
+  version: 1.0.0
+  description: This service is used to Request Visit Visa
+  x-ibm-name: requestvisitvisapackagelo
+paths:
+  /requestvisitvisapackagelo:
+    post:
+      operationId: RequestVisitVisaPackageLO
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/RequestVisitVisaPackageLORs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Request Visit Visa Package LO
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/RequestVisitVisaPackageLORq_MessageType'
+        description: Request Visit Visa Package LO
+        required: true
+basePath: /qiwalo
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+definitions:
+  RequestVisitVisaPackageLORs_MessageType:
+    type: object
+    properties:
+      RequestVisitVisaPackageLORq:
+        $ref: '#/definitions/RequestVisitVisaPackageLORs_Type'
+  RequestVisitVisaPackageLORq_MessageType:
+    type: object
+    properties:
+      RequestVisitVisaPackageLORq:
+        $ref: '#/definitions/RequestVisitVisaPackageLORq_Type'
+  RequestVisitVisaPackageLORq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/RequestVisitVisaPackageLORq_BodyType'
+  RequestVisitVisaPackageLORq_BodyType:
+    type: object
+    properties:
+      LaborOfficeID:
+        type: integer
+      EstablishmentSequence:
+        type: integer
+      Package5RequestedBalance:
+        type: integer
+    required:
+    - LaborOfficeID
+    - EstablishmentSequence
+    - Package5RequestedBalance
+  RequestVisitVisaPackageLORs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/RequestVisitVisaPackageLORs_BodyType'
+  RequestVisitVisaPackageLORs_BodyType:
+    type: object
+    properties:
+      ReferenceNumber:
+        type: integer
+    required:
+    - ReferenceNumber
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+  ErrorItem_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ArDescription:
+        type: string
+      EnDescription:
+        type: string
+    required:
+    - EnDescription
+    - ArDescription
+    - ErrorCode
+  ErrorsList_Type:
+    type: object
+    properties:
+      ErrorItem:
+        type: array
+        items:
+          $ref: '#/definitions/ErrorItem_Type'
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-lbro-lo-visas)/qiwalo/requestvisitvisapackagelo
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: allowlist
+          values: []
+        header-control:
+          type: blocklist
+          values: []
+        inject-proxy-headers: true
+        persistent-connection: true
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+schemes:
+- https

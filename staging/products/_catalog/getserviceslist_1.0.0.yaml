@@ -1,0 +1,331 @@
+swagger: "2.0"
+info:
+  title: GetServicesList
+  x-ibm-name: getserviceslist
+  version: 1.0.0
+  description: GetServicesList
+schemes:
+- https
+basePath: /common
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-lbro-lo-services)/common/getserlis
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  GetServicesListRq_MessageType:
+    type: object
+    properties:
+      GetServicesListRq:
+        $ref: '#/definitions/GetServicesListRq_Type'
+  GetServicesListRs_MessageType:
+    type: object
+    properties:
+      GetServicesListRs:
+        $ref: '#/definitions/GetServicesListRs_Type'
+  GetServicesListRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetServicesListRq_BodyType'
+  GetServicesListRq_BodyType:
+    type: object
+    properties:
+      ServiceNameAr:
+        type: string
+      ServiceNameEn:
+        type: string
+      RequesterTypeId:
+        type: integer
+      ServiceStatusId:
+        type: integer
+      SubServiceStatusId:
+        type: integer
+      IsQiwaScope:
+        type: integer
+      ServiceId:
+        type: integer
+      PageSize:
+        type: integer
+      PageIndex:
+        type: integer
+    required:
+    - PageSize
+    - PageIndex
+  GetServicesListRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetServicesListRs_BodyType'
+  GetServicesListRs_BodyType:
+    type: object
+    properties:
+      ServicesList:
+        $ref: '#/definitions/ServicesList_Type'
+      TotalRecordsCount:
+        type: integer
+    required:
+    - ServicesList
+    - TotalRecordsCount
+  ServicesList_Type:
+    type: object
+    properties:
+      ServicesItem:
+        $ref: '#/definitions/ServicesItem_Type'
+  ServicesItem_Type:
+    type: object
+    properties:
+      RequesterDetails:
+        $ref: '#/definitions/RequesterDetails_Type'
+      ServiceDetails:
+        $ref: '#/definitions/ServiceDetails_Type'
+      ServiceStatus:
+        $ref: '#/definitions/CodeName_Type'
+      RequesterType:
+        $ref: '#/definitions/CodeName_Type'
+      IsQiwaScope:
+        type: string
+      CreationDate:
+        type: string
+      LastModifiedDate:
+        type: string
+    required:
+    - RequesterDetails
+    - ServiceDetails
+    - ServiceStatus
+    - IsQiwaScope
+    - CreationDate
+    - LastModifiedDate
+  SubServicesList_Type:
+    type: object
+    properties:
+      SubServicesItem:
+        $ref: '#/definitions/SubServicesItem_Type'
+  SubServicesItem_Type:
+    type: object
+    properties:
+      RequesterDetails:
+        $ref: '#/definitions/RequesterDetails_Type'
+      SubServiceDetails:
+        $ref: '#/definitions/ServiceDetails_Type'
+      SubServiceStatus:
+        $ref: '#/definitions/CodeName_Type'
+      CreationDate:
+        type: string
+      LastModifiedDate:
+        type: string
+    required:
+    - RequesterDetails
+    - CreationDate
+    - LastModifiedDate
+  RequesterDetails_Type:
+    type: object
+    properties:
+      RequesterIdNo:
+        type: integer
+      RequesterUserId:
+        type: integer
+      RequesterName:
+        type: string
+    required:
+    - RequesterIdNo
+    - RequesterUserId
+    - RequesterName
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+    required:
+    - Code
+    - NameAr
+    - NameEn
+  ServiceDetails_Type:
+    type: object
+    properties:
+      ServiceID:
+        type: integer
+      ServiceNameAr:
+        type: string
+      ServiceNameEn:
+        type: string
+      SubServicesList:
+        $ref: '#/definitions/SubServicesList_Type'
+    required:
+    - ServiceID
+    - ServiceNameAr
+    - ServiceNameEn
+    - SubServicesList
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /getserlis:
+    post:
+      operationId: GetServicesList
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetServicesListRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Get LO Services List
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetServicesListRq_MessageType'
+        description: GetServicesListRq
+        required: true

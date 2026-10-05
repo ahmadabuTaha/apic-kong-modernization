@@ -1,0 +1,231 @@
+swagger: "2.0"
+info:
+  title: MOMRA_RestServices
+  x-ibm-name: momra-restservices
+  version: 1.0.0
+  description: MOMRA_RestServices
+schemes:
+- https
+basePath: /momra/v1
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(cat-target-hostname)$(cat-target-url-external2)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  ResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+  Error_MessageType:
+    type: object
+    properties:
+      ErrorResponse:
+        $ref: '#/definitions/ResponseStatus_Type'
+  GetEstabSitesRq_MessageType:
+    type: object
+    properties:
+      EstabSitesRq:
+        $ref: '#/definitions/GetEstabSitesRq_Type'
+  GetEstabSitesRq_Type:
+    type: object
+    properties:
+      UnifiedLicenseNumber:
+        type: string
+      OwnerIdentifier:
+        $ref: '#/definitions/OwnerIdentifier_Type'
+  OwnerIdentifier_Type:
+    type: object
+    properties:
+      CRNumber:
+        type: string
+      CharityID:
+        type: string
+      GovernmentalEntityID:
+        type: string
+      GulfID:
+        type: string
+      NationalID:
+        type: string
+      SevenHundredNumber:
+        type: string
+  ServiceError_Type:
+    type: object
+    properties:
+      SourceAgency:
+        type: string
+      ErrorType:
+        type: string
+      RaisedBy:
+        type: string
+      Code:
+        type: string
+      ErrorText:
+        type: string
+      Insert:
+        type: string
+  GetEstabSitesRs_MessageType:
+    type: object
+    properties:
+      EstabSitesRs:
+        $ref: '#/definitions/GetEstabSitesRs_Type'
+  GetShopLicenseInfoResponseDetail_Type:
+    type: object
+    properties:
+      OwnerInfo:
+        $ref: '#/definitions/OwnerInfoStructure_Type'
+      LicenseInfoList:
+        $ref: '#/definitions/LicenseInfoList_Type'
+  OwnerInfoStructure_Type:
+    type: object
+    properties:
+      OwnerName:
+        type: string
+      OwnerIdentifier:
+        $ref: '#/definitions/OwnerIdentifier_Type'
+  LicenseInfoList_Type:
+    type: object
+    properties:
+      LicenseInfo:
+        $ref: '#/definitions/LicenseInfo_Type'
+  GetEstabSitesRs_Type:
+    type: object
+    properties:
+      ServiceError:
+        $ref: '#/definitions/ServiceError_Type'
+      GetShopLicenseInfoResponseDetailObject:
+        $ref: '#/definitions/GetShopLicenseInfoResponseDetail_Type'
+  LicenseInfo_Type:
+    type: object
+    properties:
+      UnifiedLicenseNumber:
+        type: string
+      Amanah:
+        $ref: '#/definitions/Amanah_Type'
+      BaladiaName:
+        type: string
+      IssueDate:
+        type: string
+      ExpiryDate:
+        type: string
+      LicenseStatus:
+        type: string
+      ActivitiesList:
+        $ref: '#/definitions/Activity_Type'
+      CommercialName:
+        type: string
+      ShopArea:
+        type: string
+      DoorsCount:
+        type: string
+      ShopAddress:
+        type: string
+      LocationCoordinates:
+        $ref: '#/definitions/Location_Type'
+  Amanah_Type:
+    type: object
+    properties:
+      AmanahCode:
+        type: string
+      AmanahName:
+        type: string
+  Location_Type:
+    type: object
+    properties:
+      Longitude:
+        type: string
+      Latitude:
+        type: string
+  Activity_Type:
+    type: object
+    properties:
+      Activity:
+        type: array
+        items:
+          $ref: '#/definitions/ActivityStructure_Type'
+  ActivityStructure_Type:
+    type: object
+    properties:
+      ActivityISICCode:
+        type: string
+      ActivityISICDescription:
+        type: string
+      ActivityAmanahDescription:
+        type: string
+      ActivityArea:
+        type: string
+      BoardsList:
+        $ref: '#/definitions/Board_Type'
+  Board_Type:
+    type: object
+    properties:
+      Board:
+        type: array
+        items:
+          $ref: '#/definitions/BoardStructure_Type'
+  BoardStructure_Type:
+    type: object
+    properties:
+      BoardType:
+        type: string
+      BoardArea:
+        type: string
+paths:
+  /get-establishment-sites2:
+    post:
+      operationId: postGet-establishment-sites
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetEstabSitesRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Insert a get-establishment-sites
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetEstabSitesRq_MessageType'
+        description: The request body for the operation
+        required: true

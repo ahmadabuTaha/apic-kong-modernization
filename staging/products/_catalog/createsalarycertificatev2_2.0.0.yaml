@@ -1,0 +1,239 @@
+swagger: "2.0"
+info:
+  title: CreateSalaryCertificate
+  description: This API Create Salary Certificate
+  x-ibm-name: createsalarycertificatev2
+  version: 2.0.0
+schemes:
+- https
+basePath: /qiwa/v3
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+paths:
+  /salary-certificates:
+    post:
+      tags:
+      - CreateSalaryCertificate
+      description: This API Create Salary Certificate
+      operationId: CreateSalaryCertificate
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/CreateSalaryCertificateRs_MessageType'
+definitions:
+  CreateSalaryCertificateRq_MessageType:
+    type: object
+    properties:
+      CreateSalaryCertificateRq:
+        $ref: '#/definitions/CreateSalaryCertificateRq_Type'
+  CreateSalaryCertificateRs_MessageType:
+    type: object
+    properties:
+      CreateSalaryCertificateRs:
+        $ref: '#/definitions/CreateSalaryCertificateRs_Type'
+  CreateSalaryCertificateRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/CreateSalaryCertificateRq_BodyType'
+  CreateSalaryCertificateRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      LaborerIdNo:
+        type: integer
+      AddressedToId:
+        type: integer
+      BankId:
+        type: integer
+      EmbassyId:
+        type: integer
+      LanguageId:
+        type: integer
+      EntityName:
+        type: string
+      CertificateTypeId:
+        type: integer
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+    - LaborerIdNo
+    - AddressedToId
+  CreateSalaryCertificateRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/CreateSalaryCertificateRs_BodyType'
+  CreateSalaryCertificateRs_BodyType:
+    type: object
+    properties:
+      CertificateId:
+        type: string
+    required:
+    - CertificateId
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(internal-individual-salary-certificate)/api/v3/salary-certificates
+        follow-redirects: false
+        inject-proxy-headers: true
+    finally: []
+    catch: []
+  properties:
+    target-url:
+      value: http://sc-salary-certificate-http-ace.apps.stg.qiwa-nonprod.local/Create/Salary/Certificate
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload

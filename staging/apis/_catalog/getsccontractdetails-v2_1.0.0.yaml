@@ -1,0 +1,400 @@
+swagger: "2.0"
+info:
+  title: GetSCContractDetails V2
+  x-ibm-name: getsccontractdetails-v2
+  version: 1.0.0
+  description: 'This service is used to get contract details '
+schemes:
+- https
+basePath: /contractmanagement/v2
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-cntmv2-getcon-details)/contractmanagement/getsccontractdetails
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+definitions:
+  GetSCContractDetailsRq_MessageType:
+    type: object
+    properties:
+      GetSCContractDetailsRq:
+        $ref: '#/definitions/GetSCContractDetailsRq_Type'
+  GetSCContractDetailsRs_MessageType:
+    type: object
+    properties:
+      GetSCContractDetailsRs:
+        $ref: '#/definitions/GetSCContractDetailsRs_Type'
+  GetSCContractDetailsRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetSCContractDetailsRq_BodyType'
+  GetSCContractDetailsRq_BodyType:
+    type: object
+    properties:
+      ContractId:
+        type: integer
+  GetSCContractDetailsRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetSCContractDetailsRs_BodyType'
+  GetSCContractDetailsRs_BodyType:
+    type: object
+    properties:
+      LaborerDetails:
+        $ref: '#/definitions/LaborerDetails_Type'
+      EstablishmentDetails:
+        $ref: '#/definitions/EstablishmentDetails_type'
+      ContractDetails:
+        $ref: '#/definitions/ContractDetails_Type'
+    required:
+    - LaborerDetails
+    - EstablishmentDetails
+    - ContractDetails
+  ContractDetails_Type:
+    type: object
+    properties:
+      ContractId:
+        type: integer
+      JobTitle:
+        $ref: '#/definitions/JobTitle_Type'
+      ContractType:
+        $ref: '#/definitions/CodeName_Type'
+      Salary:
+        type: integer
+      SalaryType:
+        $ref: '#/definitions/CodeName_Type'
+      SalaryFrequency:
+        $ref: '#/definitions/CodeName_Type'
+      Allowances:
+        $ref: '#/definitions/Allowances_Type'
+      TotalMonthlySalary:
+        type: number
+      PercentageReasonEN:
+        type: string
+      PercentageReasonAR:
+        type: string
+      CurrentStartDate:
+        type: number
+      CurrentExpiryDate:
+        type: number
+      OriginalStartDate:
+        type: number
+      OriginalExpiryDate:
+        type: number
+      Status:
+        $ref: '#/definitions/CodeName_Type'
+      RenewalTimes:
+        type: integer
+      RelatedTo:
+        $ref: '#/definitions/CodeName_Type'
+      OccupationDetails:
+        $ref: '#/definitions/OccupationDetails_Type'
+      ContractDuration:
+        $ref: '#/definitions/CodeName_Type'
+      RenewalStatus:
+        $ref: '#/definitions/CodeName_Type'
+      LastModifiedDate:
+        type: string
+      IsUnified:
+        type: integer
+      RenewalPeriod:
+        type: integer
+    required:
+    - ContractId
+    - ContractType
+    - ContractDuration
+    - JobTitle
+    - OccupationDetails
+    - Salary
+    - SalaryType
+    - Allowances
+    - SalaryFrequency
+    - TotalMonthlySalary
+    - PercentageReasonEN
+    - PercentageReasonAR
+    - CurrentStartDate
+    - CurrentExpiryDate
+    - OriginalStartDate
+    - OriginalExpiryDate
+    - LastModifiedDate
+    - Status
+    - IsUnified
+    - RelatedTo
+    - RenewalStatus
+    - RenewalTimes
+    - RenewalPeriod
+  OccupationDetails_Type:
+    type: object
+    properties:
+      OccupationId:
+        type: integer
+      OccupationAr:
+        type: string
+      OccupationEn:
+        type: string
+    required:
+    - OccupationId
+    - OccupationAr
+    - OccupationEn
+  Allowances_Type:
+    type: object
+    properties:
+      AllowancesItem:
+        type: array
+        items:
+          $ref: '#/definitions/AllowancesItem_Type'
+  AllowancesItem_Type:
+    type: object
+    properties:
+      AllowanceType:
+        $ref: '#/definitions/CodeName_Type'
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+      Frequency:
+        $ref: '#/definitions/CodeName_Type'
+      AmountType:
+        $ref: '#/definitions/CodeName_Type'
+      Amount:
+        type: number
+      IsProvidedByEstablishment:
+        type: integer
+    required:
+    - AllowanceType
+    - NameAr
+    - NameEn
+    - Frequency
+    - AmountType
+    - Amount
+    - IsProvidedByEstablishment
+  JobTitle_Type:
+    type: object
+    properties:
+      JobTitleAr:
+        type: string
+      JobTitleEng:
+        type: string
+    required:
+    - JobTitleAr
+    - JobTitleEng
+  LaborerDetails_Type:
+    type: object
+    properties:
+      LaborerIdNo:
+        type: integer
+      LaborerType:
+        $ref: '#/definitions/CodeName_Type'
+      LaborerName:
+        type: string
+      Nationality:
+        $ref: '#/definitions/CodeName_Type'
+    required:
+    - LaborerIdNo
+    - LaborerType
+    - LaborerName
+    - Nationality
+  EstablishmentDetails_type:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      EstablishmentId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      EstablishmentNameAr:
+        type: string
+      EstablishmentNameEn:
+        type: string
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+    - EstablishmentId
+    - EstablishmentNameAr
+    - EstablishmentNameEn
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+    required:
+    - Code
+    - NameAr
+    - NameEn
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /getsccontractdetails:
+    post:
+      operationId: 'GetSCContractDetails '
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetSCContractDetailsRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: 'GetSCContractDetails '
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetSCContractDetailsRq_MessageType'
+        description: 'The scope of this service is used to get contract details '
+        required: true

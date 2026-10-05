@@ -1,0 +1,137 @@
+swagger: "2.0"
+info:
+  title: Qiwa_GetZendeskTicketByIqamaID
+  x-ibm-name: qiwa-getzendeskticketbyiqamaid
+  version: 1.0.0
+  description: Qiwa_GetZendeskTicketByIqamaID
+schemes:
+- https
+basePath: /qiwa/v1
+produces:
+- application/json
+consumes:
+- application/json
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        parameter-control:
+          type: blocklist
+        timeout: 60
+        verb: POST
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(ace-zen-zendesk)/zendesk/ticketing/v1/postTicketByIqamaID
+        follow-redirects: false
+        inject-proxy-headers: true
+        stop-on-error:
+        - OperationError
+        - SOAPError
+        - ConnectionError
+    catch:
+    - default:
+      - set-variable:
+          version: 2.0.0
+          title: set-variable
+          actions:
+          - set: message.status.code
+            value: "201"
+            type: string
+          - set: message.headers.content-type
+            value: application/json
+            type: string
+          - set: message.body
+            value: '{ "errorCode": "500", "errorMessage": "Internal server error"
+              }'
+            type: string
+    finally: []
+  properties: {}
+  application-authentication:
+    certificate: false
+  activity-log:
+    success-content: payload
+    error-content: payload
+    enabled: true
+  catalogs: {}
+  buffering: true
+definitions:
+  GetTicketByIqamaIdReq:
+    type: object
+    additionalProperties: false
+    properties:
+      TransactionId:
+        type: string
+      IdNumber:
+        type: string
+      MobileNumber:
+        type: string
+  GetTicketByIqamaIdResp:
+    type: object
+    additionalProperties: false
+  ErrorModel:
+    type: object
+    properties:
+      errorCode:
+        type: string
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+    required:
+    - errorCode
+  LocaleDataModel:
+    type: object
+    properties:
+      en-US:
+        type: string
+      ar-SA:
+        type: string
+paths:
+  /GetTicketByIdNumber:
+    post:
+      operationId: postGetTicketByIqamaId
+      responses:
+        "201":
+          description: The operation was successful.
+          schema:
+            type: integer
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Insert a GetTicketByIqamaId
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetTicketByIqamaIdReq'
+        description: The request body for the operation
+        required: true

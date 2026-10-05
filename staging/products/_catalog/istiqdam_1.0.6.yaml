@@ -1,0 +1,44 @@
+info:
+  version: 1.0.6
+  title: Istiqdam
+  name: istiqdam
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      istiqdamworkpermitassignment: {}
+      istiqdamcreatecontractapiwrapper: {}
+      istiqdamdownloadcontract: {}
+      istiqdamgetpackages: {}
+      istiqdamgetpackage: {}
+      istiqdamcancelcontract: {}
+      istiqdamcontractdetails: {}
+apis:
+  istiqdamworkpermitassignment:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/istiqdamworkpermitassignment_1.0.0_1.yaml
+  istiqdamcreatecontractapiwrapper:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/istiqdamcreatecontractapiwrapper_1.0.0_1.yaml
+  istiqdamdownloadcontract:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/istiqdamdownloadcontract_1.0.0_1.yaml
+  istiqdamgetpackages:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/istiqdamgetpackages_1.0.0_1.yaml
+  istiqdamgetpackage:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/istiqdamgetpackage_1.0.0_1.yaml
+  istiqdamcancelcontract:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/istiqdamcancelcontract_1.0.0_1.yaml
+  istiqdamcontractdetails:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/istiqdamcontractdetails_1.0.0_1.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

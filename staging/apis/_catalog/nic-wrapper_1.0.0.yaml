@@ -1,0 +1,66 @@
+swagger: "2.0"
+info:
+  title: NIC_Wrapper
+  x-ibm-name: nic-wrapper
+  version: 1.0.0
+  description: ""
+schemes:
+- https
+basePath: /nic
+security:
+- {}
+securityDefinitions:
+  clientID:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  properties: {}
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        parameter-control:
+          type: blocklist
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(dp-nic-prod)
+        follow-redirects: false
+        inject-proxy-headers: true
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+paths:
+  /services:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+      parameters:
+      - name: NIC Request
+        in: body
+        required: false
+        schema:
+          type: object

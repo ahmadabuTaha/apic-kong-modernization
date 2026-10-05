@@ -1,0 +1,193 @@
+swagger: "2.0"
+info:
+  title: Upload-Files
+  x-ibm-name: upload-files
+  version: 1.0.0
+  description: Upload-Files
+schemes:
+- https
+basePath: /qiwalo
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-cmpm-files)/qiwalo/uploadfiles
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  UploadFilesRq_MessageType:
+    type: object
+    properties:
+      UploadFilesRq:
+        $ref: '#/definitions/UploadFilesRq_Type'
+  UploadFilesRs_MessageType:
+    type: object
+    properties:
+      UploadFilesRs:
+        $ref: '#/definitions/UploadFilesRs_Type'
+  UploadFilesRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/UploadFilesRq_BodyType'
+  UploadFilesRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/UploadFilesRs_BodyType'
+  UploadFilesRq_BodyType:
+    type: object
+    properties:
+      UserName:
+        type: string
+      FileName:
+        type: string
+      FileData:
+        type: string
+    required:
+    - UserName
+    - FileName
+    - FileData
+  UploadFilesRs_BodyType:
+    type: object
+    properties:
+      FileID:
+        type: string
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+paths:
+  /uploadfiles:
+    post:
+      operationId: post Upload-Files
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/UploadFilesRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Insert a Upload-Files
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/UploadFilesRq_MessageType'
+        description: The request body for the operation
+        required: true

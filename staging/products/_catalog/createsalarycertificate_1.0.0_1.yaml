@@ -1,0 +1,365 @@
+swagger: "2.0"
+info:
+  title: SC - Create
+  x-ibm-name: createsalarycertificate
+  version: 1.0.0
+  description: This service is used to create a salary certificate.
+schemes:
+- https
+basePath: /sc
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientId: []
+  clientSecret: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: POST
+        target-url: $(ace-salc-salary-certificate)/sc/createsc
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        stop-on-error:
+        - OperationError
+        - SOAPError
+        - ConnectionError
+    - gatewayscript:
+        version: 2.0.0
+        title: Set Headers
+        source: "var apim = require('apim');\r\nvar Response = apim.getvariable('message.body');\r\nvar
+          statusCode = Response.CreateSalaryCertificateRs.Header.ResponseStatus.Code
+          ;\r\n\r\n\r\nif(statusCode == 'ESBSCHEMA' || statusCode == 'E0000059'){\r\n
+          \   var code = 400\r\n    apim.setvariable('message.status.code',code,'set');\r\n}\r\nelse
+          if(statusCode == '99999999'){\r\n    var code = 500\r\n    apim.setvariable('message.status.code',code,'set');\r\n}\r\nelse
+          if(statusCode == 'E0000451'){\r\n    var code = 401\r\n    apim.setvariable('message.status.code',code,'set');\r\n}\r\nelse
+          if(statusCode == '00000000'){\r\n    var code = 200\r\n    apim.setvariable('message.status.code',code,'set');\r\n}else{\r\n
+          \     var code = 409\r\n    apim.setvariable('message.status.code',code,'set');\r\n}\r\n"
+    catch:
+    - default:
+      - set-variable:
+          version: 2.0.0
+          title: set-variable
+          actions:
+          - set: message.status.code
+            value: "500"
+            type: string
+          - set: message.headers.content-type
+            value: application/json
+            type: string
+          - set: message.body
+            value: '{ "errorCode": "E000500", "errorMessage": "Internal server error"
+              }'
+            type: string
+    finally: []
+  properties:
+    target-url:
+      value: http://salc-salary-certificate-http-ace.apps.stg.qiwa-nonprod.local/sc/createsc
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    success-content: payload
+    error-content: header
+    enabled: true
+  application-authentication:
+    certificate: false
+  buffering: true
+  catalogs: {}
+definitions:
+  CreateSalaryCertificateRq_MessageType:
+    type: object
+    properties:
+      CreateSalaryCertificateRq:
+        $ref: '#/definitions/CreateSalaryCertificateRq_Type'
+  CreateSalaryCertificateRs_MessageType:
+    type: object
+    properties:
+      CreateSalaryCertificateRs:
+        $ref: '#/definitions/CreateSalaryCertificateRs_Type'
+  CreateSalaryCertificateRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/CreateSalaryCertificateRq_BodyType'
+  CreateSalaryCertificateRq_BodyType:
+    type: object
+    properties:
+      RequestId:
+        type: integer
+        default: "1"
+      PaymentReference:
+        type: string
+        default: "1687"
+      JobTitleEn:
+        type: string
+        default: "1343"
+      JobTitleAr:
+        type: string
+        default: "186"
+      MainSalary:
+        type: number
+        default: "178"
+      ContractStartDate:
+        type: string
+        default: "1765"
+      Allowances:
+        $ref: '#/definitions/Allowances_Type'
+      ContractExpiryDate:
+        type: string
+        default: "1"
+      SalaryFrequencyId:
+        type: integer
+        default: "1756"
+      AdditionalAllowancesList:
+        $ref: '#/definitions/AdditionalAllowancesList_Type'
+    required:
+    - RequestId
+    - PaymentReference
+  Allowances_Type:
+    type: object
+    properties:
+      Allowances:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValue_Type'
+    required:
+    - Allowances
+  KeyValue_Type:
+    type: object
+    properties:
+      Key:
+        type: string
+        default: "167"
+      Value:
+        type: number
+        default: "18768"
+    required:
+    - Key
+    - Value
+  AdditionalAllowancesList_Type:
+    type: object
+    properties:
+      AdditionalAllowances:
+        type: array
+        items:
+          $ref: '#/definitions/AdditionalAllowances_Type'
+    required:
+    - AdditionalAllowances
+  AdditionalAllowances_Type:
+    type: object
+    properties:
+      BenefitNameAr:
+        type: string
+        default: "1876"
+      BenefitNameEn:
+        type: string
+        default: "1765"
+      FrequencyId:
+        type: integer
+        default: "164"
+      AmountTypeId:
+        type: integer
+        default: "1"
+      Amount:
+        type: number
+        default: "1009"
+  CreateSalaryCertificateRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/CreateSalaryCertificateRs_BodyType'
+  CreateSalaryCertificateRs_BodyType:
+    type: object
+    properties:
+      CertificateId:
+        type: string
+    required:
+    - CertificateId
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: CSC00001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: CSC00001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+        default: "465740"
+      IDNumber:
+        type: integer
+        default: "1024812248"
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /createsc:
+    post:
+      operationId: CreateSalaryCertificate
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/CreateSalaryCertificateRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Create Salary Certificate
+      parameters:
+      - name: body
+        in: body
+        required: true
+        description: CreateSalaryCertificateRq
+        schema:
+          $ref: '#/definitions/CreateSalaryCertificateRq_MessageType'
+      - name: X-IBM-Client-Id
+        in: header
+        required: true
+        type: string
+      - name: X-IBM-Client-Secret
+        in: header
+        required: true
+        type: string

@@ -1,0 +1,303 @@
+swagger: "2.0"
+info:
+  title: ApproveRejectSeasEndorseComm
+  version: 1.0.0
+  description: ApproveRejectSeasEndorseComm
+  x-ibm-name: approverejectseasendorsecomm
+paths:
+  /apprejectendorsecomm:
+    post:
+      operationId: ApproveRejectSeasEndorseComm
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/ApproveRejectSeasEndorseCommRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: approve or reject seasonal endorsements
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/ApproveRejectSeasEndorseCommRq_MessageType'
+        description: ApproveRejectSeasEndorseCommRq
+        required: true
+basePath: /visa/seasonalvisa
+definitions:
+  ApproveRejectSeasEndorseCommRq_MessageType:
+    type: object
+    properties:
+      ApproveRejectSeasEndorseCommRq:
+        $ref: '#/definitions/ApproveRejectSeasEndorseCommRq_Type'
+  ApproveRejectSeasEndorseCommRs_MessageType:
+    type: object
+    properties:
+      ApproveRejectSeasEndorseCommRs:
+        $ref: '#/definitions/ApproveRejectSeasEndorseCommRs_Type'
+  ApproveRejectSeasEndorseCommRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/ApproveRejectSeasEndorseCommRq_BodyType'
+  ApproveRejectSeasEndorseCommRq_BodyType:
+    type: object
+    properties:
+      IsApproved:
+        type: integer
+      EndorsementId:
+        type: integer
+      RejectionReason:
+        type: string
+      ModificationReason:
+        type: string
+      SourceTypeId:
+        type: integer
+    required:
+    - IsApproved
+    - EndorsementId
+    - SourceTypeId
+  ApproveRejectSeasEndorseCommRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/ApproveRejectSeasEndorseCommRs_BodyType'
+  ApproveRejectSeasEndorseCommRs_BodyType:
+    type: object
+    properties:
+      ValidationErrorList:
+        $ref: '#/definitions/ErrorList_Type'
+      NotAllowedOccupationsNationalitiesList:
+        $ref: '#/definitions/NotAllowedOccupationsNationalitiesList_Type'
+      EstablishmentPunishmentSources:
+        $ref: '#/definitions/EstablishmentPunishmentSources_Type'
+      AreWithinTheSeason:
+        type: integer
+  EstablishmentPunishmentSources_Type:
+    type: object
+    properties:
+      PunishmentSources:
+        type: array
+        items:
+          $ref: '#/definitions/PunishmentSources_Type'
+    required:
+    - PunishmentSources
+  PunishmentSources_Type:
+    type: object
+    properties:
+      PunishmentSourceNameEN:
+        type: string
+      PunishmentSourceNameAR:
+        type: string
+      PunishmentSourceId:
+        type: integer
+  NotAllowedOccupationsNationalitiesList_Type:
+    type: object
+    properties:
+      NotAllowedOccupationsNationalities:
+        type: array
+        items:
+          $ref: '#/definitions/NotAllowedOccupationsNationalities_Type'
+    required:
+    - NotAllowedOccupationsNationalities
+  NotAllowedOccupationsNationalities_Type:
+    type: object
+    properties:
+      Nationality:
+        $ref: '#/definitions/CodeName_Type'
+      Occupation:
+        $ref: '#/definitions/CodeName_Type'
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+  ErrorList_Type:
+    type: object
+    properties:
+      ErrorItem:
+        type: array
+        items:
+          $ref: '#/definitions/ErrorItem_Type'
+    required:
+    - ErrorItem
+  ErrorItem_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      Status:
+        type: string
+      DescriptionAr:
+        type: string
+      DescriptionEn:
+        type: string
+    required:
+    - ErrorCode
+    - Status
+    - DescriptionAr
+    - DescriptionEn
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-sese-seassubmits)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: allowlist
+          values: []
+        header-control:
+          type: blocklist
+          values: []
+        inject-proxy-headers: true
+        chunked-uploads: true
+        persistent-connection: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+schemes:
+- https
+securityDefinitions:
+  clientId:
+    type: apiKey
+    x-key-type: client_id
+    name: X-IBM-Client-Id
+    in: header
+  Oauth2.0:
+    type: oauth2
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    flow: application
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+security:
+- clientId: []
+  Oauth2.0:
+  - IntegrationScope

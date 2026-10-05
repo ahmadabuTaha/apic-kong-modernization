@@ -1,0 +1,138 @@
+swagger: "2.0"
+info:
+  title: SADAD_PaymentNotification
+  x-ibm-name: sadad-paymentnotification
+  version: 1.0.0
+  description: PROD yaml
+schemes:
+- https
+basePath: /qiwa/v2
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientID: []
+  clientSecret: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientID:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_QueryParameter
+        source: |2-
+
+          var url = context.get('target-url');
+
+          var path = context.get('request.querystring');
+
+          var callingUrl = url + '?' +path;
+
+          context.set('callingUrl',callingUrl);
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        parameter-control:
+          type: blocklist
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(ace-sad-sad-payment)$(callingUrl)
+        follow-redirects: false
+        inject-proxy-headers: true
+        stop-on-error:
+        - ConnectionError
+    catch:
+    - errors: []
+      execute:
+      - gatewayscript:
+          version: 2.0.0
+          title: Set_Headers
+          source: "\tvar apim = require('apim');\n\t\n\tapim.output('application/json');\n\n
+            \   \n    \n    var cfg = apim.getvariable('cfg');\n   \n \n    \n\tvar
+            TransactionId = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.TransactionId\");\n\tvar
+            ChannelId = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.ChannelId\");\n\tvar
+            RequestTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.RequestTime\");\n\tvar
+            SessionId = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.SessionId\");\n\tvar
+            MWRequestTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.MWRequestTime\");\n\tvar
+            MWResponseTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.MWResponseTime\");\n\tvar
+            status = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.ResponseStatus.Status\");\n\t\n\n
+            \   apim.setvariable('message.headers.Transaction-Id',TransactionId,'add');\n
+            \   apim.setvariable('message.headers.Channel-Id',ChannelId,'add');\n
+            \   if (RequestTime !== 'undefined')\n\t    apim.setvariable('message.headers.RequestTime',RequestTime,'add');\n\tif
+            (SessionId !== 'undefined')\n        apim.setvariable('message.headers.X-Request-Id',SessionId,'add');\n
+            \    if (MWRequestTime !== 'undefined')\n        apim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');\n
+            \   if (MWResponseTime !== 'undefined')\n        apim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');\n\n
+            \   \n    apim.setvariable('message.headers.Response-Status',status,'add');\n
+            \   "
+      - gatewayscript:
+          version: 2.0.0
+          title: Set_Response
+          source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+            cfg = apim.getvariable('cfg'); \n\nvar body = message[cfg.responseName].Body;\n\n\nsession.output.write(body);\napim.output('application/json');"
+    - default:
+      - set-variable:
+          version: 2.0.0
+          title: set-variable
+          actions:
+          - set: message.status.code
+            value: "500"
+            type: string
+          - set: message.headers.Content-Type
+            value: application/json
+            type: string
+          - set: message.body
+            value: '{      "errorCode": "500",      "errorMessage": "Internal server
+              error"  }'
+            type: string
+    finally: []
+  properties:
+    target-url:
+      value: /sadad/v1/payment-status
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    success-content: payload
+    error-content: payload
+    enabled: true
+  buffering: true
+  application-authentication:
+    certificate: false
+  catalogs: {}
+paths:
+  /PaymentNotification:
+    get:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success

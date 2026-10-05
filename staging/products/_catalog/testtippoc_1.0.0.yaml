@@ -1,0 +1,30 @@
+info:
+  title: TestTIPPoc
+  name: testtippoc
+  version: 1.0.0
+apis:
+  test-poc1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/test-poc_1.0.0.yaml
+  test-pocupdated1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/test-pocupdated_1.0.1.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      test-poc1.0.0: {}
+      test-pocupdated1.0.1: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

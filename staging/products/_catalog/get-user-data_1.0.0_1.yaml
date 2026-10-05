@@ -1,0 +1,63 @@
+swagger: "2.0"
+info:
+  title: Get User Data
+  x-ibm-name: get-user-data
+  version: 1.0.0
+schemes:
+- https
+basePath: /qiwa/v2
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: POST
+        target-url: $(ace-rept-bidashboard)/bidashboard/usermgmt/getUserData
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+    finally: []
+  properties: {}
+  application-authentication:
+    certificate: false
+  activity-log:
+    success-content: payload
+    error-content: payload
+    enabled: true
+  buffering: true
+  catalogs: {}
+paths:
+  /GetUserData:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object

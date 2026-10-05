@@ -1,0 +1,308 @@
+swagger: "2.0"
+info:
+  title: SearchUserSubscriptions
+  x-ibm-name: searchusersubscriptions
+  version: 1.0.0
+  description: 'This service is used to search for user subscriptions. '
+schemes:
+- https
+basePath: /usermanagement
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-usrm-umutilities)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  SearchUserSubscriptionsRq_MessageType:
+    type: object
+    properties:
+      SearchUserSubscriptionsRq:
+        $ref: '#/definitions/SearchUserSubscriptionsRq_Type'
+  SearchUserSubscriptionsRs_MessageType:
+    type: object
+    properties:
+      SearchUserSubscriptionsRs:
+        $ref: '#/definitions/SearchUserSubscriptionsRs_Type'
+  SearchUserSubscriptionsRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/SearchUserSubscriptionsRq_BodyType'
+  SearchUserSubscriptionsRq_BodyType:
+    type: object
+    properties:
+      IdNo:
+        type: string
+        default: "1000"
+      UserId:
+        type: integer
+        default: "0"
+      LaborOfficeId:
+        type: integer
+        default: "0"
+      EstablishmentSequence:
+        type: integer
+        default: "0"
+      StatusId:
+        type: integer
+        default: "0"
+      SubscriptionId:
+        type: integer
+        default: "0"
+      UnifiedNumberId:
+        type: integer
+        default: "0"
+      PageSize:
+        type: integer
+        default: "10"
+      PageIndex:
+        type: integer
+        default: "100"
+  SearchUserSubscriptionsRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/SearchUserSubscriptionsRs_BodyType'
+  SearchUserSubscriptionsRs_BodyType:
+    type: object
+    properties:
+      SubscriptionsList:
+        $ref: '#/definitions/SubscriptionsList_Type'
+      TotalRecordsCount:
+        type: integer
+  SubscriptionsList_Type:
+    type: object
+    properties:
+      SubscriptionsItem:
+        type: array
+        items:
+          $ref: '#/definitions/SubscriptionsItem_Type'
+  SubscriptionsItem_Type:
+    type: object
+    properties:
+      IdNo:
+        type: string
+      UserID:
+        type: integer
+      Name:
+        type: string
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      Status:
+        $ref: '#/definitions/Status_Type'
+      StartDate:
+        type: string
+      ExpiredDate:
+        type: string
+      Subscription:
+        $ref: '#/definitions/Subscription_Type'
+  Subscription_Type:
+    type: object
+    properties:
+      Subscription:
+        type: integer
+      SubscriptionTypeEn:
+        type: string
+      SubscriptionTypeAr:
+        type: string
+  Status_Type:
+    type: object
+    properties:
+      StatusId:
+        type: integer
+      StatusEn:
+        type: string
+      StatusAr:
+        type: string
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: SUS00001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: SUS00001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+        default: "465740"
+      IDNumber:
+        type: integer
+        default: "1024812248"
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /searchusersubscriptions:
+    post:
+      operationId: SearchUserSubscriptions
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/SearchUserSubscriptionsRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Search User Supscriptions
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/SearchUserSubscriptionsRq_MessageType'
+        description: SearchUserSubscriptionsRq
+        required: true

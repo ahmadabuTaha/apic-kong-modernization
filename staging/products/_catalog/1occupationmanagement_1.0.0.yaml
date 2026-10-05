@@ -1,0 +1,27 @@
+info:
+  version: 1.0.0
+  title: 1OccupationManagement
+  name: 1occupationmanagement
+apis:
+  qiwa-getrelatedunrelatedentitylabors1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-getrelatedunrelatedentitylabors_1.0.0.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      qiwa-getrelatedunrelatedentitylabors1.0.0: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

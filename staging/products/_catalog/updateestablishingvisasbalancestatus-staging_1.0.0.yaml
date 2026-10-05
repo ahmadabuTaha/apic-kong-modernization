@@ -1,0 +1,26 @@
+info:
+  version: 1.0.0
+  title: UpdateEstablishingVisasBalanceStatus Staging
+  name: updateestablishingvisasbalancestatus-staging
+apis:
+  updateestablishingvisasbalancestatus1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updateestablishingvisasbalancestatus_1.0.0_1.yaml
+gateways:
+- datapower-api-gateway
+product: 1.0.0
+plans:
+  default:
+    title: Default Plan
+    description: Default Plan
+    approval: true
+    rate-limits: {}
+    burst-limits: {}
+    apis:
+      updateestablishingvisasbalancestatus1.0.0: {}
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

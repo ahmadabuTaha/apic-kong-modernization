@@ -1,0 +1,36 @@
+info:
+  version: 1.0.0
+  title: '1External_GAZT_Product '
+  name: 1external-gazt-product
+apis:
+  gazt-getvatinformation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/gazt-getvatinformation_1.0.0.yaml
+  gazt-getestablishmentaddress1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/gazt-getestablishmentaddress_1.0.0.yaml
+  mhrsd-submitsaudicertificate1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mhrsd-submitsaudicertificate_1.0.0.yaml
+  getestablishmentinformation-v21.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getestablishmentinformation-v2_1.0.0.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      gazt-getestablishmentaddress1.0.0: {}
+      gazt-getvatinformation1.0.0: {}
+      mhrsd-submitsaudicertificate1.0.0: {}
+      getestablishmentinformation-v21.0.0: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

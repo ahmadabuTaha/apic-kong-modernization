@@ -1,0 +1,24 @@
+info:
+  version: 1.0.0
+  title: GetEstablismnentUnifiedNumberLaborersMLSD Staging
+  name: getestablismnentunifiednumberlaborersmlsd-staging
+gateways:
+- datapower-api-gateway
+plans:
+  default:
+    title: Default Plan
+    description: Default Plan
+    approval: true
+    apis:
+      getestablismnentunifiednumberlaborersmlsd1.0.0: {}
+apis:
+  getestablismnentunifiednumberlaborersmlsd1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getestablismnentunifiednumberlaborersmlsd_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

@@ -1,0 +1,36 @@
+info:
+  version: 1.0.0
+  title: 1testanvesh
+  name: 1testanvesh
+apis:
+  updatevisastatusTEST:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updatevisastatus_TEST.yaml
+  getemployeelistwithsalaryinformationby700orcr-v2test:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getemployeelistwithsalaryinformationby700orcr-v2_test.yaml
+  testemployee1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/testemployee_1.0.1.yaml
+  mowaamahcertificate1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mowaamahcertificate_1.0.1.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: unlimited
+    apis:
+      mowaamahcertificate1.0.1: {}
+      testemployee1.0.1: {}
+      getemployeelistwithsalaryinformationby700orcr-v2test: {}
+      updatevisastatusTEST: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

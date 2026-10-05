@@ -1,0 +1,378 @@
+swagger: "2.0"
+info:
+  title: GetEstablishmentLogo
+  x-ibm-name: getestablishmentlogo
+  version: 1.0.0
+schemes:
+- https
+basePath: /qiwa/v2
+produces: []
+consumes: []
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - gatewayscript:
+        version: 2.0.0
+        title: gatewayscript
+        source: "var apim = require('apim');\r\n\r\nvar cfg={\r\n    \"serviceCode\"
+          : \"\",\r\n    \"channelId\" : \"Qiwa\",\r\n\t\"SessionId\" : \"1\",\r\n
+          \   \"requestName\" : \"GetEstablishmentLogoRq\",\r\n    \"responseName\":
+          \"GetEstablishmentLogoRs\",\r\n    \"debugFlag\" : \"1\",\r\n    \"errorMap\"
+          :{\r\n                              \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid
+          Request\"},\r\n                              \"E0000047\"  : {\"code\" :401,
+          \"msg\":\"Unauthorized\"},\r\n                              \"E0000024\"
+          \ : {\"code\" :409, \"msg\":\"Nodata\"},\r\n                              \"TI000016\"
+          \ : {\"code\" :409, \"msg\":\"InvalidFilter\"},\r\n                              \"TI000011\"
+          \ : {\"code\" :409, \"msg\":\"Conflict\"},\r\n                              \"TI000015\"
+          \ : {\"code\" :409, \"msg\":\"Conflict\"},\r\n                              \"NIC00253\"
+          \ : {\"code\" :500, \"msg\":\"Runtime_Exception\"},\r\n                              \"E0000024\"
+          \ : {\"code\" :409, \"msg\":\"NoData found\"},\r\n                              \"E0000042\"
+          \ : {\"code\" :409, \"msg\":\"InvalidData\"},\r\n                              \"E0000815\"
+          \ : {\"code\" :409, \"msg\":\"MissingParameters\"},\r\n                              \"E0000993\"
+          \ : {\"code\" :409, \"msg\":\"LogoSizeExceed\"},\r\n                              \"E0000994\"
+          \ : {\"code\" :409, \"msg\":\"LogoExists\"},\r\n                              \"E0000436\"
+          \ : {\"code\" :409, \"msg\":\"DBError\"},\r\n                              \"2000000\"
+          \ : {\"code\" :409, \"msg\":\"LogoMaxSize\"}\t\r\n                          }\r\n
+          \   \r\n};\r\n\r\napim.setvariable('cfg', cfg);\r\napim.output('application/json');\r\n"
+    - gatewayscript:
+        version: 2.0.0
+        title: PrepareHeaders
+        source: "var apim = require('apim');\r\n\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId = apim.getvariable('message.headers.Operator-Id');\r\n\r\nvar
+          laborOfficeId = null;\r\nvar sequenceNumber = null;\r\nvar establishmentId
+          = null;\r\n\r\nif (apim.getvariable('request.parameters.LaborOfficeId')
+          != null && apim.getvariable('request.parameters.LaborOfficeId') != 0) {\r\n
+          \   laborOfficeId = apim.getvariable('request.parameters.LaborOfficeId');\r\n}\r\n\r\nif
+          (apim.getvariable('request.parameters.SequenceNumber') != null && apim.getvariable('request.parameters.SequenceNumber')
+          != 0) {\r\n    sequenceNumber = apim.getvariable('request.parameters.SequenceNumber');\r\n}\r\n\r\nif
+          (apim.getvariable('request.parameters.EstablishmentId') != null && apim.getvariable('request.parameters.EstablishmentId')
+          != 0) {\r\n    establishmentId = apim.getvariable('request.parameters.EstablishmentId');\r\n}\r\n\r\nvar
+          channel = 0;\r\nif (apim.getvariable('message.headers.X-Channel-Id') !=
+          null && apim.getvariable('message.headers.X-Channel-Id') != 0) {\r\n    channel
+          = apim.getvariable('message.headers.X-Channel-Id');\r\n} else {\r\n    channel
+          = cfg.channelId;\r\n}\r\n\r\n// Create the request object\r\nvar appcReq
+          = {\r\n    [cfg.requestName]: {\r\n        \"Header\": {\r\n            \"TransactionId\":
+          millisecondsvalue,\r\n            \"ChannelId\": channel,\r\n            \"SessionId\":
+          cfg.SessionId,\r\n            \"RequestTime\": formatDate(dt),\r\n            \"MWRequestTime\":
+          formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode\r\n        },\r\n
+          \       \"Body\": {}\r\n    }\r\n};\r\n\r\n// Conditionally add optional
+          parameters\r\nif (laborOfficeId) appcReq[cfg.requestName].Body.LaborOfficeId
+          = laborOfficeId;\r\nif (sequenceNumber) appcReq[cfg.requestName].Body.SequenceNumber
+          = sequenceNumber;\r\nif (establishmentId) appcReq[cfg.requestName].Body.EstablishmentId
+          = establishmentId;\r\n\r\n// Add UserInfo if OperatorId is defined\r\nif
+          (typeof OperatorId !== 'undefined') {\r\n    appcReq[cfg.requestName].Header.UserInfo
+          = {\r\n        \"IDNumber\": OperatorId\r\n    };\r\n}\r\n\r\napim.output('application/json');\r\napim.setvariable('message.body',
+          appcReq);\r\n\r\nfunction formatDate(d) {\r\n    var month = d.getMonth()
+          + 1;\r\n    var day = d.getDate().toString();\r\n    var year = d.getFullYear();\r\n
+          \   var hour = d.getHours().toString();\r\n    var minute = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n\r\n
+          \   if (month < 10) month = \"0\" + month;\r\n    if (day.length === 1)
+          day = \"0\" + day;\r\n    if (hour.length === 1) hour = \"0\" + hour;\r\n
+          \   if (minute.length === 1) minute = \"0\" + minute;\r\n    if (second.length
+          === 1) second = \"0\" + second;\r\n    if (millisecond.length === 1) millisecond
+          = \"00\" + millisecond;\r\n    if (millisecond.length === 2) millisecond
+          = \"0\" + millisecond;\r\n\r\n    return `${year}-${month}-${day} ${hour}:${minute}:${second}.${millisecond}`;\r\n}\r\n"
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: POST
+        target-url: $(ace-estl-logo)/establishment/logo/get
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+          values: []
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+    - gatewayscript:
+        version: 2.0.0
+        title: headers
+        source: |-
+          var apim = require('apim');
+
+          apim.output('application/json');
+
+          var message = apim.getvariable('message.body');
+          var cfg = apim.getvariable('cfg');
+          var Header = message[cfg.responseName].Header;
+          var TransactionId = Header.TransactionId;
+          var ChannelId = Header.ChannelId;
+          var RequestTime = Header.RequestTime;
+          var SessionId = Header.SessionId;
+          var MWRequestTime = Header.MWRequestTime;
+          var MWResponseTime = Header.MWResponseTime;
+          var status = Header.ResponseStatus.Status;
+
+
+
+          apim.setvariable('message.headers.Transaction-Id',TransactionId,'add');
+          apim.setvariable('message.headers.Channel-Id',ChannelId,'add');
+          if (RequestTime !== 'undefined')
+           apim.setvariable('message.headers.RequestTime',RequestTime,'add');
+          if (SessionId !== 'undefined')
+           apim.setvariable('message.headers.X-Request-Id',SessionId,'add');
+          if (MWRequestTime !== 'undefined')
+          apim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');
+          if (MWResponseTime !== 'undefined')
+          apim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');
+
+          apim.setvariable('message.headers.Response-Status',status,'add');
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Success
+              source: "var apim = require('apim');\r\n\r\nvar message = apim.getvariable('message.body');\r\nvar
+                cfg = apim.getvariable('cfg'); \r\nvar body = message[cfg.responseName].Body;\r\n\r\n\r\nsession.output.write(body);\r\napim.output('application/json');"
+        - condition: (($header("Response-Status") = 'Error' or $header("Response-Status")
+            = 'ERROR'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Error
+              source: "var apim = require('apim');\r\n\r\nvar message = apim.getvariable('message.body');\r\nvar
+                cfg = apim.getvariable('cfg');     \r\n\r\nvar error = {\r\n  \"errorCode\":
+                message[cfg.responseName].Header.ResponseStatus.Code,\r\n  \"errorMessage\":
+                {\r\n    \"en-US\": message[cfg.responseName].Header.ResponseStatus.EnglishMsg,\r\n
+                \   \"ar-SA\": message[cfg.responseName].Header.ResponseStatus.ArabicMsg\r\n
+                \ }\r\n};\r\n\r\nvar httperror=0;\r\nif(cfg.errorMap){\r\n    if(cfg.errorMap[error.errorCode]){\r\n
+                \      httperror = cfg.errorMap[error.errorCode].code;\r\n       \r\n
+                \      //var errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\r\n
+                \      //var details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\r\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\r\n    }\r\n}\r\nif(httperror
+                == 0){\r\n   httperror = 400;\r\n   // apim.error('ERROR',400,'Bad
+                Request','Invalid request');\r\n}\r\n\r\napim.setvariable('message.status.code',httperror,'set');\r\n\r\nsession.output.write(error);\r\napim.output('application/json');"
+        - condition: (otherwise)
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: gatewayscript
+              source: "var apim = require('apim');\r\n\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+                message = apim.getvariable('message.body');    \r\n\r\nvar error =
+                {\r\n  \"errorCode\": message['Error'].Code,\r\n  \"errorMessage\":
+                {\r\n    \"en-US\": message['Error'].Detail,\r\n    \"ar-SA\": 'System
+                Error'\r\n};\r\n\r\nvar httperror=0;\r\nif(cfg.errorMap){\r\n    if(cfg.errorMap[error.errorCode]){\r\n
+                \      httperror = cfg.errorMap[error.errorCode].code;\r\n       \r\n
+                \      //var errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\r\n
+                \      //var details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\r\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\r\n    }\r\n}\r\nif(httperror
+                == 0){\r\n   httperror = 500;\r\n   // apim.error('ERROR',400,'Bad
+                Request','Invalid request');\r\n}\r\napim.setvariable('message.status.code',httperror,'set');\r\n\r\nsession.output.write(error);\r\napim.output('application/json');"
+    catch:
+    - errors: []
+      execute: []
+    finally: []
+  properties:
+    target-url:
+      value: http://estl-logo-http-ace.apps.stg.qiwa-nonprod.local/establishment/logo/get
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+  buffering: true
+definitions:
+  ResponseModel:
+    type: object
+    description: This response object returned by the get operation
+    properties:
+      headers:
+        $ref: '#/definitions/Headers'
+      LogosList:
+        type: array
+        items:
+          $ref: '#/definitions/Logos'
+  Logos:
+    type: object
+    description: This response object returned by the get operation
+    properties:
+      LaborOfficeId:
+        type: integer
+        example: 12356
+      SequenceNumber:
+        type: integer
+        example: 12356
+      EstablishmentId:
+        type: integer
+        example: 12356
+      Logo:
+        type: string
+        example: string
+      CreatedBy:
+        type: string
+        example: string
+      CreatedOn:
+        type: string
+        example: string
+      ModifiedBy:
+        type: string
+        example: string
+      ModifiedOn:
+        type: string
+        example: string
+      ChannelId:
+        type: string
+        example: string
+      Thumbnail:
+        type: string
+        example: string
+  ErrorModel:
+    type: object
+    required:
+    - errorCode
+    - errorMessage
+    properties:
+      errorCode:
+        type: string
+        example: EXXXX000
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+  LocaleDataModel:
+    type: object
+    additionalProperties:
+      type: string
+    example:
+      en-US: English Value
+      ar-SA: Arabic Value
+  Headers:
+    type: object
+    properties:
+      X-Request-Id:
+        type: string
+        example: 123e4567-e89b-12d3-a456-426614174000
+  HeadersErrorModel:
+    type: object
+    properties:
+      headers:
+        $ref: '#/definitions/Headers'
+paths:
+  /establishment/logo/get:
+    get:
+      tags:
+      - Logos
+      description: Services retreives  list of logos available for the estanblishment.
+      operationId: GetEstablishmentLogo
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/ResponseModel'
+        "400":
+          description: The request was rejected by the server due to malformed syntax.
+            Bad Request.
+        "401":
+          description: The request could not be completed due to lack of valid credentials.
+            Authentication.
+          schema:
+            $ref: '#/definitions/HeadersErrorModel'
+        "403":
+          description: The request could not be completed because it is not authorized.
+            Authorization
+          schema:
+            $ref: '#/definitions/HeadersErrorModel'
+        "404":
+          description: The server has not found anything matching the Request-URI.
+        "408":
+          description: The client did not produce a request within the time that the
+            server was prepared to wait.
+        "409":
+          description: The request could not be completed due to a conflict with the
+            current state of the resource. Usually business validation errors will
+            be returned in the body
+          schema:
+            $ref: '#/definitions/HeadersErrorModel'
+        "429":
+          description: The request was sent too many times in a given amount of time
+          schema:
+            $ref: '#/definitions/HeadersErrorModel'
+        "500":
+          description: The server encountered an unexpected condition which prevented
+            it from fulfilling the request.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        "501":
+          description: The server does not support the functionality required and
+            does not recognize the request
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        "503":
+          description: The server encountered an unexpected condition which prevented
+            it from fulfilling the request.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        "510":
+          description: Extensions to the request are required for the server to fulfil
+            it.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+      parameters:
+      - name: X-IBM-Client-Id
+        in: header
+        description: Client id issued by security server
+        required: true
+        type: string
+      - name: X-IBM-Client-Secret
+        in: header
+        description: Client secret issued by security server
+        required: true
+        type: string
+      - name: X-Request-Id
+        in: header
+        description: X-Request-Id returned in the response header
+        required: false
+        type: string
+      - name: X-Channel-Id
+        in: header
+        required: false
+        description: channelId
+        type: string
+      - name: LaborOfficeId
+        in: query
+        description: establishment sequence number
+        type: number
+      - name: SequenceNumber
+        in: query
+        description: establishment sequence number
+        type: number
+      - name: EstablishmentId
+        in: query
+        description: establishment id
+        type: number

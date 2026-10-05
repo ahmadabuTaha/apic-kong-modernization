@@ -1,0 +1,341 @@
+swagger: "2.0"
+info:
+  title: GetNearlySubsToBeExpired
+  x-ibm-name: getnearlysubstobeexpired
+  version: 1.0.0
+  description: This service is used to get nearly subscriptions to be expired.
+schemes:
+- https
+basePath: /usermanagement
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(cat-target-hostname)$(cat-target-url-usermgmt)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  GetNearlySubsToBeExpiredRq_MessageType:
+    type: object
+    properties:
+      GetNearlySubsToBeExpiredRq:
+        $ref: '#/definitions/GetNearlySubsToBeExpiredRq_Type'
+  GetNearlySubsToBeExpiredRs_MessageType:
+    type: object
+    properties:
+      GetNearlySubsToBeExpiredRs:
+        $ref: '#/definitions/GetNearlySubsToBeExpiredRs_Type'
+  GetNearlySubsToBeExpiredRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetNearlySubsToBeExpiredRq_BodyType'
+  GetNearlySubsToBeExpiredRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+        default: "12"
+      SequenceNumber:
+        type: string
+        default: "7687"
+      UnifiedNumberId:
+        type: string
+        default: "12876"
+      IdNo:
+        type: string
+        default: "1001"
+      UserId:
+        type: string
+        default: "65645"
+      DateFrom:
+        type: string
+        default: "2020-01-01"
+      DateTo:
+        type: string
+        default: "2020-01-10"
+      PageSize:
+        type: integer
+        default: "1"
+      PageIndex:
+        type: integer
+        default: "10"
+    required:
+    - DateFrom
+    - DateTo
+    - PageSize
+    - PageIndex
+  GetNearlySubsToBeExpiredRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetNearlySubsToBeExpiredRs_BodyType'
+  GetNearlySubsToBeExpiredRs_BodyType:
+    type: object
+    properties:
+      UsersList:
+        $ref: '#/definitions/UsersList_Type'
+      TotalRecordsCount:
+        type: integer
+    required:
+    - TotalRecordsCount
+  UsersList_Type:
+    type: object
+    properties:
+      UserItem:
+        type: array
+        items:
+          $ref: '#/definitions/UserItem_Type'
+  UserItem_Type:
+    type: object
+    properties:
+      IdNo:
+        type: string
+      UserId:
+        type: integer
+      Name:
+        type: string
+      MobileNumber:
+        type: string
+      Email:
+        type: string
+      SubscriptionsList:
+        $ref: '#/definitions/SubscriptionsList_Type'
+    required:
+    - IdNo
+    - UserId
+    - Name
+    - MobileNumber
+    - Email
+  SubscriptionsList_Type:
+    type: object
+    properties:
+      SubscriptionsItem:
+        type: array
+        items:
+          $ref: '#/definitions/SubscriptionsItem_Type'
+  SubscriptionsItem_Type:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      UnifiedNumberId:
+        type: string
+      Status:
+        $ref: '#/definitions/Status_Type'
+      StartDate:
+        type: string
+      ExpiredDate:
+        type: string
+      Subscription:
+        $ref: '#/definitions/Subscription_Type'
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+    - UnifiedNumberId
+    - Status
+    - StartDate
+    - ExpiredDate
+    - Subscription
+  Status_Type:
+    type: object
+    properties:
+      StatusId:
+        type: integer
+      StatusEn:
+        type: string
+      StatusAr:
+        type: string
+    required:
+    - StatusId
+    - StatusEn
+    - StatusAr
+  Subscription_Type:
+    type: object
+    properties:
+      SubscriptionId:
+        type: integer
+      SubscriptionTypeEn:
+        type: string
+      SubscriptionTypeAr:
+        type: string
+    required:
+    - SubscriptionId
+    - SubscriptionTypeEn
+    - SubscriptionTypeAr
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: GNSTBE01
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /getnearlysubstobeexp:
+    post:
+      operationId: GetNearlySubsToBeExpired
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetNearlySubsToBeExpiredRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Get Nearly Subscriptions To Be Expired
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetNearlySubsToBeExpiredRq_MessageType'
+        description: GetNearlySubsToBeExpiredRq
+        required: true

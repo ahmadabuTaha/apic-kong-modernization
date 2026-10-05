@@ -1,0 +1,36 @@
+info:
+  name: 1qiwa-add-training4v
+  title: 1Qiwa_Add_Training4v
+  version: 1.0.0
+apis:
+  qiwa-getcontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-getcontract_1.0.0.yaml
+  qiwa-getpolicies1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-getpolicies_1.0.0.yaml
+  qiwa-getzendeskticketbyestablishmentid1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-getzendeskticketbyestablishmentid_1.0.0_1.yaml
+  qiwa-getzendeskticketbyiqamaid1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-getzendeskticketbyiqamaid_1.0.0_1.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      qiwa-getcontract1.0.0: {}
+      qiwa-getpolicies1.0.0: {}
+      qiwa-getzendeskticketbyestablishmentid1.0.0: {}
+      qiwa-getzendeskticketbyiqamaid1.0.0: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

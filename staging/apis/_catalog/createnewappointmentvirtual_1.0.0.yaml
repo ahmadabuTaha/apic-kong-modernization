@@ -1,0 +1,312 @@
+swagger: "2.0"
+info:
+  title: CreateNewAppointmentVirtual
+  x-ibm-name: createnewappointmentvirtual
+  version: 1.0.0
+  description: This service is used to create a new appointment to enable the user
+    to visit his\her office. (virtual)
+schemes:
+- https
+basePath: /qiwalo
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-lbro-lo-appointment)/qiwalo/createnewappointment
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  CreateNewAppointmentRq_MessageType:
+    type: object
+    properties:
+      CreateNewAppointmentRq:
+        $ref: '#/definitions/CreateNewAppointmentRq_Type'
+  CreateNewAppointmentRs_MessageType:
+    type: object
+    properties:
+      CreateNewAppointmentRs:
+        $ref: '#/definitions/CreateNewAppointmentRs_Type'
+  CreateNewAppointmentRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/CreateNewAppointmentRq_BodyType'
+  CreateNewAppointmentRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/CreateNewAppointmentRs_BodyType'
+  CreateNewAppointmentRq_BodyType:
+    type: object
+    properties:
+      RequesterTypeId:
+        type: integer
+      EstablishmentDetails:
+        $ref: '#/definitions/EstablishmentDetails_Type'
+      OfficeID:
+        type: integer
+      ClientServiceId:
+        type: integer
+      SubServiceId:
+        type: integer
+      RequesterDetails:
+        $ref: '#/definitions/RequesterDetails_Type'
+      RegionId:
+        type: integer
+      Time:
+        type: integer
+      Date:
+        type: string
+      AppointmentId:
+        type: integer
+      VisitReasonId:
+        type: integer
+      Attachment:
+        $ref: '#/definitions/Attachment_Type'
+      ExplanationText:
+        type: string
+      TicketNumber:
+        type: string
+    required:
+    - RequesterTypeId
+    - OfficeID
+    - RequesterDetails
+  Attachment_Type:
+    type: object
+    properties:
+      AttachmentDetails:
+        type: array
+        items:
+          $ref: '#/definitions/AttachmentDetails_Type'
+    required:
+    - AttachmentDetails
+  AttachmentDetails_Type:
+    type: object
+    properties:
+      AttachmentId:
+        type: string
+      AttachmentName:
+        type: string
+    required:
+    - AttachmentId
+    - AttachmentName
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        type: string
+      UDF:
+        type: string
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        type: string
+      UDF:
+        type: string
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+      Tmstmp_Type:
+        type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+  CreateNewAppointmentRs_BodyType:
+    type: object
+    properties:
+      AppointmentId:
+        type: integer
+      CreationDate:
+        type: string
+      ValidationsErrorsList:
+        $ref: '#/definitions/ValidationsErrorsList_Type'
+    required:
+    - AppointmentId
+    - CreationDate
+  ValidationsErrorsList_Type:
+    type: object
+    properties:
+      ValidationError:
+        $ref: '#/definitions/ValidationError_Type'
+  ValidationError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ArDescription:
+        type: string
+      EnDescription:
+        type: string
+    required:
+    - ErrorCode
+    - ArDescription
+    - EnDescription
+  EstablishmentDetails_Type:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+  RequesterDetails_Type:
+    type: object
+    properties:
+      RequesterIdNo:
+        type: integer
+      RequesterName:
+        type: string
+      RequesterUserId:
+        type: integer
+    required:
+    - RequesterIdNo
+    - RequesterUserId
+paths:
+  /createnewappointmentvirtual:
+    post:
+      operationId: CreateNewAppointmentVirtual
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/CreateNewAppointmentRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: The scope of this service is used to to create a new appointment
+        to enable the user to visit his\her office.
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/CreateNewAppointmentRq_MessageType'
+        description: CreateNewAppointmentRq
+        required: true

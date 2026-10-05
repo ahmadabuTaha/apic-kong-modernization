@@ -1,0 +1,180 @@
+swagger: "2.0"
+info:
+  title: getincomeforcontributor
+  x-ibm-name: getincomeforcontributor
+  version: 1.0.0
+  description: ""
+schemes:
+- https
+basePath: /gosi/v1
+security:
+- OAuth2 Security:
+  - IntegrationScope
+  clientID: []
+securityDefinitions:
+  OAuth2 Security:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientID:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  properties:
+    target-url:
+      value: http://icp-proxy.qiwa.info:32676/external/getincomeforcontributor
+      description: URL of the proxy policy
+      encoded: false
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - gatewayscript:
+        version: 2.0.0
+        title: setVariables
+        source: "var apim = require('apim');\n\n apim.setvariable('requestTag','ContributorSalaryRq','add');\n
+          \ apim.setvariable('responseTag','ContributorSalaryRs','add');\n\n  \n      apim.setvariable('ServiceCode','EXGCS0001','add');"
+    - gatewayscript:
+        version: 2.0.0
+        title: dynamicTransformation
+        source: "var apim = require('apim');\n\n\n//--------------------------------\n\nvar
+          currentDate = new Date();\nvar millisecondsvalue = \"\"+currentDate.getTime();\n
+          apim.setvariable('myTransactionId',millisecondsvalue,'add');\nvar today
+          = new Date();\nvar date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();\nvar
+          time = today.getHours() + \":\" + today.getMinutes() + \":\" + today.getSeconds();\nvar
+          dateTime = date+' '+time;\napim.setvariable('myRequestTime',dateTime,'add');\n\n//--------------------------------\n\nfunction
+          formatDate(d)\n{\n    //get the month\n    var month = d.getMonth();\n    //get
+          the day\n    //convert day to string\n    var day = d.getDate().toString();\n
+          \   //get the year\n    var year = d.getFullYear();\n    var hour = d.getHours().toString();\n
+          \   var minitue = d.getMinutes().toString();\n    var second = d.getSeconds().toString();\n
+          \   var millisecond = d.getMilliseconds().toString();\n    //pull the last
+          two digits of the year\n    year = year.toString();\n    \n    //increment
+          month by 1 since it is 0 indexed\n    //converts month to a string\n    month
+          = (month + 1).toString();\n\n    //if month is 1-9 pad right with a 0 for
+          two digits\n    if (month.length === 1)\n    {\n        month = \"0\" +
+          month;\n    }\n\n    //if day is between 1-9 pad right with a 0 for two
+          digits\n    if (day.length === 1)\n    {\n        day = \"0\" + day;\n    }\n
+          \   if (hour.length === 1)\n    {\n        hour = \"0\" + hour;\n    }\n
+          \   if (minitue.length === 1)\n    {\n        minitue = \"0\" + minitue;\n
+          \   }\n    if (second.length === 1)\n    {\n        second = \"0\" + second;\n
+          \   }\n    if (millisecond.length == 1)\n    {\n        millisecond = \"00\"
+          + millisecond;\n    }if (millisecond.length == 2)\n    {\n        millisecond
+          = \"0\" + millisecond;\n    }\n    \n\n    //return the string \"MMddyy\"\n
+          \   return year+\"-\"+month+\"-\"+day+\" \"+hour + \":\" + minitue + \":\"
+          + second+\".\"+millisecond;\n}\n\nvar d = new Date();\n\n\n//---------------------------------\n\nvar
+          obj = apim.getvariable('message.body');\n  \n\nvar TransactionId = ''+apim.getvariable('myTransactionId');\nvar
+          ChannelId =\t''+apim.getvariable('message.headers.Channel-Id');\nvar SessionId
+          = '212';\nvar RequestTime = formatDate(d);\nvar MWRequestTime = formatDate(d);\nvar
+          ServiceCode = apim.getvariable('ServiceCode');\nvar UserId = '';\nvar IDNumber
+          = '';\nvar Body = '';\n\n var parent;   \n\n    function printValues(obj)
+          {\n\n        for(var k in obj) {\n\n            if(obj[k] instanceof Object)
+          {\n\n                parent = k;\n\n                printValues(obj[k]);\n\n
+          \           } else {\n\n            \n             \n                 if(parent
+          == ''){\n                  \n                  }else{\n\n                 if(Number.isFinite(obj[k])){\n\n
+          \                  Body = Body+'\"'+k+'\":'+ obj[k]+',';\n\n                 }else{\n\n
+          \                  Body = Body+'\"'+k+'\":\"'+ obj[k]+'\",';\n\n                 }\n
+          \                \n          }\n\n              \n\n              if(k =='UserId'){\n\n
+          \             UserId = obj[k];\n\n              }else if(k =='IDNumber'){\n\n
+          \              IDNumber = obj[k];\n\n              }\n\n  \n\n            };\n\n
+          \       }\n\n    };\n\n    \n\n    \n\n    printValues(obj);\n\n    if(Body.endsWith(\",\")){\n\n
+          \    Body = Body.substring(0 , Body.length - 1); \n\n \n    }\n\n    var
+          output = JSON.stringify(obj);\n    var requestTag = apim.getvariable('requestTag');\n
+          \   var message = '{\"'+requestTag+'\": {\"Header\": {\"TransactionId\":
+          \"'+TransactionId+'\",\"ChannelId\": \"'+ChannelId+'\",\"SessionId\": \"'+SessionId+'\",\"RequestTime\":
+          \"'+RequestTime+'\",\"MWRequestTime\": \"'+MWRequestTime+'\",\"ServiceCode\":
+          \"'+ServiceCode+'\",\"DebugFlag\": \"1\"},\"Body\": {'+Body+'}}}';\n\n\nsession.output.write(message);\napim.output('application/json');"
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-tip-gosi)/external/getincomeforcontributor
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+    - gatewayscript:
+        version: 2.0.0
+        title: setHeaders
+        source: "\tvar apim = require('apim');\n    apim.output('application/json');\n\tvar
+          responseTag = apim.getvariable('responseTag');\n\tvar TransactionId = \"\"+apim.getvariable(\"message.body.\"+responseTag+\".Header.TransactionId\");\n\tvar
+          mystatusCode = \"\"+apim.getvariable(\"message.body.\"+responseTag+\".Header.ResponseStatus.Code\");\n\t\n\t//\tvar
+          mystatusCode = \"78787878\";\n\n\tvar ChannelId = \"\"+apim.getvariable(\"message.body.\"+responseTag+\".Header.ChannelId\");\n\tvar
+          RequestTime = \"\"+apim.getvariable(\"message.body.\"+responseTag+\".Header.RequestTime\");\n\t\n
+          \   apim.setvariable('message.headers.TransactionId',TransactionId,'add');\n\n
+          \   apim.setvariable('message.headers.ChannelId',ChannelId,'add');\n\tapim.setvariable('message.headers.RequestTime',RequestTime,'add');\n
+          \   \n     apim.setvariable('message.headers.respStatusCode',mystatusCode,'add');"
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: (($header("respStatusCode") = '00000000'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: extractBody
+              source: "\nvar apim = require('apim');\n\n\nvar obj = apim.getvariable('message.body');\n
+                \ \nvar responseTag = apim.getvariable('responseTag');\n\nvar Body
+                = '';\n\n var parent;   \n\n\n    function printValues(obj) {\n\n
+                \       for(var k in obj) {\n\n            if(obj[k] instanceof Object)
+                {\n                \n                 if (parent =='Body'){\n                     Body
+                = Body+'\"'+k+'\":{';\n                    printValues(obj[k]);\n
+                \                   if(Body.endsWith(\",\")){\n\n                          Body
+                = Body.substring(0 , Body.length - 1); \n                     }\n
+                \                    Body = Body+'},';\n                     parent
+                = 'Body';\n                }else{\n                \n                 parent
+                = k;\n                \n                printValues(obj[k]);\n                \n
+                \               }\n\n                \n                \n               \n
+                \                \n                \n\n            } else {\n\n            \n
+                \             if(parent =='Body'){\n\n\n                 if(Number.isFinite(obj[k])){\n\n
+                \                  Body = Body+'\"'+k+'\":'+ obj[k]+',';\n\n                 }else{\n\n
+                \                  Body = Body+'\"'+k+'\":\"'+ obj[k]+'\",';\n\n                 }\n\n
+                \             }\n\n              \n\n  \n\n            };\n\n        }\n\n
+                \   };\n\n\n    printValues(obj);\n\n    if(Body.endsWith(\",\")){\n\n
+                \    Body = Body.substring(0 , Body.length - 1); \n \n    }\n\n    var
+                output = JSON.stringify(obj);\n    \n    var message = '{'+Body+'}';\n\n\nsession.output.write(message);\napim.output('application/json');"
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: ErrorResponse
+              source: "var apim = require('apim');\n\n\nvar obj = apim.getvariable('message.body');\n
+                \ \nvar responseTag = apim.getvariable('responseTag');\n\nvar Body
+                = '';\n\n var parent;   \n\n    function printValues(obj) {\n\n        for(var
+                k in obj) {\n\n            if(obj[k] instanceof Object) {\n\n                parent
+                = k;\n\n                printValues(obj[k]);\n\n            } else
+                {\n\n            \n              if(parent =='ResponseStatus'){\n\n\n
+                \                if(Number.isFinite(obj[k])){\n\n                   Body
+                = Body+'\"'+k+'\":'+ obj[k]+',';\n\n                 }else{\n\n                   Body
+                = Body+'\"'+k+'\":\"'+ obj[k]+'\",';\n\n                 }\n\n              }\n\n
+                \             \n\n  \n\n            };\n\n        }\n\n    };\n\n\n
+                \   printValues(obj);\n\n    if(Body.endsWith(\",\")){\n\n     Body
+                = Body.substring(0 , Body.length - 1); \n \n    }\n\n    var output
+                = JSON.stringify(obj);\n    \n    var message = '{\"ErrorResponse\":
+                {'+Body+'}}';\n\n\nsession.output.write(message);\napim.output('application/json');"
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+paths:
+  /getincomeforcontributor:
+    post:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success

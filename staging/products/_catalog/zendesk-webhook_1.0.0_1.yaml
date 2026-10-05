@@ -1,0 +1,70 @@
+swagger: "2.0"
+info:
+  title: Zendesk WebhookWrapper
+  x-ibm-name: zendesk-webhook
+  version: 1.0.0
+schemes:
+- https
+basePath: /qiwa/v2
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        parameter-control:
+          type: blocklist
+        timeout: 60
+        verb: POST
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(ace-zen-zendesk)/zendesk/ticketing/v2/zendesk/events/webhook
+        follow-redirects: false
+        inject-proxy-headers: true
+    catch: []
+    finally: []
+  properties: {}
+  application-authentication:
+    certificate: false
+  catalogs: {}
+  activity-log:
+    success-content: payload
+    error-content: payload
+    enabled: true
+  buffering: true
+paths:
+  /webhook:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+security:
+- clientId: []
+  clientSecret: []

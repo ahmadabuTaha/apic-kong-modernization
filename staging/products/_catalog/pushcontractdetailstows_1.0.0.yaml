@@ -1,0 +1,490 @@
+swagger: "2.0"
+info:
+  title: PushContractDetailstoWS
+  version: 1.0.0
+  description: This service is used to push Add/Update Contract details from QIWA
+    to WorkInSaudi through WS Add/Update Contract API.
+  x-ibm-name: pushcontractdetailstows
+basePath: /external/v1
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+paths:
+  /pushContractdetailstows:
+    post:
+      operationId: pushContractdetailstows
+      description: This service is used to Push Contract Details to WS
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        description: pushContractDetailstoWSRq
+        schema:
+          $ref: '#/definitions/pushContractDetailstoWSRq_BodyType'
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/pushContractDetailstoWSRs_BodyType'
+definitions:
+  pushContractDetailstoWSRq_BodyType:
+    type: object
+    required:
+    - contractId
+    - wsId
+    - contractStatus
+    - actionType
+    - createdAt
+    - updatedAt
+    - expirationAt
+    - contractDetails
+    - contractMetadata
+    properties:
+      contractId:
+        type: integer
+      wsId:
+        type: string
+      contractStatus:
+        type: string
+      actionType:
+        type: string
+      updateReason:
+        type: string
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+      expirationAt:
+        type: string
+        format: date-time
+      contractDetails:
+        $ref: '#/definitions/ContractDetails'
+      contractMetadata:
+        $ref: '#/definitions/ContractMetadata'
+  ContractDetails:
+    type: object
+    required:
+    - occupationCode
+    - establishmentNameEn
+    - establishmentNameAr
+    - establishmentId
+    - workCityEn
+    - workCityAr
+    - startDate
+    - employmentType
+    - totalSalary
+    properties:
+      occupationCode:
+        type: string
+      establishmentNameEn:
+        type: string
+      establishmentNameAr:
+        type: string
+      establishmentId:
+        type: string
+      workCityEn:
+        type: string
+      workCityAr:
+        type: string
+      startDate:
+        type: string
+        format: date
+      endDate:
+        type: string
+        format: date
+      employmentType:
+        type: string
+      totalSalary:
+        type: string
+  ContractMetadata:
+    type: object
+    properties:
+      candidateId:
+        type: string
+      epro:
+        $ref: '#/definitions/CodeType'
+      embassy:
+        $ref: '#/definitions/CodeType'
+      establishmentDetails:
+        $ref: '#/definitions/EstablishmentDetails'
+      requesterDetails:
+        $ref: '#/definitions/RequesterDetails'
+      updateRequesterDetails:
+        $ref: '#/definitions/UpdateRequesterDetails'
+      contractDetails:
+        $ref: '#/definitions/ContractDetailsExtended'
+  CodeType:
+    type: object
+    properties:
+      code:
+        type: integer
+  EstablishmentDetails:
+    type: object
+    properties:
+      laborOfficeId:
+        type: integer
+      sequenceNumber:
+        type: integer
+      establishmentNameEn:
+        type: string
+      establishmentNameAr:
+        type: string
+      establishmentEmail:
+        type: string
+      nationalAddress:
+        type: string
+      phoneNumber:
+        type: string
+      mobileNumber:
+        type: string
+  RequesterDetails:
+    type: object
+    properties:
+      requesterName:
+        type: string
+      requesterIdNo:
+        type: string
+      requesterRoleEn:
+        type: string
+      requesterRoleAr:
+        type: string
+      requesterType:
+        $ref: '#/definitions/CodeType'
+  UpdateRequesterDetails:
+    type: object
+    properties:
+      updateRequesterName:
+        type: string
+      updateRequesterIdNo:
+        type: string
+      updateRequesterRoleEn:
+        type: string
+      updateRequesterRoleAr:
+        type: string
+      updateRequesterType:
+        $ref: '#/definitions/CodeType'
+  ContractDetailsExtended:
+    type: object
+    properties:
+      contractId:
+        type: integer
+      contractType:
+        $ref: '#/definitions/CodeType'
+      contractDuration:
+        $ref: '#/definitions/CodeType'
+      status:
+        $ref: '#/definitions/CodeType'
+      salary:
+        type: string
+      salaryDueDay:
+        type: integer
+      contractPeriod:
+        type: integer
+      probationPeriod:
+        type: integer
+      noticePeriod:
+        type: integer
+      vacationPeriod:
+        type: integer
+      hoursPerWeek:
+        type: integer
+      daysPerWeek:
+        type: integer
+      hoursPerDay:
+        type: integer
+      restingDays:
+        type: integer
+      creationDate:
+        type: string
+        format: date-time
+      lastModifiedDate:
+        type: string
+        format: date-time
+      startDate:
+        type: string
+        format: date-time
+      expiryDate:
+        type: string
+        format: date-time
+      endDate:
+        type: string
+        format: date-time
+      occupationDetails:
+        $ref: '#/definitions/occupationDetails_Type'
+      jobTitle:
+        $ref: '#/definitions/name_Type'
+      workLocation:
+        $ref: '#/definitions/CodeType'
+      workingHoursType:
+        $ref: '#/definitions/CodeType'
+      allowances:
+        type: array
+        items:
+          $ref: '#/definitions/allowances_Type'
+      optionalClauses:
+        type: array
+        items:
+          $ref: '#/definitions/optionalClauses_Type'
+      additionalTerms:
+        type: array
+        items:
+          $ref: '#/definitions/name_Type'
+      inKindBenefits:
+        type: array
+        items:
+          $ref: '#/definitions/inKindBenefits_Type'
+      commission:
+        type: array
+        items:
+          $ref: '#/definitions/commission_Type'
+  occupationDetails_Type:
+    type: object
+    properties:
+      occupationId:
+        type: integer
+  name_Type:
+    type: object
+    properties:
+      nameEn:
+        type: string
+      nameAr:
+        type: string
+  allowances_Type:
+    type: object
+    properties:
+      allowanceType:
+        $ref: '#/definitions/CodeType'
+      frequency:
+        $ref: '#/definitions/CodeType'
+      amountType:
+        $ref: '#/definitions/CodeType'
+      nameEn:
+        type: string
+      nameAr:
+        type: string
+      amount:
+        type: number
+  optionalClauses_Type:
+    type: object
+    properties:
+      optionalClausesType:
+        $ref: '#/definitions/CodeType'
+      period:
+        type: integer
+      field:
+        type: string
+      location:
+        type: string
+      firstParty:
+        type: string
+      secondParty:
+        type: string
+  inKindBenefits_Type:
+    type: object
+    properties:
+      nameEn:
+        type: string
+      nameAr:
+        type: string
+      descriptionEn:
+        type: string
+      descriptionAr:
+        type: string
+      frequency:
+        $ref: '#/definitions/CodeType'
+      dueDate:
+        type: string
+        format: date-time
+  commission_Type:
+    type: object
+    properties:
+      commissionBaseEn:
+        type: string
+      commissionBaseAr:
+        type: string
+      percentage:
+        type: integer
+      frequency:
+        $ref: '#/definitions/CodeType'
+  pushContractDetailstoWSRs_BodyType:
+    type: object
+    properties:
+      contractId:
+        type: integer
+      wsId:
+        type: string
+      contractStatus:
+        type: string
+      actionType:
+        type: string
+      updateReason:
+        type: string
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+      expirationAt:
+        type: string
+        format: date-time
+      contractDetails:
+        $ref: '#/definitions/ContractDetails'
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+    policy:
+    - allow-origin:
+      - $(cors-allowed-origin)
+      allow-credentials: true
+  assembly:
+    execute:
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\r\nvar cfg={\r\n    \"serviceCode\" :
+          \"PCDW0001\",\r\n    \"channelId\" : \"Integration\",\r\n    \"requestName\"
+          : \"pushContractDetailstoWSRq\",\r\n    \"responseName\": \"pushContractDetailstoWSRs\",\r\n
+          \   \"errorMap\" :{\r\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid
+          Request\"}\r\n    }\r\n    \r\n};\r\napim.setvariable('cfg',cfg);"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare_Request
+        source: "var apim = require('apim');\r\n\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\nvar appname
+          = apim.getvariable('client.app.name');\r\nvar product1 = apim.getvariable('plan.id');\r\nvar
+          product = product1.substring(0, product1.indexOf(':'));\r\n\r\nvar appcReq
+          = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n            \"TransactionId\"
+          : millisecondsvalue,\r\n            \"ChannelId\": cfg.channelId,\r\n            \"SessionId\":
+          apim.getvariable('message.headers.X-Request-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode,\r\n            \"DebugFlag\":
+          \"1\",\r\n            \"UserInfo\": {\r\n\r\n                \"IDNumber\":
+          apim.getvariable('message.body.personID')\r\n            }\r\n            ,\r\n
+          \           \"UDF\": {\r\n                \"KeyValueArr\": [\r\n                    {\r\n
+          \                       \"key\": \"Product\",\r\n                        \"value\":
+          product\r\n                    },\r\n                    {\r\n                        \"key\":
+          \"Client\",\r\n                        \"value\": appname\r\n                    }\r\n
+          \               ]\r\n            }\r\n        },\r\n        \"Body\" : apim.getvariable('message.body')\r\n
+          \           \r\n        \r\n    }\r\n};\r\n\r\nif (typeof OperatorId !==
+          'undefined')\r\n    appcReq[cfg.requestName].Header.UserInfo = {\r\n        \"IDNumber\"
+          : OperatorId\r\n    };\r\nsession.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n    \r\n    \r\n\r\n    //return
+          the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour
+          + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: POST
+        chunked-uploads: true
+        persistent-connection: true
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        target-url: $(ace-tip-workinsaudi)/external/pushcontractdetailstows
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_Headers
+        source: "var apim = require('apim');\r\napim.output('application/json');\r\nvar
+          message = apim.getvariable('message.body');\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          Header = message[cfg.responseName].Header;\r\nvar TransactionId = Header.TransactionId;\r\nvar
+          ChannelId = Header.ChannelId;\r\nvar RequestTime = Header.RequestTime;\r\nvar
+          SessionId = Header.SessionId;\r\nvar MWRequestTime = Header.MWRequestTime;\r\nvar
+          MWResponseTime = Header.MWResponseTime;\r\nvar status = Header.ResponseStatus.Status;\r\nvar
+          code = Header.ResponseStatus.Code;\r\nvar description = '';\r\n\r\nif (Header.BackendError
+          && Header.BackendError.ErrorDescription) {\r\n    description = Header.BackendError.ErrorDescription;\r\n}\r\n\r\napim.setvariable('message.headers.Transaction-Id',TransactionId,'add');\r\napim.setvariable('message.headers.Channel-Id',ChannelId,'add');\r\nif
+          (RequestTime !== 'undefined')\r\napim.setvariable('message.headers.RequestTime',RequestTime,'add');\r\nif
+          (SessionId !== 'undefined')\r\napim.setvariable('message.headers.X-Request-Id',SessionId,'add');\r\nif
+          (MWRequestTime !== 'undefined')\r\napim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');\r\nif
+          (MWResponseTime !== 'undefined')\r\napim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');\r\napim.setvariable('message.headers.Response-Status',status,'add');\r\napim.setvariable('message.headers.Response-Code',code,'add');\r\napim.setvariable('message.headers.DebugFlag','1','add');\r\n\r\nif
+          (description !== '') {\r\n    apim.setvariable('message.headers.Description',
+          description, 'add');\r\n}"
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Response
+              source: "var apim = require('apim');\r\n\r\n\r\nvar message = apim.getvariable('message.body');\r\nvar
+                cfg = apim.getvariable('cfg');\r\nvar body = message[cfg.responseName].Body;\r\n\r\nsession.output.write(body);\r\napim.output('application/json');"
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Error
+              source: "var apim = require('apim');\r\n\r\nvar message = apim.getvariable('message.body');\r\nvar
+                cfg = apim.getvariable('cfg');\r\n\r\nvar responseStatus = message[cfg.responseName].Header.ResponseStatus;\r\n\r\nvar
+                errorCode = responseStatus.Code;\r\n\r\nvar error = {\r\n    \"errorCode\":
+                errorCode,\r\n    \"errorMessage\": {\r\n        \"en-US\": responseStatus.EnglishMsg,\r\n
+                \       \"ar-SA\": responseStatus.ArabicMsg\r\n    }\r\n};\r\n\r\nvar
+                httperror = 0;\r\n\r\n// Handle mapped errors\r\nif (cfg.errorMap
+                && cfg.errorMap[errorCode]) {\r\n\r\n    httperror = cfg.errorMap[errorCode].code;\r\n\r\n
+                \   // Custom response for ESBSCHEMA\r\n    if (errorCode === \"ESBSCHEMA\")
+                {\r\n\r\n        error = {\r\n            \"errorCode\": \"ESBSCHEMA\",\r\n
+                \           \"errorMessage\": {\r\n                \"en-US\": \"Schema
+                Validation Error\",\r\n                \"ar-SA\": \"حدث خطأ بالنظام\"\r\n
+                \           }\r\n        };\r\n    }\r\n}\r\n\r\n// Default HTTP error\r\nif
+                (httperror === 0) {\r\n    httperror = 409;\r\n}\r\n\r\napim.setvariable('message.status.code',
+                httperror, 'set');\r\nsession.output.write(error);\r\napim.output('application/json');"
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: header
+    error-content: header
+schemes:
+- https

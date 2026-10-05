@@ -1,0 +1,74 @@
+swagger: "2.0"
+info:
+  title: MCI_UpdateCRNameV2-Internal
+  version: 1.0.0
+  description: This service is used to update the CR name as received from MCI.
+  x-ibm-name: mci_updatecrnamev2-internal
+paths:
+  /mciupdatecrnamev2:
+    post:
+      operationId: MCI_UpdateCRNameV2
+      responses:
+        "200":
+          description: The operation was successful.
+      consumes:
+      - application/xml
+      produces:
+      - application/xml
+      description: MCI_UpdateCRNameV2
+basePath: /internal/estabmanagement/transferownership
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-cmpm-transfer-ownership)$(request.path)
+        follow-redirects: false
+        timeout: 240
+        parameter-control:
+          type: allowlist
+          values: []
+        header-control:
+          type: blocklist
+          values: []
+        inject-proxy-headers: true
+        persistent-connection: true
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+schemes:
+- https
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+consumes:
+- application/xml
+produces:
+- application/xml

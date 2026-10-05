@@ -1,0 +1,35 @@
+info:
+  version: 1.0.0
+  title: InternalServices
+  name: internalservices
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      internalmoldataauthtoken1.0.0: {}
+      internalnicvisasrequests1.0.0: {}
+      internalmolauthtoken1.0.0: {}
+      internalnicmoldomaintainemployeeworklocationdetails1.0.0: {}
+apis:
+  internalmoldataauthtoken1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/internalmoldataauthtoken_1.0.0.yaml
+  internalnicvisasrequests1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/internalnicvisasrequests_1.0.0.yaml
+  internalmolauthtoken1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/internalmolauthtoken_1.0.0.yaml
+  internalnicmoldomaintainemployeeworklocationdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/internalnicmoldomaintainemployeeworklocationdetails_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

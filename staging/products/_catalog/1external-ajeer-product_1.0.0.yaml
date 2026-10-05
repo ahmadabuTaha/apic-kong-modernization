@@ -1,0 +1,105 @@
+info:
+  version: 1.0.0
+  title: 1External_AJEER_Product
+  name: 1external-ajeer-product
+apis:
+  ajeer-getestablishmentquota1.0.2:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ajeer-getestablishmentquota_1.0.2.yaml
+  getindividualbasicinformation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getindividualbasicinformation_1.0.0.yaml
+  getestablishmentlaborer1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getestablishmentlaborer_1.0.0.yaml
+  ajeer-changecontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ajeer-changecontract_1.0.0.yaml
+  ajeer-terminatecontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ajeer-terminatecontract_1.0.0.yaml
+  ajeer-noticecontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ajeer-noticecontract_1.0.0.yaml
+  ajeer-approvecontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ajeer-approvecontract_1.0.0.yaml
+  ajeer-rejectcontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ajeer-rejectcontract_1.0.0.yaml
+  ajeer-activatecontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ajeer-activatecontract_1.0.0.yaml
+  ajeer-searchchangesponsor1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ajeer-searchchangesponsor_1.0.0.yaml
+  ajeer-get-establishment-information1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ajeer-get-establishment-information_1.0.0.yaml
+  getestblishmentdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getestblishmentdetails_1.0.0.yaml
+  get-saudi-non-saudi-laborer-info1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/get-saudi-non-saudi-laborer-info_1.0.0.yaml
+  getestablishmentnotes1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getestablishmentnotes_1.0.0.yaml
+  ajeer-get-unified-establishments1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ajeer-get-unified-establishments_1.0.0.yaml
+  validateactivemcsemp1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validateactivemcsemp_1.0.0.yaml
+  ajeergetestablishmentinfo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ajeergetestablishmentinfo_1.0.0.yaml
+  ajeer-nic-updateworkeroccupation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ajeer-nic-updateworkeroccupation_1.0.0.yaml
+  ajeer-getistiqdamusertablishmentinfo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ajeer-getistiqdamusertablishmentinfo_1.0.0.yaml
+  ajeer-getistiqdamusertablishmentinfo2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ajeer-getistiqdamusertablishmentinfo_2.0.0.yaml
+  ajeer-getsaudinonsaudilaborerinfo3.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ajeer-getsaudinonsaudilaborerinfo_3.0.0.yaml
+  ajeer-getsaudinonsaudilaborerinfo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ajeer-getsaudinonsaudilaborerinfo_1.0.0.yaml
+  ajeer-getajeervalidleasingcontracts1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ajeer-getajeervalidleasingcontracts_1.0.0.yaml
+  ajeer-updatereleasedatebycurrentemployer1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ajeer-updatereleasedatebycurrentemployer_1.0.0.yaml
+  ajeer-approverejectchangesponsorbycurrentemployer1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ajeer-approverejectchangesponsorbycurrentemployer_1.0.0.yaml
+  ajeer-searchchangesponsor2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ajeer-searchchangesponsor_2.0.0.yaml
+  ajeer-mhrsd-updatelaborerjobclassification1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ajeer-mhrsd-updatelaborerjobclassification_1.0.0.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      ajeer-activatecontract1.0.0: {}
+      ajeer-approvecontract1.0.0: {}
+      ajeer-approverejectchangesponsorbycurrentemployer1.0.0: {}
+      ajeer-changecontract1.0.0: {}
+      ajeer-getajeervalidleasingcontracts1.0.0: {}
+      ajeer-getistiqdamusertablishmentinfo1.0.0: {}
+      ajeer-getistiqdamusertablishmentinfo2.0.0: {}
+      ajeer-getsaudinonsaudilaborerinfo1.0.0: {}
+      ajeer-getsaudinonsaudilaborerinfo3.0.0: {}
+      ajeer-mhrsd-updatelaborerjobclassification1.0.0: {}
+      ajeer-nic-updateworkeroccupation1.0.0: {}
+      ajeer-noticecontract1.0.0: {}
+      ajeer-rejectcontract1.0.0: {}
+      ajeer-searchchangesponsor1.0.0: {}
+      ajeer-searchchangesponsor2.0.0: {}
+      ajeer-terminatecontract1.0.0: {}
+      ajeer-updatereleasedatebycurrentemployer1.0.0: {}
+      ajeergetestablishmentinfo1.0.0: {}
+      validateactivemcsemp1.0.0: {}
+      getestblishmentdetails1.0.0: {}
+      getindividualbasicinformation1.0.0: {}
+      ajeer-get-establishment-information1.0.0: {}
+      ajeer-get-unified-establishments1.0.0: {}
+      getestablishmentlaborer1.0.0: {}
+      getestablishmentnotes1.0.0: {}
+      get-saudi-non-saudi-laborer-info1.0.0: {}
+      ajeer-getestablishmentquota1.0.2: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

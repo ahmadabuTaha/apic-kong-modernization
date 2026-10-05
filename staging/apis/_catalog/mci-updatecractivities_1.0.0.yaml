@@ -1,0 +1,238 @@
+swagger: "2.0"
+info:
+  title: MCI_UpdateCRActivities
+  x-ibm-name: mci-updatecractivities
+  version: 1.0.0
+  description: This service is used to update the existing CR Activities.
+schemes:
+- https
+basePath: /estabmanagement/transferownership
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-cmpm-transfer-ownership)/estabmanagement/transferownership/mciupdatecractivities
+        follow-redirects: false
+        timeout: 120
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  MCI_UpdateCRActivitiesRq_MessageType:
+    type: object
+    properties:
+      MCI_UpdateCRActivitiesRq:
+        $ref: '#/definitions/MCI_UpdateCRActivitiesRq_Type'
+  MCI_UpdateCRActivitiesRs_MessageType:
+    type: object
+    properties:
+      MCI_UpdateCRActivitiesRs:
+        $ref: '#/definitions/MCI_UpdateCRActivitiesRs_Type'
+  MCI_UpdateCRActivitiesRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/MCI_UpdateCRActivitiesRq_BodyType'
+  MCI_UpdateCRActivitiesRq_BodyType:
+    type: object
+    properties:
+      CRNo:
+        $ref: '#/definitions/CRNo_Type'
+      CRActivities:
+        type: array
+        items:
+          $ref: '#/definitions/CRActivities_Type'
+      RefNo:
+        type: string
+    required:
+    - CRNo
+    - CRActivities
+    - RefNo
+  CRNo_Type:
+    type: string
+    format: ^[0-9]{10}$
+  CRActivities_Type:
+    type: object
+    properties:
+      CRActivity:
+        type: integer
+    required:
+    - CRActivity
+  MCI_UpdateCRActivitiesRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/MCI_UpdateCRActivitiesRs_BodyType'
+  MCI_UpdateCRActivitiesRs_BodyType:
+    type: object
+    properties:
+      Message:
+        type: string
+      RequestId:
+        type: integer
+    required:
+    - Message
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: string
+      IDNumber:
+        type: string
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /mciupdatecractivities:
+    post:
+      operationId: MCI_UpdateCRActivities
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/MCI_UpdateCRActivitiesRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: This service is used to update the existing CR Activities.
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/MCI_UpdateCRActivitiesRq_MessageType'
+        description: MCI_UpdateCRActivitiesRq
+        required: true

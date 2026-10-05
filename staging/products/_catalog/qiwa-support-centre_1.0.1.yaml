@@ -1,0 +1,38 @@
+info:
+  version: 1.0.1
+  title: Qiwa Support Centre
+  name: qiwa-support-centre
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      queryqanagement-supportcentre: {}
+      accessmanagement-supportcenter1.0.0: {}
+      cachemanagement-supportcentre1.0.0: {}
+      adminmanagement-supportcentre1.0.0: {}
+      servicemanagement-supportcentre1.0.0: {}
+apis:
+  queryqanagement-supportcentre:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/queryqanagement-supportcentre_1.0.0.yaml
+  accessmanagement-supportcenter1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/accessmanagement-supportcenter_1.0.0.yaml
+  cachemanagement-supportcentre1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/cachemanagement-supportcentre_1.0.0.yaml
+  adminmanagement-supportcentre1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/adminmanagement-supportcentre_1.0.0.yaml
+  servicemanagement-supportcentre1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/servicemanagement-supportcentre_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

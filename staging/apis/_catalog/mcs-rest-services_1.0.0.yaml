@@ -1,0 +1,458 @@
+swagger: "2.0"
+info:
+  title: MCS_Rest_Services
+  x-ibm-name: mcs-rest-services
+  version: 1.0.0
+  description: MCS REST API for Services
+schemes:
+- https
+basePath: /mcs/v1
+security:
+- {}
+securityDefinitions:
+  ClientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientID:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(cat-target-hostname)$(cat-target-url-external)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  ResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  EmployeeInfoRq_Type:
+    type: object
+    properties:
+      PersonID:
+        type: string
+  EmployeeInfoRs_Type:
+    type: object
+    properties:
+      EmployeeID:
+        type: string
+      PersonalInfo:
+        $ref: '#/definitions/PersonalInfo_Type'
+      JobTitle:
+        $ref: '#/definitions/JobTitle_Type'
+      JobHiringDate:
+        type: string
+      JobNumber:
+        type: number
+      CurrentJobStatus:
+        $ref: '#/definitions/CurrentJobStatus_Type'
+      JobLadder:
+        $ref: '#/definitions/JobLadder_Type'
+      BasicSalary:
+        type: number
+      JobGrade:
+        $ref: '#/definitions/JobGrade_Type'
+      CurrentOrganization:
+        $ref: '#/definitions/CurrentOrganization_Type'
+      IsSuspended:
+        type: string
+      IsUnderInvestigation:
+        type: string
+      JobDepartmentName:
+        type: string
+      JobStep:
+        $ref: '#/definitions/JobStep_Type'
+      JobLocation:
+        $ref: '#/definitions/JobLocation_Type'
+      CurrentJobAction:
+        $ref: '#/definitions/CurrentJobAction_Type'
+      BAYANDetails:
+        $ref: '#/definitions/BAYANDetails_Tpye'
+      JobExtension:
+        $ref: '#/definitions/JobExtension_Type'
+  PersonName_Type:
+    type: object
+    properties:
+      FirstName:
+        type: string
+      SecondName:
+        type: string
+      ThirdName:
+        type: string
+      LastName:
+        type: string
+    required:
+    - FirstName
+    - SecondName
+    - ThirdName
+    - LastName
+  JobExtension_Type:
+    type: object
+    properties:
+      JobExtensionStartDate:
+        type: string
+      JobExtensionMonths:
+        type: number
+      JobExtensionYears:
+        type: number
+    required:
+    - JobExtensionMonths
+    - JobExtensionYears
+  BAYANDetails_Tpye:
+    type: object
+    properties:
+      JobBAYANNumber:
+        type: number
+      JobBAYANDate:
+        type: string
+    required:
+    - JobBAYANNumber
+    - JobBAYANDate
+  CurrentJobAction_Type:
+    type: object
+    properties:
+      JobActionCode:
+        type: string
+      JobActionDate:
+        type: string
+      JobActionDescription:
+        type: string
+      DecisionNumber:
+        type: string
+      DecisionDate:
+        type: string
+    required:
+    - JobActionCode
+    - JobActionDate
+    - JobActionDescription
+  JobLocation_Type:
+    type: object
+    properties:
+      JobLocationCityCode:
+        type: string
+      JobLocationCityName:
+        type: string
+    required:
+    - JobLocationCityCode
+    - JobLocationCityName
+  JobStep_Type:
+    type: object
+    properties:
+      JobStepCode:
+        type: number
+      JobStepDescription:
+        type: string
+      JobStepStartDate:
+        type: string
+    required:
+    - JobStepCode
+  CurrentOrganization_Type:
+    type: object
+    properties:
+      OrganizationCode:
+        type: number
+      OrganizationDescription:
+        type: string
+    required:
+    - OrganizationCode
+    - OrganizationDescription
+  JobGrade_Type:
+    type: object
+    properties:
+      JobGradeCode:
+        type: string
+      JobGradeDescription:
+        type: string
+      JobGradeStartDate:
+        type: string
+    required:
+    - JobGradeCode
+    - JobGradeDescription
+  JobLadder_Type:
+    type: object
+    properties:
+      JobLadderCode:
+        type: number
+      JobLadderDescription:
+        type: string
+    required:
+    - JobLadderCode
+    - JobLadderDescription
+  CurrentJobStatus_Type:
+    type: object
+    properties:
+      JobStatusCode:
+        type: number
+      JobStatusDescriptionArabic:
+        type: string
+      JobStatusDescriptionEnglish:
+        type: string
+    required:
+    - JobStatusCode
+    - JobStatusDescriptionArabic
+    - JobStatusDescriptionEnglish
+  JobTitle_Type:
+    type: object
+    properties:
+      JobTitleCode:
+        type: string
+      JobTitleName:
+        type: string
+    required:
+    - JobTitleCode
+    - JobTitleName
+  PersonalInfo_Type:
+    type: object
+    properties:
+      PersonName:
+        $ref: '#/definitions/PersonName_Type'
+      Gender:
+        type: string
+      BirthDate:
+        type: string
+      BirthPlace:
+        type: string
+      PersonIdentifier:
+        type: number
+      HafizaNumber:
+        type: number
+      IdentifierIssueDate:
+        type: string
+      IdentifierIssuePlace:
+        type: string
+  EmployeeInfoRq_MessageType:
+    type: object
+    properties:
+      EmployeeInfoRq:
+        type: string
+  EmployeeInfoRs_MessageType:
+    type: object
+    properties:
+      EmployeeInfoRs:
+        type: string
+  Error_MessageType:
+    type: object
+    properties:
+      ErrorResponse:
+        $ref: '#/definitions/ResponseStatus_Type'
+  GetEmployeeHistoricalInfoRq_Type:
+    type: object
+    properties:
+      PersonID:
+        type: string
+  GetEmployeeHistoricalInfoRs_Type:
+    type: object
+    properties:
+      EmployeeID:
+        type: string
+      HistoryInfoList:
+        $ref: '#/definitions/HistoryInfoList_Type'
+  HistoryInfoList_Type:
+    type: object
+    properties:
+      JobNumber:
+        type: string
+      JobTitle:
+        $ref: '#/definitions/JobTitle_Type'
+      JobLadder:
+        $ref: '#/definitions/JobLadder_Type'
+      JobGrade:
+        $ref: '#/definitions/JobGrade_Type'
+      Organization:
+        $ref: '#/definitions/Organization_Type'
+      JobStep:
+        $ref: '#/definitions/JobStep_Type'
+      JobAction:
+        $ref: '#/definitions/JobAction_Type'
+      JobLocation:
+        $ref: '#/definitions/JobLocation_Type'
+      JobExtension:
+        $ref: '#/definitions/JobExtension_Type'
+      BasicSalary:
+        type: string
+      IsSuspended:
+        type: boolean
+      IsUnderInvestigation:
+        type: boolean
+  Organization_Type:
+    type: object
+    properties:
+      OrganizationCode:
+        type: integer
+      OrganizationDescription:
+        type: string
+  JobAction_Type:
+    type: object
+    properties:
+      JobActionCode:
+        type: string
+      JobActionDate:
+        type: string
+      JobActionDescription:
+        type: string
+      DecisionNumber:
+        type: string
+      DecisionDate:
+        type: string
+  GetEmployeeHistoricalInfoRq_MessageType:
+    type: object
+    properties:
+      EmployeeHistoricalInfoRq:
+        $ref: '#/definitions/GetEmployeeHistoricalInfoRq_Type'
+  GetEmployeeHistoricalInfoRs_MessageType:
+    type: object
+    properties:
+      EmployeeHistoricalInfoRs:
+        $ref: '#/definitions/GetEmployeeHistoricalInfoRs_Type'
+  GetEmployeeQualificationsRq_Type:
+    type: object
+    properties:
+      PersonID:
+        type: string
+  GetEmployeeQualificationsRs_Type:
+    type: object
+    properties:
+      EmployeeID:
+        type: string
+      QualificationList:
+        $ref: '#/definitions/QualificationList_Type'
+  QualificationList_Type:
+    type: object
+    properties:
+      QualificationCode:
+        type: integer
+      QualificationDescription:
+        type: string
+      MajorCode:
+        type: integer
+      MajorDescription:
+        type: string
+      UniversityCode:
+        type: string
+      UniversityName:
+        type: string
+      CityName:
+        type: string
+      CountryCode:
+        type: string
+      CountryName:
+        type: string
+      Institute:
+        type: string
+      Grade:
+        type: string
+      GraduationYear:
+        type: string
+  GetEmployeeQualificationsRq_MessageType:
+    type: object
+    properties:
+      EmployeeQualificationsRq:
+        $ref: '#/definitions/GetEmployeeQualificationsRq_Type'
+  GetEmployeeQualificationsRs_MessageType:
+    type: object
+    properties:
+      EmployeeQualificationsRs:
+        $ref: '#/definitions/GetEmployeeQualificationsRs_Type'
+paths:
+  /get-employee-info2:
+    post:
+      operationId: postGet-employee-Info
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/EmployeeInfoRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Insert a get-employee-Info
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/EmployeeInfoRq_MessageType'
+        description: The request body for the operation
+        required: true
+  /get-employee-qualifications2:
+    post:
+      operationId: postGet-employee-Qualification
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetEmployeeQualificationsRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Insert a Get-employee-Qualification
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetEmployeeQualificationsRq_MessageType'
+        description: The request body for the operation
+        required: true
+  /get-employee-historical-info2:
+    post:
+      operationId: postGet-employee-HistoricalInfo
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetEmployeeQualificationsRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Insert a Get-employee-HistoricalInfo
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetEmployeeHistoricalInfoRq_MessageType'
+        description: The request body for the operation
+        required: true

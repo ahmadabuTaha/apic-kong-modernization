@@ -1,0 +1,134 @@
+info:
+  version: 1.0.10
+  title: 1UserManagement Staging
+  name: 1usermanagement-staging
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: true
+    rate-limits:
+      default:
+        value: 100/1hour
+        hard-limit: false
+    burst-limits: {}
+    apis:
+      addestablishmentusersubscription1.0.0: {}
+      addorupdateuserprivileges1.0.0: {}
+      calculateusermanagementsubscriptionprice1.0.0: {}
+      checkaddedusereligibility1.0.0: {}
+      checkusereligibility1.0.0: {}
+      checkuserestablishmentseligibility1.0.0: {}
+      createuser1.0.0: {}
+      deleteuser1.0.0: {}
+      getestablishmentauthorizeduser1.0.0: {}
+      getestablishmentauthorizeduserv21.0.0: {}
+      getlaborerinformationmlsd1.0.0: {}
+      getnearlysubstobeexpired1.0.0: {}
+      getpaymentswithoutusersubscriptions1.0.0: {}
+      getqiwaworkspaceestablishments1.0.0: {}
+      getsubscriptionsconfigurationsodm1.0.0: {}
+      getumservicesnonsubscribedusers1.0.0: {}
+      getusereligibleservices1.0.0: {}
+      getuserestablishmentsmlsd1.0.0: {}
+      getuserinformation1.0.0: {}
+      getusermanagementservices1.0.0: {}
+      qiwa-um-getqiwaworkspaceestablishmentsv21.0.0: {}
+      qiwa-um-getuserestabsgroups1.0.0: {}
+      qiwa-um-getuserwscount1.0.0: {}
+      renewusersubscription1.0.0: {}
+      searchuserssubuninum1.0.0: {}
+      searchusersubscriptions1.0.0: {}
+      subscribeusertoestablishments1.0.0: {}
+      updateorconfirmmobilenumber1.0.0: {}
+      updateorterminateusersubscription1.0.0: {}
+      updateuserinformation1.0.0: {}
+      validatemobilenumber1.0.0: {}
+      terminatesubscriptionforexcludedactivities1.0.0: {}
+      userestabsubscriptiondetails1.0.0: {}
+      qiwa-um-addupdateuserfavoriteestab1.0.0: {}
+      getcountofactiveusers1.0.0: {}
+      qiwa_um_qiwainnumbers1.0.0: {}
+apis:
+  qiwa-um-addupdateuserfavoriteestab1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-um-addupdateuserfavoriteestab_1.0.0.yaml
+  qiwa_um_qiwainnumbers1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa_um_qiwainnumbers_1.0.0_1.yaml
+  getcountofactiveusers1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getcountofactiveusers_1.0.0_1.yaml
+  getsubscriptionsconfigurationsodm1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getsubscriptionsconfigurationsodm_1.0.0.yaml
+  calculateusermanagementsubscriptionprice1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/calculateusermanagementsubscriptionprice_1.0.0.yaml
+  getuserinformation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getuserinformation_1.0.0_1.yaml
+  getlaborerinformationmlsd1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getlaborerinformationmlsd_1.0.0_1.yaml
+  getuserestablishmentsmlsd1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getuserestablishmentsmlsd_1.0.0.yaml
+  addestablishmentusersubscription1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/addestablishmentusersubscription_1.0.0.yaml
+  updateorconfirmmobilenumber1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updateorconfirmmobilenumber_1.0.0.yaml
+  searchusersubscriptions1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/searchusersubscriptions_1.0.0.yaml
+  searchuserssubuninum1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/searchuserssubuninum_1.0.0.yaml
+  renewusersubscription1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/renewusersubscription_1.0.0.yaml
+  qiwa-um-getuserwscount1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-um-getuserwscount_1.0.0.yaml
+  qiwa-um-getuserestabsgroups1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-um-getuserestabsgroups_1.0.0.yaml
+  qiwa-um-getqiwaworkspaceestablishmentsv21.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-um-getqiwaworkspaceestablishmentsv2_1.0.0.yaml
+  userestabsubscriptiondetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/userestabsubscriptiondetails_1.0.0.yaml
+  terminatesubscriptionforexcludedactivities1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/terminatesubscriptionforexcludedactivities_1.0.0.yaml
+  validatemobilenumber1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validatemobilenumber_1.0.0.yaml
+  updateuserinformation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updateuserinformation_1.0.0.yaml
+  updateorterminateusersubscription1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updateorterminateusersubscription_1.0.0.yaml
+  subscribeusertoestablishments1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/subscribeusertoestablishments_1.0.0.yaml
+  getusermanagementservices1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getusermanagementservices_1.0.0.yaml
+  createuser1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/createuser_1.0.0.yaml
+  checkusereligibility1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/checkusereligibility_1.0.0_1.yaml
+  checkuserestablishmentseligibility1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/checkuserestablishmentseligibility_1.0.0.yaml
+  getnearlysubstobeexpired1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getnearlysubstobeexpired_1.0.0.yaml
+  getpaymentswithoutusersubscriptions1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getpaymentswithoutusersubscriptions_1.0.0.yaml
+  getqiwaworkspaceestablishments1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getqiwaworkspaceestablishments_1.0.0.yaml
+  getumservicesnonsubscribedusers1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getumservicesnonsubscribedusers_1.0.0.yaml
+  getusereligibleservices1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getusereligibleservices_1.0.0.yaml
+  checkaddedusereligibility1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/checkaddedusereligibility_1.0.0.yaml
+  deleteuser1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/deleteuser_1.0.0.yaml
+  getestablishmentauthorizeduser1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getestablishmentauthorizeduser_1.0.0.yaml
+  getestablishmentauthorizeduserv21.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getestablishmentauthorizeduserv2_1.0.0.yaml
+  addorupdateuserprivileges1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/addorupdateuserprivileges_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

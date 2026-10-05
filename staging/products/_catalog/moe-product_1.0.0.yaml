@@ -1,0 +1,33 @@
+info:
+  name: moe-product
+  title: External_MOE_Product
+  version: 1.0.0
+apis:
+  moe-rest-services1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/moe-rest-services_1.0.0.yaml
+  moe-getgraduatestudentqualifications1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/moe-getgraduatestudentqualifications_1.0.0.yaml
+  moe-getgraduatestudentqualifications2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/moe-getgraduatestudentqualifications_2.0.0.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      moe-rest-services1.0.0: {}
+      moe-getgraduatestudentqualifications1.0.0: {}
+      moe-getgraduatestudentqualifications2.0.0: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

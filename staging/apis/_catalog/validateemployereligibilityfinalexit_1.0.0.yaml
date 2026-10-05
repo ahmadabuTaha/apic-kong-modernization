@@ -1,0 +1,276 @@
+swagger: "2.0"
+info:
+  title: ValidateEmployerEligibilityFinalExit
+  x-ibm-name: validateemployereligibilityfinalexit
+  version: 1.0.0
+  description: This service is used to check the validity of the Employer to request
+    a final exit.
+schemes:
+- https
+basePath: /qiwa
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientId: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - gatewayscript:
+        version: 2.0.0
+        title: ConstructReq
+        source: "var apim = require('apim')\nvar Payload = apim.getvariable('request.body');
+          \n\nvar TransactionId = JSON.stringify(Math.floor(Math.random() * 10000000000000000000));\n\nvar
+          request = {\n    \"ValidateEmployerEligibilityFinalExitRq\": {\n        \"Header\":
+          {\n            \"TransactionId\": TransactionId,\n            \"ChannelId\":
+          \"ESB\",\n            \"SessionId\": \"212\",\n            \"RequestTime\":
+          \"2019-10-10 00:00:00.555\",\n            \"MWRequestTime\": \"2019-10-10
+          00:00:00.555\",\n            \"ServiceCode\": \"VEEFE002\",\n            \"DebugFlag\":
+          \"1\",\n             \"UserInfo\": {\n                 \"UserId\": \"465740\",\n
+          \       \"IDNumber\": \"1024812248\"\n            }\n        },\n        \"Body\":
+          {\n        \t  \"IDNumber\" : Payload.IDNumber,\n            \"NationalUnifiedNumber\"
+          : Payload.NationalUnifiedNumber\n        }\n    }\n}\n\n\napim.setvariable('message.body',request)\napim.output('application/json')"
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-tc-tcvalidates)/qiwa/valempeligfinalexit
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+    - gatewayscript:
+        version: 2.0.0
+        title: gatewayscript
+        source: "var apim = require('apim')\nvar backendRes = apim.getvariable('message.body');
+          \n var ContractExpiryDate1 =\nbackendRes.ValidateEmployerEligibilityFinalExitRs.Body.ContractExpiryDate;\n\nvar
+          ContractExpiryDate = JSON.stringify(ContractExpiryDate1);\n\n\nif(ContractExpiryDate
+          == '{}'){\n   var  ContractExpiryDate = null;\n}else{\n    var  ContractExpiryDate
+          = ContractExpiryDate1\n}\nvar response = {\n                 \"ReasonCode\":
+          backendRes.ValidateEmployerEligibilityFinalExitRs.Header.ResponseStatus.Code,\n
+          \                 \"ArReasonMessage\": backendRes.ValidateEmployerEligibilityFinalExitRs.Header.ResponseStatus.ArabicMsg,\n
+          \                    \"EnReasonMessage\": backendRes.ValidateEmployerEligibilityFinalExitRs.Header.ResponseStatus.EnglishMsg,\n
+          \                    \"ContractExpiryDate\": ContractExpiryDate\n}\n\n\napim.setvariable('message.body',response)\napim.output('application/json')"
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  API_Response:
+    type: object
+    additionalProperties: false
+    properties:
+      ReasonCode:
+        type: string
+      ArReasonMessage:
+        type: string
+      EnReasonMessage:
+        type: string
+      ContractExpiryDate:
+        type: string
+  API_Request:
+    type: object
+    additionalProperties: false
+    properties:
+      IDNumber:
+        type: string
+        default: "2111111111"
+      NationalUnifiedNumber:
+        type: string
+        default: "7001234567"
+  ValidateEmployerEligibilityFinalExitRq_MessageType:
+    type: object
+    properties:
+      ValidateEmployerEligibilityFinalExitRq:
+        $ref: '#/definitions/ValidateEmployerEligibilityFinalExitRq_Type'
+  ValidateEmployerEligibilityFinalExitRs_MessageType:
+    type: object
+    properties:
+      ValidateEmployerEligibilityFinalExitRs:
+        $ref: '#/definitions/ValidateEmployerEligibilityFinalExitRs_Type'
+  ValidateEmployerEligibilityFinalExitRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/ValidateEmployerEligibilityFinalExitRq_BodyType'
+  ValidateEmployerEligibilityFinalExitRq_BodyType:
+    type: object
+    properties:
+      IDNumber:
+        type: string
+      NationalUnifiedNumber:
+        type: string
+    required:
+    - IDNumber
+    - NationalUnifiedNumber
+  ValidateEmployerEligibilityFinalExitRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/ValidateEmployerEligibilityFinalExitRs_BodyType'
+  ValidateEmployerEligibilityFinalExitRs_BodyType:
+    type: object
+    properties:
+      ContractExpiryDate:
+        type: string
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /validateEmployerEligibilityFinalExit:
+    post:
+      operationId: ValidateEmployerEligibilityFinalExit
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/API_Response'
+      description: Validate SC Request
+      parameters:
+      - name: body
+        in: body
+        required: true
+        description: ValidateEmployerEligibilityFinalExitRq
+        schema:
+          $ref: '#/definitions/API_Request'

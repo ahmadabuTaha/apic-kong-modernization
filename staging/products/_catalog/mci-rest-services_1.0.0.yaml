@@ -1,0 +1,277 @@
+swagger: "2.0"
+info:
+  title: MCI_Rest_Services
+  x-ibm-name: mci-rest-services
+  version: 1.0.0
+  description: MCI_Rest_Services
+schemes:
+- https
+basePath: /mci/v1
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(cat-target-hostname)$(cat-target-url-external2)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  CrDetailsRq_Type:
+    type: object
+    properties:
+      CRNumber:
+        type: string
+  CrDetailsRq_MessageType:
+    type: object
+    properties:
+      CrDetailsRq:
+        $ref: '#/definitions/CrDetailsRq_Type'
+  CrDetailsRs_Type:
+    type: object
+    properties:
+      GetCRInformationByCRNumberResult:
+        $ref: '#/definitions/GetCRInformationByCRNumberResult_Type'
+      Owners:
+        $ref: '#/definitions/CrOwnersDetailsRs_Type'
+  CrDetailsRs_MessageType:
+    type: object
+    properties:
+      CrDetailsRs:
+        $ref: '#/definitions/CrDetailsRs_Type'
+  GetCRInformationByCRNumberResult_Type:
+    type: object
+    properties:
+      ServiceError:
+        $ref: '#/definitions/ServiceError_Type'
+      GetCRInformationByCRNumberResponseDetailObject:
+        $ref: '#/definitions/GetCRInformationByCRNumberResponseDetailObject_Type'
+  ServiceError_Type:
+    type: object
+    properties:
+      SourceAgency:
+        type: string
+      ErrorType:
+        type: string
+      RaisedBy:
+        type: string
+      Code:
+        type: string
+      ErrorText:
+        type: string
+      Insert:
+        type: string
+  GetCRInformationByCRNumberResponseDetailObject_Type:
+    type: object
+    properties:
+      NationalNumber:
+        type: string
+      CRType:
+        type: string
+      MainCRNumber:
+        type: string
+      CRIssueDate:
+        $ref: '#/definitions/CRDate_Type'
+      CRExpiryDate:
+        $ref: '#/definitions/CRDate_Type'
+      CRCityAR:
+        type: string
+      CRCityEN:
+        type: string
+      CRNameAR:
+        type: string
+        properties: {}
+      CRCapital:
+        type: string
+      CRLegalTypeEN:
+        type: string
+        properties: {}
+      CRLegalTypeAR:
+        type: string
+        properties: {}
+      CRStatus:
+        $ref: '#/definitions/CRStatus_Type'
+      CRPhoneNo:
+        type: string
+      CRFaxNo:
+        type: string
+      CRAddress:
+        type: string
+      CRActivities:
+        $ref: '#/definitions/CRActivities_Type'
+  CRDate_Type:
+    type: object
+    properties:
+      GregorianDate:
+        type: string
+      HijriDate:
+        type: string
+  CRStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      CRStatusDate:
+        type: string
+      CRStatusReason:
+        type: string
+  CRActivities_Type:
+    type: object
+    properties:
+      CRActivities:
+        type: string
+      ListOfISICActivities:
+        $ref: '#/definitions/ListOfISICActivities_Type'
+  ListOfISICActivities_Type:
+    type: object
+    properties:
+      ISICActivity:
+        type: array
+        items:
+          $ref: '#/definitions/ISICActivity_Type'
+  ISICActivity_Type:
+    type: object
+    properties:
+      ISICCode:
+        type: string
+      ISICName:
+        type: string
+  AllCrInfoRq_MessageType:
+    type: object
+    properties:
+      AllCrInfoRq:
+        $ref: '#/definitions/AllCrInfoRq_Type'
+  AllCrInfoRq_Type:
+    type: object
+    properties:
+      CRNumber:
+        type: string
+  AllCrInfoRs_Type:
+    type: object
+    properties:
+      CrDetailsRs:
+        $ref: '#/definitions/CrDetailsRs_Type'
+  AllCrInfoRs_MessageType:
+    type: object
+    properties:
+      AllCrInfoRs:
+        $ref: '#/definitions/AllCrInfoRs_Type'
+  CrOwnersDetailsRs_Type:
+    type: object
+    properties:
+      CROwner:
+        type: array
+        items:
+          $ref: '#/definitions/CrOwners_Type'
+  CrOwners_Type:
+    type: object
+    properties:
+      OwnerName:
+        type: string
+      OwnerID:
+        $ref: '#/definitions/OwnerID_Type'
+      OwnerNationalityEN:
+        type: string
+      OwnerNationalityAR:
+        type: string
+      RelationType:
+        type: string
+  OwnerID_Type:
+    type: object
+    properties:
+      BorderNumber:
+        type: string
+      Code700:
+        type: string
+      CRNumber:
+        type: string
+      PersonIdentifier:
+        $ref: '#/definitions/PersonIdentifier_Type'
+      PassportIdentifier:
+        $ref: '#/definitions/PassportIdentifier_Type'
+  PersonIdentifier_Type:
+    type: object
+    properties:
+      NationalID:
+        type: string
+      IqamaNumber:
+        type: string
+  PassportIdentifier_Type:
+    type: object
+    properties:
+      PassportNumber:
+        type: string
+      PassportIssuePlaceName:
+        type: string
+      PassportIssueDate:
+        $ref: '#/definitions/CRDate_Type'
+      PassportExpiryDate:
+        $ref: '#/definitions/CRDate_Type'
+paths:
+  /get-cr-details2:
+    post:
+      operationId: postGet-cr-details
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/CrDetailsRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Insert a get-cr-details
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/CrDetailsRq_MessageType'
+        description: The request body for the operation
+        required: true
+  /get-all-details2:
+    post:
+      operationId: postGet-all-details
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/AllCrInfoRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Insert a get-all-details
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/AllCrInfoRq_MessageType'
+        description: The request body for the operation
+        required: true

@@ -1,0 +1,63 @@
+info:
+  name: 1external-momra-product
+  title: 1External_MOMRA_Product
+  version: 1.0.0
+apis:
+  getcraftsandhealthaccreditorspercentage1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getcraftsandhealthaccreditorspercentage_1.0.0.yaml
+  verifysaudizationcertificatevalidity2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/verifysaudizationcertificatevalidity_2.0.0.yaml
+  validateworkpermitvalidity2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validateworkpermitvalidity_2.0.0.yaml
+  verifyviolatedestablishment2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/verifyviolatedestablishment_2.0.0.yaml
+  validateemployeeoccupation2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validateemployeeoccupation_2.0.0.yaml
+  momra-getshoplicensedetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/momra-getshoplicensedetails_1.0.0.yaml
+  getestablishmentsize2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getestablishmentsize_2.0.0.yaml
+  momra-pushhealthcertificatedetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/momra-pushhealthcertificatedetails_1.0.0.yaml
+  getestablishmentsites1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getestablishmentsites_1.0.0.yaml
+  momra-restservices1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/momra-restservices_1.0.0.yaml
+  momra-getestablishmentsites2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/momra-getestablishmentsites_2.0.0.yaml
+  getmomralicensedetails2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getmomralicensedetails_2.0.0.yaml
+  momra-pushlicenseupdatesapiwrapper2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/momra-pushlicenseupdatesapiwrapper_2.0.0.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      getestablishmentsites1.0.0: {}
+      getestablishmentsize2.0.0: {}
+      getmomralicensedetails2.0.0: {}
+      momra-getestablishmentsites2.0.0: {}
+      momra-getshoplicensedetails1.0.0: {}
+      momra-restservices1.0.0: {}
+      validateemployeeoccupation2.0.0: {}
+      validateworkpermitvalidity2.0.0: {}
+      verifysaudizationcertificatevalidity2.0.0: {}
+      verifyviolatedestablishment2.0.0: {}
+      momra-pushhealthcertificatedetails1.0.0: {}
+      getcraftsandhealthaccreditorspercentage1.0.0: {}
+      momra-pushlicenseupdatesapiwrapper2.0.0: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

@@ -1,0 +1,358 @@
+swagger: "2.0"
+info:
+  title: QIWA_DeleteEstablishmentTraining
+  x-ibm-name: qiwa-deleteestablishmenttraining
+  version: 1.0.4
+  description: This API removes training details  from Qiwa platform
+schemes:
+- https
+basePath: /qiwa/v2
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://gw-apic.qiwa.info/takamol/staging/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - gatewayscript:
+        version: 2.0.0
+        title: service_config
+        source: "var apim = require('apim');\n\nvar cfg={\n    \"serviceCode\" : \"CIE00001\",\n
+          \   \"channelId\" : \"Qiwa\",\n\t\"SessionId\" : \"1\",\n    \"requestName\"
+          : \"DeleteTrainingRq\",\n    \"responseName\": \"DeleteTrainingRs\",\n    \"errorMap\"
+          :{\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid Request\"},\n
+          \       \"E0000024\"  : {\"code\" :409, \"msg\":\"Nodata\"},\n        \"E0000004\"
+          \ : {\"code\" :400, \"msg\":\"Missing\"},\n        \"E0000042\"  : {\"code\"
+          :409, \"msg\":\"InvalidData\"},\n        \"E0000034\"  : {\"code\" :401,
+          \"msg\":\"AuthenticationFailed\"},\n        \"NIC00253\"  : {\"code\" :409,
+          \"msg\":\"Runtime_Exception\"},\n        \"E0000046\"  : {\"code\" :401,
+          \"msg\":\"Has a privilege on a subscription only with no privilege on the
+          service\"},\n        \"E0000047\"  : {\"code\" :401, \"msg\":\"The user
+          should add a subscription.\"},\n        \"E0000048\"  : {\"code\" :401,
+          \"msg\":\"The user should request a subscription from the unified owner\"},\n
+          \       \"E0000028\"  : {\"code\" :409, \"msg\":\"InvalidData\"},\n        \"E0000684\"
+          \ : {\"code\" :409, \"msg\":\"NoEstablishmentInfo\"},\n    \t\"E0000929\"
+          \ :{\"code\" :409, \"msg\":\"AllEmployeeRemovalError\"},\n        \"E0001476\"
+          \ :{\"code\" :409, \"msg\":\"Training cannot be deleted because there is
+          an approval from atleast one laborer\"}\n    }\n    \n};\n\napim.setvariable('cfg',
+          cfg);\napim.output('application/json');"
+    - gatewayscript:
+        version: 2.0.0
+        title: gatewayscript
+        source: "var apim = require('apim');\r\n\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\n\r\nvar channel
+          = 0;\r\nif (apim.getvariable('message.headers.X-Channel-Id')!= null && apim.getvariable('message.headers.X-Channel-Id')!=0){\r\n
+          \   channel= apim.getvariable('message.headers.X-Channel-Id');\r\n}\r\nelse{\r\n
+          \   channel= cfg.channelId;\r\n}\r\n\r\nvar appcReq = {\r\n    [cfg.requestName]:{\r\n
+          \       \"Header\" : {\r\n            \"TransactionId\" :millisecondsvalue,\r\n
+          \           \"ChannelId\": channel,\r\n            \"SessionId\": cfg.SessionId,
+          //apim.getvariable('message.headers.X-Request-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n\t\t\t\"MWRequestTime\" : formatDate(dt),\r\n            \"ServiceCode\":
+          cfg.serviceCode,\r\n\t\t\t\"UserInfo\": {\r\n\t\t\t\t\"UserId\": \"1021\",\r\n
+          \               \"IDNumber\": 1158407\r\n\t\t\t}\r\n        },\r\n        \"Body\"
+          : apim.getvariable('message.body')\r\n            \r\n        \r\n    }\r\n};\r\n\r\nif
+          (typeof OperatorId !== 'undefined')\r\n    appcReq[cfg.requestName].Header.UserInfo
+          = {\r\n        \"IDNumber\" : OperatorId\r\n    };\r\nsession.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n    \r\n    \r\n\r\n    //return
+          the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour
+          + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: POST
+        target-url: $(ace-trni-trainingmanagement)/external/DeleteTrainings
+        follow-redirects: false
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        cache-ttl: 90
+        timeout: 90
+        stop-on-error:
+        - ConnectionError
+        - OperationError
+        - SOAPError
+    - gatewayscript:
+        version: 2.0.0
+        title: Build Headers
+        source: |-
+          var apim = require('apim');
+
+          apim.output('application/json');
+
+          var message = apim.getvariable('message.body');
+          var cfg = apim.getvariable('cfg');
+          var Header = message[cfg.responseName].Header;
+          var TransactionId = Header.TransactionId;
+          var ChannelId = Header.ChannelId;
+          var RequestTime = Header.RequestTime;
+          var SessionId = Header.SessionId;
+          var MWRequestTime = Header.MWRequestTime;
+          var MWResponseTime = Header.MWResponseTime;
+          var status = Header.ResponseStatus.Status;
+
+
+
+          apim.setvariable('message.headers.Transaction-Id',TransactionId,'add');
+          apim.setvariable('message.headers.Channel-Id',ChannelId,'add');
+          if (RequestTime !== 'undefined')
+           apim.setvariable('message.headers.RequestTime',RequestTime,'add');
+          if (SessionId !== 'undefined')
+           apim.setvariable('message.headers.X-Request-Id',SessionId,'add');
+          if (MWRequestTime !== 'undefined')
+          apim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');
+          if (MWResponseTime !== 'undefined')
+          apim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');
+
+          apim.setvariable('message.headers.Response-Status',status,'add');
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: gatewayscript
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg'); \n\nvar body = message[cfg.responseName].Body;\n\n\nsession.output.write(body);\napim.output('application/json');"
+        - condition: ($header("Response-Status") = 'Error' or ($header("Response-Status")
+            = 'ERROR'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Error
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');     \n\nvar error = {\n  \"errorCode\":
+                message[cfg.responseName].Header.ResponseStatus.Code,\n  \"errorMessage\":
+                {\n    \"en-US\": message[cfg.responseName].Header.ResponseStatus.EnglishMsg,\n
+                \   \"ar-SA\": message[cfg.responseName].Header.ResponseStatus.ArabicMsg\n
+                \ }\n};\n\nvar httperror=0;\nif(cfg.errorMap){\n    if(cfg.errorMap[error.errorCode]){\n
+                \      httperror = cfg.errorMap[error.errorCode].code;\n       \n
+                \      //var errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\n
+                \      //var details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\n    }\n}\nif(httperror
+                == 0){\n   httperror = 400;\n   // apim.error('ERROR',400,'Bad Request','Invalid
+                request');\n}\nif(message[cfg.responseName].Header.ResponseStatus.Code=='E0000034'){\n
+                \   httperror = 401;\n}\napim.setvariable('message.status.code',httperror,'set');\n\nsession.output.write(error);\napim.output('application/json');"
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: gatewayscript
+              source: "var apim = require('apim');\r\n\r\nvar message = apim.getvariable('message.body');
+                \   \r\nvar cfg = apim.getvariable('cfg');   \r\nvar error = {\r\n
+                \ \"errorCode\": message['Error'].Code,\r\n  \"errorMessage\": {\r\n
+                \   \"en-US\": message['Error'].Detail,\r\n    \"ar-SA\": 'System
+                Error'\r\n};\r\n\r\nvar httperror=0;\r\nif(cfg.errorMap){\r\n    if(cfg.errorMap[error.errorCode]){\r\n
+                \      httperror = cfg.errorMap[error.errorCode].code;\r\n       \r\n
+                \      //var errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\r\n
+                \      //var details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\r\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\r\n    }\r\n}\r\nif(httperror
+                == 0){\r\n   httperror = 500;\r\n   // apim.error('ERROR',400,'Bad
+                Request','Invalid request');\r\n}\r\napim.setvariable('message.status.code',httperror,'set');\r\n\r\nsession.output.write(error);\r\napim.output('application/json');"
+    catch:
+    - default:
+      - set-variable:
+          version: 2.0.0
+          title: set-variable
+          actions:
+          - set: message.status.code
+            value: "500"
+            type: string
+          - set: message.headers.Content-Type
+            value: application/json
+            type: string
+          - set: message.body
+            value: '{      "errorCode": "E000500",      "errorMessage": "Internal
+              server error"  }'
+            type: string
+    finally: []
+  properties:
+    target-url:
+      value: http://trni-trainingmanagement-http-ace.apps.stg.qiwa-nonprod.local/external/DeleteTrainings
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    success-content: payload
+    error-content: payload
+    enabled: true
+  buffering: true
+  application-authentication:
+    certificate: false
+definitions:
+  deleteTrainingRequest:
+    type: object
+    additionalProperties: false
+    properties:
+      TrainingId:
+        type: integer
+      DeletionReason:
+        type: string
+      UserId:
+        type: integer
+      IDNumber:
+        type: string
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      EstablishmentId:
+        type: integer
+        properties: {}
+  ResponseModel:
+    type: object
+    description: This response object returned by the  operation
+    properties:
+      headers:
+        $ref: '#/definitions/Headers'
+  ErrorModel:
+    type: object
+    required:
+    - errorCode
+    - errorMessage
+    properties:
+      headers:
+        $ref: '#/definitions/Headers'
+      errorCode:
+        type: string
+        example: EXXXX000
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+  LocaleDataModel:
+    type: object
+    additionalProperties:
+      type: string
+    example:
+      en-US: English Value
+      ar-SA: Arabic Value
+  Headers:
+    type: object
+    properties:
+      X-Request-Id:
+        type: string
+        example: 123e4567-e89b-12d3-a456-426614174000
+  HeadersErrorModel:
+    type: object
+    properties:
+      headers:
+        $ref: '#/definitions/Headers'
+paths:
+  /training-indicator/remove:
+    post:
+      tags:
+      - remove establishment training
+      description: service remove training details to Qiwa.
+      operationId: removeestablishmenttraining
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/ResponseModel'
+        "400":
+          description: The request was rejected by the server due to malformed syntax.
+            Bad Request.
+        "401":
+          description: The request could not be completed due to lack of valid credentials.
+            Authentication.
+          schema:
+            $ref: '#/definitions/HeadersErrorModel'
+        "403":
+          description: The request could not be completed because it is not authorized.
+            Authorization
+          schema:
+            $ref: '#/definitions/HeadersErrorModel'
+        "404":
+          description: The server has not found anything matching the Request-URI.
+        "408":
+          description: The client did not produce a request within the time that the
+            server was prepared to wait.
+        "409":
+          description: The request could not be completed due to a conflict with the
+            current state of the resource. Usually business validation errors will
+            be returned in the body
+          schema:
+            $ref: '#/definitions/HeadersErrorModel'
+        "429":
+          description: The request was sent too many times in a given amount of time
+          schema:
+            $ref: '#/definitions/HeadersErrorModel'
+        "500":
+          description: The server encountered an unexpected condition which prevented
+            it from fulfilling the request.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        "501":
+          description: The server does not support the functionality required and
+            does not recognize the request
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        "503":
+          description: The server encountered an unexpected condition which prevented
+            it from fulfilling the request.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        "510":
+          description: Extensions to the request are required for the server to fulfil
+            it.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+      parameters:
+      - name: X-IBM-Client-Id
+        in: header
+        description: Client id issued by security server
+        required: true
+        type: string
+      - name: X-IBM-Client-Secret
+        in: header
+        description: Client secret issued by security server
+        required: true
+        type: string
+      - name: X-Request-Id
+        in: header
+        description: X-Request-Id returned in the response header
+        required: false
+        type: string
+      - name: requestBody
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/deleteTrainingRequest'

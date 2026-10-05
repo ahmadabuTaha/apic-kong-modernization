@@ -1,0 +1,66 @@
+swagger: "2.0"
+info:
+  title: GetEstablishmentCurrentData Prod SP
+  x-ibm-name: getestablishmentcurrentdata-prod-sp
+  version: 1.0.0
+schemes:
+- https
+basePath: /
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+x-ibm-configuration:
+  properties: {}
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        parameter-control:
+          type: blocklist
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(dp-qiwadp-sp-prod)/GetEstablishmentCurrentData
+        follow-redirects: false
+        inject-proxy-headers: true
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+paths:
+  /GetEstablishmentCurrentData:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []

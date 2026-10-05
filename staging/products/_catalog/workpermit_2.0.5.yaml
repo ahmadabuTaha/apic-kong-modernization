@@ -1,0 +1,166 @@
+info:
+  name: workpermit
+  title: WorkPermit
+  version: 2.0.5
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: true
+    rate-limits:
+      default:
+        value: 100/1hour
+        hard-limit: false
+    apis:
+      cancelsadadbill1.0.0: {}
+      checklawofficeeligibility1.0.0: {}
+      checkwpestablisheligibility1.0.0: {}
+      checkwplaborereligibility1.0.0: {}
+      createupdatesadadbill1.0.0: {}
+      createworkpermitdraft1.0.0: {}
+      getexpiredworkpermits1.0.0: {}
+      getworkpermitestablishmentlist1.0.0: {}
+      getworkpermitindicators1.0.0: {}
+      getworkpermitrequestdetails1.0.0: {}
+      getworkpermitrequests1.0.0: {}
+      issueworkpermitnic1.0.0: {}
+      odm-getworkpermitvalues1.0.0: {}
+      publicworkpermitcalculator1.0.0: {}
+      updatebillpayment1.0.0: {}
+      getworkpermitalldata1.0.1: {}
+      searchworkpermitdetails1.0.1: {}
+      calculateworkpermitfees1.0.1: {}
+      checklaborerdebt1.0.1: {}
+      cancelworkpermitrequest1.0.1: {}
+      validatelaborereligibilitywp1.0.1: {}
+      getworkpermitlaborerlist1.0.1: {}
+      getestablishmentdebt1.0.0: {}
+      getworkpermitdebtscounts1.0.0: {}
+      createestablishmentdebt1.0.0: {}
+      calculateestablishmentdebt1.0.0: {}
+      submittemporaryworkpermitrequest1.0.0: {}
+      searchtemporaryworkpermit1.0.0: {}
+      getwpinvoicedata1.0.0: {}
+      getworkpermitinvoicedetails1.0.0: {}
+      getworkpermitexemptions1.0.0: {}
+      getexpiredwplaborersdetails1.0.0: {}
+      createsadadbillfordebt1.0.0: {}
+      getwpfinalexitdebts1.0.0: {}
+      getfinalexitdebts1.0.0: {}
+      pushsadadpaymentnotification1.0.0: {}
+      validatetemporarywprequest1.0.0: {}
+      getunifiednumberworkpermit1.0.0: {}
+      validateestablisheligibilitywp1.0.1: {}
+      submitworkpermitrequest1.0.1: {}
+      pushbillingconfirmednotifications1.0.0: {}
+      createbillingsadadnumber1.0.0: {}
+      getpremiumresidencywprequests1.0.0: {}
+      validateestablishmentlaborerdebt1.0.0: {}
+      calculate-delayed-fees1.0.0: {}
+      calculate-last-delay-date1.0.0: {}
+      getscheduledworkpermitinvoices1.0.0: {}
+apis:
+  calculateestablishmentdebt1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/calculateestablishmentdebt_1.0.0.yaml
+  searchworkpermitdetails1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/searchworkpermitdetails_1.0.1_1.yaml
+  validateestablishmentlaborerdebt1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validateestablishmentlaborerdebt_1.0.0.yaml
+  calculate-delayed-fees1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/calculate-delayed-fees_1.0.0.yaml
+  calculate-last-delay-date1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/calculate-last-delay-date_1.0.0.yaml
+  getpremiumresidencywprequests1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getpremiumresidencywprequests_1.0.0.yaml
+  createupdatesadadbill1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/createupdatesadadbill_1.0.0.yaml
+  createbillingsadadnumber1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/createbillingsadadnumber_1.0.0.yaml
+  pushbillingconfirmednotifications1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/pushbillingconfirmednotifications_1.0.0.yaml
+  getworkpermitalldata1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getworkpermitalldata_1.0.1.yaml
+  validatelaborereligibilitywp1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validatelaborereligibilitywp_1.0.1.yaml
+  getworkpermitlaborerlist1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getworkpermitlaborerlist_1.0.1.yaml
+  getworkpermitexemptions1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getworkpermitexemptions_1.0.0.yaml
+  getunifiednumberworkpermit1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getunifiednumberworkpermit_1.0.0.yaml
+  validateestablisheligibilitywp1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validateestablisheligibilitywp_1.0.1.yaml
+  submitworkpermitrequest1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/submitworkpermitrequest_1.0.1.yaml
+  submittemporaryworkpermitrequest1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/submittemporaryworkpermitrequest_1.0.0.yaml
+  calculateworkpermitfees1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/calculateworkpermitfees_1.0.1.yaml
+  pushsadadpaymentnotification1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/pushsadadpaymentnotification_1.0.0.yaml
+  getworkpermitestablishmentlist1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getworkpermitestablishmentlist_1.0.0.yaml
+  validatetemporarywprequest1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validatetemporarywprequest_1.0.0.yaml
+  getexpiredwplaborersdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getexpiredwplaborersdetails_1.0.0.yaml
+  getestablishmentdebt1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getestablishmentdebt_1.0.0_1.yaml
+  getworkpermitinvoicedetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getworkpermitinvoicedetails_1.0.0_1.yaml
+  getfinalexitdebts1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getfinalexitdebts_1.0.0.yaml
+  getwpfinalexitdebts1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getwpfinalexitdebts_1.0.0.yaml
+  createsadadbillfordebt1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/createsadadbillfordebt_1.0.0.yaml
+  getworkpermitdebtscounts1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getworkpermitdebtscounts_1.0.0.yaml
+  createestablishmentdebt1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/createestablishmentdebt_1.0.0.yaml
+  searchtemporaryworkpermit1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/searchtemporaryworkpermit_1.0.0.yaml
+  getwpinvoicedata1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getwpinvoicedata_1.0.0.yaml
+  checklaborerdebt1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/checklaborerdebt_1.0.1.yaml
+  cancelworkpermitrequest1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/cancelworkpermitrequest_1.0.1.yaml
+  updatebillpayment1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updatebillpayment_1.0.0.yaml
+  cancelsadadbill1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/cancelsadadbill_1.0.0.yaml
+  getexpiredworkpermits1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getexpiredworkpermits_1.0.0.yaml
+  publicworkpermitcalculator1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/publicworkpermitcalculator_1.0.0.yaml
+  odm-getworkpermitvalues1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/odm-getworkpermitvalues_1.0.0.yaml
+  issueworkpermitnic1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/issueworkpermitnic_1.0.0.yaml
+  getworkpermitrequests1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getworkpermitrequests_1.0.0.yaml
+  getworkpermitrequestdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getworkpermitrequestdetails_1.0.0.yaml
+  getworkpermitindicators1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getworkpermitindicators_1.0.0.yaml
+  createworkpermitdraft1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/createworkpermitdraft_1.0.0.yaml
+  checkwplaborereligibility1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/checkwplaborereligibility_1.0.0.yaml
+  checkwpestablisheligibility1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/checkwpestablisheligibility_1.0.0.yaml
+  checklawofficeeligibility1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/checklawofficeeligibility_1.0.0.yaml
+  getscheduledworkpermitinvoices1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getscheduledworkpermitinvoices_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

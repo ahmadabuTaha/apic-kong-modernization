@@ -1,0 +1,79 @@
+info:
+  version: 1.0.10
+  title: 1QiwaLaborOffice Staging
+  name: 1qiwalaboroffice-staging
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: true
+    rate-limits:
+      default:
+        value: 100/1hour
+        hard-limit: false
+    apis:
+      addlaborofficeuserprivileges1.0.0: {}
+      addnewlaborofficeuser1.0.0: {}
+      approverejectchangesponsorbycurrentemployerlo1.0.0: {}
+      cancelappointmentrequest1.0.0: {}
+      createnewappointment1.0.0: {}
+      createnewlaboroffice1.0.0: {}
+      download-files1.0.0: {}
+      get-appointment-availability1.0.0: {}
+      getappointmentdetails1.0.0: {}
+      getlaborofficedetails1.0.0: {}
+      getpermissionworkspace1.0.0: {}
+      submitchangeoccupationbyemployerlo1.0.0: {}
+      submitchangesponsorrequestlo1.0.0: {}
+      submitexpansionvisarequestlo1.0.0: {}
+      updateuserdetails1.0.0: {}
+      upload-files1.0.0: {}
+      validatechangesponsorrequestlo1.0.0: {}
+      getlaborofficeuserdetails2.0.0: {}
+apis:
+  addlaborofficeuserprivileges1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/addlaborofficeuserprivileges_1.0.0.yaml
+  addnewlaborofficeuser1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/addnewlaborofficeuser_1.0.0.yaml
+  approverejectchangesponsorbycurrentemployerlo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/approverejectchangesponsorbycurrentemployerlo_1.0.0_1.yaml
+  cancelappointmentrequest1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/cancelappointmentrequest_1.0.0.yaml
+  createnewappointment1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/createnewappointment_1.0.0.yaml
+  createnewlaboroffice1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/createnewlaboroffice_1.0.0.yaml
+  download-files1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/download-files_1.0.0.yaml
+  get-appointment-availability1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/get-appointment-availability_1.0.0.yaml
+  getappointmentdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getappointmentdetails_1.0.0.yaml
+  getlaborofficedetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getlaborofficedetails_1.0.0.yaml
+  getpermissionworkspace1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getpermissionworkspace_1.0.0.yaml
+  submitchangeoccupationbyemployerlo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/submitchangeoccupationbyemployerlo_1.0.0_1.yaml
+  submitchangesponsorrequestlo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/submitchangesponsorrequestlo_1.0.0.yaml
+  submitexpansionvisarequestlo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/submitexpansionvisarequestlo_1.0.0_1.yaml
+  updateuserdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updateuserdetails_1.0.0.yaml
+  upload-files1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/upload-files_1.0.0.yaml
+  validatechangesponsorrequestlo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validatechangesponsorrequestlo_1.0.0.yaml
+  getlaborofficeuserdetails2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getlaborofficeuserdetails_2.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

@@ -1,0 +1,356 @@
+swagger: "2.0"
+info:
+  description: GetRelatedUnrelatedEntityLabors
+  version: 1.0.0
+  title: Qiwa-GetRelatedUnrelatedEntityLabors
+  x-ibm-name: qiwa-getrelatedunrelatedentitylabors
+schemes:
+- https
+basePath: /qiwa/v1
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://gw-apic.qiwa.info/takamol/staging/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+paths:
+  /occupationmangament/getrelatedunrelatedentitylabors:
+    parameters:
+    - $ref: '#/parameters/X-IBM-Client-Id'
+    - $ref: '#/parameters/X-IBM-Client-Secret'
+    post:
+      tags:
+      - Get Related Unrelated Entity Labors
+      description: Get Related Unrelated Entity Labors
+      operationId: GetRelatedUnrelatedEntityLabors
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: GetRelatedUnrelatedEntityLaborsReq
+        required: true
+        schema:
+          $ref: '#/definitions/GetRelatedUnrelatedEntityLaborsReq'
+      responses:
+        "200":
+          $ref: '#/responses/Response200'
+        "400":
+          $ref: '#/responses/Response400'
+        "401":
+          $ref: '#/responses/Response401'
+        "403":
+          $ref: '#/responses/Response403'
+        "404":
+          $ref: '#/responses/Response404'
+        "408":
+          $ref: '#/responses/Response408'
+        "409":
+          $ref: '#/responses/Response409'
+        "429":
+          $ref: '#/responses/Response429'
+        "500":
+          $ref: '#/responses/Response500'
+        "501":
+          $ref: '#/responses/Response501'
+        "503":
+          $ref: '#/responses/Response503'
+        "510":
+          $ref: '#/responses/Response510'
+definitions:
+  GetRelatedUnrelatedEntityLaborsReq:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      EstablishmentSequanceNumber:
+        type: integer
+      RelationType:
+        type: integer
+      PageIndex:
+        type: integer
+      PageSize:
+        type: integer
+  GetRelatedUnrelatedEntityLaborsRes:
+    type: object
+    properties:
+      OccupationsList:
+        type: array
+        items:
+          $ref: '#/definitions/OccupationsList'
+  ErrorModel:
+    type: object
+    required:
+    - errorCode
+    - errorMessage
+    properties:
+      errorCode:
+        type: string
+        example: EXXXX000
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+  LocaleDataModel:
+    type: object
+    additionalProperties:
+      type: string
+    example:
+      en-US: English Value
+      ar-SA: Arabic Value
+  OccupationsList:
+    type: object
+    properties:
+      PK_LaborerId:
+        type: integer
+      OccupationConditionTypeId:
+        type: integer
+      IdNumber:
+        type: integer
+      FirstName:
+        type: integer
+      SecondName:
+        type: integer
+      ThirdName:
+        type: integer
+      EstablishmentName:
+        type: integer
+      JobNumber:
+        type: integer
+      JobName:
+        type: integer
+    required:
+    - PK_LaborerId
+    - OccupationConditionTypeId
+    - IdNumber
+    - FirstName
+    - SecondName
+    - ThirdName
+    - EstablishmentName
+    - JobNumber
+    - JobName
+parameters:
+  X-IBM-Client-Id:
+    in: header
+    name: X-IBM-Client-Id
+    description: Client id issued by security server
+    required: true
+    type: string
+  X-IBM-Client-Secret:
+    in: header
+    name: X-IBM-Client-Secret
+    description: Client secret issued by security server
+    required: true
+    type: string
+  X-Request-Id:
+    in: header
+    name: X-Request-Id
+    description: X-Request-Id returned in the response header
+    required: false
+    type: string
+responses:
+  Response200:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response400:
+    description: The request was rejected by the server due to malformed syntax. Bad
+      Request.
+  Response401:
+    description: The request could not be completed due to lack of valid credentials.
+      Authentication.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response403:
+    description: The request could not be completed because it is not authorized.
+      Authorization
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response404:
+    description: The server has not found anything matching the Request-URI.
+  Response408:
+    description: The client did not produce a request within the time that the server
+      was prepared to wait.
+  Response409:
+    description: The request could not be completed due to a conflict with the current
+      state of the resource. Usually business validation errors will be returned in
+      the body
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response429:
+    description: The request was sent too many times in a given amount of time
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response500:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response501:
+    description: The server does not support the functionality required and does not
+      recognize the request
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response503:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response510:
+    description: Extensions to the request are required for the server to fulfil it.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\r\n\r\nvar cfg={\r\n    \"serviceCode\"
+          : \"US000001\",\r\n    \"channelId\" : \"Integration\",\r\n    \"requestName\"
+          : \"GetRelatedUnrelatedEntityLaborsRq\",\r\n    \"responseName\": \"GetRelatedUnrelatedEntityLaborsRs\",\r\n
+          \   \"errorMap\" :{\r\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid
+          Request\"}\r\n    }\r\n    \r\n};\r\napim.setvariable('cfg',cfg);"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare_Request
+        source: "var apim = require('apim');\r\n\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\nvar appcReq
+          = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n            \"TransactionId\"
+          : millisecondsvalue,\r\n            \"ChannelId\": cfg.channelId,\r\n            \"SessionId\":
+          apim.getvariable('message.headers.X-Request-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode\r\n\r\n
+          \       },\r\n        \"Body\" : apim.getvariable('message.body')\r\n            \r\n
+          \       \r\n    }\r\n};\r\n\r\nif (typeof OperatorId !== 'undefined')\r\n
+          \   appcReq[cfg.requestName].Header.UserInfo = {\r\n        \"IDNumber\"
+          : OperatorId\r\n    };\r\nsession.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n    \r\n    \r\n\r\n    //return
+          the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour
+          + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}\r\n"
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        header-control:
+          type: blacklist
+          values: []
+        parameter-control:
+          type: whitelist
+          values: []
+        verb: keep
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        target-url: http://icp-proxy.qiwa.info:32178/occupationmangament/getrelatedunrelatedentitylabors
+        timeout: 180
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_Headers
+        source: "var apim = require('apim');\napim.output('application/json');\n \nvar
+          message = apim.getvariable('message.body');\nvar cfg = apim.getvariable('cfg');\nvar
+          Header = message[cfg.responseName].Header;\nvar TransactionId = Header.TransactionId;\nvar
+          ChannelId = Header.ChannelId;\nvar RequestTime = Header.RequestTime;\nvar
+          SessionId = Header.SessionId; \nvar MWRequestTime = Header.MWRequestTime;\nvar
+          MWResponseTime = Header.MWResponseTime;\nvar status = Header.ResponseStatus.Status;\nvar
+          code = Header.ResponseStatus.Code;\napim.setvariable('message.headers.Transaction-Id',TransactionId,'add');\napim.setvariable('message.headers.Channel-Id',ChannelId,'add');\nif
+          (RequestTime !== 'undefined')\napim.setvariable('message.headers.RequestTime',RequestTime,'add');\nif
+          (SessionId !== 'undefined')\napim.setvariable('message.headers.X-Request-Id',SessionId,'add');\nif
+          (MWRequestTime !== 'undefined')\napim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');\nif
+          (MWResponseTime !== 'undefined')\napim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');\n
+          \n \napim.setvariable('message.headers.Response-Status',status,'add');\napim.setvariable('message.headers.Response-Code',code,'add');"
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Response
+              source: "var apim = require('apim');\r\n\r\n\r\nvar message = apim.getvariable('message.body');\r\nvar
+                cfg = apim.getvariable('cfg');\r\nvar body = message[cfg.responseName].Body;\r\n\r\nsession.output.write(body);\r\napim.output('application/json');"
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Error
+              source: "var apim = require('apim');\r\n\r\nvar message = apim.getvariable('message.body');\r\nvar
+                cfg = apim.getvariable('cfg');          \r\nvar error = {\r\n  \"errorCode\":
+                message[cfg.responseName].Header.ResponseStatus.Code,\r\n  \"errorMessage\":
+                {\r\n    \"en-US\": message[cfg.responseName].Header.ResponseStatus.EnglishMsg,\r\n
+                \   \"ar-SA\": message[cfg.responseName].Header.ResponseStatus.ArabicMsg\r\n
+                \ }\r\n};\r\n\r\nvar httperror=0;\r\nif(cfg.errorMap){\r\n    if(cfg.errorMap[error.errorCode]){\r\n
+                \      httperror = cfg.errorMap[error.errorCode].code;\r\n       \r\n
+                \      //var errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\r\n
+                \      //var details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\r\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\r\n    }\r\n}\r\nif(httperror
+                == 0){\r\n   httperror = 400;\r\n   // apim.error('ERROR',400,'Bad
+                Request','Invalid request');\r\n}\r\napim.setvariable('message.status.code',httperror,'set');\r\n\r\nsession.output.write(error);\r\napim.output('application/json');"
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload

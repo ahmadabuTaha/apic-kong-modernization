@@ -1,0 +1,99 @@
+swagger: "2.0"
+info:
+  title: InsertNewAdaaSurveryAPI
+  x-ibm-name: insertnewadaasurveryapi
+  version: 1.0.0
+  description: |-
+    Takamol Internal/External Integration platform aims to provide integrated services for governmental and private institutions facilitates the access to reliable information.
+    This service is used by the consumer to insert ADAA survey from ADAA through Takamol Internal/External Integration.
+
+    Note : This API Sample Created by Architecture team for API Connect Developer Portal
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(target-url)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: allowlist
+          values: []
+        header-control:
+          type: blocklist
+          values: []
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+basePath: /insertnewadaasurveryapi
+paths:
+  /:
+    get:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+    put:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+    delete:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+    head:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+    patch:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+securityDefinitions:
+  clientID:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+security:
+- clientID: []
+schemes:
+- https

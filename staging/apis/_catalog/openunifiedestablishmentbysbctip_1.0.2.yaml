@@ -1,0 +1,1138 @@
+swagger: "2.0"
+info:
+  title: OpenUnifiedEstablishmentBySBCTIP
+  x-ibm-name: openunifiedestablishmentbysbctip
+  version: 1.0.2
+  description: This service is used to open a new unified establishment by SBC.
+schemes:
+- https
+basePath: /qiwa/esb
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - parse:
+        version: 2.1.0
+        title: parse
+        parse-settings-reference:
+          default: apic-default-parsesettings
+    - gatewayscript:
+        version: 2.0.0
+        title: gatewayscript
+        source: "var apim = require('apim');\r\napim.setvariable('Tid',apim.getvariable('message.body.TransactionId'));\r\nconst
+          isObjectEmpty = (objectName) => {\r\n  for (let prop in objectName) {\r\n
+          \   if (objectName.hasOwnProperty(prop)) {\r\n      return false;\r\n    }\r\n
+          \ }\r\n  return true;\r\n};\r\nvar request= apim.getvariable('message.body');\r\nvar
+          LicensesLength,Activity,Capital,Management,Partner\r\nif(isObjectEmpty(request.CRInformation.LicenseList)
+          != true){\r\nvar LicensesLength = Object.keys(request.CRInformation.LicenseList.License).length;\r\nif(isObjectEmpty(request.CRInformation)
+          != true){\r\nvar LicensesLength = Object.keys(request.CRInformation.LicenseList.License).length;\r\nif(isObjectEmpty(request.CRInformation.CompanyCharacterIdList)
+          != true ){\r\n\tif((request.CRInformation.CompanyCharacterIdList) == ''
+          ){\r\nvar CharacterLength = Object.keys(request.CRInformation.CompanyCharacterIdList.CharacterId).length;\r\n}\r\n}\r\n}\r\n}\r\nif(isObjectEmpty(request.ActivityIdList)
+          != true){\r\nvar Activity = Object.keys(request.ActivityIdList.ActivityId).length;\r\n}\r\nif(isObjectEmpty(request.CapitalDetails)
+          != true){\r\nvar Capital = Object.keys(request.CapitalDetails.StockList.Stock).length;\r\n}\r\nif(isObjectEmpty(request.ManagementInformation)
+          != true){\r\nvar Management = Object.keys(request.ManagementInformation.ManagerList.Manager).length;\r\n}\r\nif(isObjectEmpty(request.PartnerList)!=
+          true){\r\nvar Partner = Object.keys(request.PartnerList.Partner).length;\r\n}\r\nif(LicensesLength
+          == 1 ){\r\nvar OrginalLicense = request.CRInformation.LicenseList.License;\r\nvar
+          newLicense = OrginalLicense[0];\r\nrequest.CRInformation.LicenseList.License
+          = newLicense;\r\n}\r\nif(CharacterLength == 1 ){\r\nvar OrginalCharacter
+          = request.CRInformation.CompanyCharacterIdList.CharacterId;\r\nvar newCharacter
+          = OrginalCharacter[0];\r\nrequest.CRInformation.CompanyCharacterIdList.CharacterId
+          = newCharacter;\r\n}\r\nif(Activity == 1 ){\r\nvar OrginalActivity = request.ActivityIdList.ActivityId;\r\nvar
+          newActivity = OrginalActivity[0];\r\nrequest.ActivityIdList.ActivityId =
+          newActivity;\r\n}\r\nif(Capital == 1 ){\r\nvar OrginalCapital = request.CapitalDetails.StockList.Stock;\r\nvar
+          newCapital = OrginalCapital[0];\r\nrequest.CapitalDetails.StockList.Stock
+          = newCapital;\r\n}\r\nif(Management == 1 ){\r\nvar OrginalManagement = request.ManagementInformation.ManagerList.Manager;\r\nvar
+          newManagement = OrginalManagement[0];\r\nrequest.ManagementInformation.ManagerList.Manager
+          = newManagement;\r\n}\r\nif(Partner == 1 ){\r\nvar OrginalPartner = request.PartnerList.Partner;\r\nvar
+          newPartner = OrginalPartner[0];\r\nrequest.PartnerList.Partner = newPartner;\r\n}\r\n
+          \r\n\r\nsession.output.write(request);\r\napim.output('application/json');"
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\r\nvar appname = apim.getvariable('client.app.name');\r\nvar
+          request = apim.getvariable('request.body');\r\nif (appname == 'hrsd-sbc')\r\n{\r\n
+          \ var channelId = 'Omalaei';\r\n  \r\n    } else {\r\n        \r\n          var
+          channelId = 'SBC';\r\n    }\r\nvar cfg={\r\n    \"serviceCode\" : \"OUESBC01\",\r\n
+          \   \"channelId\" : channelId,\r\n    \"requestName\" : \"OpenUnifiedEstablishmentBySBCRq\",\r\n
+          \   \"responseName\": \"OpenUnifiedEstablishmentBySBCRs\",\r\n    \"errorMap\"
+          :{\r\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid Request\"}\r\n
+          \   }\r\n    \r\n};\r\n\r\napim.setvariable('cfg',cfg);\r\nvar request=
+          apim.getvariable('message.body');\r\n\r\ndelete request[\"TransactionId\"];\r\nsession.output.write(request);\r\napim.output('application/json');"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare_Request
+        source: "var apim = require('apim');\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\nfunction
+          CreateGuid() {  \r\n   function _p8(s) {  \r\n      var p = (Math.random().toString(16)+\"000000000\").substr(2,8);
+          \ \r\n      return s ? \"-\" + p.substr(0,4) + \"-\" + p.substr(4,4) : p
+          ;  \r\n   }  \r\n   return _p8() + _p8(true) + _p8(true) + _p8();  \r\n}
+          \ \r\nvar guid = CreateGuid();\r\n\r\nif (cfg.channelId == 'SBC')\r\n{\r\n\r\nvar
+          UDFVALUE = apim.getvariable('Tid');\r\n  \r\n    } else {\r\n        \r\n
+          \         var UDFVALUE = guid;\r\n    }\r\n\r\n\r\nvar appcReq = {\r\n    [cfg.requestName]:{\r\n
+          \       \"Header\" : {\r\n            \"TransactionId\" :apim.getvariable('Tid'),\r\n
+          \           \"ChannelId\": cfg.channelId,\r\n            \"SessionId\":
+          apim.getvariable('message.headers.X-Request-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode,\r\n            \"DebugFlag\":
+          \"1\",\r\n            \"UserInfo\": {},\r\n            \"UDF\": {\r\n                \"KeyValueArr\":
+          {\r\n                    \"key\": \"ReferenceNo\",\r\n                    \"value\":
+          UDFVALUE\r\n                }\r\n            }\t\t\t\r\n        },\r\n        \"Body\"
+          : apim.getvariable('message.body')\r\n            \r\n    }\r\n};\r\n\r\nif
+          (typeof OperatorId !== 'undefined')\r\n    appcReq[cfg.requestName].Header.UserInfo
+          = {\r\n        \"IDNumber\" : OperatorId\r\n    };\r\nsession.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n    \r\n    \r\n\r\n    //return
+          the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour
+          + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-cmpm-open-file-with-cr)/estabmanagement/OpenUniEstBySBC
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: allowlist
+          values: []
+        header-control:
+          type: blocklist
+          values: []
+        inject-proxy-headers: true
+        persistent-connection: true
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_Headers
+        source: |-
+          var apim = require('apim');
+          apim.output('application/json');
+          var message = apim.getvariable('message.body');
+          var cfg = apim.getvariable('cfg');
+          var Header = message[cfg.responseName].Header;
+          var TransactionId = Header.TransactionId;
+          var ChannelId = Header.ChannelId;
+          var RequestTime = Header.RequestTime;
+          var SessionId = Header.SessionId;
+          var MWRequestTime = Header.MWRequestTime;
+          var MWResponseTime = Header.MWResponseTime;
+          var status = Header.ResponseStatus.Status;
+          var code = Header.ResponseStatus.Code;
+          apim.setvariable('message.headers.Transaction-Id',TransactionId,'add');
+          apim.setvariable('message.headers.Channel-Id',ChannelId,'add');
+          if (RequestTime !== 'undefined')
+          apim.setvariable('message.headers.RequestTime',RequestTime,'add');
+          if (SessionId !== 'undefined')
+          apim.setvariable('message.headers.X-Request-Id',SessionId,'add');
+          if (MWRequestTime !== 'undefined')
+          apim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');
+          if (MWResponseTime !== 'undefined')
+          apim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');
+          apim.setvariable('message.headers.Response-Status',status,'add');
+          apim.setvariable('message.headers.Response-Code',code,'add');
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Response
+              source: "var apim = require('apim');\r\nvar message = apim.getvariable('message.body');\r\nvar
+                cfg = apim.getvariable('cfg');\r\nvar body = message[cfg.responseName].Body;\r\nsession.output.write(body);\r\napim.output('application/json');"
+        - condition: (($header("Response-Code") = 'E0000022'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: ResMod
+              source: "var apim = require('apim');\r\n\r\nvar message = apim.getvariable('message.body');\r\nvar
+                cfg = apim.getvariable('cfg');  \r\nvar body = message[cfg.responseName].Body;\r\nvar
+                error = {\r\n  \"errorCode\": message[cfg.responseName].Header.ResponseStatus.Code,\r\n
+                \ \"errorMessage\": {\r\n    \"en-US\": message[cfg.responseName].Header.ResponseStatus.EnglishMsg,\r\n
+                \   \"ar-SA\": message[cfg.responseName].Header.ResponseStatus.ArabicMsg\r\n
+                \ },\r\n  \"Body\": body\r\n  \r\n};\r\n\r\nvar httperror=0;\r\nif(cfg.errorMap){\r\n
+                \   if(cfg.errorMap[error.errorCode]){\r\n       httperror = cfg.errorMap[error.errorCode].code;\r\n
+                \      \r\n       //var errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\r\n
+                \      //var details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\r\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\r\n    }\r\n}\r\nif(httperror
+                == 0){\r\n   httperror = 400;\r\n   // apim.error('ERROR',400,'Bad
+                Request','Invalid request');\r\n}\r\napim.setvariable('message.status.code',httperror,'set');\r\n\r\nsession.output.write(error);\r\napim.output('application/json');"
+        - condition: (($header("Response-Code") = 'CMP00025'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: ResMod
+              source: "var apim = require('apim');\r\n\r\nvar message = apim.getvariable('message.body');\r\nvar
+                cfg = apim.getvariable('cfg');  \r\nvar body = message[cfg.responseName].Body;\r\nvar
+                error = {\r\n  \"errorCode\": message[cfg.responseName].Header.ResponseStatus.Code,\r\n
+                \ \"errorMessage\": {\r\n    \"en-US\": message[cfg.responseName].Header.ResponseStatus.EnglishMsg,\r\n
+                \   \"ar-SA\": message[cfg.responseName].Header.ResponseStatus.ArabicMsg\r\n
+                \ },\r\n  \"Body\": body\r\n  \r\n};\r\n\r\nvar httperror=0;\r\nif(cfg.errorMap){\r\n
+                \   if(cfg.errorMap[error.errorCode]){\r\n       httperror = cfg.errorMap[error.errorCode].code;\r\n
+                \      \r\n       //var errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\r\n
+                \      //var details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\r\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\r\n    }\r\n}\r\nif(httperror
+                == 0){\r\n   httperror = 400;\r\n   // apim.error('ERROR',400,'Bad
+                Request','Invalid request');\r\n}\r\napim.setvariable('message.status.code',httperror,'set');\r\n\r\nsession.output.write(error);\r\napim.output('application/json');"
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare Error
+              source: "var apim = require('apim');\r\n\r\nvar message = apim.getvariable('message.body');\r\nvar
+                cfg = apim.getvariable('cfg');  \r\nvar body = message[cfg.responseName].Body;\r\nvar
+                error = {\r\n  \"errorCode\": message[cfg.responseName].Header.ResponseStatus.Code,\r\n
+                \ \"errorMessage\": {\r\n    \"en-US\": message[cfg.responseName].Header.ResponseStatus.EnglishMsg,\r\n
+                \   \"ar-SA\": message[cfg.responseName].Header.ResponseStatus.ArabicMsg\r\n
+                \ },\r\n  \r\n};\r\n\r\nvar httperror=0;\r\nif(cfg.errorMap){\r\n
+                \   if(cfg.errorMap[error.errorCode]){\r\n       httperror = cfg.errorMap[error.errorCode].code;\r\n
+                \      \r\n       //var errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\r\n
+                \      //var details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\r\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\r\n    }\r\n}\r\nif(httperror
+                == 0){\r\n   httperror = 400;\r\n   // apim.error('ERROR',400,'Bad
+                Request','Invalid request');\r\n}\r\napim.setvariable('message.status.code',httperror,'set');\r\n\r\nsession.output.write(error);\r\napim.output('application/json');"
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: payload
+    success-content: activity
+  application-authentication:
+    certificate: false
+  buffering: true
+parameters:
+  X-IBM-Client-Id:
+    in: header
+    name: X-IBM-Client-Id
+    description: Client id issued by security server
+    required: true
+    type: string
+  X-Request-Id:
+    in: header
+    name: X-Request-Id
+    description: X-Request-Id returned in the response header
+    required: false
+    type: string
+  UserId:
+    in: header
+    name: UserId
+    description: UserI d
+    required: false
+    type: integer
+    format: int32
+definitions:
+  RequestModel:
+    type: object
+    description: This response object returned by the post operation
+    properties:
+      TransactionId:
+        type: string
+      CRInformation:
+        $ref: '#/definitions/CRInformation_Type'
+      ActivityIdList:
+        $ref: '#/definitions/ActivityList_Type'
+      CapitalDetails:
+        $ref: '#/definitions/CapitalDetails_Type'
+      EntityNationalAddress:
+        $ref: '#/definitions/EntityNationalAddress_Type'
+      ContactInformation:
+        $ref: '#/definitions/ContactInformation_Type'
+      FiscalYear:
+        $ref: '#/definitions/FiscalYear_Type'
+      ManagementInformation:
+        $ref: '#/definitions/ManagementInformation_Type'
+      PartnerList:
+        $ref: '#/definitions/PartnerList_Type'
+      Representative:
+        $ref: '#/definitions/Representative_Type'
+    required:
+    - TransactionId
+    - CRInformation
+    - ActivityIdList
+  CRInformation_Type:
+    type: object
+    properties:
+      CrNationalNumber:
+        type: string
+        pattern: ^[0-9]{10}$
+      EntityFullName:
+        $ref: '#/definitions/Name_Type_1'
+      Capital:
+        type: integer
+      IsLicenseBased:
+        type: integer
+      CapitalCurrencyId:
+        type: integer
+        enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+      EntityTypeId:
+        type: integer
+      CompanyFormId:
+        type: integer
+        enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 99
+      CompanyCharacterIdList:
+        $ref: '#/definitions/CompanyCharacterIdList_Type'
+      HeadquarterCityId:
+        type: integer
+      CrIssueDate:
+        $ref: '#/definitions/Date_Type'
+      CRStatus:
+        type: string
+      CRConfirmDate:
+        $ref: '#/definitions/Date_Type'
+      LicenseList:
+        $ref: '#/definitions/LicenseList_Type'
+    required:
+    - CrNationalNumber
+    - EntityFullName
+    - Capital
+    - IsLicenseBased
+    - CapitalCurrencyId
+    - EntityTypeId
+    - CrIssueDate
+    - CRStatus
+    - CRConfirmDate
+  Name_Type:
+    type: object
+    properties:
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+    required:
+    - NameAr
+    - NameEn
+  Name_Type_1:
+    type: object
+    properties:
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+    required:
+    - NameAr
+  Name_Type_2:
+    type: object
+    properties:
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+  Date_Type:
+    type: object
+    properties:
+      Gregorian:
+        $ref: '#/definitions/Dt_Type'
+      Hijri:
+        type: string
+    required:
+    - Gregorian
+    - Hijri
+  LicenseList_Type:
+    type: object
+    properties:
+      License:
+        type: array
+        items:
+          $ref: '#/definitions/License_Type'
+    required:
+    - License
+  CompanyCharacterIdList_Type:
+    type: object
+    properties:
+      CharacterId:
+        type: array
+        items:
+          $ref: '#/definitions/ID_Type'
+    required:
+    - CharacterId
+  License_Type:
+    type: object
+    properties:
+      licenseIssuerId:
+        type: integer
+      LicenseTypeId:
+        type: integer
+      LicenseSource:
+        type: string
+      LicenseNo:
+        type: string
+      LicenseExpiryDate:
+        $ref: '#/definitions/Dt_Type'
+    required:
+    - licenseIssuerId
+    - LicenseTypeId
+    - LicenseNo
+    - LicenseSource
+    - LicenseExpiryDate
+  ActivityList_Type:
+    type: object
+    properties:
+      ActivityId:
+        type: array
+        items:
+          $ref: '#/definitions/ID_Act_Type'
+    required:
+    - ActivityId
+  ID_Act_Type:
+    type: object
+    properties:
+      ID:
+        type: integer
+      IsPreLicenseIssued:
+        type: integer
+      IsPostLicenseIssued:
+        type: integer
+    required:
+    - ID
+  ID_Type:
+    type: object
+    properties:
+      ID:
+        type: integer
+    required:
+    - ID
+  CapitalDetails_Type:
+    type: object
+    properties:
+      ContributionCapitalDetails:
+        $ref: '#/definitions/ContributionCapitalDetails_Type'
+      StockCapitalDetails:
+        $ref: '#/definitions/StockCapitalDetails_Type'
+      StockList:
+        $ref: '#/definitions/StockList_Type'
+    required:
+    - StockList
+  ContributionCapitalDetails_Type:
+    type: object
+    properties:
+      CapitalTypeId:
+        type: integer
+        enum:
+        - 1
+        - 2
+        - 3
+      CashCapital:
+        type: string
+      InkindCapital:
+        type: string
+      TotalCashContribution:
+        type: string
+      TotalInkindContribution:
+        type: string
+      ContributionValue:
+        type: string
+    required:
+    - CapitalTypeId
+    - TotalCashContribution
+  StockCapitalDetails_Type:
+    type: object
+    properties:
+      CapitalTypeId:
+        type: integer
+      Capital:
+        type: string
+      AnnouncedCapital:
+        type: string
+      PaidCapital:
+        type: string
+      CashCapital:
+        type: string
+      InkindCapital:
+        type: string
+    required:
+    - CapitalTypeId
+    - Capital
+    - PaidCapital
+  StockList_Type:
+    type: object
+    properties:
+      Stock:
+        type: array
+        items:
+          $ref: '#/definitions/Stock_Type'
+    required:
+    - Stock
+  Stock_Type:
+    type: object
+    properties:
+      StockCount:
+        type: string
+      StockValue:
+        type: string
+      StockTypeId:
+        type: integer
+        enum:
+        - 1
+        - 2
+        - 3
+      StockClassId:
+        type: integer
+    required:
+    - StockCount
+    - StockValue
+    - StockTypeId
+  EntityNationalAddress_Type:
+    type: object
+    properties:
+      CityId:
+        type: integer
+      DistrictId:
+        type: string
+      StreetName:
+        $ref: '#/definitions/Name_Type'
+      BuildingNo:
+        type: string
+      UnitNo:
+        type: string
+      PostalCode:
+        type: string
+      AdditionalNo:
+        type: string
+  ContactInformation_Type:
+    type: object
+    properties:
+      PhoneNo:
+        type: string
+      MobileNo:
+        type: string
+      Email:
+        type: string
+      websiteURL:
+        type: string
+  FiscalYear_Type:
+    type: object
+    properties:
+      CalendarTypeId:
+        type: integer
+      FiscalYearEndMonth:
+        type: string
+      FiscalYearEndDay:
+        type: string
+      FirstYearEndDate:
+        type: string
+    required:
+    - CalendarTypeId
+    - FiscalYearEndMonth
+    - FiscalYearEndDay
+    - FirstYearEndDate
+  ManagementInformation_Type:
+    type: object
+    properties:
+      ManagementStructureId:
+        type: integer
+        enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+      ManagerList:
+        $ref: '#/definitions/ManagerList_Type'
+    required:
+    - ManagementStructureId
+  ManagerList_Type:
+    type: object
+    properties:
+      Manager:
+        type: array
+        items:
+          $ref: '#/definitions/Manager_Type'
+    required:
+    - Manager
+  Manager_Type:
+    type: object
+    properties:
+      IsLicensed:
+        type: integer
+      ManagerTypeId:
+        type: integer
+        enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+      PersonInfo:
+        $ref: '#/definitions/PersonInfo_Type_1'
+      ManagerPositionIdList:
+        $ref: '#/definitions/ManagerPositionIdList_Type'
+    required:
+    - ManagerTypeId
+    - PersonInfo
+  PersonInfo_Type:
+    type: object
+    properties:
+      IdentifierTypeId:
+        type: integer
+        enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+      IdentifierNo:
+        type: string
+      Title:
+        $ref: '#/definitions/Name_Type_2'
+      FirstName:
+        $ref: '#/definitions/Name_Type'
+      FatherName:
+        $ref: '#/definitions/Name_Type_2'
+      GrandFatherName:
+        $ref: '#/definitions/Name_Type_2'
+      FamilyName:
+        $ref: '#/definitions/Name_Type'
+      NationalityId:
+        type: integer
+      BirthDate:
+        $ref: '#/definitions/Dt_Type'
+      Email:
+        type: string
+      MobileNumber:
+        type: string
+    required:
+    - IdentifierTypeId
+    - IdentifierNo
+    - FirstName
+    - FamilyName
+    - NationalityId
+  PersonInfo_Type_1:
+    type: object
+    properties:
+      IdentifierTypeId:
+        type: integer
+        enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+      IdentifierNo:
+        type: string
+      Title:
+        $ref: '#/definitions/Name_Type_2'
+      FirstName:
+        $ref: '#/definitions/Name_Type'
+      FatherName:
+        $ref: '#/definitions/Name_Type_2'
+      GrandFatherName:
+        $ref: '#/definitions/Name_Type_2'
+      FamilyName:
+        $ref: '#/definitions/Name_Type'
+      NationalityId:
+        type: integer
+      BirthDate:
+        $ref: '#/definitions/Dt_Type'
+      Email:
+        type: string
+      MobileNumber:
+        type: string
+    required:
+    - IdentifierTypeId
+    - IdentifierNo
+    - FirstName
+    - FamilyName
+    - NationalityId
+  Representative_Type:
+    type: object
+    properties:
+      NationalityId:
+        type: integer
+      FirstName:
+        $ref: '#/definitions/Name_Type'
+      FatherName:
+        $ref: '#/definitions/Name_Type_2'
+      GrandFatherName:
+        $ref: '#/definitions/Name_Type_2'
+      FamilyName:
+        $ref: '#/definitions/Name_Type_2'
+      PartyID:
+        type: string
+      BirthDate:
+        $ref: '#/definitions/Dt_Type'
+      IdentifierTypeId:
+        type: integer
+      Email:
+        type: string
+    required:
+    - NationalityId
+    - FirstName
+    - PartyID
+    - BirthDate
+  ManagerPositionIdList_Type:
+    type: object
+    properties:
+      ManagerPositionId:
+        type: array
+        items:
+          $ref: '#/definitions/ID_Type'
+    required:
+    - ManagerPositionId
+  PartnerList_Type:
+    type: object
+    properties:
+      Partner:
+        type: array
+        items:
+          $ref: '#/definitions/Partner_Type'
+    required:
+    - Partner
+  Partner_Type:
+    type: object
+    properties:
+      PartnerTypeId:
+        type: integer
+        enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+        - 10
+        - 11
+        - 12
+      PartnershipTypeList:
+        $ref: '#/definitions/PartnershipTypeList_Type'
+      PersonInfo:
+        $ref: '#/definitions/PersonInfo_Type'
+      GovernmentalEntity:
+        $ref: '#/definitions/GovernmentalEntity_Type'
+      Endowment:
+        $ref: '#/definitions/Endowment_Type'
+      CivilAssociation:
+        $ref: '#/definitions/CivilAssociation_Type'
+      SaudiCompany:
+        $ref: '#/definitions/SaudiCompany_Type'
+      Establishment:
+        $ref: '#/definitions/Establishment_Type'
+      GccCompany:
+        $ref: '#/definitions/GccCompany_Type'
+      ForeignCompany:
+        $ref: '#/definitions/GccCompany_Type'
+      PartnerShare:
+        $ref: '#/definitions/PartnerShare_Type'
+    required:
+    - PartnerTypeId
+  PartnerShare_Type:
+    type: object
+    properties:
+      CashContributionCount:
+        type: string
+      InkindContributionCount:
+        type: string
+      TotalContributionCount:
+        type: string
+  GovernmentalEntity_Type:
+    type: object
+    properties:
+      IdentifierTypeId:
+        type: integer
+        enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+      GovernmentalEntityNationalNo:
+        type: string
+      GovernmentalEntityName:
+        $ref: '#/definitions/Name_Type_1'
+    required:
+    - IdentifierTypeId
+    - GovernmentalEntityNationalNo
+    - GovernmentalEntityName
+  Endowment_Type:
+    type: object
+    properties:
+      IdentifierTypeId:
+        type: integer
+        enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+      DeedNo:
+        type: string
+      NationalNo:
+        type: string
+      EndowmentName:
+        $ref: '#/definitions/Name_Type_1'
+    required:
+    - IdentifierTypeId
+    - EndowmentName
+  PartnershipTypeList_Type:
+    type: object
+    properties:
+      PartnershipType:
+        type: array
+        items:
+          $ref: '#/definitions/ID_Type'
+    required:
+    - PartnershipType
+  CivilAssociation_Type:
+    type: object
+    properties:
+      IdentifierTypeId:
+        type: integer
+        enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+      NationalNo:
+        type: string
+      LicenseNo:
+        type: string
+      CivilAssociationName:
+        $ref: '#/definitions/Name_Type_1'
+    required:
+    - IdentifierTypeId
+    - CivilAssociationName
+  SaudiCompany_Type:
+    type: object
+    properties:
+      IdentifierTypeId:
+        type: integer
+        enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+      CrNationalNumber:
+        type: string
+      CrNumber:
+        type: string
+      CompanyName:
+        $ref: '#/definitions/Name_Type_1'
+    required:
+    - IdentifierTypeId
+    - CompanyName
+  Establishment_Type:
+    type: object
+    properties:
+      IdentifierTypeId:
+        type: integer
+        enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+      CrNationalNumber:
+        type: string
+      CrNumber:
+        type: string
+      EstablishmentName:
+        $ref: '#/definitions/Name_Type_1'
+    required:
+    - IdentifierTypeId
+    - EstablishmentName
+  GccCompany_Type:
+    type: object
+    properties:
+      IdentifierTypeId:
+        type: integer
+        enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+      CrNumber:
+        type: string
+      CompanyName:
+        $ref: '#/definitions/Name_Type_1'
+      NationalityId:
+        type: integer
+    required:
+    - IdentifierTypeId
+    - CrNumber
+    - CompanyName
+    - NationalityId
+  Dt_Type:
+    type: string
+    format: date
+    description: "Represents a date value (Gregorian). Adjust `format` or `type` as
+      needed.     \n"
+  ResponseModel:
+    type: object
+    description: This response object returned by the Post
+    properties:
+      EstablishmentIds:
+        type: string
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: string
+      NationalUnifiedNumber:
+        type: string
+      RequestNumber:
+        type: string
+      Message:
+        type: string
+      Status:
+        type: string
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+    - NationalUnifiedNumber
+    - RequestNumber
+  LocaleDataModel:
+    type: object
+    additionalProperties:
+      type: string
+    example:
+      en-US: English Value
+      ar-SA: Arabic Value
+  IntegerNumberModel:
+    type: object
+    description: This object use for integer numbers
+    additionalProperties:
+      type: integer
+      example: 1
+  ErrorModel:
+    type: object
+    required:
+    - errorCode
+    - errorMessage
+    properties:
+      errorCode:
+        type: string
+        example: EXXXX000
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+paths:
+  /OpenUniEstBySBC:
+    parameters:
+    - $ref: '#/parameters/X-IBM-Client-Id'
+    - $ref: '#/parameters/UserId'
+    - in: header
+      name: X-Request-Id
+      description: X-Request-Id returned in the response header
+      required: false
+      type: string
+    post:
+      tags:
+      - Open Establishment By GSB License
+      description: Creates a new unified establishment record using CR and SBC data
+      operationId: openUnifiedEstablishmentBySBC
+      parameters:
+      - name: request
+        in: body
+        schema:
+          $ref: '#/definitions/RequestModel'
+        description: Creates a new unified establishment record using CR and SBC data
+      responses:
+        "200":
+          $ref: '#/responses/Response200'
+        "400":
+          $ref: '#/responses/Response400'
+        "401":
+          $ref: '#/responses/Response401'
+        "403":
+          $ref: '#/responses/Response403'
+        "404":
+          $ref: '#/responses/Response404'
+        "408":
+          $ref: '#/responses/Response408'
+        "409":
+          $ref: '#/responses/Response409'
+        "429":
+          $ref: '#/responses/Response429'
+        "500":
+          $ref: '#/responses/Response500'
+        "501":
+          $ref: '#/responses/Response501'
+        "503":
+          $ref: '#/responses/Response503'
+        "510":
+          $ref: '#/responses/Response510'
+responses:
+  Response200:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ResponseModel'
+  Response201:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+      Location:
+        type: string
+        description: Id url encoded
+  Response204:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response400:
+    description: The request was rejected by the server due to malformed syntax. Bad
+      Request.
+  Response401:
+    description: The request could not be completed due to lack of valid credentials.
+      Authentication.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response403:
+    description: The request could not be completed because it is not authorized.
+      Authorization
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response404:
+    description: The server has not found anything matching the Request-URI.
+  Response408:
+    description: The client did not produce a request within the time that the server
+      was prepared to wait.
+  Response409:
+    description: The request could not be completed due to a conflict with the current
+      state of the resource. Usually business validation errors will be returned in
+      the body
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response429:
+    description: The request was sent too many times in a given amount of time
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response500:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response501:
+    description: The server does not support the functionality required and does not
+      recognize the request
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response503:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response510:
+    description: Extensions to the request are required for the server to fulfil it.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'

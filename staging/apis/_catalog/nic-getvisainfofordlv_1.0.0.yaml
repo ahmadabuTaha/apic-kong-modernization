@@ -1,0 +1,420 @@
+swagger: "2.0"
+info:
+  title: NIC_GetVisaInfoForDLV
+  x-ibm-name: nic-getvisainfofordlv
+  version: 1.0.0
+  description: This service is used by the consumer to get visa information for DLV
+    from NIC through Takamol Internal/External Integration.
+schemes:
+- https
+basePath: /nic/v1
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - map:
+        version: 2.0.0
+        title: map
+        inputs:
+          id:
+            schema:
+              type: string
+            variable: request.parameters.id
+          birthDateH:
+            schema:
+              type: string
+            variable: request.parameters.birthDateH
+          iqamaExpiryDateH:
+            schema:
+              type: string
+            variable: request.parameters.iqamaExpiryDateH
+        outputs:
+          "":
+            schema:
+              description: ""
+              type: object
+              properties:
+                id:
+                  type: string
+                  name: id
+                birthDateH:
+                  type: string
+                  name: birthDateH
+                iqamaExpiryDateH:
+                  type: string
+                  name: iqamaExpiryDateH
+              example: "{\r\n            \"id\": \"2000000001\",\r\n            \"birthDateH\":
+                \"1443/04/02\",\r\n            \"iqamaExpiryDateH\": \"1443/04/02\"\r\n
+                \       }"
+            variable: message.body
+            content: application/json
+        actions:
+        - set: .id
+          from: id
+        - set: .birthDateH
+          from: birthDateH
+        - set: .iqamaExpiryDateH
+          from: iqamaExpiryDateH
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\n\nvar cfg={\n    \"serviceCode\" : \"NICGVI01\",\n
+          \   \"channelId\" : \"Integration\",\n    \"requestName\" : \"GetVisaInfoForDLVRq\",\n
+          \   \"responseName\": \"GetVisaInfoForDLVRs\",\n    \"errorMap\" :{\n        \"ESBSCHEMA\"
+          : {\"code\" :400, \"msg\":\"Invalid Request\"}\n    }\n    \n};\n\napim.setvariable('cfg',cfg);"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare_Request
+        source: "var apim = require('apim');\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\nvar appcReq
+          = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n            \"TransactionId\"
+          : millisecondsvalue,\r\n            \"ChannelId\": cfg.channelId,\r\n            \"SessionId\":
+          apim.getvariable('message.headers.X-Request-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode,\r\n            \"DebugFlag\":
+          \"1\",\r\n            \"UserInfo\": {\r\n                \"IDNumber\": apim.getvariable('message.headers.IDNumber')\r\n
+          \           }\r\n        },\r\n        \"Body\" : apim.getvariable('message.body')\r\n
+          \   }\r\n};\r\nif (typeof OperatorId !== 'undefined')\r\n    appcReq[cfg.requestName].Header.UserInfo
+          = {\r\n        \"IDNumber\" : OperatorId\r\n    };\r\nsession.output.write(appcReq);\r\napim.output('application/json');\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   //increment month by 1 since it is 0 indexed\r\n    //converts month
+          to a string\r\n    month = (month + 1).toString();\r\n    //if month is
+          1-9 pad right with a 0 for two digits\r\n    if (month.length === 1)\r\n
+          \       month = \"0\" + month;\r\n    //if day is between 1-9 pad right
+          with a 0 for two digits\r\n    if (day.length === 1)\r\n        day = \"0\"
+          + day;\r\n    if (hour.length === 1)\r\n        hour = \"0\" + hour;\r\n
+          \   if (minitue.length === 1)\r\n        minitue = \"0\" + minitue;\r\n
+          \   if (second.length === 1)\r\n        second = \"0\" + second;\r\n    if
+          (millisecond.length == 1)\r\n        millisecond = \"00\" + millisecond;\r\n
+          \   if (millisecond.length == 2)\r\n        millisecond = \"0\" + millisecond;\r\n
+          \   //return the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\"
+          \"+hour + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        header-control:
+          type: blacklist
+          values: []
+        parameter-control:
+          type: whitelist
+          values: []
+        timeout: 60
+        verb: POST
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        target-url: $(ace-tip-nic-get)/external/getvisainfofordlv
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_Headers
+        source: "var apim = require('apim');\r\n\r\napim.output('application/json');\r\n\r\nvar
+          message = apim.getvariable('message.body');\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          Header = message[cfg.responseName].Header;\r\nvar TransactionId = Header.TransactionId;\r\nvar
+          ChannelId = Header.ChannelId;\r\nvar RequestTime = Header.RequestTime;\r\nvar
+          SessionId = Header.SessionId;\r\nvar MWRequestTime = Header.MWRequestTime;\r\nvar
+          MWResponseTime = Header.MWResponseTime;\r\nvar status = Header.ResponseStatus.Status;\r\napim.setvariable('message.headers.Transaction-Id',TransactionId,'add');\r\n\r\napim.setvariable('message.headers.Channel-Id',ChannelId,'add');\r\nif
+          (RequestTime !== 'undefined')\r\n apim.setvariable('message.headers.RequestTime',RequestTime,'add');\r\nif
+          (SessionId !== 'undefined')\r\n apim.setvariable('message.headers.X-Request-Id',SessionId,'add');\r\nif
+          (MWRequestTime !== 'undefined')\r\napim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');\r\nif
+          (MWResponseTime !== 'undefined')\r\napim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');\r\n\r\napim.setvariable('message.headers.Response-Status',status,'add');\r\n"
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Response
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar body = message[cfg.responseName].Body;\n\n\nsession.output.write(body);\napim.output('application/json');"
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Error
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar error = {\n  \"errorCode\":
+                message[cfg.responseName].Header.ResponseStatus.Code,\n  \"errorMessage\":
+                {\n    \"en-US\": message[cfg.responseName].Header.ResponseStatus.EnglishMsg,\n
+                \   \"ar-SA\": message[cfg.responseName].Header.ResponseStatus.ArabicMsg\n
+                \ }\n};\n\nvar httperror=0;\nif(cfg.errorMap){\n    if(cfg.errorMap[error.errorCode]){\n
+                \      httperror = cfg.errorMap[error.errorCode].code;\n       \n
+                \      //var errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\n
+                \      //var details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\n    }\n}\nif(httperror
+                == 0){\n   httperror = 400;\n   // apim.error('ERROR',400,'Bad Request','Invalid
+                request');\n}\napim.setvariable('message.status.code',httperror,'set');\n\nsession.output.write(error);\napim.output('application/json');"
+    catch: []
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  cors:
+    enabled: true
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+parameters:
+  X-IBM-Client-Id:
+    in: header
+    name: X-IBM-Client-Id
+    description: Client id issued by security server
+    required: true
+    type: string
+  X-IBM-Client-Secret:
+    in: header
+    name: X-IBM-Client-Secret
+    description: Client secret issued by security server
+    required: true
+    type: string
+  X-Request-Id:
+    in: header
+    name: X-Request-Id
+    description: X-Request-Id returned in the response header
+    required: false
+    type: string
+  id:
+    name: id
+    in: path
+    description: id in URI path
+    required: true
+    type: integer
+    format: int32
+  birthDateH:
+    name: birthDateH
+    in: path
+    description: birthDateH in URI path
+    required: true
+    type: string
+  iqamaExpiryDateH:
+    name: iqamaExpiryDateH
+    in: path
+    description: iqamaExpiryDateH in URI path
+    required: true
+    type: string
+  IDNumber:
+    name: IDNumber
+    in: header
+    required: true
+    type: integer
+    format: int32
+definitions:
+  ResponseModel:
+    type: object
+    additionalProperties: false
+    properties:
+      requestTimeStamp:
+        type: string
+      responseTimeStamp:
+        type: string
+      visaInfoList:
+        $ref: '#/definitions/visaInfoList'
+  visaInfoList:
+    type: object
+    description: This object will be used across the model
+    properties:
+      visaInfoForDLVList:
+        $ref: '#/definitions/visaInfoForDLVList'
+  visaInfoForDLVList:
+    type: object
+    description: This object will be used across the model
+    properties:
+      borderNo:
+        type: integer
+        example: 1211
+      nationality:
+        type: string
+        example: XYZ
+      occupation:
+        type: string
+        example: Driver
+      sex:
+        type: string
+        example: Male
+      visaIssueDate:
+        type: string
+        example: "2021-12-31"
+      visaNo:
+        type: integer
+        example: 1211
+      visaStatus:
+        type: string
+        example: XYZ
+  ErrorModel:
+    type: object
+    required:
+    - errorCode
+    - errorMessage
+    properties:
+      errorCode:
+        type: string
+        example: EXXXX000
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+  LocaleDataModel:
+    type: object
+    additionalProperties:
+      type: string
+    example:
+      en-US: English Value
+      ar-SA: Arabic Value
+paths:
+  /getvisainfofordlv/id/{id}/birthDateH/{birthDateH}/iqamaExpiryDateH/{iqamaExpiryDateH}:
+    parameters:
+    - $ref: '#/parameters/X-IBM-Client-Id'
+    - $ref: '#/parameters/X-IBM-Client-Secret'
+    - $ref: '#/parameters/id'
+    - $ref: '#/parameters/birthDateH'
+    - $ref: '#/parameters/iqamaExpiryDateH'
+    - $ref: '#/parameters/IDNumber'
+    - in: header
+      name: X-Request-Id
+      description: X-Request-Id returned in the response header
+      required: false
+      type: string
+    get:
+      tags:
+      - Get Visa Info
+      description: Service to get visa info
+      operationId: GetVisaInfo
+      produces:
+      - application/json
+      responses:
+        "200":
+          $ref: '#/responses/Response200'
+        "400":
+          $ref: '#/responses/Response400'
+        "401":
+          $ref: '#/responses/Response401'
+        "403":
+          $ref: '#/responses/Response403'
+        "404":
+          $ref: '#/responses/Response404'
+        "408":
+          $ref: '#/responses/Response408'
+        "409":
+          $ref: '#/responses/Response409'
+        "429":
+          $ref: '#/responses/Response429'
+        "500":
+          $ref: '#/responses/Response500'
+        "501":
+          $ref: '#/responses/Response501'
+        "503":
+          $ref: '#/responses/Response503'
+        "510":
+          $ref: '#/responses/Response510'
+responses:
+  Response200:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response204:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response400:
+    description: The request was rejected by the server due to malformed syntax. Bad
+      Request.
+  Response401:
+    description: The request could not be completed due to lack of valid credentials.
+      Authentication.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response403:
+    description: The request could not be completed because it is not authorized.
+      Authorization
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response404:
+    description: The server has not found anything matching the Request-URI.
+  Response408:
+    description: The client did not produce a request within the time that the server
+      was prepared to wait.
+  Response409:
+    description: The request could not be completed due to a conflict with the current
+      state of the resource. Usually business validation errors will be returned in
+      the body
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response429:
+    description: The request was sent too many times in a given amount of time
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response500:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response501:
+    description: The server does not support the functionality required and does not
+      recognize the request
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response503:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response510:
+    description: Extensions to the request are required for the server to fulfil it.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'

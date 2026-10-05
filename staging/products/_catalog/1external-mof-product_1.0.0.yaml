@@ -1,0 +1,30 @@
+info:
+  version: 1.0.0
+  title: 1External_MOF_Product
+  name: 1external-mof-product
+apis:
+  mof-cancelworkpermitbill1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mof-cancelworkpermitbill_1.0.0.yaml
+  mof-cancelworkpermitbillv22.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mof-cancelworkpermitbillv2_2.0.0.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      mof-cancelworkpermitbill1.0.0: {}
+      mof-cancelworkpermitbillv22.0.0: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

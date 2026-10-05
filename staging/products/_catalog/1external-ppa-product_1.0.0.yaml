@@ -1,0 +1,30 @@
+info:
+  name: 1external-ppa-product
+  title: 1External_PPA_Product:1.0.0
+  version: 1.0.0
+apis:
+  qiwa-getbeneficiarysalaryinfo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-getbeneficiarysalaryinfo_1.0.0.yaml
+  qiwa-getpensionerbeneficiarysalaryinfo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-getpensionerbeneficiarysalaryinfo_1.0.0.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      qiwa-getbeneficiarysalaryinfo1.0.0: {}
+      qiwa-getpensionerbeneficiarysalaryinfo1.0.0: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

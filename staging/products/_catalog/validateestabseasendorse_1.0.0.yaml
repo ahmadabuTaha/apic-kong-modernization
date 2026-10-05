@@ -1,0 +1,351 @@
+swagger: "2.0"
+info:
+  title: ValidateEstabSeasEndorse
+  x-ibm-name: validateestabseasendorse
+  version: 1.0.0
+  description: This service is used to check the validity of the establishment which
+    requests seasonal endorsement.
+schemes:
+- https
+basePath: /visa/seasonalvisa
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-sese-seasutility)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  ValidateEstabSeasEndorseRq_MessageType:
+    type: object
+    properties:
+      ValidateEstabSeasEndorseRq:
+        $ref: '#/definitions/ValidateEstabSeasEndorseRq_Type'
+  ValidateEstabSeasEndorseRs_MessageType:
+    type: object
+    properties:
+      ValidateEstabSeasEndorseRs:
+        $ref: '#/definitions/ValidateEstabSeasEndorseRs_Type'
+  ValidateEstabSeasEndorseRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/ValidateEstabSeasEndorseRq_BodyType'
+  ValidateEstabSeasEndorseRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      EstablishmentId:
+        type: integer
+      EndorsementTypeId:
+        type: integer
+      GovernmentalSectorId:
+        type: integer
+      EndorsementDetailsList:
+        $ref: '#/definitions/EndorsementDetailsList_Type'
+      IsApproving:
+        type: integer
+      ValidationLevel:
+        type: integer
+      EndorsementCRExemption:
+        type: integer
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+    - EstablishmentId
+    - ValidationLevel
+    - GovernmentalSectorId
+  EndorsementDetailsList_Type:
+    type: object
+    properties:
+      EndorsementDetailsItem:
+        type: array
+        items:
+          $ref: '#/definitions/EndorsementDetailsItem_Type'
+    required:
+    - EndorsementDetailsItem
+  EndorsementDetailsItem_Type:
+    type: object
+    properties:
+      NationalityId:
+        type: integer
+      OccupationId:
+        type: integer
+      TotalVisaNo:
+        type: integer
+      GenderId:
+        type: integer
+      ReligionId:
+        type: integer
+    required:
+    - NationalityId
+    - OccupationId
+    - TotalVisaNo
+    - GenderId
+    - ReligionId
+  ValidateEstabSeasEndorseRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/ValidateEstabSeasEndorseRs_BodyType'
+  ValidateEstabSeasEndorseRs_BodyType:
+    type: object
+    properties:
+      AreWithinTheSeason:
+        type: string
+      IsExempted:
+        type: boolean
+      EndorsementCRExemption:
+        type: integer
+      ErrorList:
+        $ref: '#/definitions/ErrorList_Type'
+      EstablishmentPunishmentSources:
+        $ref: '#/definitions/EstablishmentPunishmentSources_Type'
+      NotAllowedOccupationsNationalitiesList:
+        $ref: '#/definitions/NotAllowedOccupationsNationalitiesList_Type'
+  NotAllowedOccupationsNationalitiesList_Type:
+    type: object
+    properties:
+      NotAllowedOccupationsNationalities:
+        type: array
+        items:
+          $ref: '#/definitions/NotAllowedOccupationsNationalities_Type'
+    required:
+    - NotAllowedOccupationsNationalities
+  NotAllowedOccupationsNationalities_Type:
+    type: object
+    properties:
+      Nationality:
+        $ref: '#/definitions/CodeName_Type'
+      Occupation:
+        $ref: '#/definitions/CodeName_Type'
+  EstablishmentPunishmentSources_Type:
+    type: object
+    properties:
+      PunishmentSources:
+        type: array
+        items:
+          $ref: '#/definitions/PunishmentSources_Type'
+    required:
+    - PunishmentSources
+  PunishmentSources_Type:
+    type: object
+    properties:
+      PunishmentSourceNameEN:
+        type: string
+      PunishmentSourceNameAR:
+        type: string
+      PunishmentSourceId:
+        type: integer
+    required:
+    - PunishmentSourceNameEN
+    - PunishmentSourceNameAR
+    - PunishmentSourceId
+  ErrorList_Type:
+    type: object
+    properties:
+      ErrorItem:
+        type: array
+        items:
+          $ref: '#/definitions/ErrorItem_Type'
+    required:
+    - ErrorItem
+  ErrorItem_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      Status:
+        type: string
+      DescriptionAr:
+        type: string
+      DescriptionEn:
+        type: string
+    required:
+    - ErrorCode
+    - Status
+    - DescriptionAr
+    - DescriptionEn
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /validestabseasendorse:
+    post:
+      operationId: ValidateEstabSeasEndorse
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/ValidateEstabSeasEndorseRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Update Refunded
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/ValidateEstabSeasEndorseRq_MessageType'
+        description: ValidateEstabSeasEndorseRq
+        required: true

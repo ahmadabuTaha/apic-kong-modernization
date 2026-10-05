@@ -1,0 +1,232 @@
+swagger: "2.0"
+info:
+  title: TaheelGetRequestDraft
+  x-ibm-name: taheel-getrequestdraft
+  version: 1.0.0
+  description: Get Request Draft
+host: $(catalog.host)
+schemes:
+- https
+basePath: /common
+security:
+- OAuth2:
+  - IntegrationScope
+  clientID: []
+securityDefinitions:
+  OAuth2:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientID:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  properties:
+    target-url:
+      value: http://example.com
+      description: The URL of the target service
+      encoded: false
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(cat-target-hostname)$(cat-target-url-taheel)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+definitions:
+  GetRequestDraftRq_MessageType:
+    type: object
+    properties:
+      GetRequestDraftRq:
+        $ref: '#/definitions/GetRequestDraftRq_Type'
+  GetRequestDraftRs_MessageType:
+    type: object
+    properties:
+      GetRequestDraftRs:
+        $ref: '#/definitions/GetRequestDraftRs_Type'
+  GetRequestDraftRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetRequestDraftRq_BodyType'
+  GetRequestDraftRq_BodyType:
+    type: object
+    properties:
+      DraftId:
+        type: integer
+  GetRequestDraftRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetRequestDraftRs_BodyType'
+  GetRequestDraftRs_BodyType:
+    type: object
+    properties:
+      DraftList:
+        $ref: '#/definitions/DraftList_Type'
+  DraftList_Type:
+    type: array
+    items:
+      $ref: '#/definitions/DraftListItem_Type'
+  DraftListItem_Type:
+    type: object
+    properties:
+      DraftId:
+        type: integer
+      DraftData:
+        type: string
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: string
+      IDNumber:
+        type: string
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /getrequestdraft:
+    post:
+      operationId: GetRequestDraft
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetRequestDraftRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Get Request Draft
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetRequestDraftRq_MessageType'
+        description: ' GetRequestDraftRq'
+        required: true

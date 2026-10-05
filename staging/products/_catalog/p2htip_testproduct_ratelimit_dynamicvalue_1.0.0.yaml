@@ -1,0 +1,427 @@
+info:
+  version: 1.0.0
+  title: p2htip_testproduct_ratelimit_dynamicvalue
+  name: p2htip_testproduct_ratelimit_dynamicvalue
+  description: test description
+gateways:
+- datapower-api-gateway
+plans:
+  p2htip_testproduct_ratelimit_dynamicvalue_1_0_0_essential:
+    title: Essential
+    rate-limits:
+      default:
+        value: unlimited
+    assembly-rate-limits:
+      tip-rate-limit:
+      - value: 1000/45day
+        hard-limit: true
+        cache-only: false
+        is-client: true
+        use-api-name: false
+        use-app-id: true
+        use-client-id: false
+        dynamic-value: $(subscription_id)
+        weight: "1"
+    apis:
+      p2htip_testapi_ratelimit_dynamicvalue1.0.0: {}
+      p2htip_testapi_ratelimit_dynamicvalue21.0.0: {}
+      p2htip_testapi21.0.0: {}
+  p2htip_testproduct_ratelimit_dynamicvalue_1_0_0_developers:
+    title: Developers
+    rate-limits:
+      default:
+        value: unlimited
+    assembly-rate-limits:
+      tip-rate-limit:
+      - value: 5000/105day
+        hard-limit: true
+        cache-only: false
+        is-client: true
+        use-api-name: false
+        use-app-id: true
+        use-client-id: false
+        dynamic-value: $(subscription_id)
+        weight: "1"
+    apis:
+      p2htip_testapi_ratelimit_dynamicvalue1.0.0: {}
+      p2htip_testapi_ratelimit_dynamicvalue21.0.0: {}
+      p2htip_testapi21.0.0: {}
+  p2htip_testproduct_ratelimit_dynamicvalue_1_0_0_growth:
+    title: Growth
+    rate-limits:
+      default:
+        value: unlimited
+    assembly-rate-limits:
+      tip-rate-limit:
+      - value: 40000/195day
+        hard-limit: true
+        cache-only: false
+        is-client: true
+        use-api-name: false
+        use-app-id: true
+        use-client-id: false
+        dynamic-value: $(subscription_id)
+        weight: "1"
+    apis:
+      p2htip_testapi_ratelimit_dynamicvalue1.0.0: {}
+      p2htip_testapi_ratelimit_dynamicvalue21.0.0: {}
+      p2htip_testapi21.0.0: {}
+  p2htip_testproduct_ratelimit_dynamicvalue_1_0_0_pro:
+    title: Pro
+    rate-limits:
+      default:
+        value: unlimited
+    assembly-rate-limits:
+      tip-rate-limit:
+      - value: 120000/380day
+        hard-limit: true
+        cache-only: false
+        is-client: true
+        use-api-name: false
+        use-app-id: true
+        use-client-id: false
+        dynamic-value: $(subscription_id)
+        weight: "1"
+    apis:
+      p2htip_testapi_ratelimit_dynamicvalue1.0.0: {}
+      p2htip_testapi_ratelimit_dynamicvalue21.0.0: {}
+      p2htip_testapi21.0.0: {}
+  p2htip_testproduct_ratelimit_dynamicvalue_per_day:
+    title: Rate limit 3 calls per day
+    description: test
+    rate-limits:
+      default:
+        value: unlimited
+    burst-limits:
+      tip-burst-limit:
+        value: 5000/1second
+    assembly-rate-limits:
+      tip-rate-limit:
+      - value: 3/1day
+        hard-limit: true
+        cache-only: true
+        is-client: true
+        use-api-name: false
+        use-app-id: true
+        use-client-id: false
+        dynamic-value: $(subscription_id)
+        weight: "1"
+    apis:
+      p2htip_testapi_ratelimit_dynamicvalue1.0.0: {}
+      p2htip_testapi_ratelimit_dynamicvalue21.0.0: {}
+      p2htip_testapi21.0.0: {}
+  p2htip_testproduct_ratelimit_dynamicvalue_per_year:
+    title: Rate limit 1 call per year
+    rate-limits:
+      default:
+        value: unlimited
+    assembly-rate-limits:
+      tip-rate-limit:
+      - value: 1/365day
+        hard-limit: true
+        cache-only: false
+        is-client: true
+        use-api-name: false
+        use-app-id: true
+        use-client-id: false
+        dynamic-value: $(subscription_id)
+        weight: "1"
+    apis:
+      p2htip_testapi_ratelimit_dynamicvalue1.0.0: {}
+      p2htip_testapi_ratelimit_dynamicvalue21.0.0: {}
+      p2htip_testapi21.0.0: {}
+  p2htip_testproduct_ratelimit_dynamicvalue_per_two_years:
+    title: Rate limit 1 call per two years
+    rate-limits:
+      default:
+        value: unlimited
+    assembly-rate-limits:
+      tip-rate-limit:
+      - value: 1/730day
+        hard-limit: true
+        cache-only: false
+        is-client: true
+        use-api-name: false
+        use-app-id: true
+        use-client-id: false
+        dynamic-value: $(subscription_id)
+        weight: "1"
+    apis:
+      p2htip_testapi_ratelimit_dynamicvalue1.0.0: {}
+      p2htip_testapi_ratelimit_dynamicvalue21.0.0: {}
+      p2htip_testapi21.0.0: {}
+  p2htip_testproduct_ratelimit_dynamicvalue_per_three_years:
+    title: Rate limit 1 call per three years
+    rate-limits:
+      default:
+        value: unlimited
+    assembly-rate-limits:
+      tip-rate-limit:
+      - value: 1/1095day
+        hard-limit: true
+        cache-only: false
+        is-client: true
+        use-api-name: false
+        use-app-id: true
+        use-client-id: false
+        dynamic-value: $(subscription_id)
+        weight: "1"
+    apis:
+      p2htip_testapi_ratelimit_dynamicvalue1.0.0: {}
+      p2htip_testapi_ratelimit_dynamicvalue21.0.0: {}
+      p2htip_testapi21.0.0: {}
+  p2htip_testproduct_ratelimit_dynamicvalue_per_four_years:
+    title: Rate limit 1 call per four years
+    rate-limits:
+      default:
+        value: unlimited
+    assembly-rate-limits:
+      tip-rate-limit:
+      - value: 1/1460day
+        hard-limit: true
+        cache-only: false
+        is-client: true
+        use-api-name: false
+        use-app-id: true
+        use-client-id: false
+        dynamic-value: $(subscription_id)
+        weight: "1"
+    apis:
+      p2htip_testapi_ratelimit_dynamicvalue1.0.0: {}
+      p2htip_testapi_ratelimit_dynamicvalue21.0.0: {}
+      p2htip_testapi21.0.0: {}
+  p2htip_testproduct_ratelimit_dynamicvalue_per_five_years:
+    title: Rate limit 1 call per five years
+    rate-limits:
+      default:
+        value: unlimited
+    assembly-rate-limits:
+      tip-rate-limit:
+      - value: 1/1825day
+        hard-limit: true
+        cache-only: false
+        is-client: true
+        use-api-name: false
+        use-app-id: true
+        use-client-id: false
+        dynamic-value: $(subscription_id)
+        weight: "1"
+    apis:
+      p2htip_testapi_ratelimit_dynamicvalue1.0.0: {}
+      p2htip_testapi_ratelimit_dynamicvalue21.0.0: {}
+      p2htip_testapi21.0.0: {}
+  p2htip_testproduct_ratelimit_dynamicvalue_one_per_ten_years:
+    title: Rate limit 1 call per ten years
+    rate-limits:
+      default:
+        value: unlimited
+    assembly-rate-limits:
+      tip-rate-limit:
+      - value: 1/3650day
+        hard-limit: true
+        cache-only: false
+        is-client: true
+        use-api-name: false
+        use-app-id: true
+        use-client-id: false
+        dynamic-value: $(subscription_id)
+        weight: "1"
+    apis:
+      p2htip_testapi_ratelimit_dynamicvalue1.0.0: {}
+      p2htip_testapi_ratelimit_dynamicvalue21.0.0: {}
+      p2htip_testapi21.0.0: {}
+  p2htip_testproduct_ratelimit_dynamicvalue_thousand_per_ten_years:
+    title: Rate limit 1000 calls per ten years
+    rate-limits:
+      default:
+        value: unlimited
+    assembly-rate-limits:
+      tip-rate-limit:
+      - value: 1000/3650day
+        hard-limit: true
+        cache-only: false
+        is-client: true
+        use-api-name: false
+        use-app-id: true
+        use-client-id: false
+        dynamic-value: $(subscription_id)
+        weight: "1"
+    apis:
+      p2htip_testapi_ratelimit_dynamicvalue1.0.0: {}
+      p2htip_testapi_ratelimit_dynamicvalue21.0.0: {}
+      p2htip_testapi21.0.0: {}
+  p2htip_testproduct_ratelimit_dynamicvalue_per_twenty_years:
+    title: Rate limit 1 call per twenty years
+    rate-limits:
+      default:
+        value: unlimited
+    assembly-rate-limits:
+      tip-rate-limit:
+      - value: 1/7300day
+        hard-limit: true
+        cache-only: false
+        is-client: true
+        use-api-name: false
+        use-app-id: true
+        use-client-id: false
+        dynamic-value: $(subscription_id)
+        weight: "1"
+    apis:
+      p2htip_testapi_ratelimit_dynamicvalue1.0.0: {}
+      p2htip_testapi_ratelimit_dynamicvalue21.0.0: {}
+      p2htip_testapi21.0.0: {}
+  p2htip_testproduct_ratelimit_dynamicvalue_per_thirty_years:
+    title: Rate limit 1 call per thirty years
+    rate-limits:
+      default:
+        value: unlimited
+    assembly-rate-limits:
+      tip-rate-limit:
+      - value: 1/10950day
+        hard-limit: true
+        cache-only: false
+        is-client: true
+        use-api-name: false
+        use-app-id: true
+        use-client-id: false
+        dynamic-value: $(subscription_id)
+        weight: "1"
+    apis:
+      p2htip_testapi_ratelimit_dynamicvalue1.0.0: {}
+      p2htip_testapi_ratelimit_dynamicvalue21.0.0: {}
+      p2htip_testapi21.0.0: {}
+  p2htip_testproduct_ratelimit_dynamicvalue_per_120_years:
+    title: Rate limit 1 call per 120 years
+    rate-limits:
+      default:
+        value: unlimited
+    assembly-rate-limits:
+      tip-rate-limit:
+      - value: 1/43800day
+        hard-limit: true
+        cache-only: true
+        is-client: true
+        use-api-name: false
+        use-app-id: true
+        use-client-id: false
+        dynamic-value: $(subscription_id)
+        weight: "1"
+    apis:
+      p2htip_testapi_ratelimit_dynamicvalue1.0.0: {}
+      p2htip_testapi_ratelimit_dynamicvalue21.0.0: {}
+      p2htip_testapi21.0.0: {}
+  p2htip_testproduct_ratelimit_dynamicvalue_per_two_minutes:
+    title: Rate limit 1 call per two minute
+    rate-limits:
+      default:
+        value: unlimited
+    assembly-rate-limits:
+      tip-rate-limit:
+      - value: 1/2minute
+        hard-limit: true
+        cache-only: false
+        is-client: true
+        use-api-name: false
+        use-app-id: true
+        use-client-id: false
+        dynamic-value: $(subscription_id)
+        weight: "1"
+    apis:
+      p2htip_testapi_ratelimit_dynamicvalue1.0.0: {}
+      p2htip_testapi_ratelimit_dynamicvalue21.0.0: {}
+      p2htip_testapi21.0.0: {}
+  p2htip_testproduct_ratelimit_dynamicvalue_per_ten_minutes:
+    title: Rate limit 1 call per ten minute
+    rate-limits:
+      default:
+        value: unlimited
+    assembly-rate-limits:
+      tip-rate-limit:
+      - value: 1/10minute
+        hard-limit: true
+        cache-only: false
+        is-client: true
+        use-api-name: false
+        use-app-id: true
+        use-client-id: false
+        dynamic-value: $(subscription_id)
+        weight: "1"
+    apis:
+      p2htip_testapi_ratelimit_dynamicvalue1.0.0: {}
+      p2htip_testapi_ratelimit_dynamicvalue21.0.0: {}
+      p2htip_testapi21.0.0: {}
+  p2htip_testproduct_ratelimit_dynamicvalue_per_days_max:
+    title: Rate limit 1 call per days max
+    rate-limits:
+      default:
+        value: unlimited
+    assembly-rate-limits:
+      tip-rate-limit:
+      - value: 1/65535day
+        hard-limit: true
+        cache-only: false
+        is-client: true
+        use-api-name: false
+        use-app-id: true
+        use-client-id: false
+        dynamic-value: $(subscription_id)
+        weight: "1"
+    apis:
+      p2htip_testapi_ratelimit_dynamicvalue1.0.0: {}
+      p2htip_testapi_ratelimit_dynamicvalue21.0.0: {}
+      p2htip_testapi21.0.0: {}
+  p2htip_testproduct_ratelimit_dynamicvalue_per_weeks_max:
+    title: Rate limit 1 call per weeks max
+    rate-limits:
+      default:
+        value: unlimited
+    assembly-rate-limits:
+      tip-rate-limit:
+      - value: 1/65535week
+        hard-limit: true
+        cache-only: false
+        is-client: true
+        use-api-name: false
+        use-app-id: true
+        use-client-id: false
+        dynamic-value: $(subscription_id)
+        weight: "1"
+    apis:
+      p2htip_testapi_ratelimit_dynamicvalue1.0.0: {}
+      p2htip_testapi_ratelimit_dynamicvalue21.0.0: {}
+      p2htip_testapi21.0.0: {}
+  p2htip_testproduct_ratelimit_dynamicvalue_per_hours_max:
+    title: Rate limit 1 call per hours max
+    rate-limits:
+      default:
+        value: unlimited
+    assembly-rate-limits:
+      tip-rate-limit:
+      - value: 1/65535hour
+        hard-limit: true
+        cache-only: false
+        is-client: true
+        use-api-name: false
+        use-app-id: true
+        use-client-id: false
+        dynamic-value: $(subscription_id)
+        weight: "1"
+    apis:
+      p2htip_testapi_ratelimit_dynamicvalue1.0.0: {}
+      p2htip_testapi_ratelimit_dynamicvalue21.0.0: {}
+      p2htip_testapi21.0.0: {}
+apis:
+  p2htip_testapi_ratelimit_dynamicvalue1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/p2htip_testapi_ratelimit_dynamicvalue_1.0.0.yaml
+  p2htip_testapi_ratelimit_dynamicvalue21.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/p2htip_testapi_ratelimit_dynamicvalue2_1.0.0.yaml
+  p2htip_testapi21.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/p2htip_testapi2_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: authenticated
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

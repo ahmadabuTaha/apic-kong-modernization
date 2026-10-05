@@ -1,0 +1,298 @@
+swagger: "2.0"
+info:
+  title: MLSD_SubmitExpansionVisaRequest
+  x-ibm-name: mlsd-submitexpansionvisarequest
+  version: 1.0.0
+  description: This service is used to submit expansion visa request to HRSD
+schemes:
+- https
+basePath: /visa/expansionvisa
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-hrsd-hrsdutility)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  SubmitExpansionVisaRequestMLSDRq_MessageType:
+    type: object
+    properties:
+      SubmitExpansionVisaRequestMLSDRq:
+        $ref: '#/definitions/SubmitExpansionVisaRequestMLSDRq_Type'
+  SubmitExpansionVisaRequestMLSDRs_MessageType:
+    type: object
+    properties:
+      SubmitExpansionVisaRequestMLSDRs:
+        $ref: '#/definitions/SubmitExpansionVisaRequestMLSDRs_Type'
+  SubmitExpansionVisaRequestMLSDRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/SubmitExpansionVisaRequestMLSDRq_BodyType'
+  SubmitExpansionVisaRequestMLSDRq_BodyType:
+    type: object
+    properties:
+      EstablishmentId:
+        type: integer
+        default: "1111234"
+      RequesterIdNo:
+        type: integer
+        default: "234"
+      Quota:
+        type: integer
+        default: "45234"
+      NitaqId:
+        type: integer
+        default: "435234"
+      TotalLaborers:
+        type: integer
+        default: "234"
+      CreatedByUserId:
+        type: integer
+        default: "234"
+      IsFromQiwa:
+        type: integer
+        default: "4"
+      ExpansionVisaList:
+        $ref: '#/definitions/ExpansionVisaList_Type'
+  ExpansionVisaList_Type:
+    type: object
+    properties:
+      ExpansionVisa:
+        type: array
+        items:
+          $ref: '#/definitions/ExpansionVisa_Type'
+  ExpansionVisa_Type:
+    type: object
+    properties:
+      Gender:
+        type: integer
+        default: "2"
+      Job:
+        type: integer
+        default: "4"
+      Nationality:
+        type: integer
+        default: "13"
+      Origin:
+        type: integer
+        default: "4"
+      Religion:
+        type: integer
+        default: "24"
+      NumberOfVisas:
+        type: integer
+        default: "16"
+  SubmitExpansionVisaRequestMLSDRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/SubmitExpansionVisaRequestMLSDRs_BodyType'
+  SubmitExpansionVisaRequestMLSDRs_BodyType:
+    type: object
+    properties:
+      InstantVisaRequestId:
+        type: integer
+  Name_Type:
+    type: object
+    properties:
+      FirstName:
+        type: string
+      SecondName:
+        type: string
+      ThirdName:
+        type: string
+      LastName:
+        type: string
+  Date_Type:
+    type: object
+    properties:
+      GregorianDate:
+        type: string
+      HijriDate:
+        type: string
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: MSEVR001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: MSEVR001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+        default: "465740"
+      IDNumber:
+        type: integer
+        default: "1024812248"
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /subexpvisareqmlsd:
+    post:
+      operationId: MLSD_SubmitExpansionVisaRequest
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/SubmitExpansionVisaRequestMLSDRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: MLSD_SubmitExpansionVisaRequest
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/SubmitExpansionVisaRequestMLSDRq_MessageType'
+        description: MLSD_SubmitExpansionVisaRequest
+        required: true

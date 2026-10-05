@@ -1,0 +1,233 @@
+swagger: "2.0"
+info:
+  title: NotificationHubStatusCheck
+  x-ibm-name: notification-hub-statuscheck
+  version: 1.0.0
+  description: This API checks the status of email or sms that is sent with Notification
+    hub
+schemes:
+- https
+basePath: /NotificationHubService
+security:
+- OAuth2.0: []
+- clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  properties:
+    target-url:
+      value: http://prow-notificationservices-onboar-http-ace.apps.stg.qiwa-nonprod.local/external/NotificationHubService/StatusCheck
+      description: The URL of the target service
+      encoded: false
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-prow-notificationservices-onboar)/external/NotificationHubService/StatusCheck
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        persistent-connection: true
+    catch: []
+    finally: []
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  buffering: true
+  application-authentication:
+    certificate: false
+definitions:
+  NotificationStatusRequest_MessageType:
+    type: object
+    properties:
+      NotificationStatusRequest:
+        $ref: '#/definitions/NotificationStatusRequest_Type'
+  NotificationStatusResponse_MessageType:
+    type: object
+    properties:
+      NotificationStatusResponse:
+        $ref: '#/definitions/NotificationStatusResponse_Type'
+  NotificationStatusRequest_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/RequestHeader'
+      Body:
+        $ref: '#/definitions/NotificationStatusRequest_Body'
+  NotificationStatusResponse_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ResponseHeader'
+      Body:
+        $ref: '#/definitions/NotificationStatusRespone_Body'
+  RequestHeader:
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - MWRequestTime
+    - ServiceCode
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        description: Unique Number to be passed for each request
+        example: 13255235326
+      ChannelId:
+        type: string
+        description: This is to identify the source system calling the service
+        example: Qiwa
+      SessionId:
+        type: string
+        description: Pass the same value used in TransactionId
+        example: 13255235326
+      RequestTime:
+        type: string
+        description: Request time of the service
+        example: "2024-05-07T00:00:00.555Z"
+      MWRequestTime:
+        type: string
+        description: Request time of the service
+        example: "2024-05-07T00:00:00.555Z"
+      ServiceCode:
+        type: string
+        description: Service Code assigned for the service
+        example: UNH00001
+  ResponseHeader:
+    properties:
+      TransactionId:
+        type: string
+        description: Unique Number to be passed for each request
+        example: 6222121543
+      ChannelId:
+        type: string
+        description: This is to identify the source system calling the service
+        example: Qiwa
+      SessionId:
+        type: string
+        description: Returns the same value used in TransactionId
+        example: 13255235326
+      RequestTime:
+        type: string
+        description: Request time of the service
+        example: "2024-05-07T00:00:00.555Z"
+      MWRequestTime:
+        type: string
+        description: Request time of the service
+        example: "2024-05-07T00:00:00.555Z"
+      MWResponseTime:
+        type: string
+        description: Response time of the service
+        example: "2024-05-07T00:00:00.555Z"
+      ServiceCode:
+        type: string
+        description: Service Code assigned for the service
+        example: UNH00001
+      ResponseStatus:
+        $ref: '#/definitions/ResponseStatus'
+      BackendError:
+        $ref: '#/definitions/BackendError'
+  ResponseStatus:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+  BackendError:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+  NotificationStatusRequest_Body:
+    type: object
+    required:
+    - ChannelName
+    - ID
+    properties:
+      ChannelName:
+        type: string
+        description: This is Mandatory field and needs to specified as ChannelName
+          while sending the request
+        example: Email
+      ID:
+        type: string
+        description: This is Mandatory field and is the ID of the transaction which
+          was received from the email or sms API
+        example: 68904202
+  NotificationStatusRespone_Body:
+    type: object
+    properties:
+      status:
+        type: string
+        description: This tag tells the status of the request if the onboarding is
+          completed or failed with either Success or Error
+        example: Success
+      Details:
+        type: string
+        description: This tag tells the details of the request if the onboarding is
+          completed or failed with description of the transaction
+        example: Onboarding successful
+      id:
+        type: string
+        description: This tag tells the details of the request if the onboarding is
+          completed or failed with the id in response which can further be used to
+          make an update for the initial onboarding request
+        example: 32543674578
+paths:
+  /StatusCheck:
+    post:
+      tags:
+      - Notification Hub Status Check Service
+      description: Used to get the status of the transaction that was made for email
+        or sms using Notification Hub service
+      operationId: notificationhubstatus
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/NotificationStatusRequest_MessageType'
+        description: NotificationStatusRequest
+        required: true
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/NotificationStatusResponse_MessageType'

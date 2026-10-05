@@ -1,0 +1,41 @@
+info:
+  version: 1.0.0
+  title: ChatBot
+  name: chatbot
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      chatbotconversation1.0.0: {}
+      chatbotdislikescenario1.0.0: {}
+      chatbotlikescenario1.0.0: {}
+      chatbotconversation1.0.1: {}
+      chatbotdislikescenario1.0.1: {}
+      chatbotlikescenario1.0.1: {}
+apis:
+  chatbotconversation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/chatbotconversation_1.0.0.yaml
+  chatbotdislikescenario1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/chatbotdislikescenario_1.0.0.yaml
+  chatbotlikescenario1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/chatbotlikescenario_1.0.0.yaml
+  chatbotconversation1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/chatbotconversation_1.0.1.yaml
+  chatbotdislikescenario1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/chatbotdislikescenario_1.0.1.yaml
+  chatbotlikescenario1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/chatbotlikescenario_1.0.1.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

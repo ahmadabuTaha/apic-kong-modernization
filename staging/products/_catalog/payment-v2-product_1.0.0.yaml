@@ -1,0 +1,45 @@
+info:
+  version: 1.0.0
+  title: Payment V2 Product
+  name: payment-v2-product
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    rate-limits:
+      default:
+        value: 100/1hour
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    apis:
+      getpaymentdetails-v21.0.0: {}
+      getpaymentstatus-v21.0.0: {}
+      makepayment-v21.0.0: {}
+      refundpayment-v21.0.0: {}
+      searchhyperpaypaymenttransactions-v21.0.0: {}
+      searchpaymentrefundtransactions-v21.0.0: {}
+      searchpaymenttransactions-v21.0.0: {}
+product: 1.0.0
+apis:
+  makepayment-v21.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/makepayment-v2_1.0.0.yaml
+  getpaymentstatus-v21.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getpaymentstatus-v2_1.0.0.yaml
+  getpaymentdetails-v21.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getpaymentdetails-v2_1.0.0.yaml
+  searchpaymentrefundtransactions-v21.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/searchpaymentrefundtransactions-v2_1.0.0.yaml
+  searchhyperpaypaymenttransactions-v21.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/searchhyperpaypaymenttransactions-v2_1.0.0.yaml
+  refundpayment-v21.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/refundpayment-v2_1.0.0.yaml
+  searchpaymenttransactions-v21.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/searchpaymenttransactions-v2_1.0.0.yaml
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

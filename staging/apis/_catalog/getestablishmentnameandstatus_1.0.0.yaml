@@ -1,0 +1,184 @@
+openapi: 3.0.1
+info:
+  title: Getestablishmentnameandstatus
+  x-ibm-name: getestablishmentnameandstatus
+  version: 1.0.0
+servers:
+- url: /api/v2/tip
+paths:
+  /establishment/nameandstatus:
+    get:
+      tags:
+      - TIP Establishments
+      summary: Get establishment name and status
+      description: Returns establishment name and status based on the provided identifiers
+      operationId: getEstablishmentNameAndStatus
+      parameters:
+      - name: nationalUnifiedNumber
+        in: query
+        required: true
+        description: National Unified Number of the establishment
+        schema:
+          type: string
+          example: "7002140767"
+      - name: TransactionId
+        in: header
+        required: true
+        description: Unique id for tracing purposes
+        schema:
+          type: string
+      - name: ChannelId
+        in: header
+        description: Define the request made from any channel such as Qiwa, ESB, etc.
+        schema:
+          type: string
+      - name: SessionId
+        in: header
+        description: Unique Id for Auditing and Logging purposes
+        schema:
+          type: string
+      - name: ServiceCode
+        in: header
+        description: Represents the requested service code
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QiwaResponseGetEstablishmentNameAndStatusResponseDTO'
+        "400":
+          description: Bad Request - Validation or logic error
+          content:
+            application/json:
+              examples:
+                InvalidParameters:
+                  summary: Invalid Parameters
+                  value:
+                    status: -1
+                    errorCode: E0000042
+                    englishMessage: Invalid / missing parameters from the request
+                      message.
+                    arabicMessage: معايير الطلب ناقصة أو غير صحيحة
+                SchemaValidationError:
+                  summary: Schema Validation Error
+                  value:
+                    status: -1
+                    errorCode: ESBSCHEMA
+                    englishMessage: Schema Validation Error
+                    arabicMessage: حدث خطأ بالنظام
+        "401":
+          description: Unauthorized - Invalid credentials
+          content:
+            application/json:
+              examples:
+                Unauthorized:
+                  summary: Unauthorized
+                  value:
+                    httpCode: "401"
+                    httpMessage: Unauthorized
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              examples:
+                SystemError:
+                  summary: System Error
+                  value:
+                    status: -1
+                    errorCode: E0000436
+                    englishMessage: Sorry, something went wrong, please try again.
+                    arabicMessage: عفواً, حدث خطأ ما , يرجى المحاولة من جديد
+components:
+  schemas:
+    GetEstablishmentNameAndStatusResponseDTO:
+      type: object
+      properties:
+        establishmentName:
+          type: string
+          description: Name of the establishment
+          example: شركة اس تي سي السعودية
+        establishmentStatusEn:
+          type: string
+          description: Establishment status in English
+          example: Active
+        establishmentStatusAr:
+          type: string
+          description: Establishment status in Arabic
+          example: نشط
+    QiwaResponseGetEstablishmentNameAndStatusResponseDTO:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+          description: Status of the request
+        englishMessage:
+          type: string
+          description: Descriptive English message of response
+          example: Success Call
+        arabicMessage:
+          type: string
+          description: Descriptive Arabic message of response
+          example: تمت العملية بنجاح
+        data:
+          $ref: '#/components/schemas/GetEstablishmentNameAndStatusResponseDTO'
+  securitySchemes:
+    clientId:
+      type: apiKey
+      name: X-IBM-Client-Id
+      in: header
+      x-key-type: client_id
+    Oauth2:
+      type: oauth2
+      x-ibm-oauth-provider: takamol-native-oauth-porvider
+      flows:
+        clientCredentials:
+          tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+          scopes:
+            IntegrationScope: This scope for all integration services in Takamol
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: false
+  assembly:
+    execute:
+    - gatewayscript:
+        version: 2.0.0
+        title: gatewayscript
+        source: context.set('message.headers.X-API-Secret', '54587485154194846354877848');
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(internal-establishment)/api/v2/tip/establishment/name-and-status?$(request.querystring)
+        follow-redirects: false
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+security:
+- clientId: []
+  Oauth2: []

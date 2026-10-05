@@ -1,0 +1,24 @@
+{
+    "total_results": 1,
+    "results": [
+        {
+            "type": "app",
+            "api_version": "2.0.0",
+            "id": "79de71a9-04ad-4eab-aafb-46f2db018281",
+            "name": "digital-signature",
+            "title": "Digital signature",
+            "state": "enabled",
+            "lifecycle_state": "production",
+            "app_credential_urls": [
+                "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/apps/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/56539412-9a98-4a86-bb82-ee6811ba8f2f/79de71a9-04ad-4eab-aafb-46f2db018281/credentials/3850ef50-b79e-43ff-b7c1-d275f89a1835",
+                "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/apps/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/56539412-9a98-4a86-bb82-ee6811ba8f2f/79de71a9-04ad-4eab-aafb-46f2db018281/credentials/0ded1660-0d67-4382-a894-b6cff3213512"
+            ],
+            "created_at": "2026-05-05T09:26:01.000Z",
+            "updated_at": "2026-08-10T11:59:44.000Z",
+            "org_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/orgs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c",
+            "catalog_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/catalogs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2",
+            "consumer_org_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/consumer-orgs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/56539412-9a98-4a86-bb82-ee6811ba8f2f",
+            "url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/apps/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/56539412-9a98-4a86-bb82-ee6811ba8f2f/79de71a9-04ad-4eab-aafb-46f2db018281"
+        }
+    ]
+}

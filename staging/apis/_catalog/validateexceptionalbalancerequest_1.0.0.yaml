@@ -1,0 +1,272 @@
+swagger: "2.0"
+info:
+  title: 'ValidateExceptionalBalanceRequest '
+  x-ibm-name: validateexceptionalbalancerequest
+  version: 1.0.0
+  description: 'This service is used to check if the establishment is eligible to
+    request an exceptional balance or not. '
+schemes:
+- https
+basePath: /visa/expansionvisa
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-expv-expanvisa2)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        persistent-connection: true
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  ValidateExceptionalBalanceRequestRq_MessageType:
+    type: object
+    properties:
+      ValidateExceptionalBalanceRequestRq:
+        $ref: '#/definitions/ValidateExceptionalBalanceRequestRq_Type'
+  ValidateExceptionalBalanceRequestRs_MessageType:
+    type: object
+    properties:
+      GetNitaqComplianceWeightRs:
+        $ref: '#/definitions/ValidateExceptionalBalanceRequestRs_Type'
+  ValidateExceptionalBalanceRequestRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/ValidateExceptionalBalanceRequestRq_BodyType'
+  ValidateExceptionalBalanceRequestRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      RequestedBalance:
+        type: integer
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+  ValidateExceptionalBalanceRequestRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/ValidateExceptionalBalanceRequestRs_BodyType'
+  ValidateExceptionalBalanceRequestRs_BodyType:
+    type: object
+    properties:
+      ValidationsErrorsList:
+        $ref: '#/definitions/ValidationsErrorsList_Type'
+      UnifiedNumberId:
+        type: integer
+      EntityId:
+        type: string
+      EconomicActivityId:
+        type: integer
+      NitaqatQuota:
+        type: integer
+      EntityForeignersCount:
+        type: number
+      EntitySaudisCount:
+        type: integer
+      EntityTotalCount:
+        type: number
+      EstablishmentTotalLaborersCount:
+        type: number
+      EstablishmentForeignersCount:
+        type: number
+      EstablishmentSaudisCount:
+        type: integer
+      EstablishmentName:
+        type: string
+      EconomicActivityName:
+        type: string
+  ValidationsErrorsList_Type:
+    type: object
+    properties:
+      ValidationError:
+        type: array
+        items:
+          $ref: '#/definitions/ValidationError_Type'
+  ValidationError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ArDescription:
+        type: string
+      EnDescription:
+        type: string
+    required:
+    - ErrorCode
+    - ArDescription
+    - EnDescription
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /valexcbalancerq:
+    post:
+      operationId: 'ValidateExceptionalBalanceRequest '
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/ValidateExceptionalBalanceRequestRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: 'ValidateExceptionalBalanceRequest '
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/ValidateExceptionalBalanceRequestRq_MessageType'
+        description: 'ValidateExceptionalBalanceRequest '
+        required: true

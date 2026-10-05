@@ -1,0 +1,807 @@
+swagger: "2.0"
+info:
+  title: NIC_GetForeignerAlldetails
+  x-ibm-name: nic-getforeigneralldetails
+  version: 1.0.0
+schemes:
+- https
+basePath: /nic/v1
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - map:
+        version: 2.0.0
+        title: map
+        inputs:
+          "":
+            schema:
+              $ref: '#/definitions/GetForeignerAllDataRq_BodyType'
+            variable: request.body
+            content: application/json
+        outputs:
+          "":
+            schema:
+              $ref: '#/definitions/StrGetForeignerAllDataRq_BodyType'
+            variable: message.body
+            content: application/json
+        actions:
+        - set: .IdOrBorderNo
+          from: .idOrBorderNo
+        - set: .IqamaExpiryDate
+          from: .iqamaExpiryDate
+        options:
+          mapEnablePostProcessingJSON: true
+          mapEmulateV4EmptyJSONObject: false
+          mapEmulateV4DefaultRequiredProps: false
+          mapReferenceLimit: 1
+          includeEmptyXMLElements: false
+          namespaceInheritance: false
+          inlineNamespaces: false
+          mapResolveApicVariables: false
+          mapOptimizeSchemaDefinition: true
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\n\nvar cfg={\n    \"serviceCode\" : \"GFAD0001\",\n
+          \   \"channelId\" : \"Qiwa\",\n    \"requestName\" : \"GetForeignerAllDataRq\",\n
+          \   \"responseName\": \"GetForeignerAllDataRs\",\n    \"errorMap\" :{\n
+          \       \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid Request\"}\n    }\n
+          \   \n};\n\napim.setvariable('cfg',cfg);"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare_Request
+        source: "var apim = require('apim');\r\n\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\n\r\nvar appcReq
+          = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n            \"TransactionId\"
+          : millisecondsvalue,\r\n            \"ChannelId\": cfg.channelId,\r\n            \"SessionId\":
+          apim.getvariable('message.headers.Reference-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode\r\n        },\r\n
+          \       \"Body\" : apim.getvariable('message.body')\r\n            \r\n
+          \       \r\n    }\r\n};\r\n\r\nif (typeof OperatorId !== 'undefined')\r\n
+          \   appcReq[cfg.requestName].Header.UserInfo = {\r\n        \"IDNumber\"
+          : OperatorId\r\n    };\r\nsession.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n    \r\n    \r\n\r\n    //return
+          the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour
+          + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-nic-getforalldata)/common/getforeigneralldata
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_Headers
+        source: "\tvar apim = require('apim');\n\t\n\tapim.output('application/json');\n\n
+          \   \n    \n    var cfg = apim.getvariable('cfg');\n    \n\tvar TransactionId
+          = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.TransactionId\");\n\tvar
+          ChannelId = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.ChannelId\");\n\tvar
+          RequestTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.RequestTime\");\n\tvar
+          SessionId = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.SessionId\");\n\tvar
+          MWRequestTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.MWRequestTime\");\n\tvar
+          MWResponseTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.MWResponseTime\");\n\tvar
+          status = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.ResponseStatus.Status\");\n\t\n\n
+          \   apim.setvariable('message.headers.Transaction-Id',TransactionId,'add');\n
+          \   apim.setvariable('message.headers.Channel-Id',ChannelId,'add');\n    if
+          (RequestTime !== 'undefined')\n\t    apim.setvariable('message.headers.RequestTime',RequestTime,'add');\n\tif
+          (SessionId !== 'undefined')\n        apim.setvariable('message.headers.Reference-Id',SessionId,'add');\n
+          \    if (MWRequestTime !== 'undefined')\n        apim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');\n
+          \   if (MWResponseTime !== 'undefined')\n        apim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');\n\n
+          \   \n    apim.setvariable('message.headers.Response-Status',status,'add');\n
+          \   "
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Response
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar body = message[cfg.responseName].Body;\n\n\nsession.output.write(body);\napim.output('application/json');"
+          - map:
+              version: 2.0.0
+              title: map
+              inputs:
+                "":
+                  schema:
+                    $ref: '#/definitions/StrGetForeignerAllDataRs_BodyType'
+                  variable: message.body
+                  content: application/json
+              outputs:
+                "":
+                  schema:
+                    $ref: '#/definitions/GetForeignerAllDataRs_BodyType'
+                  variable: message.body
+                  content: application/json
+              actions:
+              - set: .prisonStatus
+                from: .AlienPrisonStatus
+              - set: .birthDate.gregorianDate
+                from: .BirthDate.GregorianDate
+              - set: .birthDate.hijriDate
+                from: .BirthDate.HijriDate
+              - set: .borderNumber
+                from: .BorderNumber
+              - set: .gender
+                from: .Gender
+              - set: .hRSDNationality.code
+                from: .HRSDNationality.Code
+              - set: .hRSDNationality.nameAr
+                from: .HRSDNationality.NameAr
+              - set: .hRSDNationality.nameEn
+                from: .HRSDNationality.NameEn
+              - set: .hRSDOccupation.code
+                from: .HRSDOccupation.Code
+              - set: .hRSDOccupation.nameAr
+                from: .HRSDOccupation.NameAr
+              - set: .hRSDOccupation.nameEn
+                from: .HRSDOccupation.NameEn
+              - set: .hRSDReligion.code
+                from: .HRSDReligion.Code
+              - set: .hRSDReligion.nameAr
+                from: .HRSDReligion.NameAr
+              - set: .hRSDReligion.nameEn
+                from: .HRSDReligion.NameEn
+              - set: .laborOfficeId
+                from: .LaborOfficeId
+              - set: .laborerIdNo
+                from: .LaborerIdNo
+              - set: .maritalStatus.code
+                from: .MaritalStatus.Code
+              - set: .maritalStatus.name
+                from: .MaritalStatus.Name
+              - set: .name.firstName
+                from: .Name.FirstName
+              - set: .name.fullName
+                from: .Name.FullName
+              - set: .name.lastName
+                from: .Name.LastName
+              - set: .name.secondName
+                from: .Name.SecondName
+              - set: .name.thirdName
+                from: .Name.ThirdName
+              - set: .nationality.code
+                from: .Nationality.Code
+              - set: .nationality.name
+                from: .Nationality.Name
+              - set: .occupation.code
+                from: .Occupation.Code
+              - set: .occupation.name
+                from: .Occupation.Name
+              - set: .relationship.code
+                from: .Relationship.Code
+              - set: .relationship.name
+                from: .Relationship.Name
+              - set: .religion.code
+                from: .Religion.Code
+              - set: .religion.name
+                from: .Religion.Name
+              - set: .residency.expiryDate.gregorianDate
+                from: .Residency.ExpiryDate.GregorianDate
+              - set: .residency.expiryDate.hijriDate
+                from: .Residency.ExpiryDate.HijriDate
+              - set: .residency.idNo
+                from: .Residency.IdNo
+              - set: .residency.idType
+                from: .Residency.IdType
+              - set: .residency.issueDate.gregorianDate
+                from: .Residency.IssueDate.GregorianDate
+              - set: .residency.issueDate.hijriDate
+                from: .Residency.IssueDate.HijriDate
+              - set: .residency.issuePlace
+                from: .Residency.IssuePlace
+              - set: .sequenceNumber
+                from: .SequenceNumber
+              - set: .sponsor.idNo
+                from: .Sponsor.IdNo
+              - set: .sponsor.name
+                from: .Sponsor.Name
+              - set: .sponsor.occupation
+                from: .Sponsor.Occupation
+              - set: .sponsor.status
+                from: .Sponsor.Status
+              - set: .sponsor.type.code
+                from: .Sponsor.Type.Code
+              - set: .sponsor.type.name
+                from: .Sponsor.Type.Name
+              - set: .status.fingerPrintStatus
+                from: .Status.FingerPrintStatus
+              - set: .status.personStatus.code
+                from: .Status.PersonStatus.Code
+              - set: .status.personStatus.name
+                from: .Status.PersonStatus.Name
+              - set: .travel.entryDate.gregorianDate
+                from: .Travel.EntryDate.GregorianDate
+              - set: .travel.entryDate.hijriDate
+                from: .Travel.EntryDate.HijriDate
+              - set: .travel.lastEntryDate.gregorianDate
+                from: .Travel.LastEntryDate.GregorianDate
+              - set: .travel.lastEntryDate.hijriDate
+                from: .Travel.LastEntryDate.HijriDate
+              - set: .travel.lastExitDate.gregorianDate
+                from: .Travel.LastExitDate.GregorianDate
+              - set: .travel.lastExitDate.hijriDate
+                from: .Travel.LastExitDate.HijriDate
+              - set: .travel.passportExpiryDate.gregorianDate
+                from: .Travel.PassportExpiryDate.GregorianDate
+              - set: .travel.passportExpiryDate.hijriDate
+                from: .Travel.PassportExpiryDate.HijriDate
+              - set: .travel.passportNumber
+                from: .Travel.PassportNumber
+              - set: .travel.travelStatus
+                from: .Travel.TravelStatus
+              - set: .visa.finalExitVisaIssued
+                from: .Visa.FinalExitVisaIssued
+              - set: .visa.visaExpiryDate.gregorianDate
+                from: .Visa.VisaExpiryDate.GregorianDate
+              - set: .visa.visaExpiryDate.hijriDate
+                from: .Visa.VisaExpiryDate.HijriDate
+              - set: .visa.visaType
+                from: .Visa.VisaType
+              - set: .nameEn.firstName
+                from: .TranslatedName.FirstName
+              - set: .nameEn.fullName
+                from: .TranslatedName.FullName
+              - set: .nameEn.lastName
+                from: .TranslatedName.LastName
+              - set: .nameEn.secondName
+                from: .TranslatedName.SecondName
+              - set: .nameEn.thirdName
+                from: .TranslatedName.ThirdName
+              options:
+                mapEnablePostProcessingJSON: true
+                mapEmulateV4EmptyJSONObject: false
+                mapEmulateV4DefaultRequiredProps: false
+                mapReferenceLimit: 1
+                includeEmptyXMLElements: false
+                namespaceInheritance: false
+                inlineNamespaces: false
+                mapResolveApicVariables: false
+                mapOptimizeSchemaDefinition: true
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Error
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar error = {\n    \"ErrorResponse\":
+                message[cfg.responseName].Header.ResponseStatus\n}\n\n\nvar httperror=0;\nif(cfg.errorMap){\n
+                \   if(cfg.errorMap[error.ErrorResponse.Code]){\n       httperror
+                = cfg.errorMap[error.ErrorResponse.Code].code;\n       \n       //var
+                errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\n       //var
+                details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\n    }\n}\nif(httperror
+                == 0){\n   httperror = 400;\n   // apim.error('ERROR',400,'Bad Request','Invalid
+                request');\n}\napim.setvariable('message.status.code',httperror,'set');\n\nsession.output.write(error);\napim.output('application/json');"
+    catch: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  BackendError_Type:
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+    type: object
+  CodeName_Type:
+    properties:
+      code:
+        type: integer
+      nameAr:
+        type: string
+      nameEn:
+        type: string
+    required:
+    - nameAr
+    - nameEn
+    - code
+    type: object
+  CodeandName_Type:
+    properties:
+      code:
+        type: integer
+      name:
+        type: string
+    required:
+    - code
+    - name
+    type: object
+  ESBXMLRequestHeader_Type:
+    properties:
+      ChannelId:
+        type: string
+      DebugFlag:
+        type: string
+      MWRequestTime:
+        type: string
+      RequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      SessionId:
+        type: string
+      TransactionId:
+        type: string
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+    type: object
+  ESBXMLResponseHeader_Type:
+    properties:
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+      ChannelId:
+        type: string
+      DebugFlag:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      RequestTime:
+        type: string
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      ServiceCode:
+        type: string
+      SessionId:
+        type: string
+      TransactionId:
+        type: string
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+    type: object
+  GHDate_Type:
+    properties:
+      gregorianDate:
+        type: string
+      hijriDate:
+        type: string
+    required:
+    - gregorianDate
+    - hijriDate
+    type: object
+  GetForeignerAllDataRq_BodyType:
+    properties:
+      idOrBorderNo:
+        type: string
+      iqamaExpiryDate:
+        type: integer
+    required:
+    - idOrBorderNo
+    type: object
+  GetForeignerAllDataRs_BodyType:
+    properties:
+      birthDate:
+        $ref: '#/definitions/GHDate_Type'
+      borderNumber:
+        type: string
+      gender:
+        type: string
+      hRSDNationality:
+        $ref: '#/definitions/CodeName_Type'
+      hRSDOccupation:
+        $ref: '#/definitions/CodeName_Type'
+      hRSDReligion:
+        $ref: '#/definitions/CodeName_Type'
+      laborOfficeId:
+        type: integer
+      laborerIdNo:
+        type: string
+      maritalStatus:
+        $ref: '#/definitions/CodeandName_Type'
+      name:
+        $ref: '#/definitions/Name_Type'
+      nameEn:
+        $ref: '#/definitions/Name_Type'
+      nationality:
+        $ref: '#/definitions/CodeandName_Type'
+      occupation:
+        $ref: '#/definitions/CodeandName_Type'
+      prisonStatus:
+        type: boolean
+      relationship:
+        $ref: '#/definitions/CodeandName_Type'
+      religion:
+        $ref: '#/definitions/CodeandName_Type'
+      residency:
+        $ref: '#/definitions/Residency_Type'
+      sequenceNumber:
+        type: integer
+      sponsor:
+        $ref: '#/definitions/Sponsor_Type'
+      status:
+        $ref: '#/definitions/Status_type'
+      travel:
+        $ref: '#/definitions/Travel_Type'
+      visa:
+        $ref: '#/definitions/Visa_Type'
+    required:
+    - gender
+    - laborOfficeId
+    - sequenceNumber
+    - borderNumber
+    - laborerIdNo
+    type: object
+  StrCodeName_Type:
+    properties:
+      Code:
+        type: string
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+    required:
+    - NameAr
+    - NameEn
+    - Code
+    type: object
+  StrCodeandName_Type:
+    properties:
+      Code:
+        type: string
+      Name:
+        type: string
+    required:
+    - Code
+    - Name
+    type: object
+  StrGHDate_Type:
+    properties:
+      GregorianDate:
+        type: string
+      HijriDate:
+        type: string
+    required:
+    - GregorianDate
+    - HijriDate
+    type: object
+  StrGetForeignerAllDataRq_BodyType:
+    properties:
+      IdOrBorderNo:
+        type: string
+      IqamaExpiryDate:
+        type: string
+    required:
+    - IdOrBorderNo
+    type: object
+  StrGetForeignerAllDataRs_BodyType:
+    properties:
+      AlienPrisonStatus:
+        type: string
+      BirthDate:
+        $ref: '#/definitions/StrGHDate_Type'
+      BorderNumber:
+        type: string
+      Gender:
+        type: string
+      HRSDNationality:
+        $ref: '#/definitions/StrCodeName_Type'
+      HRSDOccupation:
+        $ref: '#/definitions/StrCodeName_Type'
+      HRSDReligion:
+        $ref: '#/definitions/StrCodeName_Type'
+      LaborOfficeId:
+        type: string
+      LaborerIdNo:
+        type: string
+      MaritalStatus:
+        $ref: '#/definitions/StrCodeandName_Type'
+      Name:
+        $ref: '#/definitions/StrName_Type'
+      TranslatedName:
+        $ref: '#/definitions/StrName_Type'
+      Nationality:
+        $ref: '#/definitions/StrCodeandName_Type'
+      Occupation:
+        $ref: '#/definitions/StrCodeandName_Type'
+      Relationship:
+        $ref: '#/definitions/StrCodeandName_Type'
+      Religion:
+        $ref: '#/definitions/StrCodeandName_Type'
+      Residency:
+        $ref: '#/definitions/StrResidency_Type'
+      SequenceNumber:
+        type: string
+      Sponsor:
+        $ref: '#/definitions/StrSponsor_Type'
+      Status:
+        $ref: '#/definitions/StrStatus_type'
+      Travel:
+        $ref: '#/definitions/StrTravel_Type'
+      Visa:
+        $ref: '#/definitions/StrVisa_Type'
+    required:
+    - Gender
+    - LaborOfficeId
+    - SequenceNumber
+    - BorderNumber
+    - LaborerIdNo
+    - AlienPrisonStatus
+    type: object
+  StrName_Type:
+    properties:
+      FirstName:
+        type: string
+      FullName:
+        type: string
+      LastName:
+        type: string
+      SecondName:
+        type: string
+      ThirdName:
+        type: string
+    required:
+    - FirstName
+    - FullName
+    - LastName
+    - SecondName
+    - ThirdName
+    type: object
+  StrResidency_Type:
+    properties:
+      ExpiryDate:
+        $ref: '#/definitions/StrGHDate_Type'
+      IdNo:
+        type: string
+      IdType:
+        type: string
+      IssueDate:
+        $ref: '#/definitions/StrGHDate_Type'
+      IssuePlace:
+        type: string
+    required:
+    - IdNo
+    - IdType
+    - IssuePlace
+    type: object
+  StrSponsor_Type:
+    properties:
+      IdNo:
+        type: string
+      Name:
+        type: string
+      Occupation:
+        type: string
+      Status:
+        type: string
+      Type:
+        $ref: '#/definitions/StrCodeandName_Type'
+    required:
+    - IdNo
+    - Name
+    - Occupation
+    - Status
+    type: object
+  StrStatus_type:
+    properties:
+      FingerPrintStatus:
+        type: string
+      PersonStatus:
+        $ref: '#/definitions/StrCodeandName_Type'
+    required:
+    - FingerPrintStatus
+    type: object
+  StrTravel_Type:
+    properties:
+      EntryDate:
+        $ref: '#/definitions/StrGHDate_Type'
+      LastEntryDate:
+        $ref: '#/definitions/StrGHDate_Type'
+      LastExitDate:
+        $ref: '#/definitions/StrGHDate_Type'
+      PassportExpiryDate:
+        $ref: '#/definitions/StrGHDate_Type'
+      PassportNumber:
+        type: string
+      TravelStatus:
+        type: string
+    required:
+    - TravelStatus
+    - PassportNumber
+    type: object
+  StrVisa_Type:
+    properties:
+      FinalExitVisaIssued:
+        type: string
+      VisaExpiryDate:
+        $ref: '#/definitions/StrGHDate_Type'
+      VisaType:
+        type: string
+    required:
+    - FinalExitVisaIssued
+    - VisaType
+    type: object
+  KeyValueArr_Type:
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+    type: object
+  MWResponseStatus_Type:
+    properties:
+      ArabicMsg:
+        type: string
+      Code:
+        type: string
+      EnglishMsg:
+        type: string
+      Status:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+    type: object
+  Name_Type:
+    properties:
+      firstName:
+        type: string
+      fullName:
+        type: string
+      lastName:
+        type: string
+      secondName:
+        type: string
+      thirdName:
+        type: string
+      translatedName:
+        type: string
+    type: object
+  Residency_Type:
+    properties:
+      expiryDate:
+        $ref: '#/definitions/GHDate_Type'
+      idNo:
+        type: integer
+      idType:
+        type: string
+      issueDate:
+        $ref: '#/definitions/GHDate_Type'
+      issuePlace:
+        type: string
+    required:
+    - idNo
+    - idType
+    - issuePlace
+    type: object
+  Sponsor_Type:
+    properties:
+      idNo:
+        type: integer
+      name:
+        type: string
+      occupation:
+        type: string
+      status:
+        type: string
+      type:
+        $ref: '#/definitions/CodeandName_Type'
+    required:
+    - idNo
+    - name
+    - occupation
+    - status
+    type: object
+  Status_type:
+    properties:
+      fingerPrintStatus:
+        type: boolean
+      personStatus:
+        $ref: '#/definitions/CodeandName_Type'
+    required:
+    - fingerPrintStatus
+    type: object
+  Tmstmp_Type:
+    type: object
+  Travel_Type:
+    properties:
+      entryDate:
+        $ref: '#/definitions/GHDate_Type'
+      lastEntryDate:
+        $ref: '#/definitions/GHDate_Type'
+      lastExitDate:
+        $ref: '#/definitions/GHDate_Type'
+      passportExpiryDate:
+        $ref: '#/definitions/GHDate_Type'
+      passportNumber:
+        type: string
+      travelStatus:
+        type: string
+    required:
+    - travelStatus
+    - passportNumber
+    type: object
+  UDF_Type:
+    properties:
+      KeyValueArr:
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+        type: array
+    type: object
+  UserInfo_Type:
+    properties:
+      IDNumber:
+        type: string
+      UserId:
+        type: string
+    type: object
+  Visa_Type:
+    properties:
+      finalExitVisaIssued:
+        type: boolean
+      visaExpiryDate:
+        $ref: '#/definitions/GHDate_Type'
+      visaType:
+        type: string
+    required:
+    - finalExitVisaIssued
+    - visaType
+    type: object
+paths:
+  /get-foreigner-all-data:
+    post:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success

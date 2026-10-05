@@ -1,0 +1,314 @@
+swagger: "2.0"
+info:
+  title: CreateTemporaryLicense
+  x-ibm-name: createtemporarylicense
+  version: 1.0.0
+  description: CreateTemporaryLicense
+host: $(catalog.host)
+schemes:
+- https
+basePath: /centerestablishment
+security:
+- OAuth2:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  properties:
+    target-url:
+      value: http://example.com
+      description: The URL of the target service
+      encoded: false
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(cat-target-hostname)$(cat-target-url-taheel)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  application-authentication:
+    certificate: false
+definitions:
+  CreateTemporaryLicenseRq_MessageType:
+    type: object
+    properties:
+      CreateTemporaryLicenseRq:
+        $ref: '#/definitions/CreateTemporaryLicenseRq_Type'
+  CreateTemporaryLicenseRs_MessageType:
+    type: object
+    properties:
+      CreateTemporaryLicenseRs:
+        $ref: '#/definitions/CreateTemporaryLicenseRs_Type'
+  CreateTemporaryLicenseRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/CreateTemporaryLicenseRq_BodyType'
+  CreateTemporaryLicenseRq_BodyType:
+    type: object
+    properties:
+      BneficiaryCategory:
+        type: integer
+      CharacterType:
+        type: integer
+      IdNo:
+        type: integer
+      CRNumber:
+        type: integer
+      CenterLocation:
+        $ref: '#/definitions/CenterLocation_Type'
+      CenterInfo:
+        $ref: '#/definitions/CenterInfo_Type'
+      CenterManagerInfo:
+        $ref: '#/definitions/CenterManagerInfo_Type'
+      ReadinessAsseementResult:
+        type: integer
+  CenterLocation_Type:
+    type: object
+    properties:
+      Longitude:
+        type: string
+      Latitude:
+        type: string
+      BuildingNo:
+        type: integer
+      StreetNo:
+        type: integer
+      Neighborhood:
+        type: string
+      City:
+        type: string
+      PostalCode:
+        type: integer
+      AdditionalNumber:
+        type: integer
+  CenterInfo_Type:
+    type: object
+    properties:
+      CenterName:
+        type: string
+      CenterType:
+        type: integer
+      PotentialCapacity:
+        type: integer
+      CenterWorkPeriod:
+        type: string
+      CenterAgeGroup:
+        type: integer
+      CenterGenderGroup:
+        type: integer
+  CenterManagerInfo_Type:
+    type: object
+    properties:
+      IdNo:
+        type: integer
+      ManagerFullName:
+        $ref: '#/definitions/Name_Type'
+      IdCopy:
+        $ref: '#/definitions/File_Type'
+      PreviousExperiences:
+        $ref: '#/definitions/File_Type'
+      EducationalQualifications:
+        $ref: '#/definitions/File_Type'
+  Name_Type:
+    type: object
+    properties:
+      FirstName:
+        type: string
+      SecondName:
+        type: string
+      ThirdName:
+        type: string
+      FamilyName:
+        type: string
+  File_Type:
+    type: object
+    properties:
+      FileId:
+        type: string
+      DocType:
+        type: string
+      URL:
+        type: string
+  CreateTemporaryLicenseRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/CreateTemporaryLicenseRs_BodyType'
+  CreateTemporaryLicenseRs_BodyType:
+    type: object
+    properties:
+      CenterOwnerName:
+        type: string
+      IdNo:
+        type: integer
+      IdExpDate:
+        type: string
+      LicenseNo:
+        type: integer
+      LicenseIssueDateH:
+        type: string
+      CenterType:
+        type: integer
+      CRNumber:
+        type: integer
+      CRIssueDate:
+        type: string
+      CRExpDate:
+        type: string
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: string
+      IDNumber:
+        type: string
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /createtemplicense:
+    post:
+      operationId: CreateTemporaryLicense
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/CreateTemporaryLicenseRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: CreateTemporaryLicense
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/CreateTemporaryLicenseRq_MessageType'
+        description: CreateTemporaryLicenseRq
+        required: true

@@ -1,0 +1,494 @@
+swagger: "2.0"
+info:
+  title: ValidateIssueEstablishingVisas
+  x-ibm-name: validateissueestablishingvisas
+  version: 1.0.0
+  description: This service used to validate the establishing visa request (Establishment
+    eligibility. Profession, Nationality, embassies , user privileges and establishment
+    valance).
+schemes:
+- https
+basePath: /qiwa/esb
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-estv-establishingvalidates)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  ValidateIssueEstablishingVisasRq_MessageType:
+    type: object
+    properties:
+      ValidateIssueEstablishingVisasRq:
+        $ref: '#/definitions/ValidateIssueEstablishingVisasRq_Type'
+  ValidateIssueEstablishingVisasRs_MessageType:
+    type: object
+    properties:
+      ValidateIssueEstablishingVisasRs:
+        $ref: '#/definitions/ValidateIssueEstablishingVisasRs_Type'
+  ValidateIssueEstablishingVisasRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/ValidateIssueEstablishingVisasRq_BodyType'
+  ValidateIssueEstablishingVisasRq_BodyType:
+    type: object
+    properties:
+      VisaRequestDetailsList:
+        $ref: '#/definitions/VisaReqDtlsList_Type'
+      LaborOfficeId:
+        type: integer
+        default: "12"
+      EstablishmentSequanceNumber:
+        type: integer
+        default: "1009"
+      ValidationLevel:
+        type: integer
+        default: "17762"
+      TierId:
+        type: integer
+        default: "186872"
+    required:
+    - LaborOfficeId
+    - EstablishmentSequanceNumber
+    - ValidationLevel
+  VisaReqDtlsList_Type:
+    type: object
+    properties:
+      VisaRequestDetails:
+        type: array
+        items:
+          $ref: '#/definitions/VisaReqDtls_Type'
+  VisaReqDtls_Type:
+    type: object
+    properties:
+      JobId:
+        type: integer
+        default: "18"
+      Gender:
+        type: integer
+        default: "3"
+      EmbassyId:
+        type: integer
+        default: "128787"
+      NationalityId:
+        type: integer
+        default: "12"
+      NumberOfVisas:
+        type: integer
+        default: "17"
+  ValidateIssueEstablishingVisasRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/ValidateIssueEstablishingVisasRs_BodyType'
+  ValidateIssueEstablishingVisasRs_BodyType:
+    type: object
+    properties:
+      Balance:
+        type: integer
+      EntityInformation:
+        $ref: '#/definitions/EntityInformations_Type'
+      EstablishmentInformation:
+        $ref: '#/definitions/EstablishmentInformations_Type'
+  EntityInformations_Type:
+    type: object
+    properties:
+      ExpiredEstablishmentId:
+        type: integer
+      EstablishmentDetailsList:
+        $ref: '#/definitions/EstablishmentDetailsList_Type'
+      NotesList:
+        $ref: '#/definitions/NotesInfoList_Type'
+  EstablishmentDetailsList_Type:
+    type: object
+    properties:
+      EstablishmentDetailsItem:
+        type: array
+        items:
+          $ref: '#/definitions/EstablishmentDetailsItem_Type'
+  EstablishmentDetailsItem_Type:
+    type: object
+    properties:
+      UnifiedNumberId:
+        type: integer
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      EstablishmentName:
+        type: string
+      InsertDate:
+        type: string
+      EconomicActivityId:
+        type: integer
+      ColorId:
+        type: integer
+      SizeId:
+        type: integer
+      OldestEstablishmentPerActivity:
+        type: integer
+      OrderedEstablishmentOldest:
+        type: integer
+  NotesInfoList_Type:
+    type: object
+    properties:
+      NoteInformation:
+        type: array
+        items:
+          $ref: '#/definitions/NotesInfo_Type'
+  NotesInfo_Type:
+    type: object
+    properties:
+      EstablishmentId:
+        type: integer
+      NoteSourceId:
+        type: integer
+      NoteText:
+        type: string
+      NoteStatusId:
+        type: integer
+      NoteTypeId:
+        type: integer
+      StartDate:
+        type: string
+      EndDate:
+        type: string
+      NoteId:
+        type: integer
+      NotesOrder:
+        type: integer
+  EstablishmentInformations_Type:
+    type: object
+    properties:
+      EstablishmentId:
+        type: integer
+      PKEstablishmentId:
+        type: integer
+      EstablishmentName:
+        type: string
+      LaborOfficeId:
+        type: integer
+      SequanceNumber:
+        type: integer
+      EstablishmentStatusId:
+        type: integer
+      EstablishmentStatus:
+        type: string
+      MainEconomicActivityId:
+        type: integer
+      SubEconomicActivityId:
+        type: integer
+      MainEconomicActivity:
+        type: integer
+      SubEconomicActivity:
+        type: string
+      CRNumber:
+        type: string
+      CRReleaseDate:
+        type: string
+      CREndDate:
+        type: string
+      MunicipalLicenseSource:
+        type: string
+      MunicipalLicenseNumber:
+        type: string
+      MunicipalLicenseReleaseDate:
+        type: string
+      MunicipalLicenseEndDate:
+        type: string
+      Notes:
+        type: string
+      SevenHundredNumber:
+        type: string
+      UnifiedNumberId:
+        type: string
+      OwnerId:
+        type: string
+      InsertDate:
+        type: string
+      IsMainBranch:
+        type: string
+      District:
+        type: string
+      Street:
+        type: string
+      EstablishmentEmail:
+        type: string
+      PostalCode:
+        type: string
+      ZIPCode:
+        type: string
+      PKOwnerId:
+        type: integer
+      UnifiedNationalNumber:
+        type: string
+      UseUnifiedNationalNumberFlag:
+        type: integer
+      CityId:
+        type: integer
+      CityName:
+        type: string
+      EstablishmentTypeId:
+        type: integer
+      EstablishmentTypeName:
+        type: string
+      WaselZipCode:
+        type: string
+      WaselPrimary:
+        type: string
+      WaselSecondary:
+        type: string
+      WaselUnitNo:
+        type: string
+      WaselCity:
+        type: string
+      WaselArea:
+        type: string
+      WaselStreet:
+        type: string
+      WaselExpiryDate:
+        type: string
+      WaselStatus:
+        type: integer
+      EconomicActivityId:
+        type: integer
+      EconomicActivityName:
+        type: string
+      ColorId:
+        type: string
+      NitaqatColor:
+        type: string
+      SizeId:
+        type: string
+      SizeName:
+        type: string
+      ColorCode:
+        type: string
+      Saudis:
+        type: string
+      Foreigners:
+        type: string
+      TotalLaborerCount:
+        type: integer
+      NotesInformationList:
+        $ref: '#/definitions/NotesList_Type'
+  NotesList_Type:
+    type: object
+    properties:
+      NoteInformation:
+        type: array
+        items:
+          $ref: '#/definitions/NoteInfo_Type'
+  NoteInfo_Type:
+    type: object
+    properties:
+      NoteId:
+        type: string
+      EstablishmentId:
+        type: string
+      NoteText:
+        type: string
+      NoteStatusId:
+        type: integer
+      NoteStatusName:
+        type: string
+      NoteTypeId:
+        type: integer
+      StartDate:
+        type: string
+      EndDate:
+        type: string
+      NoteSourceId:
+        type: integer
+      NoteSourceName:
+        type: string
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: VIEV0001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: VIEV0001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+        default: "465740"
+      IDNumber:
+        type: integer
+        default: "1024812248"
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /validateissueestablishingvisas:
+    post:
+      operationId: ValidateIssueEstablishingVisas
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/ValidateIssueEstablishingVisasRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Validate Issue Establishing Visas
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/ValidateIssueEstablishingVisasRq_MessageType'
+        description: ValidateIssueEstablishingVisasRq
+        required: true

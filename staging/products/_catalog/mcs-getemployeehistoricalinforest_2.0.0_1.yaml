@@ -1,0 +1,1084 @@
+swagger: "2.0"
+info:
+  title: MCS_GetEmployeeHistoricalInfoRest
+  x-ibm-name: mcs-getemployeehistoricalinforest
+  version: 2.0.0
+  description: This API exposes MCI to get Employee Historical Information services
+    from Qiwa platform
+schemes:
+- https
+basePath: /mcs/v2
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - map:
+        version: 2.0.0
+        title: map
+        inputs:
+          personID:
+            schema:
+              type: string
+            variable: request.parameters.personID
+          pageSize:
+            schema:
+              type: string
+            variable: request.parameters.pageSize
+          pageOffSet:
+            schema:
+              type: string
+            variable: request.parameters.pageOffSet
+          organizationId:
+            schema:
+              type: string
+            variable: request.parameters.organizationId
+          fromDate:
+            schema:
+              type: string
+            variable: request.parameters.fromDate
+          toDate:
+            schema:
+              type: string
+            variable: request.parameters.toDate
+          jobGradeCode:
+            schema:
+              type: string
+            variable: request.parameters.jobGradeCode
+          jobChainCode:
+            schema:
+              type: string
+            variable: request.parameters.jobChainCode
+          jobTitleCode:
+            schema:
+              type: string
+            variable: request.parameters.jobTitleCode
+        outputs:
+          "":
+            schema:
+              description: ""
+              type: object
+              properties:
+                personID:
+                  type: string
+                  name: personID
+                pageSize:
+                  type: string
+                  name: pageSize
+                pageOffSet:
+                  type: string
+                  name: pageOffSet
+                organizationId:
+                  type: string
+                  name: organizationId
+                fromDate:
+                  type: string
+                  name: fromDate
+                toDate:
+                  type: string
+                  name: toDate
+                jobGradeCode:
+                  type: string
+                  name: jobGradeCode
+                jobChainCode:
+                  type: string
+                  name: jobChainCode
+                jobTitleCode:
+                  type: string
+                  name: jobTitleCode
+              example: "{\r\n        \"personID\":\"Integer\",\r\n        \"pageSize\"
+                :\"Integer\",\r\n        \"pageOffSet\" :\"Integer\",\r\n        \"organizationId\"
+                :\"Integer\",\r\n        \"fromDate\" :\"Integer\",\r\n        \"toDate\"
+                :\"Integer\",\r\n        \"jobGradeCode\" :\"Integer\",\r\n        \"jobChainCode\"
+                :\"Integer\",\r\n        \"jobTitleCode\" :\"Integer\"\r\n}"
+            variable: message.body
+            content: application/json
+        actions:
+        - set: .personID
+          from: personID
+        - set: .pageSize
+          from: pageSize
+        - set: .pageOffSet
+          from: pageOffSet
+        - set: .organizationId
+          from: organizationId
+        - set: .fromDate
+          from: fromDate
+        - set: .toDate
+          from: toDate
+        - set: .jobGradeCode
+          from: jobGradeCode
+        - set: .jobChainCode
+          from: jobChainCode
+        - set: .jobTitleCode
+          from: jobTitleCode
+        options:
+          mapEnablePostProcessingJSON: true
+          mapEmulateV4EmptyJSONObject: false
+          mapEmulateV4DefaultRequiredProps: false
+          mapReferenceLimit: 1
+          includeEmptyXMLElements: false
+          namespaceInheritance: false
+          inlineNamespaces: false
+          mapResolveApicVariables: false
+          mapOptimizeSchemaDefinition: true
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\n\nvar cfg={\n    \"serviceCode\" : \"EXGEH00002\",\n
+          \   \"channelId\" : \"Integration\",\n    \"requestName\" : \"EmployeeHistoricalInfoRq\",\n
+          \   \"responseName\": \"EmployeeHistoricalInfoRs\",\n    \"errorMap\" :{\n
+          \       \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid Request\"}\n    }\n
+          \   \n};\n\napim.setvariable('cfg',cfg);"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare_Request
+        source: "var apim = require('apim');\r\n\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\n\r\nvar appcReq
+          = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n            \"TransactionId\"
+          : millisecondsvalue,\r\n            \"ChannelId\": cfg.channelId,\r\n            \"SessionId\":
+          apim.getvariable('message.headers.X-Request-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode\r\n        },\r\n
+          \       \"Body\" : apim.getvariable('message.body')\r\n            \r\n
+          \       \r\n    }\r\n};\r\n\r\nif (typeof OperatorId !== 'undefined')\r\n
+          \   appcReq[cfg.requestName].Header.UserInfo = {\r\n        \"IDNumber\"
+          : OperatorId\r\n    };\r\nsession.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n    \r\n    \r\n\r\n    //return
+          the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour
+          + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        header-control:
+          type: blacklist
+          values: []
+        parameter-control:
+          type: whitelist
+          values: []
+        timeout: 60
+        verb: POST
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        target-url: $(ace-tip-mcs)/external/getemployeehistoryrest
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_Headers
+        source: "var apim = require('apim');\n \napim.output('application/json');\n
+          \nvar message = apim.getvariable('message.body');\nvar cfg = apim.getvariable('cfg');\nvar
+          Header = message[cfg.responseName].Header;\nvar TransactionId = Header.TransactionId;\nvar
+          ChannelId = Header.ChannelId;\nvar RequestTime = Header.RequestTime;\nvar
+          SessionId = Header.SessionId;\nvar MWRequestTime = Header.MWRequestTime;\nvar
+          MWResponseTime = Header.MWResponseTime;\nvar status = Header.ResponseStatus.Status;\napim.setvariable('message.headers.Transaction-Id',TransactionId,'add');\n
+          \napim.setvariable('message.headers.Channel-Id',ChannelId,'add');\nif (RequestTime
+          !== 'undefined')\napim.setvariable('message.headers.RequestTime',RequestTime,'add');\nif
+          (SessionId !== 'undefined')\napim.setvariable('message.headers.X-Request-Id',SessionId,'add');\nif
+          (MWRequestTime !== 'undefined')\napim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');\nif
+          (MWResponseTime !== 'undefined')\napim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');\n
+          \napim.setvariable('message.headers.Response-Status',status,'add');"
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Response
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar body = message[cfg.responseName].Body;\n\n\nsession.output.write(body);\napim.output('application/json');"
+          - map:
+              version: 2.0.0
+              title: map
+              inputs:
+                "":
+                  schema:
+                    description: ""
+                    type: object
+                    properties:
+                      EmployeeId:
+                        type: string
+                        name: EmployeeId
+                      FirstHiringDt:
+                        type: string
+                        name: FirstHiringDt
+                      BAYANDetails:
+                        type: object
+                        properties:
+                          JobBAYANNum:
+                            type: string
+                            name: JobBAYANNum
+                          JobBAYANDt:
+                            type: string
+                            name: JobBAYANDt
+                        name: BAYANDetails
+                      EmployeeHistList:
+                        type: object
+                        properties:
+                          EmployeeHistInfo:
+                            type: object
+                            properties:
+                              Item:
+                                type: array
+                                items:
+                                  properties:
+                                    JobAssignmentInfo:
+                                      type: object
+                                      properties:
+                                        JobTitle:
+                                          type: object
+                                          properties:
+                                            JobTitleCode:
+                                              type: string
+                                              name: JobTitleCode
+                                            JobTitleName:
+                                              type: string
+                                              name: JobTitleName
+                                          name: JobTitle
+                                        SerialNum:
+                                          type: string
+                                          name: SerialNum
+                                        JobNum:
+                                          type: string
+                                          name: JobNum
+                                        JobClassCode:
+                                          type: object
+                                          properties: {}
+                                          name: JobClassCode
+                                        JobAction:
+                                          type: object
+                                          properties:
+                                            JobActionCode:
+                                              type: string
+                                              name: JobActionCode
+                                            JobActionDesc:
+                                              type: string
+                                              name: JobActionDesc
+                                            JobActionDt:
+                                              type: string
+                                              name: JobActionDt
+                                            DcsnNum:
+                                              type: string
+                                              name: DcsnNum
+                                            DcsnDt:
+                                              type: string
+                                              name: DcsnDt
+                                          name: JobAction
+                                        AssignmentStatus:
+                                          type: string
+                                          name: AssignmentStatus
+                                        JobOrg:
+                                          type: object
+                                          properties:
+                                            OrgId:
+                                              type: string
+                                              name: OrgId
+                                            FullName:
+                                              type: string
+                                              name: FullName
+                                          name: JobOrg
+                                        JobLadder:
+                                          type: object
+                                          properties:
+                                            JobLadderCode:
+                                              type: string
+                                              name: JobLadderCode
+                                            JobLadderDesc:
+                                              type: string
+                                              name: JobLadderDesc
+                                            GradeStep:
+                                              type: object
+                                              properties:
+                                                JobGradeCode:
+                                                  type: string
+                                                  name: JobGradeCode
+                                                JobGradeDesc:
+                                                  type: string
+                                                  name: JobGradeDesc
+                                                JobGradeStartDt:
+                                                  type: string
+                                                  name: JobGradeStartDt
+                                                JobStepCode:
+                                                  type: string
+                                                  name: JobStepCode
+                                                JobStepStartDt:
+                                                  type: string
+                                                  name: JobStepStartDt
+                                              name: GradeStep
+                                          name: JobLadder
+                                        JobLoc:
+                                          type: object
+                                          properties:
+                                            JobLocCode:
+                                              type: string
+                                              name: JobLocCode
+                                            JobLocName:
+                                              type: string
+                                              name: JobLocName
+                                          name: JobLoc
+                                        JobExtension:
+                                          type: object
+                                          properties:
+                                            JobExtensionMonths:
+                                              type: object
+                                              properties: {}
+                                              name: JobExtensionMonths
+                                            JobExtensionYrs:
+                                              type: object
+                                              properties: {}
+                                              name: JobExtensionYrs
+                                          name: JobExtension
+                                      name: JobAssignmentInfo
+                                    Salary:
+                                      type: string
+                                      name: Salary
+                                  type: object
+                                name: Item
+                            name: EmployeeHistInfo
+                        name: EmployeeHistList
+                    example: "{\r\n  \"EmployeeId\": \"1007588872\",\r\n  \"FirstHiringDt\":
+                      \"1405-06-18\",\r\n  \"BAYANDetails\": {\r\n    \"JobBAYANNum\":
+                      \"25988\",\r\n    \"JobBAYANDt\": \"1436-05-18\"\r\n  },\r\n
+                      \ \"EmployeeHistList\": {\r\n    \"EmployeeHistInfo\": {\r\n
+                      \     \"Item\": [\r\n        {\r\n          \"JobAssignmentInfo\":
+                      {\r\n            \"JobTitle\": {\r\n              \"JobTitleCode\":
+                      \"503051001\",\r\n              \"JobTitleName\": \"مدقق اجراءات
+                      احوال مدنيه\"\r\n            },\r\n            \"SerialNum\":
+                      \"9999\",\r\n            \"JobNum\": \"1380\",\r\n            \"JobClassCode\":
+                      {},\r\n            \"JobAction\": {\r\n              \"JobActionCode\":
+                      \"38\",\r\n              \"JobActionDesc\": \"تقاعد مبكر\",\r\n
+                      \             \"JobActionDt\": \"1436-02-15\",\r\n              \"DcsnNum\":
+                      \"19086\",\r\n              \"DcsnDt\": \"1436-02-23\"\r\n            },\r\n
+                      \           \"AssignmentStatus\": \"\",\r\n            \"JobOrg\":
+                      {\r\n              \"OrgId\": \"1811\",\r\n              \"FullName\":
+                      \"الاحوال المدنيه\"\r\n            },\r\n            \"JobLadder\":
+                      {\r\n              \"JobLadderCode\": \"1\",\r\n              \"JobLadderDesc\":
+                      \"سلم الموظفين العام\",\r\n              \"GradeStep\": {\r\n
+                      \               \"JobGradeCode\": \"8\",\r\n                \"JobGradeDesc\":
+                      \"الثامنة\",\r\n                \"JobGradeStartDt\": \"1434-12-29\",\r\n
+                      \               \"JobStepCode\": \"14\",\r\n                \"JobStepStartDt\":
+                      \"1434-12-29\"\r\n              }\r\n            },\r\n            \"JobLoc\":
+                      {\r\n              \"JobLocCode\": \"0300000\",\r\n              \"JobLocName\":
+                      \"المدينةالمنورة\"\r\n            },\r\n            \"JobExtension\":
+                      {\r\n              \"JobExtensionMonths\": {},\r\n              \"JobExtensionYrs\":
+                      {}\r\n            }\r\n          },\r\n          \"Salary\":
+                      \"1.3405E+4\"\r\n        },\r\n        {\r\n          \"JobAssignmentInfo\":
+                      {\r\n            \"JobTitle\": {\r\n              \"JobTitleCode\":
+                      \"503051001\",\r\n              \"JobTitleName\": \"مدقق اجراءات
+                      احوال مدنيه\"\r\n            },\r\n            \"SerialNum\":
+                      \"8\",\r\n            \"JobNum\": \"1380\",\r\n            \"JobClassCode\":
+                      \"5030508\",\r\n            \"JobAction\": {\r\n              \"JobActionCode\":
+                      \"20\",\r\n              \"JobActionDesc\": \"ترقية بالمدة\",\r\n
+                      \             \"JobActionDt\": \"1434-12-29\",\r\n              \"DcsnNum\":
+                      \"73919\",\r\n              \"DcsnDt\": \"1434-12-29\"\r\n            },\r\n
+                      \           \"AssignmentStatus\": \"\",\r\n            \"JobOrg\":
+                      {\r\n              \"OrgId\": \"1811\",\r\n              \"FullName\":
+                      \"الاحوال المدنيه\"\r\n            },\r\n            \"JobLadder\":
+                      {\r\n              \"JobLadderCode\": \"1\",\r\n              \"JobLadderDesc\":
+                      \"سلم الموظفين العام\",\r\n              \"GradeStep\": {\r\n
+                      \               \"JobGradeCode\": \"8\",\r\n                \"JobGradeDesc\":
+                      \"الثامنة\",\r\n                \"JobGradeStartDt\": \"1434-12-29\",\r\n
+                      \               \"JobStepCode\": \"12\",\r\n                \"JobStepStartDt\":
+                      \"1434-12-29\"\r\n              }\r\n            },\r\n            \"JobLoc\":
+                      {\r\n              \"JobLocCode\": \"0300000\",\r\n              \"JobLocName\":
+                      \"المدينةالمنورة\"\r\n            },\r\n            \"JobExtension\":
+                      {\r\n              \"JobExtensionMonths\": {},\r\n              \"JobExtensionYrs\":
+                      {}\r\n            }\r\n          },\r\n          \"Salary\":
+                      \"1.2575E+4\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}"
+                  variable: message.body
+              outputs:
+                "":
+                  schema:
+                    description: ""
+                    type: object
+                    properties:
+                      employeeId:
+                        type: string
+                        name: employeeId
+                      firstHiringDt:
+                        type: string
+                        name: firstHiringDt
+                      bAYANDetails:
+                        type: object
+                        properties:
+                          jobBAYANNum:
+                            type: string
+                            name: jobBAYANNum
+                          jobBAYANDt:
+                            type: string
+                            name: jobBAYANDt
+                        name: bAYANDetails
+                      employeeHistList:
+                        type: object
+                        properties:
+                          employeeHistInfo:
+                            type: object
+                            properties:
+                              item:
+                                type: array
+                                items:
+                                  properties:
+                                    jobAssignmentInfo:
+                                      type: object
+                                      properties:
+                                        jobTitle:
+                                          type: object
+                                          properties:
+                                            jobTitleCode:
+                                              type: string
+                                              name: jobTitleCode
+                                            jobTitleName:
+                                              type: string
+                                              name: jobTitleName
+                                          name: jobTitle
+                                        serialNum:
+                                          type: string
+                                          name: serialNum
+                                        jobNum:
+                                          type: string
+                                          name: jobNum
+                                        jobClassCode:
+                                          type: object
+                                          properties: {}
+                                          name: jobClassCode
+                                        jobAction:
+                                          type: object
+                                          properties:
+                                            jobActionCode:
+                                              type: string
+                                              name: jobActionCode
+                                            jobActionDesc:
+                                              type: string
+                                              name: jobActionDesc
+                                            jobActionDt:
+                                              type: string
+                                              name: jobActionDt
+                                            dcsnNum:
+                                              type: string
+                                              name: dcsnNum
+                                            dcsnDt:
+                                              type: string
+                                              name: dcsnDt
+                                          name: jobAction
+                                        assignmentStatus:
+                                          type: string
+                                          name: assignmentStatus
+                                        jobOrg:
+                                          type: object
+                                          properties:
+                                            orgId:
+                                              type: string
+                                              name: orgId
+                                            fullName:
+                                              type: string
+                                              name: fullName
+                                          name: jobOrg
+                                        jobLadder:
+                                          type: object
+                                          properties:
+                                            jobLadderCode:
+                                              type: string
+                                              name: jobLadderCode
+                                            jobLadderDesc:
+                                              type: string
+                                              name: jobLadderDesc
+                                            gradeStep:
+                                              type: object
+                                              properties:
+                                                jobGradeCode:
+                                                  type: string
+                                                  name: jobGradeCode
+                                                jobGradeDesc:
+                                                  type: string
+                                                  name: jobGradeDesc
+                                                jobGradeStartDt:
+                                                  type: string
+                                                  name: jobGradeStartDt
+                                                jobStepCode:
+                                                  type: string
+                                                  name: jobStepCode
+                                                jobStepStartDt:
+                                                  type: string
+                                                  name: jobStepStartDt
+                                              name: gradeStep
+                                          name: jobLadder
+                                        jobLoc:
+                                          type: object
+                                          properties:
+                                            jobLocCode:
+                                              type: string
+                                              name: jobLocCode
+                                            jobLocName:
+                                              type: string
+                                              name: jobLocName
+                                          name: jobLoc
+                                        jobExtension:
+                                          type: object
+                                          properties:
+                                            jobExtensionMonths:
+                                              type: object
+                                              properties: {}
+                                              name: jobExtensionMonths
+                                            jobExtensionYrs:
+                                              type: object
+                                              properties: {}
+                                              name: jobExtensionYrs
+                                          name: jobExtension
+                                      name: jobAssignmentInfo
+                                    salary:
+                                      type: string
+                                      name: salary
+                                  type: object
+                                name: item
+                            name: employeeHistInfo
+                        name: employeeHistList
+                    example: "{\r\n  \"employeeId\": \"1007588872\",\r\n  \"firstHiringDt\":
+                      \"1405-06-18\",\r\n  \"bAYANDetails\": {\r\n    \"jobBAYANNum\":
+                      \"25988\",\r\n    \"jobBAYANDt\": \"1436-05-18\"\r\n  },\r\n
+                      \ \"employeeHistList\": {\r\n    \"employeeHistInfo\": {\r\n
+                      \     \"item\": [\r\n        {\r\n          \"jobAssignmentInfo\":
+                      {\r\n            \"jobTitle\": {\r\n              \"jobTitleCode\":
+                      \"503051001\",\r\n              \"jobTitleName\": \"مدقق اجراءات
+                      احوال مدنيه\"\r\n            },\r\n            \"serialNum\":
+                      \"9999\",\r\n            \"jobNum\": \"1380\",\r\n            \"jobClassCode\":
+                      {},\r\n            \"jobAction\": {\r\n              \"jobActionCode\":
+                      \"38\",\r\n              \"jobActionDesc\": \"تقاعد مبكر\",\r\n
+                      \             \"jobActionDt\": \"1436-02-15\",\r\n              \"dcsnNum\":
+                      \"19086\",\r\n              \"dcsnDt\": \"1436-02-23\"\r\n            },\r\n
+                      \           \"assignmentStatus\": \"\",\r\n            \"jobOrg\":
+                      {\r\n              \"orgId\": \"1811\",\r\n              \"fullName\":
+                      \"الاحوال المدنيه\"\r\n            },\r\n            \"jobLadder\":
+                      {\r\n              \"jobLadderCode\": \"1\",\r\n              \"jobLadderDesc\":
+                      \"سلم الموظفين العام\",\r\n              \"gradeStep\": {\r\n
+                      \               \"jobGradeCode\": \"8\",\r\n                \"jobGradeDesc\":
+                      \"الثامنة\",\r\n                \"jobGradeStartDt\": \"1434-12-29\",\r\n
+                      \               \"jobStepCode\": \"14\",\r\n                \"jobStepStartDt\":
+                      \"1434-12-29\"\r\n              }\r\n            },\r\n            \"jobLoc\":
+                      {\r\n              \"jobLocCode\": \"0300000\",\r\n              \"jobLocName\":
+                      \"المدينةالمنورة\"\r\n            },\r\n            \"jobExtension\":
+                      {\r\n              \"jobExtensionMonths\": {},\r\n              \"jobExtensionYrs\":
+                      {}\r\n            }\r\n          },\r\n          \"salary\":
+                      \"1.3405E+4\"\r\n        },\r\n        {\r\n          \"jobAssignmentInfo\":
+                      {\r\n            \"jobTitle\": {\r\n              \"jobTitleCode\":
+                      \"503051001\",\r\n              \"jobTitleName\": \"مدقق اجراءات
+                      احوال مدنيه\"\r\n            },\r\n            \"serialNum\":
+                      \"8\",\r\n            \"jobNum\": \"1380\",\r\n            \"jobClassCode\":
+                      \"5030508\",\r\n            \"jobAction\": {\r\n              \"jobActionCode\":
+                      \"20\",\r\n              \"jobActionDesc\": \"ترقية بالمدة\",\r\n
+                      \             \"jobActionDt\": \"1434-12-29\",\r\n              \"dcsnNum\":
+                      \"73919\",\r\n              \"dcsnDt\": \"1434-12-29\"\r\n            },\r\n
+                      \           \"assignmentStatus\": \"\",\r\n            \"jobOrg\":
+                      {\r\n              \"orgId\": \"1811\",\r\n              \"fullName\":
+                      \"الاحوال المدنيه\"\r\n            },\r\n            \"jobLadder\":
+                      {\r\n              \"jobLadderCode\": \"1\",\r\n              \"jobLadderDesc\":
+                      \"سلم الموظفين العام\",\r\n              \"gradeStep\": {\r\n
+                      \               \"jobGradeCode\": \"8\",\r\n                \"jobGradeDesc\":
+                      \"الثامنة\",\r\n                \"jobGradeStartDt\": \"1434-12-29\",\r\n
+                      \               \"jobStepCode\": \"12\",\r\n                \"jobStepStartDt\":
+                      \"1434-12-29\"\r\n              }\r\n            },\r\n            \"jobLoc\":
+                      {\r\n              \"jobLocCode\": \"0300000\",\r\n              \"jobLocName\":
+                      \"المدينةالمنورة\"\r\n            },\r\n            \"jobExtension\":
+                      {\r\n              \"jobExtensionMonths\": {},\r\n              \"jobExtensionYrs\":
+                      {}\r\n            }\r\n          },\r\n          \"salary\":
+                      \"1.2575E+4\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}"
+                  variable: message.body
+              actions:
+              - set: .employeeId
+                from: .EmployeeId
+              - set: .firstHiringDt
+                from: .FirstHiringDt
+              - set: .bAYANDetails.jobBAYANNum
+                from: .BAYANDetails.JobBAYANNum
+              - set: .bAYANDetails.jobBAYANDt
+                from: .BAYANDetails.JobBAYANDt
+              - create: .employeeHistList.employeeHistInfo.item
+                foreach: .EmployeeHistList.EmployeeHistInfo.Item
+                from: .EmployeeHistList.EmployeeHistInfo.Item
+                actions:
+                - set: salary
+                  from: Salary
+                - set: jobAssignmentInfo.jobExtension.jobExtensionYrs
+                  from: JobAssignmentInfo.JobExtension.JobExtensionYrs
+                - set: jobAssignmentInfo.jobExtension.jobExtensionMonths
+                  from: JobAssignmentInfo.JobExtension.JobExtensionMonths
+                - set: jobAssignmentInfo.jobLoc.jobLocCode
+                  from: JobAssignmentInfo.JobLoc.JobLocCode
+                - set: jobAssignmentInfo.jobLoc.jobLocName
+                  from: JobAssignmentInfo.JobLoc.JobLocName
+                - set: jobAssignmentInfo.jobLadder.gradeStep.jobGradeCode
+                  from: JobAssignmentInfo.JobLadder.GradeStep.JobGradeCode
+                - set: jobAssignmentInfo.jobLadder.gradeStep.jobGradeDesc
+                  from: JobAssignmentInfo.JobLadder.GradeStep.JobGradeDesc
+                - set: jobAssignmentInfo.jobLadder.gradeStep.jobGradeStartDt
+                  from: JobAssignmentInfo.JobLadder.GradeStep.JobGradeStartDt
+                - set: jobAssignmentInfo.jobLadder.gradeStep.jobStepCode
+                  from: JobAssignmentInfo.JobLadder.GradeStep.JobStepCode
+                - set: jobAssignmentInfo.jobLadder.gradeStep.jobStepStartDt
+                  from: JobAssignmentInfo.JobLadder.GradeStep.JobStepStartDt
+                - set: jobAssignmentInfo.jobLadder.jobLadderCode
+                  from: JobAssignmentInfo.JobLadder.JobLadderCode
+                - set: jobAssignmentInfo.jobLadder.jobLadderDesc
+                  from: JobAssignmentInfo.JobLadder.JobLadderDesc
+                - set: jobAssignmentInfo.jobOrg.orgId
+                  from: JobAssignmentInfo.JobOrg.OrgId
+                - set: jobAssignmentInfo.jobOrg.fullName
+                  from: JobAssignmentInfo.JobOrg.FullName
+                - set: jobAssignmentInfo.assignmentStatus
+                  from: JobAssignmentInfo.AssignmentStatus
+                - set: jobAssignmentInfo.jobAction.jobActionCode
+                  from: JobAssignmentInfo.JobAction.JobActionCode
+                - set: jobAssignmentInfo.jobAction.jobActionDesc
+                  from: JobAssignmentInfo.JobAction.JobActionDesc
+                - set: jobAssignmentInfo.jobAction.jobActionDt
+                  from: JobAssignmentInfo.JobAction.JobActionDt
+                - set: jobAssignmentInfo.jobAction.dcsnNum
+                  from: JobAssignmentInfo.JobAction.DcsnNum
+                - set: jobAssignmentInfo.jobAction.dcsnDt
+                  from: JobAssignmentInfo.JobAction.DcsnDt
+                - set: jobAssignmentInfo.jobClassCode
+                  from: JobAssignmentInfo.JobClassCode
+                - set: jobAssignmentInfo.jobNum
+                  from: JobAssignmentInfo.JobNum
+                - set: jobAssignmentInfo.serialNum
+                  from: JobAssignmentInfo.SerialNum
+                - set: jobAssignmentInfo.jobTitle.jobTitleCode
+                  from: JobAssignmentInfo.JobTitle.JobTitleCode
+                - set: jobAssignmentInfo.jobTitle.jobTitleName
+                  from: JobAssignmentInfo.JobTitle.JobTitleName
+              options:
+                mapEnablePostProcessingJSON: true
+                mapEmulateV4EmptyJSONObject: false
+                mapEmulateV4DefaultRequiredProps: false
+                mapReferenceLimit: 1
+                namespaceInheritance: false
+                inlineNamespaces: false
+                includeEmptyXMLElements: false
+                mapResolveApicVariables: false
+                mapOptimizeSchemaDefinition: true
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Error
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar error = {\n  \"errorCode\":
+                message[cfg.responseName].Header.ResponseStatus.Code,\n  \"errorMessage\":
+                {\n    \"en-US\": message[cfg.responseName].Header.ResponseStatus.EnglishMsg,\n
+                \   \"ar-SA\": message[cfg.responseName].Header.ResponseStatus.ArabicMsg\n
+                \ }\n};\n\nvar httperror=0;\nif(cfg.errorMap){\n    if(cfg.errorMap[error.errorCode]){\n
+                \      httperror = cfg.errorMap[error.errorCode].code;\n       \n
+                \      //var errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\n
+                \      //var details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\n    }\n}\nif(httperror
+                == 0){\n   httperror = 409;\n   // apim.error('ERROR',400,'Bad Request','Invalid
+                request');\n}\napim.setvariable('message.status.code',httperror,'set');\n\nsession.output.write(error);\napim.output('application/json');"
+    catch: []
+    finally: []
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+parameters:
+  personID:
+    in: path
+    name: personID
+    description: Personal Identifier
+    required: true
+    type: string
+  X-IBM-Client-Id:
+    in: header
+    name: X-IBM-Client-Id
+    description: Client id issued by security server
+    required: true
+    type: string
+  X-IBM-Client-Secret:
+    in: header
+    name: X-IBM-Client-Secret
+    description: Client secret issued by security server
+    required: true
+    type: string
+  X-Request-Id:
+    in: header
+    name: X-Request-Id
+    description: X-Request-Id returned in the response header
+    required: false
+    type: string
+  pageSize:
+    in: query
+    name: pageSize
+    description: Page Size
+    required: true
+    type: string
+  pageOffSet:
+    in: query
+    name: pageOffSet
+    description: Page Off-Set
+    required: true
+    type: string
+  organizationId:
+    in: query
+    name: organizationId
+    description: Organization Identification Number
+    required: false
+    type: string
+  fromDate:
+    in: query
+    name: fromDate
+    description: From Date
+    required: false
+    type: string
+  toDate:
+    in: query
+    name: toDate
+    description: To Date
+    required: false
+    type: string
+  jobGradeCode:
+    in: query
+    name: jobGradeCode
+    description: Job Grade Code
+    required: false
+    type: string
+  jobChainCode:
+    in: query
+    name: jobChainCode
+    description: Job Chain Code
+    required: false
+    type: string
+  jobTitleCode:
+    in: query
+    name: jobTitleCode
+    description: Job Title Code
+    required: false
+    type: string
+definitions:
+  ResponseModel:
+    type: object
+    description: This response object returned by the get operation
+    properties:
+      employeeID:
+        type: string
+      firstHiringDate:
+        $ref: '#/definitions/HijriDateModel'
+      bayanDetails:
+        $ref: '#/definitions/BayanDetailsModel'
+      historyInfoList:
+        type: array
+        items:
+          $ref: '#/definitions/historyInfoListModel'
+  BayanDetailsModel:
+    type: object
+    properties:
+      bayanNumber:
+        type: integer
+      bayanDescription:
+        $ref: '#/definitions/HijriDateModel'
+  historyInfoListModel:
+    type: object
+    properties:
+      jobNumber:
+        type: string
+      jobTitle:
+        $ref: '#/definitions/NameCodeModel'
+      jobLadder:
+        $ref: '#/definitions/NameCodeModel'
+      jobGrade:
+        $ref: '#/definitions/jobGradeModel'
+      organization:
+        $ref: '#/definitions/NameCodeModel'
+      jobStep:
+        $ref: '#/definitions/jobStepModel'
+      jobAction:
+        $ref: '#/definitions/jobActionModel'
+      assignmentStatus:
+        $ref: '#/definitions/NameCodeModel'
+      jobLocation:
+        $ref: '#/definitions/NameCodeModel'
+      jobExtension:
+        $ref: '#/definitions/jobExtensionModel'
+      basicSalary:
+        $ref: '#/definitions/NumberModel'
+  jobGradeModel:
+    type: object
+    properties:
+      jobGradeCode:
+        type: string
+        minLength: 1
+        maxLength: 30
+      jobGradeDescription:
+        type: string
+        minLength: 1
+        maxLength: 100
+      jobGradeStartDate:
+        $ref: '#/definitions/HijriDateModel'
+  jobStepModel:
+    type: object
+    properties:
+      jobStepCode:
+        $ref: '#/definitions/IntegerNumberModel'
+      jobStepDescription:
+        type: string
+        minLength: 1
+        maxLength: 100
+      jobStepStartDate:
+        $ref: '#/definitions/HijriDateModel'
+  jobActionModel:
+    type: object
+    properties:
+      jobActionCode:
+        type: string
+        minLength: 1
+        maxLength: 30
+      jobActionDate:
+        $ref: '#/definitions/HijriDateModel'
+      jobActionDescription:
+        type: string
+        minLength: 1
+        maxLength: 100
+      decisionNumber:
+        type: string
+        minLength: 1
+        maxLength: 15
+      decisionDate:
+        $ref: '#/definitions/HijriDateModel'
+  jobExtensionModel:
+    type: object
+    properties:
+      jobExtensionStartDate:
+        $ref: '#/definitions/HijriDateModel'
+      jobExtensionMonths:
+        $ref: '#/definitions/IntegerNumberModel'
+      jobExtensionYears:
+        $ref: '#/definitions/IntegerNumberModel'
+  IntegerNumberModel:
+    type: object
+    description: This object use for integer numbers
+    additionalProperties:
+      type: integer
+      example: 1
+  NumberModel:
+    type: object
+    description: This object use for integer numbers
+    additionalProperties:
+      type: number
+      example: 100.25
+  NameCodeModel:
+    type: object
+    description: 'This object will be used across the model '
+    properties:
+      code:
+        type: string
+        example: "1"
+      name:
+        type: string
+        example: name
+  HijriDateModel:
+    type: string
+    description: This date object will be used across the model with format yyyy-MM-dd
+      for hijri dates only
+    example: 1439/12/25
+  ErrorModel:
+    type: object
+    required:
+    - errorCode
+    - errorMessage
+    properties:
+      errorCode:
+        type: string
+        example: EXXXX000
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+  ServerErrorModel:
+    type: object
+    required:
+    - httpCode
+    - httpMessage
+    - moreInformation
+    properties:
+      httpCode:
+        type: string
+        example: "401"
+      httpMessage:
+        type: string
+        example: Unauthorized
+      moreInformation:
+        type: string
+        example: Cannot pass the security checks that are required by the target API
+          or operation
+  LocaleDataModel:
+    type: object
+    properties:
+      en-US:
+        type: string
+      ar-SA:
+        type: string
+paths:
+  /employee/{personID}/historical-information/:
+    parameters:
+    - $ref: '#/parameters/X-IBM-Client-Id'
+    - $ref: '#/parameters/X-IBM-Client-Secret'
+    - $ref: '#/parameters/personID'
+    - $ref: '#/parameters/pageSize'
+    - $ref: '#/parameters/pageOffSet'
+    - $ref: '#/parameters/organizationId'
+    - $ref: '#/parameters/fromDate'
+    - $ref: '#/parameters/toDate'
+    - $ref: '#/parameters/jobGradeCode'
+    - $ref: '#/parameters/jobChainCode'
+    - $ref: '#/parameters/jobTitleCode'
+    - in: header
+      name: X-Request-Id
+      description: X-Request-Id returned in the response header
+      required: false
+      type: string
+    get:
+      tags:
+      - Historical Information
+      description: Service to Get Employee Historical Information
+      operationId: getEmployeeHistoricalInfoRest
+      produces:
+      - application/json
+      responses:
+        "200":
+          $ref: '#/responses/Response200'
+        "400":
+          $ref: '#/responses/Response400'
+        "401":
+          $ref: '#/responses/Response401'
+        "403":
+          $ref: '#/responses/Response403'
+        "404":
+          $ref: '#/responses/Response404'
+        "408":
+          $ref: '#/responses/Response408'
+        "409":
+          $ref: '#/responses/Response409'
+        "429":
+          $ref: '#/responses/Response429'
+        "500":
+          $ref: '#/responses/Response500'
+        "501":
+          $ref: '#/responses/Response501'
+        "503":
+          $ref: '#/responses/Response503'
+        "510":
+          $ref: '#/responses/Response510'
+responses:
+  Response200:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ResponseModel'
+  Response400:
+    description: The request was rejected by the server due to malformed syntax. Bad
+      Request.
+  Response401:
+    description: The request could not be completed due to lack of valid credentials.
+      Authentication.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response403:
+    description: The request could not be completed because it is not authorized.
+      Authorization
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response404:
+    description: The server has not found anything matching the Request-URI.
+  Response408:
+    description: The client did not produce a request within the time that the server
+      was prepared to wait.
+  Response409:
+    description: The request could not be completed due to a conflict with the current
+      state of the resource. Usually business validation errors will be returned in
+      the body
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response429:
+    description: The request was sent too many times in a given amount of time
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response500:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response501:
+    description: The server does not support the functionality required and does not
+      recognize the request
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response503:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response510:
+    description: Extensions to the request are required for the server to fulfil it.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'

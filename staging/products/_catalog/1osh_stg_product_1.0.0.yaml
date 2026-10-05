@@ -1,0 +1,150 @@
+info:
+  version: 1.0.0
+  title: 1OSH_Stg_Product
+  name: 1osh_stg_product
+apis:
+  getcategorybyid1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getcategorybyid_1.0.0.yaml
+  geteconomicactivitybynitakatid1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/geteconomicactivitybynitakatid_1.0.0.yaml
+  getperformancecardrequestfiltered1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getperformancecardrequestfiltered_1.0.0.yaml
+  ohs-getassessmentvisitsbyid1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ohs-getassessmentvisitsbyid_1.0.0.yaml
+  osh-createperformancecard1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-createperformancecard_1.0.0.yaml
+  osh-createperformancecardrequest1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-createperformancecardrequest_1.0.0.yaml
+  osh-createuser1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-createuser_1.0.0.yaml
+  osh-duplicateselfassessmentquestionbyquestionid1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-duplicateselfassessmentquestionbyquestionid_1.0.0.yaml
+  osh-exportusers1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-exportusers_1.0.0.yaml
+  osh-getallassessmentvisits1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-getallassessmentvisits_1.0.0.yaml
+  osh-getallcategories1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-getallcategories_1.0.0.yaml
+  osh-getalleconomicactivities1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-getalleconomicactivities_1.0.0.yaml
+  osh-getallfiles1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-getallfiles_1.0.0.yaml
+  osh-getallperformancecardrequestbyestablishmentid1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-getallperformancecardrequestbyestablishmentid_1.0.0.yaml
+  osh-getallroles1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-getallroles_1.0.0.yaml
+  osh-getallselfassessmenttemplatequestionsanswers1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-getallselfassessmenttemplatequestionsanswers_1.0.0.yaml
+  osh-getallusers1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-getallusers_1.0.0.yaml
+  osh-getassessmentvisitsbypcrid1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-getassessmentvisitsbypcrid_1.0.0.yaml
+  osh-getassessmentvisitsbyuserid1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-getassessmentvisitsbyuserid_1.0.0.yaml
+  osh-getcategorybyid1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-getcategorybyid_1.0.0.yaml
+  osh-geteconomicactivitybynitakatid1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-geteconomicactivitybynitakatid_1.0.0.yaml
+  osh-getestablishmentbycompanyid1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-getestablishmentbycompanyid_1.0.0.yaml
+  osh-getestablishmentbyid1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-getestablishmentbyid_1.0.0.yaml
+  osh-getfilebyfilename1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-getfilebyfilename_1.0.0.yaml
+  osh-getperformancecardbyestablishmentid1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-getperformancecardbyestablishmentid_1.0.0.yaml
+  osh-getperformancecardbyid1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-getperformancecardbyid_1.0.0.yaml
+  osh-getperformancecardrequestbyid1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-getperformancecardrequestbyid_1.0.0.yaml
+  osh-getperformancecardrequestbyuser1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-getperformancecardrequestbyuser_1.0.0.yaml
+  osh-getperformancecardrequestfiltered1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-getperformancecardrequestfiltered_1.0.0.yaml
+  osh-getselfassessmentquestionbyqueryparam1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-getselfassessmentquestionbyqueryparam_1.0.0.yaml
+  osh-getselfassessmentquestionsbyeconomicid1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-getselfassessmentquestionsbyeconomicid_1.0.0.yaml
+  osh-getselfassessmenttemplatequestionsanswersbyid1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-getselfassessmenttemplatequestionsanswersbyid_1.0.0.yaml
+  osh-getuserbyusername1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-getuserbyusername_1.0.0.yaml
+  osh-getuserbyuuid1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-getuserbyuuid_1.0.0.yaml
+  osh-patchperformancecardrequest1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-patchperformancecardrequest_1.0.0.yaml
+  osh-performancecardsearchfilter1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-performancecardsearchfilter_1.0.0.yaml
+  osh-putselfassessmenttemplatequestionanswerlist1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-putselfassessmenttemplatequestionanswerlist_1.0.0.yaml
+  osh-saveallselfassessmentquestion1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-saveallselfassessmentquestion_1.0.0.yaml
+  osh-saveallselfassessmenttemplatequestionanswer1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-saveallselfassessmenttemplatequestionanswer_1.0.0.yaml
+  osh-saveselfassessmentquestion1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-saveselfassessmentquestion_1.0.0.yaml
+  osh-saveselfassessmenttemplatequestionanswer1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-saveselfassessmenttemplatequestionanswer_1.0.0.yaml
+  osh-updateselfassessmentquestionstatus1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-updateselfassessmentquestionstatus_1.0.0.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      getcategorybyid1.0.0: {}
+      geteconomicactivitybynitakatid1.0.0: {}
+      getperformancecardrequestfiltered1.0.0: {}
+      ohs-getassessmentvisitsbyid1.0.0: {}
+      osh-createperformancecard1.0.0: {}
+      osh-createperformancecardrequest1.0.0: {}
+      osh-createuser1.0.0: {}
+      osh-duplicateselfassessmentquestionbyquestionid1.0.0: {}
+      osh-exportusers1.0.0: {}
+      osh-getallassessmentvisits1.0.0: {}
+      osh-getallcategories1.0.0: {}
+      osh-getalleconomicactivities1.0.0: {}
+      osh-getallfiles1.0.0: {}
+      osh-getallperformancecardrequestbyestablishmentid1.0.0: {}
+      osh-getallroles1.0.0: {}
+      osh-getallselfassessmenttemplatequestionsanswers1.0.0: {}
+      osh-getallusers1.0.0: {}
+      osh-getassessmentvisitsbypcrid1.0.0: {}
+      osh-getassessmentvisitsbyuserid1.0.0: {}
+      osh-getcategorybyid1.0.0: {}
+      osh-geteconomicactivitybynitakatid1.0.0: {}
+      osh-getestablishmentbycompanyid1.0.0: {}
+      osh-getestablishmentbyid1.0.0: {}
+      osh-getfilebyfilename1.0.0: {}
+      osh-getperformancecardbyestablishmentid1.0.0: {}
+      osh-getperformancecardbyid1.0.0: {}
+      osh-getperformancecardrequestbyid1.0.0: {}
+      osh-getperformancecardrequestbyuser1.0.0: {}
+      osh-getperformancecardrequestfiltered1.0.0: {}
+      osh-getselfassessmentquestionbyqueryparam1.0.0: {}
+      osh-getselfassessmentquestionsbyeconomicid1.0.0: {}
+      osh-getselfassessmenttemplatequestionsanswersbyid1.0.0: {}
+      osh-getuserbyusername1.0.0: {}
+      osh-getuserbyuuid1.0.0: {}
+      osh-patchperformancecardrequest1.0.0: {}
+      osh-performancecardsearchfilter1.0.0: {}
+      osh-putselfassessmenttemplatequestionanswerlist1.0.0: {}
+      osh-saveallselfassessmentquestion1.0.0: {}
+      osh-saveallselfassessmenttemplatequestionanswer1.0.0: {}
+      osh-saveselfassessmentquestion1.0.0: {}
+      osh-saveselfassessmenttemplatequestionanswer1.0.0: {}
+      osh-updateselfassessmentquestionstatus1.0.0: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

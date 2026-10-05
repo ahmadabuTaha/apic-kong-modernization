@@ -1,0 +1,266 @@
+swagger: "2.0"
+info:
+  title: GetEstablishmentAllowancePeriod
+  x-ibm-name: getestablishmentallowanceperiod
+  version: 1.0.0
+  description: GetEstablishmentAllowancePeriod
+host: $(catalog.host)
+schemes:
+- https
+basePath: /qiwa/esb
+produces:
+- application/json
+consumes:
+- application/json
+security:
+- clientSecret: []
+  clientID: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientID:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  properties:
+    target-url:
+      value: http://192.168.80.4:30090
+      description: The internal IP of 'icp-cluster.qiwa.info'
+      encoded: false
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-estv-establishinggets)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  DebugFlag_Type:
+    type: integer
+    default: "1"
+  ServiceCode_Type:
+    type: string
+    default: AUEA0001
+  TransactionId_Type:
+    type: string
+    default: "6222121543"
+  ChannelId_Type:
+    type: string
+    default: Qiwa
+  SessionId_Type:
+    type: string
+    default: "212"
+  RequestTime_Type:
+    type: string
+    default: "2019-10-10T00:00:00.555Z"
+  MWRequestTime_Type:
+    type: string
+    default: '''2019-10-10T00:00:00.555'
+  MWResponseime_Type:
+    type: string
+    default: '''2019-10-10T00:00:00.555'
+  EconomicActivityId_Type:
+    type: string
+    default: "901"
+  GetEstablishmentAllowancePeriodRq_MessageType:
+    type: object
+    properties:
+      GetEstablishmentAllowancePeriodRq:
+        $ref: '#/definitions/GetEstablishmentAllowancePeriodRq_Type'
+  GetEstablishmentAllowancePeriodRs_MessageType:
+    type: object
+    properties:
+      GetEstablishmentAllowancePeriodRs:
+        $ref: '#/definitions/GetEstablishmentAllowancePeriodRs_Type'
+  GetEstablishmentAllowancePeriodRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetEstablishmentAllowancePeriodRq_BodyType'
+  GetEstablishmentAllowancePeriodRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+  GetEstablishmentAllowancePeriodRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetEstablishmentAllowancePeriodRs_BodyType'
+  GetEstablishmentAllowancePeriodRs_BodyType:
+    type: object
+    properties:
+      VisaTotalCount:
+        type: integer
+      AllowanceStartDate:
+        type: string
+      AllowanceEndDate:
+        type: string
+      TierId:
+        type: integer
+    required:
+    - VisaTotalCount
+    - AllowanceStartDate
+    - AllowanceEndDate
+    - TierId
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        $ref: '#/definitions/TransactionId_Type'
+      ChannelId:
+        $ref: '#/definitions/ChannelId_Type'
+      SessionId:
+        $ref: '#/definitions/SessionId_Type'
+      RequestTime:
+        $ref: '#/definitions/RequestTime_Type'
+      MWRequestTime:
+        $ref: '#/definitions/MWRequestTime_Type'
+      ServiceCode:
+        $ref: '#/definitions/ServiceCode_Type'
+      DebugFlag:
+        $ref: '#/definitions/DebugFlag_Type'
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        $ref: '#/definitions/TransactionId_Type'
+      ChannelId:
+        $ref: '#/definitions/ChannelId_Type'
+      SessionId:
+        $ref: '#/definitions/SessionId_Type'
+      RequestTime:
+        $ref: '#/definitions/RequestTime_Type'
+      MWRequestTime:
+        $ref: '#/definitions/MWRequestTime_Type'
+      MWResponseime:
+        $ref: '#/definitions/MWResponseime_Type'
+      ServiceCode:
+        $ref: '#/definitions/ServiceCode_Type'
+      DebugFlag:
+        $ref: '#/definitions/DebugFlag_Type'
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: string
+      IDNumber:
+        type: string
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /getestablishmentallowanceperiod:
+    post:
+      operationId: GetEstablishmentAllowancePeriod
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetEstablishmentAllowancePeriodRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Get Establishment Allowance Period
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetEstablishmentAllowancePeriodRq_MessageType'
+        description: GetEstablishmentAllowancePeriodRq
+        required: true

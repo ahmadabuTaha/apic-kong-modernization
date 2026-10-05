@@ -1,0 +1,52 @@
+info:
+  version: 1.0.0
+  title: 1Musaned Stg
+  name: 1musaned-stg
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: true
+    rate-limits:
+      default:
+        value: 100/1hour
+        hard-limit: false
+    apis:
+      activatecontract1.0.0: {}
+      contractcancelation1.0.0: {}
+      getcontractinfo1.0.0: {}
+      getcontractsbydocumentnumber1.0.0: {}
+      getexternalofficelist1.0.1: {}
+      getlookups1.0.0: {}
+      getvisadocumentdata1.0.0: {}
+      newcontract1.0.0: {}
+      validatecontract1.0.0: {}
+apis:
+  activatecontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/activatecontract_1.0.0.yaml
+  contractcancelation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/contractcancelation_1.0.0.yaml
+  getcontractinfo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getcontractinfo_1.0.0.yaml
+  getcontractsbydocumentnumber1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getcontractsbydocumentnumber_1.0.0.yaml
+  getexternalofficelist1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getexternalofficelist_1.0.1.yaml
+  getlookups1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getlookups_1.0.0.yaml
+  getvisadocumentdata1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getvisadocumentdata_1.0.0.yaml
+  newcontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/newcontract_1.0.0.yaml
+  validatecontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validatecontract_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

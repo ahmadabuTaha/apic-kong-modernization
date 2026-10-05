@@ -1,0 +1,117 @@
+swagger: "2.0"
+info:
+  title: Zendesk GetTicketComments
+  x-ibm-name: zendesk-getticketcomments
+  version: 1.0.0
+schemes:
+- https
+basePath: /qiwa/v2
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientID: []
+  clientSecret: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: ""
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientID:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - gatewayscript:
+        version: 2.0.0
+        title: gatewayscript
+        source: |2
+
+          var url = context.get('target-url');
+
+          var path = context.get('request.querystring');
+
+          var callingUrl = url + '?' +path;
+
+          context.set('callingUrl',callingUrl);
+    - invoke:
+        version: 2.2.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        http-version: HTTP/1.1
+        cache-response: protocol
+        stop-on-error: []
+        graphql-send-type: detect
+        websocket-upgrade: false
+        target-url: $(ace-zen-zendesk)$(callingUrl)
+        cache-ttl: 59
+    catch:
+    - default:
+      - set-variable:
+          version: 2.0.0
+          title: set-variable
+          actions:
+          - set: message.status.code
+            value: "500"
+            type: string
+          - set: message.header.content-type
+            value: application/json
+            type: string
+          - set: message.body
+            value: '{     "ErrorCode": "500",     "Description": "Internal Server
+              Error" }'
+            type: string
+    finally: []
+  properties:
+    target-url:
+      value: /zendesk/ticketing/v1/getTicketComents
+  application-authentication:
+    certificate: false
+  catalogs: {}
+  activity-log:
+    success-content: payload
+    error-content: payload
+    enabled: true
+  buffering: true
+paths:
+  /getTicketComents:
+    get:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+    parameters:
+    - name: ticketnumber
+      in: query
+      required: true
+      type: string

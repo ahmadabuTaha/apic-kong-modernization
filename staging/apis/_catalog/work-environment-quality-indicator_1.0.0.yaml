@@ -1,0 +1,260 @@
+swagger: "2.0"
+info:
+  title: WorkEnvironmentQualityIndicator
+  x-ibm-name: work-environment-quality-indicator
+  version: 1.0.0
+  description: This API retrieves the Work Environment Quality Score Details
+schemes:
+- https
+basePath: /Indicators
+security:
+- OAuth2.0: []
+- clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  properties:
+    target-url:
+      value: http://prow-indicators-http-ace.apps.stg.qiwa-nonprod.local/external/GetWorkEnvironmentQuality
+      description: The URL of the target service
+      encoded: false
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(ace-prow-indicators)/external/GetWorkEnvironmentQuality
+        follow-redirects: false
+        inject-proxy-headers: true
+    finally: []
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  buffering: true
+  application-authentication:
+    certificate: false
+definitions:
+  WorkEnvironmentQualityScoreRequest_MessageType:
+    type: object
+    properties:
+      WorkEnvironmentQualityRq:
+        $ref: '#/definitions/WorkEnvironmentQualityScoreRq_Type'
+  WorkEnvironmentQualityScoreResponse_MessageType:
+    type: object
+    properties:
+      WorkEnvironmentQualityRs:
+        $ref: '#/definitions/WorkEnvironmentQualityScoreRs_Type'
+  WorkEnvironmentQualityScoreRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/RequestHeader_Type'
+      Body:
+        $ref: '#/definitions/WorkEnvironmentQualityScoreRq_Body'
+  WorkEnvironmentQualityScoreRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/WorkEnvironmentQualityScoreRs_Body'
+  RequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      ServiceCode:
+        type: string
+        default: NPC00001
+      DebugFlag:
+        type: string
+        default: 1
+  ResponseHeader_Type:
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      ServiceCode:
+        type: string
+        default: NPC00001
+      DebugFlag:
+        type: string
+        default: 1
+      ResponseStatus:
+        $ref: '#/definitions/ResponseStatus'
+      BackendError:
+        $ref: '#/definitions/BackendError'
+  ResponseStatus:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+  BackendError:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+  WorkEnvironmentQualityScoreRq_Body:
+    type: object
+    required:
+    - LaborOfficeID
+    - SequenceNumber
+    properties:
+      LaborOfficeID:
+        type: number
+      SequenceNumber:
+        type: number
+  WorkEnvironmentQualityScoreRs_Body:
+    type: object
+    properties:
+      WorkEnvironmentQualityDetails:
+        $ref: '#/definitions/WorkEnvironmentQualityDetails_Type'
+  WorkEnvironmentQualityDetails_Type:
+    type: object
+    properties:
+      Subscores:
+        type: object
+        properties:
+          WorkNature:
+            type: number
+            example: 0
+          PromotionandTraining:
+            type: number
+            example: 0
+          LeaderManagement:
+            type: number
+            example: 0
+          CorporationandCoworkers:
+            type: number
+            example: 0
+          IncomeandBenefits:
+            type: number
+            example: 0
+          WorkplaceEnvironment:
+            type: number
+            example: 0
+      ComparetoOthers:
+        type: object
+        properties:
+          UnifiedNumberScore:
+            type: number
+            example: 0
+          EntityScore:
+            type: number
+            example: 0
+          SectorScore:
+            type: number
+            example: 0
+          AverageScore:
+            type: number
+            example: 0
+          Location:
+            type: string
+            example: Riyadh
+          Size:
+            type: string
+            example: Large
+          EconomicActivity:
+            type: string
+            example: Retail
+      OverallWorkEnvScore:
+        type: number
+        example: 0
+      ParticipantsCount:
+        type: number
+        example: 100
+      LatestUpdatedDate:
+        type: string
+        example: 31-03-2024'
+paths:
+  /WorkEnvironmentQualityScore:
+    post:
+      tags:
+      - WorkEnvironment Quality Score
+      description: Used to get Work Environment Quality Score
+      operationId: getWorkEnvironmentQualityScore
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/WorkEnvironmentQualityScoreRequest_MessageType'
+        description: WorkEnvironmentQualityScoreRq
+        required: true
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/WorkEnvironmentQualityScoreResponse_MessageType'
+host: $(catalog.host)

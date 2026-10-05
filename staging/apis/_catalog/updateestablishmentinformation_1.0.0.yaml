@@ -1,0 +1,483 @@
+swagger: "2.0"
+info:
+  title: UpdateEstablishmentInformation
+  x-ibm-name: updateestablishmentinformation
+  version: 1.0.0
+  description: This service is used to update establishment information specifically
+    CREndDate, Establishment Name and retrieve all establishment information to the
+    user.
+schemes:
+- https
+basePath: /common
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-ei-externals)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  UpdateEstablishmentInformationRq_MessageType:
+    type: object
+    properties:
+      UpdateEstablishmentInformationRq:
+        $ref: '#/definitions/UpdateEstablishmentInformationRq_Type'
+  UpdateEstablishmentInformationRs_MessageType:
+    type: object
+    properties:
+      UpdateEstablishmentInformationRs:
+        $ref: '#/definitions/UpdateEstablishmentInformationRs_Type'
+  UpdateEstablishmentInformationRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/UpdateEstablishmentInformationRq_BodyType'
+  UpdateEstablishmentInformationRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+        default: "1213"
+      SequenceNumber:
+        type: integer
+        default: "676565"
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+  UpdateEstablishmentInformationRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/UpdateEstablishmentInformationRs_BodyType'
+  UpdateEstablishmentInformationRs_BodyType:
+    type: object
+    properties:
+      EstablishmentDetails:
+        $ref: '#/definitions/EstablishmentDetails_Type'
+      NotesInformationList:
+        $ref: '#/definitions/NotesInformationList_Type'
+    required:
+    - EstablishmentDetails
+    - NotesInformationList
+  EstablishmentDetails_Type:
+    type: object
+    properties:
+      EstablishmentId:
+        type: integer
+      PKEstablishmentId:
+        type: integer
+      EstablishmentName:
+        type: string
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      EstablishmentStatusId:
+        type: integer
+      EstablishmentStatus:
+        type: string
+      MainEconomicActivityId:
+        type: integer
+      SubEconomicActivityId:
+        type: integer
+      MainEconomicActivity:
+        type: string
+      SubEconomicActivity:
+        type: string
+      NICAccountNumber:
+        type: string
+      CRNumber:
+        type: integer
+      CRReleaseDate:
+        type: string
+      CREndDate:
+        type: string
+      MunicipalLicenseSource:
+        type: integer
+      MunicipalLicenseNumber:
+        type: integer
+      MunicipalLicenseReleaseDate:
+        type: string
+      MunicipalLicenseEndDate:
+        type: string
+      Notes:
+        type: string
+      SevenHundredNumber:
+        type: integer
+      UnifiedNumberId:
+        type: integer
+      OwnerId:
+        type: integer
+      InsertDate:
+        type: string
+      IsMainBranch:
+        type: string
+      District:
+        type: string
+      Street:
+        type: string
+      EstablishmentEmail:
+        type: string
+      PostalCode:
+        type: string
+      ZIPCode:
+        type: string
+      PKOwnerId:
+        type: integer
+      UnifiedNationalNumber:
+        type: integer
+      UseUnifiedNationalNumberFlag:
+        type: integer
+      CityId:
+        type: integer
+      CityName:
+        type: string
+      EstablishmentTypeId:
+        type: integer
+      EstablishmentTypeName:
+        type: string
+      EconomicActivityId:
+        type: integer
+      EconomicActivityName:
+        type: string
+      ColorId:
+        type: integer
+      NitaqatColor:
+        type: string
+      SizeId:
+        type: integer
+      SizeName:
+        type: string
+      ColorCode:
+        type: string
+      Saudis:
+        type: string
+      Foreigners:
+        type: string
+      EntitySaudiPercentage:
+        type: string
+      TotalLaborerCount:
+        type: string
+      EntityId:
+        type: integer
+      EntityForeignersCount:
+        type: string
+      EntitySaudisCount:
+        type: string
+      EntityTotalCount:
+        type: string
+      EntitySaudisTotalFactorized:
+        type: string
+      EntityForeignersTotalFactorized:
+        type: string
+      WASELZipCode:
+        type: string
+      WASELPrimary:
+        type: string
+      WASELSecondary:
+        type: string
+      WASELUnitNo:
+        type: string
+      WASELCity:
+        type: string
+      WASELArea:
+        type: string
+      WASELStreet:
+        type: string
+      WASELExpiryDate:
+        type: string
+      WASELStatus:
+        type: string
+    required:
+    - EstablishmentId
+    - PKEstablishmentId
+    - EstablishmentName
+    - LaborOfficeId
+    - SequenceNumber
+    - EstablishmentStatusId
+    - EstablishmentStatus
+    - MainEconomicActivityId
+    - SubEconomicActivityId
+    - MainEconomicActivity
+    - SubEconomicActivity
+    - NICAccountNumber
+    - CRNumber
+    - CRReleaseDate
+    - CREndDate
+    - MunicipalLicenseSource
+    - MunicipalLicenseNumber
+    - MunicipalLicenseReleaseDate
+    - MunicipalLicenseEndDate
+    - Notes
+    - SevenHundredNumber
+    - UnifiedNumberId
+    - OwnerId
+    - InsertDate
+    - IsMainBranch
+    - District
+    - Street
+    - EstablishmentEmail
+    - PostalCode
+    - ZIPCode
+    - PKOwnerId
+    - UnifiedNationalNumber
+    - UseUnifiedNationalNumberFlag
+    - CityId
+    - CityName
+    - EstablishmentTypeId
+    - EstablishmentTypeName
+    - EconomicActivityId
+    - EconomicActivityName
+    - ColorId
+    - NitaqatColor
+    - SizeId
+    - SizeName
+    - ColorCode
+    - Saudis
+    - Foreigners
+    - EntitySaudiPercentage
+    - TotalLaborerCount
+    - EntityId
+    - EntityForeignersCount
+    - EntitySaudisCount
+    - EntityTotalCount
+    - EntitySaudisTotalFactorized
+    - EntityForeignersTotalFactorized
+    - WASELZipCode
+    - WASELPrimary
+    - WASELSecondary
+    - WASELUnitNo
+    - WASELCity
+    - WASELArea
+    - WASELStreet
+    - WASELExpiryDate
+    - WASELStatus
+  NotesInformationList_Type:
+    type: object
+    properties:
+      NoteInformation:
+        type: array
+        items:
+          $ref: '#/definitions/NoteInformation_Type'
+  NoteInformation_Type:
+    type: object
+    properties:
+      NoteId:
+        type: integer
+      EstablishmentId:
+        type: integer
+      NoteText:
+        type: string
+      NoteStatusId:
+        type: integer
+      NoteStatusName:
+        type: string
+      NoteTypeId:
+        type: integer
+      StartDate:
+        type: string
+      EndDate:
+        type: string
+      NoteSourceId:
+        type: integer
+      NoteSourceName:
+        type: string
+    required:
+    - NoteId
+    - EstablishmentId
+    - NoteText
+    - NoteStatusId
+    - NoteStatusName
+    - NoteTypeId
+    - StartDate
+    - EndDate
+    - NoteSourceId
+    - NoteSourceName
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "200966842998"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: UEI00001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: UEI00001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+        default: "23432"
+      IDNumber:
+        type: integer
+        default: "324324"
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /updestablishmentinformation:
+    post:
+      operationId: UpdateEstablishmentInformation
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/UpdateEstablishmentInformationRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Update Establishment Information
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/UpdateEstablishmentInformationRq_MessageType'
+        description: UpdateEstablishmentInformationRq
+        required: true

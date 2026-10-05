@@ -1,0 +1,340 @@
+swagger: "2.0"
+info:
+  title: GetEstablishmentEmployeesListTC
+  x-ibm-name: getestablishmentemployeeslisttc
+  version: 1.0.0
+  description: This service is used to get laborers list with specific details under
+    establishment, it could be used by passing specific filters like Saudi’s only,
+    using iqama expiry date .. etc
+schemes:
+- https
+basePath: /tc
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-tc-tcutility)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  GetEstablishmentEmployeesListTCRq_MessageType:
+    type: object
+    properties:
+      GetEstablishmentEmployeesListTCRq:
+        $ref: '#/definitions/GetEstablishmentEmployeesListTCRq_Type'
+  GetEstablishmentEmployeesListTCRs_MessageType:
+    type: object
+    properties:
+      GetEstablishmentEmployeesListTCRs:
+        $ref: '#/definitions/GetEstablishmentEmployeesListTCRs_Type'
+  GetEstablishmentEmployeesListTCRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetEstablishmentEmployeesListTCRq_BodyType'
+  GetEstablishmentEmployeesListTCRq_BodyType:
+    type: object
+    properties:
+      'LaborOfficeId ':
+        type: integer
+      SequenceNumber:
+        type: integer
+      ForeignersOrSaudi:
+        type: integer
+      LaborerFirstName:
+        type: string
+      LaborerIdNo:
+        type: string
+      BorderNumber:
+        type: string
+      WPExpiryDateFrom:
+        type: string
+      WPExpiryDateTo:
+        type: string
+      IdExpiryDate:
+        type: string
+      ServiceStartDate:
+        type: string
+      PageSize:
+        type: integer
+      PageIndex:
+        type: integer
+    required:
+    - 'LaborOfficeId '
+    - SequenceNumber
+    - PageSize
+    - PageIndex
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+  GetEstablishmentEmployeesListTCRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetEstablishmentEmployeesListTCRs_BodyType'
+  GetEstablishmentEmployeesListTCRs_BodyType:
+    type: object
+    properties:
+      EstablishmentDetails:
+        $ref: '#/definitions/EstablishmentDetails_Type'
+      Laborers:
+        type: object
+        properties:
+          Laborer:
+            type: array
+            items:
+              $ref: '#/definitions/Laborer_Type'
+      TotalRecordCount:
+        type: integer
+    required:
+    - TotalRecordCount
+  EstablishmentDetails_Type:
+    type: object
+    properties:
+      EstablishmentId:
+        type: integer
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      EstablishmentName:
+        type: string
+  Laborer_Type:
+    type: object
+    properties:
+      LaborerIdNo:
+        type: integer
+      LaborerName:
+        $ref: '#/definitions/LaborerName_Type'
+      Gender:
+        type: string
+      Nationality:
+        $ref: '#/definitions/CodeName_Type'
+      Job:
+        $ref: '#/definitions/CodeName_Type'
+      LaborerStatus:
+        $ref: '#/definitions/CodeName_Type'
+      EntryDate:
+        $ref: '#/definitions/Tmstmp_Type'
+      WorkPermitId:
+        type: integer
+      IdExpiryDate:
+        $ref: '#/definitions/Tmstmp_Type'
+      ServiceStartDate:
+        $ref: '#/definitions/Tmstmp_Type'
+      ServiceEndDate:
+        $ref: '#/definitions/Tmstmp_Type'
+      BorderNumber:
+        type: integer
+      WPDetails:
+        $ref: '#/definitions/WPDetails_Type'
+      OriginalStartDate:
+        type: string
+    required:
+    - LaborerIdNo
+    - Gender
+    - WorkPermitId
+    - BorderNumber
+    - OriginalStartDate
+  LaborerName_Type:
+    type: object
+    properties:
+      First:
+        type: string
+      Second:
+        type: string
+      Third:
+        type: string
+      Fourth:
+        type: string
+      Full:
+        type: string
+    required:
+    - First
+    - Second
+    - Third
+    - Fourth
+    - Full
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      Name:
+        type: string
+    required:
+    - Code
+    - Name
+  WPDetails_Type:
+    type: object
+    properties:
+      WPStartDate:
+        $ref: '#/definitions/Tmstmp_Type'
+      WPExpirationDate:
+        $ref: '#/definitions/Tmstmp_Type'
+      WorkPermitType:
+        $ref: '#/definitions/CodeName_Type'
+paths:
+  /getestemployeeslisttc:
+    post:
+      operationId: GetEstablishmentEmployeesListTC
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetEstablishmentEmployeesListTCRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Get Establishment Employees List TC
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetEstablishmentEmployeesListTCRq_MessageType'
+        description: GetEstablishmentEmployeesListTCRq
+        required: true

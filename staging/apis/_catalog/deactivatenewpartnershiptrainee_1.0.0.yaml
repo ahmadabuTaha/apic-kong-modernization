@@ -1,0 +1,272 @@
+swagger: "2.0"
+info:
+  title: DeactivateNewPartnershipTrainee
+  description: |
+    This service is used to Deactivate New Partnership Trainee
+  x-ibm-name: deactivatenewpartnershiptrainee
+  version: 1.0.0
+schemes:
+- https
+basePath: /external/v1
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+paths:
+  /deactivatenewpartnertrain:
+    parameters:
+    - $ref: '#/parameters/X-IBM-Client-Id'
+    post:
+      tags:
+      - Nitaqat
+      description: |
+        This service is used to Deactivate New Partnership Trainee
+      operationId: deactivatenewpartnershiptrainee
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        description: Request body
+        required: true
+        schema:
+          $ref: '#/definitions/DeactivateRequestBody'
+      responses:
+        "200":
+          $ref: '#/responses/Response200'
+        "400":
+          $ref: '#/responses/Response400'
+        "401":
+          $ref: '#/responses/Response401'
+        "403":
+          $ref: '#/responses/Response403'
+        "404":
+          $ref: '#/responses/Response404'
+        "500":
+          $ref: '#/responses/Response500'
+definitions:
+  DeactivateRequestBody:
+    type: object
+    description: Request payload for deactivation
+    properties:
+      traineeIdNumber:
+        type: string
+        description: Unique identifier for the trainee
+      startDate:
+        type: string
+        description: Start date of the trainee
+        example: "2024-01-01"
+      establishmentNumber:
+        $ref: '#/definitions/establishmentNumber_Type'
+  establishmentNumber_Type:
+    type: object
+    properties:
+      laborOfficeId:
+        type: integer
+        description: Identifier for the labor office
+      sequenceNumber:
+        type: integer
+        description: Sequence number for the establishment
+  DeactivateResponseModel:
+    type: object
+    description: Response object for deactivation
+    properties:
+      status:
+        type: string
+        example: Success
+      message:
+        type: string
+      data:
+        type: object
+        properties:
+          traineeIdNumber:
+            type: string
+          startDate:
+            type: string
+            format: date
+          establishmentNumber:
+            type: object
+            properties:
+              laborOfficeId:
+                type: integer
+              sequenceNumber:
+                type: integer
+          deactivatedAt:
+            type: string
+            format: date-time
+            description: Timestamp when trainee was deactivated
+  ErrorModel:
+    type: object
+    required:
+    - errorCode
+    - errorMessage
+    properties:
+      errorCode:
+        type: string
+        example: EXXXX000
+      errorMessage:
+        type: string
+parameters:
+  X-IBM-Client-Id:
+    in: header
+    name: X-IBM-Client-Id
+    description: Client id issued by security server
+    required: true
+    type: string
+responses:
+  Response200:
+    description: Successful deactivation response
+    schema:
+      $ref: '#/definitions/DeactivateResponseModel'
+  Response400:
+    description: Bad Request
+  Response401:
+    description: Unauthorized
+  Response403:
+    description: Forbidden
+  Response404:
+    description: Not Found
+  Response500:
+    description: Internal Server Error
+    schema:
+      $ref: '#/definitions/ErrorModel'
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: POST
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(dp-qiwadp-nitaqatintegration)/nitaqat/integration/api/v1/strategic/deactivate
+        follow-redirects: false
+        inject-proxy-headers: true
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\r\nvar cfg={\r\n    \"serviceCode\" :
+          \"DNPT0001\",\r\n    \"channelId\" : \"Qiwa\",\r\n    \"requestName\" :
+          \"DeactivateNewPartnershipTraineeRq\",\r\n    \"responseName\": \"DeactivateNewPartnershipTraineeRs\",\r\n
+          \   \"errorMap\" :{\r\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid
+          Request\"}\r\n    }\r\n    \r\n};\r\nvar DPResponse = apim.getvariable('message.body');\r\napim.setvariable('DPResponse',DPResponse);\r\napim.setvariable('cfg',cfg);"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare-Request
+        source: "var apim = require('apim');\r\n//var millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\nvar appname
+          = apim.getvariable('client.app.name');\r\nvar millisecondsvalue = apim.getvariable('session.globalTransactionID');\r\napim.setvariable('TransactionID1',millisecondsvalue);\r\nvar
+          appcReq = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n            \"TransactionId\"
+          : millisecondsvalue,\r\n            \"ChannelId\": cfg.channelId,\r\n            \"SessionId\":
+          apim.getvariable('message.headers.X-Request-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode,\r\n            \"DebugFlag\":
+          \"1\",\r\n            \"UserInfo\": {\r\n                \"UserId\": apim.getvariable('message.headers.UserId'),\r\n
+          \               \"IDNumber\": apim.getvariable('message.headers.IDNumber')\t\t\t\t\r\n
+          \           },\r\n            \"UDF\": {\r\n                \"KeyValueArr\":
+          [\r\n                    {\r\n                        \"key\": \"Product\",\r\n
+          \                       \"value\": \"TIP-Wrapper\"\r\n                    },\r\n
+          \                   {\r\n                        \"key\": \"Client\",\r\n
+          \                       \"value\": appname\r\n                    }\r\n
+          \               ]\r\n            }\t\t\t\r\n        },\r\n        \"Body\"
+          : apim.getvariable('request.body')\r\n            \r\n    }\r\n};\r\n\r\nif
+          (typeof OperatorId !== 'undefined')\r\n    appcReq[cfg.requestName].Header.UserInfo
+          = {\r\n        \"IDNumber\" : OperatorId\r\n    };\r\napim.setvariable('payload',appcReq);
+          \    \r\n//session.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n    \r\n    \r\n\r\n    //return
+          the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour
+          + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    - gatewayscript:
+        version: 2.0.0
+        title: ReqForLogging
+        source: "var apim=require('apim');\r\nvar appconnectrequest = apim.getvariable('payload');\r\nvar
+          Body = apim.getvariable('DPResponse');\r\nvar Headers = appconnectrequest.DeactivateNewPartnershipTraineeRq.Header;\r\nvar
+          transactionId1 = Math.floor(1000000000 + Math.random() * 9000000000);\r\napim.setvariable('message.headers.TransactionID',transactionId1);\r\napim.setvariable('TransactionID',transactionId1);\r\nvar
+          SuccessCall =\r\n{\r\n                \"Status\": \"SUCCESS\",\r\n                \"Code\":
+          \"00000000\",\r\n                \"ArabicMsg\": \"تمت العملية بنجاح\",\r\n
+          \               \"EnglishMsg\": \"Success Call\"\r\n            }\r\n\r\nvar
+          APIRes = {\r\n    \"Header\": Headers,\r\n     Body\r\n};\r\nAPIRes.Header.ResponseStatus
+          = SuccessCall;\r\nvar jsonData= {\r\n\t\"LogAPIData\": {\r\n\t\t\"DeactivateNewPartnershipTraineeRq\":
+          appconnectrequest.DeactivateNewPartnershipTraineeRq,\r\n\t\t\"DeactivateNewPartnershipTraineeRs\":
+          APIRes,\r\n\t}\r\n}\r\nsession.output.write(jsonData);\r\napim.output('application/json');"
+    - invoke:
+        version: 2.3.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        http-version: HTTP/1.1
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        cache-response: protocol
+        cache-ttl: 900
+        websocket-upgrade: false
+        graphql-send-type: detect
+        target-url: $(ace-tip-internal)/external/logwrapperapidata
+    - gatewayscript:
+        version: 2.0.0
+        title: gatewayscript
+        source: "var apim = require('apim');\r\nvar FinalRes = apim.getvariable('DPResponse');\r\nvar
+          TransId = apim.getvariable('TransactionID1');\r\nvar statusCode = 200;\r\nvar
+          errorCodes = [\"0000\", \"1010\", \"1002\", \"1009\"];\r\n\r\nif (FinalRes
+          && FinalRes.error && errorCodes.includes(FinalRes.error.code)) {\r\n    statusCode
+          = 400;\r\n}\r\n//apim.setvariable('TransactionID1',millisecondsvalue);\r\napim.setvariable('message.status.code',
+          statusCode);\r\napim.setvariable('message.headers.TransactionID',TransId);\r\nsession.output.write(FinalRes);\r\napim.output('application/json');"
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload

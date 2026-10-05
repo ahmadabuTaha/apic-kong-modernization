@@ -1,0 +1,1492 @@
+swagger: "2.0"
+info:
+  x-ibm-name: ajeerelservices
+  title: AjeerELServices
+  version: 1.0.1
+schemes:
+- https
+host: $(catalog.host)
+basePath: /external/v1/ajeerelservice
+consumes:
+- application/json
+produces:
+- application/json
+parameters:
+  X-IBM-Client-Id:
+    in: header
+    name: X-IBM-Client-Id
+    description: Client id issued by security server
+    required: true
+    type: string
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  type: wsdl-to-rest
+  testable: true
+  enforced: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: false
+  wsdl-definition:
+    wsdl: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/apis/_catalog/ajeerelservices:1.0.wsdl
+    service: AjeerELServices
+    port: PersonInfoServiceEndPoint
+    soap-version: "1.1"
+  properties:
+    x-ibm-gateway-optimize-schema-definition:
+      value: "true"
+      description: Optimize map schema loading
+      encoded: false
+  assembly:
+    execute:
+    - switch:
+        title: switch
+        case:
+        - condition: (($httpVerb() = 'POST' and $operationPath() = '/GetAjeerEstablishmentVisaInfo'))
+          execute:
+          - parse:
+              version: 2.0.0
+              title: parse
+              parse-settings-reference:
+                default: apic-default-parsesettings
+              input: request
+              output: message
+              use-content-type: true
+          - gatewayscript:
+              version: 2.0.0
+              title: gatewayscript
+              source: "var apim = require('apim');\r\n\r\nvar body = apim.getvariable('message.body');\r\n\r\nif
+                (typeof body === 'string') {\r\n    body = JSON.parse(body);\r\n}\r\n\r\nvar
+                req = body.GetAjeerEstablishmentVisaInfo.request;\r\n\r\n// Helper
+                function\r\nfunction optTag(name, value) {\r\n    return (value !==
+                undefined && value !== null && value !== '')\r\n        ? '<ser:'
+                + name + '>' + value + '</ser:' + name + '>'\r\n        : '';\r\n}\r\n\r\n//
+                Required fields\r\nvar officeId = req.EstablishmentLaborOfficeID;\r\nvar
+                seqNumber = req.EstablishmentSequenceNumber;\r\n\r\n// Optional filter
+                structure\r\nvar filter = req.FilterStructure || {};\r\nvar creation
+                = filter.CreationDate;\r\n\r\nvar creationFrom = creation && creation.From;\r\nvar
+                creationTo   = creation && creation.To;\r\n\r\nvar reasonCode = filter.ReasonCode;\r\nvar
+                visaNumber = filter.VisaNumber;\r\nvar visaStatus = filter.VisaStatusCode;\r\nvar
+                borderNum  = filter.borderNumber;\r\n\r\n// Page structure\r\nvar
+                pageIndex = req.PageStructure && req.PageStructure.PageIndex;\r\nvar
+                pageSize  = req.PageStructure && req.PageStructure.PageSize;\r\n\r\n//
+                SOAP XML\r\nvar soapXml =\r\n'<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"
+                xmlns:ser=\"http://mlsd.gov.sa/services/\">' +\r\n    '<soapenv:Header/>'
+                +\r\n    '<soapenv:Body>' +\r\n        '<ser:GetAjeerEstablishmentVisaInfo>'
+                +\r\n            '<ser:request>' +\r\n\r\n                '<ser:EstablishmentLaborOfficeID>'
+                + officeId + '</ser:EstablishmentLaborOfficeID>' +\r\n                '<ser:EstablishmentSequenceNumber>'
+                + seqNumber + '</ser:EstablishmentSequenceNumber>' +\r\n\r\n                '<ser:FilterStructure>'
+                +\r\n\r\n                    (\r\n                        filter.hasOwnProperty('CreationDate')\r\n
+                \                       ? (\r\n                            '<ser:CreationDate>'
+                +\r\n                                optTag('From', creationFrom)
+                +\r\n                                optTag('To', creationTo) +\r\n
+                \                           '</ser:CreationDate>'\r\n                        )\r\n
+                \                       : ''\r\n                    ) +\r\n\r\n                    optTag('ReasonCode',
+                reasonCode) +\r\n                    optTag('VisaNumber', visaNumber)
+                +\r\n                    optTag('VisaStatusCode', visaStatus) +\r\n
+                \                   optTag('borderNumber', borderNum) +\r\n\r\n                '</ser:FilterStructure>'
+                +\r\n\r\n                '<ser:PageStructure>' +\r\n                    optTag('PageIndex',
+                pageIndex) +\r\n                    optTag('PageSize', pageSize) +\r\n
+                \               '</ser:PageStructure>' +\r\n\r\n            '</ser:request>'
+                +\r\n        '</ser:GetAjeerEstablishmentVisaInfo>' +\r\n    '</soapenv:Body>'
+                +\r\n'</soapenv:Envelope>';\r\n\r\n// Debug log\r\nconsole.error(\"SOAP
+                REQUEST:\");\r\nconsole.error(soapXml);\r\n\r\n// Output XML\r\napim.output('application/xml');\r\nsession.output.write(soapXml);"
+          - parse:
+              version: 2.2.0
+              title: parse
+              parse-settings-reference:
+                default: apic-default-parsesettings
+          - gatewayscript:
+              version: 2.0.0
+              title: SoapHeader
+              source: "var apim = require('apim');\r\n\r\napim.setvariable('message.headers.SOAPAction',\r\n'http://mlsd.gov.sa/services/IAjeerELServices/GetAjeerEstablishmentVisaInfo');"
+          - invoke:
+              version: 2.3.0
+              title: invoke
+              backend-type: xml
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: POST
+              chunked-uploads: true
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              websocket-upgrade: false
+              target-url: http://qiwadp8036-dp.apps.stg.qiwa-nonprod.local/AjeerELServices.svc
+          - parse:
+              version: 2.2.0
+              title: parse
+              parse-settings-reference:
+                default: apic-default-parsesettings
+          - xml-to-json:
+              version: 2.0.0
+              title: xml-to-json
+          - gatewayscript:
+              version: 2.0.0
+              title: FirstInvokeCheck
+              source: "var apim = require('apim');\r\n\r\n// Read incoming message
+                body (already XML → JSON)\r\nvar body = apim.getvariable('message.body');\r\n\r\nif
+                (typeof body === 'string') {\r\n    body = JSON.parse(body);\r\n}\r\n\r\n//
+                SOAP envelope & body (namespace tolerant)\r\nvar envelope = body[\"s:Envelope\"]
+                || body[\"Envelope\"];\r\nvar soapBody = envelope[\"s:Body\"] || envelope[\"Body\"];\r\n\r\n//
+                -------------------------\r\n//  EXTRACT BE ACTIVITY ID / CORRELATION
+                ID\r\n// -------------------------\r\nvar soapHeader = envelope[\"s:Header\"]
+                || envelope[\"Header\"];\r\nvar correlationId = \"\";\r\n\r\nif (soapHeader)
+                {\r\n    var activityId =\r\n        soapHeader[\"ActivityId\"] ||\r\n
+                \       soapHeader[\"s:ActivityId\"];\r\n\r\n    if (activityId) {\r\n
+                \       correlationId =\r\n            activityId[\"@CorrelationId\"]
+                ||\r\n            activityId[\"CorrelationId\"] ||\r\n            \"\";\r\n\r\n
+                \       if (!correlationId && activityId.$) {\r\n            correlationId
+                = activityId.$.CorrelationId || \"\";\r\n        }\r\n    }\r\n}\r\n\r\napim.setvariable('BEActivityId',
+                correlationId);\r\n\r\n// -------------------------\r\n//  HANDLE
+                SOAP FAULTS\r\n// -------------------------\r\nvar fault = soapBody[\"s:Fault\"]
+                || soapBody[\"Fault\"];\r\n\r\nif (fault) {\r\n\r\n    var faultCode
+                = fault[\"faultcode\"];\r\n    if (faultCode && faultCode.$) {\r\n
+                \       faultCode = faultCode.$;\r\n    }\r\n\r\n    if (faultCode
+                && faultCode.includes(\":\")) {\r\n        faultCode = faultCode.split(\":\")[1];\r\n
+                \   }\r\n\r\n    var faultString = fault[\"faultstring\"];\r\n    if
+                (faultString && faultString.$) {\r\n        faultString = faultString.$;\r\n
+                \   }\r\n\r\n    faultCode = faultCode || \"UNKNOWN_ERROR\";\r\n    faultString
+                = faultString || \"Unknown error\";\r\n\r\n    var errorResponse =
+                {\r\n        errorCode: faultCode,\r\n        errorMessage: {\r\n
+                \           \"en-US\": faultString,\r\n            \"ar-SA\": faultString\r\n
+                \       }\r\n    };\r\n\r\n    apim.output('application/json');\r\n
+                \   session.output.write(errorResponse);\r\n    return;\r\n}\r\n\r\n//
+                --------------------------------------------\r\n//  SUCCESS RESPONSE
+                PARSING (Namespace-safe)\r\n// --------------------------------------------\r\n\r\nvar
+                resp =\r\n    soapBody[\"GetAjeerEstablishmentVisaInfoResponse\"]
+                ||\r\n    soapBody[\"ser:GetAjeerEstablishmentVisaInfoResponse\"];\r\n\r\nvar
+                result =\r\n    resp[\"GetAjeerEstablishmentVisaInfoResult\"] ||\r\n
+                \   resp[\"ser:GetAjeerEstablishmentVisaInfoResult\"];\r\n\r\nvar
+                visaList =\r\n    result[\"EstablishmentVisaList\"]?.[\"EstablishmentVisa\"]
+                ||\r\n    result[\"ser:EstablishmentVisaList\"]?.[\"ser:EstablishmentVisa\"];\r\n\r\nif
+                (!Array.isArray(visaList)) {\r\n    visaList = [visaList];\r\n}\r\n\r\nfunction
+                val(node) {\r\n    return (node?.$ !== undefined) ? node.$ : node;\r\n}\r\n\r\nvar
+                visas = visaList.map(v => ({\r\n    BorderNumber: val(v.BorderNumber),\r\n
+                \   CreationDate: val(v.CreationDate),\r\n    EstablishmentId: val(v.EstablishmentId),\r\n
+                \   FK_LaborOfficeId: val(v.FK_LaborOfficeId),\r\n\r\n    Gender:
+                {\r\n        Code: val(v.Gender?.Code),\r\n        Name: val(v.Gender?.Name)\r\n
+                \   },\r\n    Nationality: {\r\n        Code: val(v.Nationality?.Code),\r\n
+                \       Name: val(v.Nationality?.Name)\r\n    },\r\n    Occupation:
+                {\r\n        Code: val(v.Occupation?.Code),\r\n        Name: val(v.Occupation?.Name)\r\n
+                \   },\r\n    Origin: {\r\n        Code: val(v.Origin?.Code),\r\n
+                \       Name: val(v.Origin?.Name)\r\n    },\r\n    Reason: {\r\n        Code:
+                val(v.Reason?.Code),\r\n        Name: val(v.Reason?.Name)\r\n    },\r\n
+                \   Religion: {\r\n        Code: val(v.Religion?.Code),\r\n        Name:
+                val(v.Religion?.Name)\r\n    },\r\n\r\n    SequenceNumber: val(v.SequenceNumber),\r\n
+                \   VisaNumber: val(v.VisaNumber),\r\n    VisaRequestNumber: val(v.VisaRequestNumber),\r\n
+                \   VisaStatus: val(v.VisaStatus)\r\n}));\r\n\r\nvar finalResponse
+                = {\r\n    EstablishmentVisaList: visas,\r\n    PageSize: val(result.PageSize),\r\n
+                \   TotalCount: val(result.TotalCount),\r\n    Pagination: {\r\n        TotalCount:
+                val(result.Pagination?.TotalCount),\r\n        TotalPagesCount: val(result.Pagination?.TotalPagesCount)\r\n
+                \   }\r\n};\r\n\r\napim.output('application/json');\r\nsession.output.write(finalResponse);"
+          - gatewayscript:
+              version: 2.0.0
+              title: ServiceConfig
+              source: "var apim = require('apim');\r\nvar cfg={\r\n    \"serviceCode\"
+                : \"SV00001\",\r\n    \"channelId\" : \"Qiwa\",\r\n    \"requestName\"
+                : \"SearchVisaRq\",\r\n    \"responseName\": \"SearchVisaRs\",\r\n
+                \   \"errorMap\" :{\r\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid
+                Request\"}\r\n    }\r\n    \r\n};\r\nvar DPResponse = apim.getvariable('message.body');\r\napim.setvariable('DPResponse',DPResponse);\r\napim.setvariable('cfg',cfg);"
+          - gatewayscript:
+              version: 2.0.0
+              title: PrepareRequest
+              source: "var apim = require('apim');\r\nvar millisecondsvalue = \"\"+(new
+                Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+                OperatorId=apim.getvariable('message.headers.Operator-Id');\r\nvar
+                appname = apim.getvariable('client.app.name');\r\napim.setvariable('TransactionID1',millisecondsvalue);\r\nvar
+                appcReq = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n
+                \           \"TransactionId\" : millisecondsvalue,\r\n            \"ChannelId\":
+                cfg.channelId,\r\n            \"SessionId\": apim.getvariable('message.headers.X-Request-Id'),\r\n
+                \           \"RequestTime\" : formatDate(dt),\r\n            \"ServiceCode\":
+                cfg.serviceCode,\r\n            \"DebugFlag\": \"1\",\r\n            \"UserInfo\":
+                {\r\n                \"UserId\": apim.getvariable('message.headers.UserId'),\r\n
+                \               \"IDNumber\": apim.getvariable('message.headers.IDNumber')\t\t\t\t\r\n
+                \           },\r\n            \"UDF\": {\r\n                \"KeyValueArr\":
+                [\r\n                    {\r\n                        \"key\": \"Product\",\r\n
+                \                       \"value\": \"Ajeer\"\r\n                    },\r\n
+                \                   {\r\n                        \"key\": \"Client\",\r\n
+                \                       \"value\": appname\r\n                    }\r\n
+                \               ]\r\n            }\t\t\t\r\n        },\r\n        \"Body\"
+                : apim.getvariable('request.body')\r\n            \r\n    }\r\n};\r\n\r\nif
+                (typeof OperatorId !== 'undefined')\r\n    appcReq[cfg.requestName].Header.UserInfo
+                = {\r\n        \"IDNumber\" : OperatorId\r\n    };\r\napim.setvariable('payload',appcReq);
+                \    \r\n//session.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+                formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+                \   //get the day\r\n    //convert day to string\r\n    var day =
+                d.getDate().toString();\r\n    //get the year\r\n    var year = d.getFullYear();\r\n
+                \   var hour = d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+                \   var second = d.getSeconds().toString();\r\n    var millisecond
+                = d.getMilliseconds().toString();\r\n    //pull the last two digits
+                of the year\r\n    year = year.toString();\r\n    \r\n    //increment
+                month by 1 since it is 0 indexed\r\n    //converts month to a string\r\n
+                \   month = (month + 1).toString();\r\n\r\n    //if month is 1-9 pad
+                right with a 0 for two digits\r\n    if (month.length === 1)\r\n        month
+                = \"0\" + month;\r\n\r\n    //if day is between 1-9 pad right with
+                a 0 for two digits\r\n    if (day.length === 1)\r\n        day = \"0\"
+                + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\" +
+                hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+                + minitue;\r\n\r\n    if (second.length === 1)\r\n        second =
+                \"0\" + second;\r\n        \r\n    if (millisecond.length == 1)\r\n
+                \       millisecond = \"00\" + millisecond;\r\n        \r\n    if
+                (millisecond.length == 2)\r\n        millisecond = \"0\" + millisecond;\r\n
+                \   \r\n    \r\n\r\n    //return the string \"MMddyy\"\r\n    return
+                year+\"-\"+month+\"-\"+day+\" \"+hour + \":\" + minitue + \":\" +
+                second+\".\"+millisecond;\r\n}"
+          - gatewayscript:
+              version: 2.0.0
+              title: ReqForLogging
+              source: "var apim=require('apim');\r\nvar appconnectrequest = apim.getvariable('payload');\r\nvar
+                Body = apim.getvariable('DPResponse');\r\nvar Headers = appconnectrequest.SearchVisaRq.Header;\r\nvar
+                transactionId1 = Math.floor(1000000000 + Math.random() * 9000000000);\r\napim.setvariable('message.headers.TransactionID',transactionId1);\r\napim.setvariable('TransactionID',transactionId1);\r\nvar
+                SuccessCall =\r\n{\r\n                \"Status\": \"SUCCESS\",\r\n
+                \               \"Code\": \"00000000\",\r\n                \"ArabicMsg\":
+                \"تمت العملية بنجاح\",\r\n                \"EnglishMsg\": \"Success
+                Call\"\r\n            }\r\n\r\nvar APIRes = {\r\n    \"Header\": Headers,\r\n
+                \    Body\r\n};\r\nAPIRes.Header.ResponseStatus = SuccessCall;\r\nvar
+                jsonData= {\r\n\t\"LogAPIData\": {\r\n\t\t\"SearchVisaRq\": appconnectrequest.SearchVisaRq,\r\n\t\t\"SearchVisaRs\":
+                APIRes,\r\n\t}\r\n}\r\nsession.output.write(jsonData);\r\napim.output('application/json');"
+          - invoke:
+              version: 2.3.0
+              title: invoke
+              backend-type: detect
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: keep
+              chunked-uploads: true
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              websocket-upgrade: false
+              graphql-send-type: detect
+              target-url: $(ace-tip-internal)/external/logwrapperapidata
+          - gatewayscript:
+              version: 2.0.0
+              title: FinalResponse
+              source: "var apim = require('apim');\r\n\r\nvar FinalRes = apim.getvariable('DPResponse');\r\nvar
+                TransId = apim.getvariable('TransactionID1');\r\nvar activityId =
+                apim.getvariable('BEActivityId');\r\n\r\napim.setvariable('message.headers.TransactionID',
+                TransId);\r\n\r\nif (activityId) {\r\n    apim.setvariable('message.headers.ActivityId',
+                activityId);\r\n}\r\n\r\nif (FinalRes.errorCode) {\r\n    apim.setvariable('message.status.code',
+                409);\r\n} else {\r\n    apim.setvariable('message.status.code', 200);\r\n}\r\n\r\nsession.output.write(FinalRes);\r\napim.output('application/json');"
+        otherwise: []
+        version: 2.0.0
+    catch:
+    - errors:
+      - OperationError
+      execute:
+      - parse:
+          version: 2.0.0
+          title: parse
+          parse-settings-reference:
+            default: apic-default-parsesettings
+          input: message
+          output: message
+          use-content-type: false
+      - map:
+          title: SOAPFault map
+          inputs:
+            CommonFault:
+              schema:
+                $ref: '#/x-ibm-configuration/targets/AjeerELServices/definitions/CommonFault'
+              variable: message.body
+              content: application/xml
+          outputs:
+            response:
+              schema:
+                $ref: '#/definitions/CommonFault'
+              variable: message.body
+              content: application/json
+          actions:
+          - set: response.Fault
+            from: CommonFault.Envelope.Body.Fault
+          - set: response.error
+            from: CommonFault.Envelope.Body.Fault.faultstring
+          version: 2.1.0
+          options:
+            includeEmptyXMLElements: false
+            inlineNamespaces: false
+            mapEnablePostProcessingJSON: true
+            mapResolveXMLInputDataType: true
+            mapResolveApicVariables: false
+  phase: realized
+  targets:
+    AjeerELServices:
+      swagger: "2.0"
+      info:
+        title: AjeerELServices
+        description: ""
+        x-ibm-name: ajeerelservices
+        version: 1.0.0
+      schemes:
+      - https
+      basePath: /AjeerELServices
+      produces:
+      - application/xml
+      consumes:
+      - text/xml
+      securityDefinitions:
+        clientID:
+          type: apiKey
+          name: X-IBM-Client-Id
+          in: header
+          description: ""
+      security:
+      - clientID: []
+      x-ibm-configuration:
+        phase: realized
+        enforced: true
+        testable: true
+        gateway: datapower-api-gateway
+        cors:
+          enabled: true
+        assembly:
+          execute:
+          - invoke:
+              title: invoke
+              target-url: ""
+              version: 2.0.0
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: blocklist
+                values: []
+        x-ibm-apiconnect-wsdl:
+          package-version: 2.0.36
+          options: {}
+          messages: {}
+      paths:
+        /GetAjeerEstablishmentVisaInfo:
+          post:
+            summary: Operation GetAjeerEstablishmentVisaInfo
+            description: ""
+            operationId: GetAjeerEstablishmentVisaInfo
+            x-ibm-soap:
+              soap-action: http://mlsd.gov.sa/services/IAjeerELServices/GetAjeerEstablishmentVisaInfo
+              soap-operation: '{http://mlsd.gov.sa/services/}GetAjeerEstablishmentVisaInfo'
+            parameters:
+            - in: body
+              name: body
+              required: true
+              schema:
+                $ref: '#/x-ibm-configuration/targets/AjeerELServices/definitions/GetAjeerEstablishmentVisaInfoInput'
+            responses:
+              "500":
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/AjeerELServices/definitions/CommonFault'
+              default:
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/AjeerELServices/definitions/GetAjeerEstablishmentVisaInfoOutput'
+      definitions:
+        Security:
+          xml:
+            namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd
+            prefix: wsse
+          description: Header for WS-Security
+          type: object
+          properties:
+            UsernameToken:
+              xml:
+                namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd
+                prefix: wsse
+              type: object
+              properties:
+                Username:
+                  xml:
+                    namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd
+                    prefix: wsse
+                  type: string
+                Password:
+                  xml:
+                    namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd
+                    prefix: wsse
+                  type: string
+                Nonce:
+                  xml:
+                    namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd
+                    prefix: wsse
+                  type: string
+                  properties:
+                    EncodingType:
+                      xml:
+                        namespace: ""
+                        attribute: true
+                      type: string
+                Created:
+                  xml:
+                    namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd
+                    prefix: wsu
+                  type: string
+            Timestamp:
+              xml:
+                namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd
+                prefix: wsu
+              type: object
+              properties:
+                Created:
+                  xml:
+                    namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd
+                    prefix: wsu
+                  type: string
+                Expires:
+                  xml:
+                    namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd
+                    prefix: wsu
+                  type: string
+                Id:
+                  xml:
+                    namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd
+                    prefix: wsu
+                    attribute: true
+                  type: string
+        GetAjeerEstablishmentVisaInfoInput:
+          description: Input message for wsdl operation GetAjeerEstablishmentVisaInfo
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  $ref: '#/x-ibm-configuration/targets/AjeerELServices/definitions/GetAjeerEstablishmentVisaInfoHeader'
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    GetAjeerEstablishmentVisaInfo:
+                      $ref: '#/x-ibm-configuration/targets/AjeerELServices/definitions/GetAjeerEstablishmentVisaInfo_element_tns'
+                  required:
+                  - GetAjeerEstablishmentVisaInfo
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://mlsd.gov.sa/services/}PersonInfoServiceEndPoint'
+            wsdl-operation: GetAjeerEstablishmentVisaInfo
+            wsdl-message-direction-or-name: GetAjeerEstablishmentVisaInfoRequest
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Header>
+              <!-- The Security element should be removed if WS-Security is not enabled on the SOAP target-url -->
+              <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+               <wsse:UsernameToken>
+                <wsse:Username>string</wsse:Username>
+                <wsse:Password>string</wsse:Password>
+                <wsse:Nonce EncodingType="string">string</wsse:Nonce>
+                <wsu:Created>string</wsu:Created>
+               </wsse:UsernameToken>
+               <wsu:Timestamp wsu:Id="string">
+                <wsu:Created>string</wsu:Created>
+                <wsu:Expires>string</wsu:Expires>
+               </wsu:Timestamp>
+              </wsse:Security>
+             </soapenv:Header>
+             <soapenv:Body>
+              <tns:GetAjeerEstablishmentVisaInfo xmlns:tns="http://mlsd.gov.sa/services/"><!-- mandatory -->
+               <tns:request>
+                <tns:EstablishmentLaborOfficeID><!-- mandatory -->3</tns:EstablishmentLaborOfficeID>
+                <tns:EstablishmentSequenceNumber><!-- mandatory -->3</tns:EstablishmentSequenceNumber>
+                <tns:FilterStructure><!-- mandatory -->
+                 <tns:CreationDate>
+                  <tns:From>2016-04-18T14:07:37</tns:From>
+                  <tns:To>2016-04-18T14:07:37</tns:To>
+                 </tns:CreationDate>
+                 <tns:ReasonCode>3</tns:ReasonCode>
+                 <tns:VisaNumber>string</tns:VisaNumber>
+                 <tns:VisaStatusCode>3</tns:VisaStatusCode>
+                 <tns:borderNumber>3</tns:borderNumber>
+                </tns:FilterStructure>
+                <tns:PageStructure><!-- mandatory -->
+                 <tns:PageIndex><!-- mandatory -->3</tns:PageIndex>
+                 <tns:PageSize><!-- mandatory -->3</tns:PageSize>
+                </tns:PageStructure>
+               </tns:request>
+              </tns:GetAjeerEstablishmentVisaInfo>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        GetAjeerEstablishmentVisaInfoHeader:
+          description: Input headers for wsdl operation GetAjeerEstablishmentVisaInfo
+          type: object
+          properties:
+            Security:
+              $ref: '#/x-ibm-configuration/targets/AjeerELServices/definitions/Security'
+        GetAjeerEstablishmentVisaInfoOutput:
+          description: Output message for wsdl operation GetAjeerEstablishmentVisaInfo
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    GetAjeerEstablishmentVisaInfoResponse:
+                      $ref: '#/x-ibm-configuration/targets/AjeerELServices/definitions/GetAjeerEstablishmentVisaInfoResponse_element_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://mlsd.gov.sa/services/}PersonInfoServiceEndPoint'
+            wsdl-operation: GetAjeerEstablishmentVisaInfo
+            wsdl-message-direction-or-name: GetAjeerEstablishmentVisaInfoResponse
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Body>
+              <tns:GetAjeerEstablishmentVisaInfoResponse xmlns:tns="http://mlsd.gov.sa/services/">
+               <tns:GetAjeerEstablishmentVisaInfoResult>
+                <tns:EstablishmentVisaList>
+                 <tns:EstablishmentVisa><!-- between zero and unlimited repetitions of this element -->
+                  <tns:BorderNumber>3</tns:BorderNumber>
+                  <tns:CreationDate>2016-04-18T14:07:37</tns:CreationDate>
+                  <tns:EstablishmentId>3</tns:EstablishmentId>
+                  <tns:FK_LaborOfficeId>3</tns:FK_LaborOfficeId>
+                  <tns:Gender>
+                   <tns:Code>string</tns:Code>
+                   <tns:Name>string</tns:Name>
+                   <tns:NameLocal>string</tns:NameLocal>
+                  </tns:Gender>
+                  <tns:Nationality>
+                   <tns:Code>string</tns:Code>
+                   <tns:Name>string</tns:Name>
+                   <tns:NameLocal>string</tns:NameLocal>
+                  </tns:Nationality>
+                  <tns:Occupation>
+                   <tns:Code>string</tns:Code>
+                   <tns:Name>string</tns:Name>
+                   <tns:NameLocal>string</tns:NameLocal>
+                  </tns:Occupation>
+                  <tns:Origin>
+                   <tns:Code>string</tns:Code>
+                   <tns:Name>string</tns:Name>
+                   <tns:NameLocal>string</tns:NameLocal>
+                  </tns:Origin>
+                  <tns:Reason>
+                   <tns:Code>string</tns:Code>
+                   <tns:Name>string</tns:Name>
+                   <tns:NameLocal>string</tns:NameLocal>
+                  </tns:Reason>
+                  <tns:Religion>
+                   <tns:Code>string</tns:Code>
+                   <tns:Name>string</tns:Name>
+                   <tns:NameLocal>string</tns:NameLocal>
+                  </tns:Religion>
+                  <tns:SequenceNumber>3</tns:SequenceNumber>
+                  <tns:VisaNumber>string</tns:VisaNumber>
+                  <tns:VisaRequestNumber>string</tns:VisaRequestNumber>
+                  <tns:VisaStatus>3</tns:VisaStatus>
+                 </tns:EstablishmentVisa>
+                </tns:EstablishmentVisaList>
+                <tns:PageSize><!-- mandatory -->3</tns:PageSize>
+                <tns:Pagination>
+                 <tns:TotalCount><!-- mandatory -->3</tns:TotalCount>
+                 <tns:TotalPagesCount><!-- mandatory -->3</tns:TotalPagesCount>
+                </tns:Pagination>
+                <tns:TotalCount><!-- mandatory -->3</tns:TotalCount>
+               </tns:GetAjeerEstablishmentVisaInfoResult>
+              </tns:GetAjeerEstablishmentVisaInfoResponse>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        GetAjeerEstablishmentVisaInfoFault:
+          description: Fault message for wsdl operation GetAjeerEstablishmentVisaInfo
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    Fault:
+                      xml:
+                        namespace: http://schemas.xmlsoap.org/soap/envelope/
+                        prefix: soapenv
+                      type: object
+                      properties:
+                        faultcode:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultstring:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultactor:
+                          xml:
+                            namespace: ""
+                          type: string
+                        detail:
+                          xml:
+                            namespace: ""
+                            prefix: ""
+                          type: object
+                          properties:
+                            FaultContractFault:
+                              $ref: '#/x-ibm-configuration/targets/AjeerELServices/definitions/IAjeerELServices_GetAjeerEstablishmentVisaInfo_FaultContractFault_FaultMessage_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://mlsd.gov.sa/services/}PersonInfoServiceEndPoint'
+            wsdl-operation: GetAjeerEstablishmentVisaInfo
+            wsdl-message-direction-or-name: FaultContractFault
+        GetAjeerEstablishmentVisaInfo_element_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: ser
+            name: GetAjeerEstablishmentVisaInfo
+          type: object
+          properties:
+            request:
+              $ref: '#/x-ibm-configuration/targets/AjeerELServices/definitions/RequestStructure_type_tns'
+          example: |2-
+
+            <tns:GetAjeerEstablishmentVisaInfo xmlns:tns="http://mlsd.gov.sa/services/">
+             <tns:request>
+              <tns:EstablishmentLaborOfficeID><!-- mandatory -->3</tns:EstablishmentLaborOfficeID>
+              <tns:EstablishmentSequenceNumber><!-- mandatory -->3</tns:EstablishmentSequenceNumber>
+              <tns:FilterStructure><!-- mandatory -->
+               <tns:CreationDate>
+                <tns:From>2016-04-18T14:07:37</tns:From>
+                <tns:To>2016-04-18T14:07:37</tns:To>
+               </tns:CreationDate>
+               <tns:ReasonCode>3</tns:ReasonCode>
+               <tns:VisaNumber>string</tns:VisaNumber>
+               <tns:VisaStatusCode>3</tns:VisaStatusCode>
+               <tns:borderNumber>3</tns:borderNumber>
+              </tns:FilterStructure>
+              <tns:PageStructure><!-- mandatory -->
+               <tns:PageIndex><!-- mandatory -->3</tns:PageIndex>
+               <tns:PageSize><!-- mandatory -->3</tns:PageSize>
+              </tns:PageStructure>
+             </tns:request>
+            </tns:GetAjeerEstablishmentVisaInfo>
+        GetAjeerEstablishmentVisaInfoResponse_element_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: ser
+            name: GetAjeerEstablishmentVisaInfoResponse
+          type: object
+          properties:
+            GetAjeerEstablishmentVisaInfoResult:
+              $ref: '#/x-ibm-configuration/targets/AjeerELServices/definitions/AjeerEstablishmentVisaResponseStructure_type_tns'
+          example: |2-
+
+            <tns:GetAjeerEstablishmentVisaInfoResponse xmlns:tns="http://mlsd.gov.sa/services/">
+             <tns:GetAjeerEstablishmentVisaInfoResult>
+              <tns:EstablishmentVisaList>
+               <tns:EstablishmentVisa><!-- between zero and unlimited repetitions of this element -->
+                <tns:BorderNumber>3</tns:BorderNumber>
+                <tns:CreationDate>2016-04-18T14:07:37</tns:CreationDate>
+                <tns:EstablishmentId>3</tns:EstablishmentId>
+                <tns:FK_LaborOfficeId>3</tns:FK_LaborOfficeId>
+                <tns:Gender>
+                 <tns:Code>string</tns:Code>
+                 <tns:Name>string</tns:Name>
+                 <tns:NameLocal>string</tns:NameLocal>
+                </tns:Gender>
+                <tns:Nationality>
+                 <tns:Code>string</tns:Code>
+                 <tns:Name>string</tns:Name>
+                 <tns:NameLocal>string</tns:NameLocal>
+                </tns:Nationality>
+                <tns:Occupation>
+                 <tns:Code>string</tns:Code>
+                 <tns:Name>string</tns:Name>
+                 <tns:NameLocal>string</tns:NameLocal>
+                </tns:Occupation>
+                <tns:Origin>
+                 <tns:Code>string</tns:Code>
+                 <tns:Name>string</tns:Name>
+                 <tns:NameLocal>string</tns:NameLocal>
+                </tns:Origin>
+                <tns:Reason>
+                 <tns:Code>string</tns:Code>
+                 <tns:Name>string</tns:Name>
+                 <tns:NameLocal>string</tns:NameLocal>
+                </tns:Reason>
+                <tns:Religion>
+                 <tns:Code>string</tns:Code>
+                 <tns:Name>string</tns:Name>
+                 <tns:NameLocal>string</tns:NameLocal>
+                </tns:Religion>
+                <tns:SequenceNumber>3</tns:SequenceNumber>
+                <tns:VisaNumber>string</tns:VisaNumber>
+                <tns:VisaRequestNumber>string</tns:VisaRequestNumber>
+                <tns:VisaStatus>3</tns:VisaStatus>
+               </tns:EstablishmentVisa>
+              </tns:EstablishmentVisaList>
+              <tns:PageSize><!-- mandatory -->3</tns:PageSize>
+              <tns:Pagination>
+               <tns:TotalCount><!-- mandatory -->3</tns:TotalCount>
+               <tns:TotalPagesCount><!-- mandatory -->3</tns:TotalPagesCount>
+              </tns:Pagination>
+              <tns:TotalCount><!-- mandatory -->3</tns:TotalCount>
+             </tns:GetAjeerEstablishmentVisaInfoResult>
+            </tns:GetAjeerEstablishmentVisaInfoResponse>
+        IAjeerELServices_GetAjeerEstablishmentVisaInfo_FaultContractFault_FaultMessage_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: ser
+            name: FaultContract
+          type: object
+          properties:
+            ErrorCode:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: string
+              x-nullable: true
+            ErrorMessage:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: string
+              x-nullable: true
+            ErrorMessageLocal:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: string
+              x-nullable: true
+            Insert:
+              $ref: '#/x-ibm-configuration/targets/AjeerELServices/definitions/ArrayOfstring_type_q1_tns'
+            RaisedBy:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: string
+              x-nullable: true
+          example: |2-
+
+            <tns:FaultContract xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:tns="http://mlsd.gov.sa/services/">
+             <tns:ErrorCode>string</tns:ErrorCode>
+             <tns:ErrorMessage>string</tns:ErrorMessage>
+             <tns:ErrorMessageLocal>string</tns:ErrorMessageLocal>
+             <tns:Insert>
+              <q1:string><!-- between zero and unlimited repetitions of this element -->string</q1:string>
+             </tns:Insert>
+             <tns:RaisedBy>string</tns:RaisedBy>
+            </tns:FaultContract>
+        RequestStructure_type_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: ser
+          type: object
+          properties:
+            EstablishmentLaborOfficeID:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: integer
+              format: int32
+            EstablishmentSequenceNumber:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: integer
+              format: int32
+            FilterStructure:
+              $ref: '#/x-ibm-configuration/targets/AjeerELServices/definitions/FilterStructure_type_tns'
+            PageStructure:
+              $ref: '#/x-ibm-configuration/targets/AjeerELServices/definitions/PaginationInStructure_type_tns'
+          required:
+          - EstablishmentLaborOfficeID
+          - EstablishmentSequenceNumber
+          - FilterStructure
+          - PageStructure
+          x-nullable: true
+          x-xsi-type: RequestStructure
+          x-xsi-type-xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: ser
+          x-xsi-type-uniquename: RequestStructure_type_tns
+        AjeerEstablishmentVisaResponseStructure_type_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: ser
+          type: object
+          properties:
+            EstablishmentVisaList:
+              $ref: '#/x-ibm-configuration/targets/AjeerELServices/definitions/ArrayOfEstablishmentVisa_type_tns'
+            PageSize:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: integer
+              format: int32
+            Pagination:
+              $ref: '#/x-ibm-configuration/targets/AjeerELServices/definitions/PaginationOutStructure_type_tns'
+            TotalCount:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: integer
+              format: int32
+          required:
+          - PageSize
+          - TotalCount
+          x-nullable: true
+          x-xsi-type: AjeerEstablishmentVisaResponseStructure
+          x-xsi-type-xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: ser
+          x-xsi-type-uniquename: AjeerEstablishmentVisaResponseStructure_type_tns
+        FilterStructure_type_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: ser
+          type: object
+          properties:
+            CreationDate:
+              $ref: '#/x-ibm-configuration/targets/AjeerELServices/definitions/DateFilter_type_tns'
+            ReasonCode:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: integer
+              format: int32
+              x-nullable: true
+            VisaNumber:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: string
+              x-nullable: true
+            VisaStatusCode:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: integer
+              format: int32
+              minimum: -32768
+              maximum: 32767
+              x-nullable: true
+            borderNumber:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: integer
+              format: int64
+              x-nullable: true
+          x-nullable: true
+          x-xsi-type: FilterStructure
+          x-xsi-type-xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: ser
+          x-xsi-type-uniquename: FilterStructure_type_tns
+        PaginationInStructure_type_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: ser
+          type: object
+          properties:
+            PageIndex:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: integer
+              format: int32
+            PageSize:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: integer
+              format: int32
+          required:
+          - PageIndex
+          - PageSize
+          x-nullable: true
+          x-xsi-type: PaginationInStructure
+          x-xsi-type-xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: ser
+          x-xsi-type-uniquename: PaginationInStructure_type_tns
+        ArrayOfEstablishmentVisa_type_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: ser
+          type: object
+          properties:
+            EstablishmentVisa:
+              type: array
+              items:
+                $ref: '#/x-ibm-configuration/targets/AjeerELServices/definitions/EstablishmentVisa_type_tns'
+              x-nullable: true
+          x-nullable: true
+          x-xsi-type: ArrayOfEstablishmentVisa
+          x-xsi-type-xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: ser
+          x-xsi-type-uniquename: ArrayOfEstablishmentVisa_type_tns
+        PaginationOutStructure_type_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: ser
+          type: object
+          properties:
+            TotalCount:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: integer
+              format: int32
+            TotalPagesCount:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: integer
+              format: int32
+          required:
+          - TotalCount
+          - TotalPagesCount
+          x-nullable: true
+          x-xsi-type: PaginationOutStructure
+          x-xsi-type-xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: ser
+          x-xsi-type-uniquename: PaginationOutStructure_type_tns
+        ArrayOfstring_type_q1_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: ser
+          type: object
+          properties:
+            string:
+              type: array
+              items:
+                xml:
+                  namespace: http://schemas.microsoft.com/2003/10/Serialization/Arrays
+                  prefix: q1
+                type: string
+              x-nullable: true
+          x-nullable: true
+          x-xsi-type: ArrayOfstring
+          x-xsi-type-xml:
+            namespace: http://schemas.microsoft.com/2003/10/Serialization/Arrays
+            prefix: q1
+          x-xsi-type-uniquename: ArrayOfstring_type_q1_tns
+        DateFilter_type_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: ser
+          type: object
+          properties:
+            From:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: string
+              format: date-time
+              x-nullable: true
+            To:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: string
+              format: date-time
+              x-nullable: true
+          x-nullable: true
+          x-xsi-type: DateFilter
+          x-xsi-type-xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: ser
+          x-xsi-type-uniquename: DateFilter_type_tns
+        EstablishmentVisa_type_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: ser
+          type: object
+          properties:
+            BorderNumber:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: integer
+              format: int64
+              x-nullable: true
+            CreationDate:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: string
+              format: date-time
+            EstablishmentId:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: integer
+              format: int64
+            FK_LaborOfficeId:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: integer
+              format: int32
+            Gender:
+              $ref: '#/x-ibm-configuration/targets/AjeerELServices/definitions/LookupStructure_type_tns'
+            Nationality:
+              $ref: '#/x-ibm-configuration/targets/AjeerELServices/definitions/LookupStructure_type_tns'
+            Occupation:
+              $ref: '#/x-ibm-configuration/targets/AjeerELServices/definitions/LookupStructure_type_tns'
+            Origin:
+              $ref: '#/x-ibm-configuration/targets/AjeerELServices/definitions/LookupStructure_type_tns'
+            Reason:
+              $ref: '#/x-ibm-configuration/targets/AjeerELServices/definitions/LookupStructure_type_tns'
+            Religion:
+              $ref: '#/x-ibm-configuration/targets/AjeerELServices/definitions/LookupStructure_type_tns'
+            SequenceNumber:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: integer
+              format: int64
+            VisaNumber:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: string
+              x-nullable: true
+            VisaRequestNumber:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: string
+              x-nullable: true
+            VisaStatus:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: integer
+              format: int32
+          x-xsi-type: EstablishmentVisa
+          x-xsi-type-xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: ser
+          x-xsi-type-uniquename: EstablishmentVisa_type_tns
+        LookupStructure_type_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: ser
+          type: object
+          properties:
+            Code:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: string
+              x-nullable: true
+            Name:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: string
+              x-nullable: true
+            NameLocal:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: ser
+              type: string
+              x-nullable: true
+          x-nullable: true
+          x-xsi-type: LookupStructure
+          x-xsi-type-xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: ser
+          x-xsi-type-uniquename: LookupStructure_type_tns
+        CommonFault:
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties: {}
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    Fault:
+                      xml:
+                        namespace: http://schemas.xmlsoap.org/soap/envelope/
+                        prefix: soapenv
+                      type: object
+                      properties:
+                        faultcode:
+                          xml:
+                            namespace: ""
+                            prefix: ""
+                          type: string
+                        faultstring:
+                          xml:
+                            namespace: ""
+                            prefix: ""
+                          type: string
+                        faultactor:
+                          xml:
+                            namespace: ""
+                            prefix: ""
+                          type: string
+                        detail:
+                          xml:
+                            namespace: ""
+                            prefix: ""
+                          type: object
+                          properties: {}
+              required:
+              - Body
+          required:
+          - Envelope
+  x-ibm-apiconnect-wsdl:
+    package-version: 2.0.36
+    options: {}
+    messages:
+      info: []
+      warning: []
+      error: []
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+paths:
+  /GetAjeerEstablishmentVisaInfo:
+    post:
+      responses:
+        "200":
+          description: 200 OK
+          schema:
+            $ref: '#/definitions/GetAjeerEstablishmentVisaInfoResponse_element_tns'
+        "500":
+          description: ""
+          schema:
+            $ref: '#/definitions/CommonFault'
+      parameters:
+      - name: request
+        required: true
+        in: body
+        schema:
+          $ref: '#/definitions/GetAjeerEstablishmentVisaInfo_element_tns'
+definitions:
+  CommonFault:
+    type: object
+    properties:
+      error:
+        type: string
+      Fault:
+        type: object
+        properties:
+          faultcode:
+            type: string
+          faultstring:
+            type: string
+          faultactor:
+            type: string
+          detail:
+            type: object
+            properties:
+              FaultContractFault:
+                $ref: '#/definitions/IAjeerELServices_GetAjeerEstablishmentVisaInfo_FaultContractFault_FaultMessage_tns'
+  GetAjeerEstablishmentVisaInfo_element_tns:
+    type: object
+    properties:
+      request:
+        $ref: '#/definitions/RequestStructure_type_tns'
+  GetAjeerEstablishmentVisaInfoResponse_element_tns:
+    type: object
+    properties:
+      GetAjeerEstablishmentVisaInfoResult:
+        $ref: '#/definitions/AjeerEstablishmentVisaResponseStructure_type_tns'
+  IAjeerELServices_GetAjeerEstablishmentVisaInfo_FaultContractFault_FaultMessage_tns:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+        x-nullable: true
+      ErrorMessage:
+        type: string
+        x-nullable: true
+      ErrorMessageLocal:
+        type: string
+        x-nullable: true
+      Insert:
+        $ref: '#/definitions/ArrayOfstring_type_q1_tns'
+      RaisedBy:
+        type: string
+        x-nullable: true
+  RequestStructure_type_tns:
+    type: object
+    properties:
+      EstablishmentLaborOfficeID:
+        type: integer
+        format: int32
+      EstablishmentSequenceNumber:
+        type: integer
+        format: int32
+      FilterStructure:
+        $ref: '#/definitions/FilterStructure_type_tns'
+      PageStructure:
+        $ref: '#/definitions/PaginationInStructure_type_tns'
+    required:
+    - EstablishmentLaborOfficeID
+    - EstablishmentSequenceNumber
+    - FilterStructure
+    - PageStructure
+    x-nullable: true
+    x-xsi-type: RequestStructure
+    x-xsi-type-xml:
+      namespace: http://mlsd.gov.sa/services/
+      prefix: ser
+    x-xsi-type-uniquename: RequestStructure_type_tns
+  AjeerEstablishmentVisaResponseStructure_type_tns:
+    type: object
+    properties:
+      EstablishmentVisaList:
+        $ref: '#/definitions/ArrayOfEstablishmentVisa_type_tns'
+      PageSize:
+        type: integer
+        format: int32
+      Pagination:
+        $ref: '#/definitions/PaginationOutStructure_type_tns'
+      TotalCount:
+        type: integer
+        format: int32
+    required:
+    - PageSize
+    - TotalCount
+    x-nullable: true
+    x-xsi-type: AjeerEstablishmentVisaResponseStructure
+    x-xsi-type-xml:
+      namespace: http://mlsd.gov.sa/services/
+      prefix: ser
+    x-xsi-type-uniquename: AjeerEstablishmentVisaResponseStructure_type_tns
+  FilterStructure_type_tns:
+    type: object
+    properties:
+      CreationDate:
+        $ref: '#/definitions/DateFilter_type_tns'
+      ReasonCode:
+        type: integer
+        format: int32
+        x-nullable: true
+      VisaNumber:
+        type: string
+        x-nullable: true
+      VisaStatusCode:
+        type: integer
+        format: int32
+        minimum: -32768
+        maximum: 32767
+        x-nullable: true
+      borderNumber:
+        type: integer
+        format: int64
+        x-nullable: true
+    x-nullable: true
+    x-xsi-type: FilterStructure
+    x-xsi-type-xml:
+      namespace: http://mlsd.gov.sa/services/
+      prefix: ser
+    x-xsi-type-uniquename: FilterStructure_type_tns
+  PaginationInStructure_type_tns:
+    type: object
+    properties:
+      PageIndex:
+        type: integer
+        format: int32
+      PageSize:
+        type: integer
+        format: int32
+    required:
+    - PageIndex
+    - PageSize
+    x-nullable: true
+    x-xsi-type: PaginationInStructure
+    x-xsi-type-xml:
+      namespace: http://mlsd.gov.sa/services/
+      prefix: ser
+    x-xsi-type-uniquename: PaginationInStructure_type_tns
+  ArrayOfEstablishmentVisa_type_tns:
+    type: object
+    properties:
+      EstablishmentVisa:
+        type: array
+        items:
+          $ref: '#/definitions/EstablishmentVisa_type_tns'
+        x-nullable: true
+    x-nullable: true
+    x-xsi-type: ArrayOfEstablishmentVisa
+    x-xsi-type-xml:
+      namespace: http://mlsd.gov.sa/services/
+      prefix: ser
+    x-xsi-type-uniquename: ArrayOfEstablishmentVisa_type_tns
+  PaginationOutStructure_type_tns:
+    type: object
+    properties:
+      TotalCount:
+        type: integer
+        format: int32
+      TotalPagesCount:
+        type: integer
+        format: int32
+    required:
+    - TotalCount
+    - TotalPagesCount
+    x-nullable: true
+    x-xsi-type: PaginationOutStructure
+    x-xsi-type-xml:
+      namespace: http://mlsd.gov.sa/services/
+      prefix: ser
+    x-xsi-type-uniquename: PaginationOutStructure_type_tns
+  ArrayOfstring_type_q1_tns:
+    type: object
+    properties:
+      string:
+        type: array
+        items:
+          type: string
+        x-nullable: true
+    x-nullable: true
+    x-xsi-type: ArrayOfstring
+    x-xsi-type-xml:
+      namespace: http://schemas.microsoft.com/2003/10/Serialization/Arrays
+      prefix: q1
+    x-xsi-type-uniquename: ArrayOfstring_type_q1_tns
+  DateFilter_type_tns:
+    type: object
+    properties:
+      From:
+        type: string
+        format: date-time
+        x-nullable: true
+      To:
+        type: string
+        format: date-time
+        x-nullable: true
+    x-nullable: true
+    x-xsi-type: DateFilter
+    x-xsi-type-xml:
+      namespace: http://mlsd.gov.sa/services/
+      prefix: ser
+    x-xsi-type-uniquename: DateFilter_type_tns
+  EstablishmentVisa_type_tns:
+    type: object
+    properties:
+      BorderNumber:
+        type: integer
+        format: int64
+        x-nullable: true
+      CreationDate:
+        type: string
+        format: date-time
+      EstablishmentId:
+        type: integer
+        format: int64
+      FK_LaborOfficeId:
+        type: integer
+        format: int32
+      Gender:
+        $ref: '#/definitions/LookupStructure_type_tns'
+      Nationality:
+        $ref: '#/definitions/LookupStructure_type_tns'
+      Occupation:
+        $ref: '#/definitions/LookupStructure_type_tns'
+      Origin:
+        $ref: '#/definitions/LookupStructure_type_tns'
+      Reason:
+        $ref: '#/definitions/LookupStructure_type_tns'
+      Religion:
+        $ref: '#/definitions/LookupStructure_type_tns'
+      SequenceNumber:
+        type: integer
+        format: int64
+      VisaNumber:
+        type: string
+        x-nullable: true
+      VisaRequestNumber:
+        type: string
+        x-nullable: true
+      VisaStatus:
+        type: integer
+        format: int32
+    x-xsi-type: EstablishmentVisa
+    x-xsi-type-xml:
+      namespace: http://mlsd.gov.sa/services/
+      prefix: ser
+    x-xsi-type-uniquename: EstablishmentVisa_type_tns
+  LookupStructure_type_tns:
+    type: object
+    properties:
+      Code:
+        type: string
+        x-nullable: true
+      Name:
+        type: string
+        x-nullable: true
+      NameLocal:
+        type: string
+        x-nullable: true
+    x-nullable: true
+    x-xsi-type: LookupStructure
+    x-xsi-type-xml:
+      namespace: http://mlsd.gov.sa/services/
+      prefix: ser
+    x-xsi-type-uniquename: LookupStructure_type_tns
+tags: []

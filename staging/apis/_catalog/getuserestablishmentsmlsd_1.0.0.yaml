@@ -1,0 +1,271 @@
+swagger: "2.0"
+info:
+  title: GetUserEstablishmentsMLSD
+  x-ibm-name: getuserestablishmentsmlsd
+  version: 1.0.0
+  description: This service is used get the establishments related to the user.
+schemes:
+- https
+basePath: /common
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-hrsd-hrsdget2)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  GetUserEstablishmentsMLSDRq_MessageType:
+    type: object
+    properties:
+      GetUserEstablishmentsMLSDRq:
+        $ref: '#/definitions/GetUserEstablishmentsMLSDRq_Type'
+  GetUserEstablishmentsMLSDRs_MessageType:
+    type: object
+    properties:
+      GetUserEstablishmentsMLSDRs:
+        $ref: '#/definitions/GetUserEstablishmentsMLSDRs_Type'
+  GetUserEstablishmentsMLSDRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetUserEstablishmentsMLSDRq_BodyType'
+  GetUserEstablishmentsMLSDRq_BodyType:
+    type: object
+    properties:
+      IdNo:
+        type: string
+        default: "234"
+      ExcludeEconomicActivities:
+        type: boolean
+        default: "1"
+    required:
+    - IdNo
+  GetUserEstablishmentsMLSDRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetUserEstablishmentsMLSDRs_BodyType'
+  GetUserEstablishmentsMLSDRs_BodyType:
+    type: object
+    properties:
+      UserEstablishmentsList:
+        $ref: '#/definitions/UserEstablishmentsList_Type'
+  UserEstablishmentsList_Type:
+    type: object
+    properties:
+      UserEstablishmentsItem:
+        type: array
+        items:
+          $ref: '#/definitions/UserEstablishmentsItem_Type'
+  UserEstablishmentsItem_Type:
+    type: object
+    properties:
+      AuthorizationType:
+        $ref: '#/definitions/AuthorizationType_Type'
+      Establishment:
+        $ref: '#/definitions/Establishment_Type'
+      IdNumber:
+        type: integer
+  AuthorizationType_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      Name:
+        type: string
+      NameLocal:
+        type: string
+  Establishment_Type:
+    type: object
+    properties:
+      Name:
+        type: string
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: MGUE0001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: MGUE0001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+        default: "465740"
+      IDNumber:
+        type: integer
+        default: "1024812248"
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /getuserestablishmentsmlsd:
+    post:
+      operationId: GetUserEstablishmentsMLSD
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetUserEstablishmentsMLSDRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Get User Establishments MLSD
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetUserEstablishmentsMLSDRq_MessageType'
+        description: GetUserEstablishmentsMLSDRq
+        required: true

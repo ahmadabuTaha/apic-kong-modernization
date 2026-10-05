@@ -1,0 +1,290 @@
+swagger: "2.0"
+info:
+  title: QIWA_GetOccupationIDAnalysis
+  description: This API fetches the occupationId data details.
+  x-ibm-name: qiwa-getoccupationidanalysis
+  version: 1.0.0
+schemes:
+- https
+basePath: /qiwa/v2
+produces:
+- application/json
+consumes:
+- application/json
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://gw-apic.qiwa.info/takamol/staging/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+paths:
+  /GetOccupationIDAnalysis:
+    post:
+      tags:
+      - GetOccupationIDAnalysis
+      description: This API fetches the deceased FE config details.
+      operationId: GetOccupationIDAnalysis
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetOccupationIDAnalysisRs_MessageType'
+      parameters:
+      - name: X-IBM-Client-Id
+        in: header
+        description: Client id issued by security server.
+        required: true
+        type: string
+      - name: X-IBM-Client-Secret
+        in: header
+        description: Client secret issued by security server
+        required: true
+        type: string
+      - name: requestBody
+        in: body
+        schema:
+          $ref: '#/definitions/GetOccupationIDAnalysisRq_MessageType'
+definitions:
+  OccupationIdList:
+    type: object
+    properties:
+      Id:
+        type: integer
+  ResponseObject:
+    type: object
+    properties:
+      OccupationId:
+        type: integer
+      totalAssigned:
+        type: integer
+      totalTrained:
+        type: integer
+  GregorianDateModel:
+    type: string
+    description: This date object will be used across the model with format yyyy-MM-dd
+      HH:MM:SS.sssfor gregorian dates only
+    example: "2021-12-31 22:00:00.000"
+  GetOccupationIDAnalysisRq_MessageType:
+    type: object
+    properties:
+      GetOccupationIDAnalysisRq:
+        $ref: '#/definitions/GetOccupationIDAnalysisRq_Type'
+  GetOccupationIDAnalysisRs_MessageType:
+    type: object
+    properties:
+      GetOccupationIDAnalysisRs:
+        $ref: '#/definitions/GetOccupationIDAnalysisRs_Type'
+  GetOccupationIDAnalysisRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetOccupationIDAnalysisRq_BodyType'
+  GetOccupationIDAnalysisRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      UserId:
+        type: integer
+      EstablishmentId:
+        type: integer
+      TrainingStartDate:
+        $ref: '#/definitions/GregorianDateModel'
+      TrainingEndDate:
+        $ref: '#/definitions/GregorianDateModel'
+      TrainingType:
+        type: integer
+      TrainingLocation:
+        type: integer
+      HasCertification:
+        type: string
+      OccupationId:
+        type: array
+        items:
+          $ref: '#/definitions/OccupationIdList'
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+  GetOccupationIDAnalysisRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetOccupationIDAnalysisRs_BodyType'
+  GetOccupationIDAnalysisRs_BodyType:
+    type: array
+    items:
+      $ref: '#/definitions/ResponseObject'
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-trni-trainingmanagement)/GetOccupationIDAnalysis
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+          values: []
+        header-control:
+          type: blocklist
+          values: []
+        inject-proxy-headers: true
+        persistent-connection: true
+    - gatewayscript:
+        version: 2.0.0
+        title: gatewayscript
+        source: "var apim = require('apim');\nvar Response = apim.getvariable('message.body');\nvar
+          statusCode = Response.GetOccupationIDAnalysisRs.Header.ResponseStatus.Code
+          ;\n\nif(statusCode == 'ESBSCHEMA' || statusCode == 'E0000004' || statusCode
+          == 'E0001203' || statusCode == 'E0001202' \n|| statusCode == 'E0001201'
+          \ || statusCode == 'E0001200' ){\n    var code = 400\n    apim.setvariable('message.status.code',code,'set');\n}\nelse
+          if(statusCode == 'E0000747' || statusCode == 'E0000034' || statusCode ==
+          'E0000046' || statusCode == 'E0000047' || statusCode == 'E0000048' ||statusCode
+          == 'E0001287' || statusCode == 'E0001592'   || statusCode == 'E0000980'
+          || statusCode == 'E0000131' || statusCode == 'E0000132'  || statusCode ==
+          'E0000128'){\n    var code = 401\n    apim.setvariable('message.status.code',code,'set');\n}\nelse
+          if(statusCode == '99999999' || statusCode == 'E0001567'){\n    var code
+          = 500\n    apim.setvariable('message.status.code',code,'set');\n}\nelse
+          if(statusCode == '00000000'){\n    var code = 200\n    apim.setvariable('message.status.code',code,'set');\n}else{\n
+          \     var code = 409\n    apim.setvariable('message.status.code',code,'set');\n}"
+    finally: []
+  properties:
+    target-url:
+      value: http://trni-trainingmanagement-http-ace.apps.stg.qiwa-nonprod.local/GetOccupationIDAnalysis
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload

@@ -1,0 +1,27 @@
+info:
+  title: MCSEmployment_QueryCenter
+  name: mcsemployment_querycenter
+  version: 1.0.0
+apis:
+  mcsemploymentstatusenquiry_querycenter1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mcsemploymentstatusenquiry_querycenter_1.0.0.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      mcsemploymentstatusenquiry_querycenter1.0.0: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

@@ -1,0 +1,60 @@
+swagger: "2.0"
+info:
+  title: GET_SRV_DifferentUnifiedNumbers API
+  x-ibm-name: get-srv-differentunifiednumbers-api
+  version: 1.0.0
+schemes:
+- https
+basePath: /sp
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  properties:
+    target-url:
+      value: http://datapower.qiwa.info:9044/GET_SRV_DifferentUnifiedNumbers
+      description: URL of the proxy policy
+      encoded: false
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(target-url)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  application-authentication:
+    certificate: false
+paths:
+  /GET_SRV_DifferentUnifiedNumbers:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+      parameters:
+      - name: Input Request
+        in: body
+        required: false
+        schema:
+          type: object

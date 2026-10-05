@@ -1,0 +1,274 @@
+swagger: "2.0"
+info:
+  title: GetNitaqInformation
+  x-ibm-name: getnitaqinformation
+  version: 1.0.0
+  description: The purpose of this service is to get Nitaq information and calculate
+    saudis to be hired to reach next nitaqat levels
+schemes:
+- https
+basePath: /NitaqatCalculators
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-ntc-nitaqat)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  GetNitaqInformationRq_MessageType:
+    type: object
+    properties:
+      GetNitaqInformationRq:
+        $ref: '#/definitions/GetNitaqInformationRq_Type'
+  GetNitaqInformationRs_MessageType:
+    type: object
+    properties:
+      GetNitaqInformationRs:
+        $ref: '#/definitions/GetNitaqInformationRs_Type'
+  GetNitaqInformationRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetNitaqInformationRq_BodyType'
+  GetNitaqInformationRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+  GetNitaqInformationRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetNitaqInformationRs_BodyType'
+  GetNitaqInformationRs_BodyType:
+    type: object
+    properties:
+      Isic4Activity:
+        $ref: '#/definitions/IDName_Type'
+      NitaqActivity:
+        $ref: '#/definitions/IDName_Type'
+      Colors:
+        $ref: '#/definitions/Colors_Type'
+      EntityCurrentColor:
+        $ref: '#/definitions/IDName_Type'
+      Nationalization:
+        type: number
+      IsSustain:
+        type: integer
+      NbOfIssuedVisas:
+        type: integer
+      NbPendingRequests:
+        type: integer
+      AjeerCount:
+        type: integer
+    required:
+    - Isic4Activity
+    - NitaqActivity
+    - Colors
+    - EntityCurrentColor
+    - Nationalization
+    - IsSustain
+    - NbOfIssuedVisas
+    - NbPendingRequests
+    - AjeerCount
+  IDName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+    required:
+    - Code
+    - NameAr
+    - NameEn
+  Colors_Type:
+    type: object
+    properties:
+      Color:
+        type: array
+        items:
+          $ref: '#/definitions/Color_Type'
+  Color_Type:
+    type: object
+    properties:
+      ColorInfo:
+        $ref: '#/definitions/IDName_Type'
+      ColValue:
+        type: number
+      SaudisToBeHired:
+        type: integer
+    required:
+    - ColorInfo
+    - ColValue
+    - SaudisToBeHired
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /getnitaqinformation:
+    post:
+      operationId: GetNitaqInformation
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetNitaqInformationRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Get Nitaq Information
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetNitaqInformationRq_MessageType'
+        description: GetNitaqInformationRq
+        required: true

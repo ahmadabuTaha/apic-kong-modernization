@@ -1,0 +1,673 @@
+swagger: "2.0"
+info:
+  title: testAnvesh
+  x-ibm-name: testanvesh
+  version: 1.0.0
+  description: This API is used for POC or any testing purpose only
+schemes:
+- https
+basePath: /qiwa/v1
+security:
+- clientIdHeader: []
+  OAuth2.0:
+  - IntegrationScope
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+paths:
+  /getcontractspecialtiesapiwrapper:
+    parameters: []
+    post:
+      tags:
+      - GetContractSpecialtiesAPIWrapper
+      description: This service is used to get all Specialties under the contract
+        management module.
+      operationId: getcontractspecialtiesapiwrapper
+      produces:
+      - application/json
+      responses:
+        "200":
+          $ref: '#/responses/Response200'
+        "400":
+          $ref: '#/responses/Response400'
+        "401":
+          $ref: '#/responses/Response401'
+        "403":
+          $ref: '#/responses/Response403'
+        "404":
+          $ref: '#/responses/Response404'
+        "408":
+          $ref: '#/responses/Response408'
+        "409":
+          $ref: '#/responses/Response409'
+        "429":
+          $ref: '#/responses/Response429'
+        "500":
+          $ref: '#/responses/Response500'
+        "501":
+          $ref: '#/responses/Response501'
+        "503":
+          $ref: '#/responses/Response503'
+        "510":
+          $ref: '#/responses/Response510'
+definitions:
+  ResponseModel:
+    type: object
+    description: This response object returned by the post operation
+    properties:
+      SpecialtyList:
+        $ref: '#/definitions/SpecialtyList_Type'
+  SpecialtyList_Type:
+    type: object
+    properties:
+      SpecialtyItem:
+        type: array
+        items:
+          $ref: '#/definitions/SpecialtyItem_Type'
+  SpecialtyItem_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+  LocaleDataModel:
+    type: object
+    additionalProperties:
+      type: string
+    example:
+      en-US: English Value
+      ar-SA: Arabic Value
+  IntegerNumberModel:
+    type: object
+    description: This object use for integer numbers
+    additionalProperties:
+      type: integer
+      example: 1
+  ErrorModel:
+    type: object
+    required:
+    - errorCode
+    - errorMessage
+    properties:
+      errorCode:
+        type: string
+        example: EXXXX000
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+parameters:
+  X-IBM-Client-Id:
+    in: header
+    name: X-IBM-Client-Id
+    description: Client id issued by security server
+    required: true
+    type: string
+  X-IBM-Client-Secret:
+    in: header
+    name: X-IBM-Client-Secret
+    description: Client secret issued by security server
+    required: true
+    type: string
+  CategoryId:
+    in: query
+    name: CategoryId
+    description: CategoryId
+    required: true
+    type: integer
+responses:
+  Response200:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ResponseModel'
+  Response201:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+      Location:
+        type: string
+        description: Id url encoded
+  Response204:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response400:
+    description: The request was rejected by the server due to malformed syntax. Bad
+      Request.
+  Response401:
+    description: The request could not be completed due to lack of valid credentials.
+      Authentication.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response403:
+    description: The request could not be completed because it is not authorized.
+      Authorization
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response404:
+    description: The server has not found anything matching the Request-URI.
+  Response408:
+    description: The client did not produce a request within the time that the server
+      was prepared to wait.
+  Response409:
+    description: The request could not be completed due to a conflict with the current
+      state of the resource. Usually business validation errors will be returned in
+      the body
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response429:
+    description: The request was sent too many times in a given amount of time
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response500:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response501:
+    description: The server does not support the functionality required and does not
+      recognize the request
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response503:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response510:
+    description: Extensions to the request are required for the server to fulfil it.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - map:
+        inputs:
+          "":
+            schema:
+              type: object
+              properties:
+                resumeStatus:
+                  type: number
+                resumeStatusEn:
+                  type: string
+                resumeStatusAr:
+                  type: string
+                applicantStatus:
+                  type: number
+                applicantStatusEn:
+                  type: string
+                applicantStatusAr:
+                  type: string
+                epro:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    location:
+                      type: string
+                    contactNumber:
+                      type: string
+                    email:
+                      type: string
+                aboutMe:
+                  type: string
+                contactDetails:
+                  type: object
+                  properties:
+                    phoneNumber:
+                      type: string
+                    email:
+                      type: string
+                emergencyContacts:
+                  type: object
+                  properties:
+                    phoneNumber:
+                      type: string
+                    relationshipType:
+                      type: string
+                    relationshipTypeEn:
+                      type: string
+                    relationshipTypeAr:
+                      type: string
+                passportDetails:
+                  type: object
+                  properties:
+                    firstName:
+                      type: string
+                    lastName:
+                      type: string
+                    passportNo:
+                      type: string
+                    nationality:
+                      type: number
+                    nationalityEn:
+                      type: string
+                    nationalityAr:
+                      type: string
+                    dateOfBirth:
+                      type: string
+                    gender:
+                      type: number
+                    genderEn:
+                      type: string
+                    genderAr:
+                      type: string
+                    dateOfExpiry:
+                      type: string
+                    countryCode:
+                      type: number
+                    countryEn:
+                      type: string
+                    countryAr:
+                      type: string
+                    DateOfIssue:
+                      type: string
+                    IssuePlace:
+                      type: string
+                personalDetails:
+                  type: object
+                  properties:
+                    maritalStatus:
+                      type: number
+                    maritalStatusEn:
+                      type: string
+                    maritalStatusAr:
+                      type: string
+                    idNo:
+                      type: string
+                    religion:
+                      type: number
+                    religionEn:
+                      type: string
+                    religionAr:
+                      type: string
+                    countryOfResidence:
+                      type: string
+                languages:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      language:
+                        type: number
+                      languageEn:
+                        type: string
+                      languageAr:
+                        type: string
+                      candidateLanguageId:
+                        type: number
+                      proficiency:
+                        type: number
+                      proficiencyEn:
+                        type: string
+                      proficiencyAr:
+                        type: string
+                experience:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      jobTitle:
+                        type: string
+                      candidateExperienceId:
+                        type: number
+                      companyName:
+                        type: string
+                      employmentType:
+                        type: number
+                      employmentTypeEn:
+                        type: string
+                      employmentTypeAr:
+                        type: string
+                      startDate:
+                        type: string
+                      endDate:
+                        type: string
+                      experienceYears:
+                        type: string
+                      location:
+                        type: number
+                      locationEn:
+                        type: string
+                      locationAr:
+                        type: string
+                      industry:
+                        type: number
+                      industryEn:
+                        type: string
+                      industryAr:
+                        type: string
+                      description:
+                        type: string
+                education:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      educationLevel:
+                        type: number
+                      educationLevelEn:
+                        type: string
+                      educationLevelAr:
+                        type: string
+                      candidateEducationId:
+                        type: number
+                      major:
+                        type: number
+                      majorEn:
+                        type: string
+                      majorAr:
+                        type: string
+                      instituteName:
+                        type: string
+                      graduationCountry:
+                        type: number
+                      graduationCountryEn:
+                        type: string
+                      graduationCountryAr:
+                        type: string
+                      startDate:
+                        type: string
+                      endDate:
+                        type: string
+                      gpaType:
+                        type: number
+                      gpaTypeEn:
+                        type: string
+                      gpaTypeAr:
+                        type: string
+                      gpa:
+                        type: string
+                      description:
+                        type: string
+                interests:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      occupationCode:
+                        type: number
+                      occupationEn:
+                        type: string
+                      occupationAr:
+                        type: string
+                      candidateInterestId:
+                        type: number
+                skills:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      skillName:
+                        type: string
+                      candidateSkillId:
+                        type: number
+                certificates:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      certificateName:
+                        type: string
+                      candidateCertificateId:
+                        type: number
+                      instituteName:
+                        type: string
+                      issueDate:
+                        type: string
+                      expireDate:
+                        type: string
+                publishDate:
+                  type: string
+            variable: message.body
+        outputs:
+          "":
+            schema:
+              type: object
+              properties:
+                resumeStatus:
+                  type: number
+                applicantStatus:
+                  type: number
+                epro:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    location:
+                      type: string
+                    contactNumber:
+                      type: string
+                    email:
+                      type: string
+                aboutMe:
+                  type: string
+                contactDetails:
+                  type: object
+                  properties:
+                    phoneNumber:
+                      type: string
+                    email:
+                      type: string
+                emergencyContacts:
+                  type: object
+                  properties:
+                    phoneNumber:
+                      type: string
+                    relationshipType:
+                      type: string
+                passportDetails:
+                  type: object
+                  properties:
+                    firstName:
+                      type: string
+                    lastName:
+                      type: string
+                    passportNo:
+                      type: string
+                    nationality:
+                      type: string
+                    dateOfBirth:
+                      type: string
+                    gender:
+                      type: string
+                    dateOfExpiry:
+                      type: string
+                    countryCode:
+                      type: string
+                    DateOfIssue:
+                      type: string
+                    IssuePlace:
+                      type: string
+                personalDetails:
+                  type: object
+                  properties:
+                    maritalStatus:
+                      type: string
+                    idNo:
+                      type: number
+                    religion:
+                      type: string
+                    countryOfResidence:
+                      type: string
+                languages:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      language:
+                        type: string
+                      candidateLanguageId:
+                        type: number
+                      proficiency:
+                        type: string
+                experience:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      jobTitle:
+                        type: string
+                      candidateExperienceId:
+                        type: number
+                      companyName:
+                        type: string
+                      employmentType:
+                        type: string
+                      startDate:
+                        type: string
+                      endDate:
+                        type: string
+                      experienceYears:
+                        type: number
+                      location:
+                        type: string
+                      industry:
+                        type: string
+                      description:
+                        type: string
+                education:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      educationLevel:
+                        type: string
+                      candidateEducationId:
+                        type: number
+                      major:
+                        type: string
+                      instituteName:
+                        type: string
+                      graduationCountry:
+                        type: string
+                      startDate:
+                        type: string
+                      endDate:
+                        type: string
+                      gpaType:
+                        type: string
+                      gpa:
+                        type: string
+                      description:
+                        type: string
+                interests:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      occupationCode:
+                        type: string
+                      candidateInterestId:
+                        type: number
+                skills:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      skillName:
+                        type: string
+                      candidateSkillId:
+                        type: number
+                certificates:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      certificateName:
+                        type: string
+                      candidateCertificateId:
+                        type: number
+                      instituteName:
+                        type: string
+                      issueDate:
+                        type: string
+                      expireDate:
+                        type: string
+                publishDate:
+                  type: string
+                ActionType:
+                  type: string
+                action:
+                  type: string
+            variable: message.body
+        actions:
+        - set: .resumeStatus
+          from: .resumeStatus
+        - set: .applicantStatus
+          from: .applicantStatus
+        - set: epro.name
+          from: epro.name
+        version: 2.0.0
+        title: map
+        options:
+          mapEmulateV4EmptyJSONObject: false
+          mapEmulateV4DefaultRequiredProps: false
+          mapEnablePostProcessingJSON: false
+          mapReferenceLimit: 1
+    finally: []
+    catch: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+  application-authentication:
+    certificate: true
+  application-authentication-source:
+  - header
+  - tls-cert

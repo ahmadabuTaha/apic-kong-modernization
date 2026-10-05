@@ -1,0 +1,39 @@
+info:
+  title: mani-product
+  name: mani-product
+  version: 1.0.0
+apis:
+  tip-verifylaborermeccalocationtest:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/tip-verifylaborermeccalocation_test.yaml
+  getworkerexaminationstatustest:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getworkerexaminationstatus_test.yaml
+  getemplistbysevenhundredorcrtest:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getemplistbysevenhundredorcr_test.yaml
+  getsernowticketdetailstest:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getsernowticketdetails_test.yaml
+  rate_test1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/rate_test_1.0.0.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      rate_test1.0.0: {}
+      getsernowticketdetailstest: {}
+      getemplistbysevenhundredorcrtest: {}
+      getworkerexaminationstatustest: {}
+      tip-verifylaborermeccalocationtest: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

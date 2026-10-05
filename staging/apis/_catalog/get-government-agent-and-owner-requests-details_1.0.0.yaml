@@ -1,0 +1,378 @@
+swagger: "2.0"
+info:
+  title: Get Government Agent and Owner Requests Details
+  x-ibm-name: get-government-agent-and-owner-requests-details
+  version: 1.0.0
+  description: This service is used to get government agent and owner requests with
+    its details .
+schemes:
+- https
+basePath: /estabmanagement
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-cmpm-open-file-without-cr-other)/estabmanagement/getgovagentandownerreqsdetails
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  GetGovAgentAndOwnerReqsDetailsRq_MessageType:
+    type: object
+    properties:
+      GetGovAgentAndOwnerReqsDetailsRq:
+        $ref: '#/definitions/GetGovAgentAndOwnerReqsDetailsRq_Type'
+  GetGovAgentAndOwnerReqsDetailsRs_MessageType:
+    type: object
+    properties:
+      GetGovAgentAndOwnerReqsDetailsRs:
+        $ref: '#/definitions/GetGovAgentAndOwnerReqsDetailsRs_Type'
+  GetGovAgentAndOwnerReqsDetailsRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetGovAgentAndOwnerReqsDetailsRq_BodyType'
+  GetGovAgentAndOwnerReqsDetailsRq_BodyType:
+    type: object
+    properties:
+      GovAgentIdNo:
+        type: integer
+      OwnerIDNumber:
+        type: string
+      GovAgentRequestId:
+        type: integer
+      GovAgentRequestStatus:
+        type: integer
+      CreationDate:
+        type: string
+      PageSize:
+        type: integer
+      PageIndex:
+        type: integer
+  GetGovAgentAndOwnerReqsDetailsRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetGovAgentAndOwnerReqsDetailsRs_BodyType'
+  GetGovAgentAndOwnerReqsDetailsRs_BodyType:
+    type: object
+    properties:
+      RequestDetailsList:
+        $ref: '#/definitions/RequestDetailsList_Type'
+      TotalRecordsCount:
+        type: integer
+  RequestDetailsList_Type:
+    type: object
+    properties:
+      RequestDetailsItem:
+        type: array
+        items:
+          $ref: '#/definitions/RequestDetailsItem_Type'
+  RequestDetailsItem_Type:
+    type: object
+    properties:
+      GovAgentRequestId:
+        type: integer
+      GovAgentIdNo:
+        type: integer
+      GovAgentRequestStatus:
+        $ref: '#/definitions/CodeName_Type'
+      LastModifiedDate:
+        type: string
+      RejectionReason:
+        type: string
+      EstablishmentDetails:
+        $ref: '#/definitions/EstablishmentDetails_Type'
+      OwnerDetails:
+        $ref: '#/definitions/OwnerDetails_Type'
+      EstablishmentActivityLicensesDetails:
+        $ref: '#/definitions/EstablishmentActivityLicensesDetails_Type'
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: string
+      NAmeAr:
+        type: string
+      NameEn:
+        type: string
+  EstablishmentDetails_Type:
+    type: object
+    properties:
+      EstablishmentName:
+        type: string
+      EstablishmentType:
+        type: integer
+      NationalUnifiedNumber:
+        type: integer
+      SequenceNumber:
+        type: integer
+      LaborOfficeId:
+        type: integer
+      EstablishmentNationality:
+        type: integer
+      EstablishmentFinancialCalendar:
+        type: integer
+      EstablishmentId:
+        type: integer
+      EstablishmentContactAddress:
+        $ref: '#/definitions/EstablishmentContactAddress_Type'
+  EstablishmentContactAddress_Type:
+    type: object
+    properties:
+      PersonFirstName:
+        type: string
+      PersonLastName:
+        type: string
+      PersonMobileNumber:
+        type: string
+      CityId:
+        type: integer
+      CityName:
+        type: string
+      ZipCode:
+        type: string
+      StreetName:
+        type: string
+      BuildingNo:
+        type: string
+      Email:
+        type: string
+      District:
+        type: string
+      Longitude:
+        type: string
+      Latitude:
+        type: string
+  OwnerDetails_Type:
+    type: object
+    properties:
+      OwnerIDNumber:
+        type: integer
+      OwnerBirthDateGreg:
+        type: string
+      OwnerMobileNumber:
+        type: string
+      OwnerEmail:
+        type: string
+      OwnerFullName:
+        type: string
+      OwnerNationalityId:
+        type: integer
+  EstablishmentActivityLicensesDetails_Type:
+    type: object
+    properties:
+      Isic4ActivityId:
+        type: integer
+      Isic4ActivityName:
+        type: string
+      NitaqActivityId:
+        type: integer
+      NitaqActivityName:
+        type: string
+      LicensesList:
+        $ref: '#/definitions/LicensesList_Type'
+  LicensesList_Type:
+    type: object
+    properties:
+      LicenseItem:
+        type: array
+        items:
+          $ref: '#/definitions/LicenseItem_Type'
+  LicenseItem_Type:
+    type: object
+    properties:
+      LicenseCode:
+        type: integer
+      LicenseName:
+        type: string
+      LicenseNumber:
+        type: string
+      Source:
+        type: string
+      IssueDate:
+        type: string
+      IssueDateGreg:
+        type: string
+      ExpiryDate:
+        type: string
+      ExpiryDateGreg:
+        type: string
+      Area:
+        type: integer
+      AttachmentId:
+        type: string
+      IsMunicipal:
+        type: integer
+      LicenseStatus:
+        type: integer
+      LicenseStatusAr:
+        type: string
+      LicenseStatusEn:
+        type: string
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: string
+      IDNumber:
+        type: string
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /getgovagentandownerreqsdetails:
+    post:
+      operationId: GetEstablishmentProfileInformation
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetGovAgentAndOwnerReqsDetailsRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: this service is used to Get Establishment Profile Information
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetGovAgentAndOwnerReqsDetailsRq_MessageType'
+        description: GetGovAgentAndOwnerReqsDetailsRq
+        required: true

@@ -1,0 +1,69 @@
+swagger: "2.0"
+info:
+  title: SendInvoicesManually
+  x-ibm-name: sendinvoicesmanually
+  version: 1.0.0
+schemes:
+- https
+basePath: /invoices
+security:
+- clientID: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientID:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  properties:
+    target-url:
+      value: http://icp-proxy.qiwa.info:30984/invoices/sendinvoicesmanually
+      description: URL of the proxy policy
+      encoded: false
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-uim-insunifiedinv)/invoices/sendinvoicesmanually
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  application-authentication:
+    certificate: false
+paths:
+  /sendinvoicesmanually:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+      parameters:
+      - name: request
+        in: body
+        required: false
+        schema:
+          type: object

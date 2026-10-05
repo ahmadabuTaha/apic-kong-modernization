@@ -1,0 +1,452 @@
+swagger: "2.0"
+info:
+  title: GetEstablishmentInformation-v2
+  version: 1.0.0
+  description: GetEstablishmentInformation-v2
+  x-ibm-name: getestablishmentinformation-v2
+paths:
+  /GetEstablishmentInformation:
+    post:
+      operationId: GetEstablishmentInformation
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetEstablishmentInformationRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Get Establishment Information
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetEstablishmentInformationRq_MessageType'
+        description: GetEstablishmentInformationRq
+        required: true
+basePath: /qiwa/esb/v2
+securityDefinitions:
+  clientId:
+    type: apiKey
+    x-key-type: client_id
+    name: X-IBM-Client-Id
+    in: header
+  Oauth2.0:
+    type: oauth2
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    flow: application
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+security:
+- clientId: []
+  Oauth2.0:
+  - IntegrationScope
+definitions:
+  GetEstablishmentInformationRq_MessageType:
+    type: object
+    properties:
+      GetEstablishmentInformationRq:
+        $ref: '#/definitions/GetEstablishmentInformationRq_Type'
+  GetEstablishmentInformationRs_MessageType:
+    type: object
+    properties:
+      GetEstablishmentInformationRs:
+        $ref: '#/definitions/GetEstablishmentInformationRs_Type'
+  GetEstablishmentInformationRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetEstablishmentInformationRq_BodyType'
+  GetEstablishmentInformationRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: string
+      EstablishmentSequanceNumber:
+        type: string
+      EstablishmentId:
+        type: string
+      NoteStatusId:
+        type: string
+    required:
+    - LaborOfficeId
+    - EstablishmentSequanceNumber
+    - EstablishmentId
+    - NoteStatusId
+  GetEstablishmentInformationRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetEstablishmentInformationRs_BodyType'
+  GetEstablishmentInformationRs_BodyType:
+    type: object
+    properties:
+      EstablishmentDetails:
+        $ref: '#/definitions/EstablishmentDetails_Type'
+      NotesInformationList:
+        $ref: '#/definitions/NotesInformationList_Type'
+  NotesInformationList_Type:
+    type: object
+    properties:
+      NoteInformation:
+        type: array
+        items:
+          $ref: '#/definitions/NoteInformation_Type'
+  NoteInformation_Type:
+    type: object
+    properties:
+      NoteId:
+        type: string
+      EstablishmentId:
+        type: string
+      NoteText:
+        type: string
+      NoteStatusId:
+        type: string
+      NoteStatusName:
+        type: string
+      NoteTypeId:
+        type: string
+      StartDate:
+        type: string
+      EndDate:
+        type: string
+      NoteSourceId:
+        type: string
+      NoteSourceName:
+        type: string
+      NoteTypeName:
+        type: string
+  EstablishmentDetails_Type:
+    type: object
+    properties:
+      EstablishmentId:
+        type: string
+      PKEstablishmentId:
+        $ref: '#/definitions/PKEstablishmentId'
+      EstablishmentName:
+        type: string
+      LaborOfficeId:
+        type: string
+      SequanceNumber:
+        type: string
+      EstablishmentStatusId:
+        type: string
+      EstablishmentStatus:
+        type: string
+      MainEconomicActivityId:
+        type: string
+      SubEconomicActivityId:
+        type: string
+      MainEconomicActivity:
+        type: string
+      SubEconomicActivity:
+        type: string
+      CRNumber:
+        type: string
+      CRReleaseDate:
+        type: string
+      CREndDate:
+        type: string
+      MunicipalLicenseSource:
+        $ref: '#/definitions/MunicipalLicenseSource'
+      MunicipalLicenseNumber:
+        type: string
+      MunicipalLicenseReleaseDate:
+        type: string
+      MunicipalLicenseEndDate:
+        type: string
+      Notes:
+        type: string
+      SevenHundredNumber:
+        type: string
+      UnifiedNumberId:
+        type: string
+      OwnerId:
+        $ref: '#/definitions/OwnerId'
+      InsertDate:
+        type: string
+      IsMainBranch:
+        type: string
+      District:
+        type: string
+      Street:
+        type: string
+      EstablishmentEmail:
+        $ref: '#/definitions/EstablishmentEmail'
+      PostalCode:
+        type: string
+      ZIPCode:
+        type: string
+      PKOwnerId:
+        type: string
+      UnifiedNationalNumber:
+        type: string
+      UseUnifiedNationalNumberFlag:
+        type: string
+      CityId:
+        type: string
+      CityName:
+        type: string
+      EstablishmentTypeId:
+        $ref: '#/definitions/EstablishmentTypeId'
+      EstablishmentTypeName:
+        $ref: '#/definitions/EstablishmentTypeName'
+      WaselZipCode:
+        $ref: '#/definitions/WaselZipCode'
+      WaselPrimary:
+        $ref: '#/definitions/WaselPrimary'
+      WaselSecondary:
+        $ref: '#/definitions/WaselSecondary'
+      WaselUnitNo:
+        $ref: '#/definitions/WaselUnitNo'
+      WaselCity:
+        $ref: '#/definitions/WaselCity'
+      WaselArea:
+        $ref: '#/definitions/WaselArea'
+      WaselStreet:
+        $ref: '#/definitions/WaselStreet'
+      WaselExpiryDate:
+        $ref: '#/definitions/WaselExpiryDate'
+      WaselStatus:
+        $ref: '#/definitions/WaselStatus'
+      EconomicActivityId:
+        type: string
+      EconomicActivityName:
+        type: string
+      ColorId:
+        type: string
+      NitaqatColor:
+        type: string
+      SizeId:
+        type: string
+      SizeName:
+        type: string
+      ColorCode:
+        type: string
+      Saudis:
+        type: string
+      Foreigners:
+        type: string
+      TotalLaborerCount:
+        type: string
+      EntitySaudiPercentage:
+        type: string
+      EntityId:
+        type: string
+      EntityForeignersCount:
+        type: string
+      EntitySaudisCount:
+        type: string
+      EntityTotalCount:
+        type: string
+      EntitySaudisTotalFactorized:
+        type: string
+      EntityForeignersTotalFactorized:
+        type: string
+      NICAccountNumber:
+        type: string
+      StatusModificationDate:
+        type: string
+      FinancialYear:
+        $ref: '#/definitions/FinancialYear'
+      EconomicActivityNameEn:
+        type: string
+      CrNationalNumber:
+        type: string
+      OriginalEntityId:
+        $ref: '#/definitions/OriginalEntityId'
+      EntityOwners:
+        type: string
+      EstablishmentOwners:
+        type: string
+      CalculationTypeId:
+        $ref: '#/definitions/CalculationTypeId'
+      EntityAjeerLaborers:
+        $ref: '#/definitions/EntityAjeerLaborers'
+      MainBranch:
+        type: boolean
+      CRStatus:
+        $ref: '#/definitions/CRStatus'
+      UN_LaborOfficeId:
+        type: string
+      UN_SequanceNumber:
+        type: string
+  PKEstablishmentId:
+    type: object
+    properties: {}
+  MunicipalLicenseSource:
+    type: object
+    properties: {}
+  OwnerId:
+    type: object
+    properties: {}
+  EstablishmentEmail:
+    type: object
+    properties: {}
+  EstablishmentTypeId:
+    type: object
+    properties: {}
+  EstablishmentTypeName:
+    type: object
+    properties: {}
+  WaselZipCode:
+    type: object
+    properties: {}
+  WaselPrimary:
+    type: object
+    properties: {}
+  WaselSecondary:
+    type: object
+    properties: {}
+  WaselUnitNo:
+    type: object
+    properties: {}
+  WaselCity:
+    type: object
+    properties: {}
+  WaselArea:
+    type: object
+    properties: {}
+  WaselStreet:
+    type: object
+    properties: {}
+  WaselExpiryDate:
+    type: object
+    properties: {}
+  WaselStatus:
+    type: object
+    properties: {}
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      MWResponseTime:
+        type: string
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  FinancialYear:
+    type: object
+    properties: {}
+  OriginalEntityId:
+    type: object
+    properties: {}
+  CalculationTypeId:
+    type: object
+    properties: {}
+  EntityAjeerLaborers:
+    type: object
+    properties: {}
+  CRStatus:
+    type: object
+    properties:
+      Code:
+        type: string
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - gatewayscript:
+        version: 2.0.0
+        title: gatewayscript
+        source: context.set('message.headers.X-API-Secret', '54587485154194846354877848');
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(internal-establishment)/qiwa/esb/getestablishmentinformation
+        follow-redirects: false
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+schemes:
+- https

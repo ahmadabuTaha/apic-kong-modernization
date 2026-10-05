@@ -1,0 +1,275 @@
+swagger: "2.0"
+info:
+  title: GetZakatCertificateById
+  x-ibm-name: getzakatcertificatebyid
+  version: 1.0.0
+  description: Get Zakat Certificate By Id
+host: $(catalog.host)
+schemes:
+- https
+basePath: /common
+security:
+- clientID: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientID:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  properties:
+    target-url:
+      value: http://example.com
+      description: The URL of the target service
+      encoded: false
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(cat-target-hostname)$(cat-target-url-gazt)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  GetZakatCertificateByIdRq_MessageType:
+    type: object
+    properties:
+      GetZakatCertificateByIdRq:
+        $ref: '#/definitions/GetZakatCertificateByIdRq_Type'
+  GetZakatCertificateByIdRs_MessageType:
+    type: object
+    properties:
+      GetZakatCertificateByIdRs:
+        $ref: '#/definitions/GetZakatCertificateByIdRs_Type'
+  GetZakatCertificateByIdRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetZakatCertificateByIdRq_BodyType'
+  GetZakatCertificateByIdRq_BodyType:
+    type: object
+    properties:
+      NationalId:
+        type: integer
+    required:
+    - NationalId
+  GetZakatCertificateByIdRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetZakatCertificateByIdRs_BodyType'
+  GetZakatCertificateByIdRs_BodyType:
+    type: object
+    properties:
+      ZCTaxpayerTIN:
+        type: string
+      ZCnumber:
+        type: string
+      ZCissueDate:
+        $ref: '#/definitions/ZCissueDate_Type'
+      ZCexpiryDate:
+        $ref: '#/definitions/ZCexpiryDate_Type'
+      ZCtype:
+        type: string
+      NationalId:
+        type: integer
+      Name:
+        type: string
+      CRnumber:
+        type: string
+      LicenseNumber:
+        type: string
+      Branches:
+        type: array
+        items:
+          $ref: '#/definitions/BranchItem_Type'
+  ZCissueDate_Type:
+    type: object
+    properties:
+      GregorianDate:
+        type: string
+      HijriDate:
+        type: string
+  ZCexpiryDate_Type:
+    type: object
+    properties:
+      GregorianDate:
+        type: string
+      HijriDate:
+        type: string
+  BranchItem_Type:
+    type: object
+    properties:
+      BranchName:
+        type: string
+      BranchSN:
+        type: integer
+      CRNumber:
+        type: string
+      LicenseNumber:
+        type: string
+      CityName:
+        $ref: '#/definitions/CityName_Type'
+  CityName_Type:
+    type: object
+    properties:
+      CityCode:
+        type: integer
+      CityString:
+        type: string
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: string
+      IDNumber:
+        type: string
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /getzakatcertbyid:
+    post:
+      operationId: GetZakatCertificateById
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetZakatCertificateByIdRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Get Zakat Certificate By Id
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetZakatCertificateByIdRq_MessageType'
+        description: GetZakatCertificateByIdRq
+        required: true

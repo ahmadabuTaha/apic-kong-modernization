@@ -1,0 +1,743 @@
+swagger: "2.0"
+info:
+  title: MCIChangeHistory
+  description: This service is used to get basic CR information from MCI.
+  x-ibm-name: mcichangehistory
+  version: 1.0.0
+schemes:
+- https
+basePath: /external/v1
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+paths:
+  /mcichangehistory/customFromDate/{customFromDate}/customToDate/{customToDate}/yeFIMessageId/{yeFIMessageId}:
+    parameters:
+    - $ref: '#/parameters/X-IBM-Client-Id'
+    - $ref: '#/parameters/customFromDate'
+    - $ref: '#/parameters/customToDate'
+    - $ref: '#/parameters/yeFIMessageId'
+    get:
+      tags:
+      - MCIChangeHistory
+      description: This service is used to get basic CR information from MCI.
+      operationId: mcichangehistory
+      produces:
+      - application/json
+      responses:
+        "200":
+          $ref: '#/responses/Response200'
+        "400":
+          $ref: '#/responses/Response400'
+        "401":
+          $ref: '#/responses/Response401'
+        "403":
+          $ref: '#/responses/Response403'
+        "404":
+          $ref: '#/responses/Response404'
+        "408":
+          $ref: '#/responses/Response408'
+        "409":
+          $ref: '#/responses/Response409'
+        "429":
+          $ref: '#/responses/Response429'
+        "500":
+          $ref: '#/responses/Response500'
+        "501":
+          $ref: '#/responses/Response501'
+        "503":
+          $ref: '#/responses/Response503'
+        "510":
+          $ref: '#/responses/Response510'
+definitions:
+  ResponseModel:
+    type: object
+    description: This response object returned by the get operation
+    properties:
+      yefiResponseHeader:
+        $ref: '#/definitions/yefiResponseHeader_Type'
+      metadata:
+        $ref: '#/definitions/metadata_Type'
+      crChangeHistorylist:
+        type: array
+        items:
+          $ref: '#/definitions/crChangeHistorylist_Type'
+  yefiResponseHeader_Type:
+    type: object
+    properties:
+      yeFISourceId:
+        type: string
+        example: yeFISourceId
+      yeFITimeStamp:
+        type: string
+        example: yeFITimeStamp
+      yeFIMessageId:
+        type: string
+        example: yeFIMessageId
+  metadata_Type:
+    type: object
+    properties:
+      count:
+        type: integer
+        example: 0
+      limit:
+        type: integer
+        example: 0
+      offset:
+        type: integer
+        example: 0
+  crChangeHistorylist_Type:
+    type: object
+    properties:
+      crNationalNumber:
+        type: string
+        example: crNationalNumber
+      entityFullNameAr:
+        type: string
+        example: entityFullNameAr
+      entityFullNameEn:
+        type: string
+        example: entityFullNameEn
+      versionNo:
+        type: integer
+        example: 0
+      actionType:
+        $ref: '#/definitions/actionType_Type'
+      actionDate:
+        $ref: '#/definitions/actionDate_Type'
+      actorType:
+        $ref: '#/definitions/actorType_Type'
+      editTrace:
+        $ref: '#/definitions/editTrace_Type'
+      changeOwnerTrace:
+        $ref: '#/definitions/changeOwnerTrace_Type'
+      convertTrace:
+        $ref: '#/definitions/convertTrace_Type'
+      impactedGovernmentalEntity:
+        type: array
+        items:
+          $ref: '#/definitions/impactedGovernmentalEntity_Type'
+  actionType_Type:
+    type: object
+    properties:
+      actionTypeID:
+        type: integer
+        example: 0
+      actionTypeDescAr:
+        type: string
+        example: actionTypeDescAr
+      actionTypeDescEn:
+        type: string
+        example: actionTypeDescEn
+  actionDate_Type:
+    type: object
+    properties:
+      actionDateGregorian:
+        type: string
+        example: actionDateGregorian
+      actionDateHijri:
+        type: string
+        example: actionDateHijri
+  actorType_Type:
+    type: object
+    properties:
+      actorTypeID:
+        type: integer
+        example: 0
+      actorTypeDescAr:
+        type: string
+        example: actorTypeDescAr
+      actorTypeDescEn:
+        type: string
+        example: actorTypeDescEn
+  editTrace_Type:
+    type: object
+    properties:
+      basicInfoUpdated:
+        type: boolean
+        example: "true"
+      tradeNameUpdated:
+        type: boolean
+        example: "true"
+      activityListUpdated:
+        type: boolean
+        example: "true"
+      capitalUpdated:
+        type: boolean
+        example: "true"
+      managersUpdated:
+        type: boolean
+        example: "true"
+      partnerUpdated:
+        type: boolean
+        example: "true"
+      fiscalYearUpdated:
+        type: boolean
+        example: "true"
+      addressUpdated:
+        type: boolean
+        example: "true"
+      statusUpdated:
+        type: boolean
+        example: "true"
+      ownerDataUpdated:
+        type: boolean
+        example: "true"
+      ownerChanged:
+        type: boolean
+      entityTypeUpdated:
+        type: boolean
+        example: "true"
+      crDataConfirmed:
+        type: boolean
+        example: "true"
+      mainCRUpdated:
+        type: boolean
+        example: "true"
+      liquidationProcessStarted:
+        type: boolean
+        example: "true"
+      oldMainCRNationalNumber:
+        type: string
+        example: oldMainCRNationalNumber
+      newMainCRNationalNumber:
+        type: string
+        example: newMainCRNationalNumber
+      deletedActivityList:
+        type: array
+        items:
+          $ref: '#/definitions/deletedActivityList_Type'
+      oldTradeName:
+        $ref: '#/definitions/oldTradeName_Type'
+      newTradeName:
+        $ref: '#/definitions/oldTradeName_Type'
+      newCRconfirmDate:
+        $ref: '#/definitions/newCRconfirmDate_Type'
+      crOldStatus:
+        $ref: '#/definitions/crOldStatus_Type'
+      crNewStatus:
+        $ref: '#/definitions/crOldStatus_Type'
+  changeOwnerTrace_Type:
+    type: object
+    properties:
+      newOwnerInfo:
+        $ref: '#/definitions/newOwnerInfo_Type'
+      oldOwnerInfo:
+        $ref: '#/definitions/newOwnerInfo_Type'
+  newOwnerInfo_Type:
+    type: object
+    properties:
+      identifierType:
+        $ref: '#/definitions/identifierType_Type'
+      identifierNo:
+        type: string
+        example: identifierNo
+      ownerNameAr:
+        type: string
+        example: ownerNameAr
+      ownerNameEn:
+        type: string
+        example: ownerNameEn
+      nationality:
+        $ref: '#/definitions/nationality_Type'
+  identifierType_Type:
+    type: object
+    properties:
+      identifierTypeID:
+        type: integer
+        example: 0
+      identifierTypeDescAr:
+        type: string
+        example: identifierTypeDescAr
+      identifierTypeDescEn:
+        type: string
+        example: identifierTypeDescEn
+  nationality_Type:
+    type: object
+    properties:
+      nationalityID:
+        type: integer
+        example: 0
+      nationalityDescriptionAr:
+        type: string
+        example: nationalityDescriptionAr
+      nationalityDescriptionEn:
+        type: string
+        example: nationalityDescriptionEn
+  convertTrace_Type:
+    type: object
+    properties:
+      oldEntityInfo:
+        $ref: '#/definitions/oldEntityInfo_Type'
+      newEntityInfo:
+        $ref: '#/definitions/oldEntityInfo_Type'
+  oldEntityInfo_Type:
+    type: object
+    properties:
+      entityType:
+        $ref: '#/definitions/entityType_Type'
+      companyForm:
+        $ref: '#/definitions/companyForm_Type'
+      companyCharacterLists:
+        $ref: '#/definitions/companyCharacterLists_Type'
+  entityType_Type:
+    type: object
+    properties:
+      entityTypeID:
+        type: integer
+        example: 0
+      entityTypeDescAr:
+        type: string
+        example: entityTypeDescAr
+      entityTypeDescEn:
+        type: string
+        example: entityTypeDescEn
+  companyForm_Type:
+    type: object
+    properties:
+      companyFormID:
+        type: integer
+        example: 0
+      companyFormDescriptionAr:
+        type: string
+        example: companyFormDescriptionAr
+      companyFormDescriptionEn:
+        type: string
+        example: companyFormDescriptionEn
+  companyCharacterLists_Type:
+    type: object
+    properties:
+      companyCharacterID:
+        type: integer
+        example: 0
+      companyCharacterDescriptionAr:
+        type: string
+        example: companyCharacterDescriptionAr
+      companyCharacterDescriptionEn:
+        type: string
+        example: companyCharacterDescriptionEn
+  impactedGovernmentalEntity_Type:
+    type: object
+    properties:
+      governmentalEntityNationalNo:
+        type: string
+        example: governmentalEntityNationalNo
+      governmentalEntityNameAr:
+        type: string
+        example: governmentalEntityNameAr
+      governmentalEntityNameEn:
+        type: string
+        example: governmentalEntityNameEn
+  deletedActivityList_Type:
+    type: object
+    properties:
+      governmentalEntityNationalNo:
+        type: string
+        example: governmentalEntityNationalNo
+      governmentalEntityNameAr:
+        type: string
+        example: governmentalEntityNameAr
+      governmentalEntityNameEn:
+        type: string
+        example: governmentalEntityNameEn
+  oldTradeName_Type:
+    type: object
+    properties:
+      entityFullNameAr:
+        type: string
+        example: entityFullNameAr
+      entityFullNameEn:
+        type: string
+        example: entityFullNameEn
+  newCRconfirmDate_Type:
+    type: object
+    properties:
+      crConfirmDateGregorian:
+        type: string
+        example: crConfirmDateGregorian
+      crConfirmDateHijri:
+        type: string
+        example: crConfirmDateHijri
+  crOldStatus_Type:
+    type: object
+    properties:
+      crStatusID:
+        type: string
+        example: 0
+      crStatusDescAr:
+        type: string
+        example: crStatusDescAr
+      crStatusDescEn:
+        type: string
+        example: crStatusDescEn
+  LocaleDataModel:
+    type: object
+    additionalProperties:
+      type: string
+    example:
+      en-US: English Value
+      ar-SA: Arabic Value
+  IntegerNumberModel:
+    type: object
+    description: This object use for integer numbers
+    additionalProperties:
+      type: integer
+      example: 1
+  ErrorModel:
+    type: object
+    required:
+    - errorCode
+    - errorMessage
+    properties:
+      errorCode:
+        type: string
+        example: EXXXX000
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+parameters:
+  X-IBM-Client-Id:
+    in: header
+    name: X-IBM-Client-Id
+    description: Client id issued by security server
+    required: true
+    type: string
+  X-IBM-Client-Secret:
+    in: header
+    name: X-IBM-Client-Secret
+    description: Client secret issued by security server
+    required: true
+    type: string
+  X-Request-Id:
+    in: header
+    name: X-Request-Id
+    description: X-Request-Id returned in the response header
+    required: false
+    type: string
+  UserId:
+    in: header
+    name: UserId
+    description: UserI d
+    required: false
+    type: integer
+  customFromDate:
+    in: path
+    name: customFromDate
+    description: customFromDate
+    required: true
+    type: string
+  customToDate:
+    in: path
+    name: customToDate
+    description: customToDate
+    required: true
+    type: string
+  yeFIMessageId:
+    in: path
+    name: yeFIMessageId
+    description: yeFIMessageId
+    required: true
+    type: string
+  offset:
+    in: query
+    name: offset
+    description: offset
+    required: false
+    type: integer
+  limit:
+    in: query
+    name: limit
+    description: limit
+    required: false
+    type: integer
+responses:
+  Response200:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ResponseModel'
+  Response201:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+      Location:
+        type: string
+        description: Id url encoded
+  Response204:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response400:
+    description: The request was rejected by the server due to malformed syntax. Bad
+      Request.
+  Response401:
+    description: The request could not be completed due to lack of valid credentials.
+      Authentication.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response403:
+    description: The request could not be completed because it is not authorized.
+      Authorization
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response404:
+    description: The server has not found anything matching the Request-URI.
+  Response408:
+    description: The client did not produce a request within the time that the server
+      was prepared to wait.
+  Response409:
+    description: The request could not be completed due to a conflict with the current
+      state of the resource. Usually business validation errors will be returned in
+      the body
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response429:
+    description: The request was sent too many times in a given amount of time
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response500:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response501:
+    description: The server does not support the functionality required and does not
+      recognize the request
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response503:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response510:
+    description: Extensions to the request are required for the server to fulfil it.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - map:
+        version: 2.0.0
+        title: map
+        inputs:
+          yeFIMessageId:
+            schema:
+              type: string
+            variable: request.parameters.yeFIMessageId
+          customFromDate:
+            schema:
+              type: string
+            variable: request.parameters.customFromDate
+          limit:
+            schema:
+              type: integer
+              format: int32
+            variable: request.parameters.limit
+          offset:
+            schema:
+              type: integer
+              format: int32
+            variable: request.parameters.offset
+          customToDate:
+            schema:
+              type: string
+            variable: request.parameters.customToDate
+        outputs:
+          "":
+            schema:
+              type: object
+              properties:
+                customFromDate:
+                  type: string
+                  name: customFromDate
+                customToDate:
+                  type: string
+                  name: customToDate
+                offset:
+                  type: number
+                  name: offset
+                limit:
+                  type: number
+                  name: limit
+                yeFIMessageId:
+                  type: string
+                  name: yeFIMessageId
+              example: '{"customFromDate":"1995-09-11","customToDate":"2024-12-18","offset":1,"limit":10,"yeFIMessageId":"84b07f4d-c081-4e4c-a962-27540384fb19"}'
+            variable: message.body
+        actions:
+        - set: .customFromDate
+          from: customFromDate
+        - set: .customToDate
+          from: customToDate
+        - set: .offset
+          from: offset
+        - set: .limit
+          from: limit
+        - set: .yeFIMessageId
+          from: yeFIMessageId
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\r\nvar cfg={\r\n    \"serviceCode\" :
+          \"MCCH0001\",\r\n    \"channelId\" : \"Integration\",\r\n    \"requestName\"
+          : \"MCIChangeHistoryRq\",\r\n    \"responseName\": \"MCIChangeHistoryRs\",\r\n
+          \   \"errorMap\" :{\r\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid
+          Request\"}\r\n    }\r\n    \r\n};\r\napim.setvariable('cfg',cfg);"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare_Request
+        source: "var apim = require('apim');\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\nvar appname
+          = apim.getvariable('client.app.name');\r\n\r\nvar appcReq = {\r\n    [cfg.requestName]:{\r\n
+          \       \"Header\" : {\r\n            \"TransactionId\" : millisecondsvalue,\r\n
+          \           \"ChannelId\": cfg.channelId,\r\n            \"SessionId\":
+          apim.getvariable('message.headers.X-Request-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode,\r\n            \"DebugFlag\":
+          \"1\",\r\n            \"UserInfo\": {\r\n                \"UserId\": apim.getvariable('message.headers.UserId'),\r\n
+          \               \"IDNumber\": apim.getvariable('message.headers.IDNumber')\t\t\t\t\r\n
+          \           },\r\n            \"UDF\": {\r\n                \"KeyValueArr\":
+          [\r\n                    {\r\n                        \"key\": \"Product\",\r\n
+          \                       \"value\": \"External-MCI-Product\"\r\n                    },\r\n
+          \                   {\r\n                        \"key\": \"Client\",\r\n
+          \                       \"value\": appname\r\n                    }\r\n
+          \               ]\r\n            }\t\t\t\r\n        },\r\n        \"Body\"
+          : apim.getvariable('message.body')\r\n            \r\n    }\r\n};\r\n\r\nif
+          (typeof OperatorId !== 'undefined')\r\n    appcReq[cfg.requestName].Header.UserInfo
+          = {\r\n        \"IDNumber\" : OperatorId\r\n    };\r\nsession.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n    \r\n    \r\n\r\n    //return
+          the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour
+          + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: POST
+        target-url: $(ace-tip-mci)/external/mcichangehistory
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: allowlist
+          values: []
+        header-control:
+          type: blocklist
+          values: []
+        inject-proxy-headers: true
+        persistent-connection: true
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_Headers
+        source: "var apim = require('apim');\r\napim.output('application/json');\r\nvar
+          message = apim.getvariable('message.body');\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          Header = message[cfg.responseName].Header;\r\nvar TransactionId = Header.TransactionId;\r\nvar
+          ChannelId = Header.ChannelId;\r\nvar RequestTime = Header.RequestTime;\r\nvar
+          SessionId = Header.SessionId;\r\nvar MWRequestTime = Header.MWRequestTime;\r\nvar
+          MWResponseTime = Header.MWResponseTime;\r\nvar status = Header.ResponseStatus.Status;\r\nvar
+          code = Header.ResponseStatus.Code;\r\napim.setvariable('message.headers.Transaction-Id',TransactionId,'add');\r\napim.setvariable('message.headers.Channel-Id',ChannelId,'add');\r\nif
+          (RequestTime !== 'undefined')\r\napim.setvariable('message.headers.RequestTime',RequestTime,'add');\r\nif
+          (SessionId !== 'undefined')\r\napim.setvariable('message.headers.X-Request-Id',SessionId,'add');\r\nif
+          (MWRequestTime !== 'undefined')\r\napim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');\r\nif
+          (MWResponseTime !== 'undefined')\r\napim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');\r\napim.setvariable('message.headers.Response-Status',status,'add');\r\napim.setvariable('message.headers.Response-Code',code,'add');"
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Response
+              source: "var apim = require('apim');\r\nvar message = apim.getvariable('message.body');\r\nvar
+                cfg = apim.getvariable('cfg');\r\nvar body = message[cfg.responseName].Body;\r\nsession.output.write(body);\r\napim.output('application/json');"
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Error
+              source: "var apim = require('apim');\r\nvar message = apim.getvariable('message.body');\r\nvar
+                cfg = apim.getvariable('cfg');          \r\nvar error = {\r\n  \"errorCode\":
+                message[cfg.responseName].Header.ResponseStatus.Code,\r\n  \"errorMessage\":
+                {\r\n    \"en-US\": message[cfg.responseName].Header.ResponseStatus.EnglishMsg,\r\n
+                \   \"ar-SA\": message[cfg.responseName].Header.ResponseStatus.ArabicMsg\r\n
+                \ }\r\n};\r\n\r\nvar httperror=0;\r\nif(cfg.errorMap){\r\n    if(cfg.errorMap[error.errorCode]){\r\n
+                \      httperror = cfg.errorMap[error.errorCode].code;\r\n       \r\n
+                \      //var errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\r\n
+                \      //var details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\r\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\r\n    }\r\n}\r\nif(httperror
+                == 0){\r\n   httperror = 409;\r\n   // apim.error('ERROR',400,'Bad
+                Request','Invalid request');\r\n}\r\napim.setvariable('message.status.code',httperror,'set');\r\n\r\nsession.output.write(error);\r\napim.output('application/json');"
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload

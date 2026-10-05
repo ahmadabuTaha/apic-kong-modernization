@@ -1,0 +1,36 @@
+info:
+  version: 1.0.0
+  title: OSH
+  name: osh
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      osh-saveestablishmentifnotexist1.0.0: {}
+      osh-getallperformancecardrequestwithfilter1.0.0: {}
+      osh-updateselfassessmentquestion1.0.0: {}
+      osh-uploadfile1.0.0: {}
+product: 1.0.0
+apis:
+  osh-saveestablishmentifnotexist1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-saveestablishmentifnotexist_1.0.0.yaml
+  osh-getallperformancecardrequestwithfilter1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-getallperformancecardrequestwithfilter_1.0.0.yaml
+  osh-updateselfassessmentquestion1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-updateselfassessmentquestion_1.0.0.yaml
+  osh-uploadfile1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/osh-uploadfile_1.0.0.yaml
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

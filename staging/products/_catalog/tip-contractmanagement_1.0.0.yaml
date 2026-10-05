@@ -1,0 +1,32 @@
+info:
+  version: 1.0.0
+  title: TIP-ContractManagement
+  name: tip-contractmanagement
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      externalservices_createemploymentcontract1.0.0: {}
+      externalservices_updateemploymentcontract1.0.0: {}
+      externalservices_getemploymentcontractslist1.0.0: {}
+apis:
+  externalservices_createemploymentcontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/externalservices_createemploymentcontract_1.0.0_1.yaml
+  externalservices_updateemploymentcontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/externalservices_updateemploymentcontract_1.0.0_1.yaml
+  externalservices_getemploymentcontractslist1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/externalservices_getemploymentcontractslist_1.0.0_1.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

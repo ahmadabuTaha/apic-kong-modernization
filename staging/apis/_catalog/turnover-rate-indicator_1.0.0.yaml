@@ -1,0 +1,259 @@
+swagger: "2.0"
+info:
+  title: TurnOverIndicatorRate
+  x-ibm-name: turnover-rate-indicator
+  version: 1.0.0
+  description: This API retrieves the TurnOver Rate Details
+schemes:
+- https
+basePath: /indicators
+security:
+- OAuth2.0: []
+- clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://gw-apic.qiwa.info/takamol/staging/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  properties:
+    target-url:
+      value: http://prow-indicators-http-ace.apps.stg.qiwa-nonprod.local/external/getturnoverrate
+      description: The URL of the target service
+      encoded: false
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: http://prow-indicators-http-ace.apps.stg.qiwa-nonprod.local/external/getturnoverrate
+        follow-redirects: false
+        inject-proxy-headers: true
+    finally: []
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  buffering: true
+  application-authentication:
+    certificate: false
+  catalogs: {}
+definitions:
+  TurnOverRateRequest_MessageType:
+    type: object
+    properties:
+      TurnOverIndicatorRq:
+        $ref: '#/definitions/TurnOverRateRq_Type'
+  TurnOverRateResponse_MessageType:
+    type: object
+    properties:
+      TurnOverIndicatorRs:
+        $ref: '#/definitions/TurnOverRateRs_Type'
+  TurnOverRateRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/RequestHeader_Type'
+      Body:
+        $ref: '#/definitions/TurnOverRateRq_Body'
+  TurnOverRateRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/TurnOverRateRs_Body'
+  RequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      ServiceCode:
+        type: string
+        default: NPC00001
+      DebugFlag:
+        type: string
+        default: 1
+  ResponseHeader_Type:
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      ServiceCode:
+        type: string
+        default: PATOI001
+      ResponseStatus:
+        $ref: '#/definitions/ResponseStatus'
+      BackendError:
+        $ref: '#/definitions/BackendError'
+  ResponseStatus:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+  BackendError:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+  TurnOverRateRq_Body:
+    type: object
+    required:
+    - LaborOfficeID
+    - SequenceNumber
+    properties:
+      LaborOfficeID:
+        type: number
+      SequenceNumber:
+        type: number
+  TurnOverRateRs_Body:
+    type: object
+    required:
+    - TurnOverRate
+    properties:
+      TurnOverRate:
+        $ref: '#/definitions/TurnOverRate_Type'
+  TurnOverRate_Type:
+    type: object
+    required:
+    - EstbalishmentRate
+    - EntityRate
+    - UnifiedRate
+    - SectorRate
+    - TurnoverChange
+    - EmployeeStatistics
+    properties:
+      EstbalishmentRate:
+        type: number
+        example: 0
+      EntityRate:
+        type: number
+        example: 100
+      UnifiedRate:
+        type: number
+        example: 0
+      SectorRate:
+        type: number
+        example: 0
+      TurnoverChange:
+        type: number
+        example: 0
+      EmployeeStatistics:
+        $ref: '#/definitions/EmployeeStatistics_Type'
+  Rate_Type:
+    type: object
+    properties:
+      EstablishmentRate:
+        type: number
+        example: 67
+      EntityRate:
+        type: number
+        example: 56
+      UnifiedRate:
+        type: number
+        example: 70
+      SectorRate:
+        type: number
+        example: 80
+  EmployeeStatistics_Type:
+    type: object
+    properties:
+      NewEmployeesSinceLastMonth:
+        type: integer
+      NewEmployeesSinceLastMonthChange:
+        type: integer
+      EmployeesDepartureSinceLastMonth:
+        type: integer
+      EmployeesDepartureSinceLastMonthChange:
+        type: integer
+      CurrentNumberOfEmployees:
+        type: integer
+      CurrentNumberOfEmployeesChange:
+        type: integer
+paths:
+  /turnoverrate:
+    post:
+      tags:
+      - TurnOver Rate
+      description: Used to get TurnOver Rate
+      operationId: getTurnOverRate
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/TurnOverRateRequest_MessageType'
+        description: TurnOverRateRq
+        required: true
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/TurnOverRateResponse_MessageType'

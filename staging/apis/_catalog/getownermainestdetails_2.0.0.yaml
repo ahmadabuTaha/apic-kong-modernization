@@ -1,0 +1,309 @@
+swagger: "2.0"
+info:
+  title: GetOwnerMainEstDetails
+  x-ibm-name: getownermainestdetails
+  version: 2.0.0
+  description: Get Owner and Main Establishment Details
+schemes:
+- https
+basePath: /estabmanagement
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-cmpm-dashboard-profile)/estabmanagement/getownermainestdetails
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  GetOwnerMainEstDetailsRq_MessageType:
+    type: object
+    properties:
+      GetOwnerMainEstDetailsRq:
+        $ref: '#/definitions/GetOwnerMainEstDetailsRq_Type'
+  GetOwnerMainEstDetailsRs_MessageType:
+    type: object
+    properties:
+      GetOwnerMainEstDetailsRs:
+        $ref: '#/definitions/GetOwnerMainEstDetailsRs_Type'
+  GetOwnerMainEstDetailsRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetOwnerMainEstDetailsRq_BodyType'
+  GetOwnerMainEstDetailsRq_BodyType:
+    type: object
+    properties:
+      IDNumber:
+        type: string
+    required:
+    - IDNumber
+  GetOwnerMainEstDetailsRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetOwnerMainEstDetailsRs_BodyType'
+  GetOwnerMainEstDetailsRs_BodyType:
+    type: object
+    properties:
+      MainEstDetails:
+        $ref: '#/definitions/MainEstDetails_Type'
+      OwnerDetails:
+        $ref: '#/definitions/OwnerDetails_Type'
+    required:
+    - OwnerDetails
+  MainEstDetails_Type:
+    type: object
+    properties:
+      MainUNEstablishmentId:
+        type: integer
+      MainUNLaborOfficeId:
+        type: integer
+      MainUNSequenceNumber:
+        type: string
+      MainUnifiedNumberId:
+        type: string
+      MainEstLaborOfficeId:
+        type: string
+      MainEstSequenceNumber:
+        type: string
+      MainUnifiedNationalNumber:
+        type: string
+      MainEstablishmentName:
+        type: string
+      MainEstablishmentNationality:
+        $ref: '#/definitions/IDName_Type'
+      MainOwnershipType:
+        type: string
+      MainOwner:
+        $ref: '#/definitions/IDName_Type'
+      MainSevenHundredNumber:
+        type: string
+      MainLegalType:
+        type: string
+      MainIsic4ActivityId:
+        type: integer
+      IsHRSD:
+        type: integer
+      Status:
+        type: integer
+      IsMain:
+        type: integer
+  IDName_Type:
+    type: object
+    properties:
+      ID:
+        type: integer
+      Name:
+        type: string
+    required:
+    - ID
+    - Name
+  OwnerDetails_Type:
+    type: object
+    properties:
+      Name:
+        type: string
+      NationalNumber:
+        type: string
+      DateOfBirth:
+        type: string
+      Nationality:
+        $ref: '#/definitions/City_Type'
+      Gender:
+        $ref: '#/definitions/City_Type'
+      Origin:
+        type: string
+      DateOfExpiration:
+        type: string
+      MobileNumber:
+        type: string
+      City:
+        $ref: '#/definitions/City_Type'
+      StreetName:
+        type: string
+      Email:
+        type: string
+      ZipCode:
+        type: string
+      BuildingNo:
+        type: string
+  City_Type:
+    type: object
+    properties:
+      ID:
+        type: integer
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+    required:
+    - ID
+    - NameAr
+    - NameEn
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: string
+      IDNumber:
+        type: string
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /getownermainestdetails:
+    post:
+      operationId: GetOwnerMainEstDetails
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetOwnerMainEstDetailsRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Get Owner and Main Establishment Details
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetOwnerMainEstDetailsRq_MessageType'
+        description: GetOwnerMainEstDetailsRq
+        required: true

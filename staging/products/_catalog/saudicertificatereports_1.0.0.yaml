@@ -1,0 +1,222 @@
+swagger: "2.0"
+info:
+  title: SaudiCertificateReports
+  x-ibm-name: saudicertificatereports
+  version: 1.0.0
+schemes:
+- https
+basePath: /reporting
+security:
+- {}
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - set-variable:
+        version: 2.0.0
+        title: set-variable
+        actions:
+        - set: Input
+          value: $(message.body)
+          type: any
+    - invoke:
+        version: 2.0.0
+        title: invoke-LogInterceptor
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        target-url: $(ace-rept-rpt-reportingalllogs)/LogInterceptor
+    - gatewayscript:
+        version: 2.0.0
+        title: setting-contentType
+        source: |2+
+           var apim = require('apim');
+          var Input = apim.getvariable('Input');
+          session.output.write(Input)
+          apim.output('application/json');
+
+    - gatewayscript:
+        version: 2.0.0
+        title: setting-rootTag
+        source: |2-
+           var apim = require('apim');
+          var Input = apim.getvariable('message.body');
+          var keys = Object.keys(Input);
+          var root = keys[0];
+          apim.setvariable('message.headers.root',root,'add');
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: ($header("root") = 'ValidateSaudiCertificate' or $header("root")
+            = 'ValidateSaudiCertificateResult')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: invoke
+              backend-type: detect
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              timeout: 60
+              verb: keep
+              chunked-uploads: true
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error: []
+              target-url: $(ace-rept-saudicert-interceptor)/report/valsaudicert
+        - condition: ($header("root") = 'CheckSaudiCertifEligibilityRq' or  $header("root")=
+            'CheckSaudiCertifEligibilityRs')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: invoke
+              backend-type: detect
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              timeout: 60
+              verb: keep
+              chunked-uploads: true
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error: []
+              target-url: $(ace-rept-saudicert-interceptor)/report/CheckSaudiCertifEligibilityRequest
+        - condition: ($header("root") = 'CreateSaudiCertificateRq' or  $header("root")=
+            'CreateSaudiCertificateRs')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: invoke
+              backend-type: detect
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              timeout: 60
+              verb: keep
+              chunked-uploads: true
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error: []
+              target-url: $(ace-rept-saudicert-interceptor)/report/CreateSaudiCertificateRequest
+        - condition: ($header("root") = 'SubmitSaudiCertificate' or $header("root")
+            = 'SubmitSaudiCertificateResult')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: invoke
+              backend-type: detect
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              timeout: 60
+              verb: keep
+              chunked-uploads: true
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error: []
+              target-url: $(ace-rept-saudicert-interceptor)/report/subsaudicert
+        - condition: ($header("root") = 'ValidEstSaudiCertificateRq' or  $header("root")=
+            'ValidEstSaudiCertificateRs')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: invoke
+              backend-type: detect
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              timeout: 60
+              verb: keep
+              chunked-uploads: true
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error: []
+              target-url: $(ace-rept-saudicert-interceptor)/report/ValidEstSaudiCertificateRequest
+        - otherwise:
+          - set-variable:
+              version: 2.0.0
+              title: set-variable
+              actions:
+              - set: message.status.code
+                value: "442"
+                type: string
+              - set: message.content-type
+                value: application/json
+                type: string
+              - set: message.body
+                value: '{ "httpCode": "422",                  "httpMessage": "Invalid",                 "moreInformation":
+                  "The request body is invalid"}'
+                type: string
+    catch: []
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  activity-log:
+    success-content: payload
+    error-content: payload
+    enabled: true
+  buffering: true
+paths:
+  /saudicertificatereports:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []

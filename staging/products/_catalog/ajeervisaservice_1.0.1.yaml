@@ -1,0 +1,3142 @@
+swagger: "2.0"
+info:
+  x-ibm-name: ajeervisaservice
+  title: AjeerVisaService
+  version: 1.0.1
+schemes:
+- https
+host: $(catalog.host)
+basePath: /external/v1/ajeervisaservice
+consumes:
+- application/json
+produces:
+- application/json
+parameters:
+  X-IBM-Client-Id:
+    in: header
+    name: X-IBM-Client-Id
+    description: Client id issued by security server
+    required: true
+    type: string
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  type: wsdl-to-rest
+  testable: true
+  enforced: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  wsdl-definition:
+    wsdl: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ajeervisaservice:1.0.wsdl
+    service: AjeerVisaService
+    port: endpoint
+    soap-version: "1.1"
+  properties:
+    x-ibm-gateway-optimize-schema-definition:
+      value: "true"
+      description: Optimize map schema loading
+      encoded: false
+  assembly:
+    execute:
+    - switch:
+        title: switch
+        case:
+        - condition: (($httpVerb() = 'POST' and $operationPath() = '/AddCredit'))
+          execute:
+          - parse:
+              version: 2.0.0
+              title: parse
+              parse-settings-reference:
+                default: apic-default-parsesettings
+              input: request
+              output: message
+              use-content-type: true
+          - map:
+              inputs:
+                request:
+                  schema:
+                    $ref: '#/definitions/AddCreditInput'
+                  variable: message.body
+                  content: application/json
+              outputs:
+                content-type:
+                  schema:
+                    type: string
+                  variable: message.headers.content-type
+                body:
+                  schema:
+                    $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/AddCreditInput'
+                  variable: message.body
+                  content: text/xml
+                SOAPAction:
+                  schema:
+                    type: string
+                  variable: message.headers.SOAPAction
+              actions:
+              - set: content-type
+                default: text/xml
+              - set: SOAPAction
+                default: http://mlsd.gov.sa/services/IAjeerVisaService/AddCredit
+              - set: body.Envelope.Header
+                from: request.header
+              - set: body.Envelope.Body
+                from: request
+              title: 'AddCredit: input'
+              options:
+                includeEmptyXMLElements: false
+                inlineNamespaces: false
+                mapEnablePostProcessingJSON: true
+                mapResolveXMLInputDataType: true
+                mapResolveApicVariables: false
+              version: 2.1.0
+          - invoke:
+              version: 2.3.0
+              title: invoke
+              backend-type: detect
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: POST
+              chunked-uploads: true
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              websocket-upgrade: false
+              graphql-send-type: detect
+              target-url: http://qiwadp8037-dp.apps.stg.qiwa-nonprod.local/AjeerVisaService.svc
+          - parse:
+              version: 2.2.0
+              title: parse
+              parse-settings-reference:
+                default: apic-default-parsesettings
+          - xml-to-json:
+              version: 2.0.0
+              title: xml-to-json
+          - gatewayscript:
+              version: 2.0.0
+              title: FirstInvokeCheck
+              source: "\r\nvar apim = require('apim');\r\nvar body = apim.getvariable('message.body');\r\nvar
+                response;\r\n\r\nif (typeof body === 'string') {\r\n    body = JSON.parse(body);\r\n}\r\n\r\n//
+                ROOT ENVELOPE\r\nvar envelope = body[\"s:Envelope\"];\r\nvar bodyNode
+                = envelope?.[\"s:Body\"];\r\n\r\n\r\nif (bodyNode && bodyNode[\"s:Fault\"])
+                {\r\n\r\n    var fault = bodyNode[\"s:Fault\"];\r\n    var faultContract
+                = fault.detail?.FaultContract;\r\n\r\n    response = {\r\n        errorCode:
+                faultContract?.ErrorCode?.$,\r\n        errorMessage: {\r\n            \"en-US\":
+                faultContract?.ErrorMessage?.$,\r\n            \"ar-SA\": faultContract?.ErrorMessageLocal?.$\r\n
+                \       }\r\n    };\r\n    apim.setvariable('message.status.code',
+                409);\r\n    apim.output('application/json');\r\n    session.output.write(response);\r\n
+                \   return;\r\n}\r\nvar addCredit = bodyNode.addCreditResponseObject;\r\n\r\nresponse
+                = {\r\n    CreditNumber: addCredit?.CreditNumber?.$,\r\n    IsSuccceded:
+                addCredit?.IsSuccceded?.$\r\n};\r\n\r\napim.output('application/json');\r\nsession.output.write(response);\r\n"
+          - gatewayscript:
+              version: 2.0.0
+              title: ServiceConfig
+              source: "var apim = require('apim');\r\nvar cfg={\r\n    \"serviceCode\"
+                : \"AC00001\",\r\n    \"channelId\" : \"Qiwa\",\r\n    \"requestName\"
+                : \"AddCreditRq\",\r\n    \"responseName\": \"AddCreditRs\",\r\n    \"errorMap\"
+                :{\r\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid Request\"}\r\n
+                \   }\r\n    \r\n};\r\nvar DPResponse = apim.getvariable('message.body');\r\napim.setvariable('DPResponse',DPResponse);\r\napim.setvariable('cfg',cfg);"
+          - gatewayscript:
+              version: 2.0.0
+              title: PrepareRequest
+              source: "var apim = require('apim');\r\nvar millisecondsvalue = \"\"+(new
+                Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+                OperatorId=apim.getvariable('message.headers.Operator-Id');\r\nvar
+                appname = apim.getvariable('client.app.name');\r\napim.setvariable('TransactionID1',millisecondsvalue);\r\nvar
+                appcReq = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n
+                \           \"TransactionId\" : millisecondsvalue,\r\n            \"ChannelId\":
+                cfg.channelId,\r\n            \"SessionId\": apim.getvariable('message.headers.X-Request-Id'),\r\n
+                \           \"RequestTime\" : formatDate(dt),\r\n            \"ServiceCode\":
+                cfg.serviceCode,\r\n            \"DebugFlag\": \"1\",\r\n            \"UserInfo\":
+                {\r\n                \"UserId\": apim.getvariable('message.headers.UserId'),\r\n
+                \               \"IDNumber\": apim.getvariable('message.headers.IDNumber')\t\t\t\t\r\n
+                \           },\r\n            \"UDF\": {\r\n                \"KeyValueArr\":
+                [\r\n                    {\r\n                        \"key\": \"Product\",\r\n
+                \                       \"value\": \"Ajeer\"\r\n                    },\r\n
+                \                   {\r\n                        \"key\": \"Client\",\r\n
+                \                       \"value\": appname\r\n                    }\r\n
+                \               ]\r\n            }\t\t\t\r\n        },\r\n        \"Body\"
+                : apim.getvariable('request.body')\r\n            \r\n    }\r\n};\r\n\r\nif
+                (typeof OperatorId !== 'undefined')\r\n    appcReq[cfg.requestName].Header.UserInfo
+                = {\r\n        \"IDNumber\" : OperatorId\r\n    };\r\napim.setvariable('payload',appcReq);
+                \    \r\n//session.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+                formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+                \   //get the day\r\n    //convert day to string\r\n    var day =
+                d.getDate().toString();\r\n    //get the year\r\n    var year = d.getFullYear();\r\n
+                \   var hour = d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+                \   var second = d.getSeconds().toString();\r\n    var millisecond
+                = d.getMilliseconds().toString();\r\n    //pull the last two digits
+                of the year\r\n    year = year.toString();\r\n    \r\n    //increment
+                month by 1 since it is 0 indexed\r\n    //converts month to a string\r\n
+                \   month = (month + 1).toString();\r\n\r\n    //if month is 1-9 pad
+                right with a 0 for two digits\r\n    if (month.length === 1)\r\n        month
+                = \"0\" + month;\r\n\r\n    //if day is between 1-9 pad right with
+                a 0 for two digits\r\n    if (day.length === 1)\r\n        day = \"0\"
+                + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\" +
+                hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+                + minitue;\r\n\r\n    if (second.length === 1)\r\n        second =
+                \"0\" + second;\r\n        \r\n    if (millisecond.length == 1)\r\n
+                \       millisecond = \"00\" + millisecond;\r\n        \r\n    if
+                (millisecond.length == 2)\r\n        millisecond = \"0\" + millisecond;\r\n
+                \   \r\n    \r\n\r\n    //return the string \"MMddyy\"\r\n    return
+                year+\"-\"+month+\"-\"+day+\" \"+hour + \":\" + minitue + \":\" +
+                second+\".\"+millisecond;\r\n}"
+          - gatewayscript:
+              version: 2.0.0
+              title: ReqForLogging
+              source: "var apim=require('apim');\r\nvar appconnectrequest = apim.getvariable('payload');\r\nvar
+                Body = apim.getvariable('DPResponse');\r\nvar Headers = appconnectrequest.AddCreditRq.Header;\r\nvar
+                transactionId1 = Math.floor(1000000000 + Math.random() * 9000000000);\r\napim.setvariable('message.headers.TransactionID',transactionId1);\r\napim.setvariable('TransactionID',transactionId1);\r\nvar
+                SuccessCall =\r\n{\r\n                \"Status\": \"SUCCESS\",\r\n
+                \               \"Code\": \"00000000\",\r\n                \"ArabicMsg\":
+                \"تمت العملية بنجاح\",\r\n                \"EnglishMsg\": \"Success
+                Call\"\r\n            }\r\n\r\nvar APIRes = {\r\n    \"Header\": Headers,\r\n
+                \    Body\r\n};\r\nAPIRes.Header.ResponseStatus = SuccessCall;\r\nvar
+                jsonData= {\r\n\t\"LogAPIData\": {\r\n\t\t\"AddCreditRq\": appconnectrequest.AddCreditRq,\r\n\t\t\"AddCreditRs\":
+                APIRes,\r\n\t}\r\n}\r\nsession.output.write(jsonData);\r\napim.output('application/json');"
+          - invoke:
+              version: 2.3.0
+              title: invoke
+              backend-type: detect
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: keep
+              chunked-uploads: true
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              websocket-upgrade: false
+              graphql-send-type: detect
+              target-url: $(ace-tip-internal)/external/logwrapperapidata
+          - gatewayscript:
+              version: 2.0.0
+              title: FinalResponse
+              source: "var apim = require('apim');\r\nvar FinalRes = apim.getvariable('DPResponse');\r\nvar
+                CreditNumber = FinalRes.CreditNumber;\r\nvar TransId = apim.getvariable('TransactionID1');\r\napim.setvariable('message.headers.TransactionID',TransId);\r\n\r\n\r\nif
+                (CreditNumber) {\r\n    apim.setvariable('message.headers.CreditNumber',
+                CreditNumber);\r\n}\r\n\r\nif (FinalRes.errorCode) {\r\n    apim.setvariable('message.status.code',
+                409);\r\n} else {\r\n    apim.setvariable('message.status.code', 200);\r\n}\r\n\r\nsession.output.write(FinalRes);\r\napim.output('application/json');"
+        - condition: (($httpVerb() = 'POST' and $operationPath() = '/SubmitVisaTransaction'))
+          execute:
+          - parse:
+              version: 2.0.0
+              title: parse
+              parse-settings-reference:
+                default: apic-default-parsesettings
+              input: request
+              output: message
+              use-content-type: true
+          - map:
+              inputs:
+                request:
+                  schema:
+                    $ref: '#/definitions/SubmitVisaTransactionInput'
+                  variable: message.body
+                  content: application/json
+              outputs:
+                content-type:
+                  schema:
+                    type: string
+                  variable: message.headers.content-type
+                body:
+                  schema:
+                    $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/SubmitVisaTransactionInput'
+                  variable: message.body
+                  content: text/xml
+                SOAPAction:
+                  schema:
+                    type: string
+                  variable: message.headers.SOAPAction
+              actions:
+              - set: content-type
+                default: text/xml
+              - set: SOAPAction
+                default: http://mlsd.gov.sa/services/IAjeerVisaService/SubmitVisaTransaction
+              - set: body.Envelope.Header
+                from: request.header
+              - set: body.Envelope.Body
+                from: request
+              title: 'SubmitVisaTransaction: input'
+              options:
+                includeEmptyXMLElements: false
+                inlineNamespaces: false
+                mapEnablePostProcessingJSON: true
+                mapResolveXMLInputDataType: true
+                mapResolveApicVariables: false
+              version: 2.1.0
+          - invoke:
+              version: 2.3.0
+              title: invoke
+              backend-type: detect
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: POST
+              chunked-uploads: true
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              websocket-upgrade: false
+              graphql-send-type: detect
+              target-url: http://qiwadp8037-dp.apps.stg.qiwa-nonprod.local/AjeerVisaService.svc
+          - parse:
+              version: 2.0.0
+              title: parse
+              parse-settings-reference:
+                default: apic-default-parsesettings
+              input: message
+              output: message
+              use-content-type: false
+          - xml-to-json:
+              version: 2.0.0
+              title: xml-to-json
+          - gatewayscript:
+              version: 2.0.0
+              title: FirstInvokeCheck
+              source: "var apim = require('apim');\r\n\r\nvar body = apim.getvariable('message.body');\r\nif
+                (typeof body === 'string') {\r\n    body = JSON.parse(body);\r\n}\r\n\r\nvar
+                envelope = body[\"s:Envelope\"] || body[\"Envelope\"];\r\nvar soapBody
+                = envelope[\"s:Body\"] || envelope[\"Body\"];\r\n\r\n// ----- SOAP
+                Fault Handling -----\r\nvar fault = soapBody[\"s:Fault\"] || soapBody[\"Fault\"];\r\nif
+                (fault) {\r\n    var fc = fault.detail.FaultContract;\r\n    var responseFault
+                = {\r\n        errorCode: fc.ErrorCode?.$ || null,\r\n        errorMessage:
+                {\r\n            \"en-US\": fc.ErrorMessage?.$ || null,\r\n            \"ar-SA\":
+                fc.ErrorMessageLocal?.$ || null\r\n        }\r\n    };\r\n    apim.output('application/json');\r\n
+                \   session.output.write(responseFault);\r\n    return;\r\n}\r\n\r\n//
+                ---- Success Response Mapping ----\r\nvar responseObj =\r\n    soapBody[\"ser:submitVisaTransactionResponseObject\"]\r\n
+                \   || soapBody[\"submitVisaTransactionResponseObject\"];\r\n\r\n//
+                Extract root simple fields safely\r\nvar isSucc = (responseObj[\"ser:IsSuccceded\"]
+                || responseObj[\"IsSuccceded\"])?.$ || null;\r\nvar outgoingNumber
+                = (responseObj[\"ser:OutgoingNumber\"] || responseObj[\"OutgoingNumber\"])?.$
+                || null;\r\n\r\n// NicRejectionReason null-safe\r\nvar rr = responseObj[\"ser:NicRejectionReason\"]
+                || responseObj[\"NicRejectionReason\"];\r\nvar rejectionReason = rr
+                ? rr.$ : null;\r\n\r\n// Extract Details / VisaDetails\r\nvar details
+                = responseObj[\"ser:Details\"] || responseObj[\"Details\"];\r\nvar
+                visaList = details[\"ser:VisaDetails\"] || details[\"VisaDetails\"];\r\n\r\n//
+                Ensure array form\r\nif (!Array.isArray(visaList)) {\r\n    visaList
+                = [visaList];\r\n}\r\n\r\n// Map Visa fields safely\r\nvar visaDetailsArray
+                = visaList.map(v => ({\r\n    BorderNumber: v[\"ser:BorderNumber\"]?.$
+                || v[\"BorderNumber\"]?.$ || null,\r\n    Gender: {\r\n        Code:
+                v.Gender?.Code?.$ || null,\r\n        Name: v.Gender?.Name?.$ || null\r\n
+                \   },\r\n    Job: {\r\n        Code: v.Job?.Code?.$ || null,\r\n
+                \       Name: v.Job?.Name?.$ || null\r\n    },\r\n    Nationality:
+                {\r\n        Code: v.Nationality?.Code?.$ || null,\r\n        Name:
+                v.Nationality?.Name?.$ || null\r\n    },\r\n    Origin: {\r\n        Code:
+                v.Origin?.Code?.$ || null,\r\n        Name: v.Origin?.Name?.$ || null\r\n
+                \   },\r\n    Religion: {\r\n        Code: v.Religion?.Code?.$ ||
+                null,\r\n        Name: v.Religion?.Name?.$ || null\r\n    }\r\n}));\r\n\r\n//
+                ---- Final JSON Model (with Details object) ----\r\nvar response =
+                {\r\n    IsSuccceded: isSucc,\r\n    OutgoingNumber: outgoingNumber,\r\n
+                \   NicRejectionReason: rejectionReason,\r\n    Details: {\r\n        VisaDetails:
+                visaDetailsArray\r\n    }\r\n};\r\n\r\n// Send JSON response\r\napim.output('application/json');\r\nsession.output.write(response);\r\n"
+          - gatewayscript:
+              version: 2.0.0
+              title: ServiceConfig
+              source: "var apim = require('apim');\r\nvar cfg={\r\n    \"serviceCode\"
+                : \"SV00001\",\r\n    \"channelId\" : \"Qiwa\",\r\n    \"requestName\"
+                : \"SubmitVisaRq\",\r\n    \"responseName\": \"SubmitVisaRs\",\r\n
+                \   \"errorMap\" :{\r\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid
+                Request\"}\r\n    }\r\n    \r\n};\r\nvar DPResponse = apim.getvariable('message.body');\r\napim.setvariable('DPResponse',DPResponse);\r\napim.setvariable('cfg',cfg);"
+          - gatewayscript:
+              version: 2.0.0
+              title: PrepareRequest
+              source: "var apim = require('apim');\r\nvar millisecondsvalue = \"\"+(new
+                Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+                OperatorId=apim.getvariable('message.headers.Operator-Id');\r\nvar
+                appname = apim.getvariable('client.app.name');\r\napim.setvariable('TransactionID1',millisecondsvalue);\r\nvar
+                appcReq = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n
+                \           \"TransactionId\" : millisecondsvalue,\r\n            \"ChannelId\":
+                cfg.channelId,\r\n            \"SessionId\": apim.getvariable('message.headers.X-Request-Id'),\r\n
+                \           \"RequestTime\" : formatDate(dt),\r\n            \"ServiceCode\":
+                cfg.serviceCode,\r\n            \"DebugFlag\": \"1\",\r\n            \"UserInfo\":
+                {\r\n                \"UserId\": apim.getvariable('message.headers.UserId'),\r\n
+                \               \"IDNumber\": apim.getvariable('message.headers.IDNumber')\t\t\t\t\r\n
+                \           },\r\n            \"UDF\": {\r\n                \"KeyValueArr\":
+                [\r\n                    {\r\n                        \"key\": \"Product\",\r\n
+                \                       \"value\": \"Ajeer\"\r\n                    },\r\n
+                \                   {\r\n                        \"key\": \"Client\",\r\n
+                \                       \"value\": appname\r\n                    }\r\n
+                \               ]\r\n            }\t\t\t\r\n        },\r\n        \"Body\"
+                : apim.getvariable('request.body')\r\n            \r\n    }\r\n};\r\n\r\nif
+                (typeof OperatorId !== 'undefined')\r\n    appcReq[cfg.requestName].Header.UserInfo
+                = {\r\n        \"IDNumber\" : OperatorId\r\n    };\r\napim.setvariable('payload',appcReq);
+                \    \r\n//session.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+                formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+                \   //get the day\r\n    //convert day to string\r\n    var day =
+                d.getDate().toString();\r\n    //get the year\r\n    var year = d.getFullYear();\r\n
+                \   var hour = d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+                \   var second = d.getSeconds().toString();\r\n    var millisecond
+                = d.getMilliseconds().toString();\r\n    //pull the last two digits
+                of the year\r\n    year = year.toString();\r\n    \r\n    //increment
+                month by 1 since it is 0 indexed\r\n    //converts month to a string\r\n
+                \   month = (month + 1).toString();\r\n\r\n    //if month is 1-9 pad
+                right with a 0 for two digits\r\n    if (month.length === 1)\r\n        month
+                = \"0\" + month;\r\n\r\n    //if day is between 1-9 pad right with
+                a 0 for two digits\r\n    if (day.length === 1)\r\n        day = \"0\"
+                + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\" +
+                hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+                + minitue;\r\n\r\n    if (second.length === 1)\r\n        second =
+                \"0\" + second;\r\n        \r\n    if (millisecond.length == 1)\r\n
+                \       millisecond = \"00\" + millisecond;\r\n        \r\n    if
+                (millisecond.length == 2)\r\n        millisecond = \"0\" + millisecond;\r\n
+                \   \r\n    \r\n\r\n    //return the string \"MMddyy\"\r\n    return
+                year+\"-\"+month+\"-\"+day+\" \"+hour + \":\" + minitue + \":\" +
+                second+\".\"+millisecond;\r\n}"
+          - gatewayscript:
+              version: 2.0.0
+              title: ReqForLogging
+              source: "var apim=require('apim');\r\nvar appconnectrequest = apim.getvariable('payload');\r\nvar
+                Body = apim.getvariable('DPResponse');\r\nvar Headers = appconnectrequest.SubmitVisaRq.Header;\r\nvar
+                transactionId1 = Math.floor(1000000000 + Math.random() * 9000000000);\r\napim.setvariable('message.headers.TransactionID',transactionId1);\r\napim.setvariable('TransactionID',transactionId1);\r\nvar
+                SuccessCall =\r\n{\r\n                \"Status\": \"SUCCESS\",\r\n
+                \               \"Code\": \"00000000\",\r\n                \"ArabicMsg\":
+                \"تمت العملية بنجاح\",\r\n                \"EnglishMsg\": \"Success
+                Call\"\r\n            }\r\n\r\nvar APIRes = {\r\n    \"Header\": Headers,\r\n
+                \    Body\r\n};\r\nAPIRes.Header.ResponseStatus = SuccessCall;\r\nvar
+                jsonData= {\r\n\t\"LogAPIData\": {\r\n\t\t\"SubmitVisaRq\": appconnectrequest.SubmitVisaRq,\r\n\t\t\"SubmitVisaRs\":
+                APIRes,\r\n\t}\r\n}\r\nsession.output.write(jsonData);\r\napim.output('application/json');"
+          - invoke:
+              version: 2.3.0
+              title: invoke
+              backend-type: detect
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: keep
+              chunked-uploads: true
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              websocket-upgrade: false
+              graphql-send-type: detect
+              target-url: $(ace-tip-internal)/external/logwrapperapidata
+          - gatewayscript:
+              version: 2.0.0
+              title: FinalResponse
+              source: "var apim = require('apim');\r\nvar FinalRes = apim.getvariable('DPResponse');\r\nvar
+                OutgoingNumber = FinalRes.OutgoingNumber;\r\nvar TransId = apim.getvariable('TransactionID1');\r\napim.setvariable('message.headers.TransactionID',TransId);\r\n\r\nif
+                (OutgoingNumber) {\r\n    apim.setvariable('message.headers.OutgoingNumber',
+                OutgoingNumber);\r\n}\r\n\r\nif (FinalRes.errorCode) {\r\n    apim.setvariable('message.status.code',
+                409);\r\n} else {\r\n    apim.setvariable('message.status.code', 200);\r\n}\r\n\r\nsession.output.write(FinalRes);\r\napim.output('application/json');"
+        - condition: (($httpVerb() = 'POST' and $operationPath() = '/CreditInquiry'))
+          execute:
+          - parse:
+              version: 2.0.0
+              title: parse
+              parse-settings-reference:
+                default: apic-default-parsesettings
+              input: request
+              output: message
+              use-content-type: true
+          - map:
+              title: 'CreditInquiry: input'
+              inputs:
+                request:
+                  schema:
+                    $ref: '#/definitions/CreditInquiryInput'
+                  variable: message.body
+                  content: application/json
+              outputs:
+                content-type:
+                  schema:
+                    type: string
+                  variable: message.headers.content-type
+                body:
+                  schema:
+                    $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/CreditInquiryInput'
+                  variable: message.body
+                  content: text/xml
+                SOAPAction:
+                  schema:
+                    type: string
+                  variable: message.headers.SOAPAction
+              actions:
+              - set: content-type
+                default: text/xml
+              - set: SOAPAction
+                default: http://mlsd.gov.sa/services/IAjeerVisaService/CreditInquiry
+              - set: body.Envelope.Header
+                from: request.header
+              - set: body.Envelope.Body
+                from: request
+              options:
+                includeEmptyXMLElements: false
+                inlineNamespaces: false
+                mapEnablePostProcessingJSON: true
+                mapResolveXMLInputDataType: true
+                mapResolveApicVariables: false
+              version: 2.1.0
+          - invoke:
+              version: 2.0.0
+              title: 'CreditInquiry: invoke'
+              backend-type: detect
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: blocklist
+                values: []
+              timeout: 60
+              verb: POST
+              chunked-uploads: true
+              persistent-connection: true
+              target-url: http://qiwadp8037-dp.apps.stg.qiwa-nonprod.local/AjeerVisaService.svc
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error:
+              - ConnectionError
+              - OperationError
+          - parse:
+              version: 2.0.0
+              title: parse
+              parse-settings-reference:
+                default: apic-default-parsesettings
+              input: message
+              output: message
+              use-content-type: false
+          - map:
+              title: 'CreditInquiry: output'
+              inputs:
+                input:
+                  schema:
+                    $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/CreditInquiryOutput'
+                  variable: message.body
+                  content: application/xml
+              outputs:
+                response:
+                  schema:
+                    $ref: '#/definitions/creditInquiryResponseObject_element_tns'
+                  variable: message.body
+                  content: application/json
+              actions:
+              - set: response
+                from: input.Envelope.Body.creditInquiryResponseObject
+              options:
+                includeEmptyXMLElements: false
+                inlineNamespaces: false
+                mapEnablePostProcessingJSON: true
+                mapResolveXMLInputDataType: true
+                mapResolveApicVariables: false
+              version: 2.1.0
+        - condition: (($httpVerb() = 'POST' and $operationPath() = '/TerminateCredit'))
+          execute:
+          - parse:
+              version: 2.0.0
+              title: parse
+              parse-settings-reference:
+                default: apic-default-parsesettings
+              input: request
+              output: message
+              use-content-type: true
+          - map:
+              title: 'TerminateCredit: input'
+              inputs:
+                request:
+                  schema:
+                    $ref: '#/definitions/TerminateCreditInput'
+                  variable: message.body
+                  content: application/json
+              outputs:
+                content-type:
+                  schema:
+                    type: string
+                  variable: message.headers.content-type
+                body:
+                  schema:
+                    $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/TerminateCreditInput'
+                  variable: message.body
+                  content: text/xml
+                SOAPAction:
+                  schema:
+                    type: string
+                  variable: message.headers.SOAPAction
+              actions:
+              - set: content-type
+                default: text/xml
+              - set: SOAPAction
+                default: http://mlsd.gov.sa/services/IAjeerVisaService/TerminateCredit
+              - set: body.Envelope.Header
+                from: request.header
+              - set: body.Envelope.Body
+                from: request
+              options:
+                includeEmptyXMLElements: false
+                inlineNamespaces: false
+                mapEnablePostProcessingJSON: true
+                mapResolveXMLInputDataType: true
+                mapResolveApicVariables: false
+              version: 2.1.0
+          - invoke:
+              version: 2.3.0
+              title: invoke
+              backend-type: detect
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: keep
+              chunked-uploads: true
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              websocket-upgrade: false
+              graphql-send-type: detect
+              target-url: http://qiwadp8037-dp.apps.stg.qiwa-nonprod.local/AjeerVisaService.svc
+          - parse:
+              version: 2.2.0
+              title: parse
+              parse-settings-reference:
+                default: apic-default-parsesettings
+          - xml-to-json:
+              version: 2.0.0
+              title: xml-to-json
+          - gatewayscript:
+              version: 2.0.0
+              title: FirstInvokeCheck
+              source: "\r\nvar apim = require('apim');\r\nvar body = apim.getvariable('message.body');\r\nvar
+                response;\r\n\r\nif (typeof body === 'string') {\r\n    body = JSON.parse(body);\r\n}\r\n\r\n//
+                ROOT ENVELOPE\r\nvar envelope = body[\"s:Envelope\"];\r\nvar bodyNode
+                = envelope?.[\"s:Body\"];\r\n\r\n\r\nif (bodyNode && bodyNode[\"s:Fault\"])
+                {\r\n\r\n    var fault = bodyNode[\"s:Fault\"];\r\n    var faultContract
+                = fault.detail?.FaultContract;\r\n\r\n    response = {\r\n        errorCode:
+                faultContract?.ErrorCode?.$,\r\n        errorMessage: {\r\n            \"en-US\":
+                faultContract?.ErrorMessage?.$,\r\n            \"ar-SA\": faultContract?.ErrorMessageLocal?.$\r\n
+                \       }\r\n    };\r\n    apim.setvariable('message.status.code',
+                409);\r\n    apim.output('application/json');\r\n    session.output.write(response);\r\n
+                \   return;\r\n}\r\nvar terminateCredit = bodyNode.terminateCreditResponseObject;\r\n\r\nresponse
+                = {\r\n    IsSuccceded: terminateCredit?.IsSuccceded?.$\r\n};\r\n\r\napim.output('application/json');\r\nsession.output.write(response);\r\n"
+          - gatewayscript:
+              version: 2.0.0
+              title: ServiceConfig
+              source: "var apim = require('apim');\r\nvar cfg={\r\n    \"serviceCode\"
+                : \"TC00001\",\r\n    \"channelId\" : \"Qiwa\",\r\n    \"requestName\"
+                : \"TerminateCreditRq\",\r\n    \"responseName\": \"TerminateCreditRs\",\r\n
+                \   \"errorMap\" :{\r\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid
+                Request\"}\r\n    }\r\n    \r\n};\r\nvar DPResponse = apim.getvariable('message.body');\r\napim.setvariable('DPResponse',DPResponse);\r\napim.setvariable('cfg',cfg);"
+          - gatewayscript:
+              version: 2.0.0
+              title: PrepareRequest
+              source: "var apim = require('apim');\r\nvar millisecondsvalue = \"\"+(new
+                Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+                OperatorId=apim.getvariable('message.headers.Operator-Id');\r\nvar
+                appname = apim.getvariable('client.app.name');\r\napim.setvariable('TransactionID1',millisecondsvalue);\r\nvar
+                appcReq = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n
+                \           \"TransactionId\" : millisecondsvalue,\r\n            \"ChannelId\":
+                cfg.channelId,\r\n            \"SessionId\": apim.getvariable('message.headers.X-Request-Id'),\r\n
+                \           \"RequestTime\" : formatDate(dt),\r\n            \"ServiceCode\":
+                cfg.serviceCode,\r\n            \"DebugFlag\": \"1\",\r\n            \"UserInfo\":
+                {\r\n                \"UserId\": apim.getvariable('message.headers.UserId'),\r\n
+                \               \"IDNumber\": apim.getvariable('message.headers.IDNumber')\t\t\t\t\r\n
+                \           },\r\n            \"UDF\": {\r\n                \"KeyValueArr\":
+                [\r\n                    {\r\n                        \"key\": \"Product\",\r\n
+                \                       \"value\": \"Ajeer\"\r\n                    },\r\n
+                \                   {\r\n                        \"key\": \"Client\",\r\n
+                \                       \"value\": appname\r\n                    }\r\n
+                \               ]\r\n            }\t\t\t\r\n        },\r\n        \"Body\"
+                : apim.getvariable('request.body')\r\n            \r\n    }\r\n};\r\n\r\nif
+                (typeof OperatorId !== 'undefined')\r\n    appcReq[cfg.requestName].Header.UserInfo
+                = {\r\n        \"IDNumber\" : OperatorId\r\n    };\r\napim.setvariable('payload',appcReq);
+                \    \r\n//session.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+                formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+                \   //get the day\r\n    //convert day to string\r\n    var day =
+                d.getDate().toString();\r\n    //get the year\r\n    var year = d.getFullYear();\r\n
+                \   var hour = d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+                \   var second = d.getSeconds().toString();\r\n    var millisecond
+                = d.getMilliseconds().toString();\r\n    //pull the last two digits
+                of the year\r\n    year = year.toString();\r\n    \r\n    //increment
+                month by 1 since it is 0 indexed\r\n    //converts month to a string\r\n
+                \   month = (month + 1).toString();\r\n\r\n    //if month is 1-9 pad
+                right with a 0 for two digits\r\n    if (month.length === 1)\r\n        month
+                = \"0\" + month;\r\n\r\n    //if day is between 1-9 pad right with
+                a 0 for two digits\r\n    if (day.length === 1)\r\n        day = \"0\"
+                + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\" +
+                hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+                + minitue;\r\n\r\n    if (second.length === 1)\r\n        second =
+                \"0\" + second;\r\n        \r\n    if (millisecond.length == 1)\r\n
+                \       millisecond = \"00\" + millisecond;\r\n        \r\n    if
+                (millisecond.length == 2)\r\n        millisecond = \"0\" + millisecond;\r\n
+                \   \r\n    \r\n\r\n    //return the string \"MMddyy\"\r\n    return
+                year+\"-\"+month+\"-\"+day+\" \"+hour + \":\" + minitue + \":\" +
+                second+\".\"+millisecond;\r\n}"
+          - gatewayscript:
+              version: 2.0.0
+              title: ReqForLogging
+              source: "var apim=require('apim');\r\nvar appconnectrequest = apim.getvariable('payload');\r\nvar
+                Body = apim.getvariable('DPResponse');\r\nvar Headers = appconnectrequest.TerminateCreditRq.Header;\r\nvar
+                transactionId1 = Math.floor(1000000000 + Math.random() * 9000000000);\r\napim.setvariable('message.headers.TransactionID',transactionId1);\r\napim.setvariable('TransactionID',transactionId1);\r\nvar
+                SuccessCall =\r\n{\r\n                \"Status\": \"SUCCESS\",\r\n
+                \               \"Code\": \"00000000\",\r\n                \"ArabicMsg\":
+                \"تمت العملية بنجاح\",\r\n                \"EnglishMsg\": \"Success
+                Call\"\r\n            }\r\n\r\nvar APIRes = {\r\n    \"Header\": Headers,\r\n
+                \    Body\r\n};\r\nAPIRes.Header.ResponseStatus = SuccessCall;\r\nvar
+                jsonData= {\r\n\t\"LogAPIData\": {\r\n\t\t\"TerminateCreditRq\": appconnectrequest.TerminateCreditRq,\r\n\t\t\"TerminateCreditRs\":
+                APIRes,\r\n\t}\r\n}\r\nsession.output.write(jsonData);\r\napim.output('application/json');"
+          - invoke:
+              version: 2.3.0
+              title: invoke
+              backend-type: detect
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: keep
+              chunked-uploads: true
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              websocket-upgrade: false
+              graphql-send-type: detect
+              target-url: $(ace-tip-internal)/external/logwrapperapidata
+          - gatewayscript:
+              version: 2.0.0
+              title: FinalResponse
+              source: "var apim = require('apim');\r\nvar FinalRes = apim.getvariable('DPResponse');\r\nvar
+                TransId = apim.getvariable('TransactionID1');\r\napim.setvariable('message.headers.TransactionID',TransId);\r\n\r\nif
+                (FinalRes.errorCode) {\r\n    apim.setvariable('message.status.code',
+                409);\r\n} else {\r\n    apim.setvariable('message.status.code', 200);\r\n}\r\n\r\nsession.output.write(FinalRes);\r\napim.output('application/json');"
+        otherwise: []
+        version: 2.0.0
+    catch:
+    - errors:
+      - OperationError
+      execute:
+      - parse:
+          version: 2.0.0
+          title: parse
+          parse-settings-reference:
+            default: apic-default-parsesettings
+          input: message
+          output: message
+          use-content-type: false
+      - map:
+          title: SOAPFault map
+          inputs:
+            CommonFault:
+              schema:
+                $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/CommonFault'
+              variable: message.body
+              content: application/xml
+          outputs:
+            response:
+              schema:
+                $ref: '#/definitions/CommonFault'
+              variable: message.body
+              content: application/json
+          actions:
+          - set: response.Fault
+            from: CommonFault.Envelope.Body.Fault
+          - set: response.error
+            from: CommonFault.Envelope.Body.Fault.faultstring
+          version: 2.1.0
+          options:
+            includeEmptyXMLElements: false
+            inlineNamespaces: false
+            mapEnablePostProcessingJSON: true
+            mapResolveXMLInputDataType: true
+            mapResolveApicVariables: false
+  phase: realized
+  targets:
+    AjeerVisaService:
+      swagger: "2.0"
+      info:
+        title: AjeerVisaService
+        description: ""
+        x-ibm-name: ajeervisaservice
+        version: 1.0.0
+      schemes:
+      - https
+      basePath: /AjeerVisaService
+      produces:
+      - application/xml
+      consumes:
+      - text/xml
+      securityDefinitions:
+        clientID:
+          type: apiKey
+          name: X-IBM-Client-Id
+          in: header
+          description: ""
+      security:
+      - clientID: []
+      x-ibm-configuration:
+        phase: realized
+        enforced: true
+        testable: true
+        gateway: datapower-api-gateway
+        cors:
+          enabled: true
+        assembly:
+          execute:
+          - invoke:
+              title: invoke
+              target-url: https://biztalk-srv1.mol-pdom.gov:6808/AjeerVisaService.svc
+              version: 2.0.0
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: blocklist
+                values: []
+        x-ibm-apiconnect-wsdl:
+          package-version: 2.0.36
+          options: {}
+          messages: {}
+      paths:
+        /AddCredit:
+          post:
+            summary: Operation AddCredit
+            description: ""
+            operationId: AddCredit
+            x-ibm-soap:
+              soap-action: http://mlsd.gov.sa/services/IAjeerVisaService/AddCredit
+              soap-operation: '{http://mlsd.gov.sa/services/}addCreditRequestObject'
+            parameters:
+            - in: body
+              name: body
+              required: true
+              schema:
+                $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/AddCreditInput'
+            responses:
+              "500":
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/CommonFault'
+              default:
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/AddCreditOutput'
+        /SubmitVisaTransaction:
+          post:
+            summary: Operation SubmitVisaTransaction
+            description: ""
+            operationId: SubmitVisaTransaction
+            x-ibm-soap:
+              soap-action: http://mlsd.gov.sa/services/IAjeerVisaService/SubmitVisaTransaction
+              soap-operation: '{http://mlsd.gov.sa/services/}submitVisaTransactionRequestObject'
+            parameters:
+            - in: body
+              name: body
+              required: true
+              schema:
+                $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/SubmitVisaTransactionInput'
+            responses:
+              "500":
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/SubmitVisaTransactionFault'
+              default:
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/SubmitVisaTransactionOutput'
+        /CreditInquiry:
+          post:
+            summary: Operation CreditInquiry
+            description: ""
+            operationId: CreditInquiry
+            x-ibm-soap:
+              soap-action: http://mlsd.gov.sa/services/IAjeerVisaService/CreditInquiry
+              soap-operation: '{http://mlsd.gov.sa/services/}creditInquiryRequestObject'
+            parameters:
+            - in: body
+              name: body
+              required: true
+              schema:
+                $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/CreditInquiryInput'
+            responses:
+              "500":
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/CreditInquiryFault'
+              default:
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/CreditInquiryOutput'
+        /TerminateCredit:
+          post:
+            summary: Operation TerminateCredit
+            description: ""
+            operationId: TerminateCredit
+            x-ibm-soap:
+              soap-action: http://mlsd.gov.sa/services/IAjeerVisaService/TerminateCredit
+              soap-operation: '{http://mlsd.gov.sa/services/}terminateCreditRequestObject'
+            parameters:
+            - in: body
+              name: body
+              required: true
+              schema:
+                $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/TerminateCreditInput'
+            responses:
+              "500":
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/TerminateCreditFault'
+              default:
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/TerminateCreditOutput'
+      definitions:
+        Security:
+          xml:
+            namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd
+            prefix: wsse
+          description: Header for WS-Security
+          type: object
+          properties:
+            UsernameToken:
+              xml:
+                namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd
+                prefix: wsse
+              type: object
+              properties:
+                Username:
+                  xml:
+                    namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd
+                    prefix: wsse
+                  type: string
+                Password:
+                  xml:
+                    namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd
+                    prefix: wsse
+                  type: string
+                Nonce:
+                  xml:
+                    namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd
+                    prefix: wsse
+                  type: string
+                  properties:
+                    EncodingType:
+                      xml:
+                        namespace: ""
+                        attribute: true
+                      type: string
+                Created:
+                  xml:
+                    namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd
+                    prefix: wsu
+                  type: string
+            Timestamp:
+              xml:
+                namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd
+                prefix: wsu
+              type: object
+              properties:
+                Created:
+                  xml:
+                    namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd
+                    prefix: wsu
+                  type: string
+                Expires:
+                  xml:
+                    namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd
+                    prefix: wsu
+                  type: string
+                Id:
+                  xml:
+                    namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd
+                    prefix: wsu
+                    attribute: true
+                  type: string
+        AddCreditInput:
+          description: Input message for wsdl operation addCreditRequestObject
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/AddCreditHeader'
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    addCreditRequestObject:
+                      $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/addCreditRequestObject_element_tns'
+                  required:
+                  - addCreditRequestObject
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://mlsd.gov.sa/services/}endpoint'
+            wsdl-operation: addCreditRequestObject
+            wsdl-message-direction-or-name: addCreditRequestObjectRequest
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Header>
+              <!-- The Security element should be removed if WS-Security is not enabled on the SOAP target-url -->
+              <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+               <wsse:UsernameToken>
+                <wsse:Username>string</wsse:Username>
+                <wsse:Password>string</wsse:Password>
+                <wsse:Nonce EncodingType="string">string</wsse:Nonce>
+                <wsu:Created>string</wsu:Created>
+               </wsse:UsernameToken>
+               <wsu:Timestamp wsu:Id="string">
+                <wsu:Created>string</wsu:Created>
+                <wsu:Expires>string</wsu:Expires>
+               </wsu:Timestamp>
+              </wsse:Security>
+              <tns:serviceHeaderElement xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:tns="http://mlsd.gov.sa/services/">
+               <tns:Parameters>
+                <q1:KeyValueOfstringstring><!-- between zero and unlimited repetitions of this element -->
+                 <q1:Key><!-- mandatory -->string</q1:Key>
+                 <q1:Value><!-- mandatory -->string</q1:Value>
+                </q1:KeyValueOfstringstring>
+               </tns:Parameters>
+              </tns:serviceHeaderElement>
+             </soapenv:Header>
+             <soapenv:Body>
+              <tns:addCreditRequestObject xmlns:tns="http://mlsd.gov.sa/services/"><!-- mandatory -->
+               <tns:CreditExpirationDate>2016-04-18T14:07:37</tns:CreditExpirationDate>
+               <tns:Details>
+                <tns:TranstactionDetails><!-- between zero and unlimited repetitions of this element -->
+                 <tns:Count>3</tns:Count>
+                 <tns:Gender>
+                  <tns:Code>string</tns:Code>
+                  <tns:Name>string</tns:Name>
+                 </tns:Gender>
+                 <tns:Job>
+                  <tns:Code>string</tns:Code>
+                  <tns:Name>string</tns:Name>
+                 </tns:Job>
+                </tns:TranstactionDetails>
+               </tns:Details>
+               <tns:EstablishmentNumber>
+                <tns:LaborOfficeId>3</tns:LaborOfficeId>
+                <tns:SequenceNumber><!-- mandatory -->3</tns:SequenceNumber>
+               </tns:EstablishmentNumber>
+               <tns:requesterIdNo>3</tns:requesterIdNo>
+              </tns:addCreditRequestObject>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        AddCreditHeader:
+          description: Input headers for wsdl operation addCreditRequestObject
+          type: object
+          properties:
+            Security:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/Security'
+            serviceHeaderElement:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/serviceHeaderElement_element_tns'
+        AddCreditOutput:
+          description: Output message for wsdl operation addCreditRequestObject
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    addCreditResponseObject:
+                      $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/addCreditResponseObject_element_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://mlsd.gov.sa/services/}endpoint'
+            wsdl-operation: addCreditRequestObject
+            wsdl-message-direction-or-name: addCreditRequestObjectResponse
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Body>
+              <tns:addCreditResponseObject xmlns:tns="http://mlsd.gov.sa/services/">
+               <tns:CreditNumber>3</tns:CreditNumber>
+               <tns:IsSuccceded>true</tns:IsSuccceded>
+              </tns:addCreditResponseObject>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        AddCreditFault:
+          description: Fault message for wsdl operation addCreditRequestObject
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    Fault:
+                      xml:
+                        namespace: http://schemas.xmlsoap.org/soap/envelope/
+                        prefix: soapenv
+                      type: object
+                      properties:
+                        faultcode:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultstring:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultactor:
+                          xml:
+                            namespace: ""
+                          type: string
+                        detail:
+                          xml:
+                            namespace: ""
+                            prefix: ""
+                          type: object
+                          properties:
+                            FaultContractFault:
+                              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/IAjeerVisaService_AddCredit_FaultContractFault_FaultMessage_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://mlsd.gov.sa/services/}endpoint'
+            wsdl-operation: addCreditRequestObject
+            wsdl-message-direction-or-name: FaultContractFault
+        SubmitVisaTransactionInput:
+          description: Input message for wsdl operation submitVisaTransactionRequestObject
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/SubmitVisaTransactionHeader'
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    submitVisaTransactionRequestObject:
+                      $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/submitVisaTransactionRequestObject_element_tns'
+                  required:
+                  - submitVisaTransactionRequestObject
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://mlsd.gov.sa/services/}endpoint'
+            wsdl-operation: submitVisaTransactionRequestObject
+            wsdl-message-direction-or-name: submitVisaTransactionRequestObjectRequest
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Header>
+              <!-- The Security element should be removed if WS-Security is not enabled on the SOAP target-url -->
+              <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+               <wsse:UsernameToken>
+                <wsse:Username>string</wsse:Username>
+                <wsse:Password>string</wsse:Password>
+                <wsse:Nonce EncodingType="string">string</wsse:Nonce>
+                <wsu:Created>string</wsu:Created>
+               </wsse:UsernameToken>
+               <wsu:Timestamp wsu:Id="string">
+                <wsu:Created>string</wsu:Created>
+                <wsu:Expires>string</wsu:Expires>
+               </wsu:Timestamp>
+              </wsse:Security>
+              <tns:serviceHeaderElement xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:tns="http://mlsd.gov.sa/services/">
+               <tns:Parameters>
+                <q1:KeyValueOfstringstring><!-- between zero and unlimited repetitions of this element -->
+                 <q1:Key><!-- mandatory -->string</q1:Key>
+                 <q1:Value><!-- mandatory -->string</q1:Value>
+                </q1:KeyValueOfstringstring>
+               </tns:Parameters>
+              </tns:serviceHeaderElement>
+             </soapenv:Header>
+             <soapenv:Body>
+              <tns:submitVisaTransactionRequestObject xmlns:q3="http://schemas.datacontract.org/2004/07/Mol.Services.DataContracts.AjeerVisa" xmlns:tns="http://mlsd.gov.sa/services/"><!-- mandatory -->
+               <tns:CreditNumber>3</tns:CreditNumber>
+               <tns:EstablishmentNumber>
+                <tns:LaborOfficeId>3</tns:LaborOfficeId>
+                <tns:SequenceNumber><!-- mandatory -->3</tns:SequenceNumber>
+               </tns:EstablishmentNumber>
+               <tns:RequesterIdNo>3</tns:RequesterIdNo>
+               <tns:visasDetailsCollection>
+                <q3:TranstactionDetailsRequest><!-- between zero and unlimited repetitions of this element -->
+                 <q3:Count>3</q3:Count>
+                 <q3:Gender>
+                  <tns:Code>string</tns:Code>
+                  <tns:Name>string</tns:Name>
+                 </q3:Gender>
+                 <q3:Job>
+                  <tns:Code>string</tns:Code>
+                  <tns:Name>string</tns:Name>
+                 </q3:Job>
+                 <q3:Nationality>
+                  <tns:Code>string</tns:Code>
+                  <tns:Name>string</tns:Name>
+                 </q3:Nationality>
+                 <q3:Origin>
+                  <tns:Code>string</tns:Code>
+                  <tns:Name>string</tns:Name>
+                 </q3:Origin>
+                 <q3:Religion>
+                  <tns:Code>string</tns:Code>
+                  <tns:Name>string</tns:Name>
+                 </q3:Religion>
+                </q3:TranstactionDetailsRequest>
+               </tns:visasDetailsCollection>
+              </tns:submitVisaTransactionRequestObject>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        SubmitVisaTransactionHeader:
+          description: Input headers for wsdl operation submitVisaTransactionRequestObject
+          type: object
+          properties:
+            Security:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/Security'
+            serviceHeaderElement:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/serviceHeaderElement_element_tns'
+        SubmitVisaTransactionOutput:
+          description: Output message for wsdl operation submitVisaTransactionRequestObject
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    submitVisaTransactionResponseObject:
+                      $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/submitVisaTransactionResponseObject_element_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://mlsd.gov.sa/services/}endpoint'
+            wsdl-operation: submitVisaTransactionRequestObject
+            wsdl-message-direction-or-name: submitVisaTransactionRequestObjectResponse
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Body>
+              <tns:submitVisaTransactionResponseObject xmlns:tns="http://mlsd.gov.sa/services/">
+               <tns:Details>
+                <tns:VisaDetails><!-- between zero and unlimited repetitions of this element -->
+                 <tns:BorderNumber>3</tns:BorderNumber>
+                 <tns:Gender>
+                  <tns:Code>string</tns:Code>
+                  <tns:Name>string</tns:Name>
+                 </tns:Gender>
+                 <tns:Job>
+                  <tns:Code>string</tns:Code>
+                  <tns:Name>string</tns:Name>
+                 </tns:Job>
+                 <tns:Nationality>
+                  <tns:Code>string</tns:Code>
+                  <tns:Name>string</tns:Name>
+                 </tns:Nationality>
+                 <tns:Origin>
+                  <tns:Code>string</tns:Code>
+                  <tns:Name>string</tns:Name>
+                 </tns:Origin>
+                 <tns:Religion>
+                  <tns:Code>string</tns:Code>
+                  <tns:Name>string</tns:Name>
+                 </tns:Religion>
+                </tns:VisaDetails>
+               </tns:Details>
+               <tns:IsSuccceded>true</tns:IsSuccceded>
+               <tns:NicRejectionReason>string</tns:NicRejectionReason>
+               <tns:OutgoingNumber>3</tns:OutgoingNumber>
+              </tns:submitVisaTransactionResponseObject>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        SubmitVisaTransactionFault:
+          description: Fault message for wsdl operation submitVisaTransactionRequestObject
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    Fault:
+                      xml:
+                        namespace: http://schemas.xmlsoap.org/soap/envelope/
+                        prefix: soapenv
+                      type: object
+                      properties:
+                        faultcode:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultstring:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultactor:
+                          xml:
+                            namespace: ""
+                          type: string
+                        detail:
+                          xml:
+                            namespace: ""
+                            prefix: ""
+                          type: object
+                          properties:
+                            FaultContractFault:
+                              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/IAjeerVisaService_SubmitVisaTransaction_FaultContractFault_FaultMessage_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://mlsd.gov.sa/services/}endpoint'
+            wsdl-operation: submitVisaTransactionRequestObject
+            wsdl-message-direction-or-name: FaultContractFault
+        CreditInquiryInput:
+          description: Input message for wsdl operation creditInquiryRequestObject
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/CreditInquiryHeader'
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    creditInquiryRequestObject:
+                      $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/creditInquiryRequestObject_element_tns'
+                  required:
+                  - creditInquiryRequestObject
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://mlsd.gov.sa/services/}endpoint'
+            wsdl-operation: creditInquiryRequestObject
+            wsdl-message-direction-or-name: creditInquiryRequestObjectRequest
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Header>
+              <!-- The Security element should be removed if WS-Security is not enabled on the SOAP target-url -->
+              <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+               <wsse:UsernameToken>
+                <wsse:Username>string</wsse:Username>
+                <wsse:Password>string</wsse:Password>
+                <wsse:Nonce EncodingType="string">string</wsse:Nonce>
+                <wsu:Created>string</wsu:Created>
+               </wsse:UsernameToken>
+               <wsu:Timestamp wsu:Id="string">
+                <wsu:Created>string</wsu:Created>
+                <wsu:Expires>string</wsu:Expires>
+               </wsu:Timestamp>
+              </wsse:Security>
+              <tns:serviceHeaderElement xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:tns="http://mlsd.gov.sa/services/">
+               <tns:Parameters>
+                <q1:KeyValueOfstringstring><!-- between zero and unlimited repetitions of this element -->
+                 <q1:Key><!-- mandatory -->string</q1:Key>
+                 <q1:Value><!-- mandatory -->string</q1:Value>
+                </q1:KeyValueOfstringstring>
+               </tns:Parameters>
+              </tns:serviceHeaderElement>
+             </soapenv:Header>
+             <soapenv:Body>
+              <tns:creditInquiryRequestObject xmlns:tns="http://mlsd.gov.sa/services/"><!-- mandatory -->
+               <tns:EstablishmentNumber>
+                <tns:LaborOfficeId>3</tns:LaborOfficeId>
+                <tns:SequenceNumber><!-- mandatory -->3</tns:SequenceNumber>
+               </tns:EstablishmentNumber>
+              </tns:creditInquiryRequestObject>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        CreditInquiryHeader:
+          description: Input headers for wsdl operation creditInquiryRequestObject
+          type: object
+          properties:
+            Security:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/Security'
+            serviceHeaderElement:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/serviceHeaderElement_element_tns'
+        CreditInquiryOutput:
+          description: Output message for wsdl operation creditInquiryRequestObject
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    creditInquiryResponseObject:
+                      $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/creditInquiryResponseObject_element_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://mlsd.gov.sa/services/}endpoint'
+            wsdl-operation: creditInquiryRequestObject
+            wsdl-message-direction-or-name: creditInquiryRequestObjectResponse
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Body>
+              <tns:creditInquiryResponseObject xmlns:tns="http://mlsd.gov.sa/services/">
+               <tns:VisaCredit>
+                <tns:Credit><!-- between zero and unlimited repetitions of this element -->
+                 <tns:CreditExpirationDate>2016-04-18T14:07:37</tns:CreditExpirationDate>
+                 <tns:CreditNumber>3</tns:CreditNumber>
+                 <tns:CreditStartDate>2016-04-18T14:07:37</tns:CreditStartDate>
+                 <tns:Details>
+                  <tns:CreditDetails><!-- between zero and unlimited repetitions of this element -->
+                   <tns:ApprovedCredit>3</tns:ApprovedCredit>
+                   <tns:AvailableCredit>3</tns:AvailableCredit>
+                   <tns:Gender>
+                    <tns:Code>string</tns:Code>
+                    <tns:Name>string</tns:Name>
+                   </tns:Gender>
+                   <tns:Job>
+                    <tns:Code>string</tns:Code>
+                    <tns:Name>string</tns:Name>
+                   </tns:Job>
+                   <tns:UsedCredit>3</tns:UsedCredit>
+                  </tns:CreditDetails>
+                 </tns:Details>
+                 <tns:EstablishmentNumber>
+                  <tns:LaborOfficeId>3</tns:LaborOfficeId>
+                  <tns:SequenceNumber><!-- mandatory -->3</tns:SequenceNumber>
+                 </tns:EstablishmentNumber>
+                </tns:Credit>
+               </tns:VisaCredit>
+              </tns:creditInquiryResponseObject>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        CreditInquiryFault:
+          description: Fault message for wsdl operation creditInquiryRequestObject
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    Fault:
+                      xml:
+                        namespace: http://schemas.xmlsoap.org/soap/envelope/
+                        prefix: soapenv
+                      type: object
+                      properties:
+                        faultcode:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultstring:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultactor:
+                          xml:
+                            namespace: ""
+                          type: string
+                        detail:
+                          xml:
+                            namespace: ""
+                            prefix: ""
+                          type: object
+                          properties:
+                            FaultContractFault:
+                              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/IAjeerVisaService_CreditInquiry_FaultContractFault_FaultMessage_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://mlsd.gov.sa/services/}endpoint'
+            wsdl-operation: creditInquiryRequestObject
+            wsdl-message-direction-or-name: FaultContractFault
+        TerminateCreditInput:
+          description: Input message for wsdl operation terminateCreditRequestObject
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/TerminateCreditHeader'
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    terminateCreditRequestObject:
+                      $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/terminateCreditRequestObject_element_tns'
+                  required:
+                  - terminateCreditRequestObject
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://mlsd.gov.sa/services/}endpoint'
+            wsdl-operation: terminateCreditRequestObject
+            wsdl-message-direction-or-name: terminateCreditRequestObjectRequest
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Header>
+              <!-- The Security element should be removed if WS-Security is not enabled on the SOAP target-url -->
+              <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+               <wsse:UsernameToken>
+                <wsse:Username>string</wsse:Username>
+                <wsse:Password>string</wsse:Password>
+                <wsse:Nonce EncodingType="string">string</wsse:Nonce>
+                <wsu:Created>string</wsu:Created>
+               </wsse:UsernameToken>
+               <wsu:Timestamp wsu:Id="string">
+                <wsu:Created>string</wsu:Created>
+                <wsu:Expires>string</wsu:Expires>
+               </wsu:Timestamp>
+              </wsse:Security>
+              <tns:serviceHeaderElement xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:tns="http://mlsd.gov.sa/services/">
+               <tns:Parameters>
+                <q1:KeyValueOfstringstring><!-- between zero and unlimited repetitions of this element -->
+                 <q1:Key><!-- mandatory -->string</q1:Key>
+                 <q1:Value><!-- mandatory -->string</q1:Value>
+                </q1:KeyValueOfstringstring>
+               </tns:Parameters>
+              </tns:serviceHeaderElement>
+             </soapenv:Header>
+             <soapenv:Body>
+              <tns:terminateCreditRequestObject xmlns:tns="http://mlsd.gov.sa/services/"><!-- mandatory -->
+               <tns:CreditNumber>3</tns:CreditNumber>
+               <tns:EstablishmentNumber>
+                <tns:LaborOfficeId>3</tns:LaborOfficeId>
+                <tns:SequenceNumber><!-- mandatory -->3</tns:SequenceNumber>
+               </tns:EstablishmentNumber>
+               <tns:RequesterIdNo>3</tns:RequesterIdNo>
+              </tns:terminateCreditRequestObject>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        TerminateCreditHeader:
+          description: Input headers for wsdl operation terminateCreditRequestObject
+          type: object
+          properties:
+            Security:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/Security'
+            serviceHeaderElement:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/serviceHeaderElement_element_tns'
+        TerminateCreditOutput:
+          description: Output message for wsdl operation terminateCreditRequestObject
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    terminateCreditResponseObject:
+                      $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/terminateCreditResponseObject_element_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://mlsd.gov.sa/services/}endpoint'
+            wsdl-operation: terminateCreditRequestObject
+            wsdl-message-direction-or-name: terminateCreditRequestObjectResponse
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Body>
+              <tns:terminateCreditResponseObject xmlns:tns="http://mlsd.gov.sa/services/">
+               <tns:IsSuccceded>true</tns:IsSuccceded>
+              </tns:terminateCreditResponseObject>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        TerminateCreditFault:
+          description: Fault message for wsdl operation terminateCreditRequestObject
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    Fault:
+                      xml:
+                        namespace: http://schemas.xmlsoap.org/soap/envelope/
+                        prefix: soapenv
+                      type: object
+                      properties:
+                        faultcode:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultstring:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultactor:
+                          xml:
+                            namespace: ""
+                          type: string
+                        detail:
+                          xml:
+                            namespace: ""
+                            prefix: ""
+                          type: object
+                          properties:
+                            FaultContractFault:
+                              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/IAjeerVisaService_TerminateCredit_FaultContractFault_FaultMessage_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://mlsd.gov.sa/services/}endpoint'
+            wsdl-operation: terminateCreditRequestObject
+            wsdl-message-direction-or-name: FaultContractFault
+        addCreditRequestObject_element_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+            name: addCreditRequestObject
+          type: object
+          properties:
+            CreditExpirationDate:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: string
+              format: date-time
+            Details:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/ArrayOfTranstactionDetails_type_tns'
+            EstablishmentNumber:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/FileNumber_type_tns'
+            requesterIdNo:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: integer
+              format: int64
+          example: |2-
+
+            <tns:addCreditRequestObject xmlns:tns="http://mlsd.gov.sa/services/">
+             <tns:CreditExpirationDate>2016-04-18T14:07:37</tns:CreditExpirationDate>
+             <tns:Details>
+              <tns:TranstactionDetails><!-- between zero and unlimited repetitions of this element -->
+               <tns:Count>3</tns:Count>
+               <tns:Gender>
+                <tns:Code>string</tns:Code>
+                <tns:Name>string</tns:Name>
+               </tns:Gender>
+               <tns:Job>
+                <tns:Code>string</tns:Code>
+                <tns:Name>string</tns:Name>
+               </tns:Job>
+              </tns:TranstactionDetails>
+             </tns:Details>
+             <tns:EstablishmentNumber>
+              <tns:LaborOfficeId>3</tns:LaborOfficeId>
+              <tns:SequenceNumber><!-- mandatory -->3</tns:SequenceNumber>
+             </tns:EstablishmentNumber>
+             <tns:requesterIdNo>3</tns:requesterIdNo>
+            </tns:addCreditRequestObject>
+        addCreditResponseObject_element_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+            name: addCreditResponseObject
+          type: object
+          properties:
+            CreditNumber:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: integer
+              format: int32
+            IsSuccceded:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: boolean
+          example: |2-
+
+            <tns:addCreditResponseObject xmlns:tns="http://mlsd.gov.sa/services/">
+             <tns:CreditNumber>3</tns:CreditNumber>
+             <tns:IsSuccceded>true</tns:IsSuccceded>
+            </tns:addCreditResponseObject>
+        IAjeerVisaService_AddCredit_FaultContractFault_FaultMessage_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+            name: FaultContract
+          type: object
+          properties:
+            ErrorCode:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: string
+              x-nullable: true
+            ErrorMessage:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: string
+              x-nullable: true
+            ErrorMessageLocal:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: string
+              x-nullable: true
+            Insert:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/ArrayOfstring_type_q1_tns'
+            RaisedBy:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: string
+              x-nullable: true
+          example: |2-
+
+            <tns:FaultContract xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:tns="http://mlsd.gov.sa/services/">
+             <tns:ErrorCode>string</tns:ErrorCode>
+             <tns:ErrorMessage>string</tns:ErrorMessage>
+             <tns:ErrorMessageLocal>string</tns:ErrorMessageLocal>
+             <tns:Insert>
+              <q1:string><!-- between zero and unlimited repetitions of this element -->string</q1:string>
+             </tns:Insert>
+             <tns:RaisedBy>string</tns:RaisedBy>
+            </tns:FaultContract>
+        submitVisaTransactionRequestObject_element_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+            name: submitVisaTransactionRequestObject
+          type: object
+          properties:
+            CreditNumber:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: integer
+              format: int32
+            EstablishmentNumber:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/FileNumber_type_tns'
+            RequesterIdNo:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: integer
+              format: int64
+            visasDetailsCollection:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/ArrayOfTranstactionDetailsRequest_type_q3_tns'
+          example: |2-
+
+            <tns:submitVisaTransactionRequestObject xmlns:q3="http://schemas.datacontract.org/2004/07/Mol.Services.DataContracts.AjeerVisa" xmlns:tns="http://mlsd.gov.sa/services/">
+             <tns:CreditNumber>3</tns:CreditNumber>
+             <tns:EstablishmentNumber>
+              <tns:LaborOfficeId>3</tns:LaborOfficeId>
+              <tns:SequenceNumber><!-- mandatory -->3</tns:SequenceNumber>
+             </tns:EstablishmentNumber>
+             <tns:RequesterIdNo>3</tns:RequesterIdNo>
+             <tns:visasDetailsCollection>
+              <q3:TranstactionDetailsRequest><!-- between zero and unlimited repetitions of this element -->
+               <q3:Count>3</q3:Count>
+               <q3:Gender>
+                <tns:Code>string</tns:Code>
+                <tns:Name>string</tns:Name>
+               </q3:Gender>
+               <q3:Job>
+                <tns:Code>string</tns:Code>
+                <tns:Name>string</tns:Name>
+               </q3:Job>
+               <q3:Nationality>
+                <tns:Code>string</tns:Code>
+                <tns:Name>string</tns:Name>
+               </q3:Nationality>
+               <q3:Origin>
+                <tns:Code>string</tns:Code>
+                <tns:Name>string</tns:Name>
+               </q3:Origin>
+               <q3:Religion>
+                <tns:Code>string</tns:Code>
+                <tns:Name>string</tns:Name>
+               </q3:Religion>
+              </q3:TranstactionDetailsRequest>
+             </tns:visasDetailsCollection>
+            </tns:submitVisaTransactionRequestObject>
+        submitVisaTransactionResponseObject_element_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+            name: submitVisaTransactionResponseObject
+          type: object
+          properties:
+            Details:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/ArrayOfVisaDetails_type_tns'
+            IsSuccceded:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: boolean
+            NicRejectionReason:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: string
+              x-nullable: true
+            OutgoingNumber:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: integer
+              format: int64
+          example: |2-
+
+            <tns:submitVisaTransactionResponseObject xmlns:tns="http://mlsd.gov.sa/services/">
+             <tns:Details>
+              <tns:VisaDetails><!-- between zero and unlimited repetitions of this element -->
+               <tns:BorderNumber>3</tns:BorderNumber>
+               <tns:Gender>
+                <tns:Code>string</tns:Code>
+                <tns:Name>string</tns:Name>
+               </tns:Gender>
+               <tns:Job>
+                <tns:Code>string</tns:Code>
+                <tns:Name>string</tns:Name>
+               </tns:Job>
+               <tns:Nationality>
+                <tns:Code>string</tns:Code>
+                <tns:Name>string</tns:Name>
+               </tns:Nationality>
+               <tns:Origin>
+                <tns:Code>string</tns:Code>
+                <tns:Name>string</tns:Name>
+               </tns:Origin>
+               <tns:Religion>
+                <tns:Code>string</tns:Code>
+                <tns:Name>string</tns:Name>
+               </tns:Religion>
+              </tns:VisaDetails>
+             </tns:Details>
+             <tns:IsSuccceded>true</tns:IsSuccceded>
+             <tns:NicRejectionReason>string</tns:NicRejectionReason>
+             <tns:OutgoingNumber>3</tns:OutgoingNumber>
+            </tns:submitVisaTransactionResponseObject>
+        IAjeerVisaService_SubmitVisaTransaction_FaultContractFault_FaultMessage_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+            name: FaultContract
+          type: object
+          properties:
+            ErrorCode:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: string
+              x-nullable: true
+            ErrorMessage:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: string
+              x-nullable: true
+            ErrorMessageLocal:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: string
+              x-nullable: true
+            Insert:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/ArrayOfstring_type_q1_tns'
+            RaisedBy:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: string
+              x-nullable: true
+          example: |2-
+
+            <tns:FaultContract xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:tns="http://mlsd.gov.sa/services/">
+             <tns:ErrorCode>string</tns:ErrorCode>
+             <tns:ErrorMessage>string</tns:ErrorMessage>
+             <tns:ErrorMessageLocal>string</tns:ErrorMessageLocal>
+             <tns:Insert>
+              <q1:string><!-- between zero and unlimited repetitions of this element -->string</q1:string>
+             </tns:Insert>
+             <tns:RaisedBy>string</tns:RaisedBy>
+            </tns:FaultContract>
+        creditInquiryRequestObject_element_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+            name: creditInquiryRequestObject
+          type: object
+          properties:
+            EstablishmentNumber:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/FileNumber_type_tns'
+          example: |2-
+
+            <tns:creditInquiryRequestObject xmlns:tns="http://mlsd.gov.sa/services/">
+             <tns:EstablishmentNumber>
+              <tns:LaborOfficeId>3</tns:LaborOfficeId>
+              <tns:SequenceNumber><!-- mandatory -->3</tns:SequenceNumber>
+             </tns:EstablishmentNumber>
+            </tns:creditInquiryRequestObject>
+        creditInquiryResponseObject_element_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+            name: creditInquiryResponseObject
+          type: object
+          properties:
+            VisaCredit:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/ArrayOfCredit_type_tns'
+          example: |2-
+
+            <tns:creditInquiryResponseObject xmlns:tns="http://mlsd.gov.sa/services/">
+             <tns:VisaCredit>
+              <tns:Credit><!-- between zero and unlimited repetitions of this element -->
+               <tns:CreditExpirationDate>2016-04-18T14:07:37</tns:CreditExpirationDate>
+               <tns:CreditNumber>3</tns:CreditNumber>
+               <tns:CreditStartDate>2016-04-18T14:07:37</tns:CreditStartDate>
+               <tns:Details>
+                <tns:CreditDetails><!-- between zero and unlimited repetitions of this element -->
+                 <tns:ApprovedCredit>3</tns:ApprovedCredit>
+                 <tns:AvailableCredit>3</tns:AvailableCredit>
+                 <tns:Gender>
+                  <tns:Code>string</tns:Code>
+                  <tns:Name>string</tns:Name>
+                 </tns:Gender>
+                 <tns:Job>
+                  <tns:Code>string</tns:Code>
+                  <tns:Name>string</tns:Name>
+                 </tns:Job>
+                 <tns:UsedCredit>3</tns:UsedCredit>
+                </tns:CreditDetails>
+               </tns:Details>
+               <tns:EstablishmentNumber>
+                <tns:LaborOfficeId>3</tns:LaborOfficeId>
+                <tns:SequenceNumber><!-- mandatory -->3</tns:SequenceNumber>
+               </tns:EstablishmentNumber>
+              </tns:Credit>
+             </tns:VisaCredit>
+            </tns:creditInquiryResponseObject>
+        IAjeerVisaService_CreditInquiry_FaultContractFault_FaultMessage_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+            name: FaultContract
+          type: object
+          properties:
+            ErrorCode:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: string
+              x-nullable: true
+            ErrorMessage:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: string
+              x-nullable: true
+            ErrorMessageLocal:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: string
+              x-nullable: true
+            Insert:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/ArrayOfstring_type_q1_tns'
+            RaisedBy:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: string
+              x-nullable: true
+          example: |2-
+
+            <tns:FaultContract xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:tns="http://mlsd.gov.sa/services/">
+             <tns:ErrorCode>string</tns:ErrorCode>
+             <tns:ErrorMessage>string</tns:ErrorMessage>
+             <tns:ErrorMessageLocal>string</tns:ErrorMessageLocal>
+             <tns:Insert>
+              <q1:string><!-- between zero and unlimited repetitions of this element -->string</q1:string>
+             </tns:Insert>
+             <tns:RaisedBy>string</tns:RaisedBy>
+            </tns:FaultContract>
+        terminateCreditRequestObject_element_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+            name: terminateCreditRequestObject
+          type: object
+          properties:
+            CreditNumber:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: integer
+              format: int32
+            EstablishmentNumber:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/FileNumber_type_tns'
+            RequesterIdNo:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: integer
+              format: int64
+          example: |2-
+
+            <tns:terminateCreditRequestObject xmlns:tns="http://mlsd.gov.sa/services/">
+             <tns:CreditNumber>3</tns:CreditNumber>
+             <tns:EstablishmentNumber>
+              <tns:LaborOfficeId>3</tns:LaborOfficeId>
+              <tns:SequenceNumber><!-- mandatory -->3</tns:SequenceNumber>
+             </tns:EstablishmentNumber>
+             <tns:RequesterIdNo>3</tns:RequesterIdNo>
+            </tns:terminateCreditRequestObject>
+        terminateCreditResponseObject_element_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+            name: terminateCreditResponseObject
+          type: object
+          properties:
+            IsSuccceded:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: boolean
+          example: |2-
+
+            <tns:terminateCreditResponseObject xmlns:tns="http://mlsd.gov.sa/services/">
+             <tns:IsSuccceded>true</tns:IsSuccceded>
+            </tns:terminateCreditResponseObject>
+        IAjeerVisaService_TerminateCredit_FaultContractFault_FaultMessage_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+            name: FaultContract
+          type: object
+          properties:
+            ErrorCode:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: string
+              x-nullable: true
+            ErrorMessage:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: string
+              x-nullable: true
+            ErrorMessageLocal:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: string
+              x-nullable: true
+            Insert:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/ArrayOfstring_type_q1_tns'
+            RaisedBy:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: string
+              x-nullable: true
+          example: |2-
+
+            <tns:FaultContract xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:tns="http://mlsd.gov.sa/services/">
+             <tns:ErrorCode>string</tns:ErrorCode>
+             <tns:ErrorMessage>string</tns:ErrorMessage>
+             <tns:ErrorMessageLocal>string</tns:ErrorMessageLocal>
+             <tns:Insert>
+              <q1:string><!-- between zero and unlimited repetitions of this element -->string</q1:string>
+             </tns:Insert>
+             <tns:RaisedBy>string</tns:RaisedBy>
+            </tns:FaultContract>
+        serviceHeaderElement_element_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+          type: object
+          properties:
+            Parameters:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/ArrayOfKeyValueOfstringstring_type_q1_tns'
+          x-xsi-type: ServiceHeader
+          x-xsi-type-xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+          x-xsi-type-uniquename: ServiceHeader_type_tns
+        ArrayOfTranstactionDetails_type_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+          type: object
+          properties:
+            TranstactionDetails:
+              type: array
+              items:
+                $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/TranstactionDetails_type_tns'
+              x-nullable: true
+          x-nullable: true
+          x-xsi-type: ArrayOfTranstactionDetails
+          x-xsi-type-xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+          x-xsi-type-uniquename: ArrayOfTranstactionDetails_type_tns
+        FileNumber_type_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+          type: object
+          properties:
+            LaborOfficeId:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: integer
+              format: int32
+            SequenceNumber:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: integer
+              format: int64
+          required:
+          - SequenceNumber
+          x-nullable: true
+          x-xsi-type: FileNumber
+          x-xsi-type-xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+          x-xsi-type-uniquename: FileNumber_type_tns
+        ArrayOfstring_type_q1_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+          type: object
+          properties:
+            string:
+              type: array
+              items:
+                xml:
+                  namespace: http://schemas.microsoft.com/2003/10/Serialization/Arrays
+                  prefix: q1
+                type: string
+              x-nullable: true
+          x-nullable: true
+          x-xsi-type: ArrayOfstring
+          x-xsi-type-xml:
+            namespace: http://schemas.microsoft.com/2003/10/Serialization/Arrays
+            prefix: q1
+          x-xsi-type-uniquename: ArrayOfstring_type_q1_tns
+        ArrayOfTranstactionDetailsRequest_type_q3_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+          type: object
+          properties:
+            TranstactionDetailsRequest:
+              type: array
+              items:
+                $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/TranstactionDetailsRequest_type_q3'
+              x-nullable: true
+          x-nullable: true
+          x-xsi-type: ArrayOfTranstactionDetailsRequest
+          x-xsi-type-xml:
+            namespace: http://schemas.datacontract.org/2004/07/Mol.Services.DataContracts.AjeerVisa
+            prefix: q3
+          x-xsi-type-uniquename: ArrayOfTranstactionDetailsRequest_type_q3_tns
+        ArrayOfVisaDetails_type_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+          type: object
+          properties:
+            VisaDetails:
+              type: array
+              items:
+                $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/VisaDetails_type_tns'
+              x-nullable: true
+          x-nullable: true
+          x-xsi-type: ArrayOfVisaDetails
+          x-xsi-type-xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+          x-xsi-type-uniquename: ArrayOfVisaDetails_type_tns
+        ArrayOfCredit_type_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+          type: object
+          properties:
+            Credit:
+              type: array
+              items:
+                $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/Credit_type_tns'
+              x-nullable: true
+          x-nullable: true
+          x-xsi-type: ArrayOfCredit
+          x-xsi-type-xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+          x-xsi-type-uniquename: ArrayOfCredit_type_tns
+        ArrayOfKeyValueOfstringstring_type_q1_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+          type: object
+          properties:
+            KeyValueOfstringstring:
+              type: array
+              items:
+                xml:
+                  namespace: http://schemas.microsoft.com/2003/10/Serialization/Arrays
+                  prefix: q1
+                type: object
+                properties:
+                  Key:
+                    xml:
+                      namespace: http://schemas.microsoft.com/2003/10/Serialization/Arrays
+                      prefix: q1
+                    type: string
+                    x-nullable: true
+                  Value:
+                    xml:
+                      namespace: http://schemas.microsoft.com/2003/10/Serialization/Arrays
+                      prefix: q1
+                    type: string
+                    x-nullable: true
+                required:
+                - Key
+                - Value
+          x-nullable: true
+          x-xsi-type: ArrayOfKeyValueOfstringstring
+          x-xsi-type-xml:
+            namespace: http://schemas.microsoft.com/2003/10/Serialization/Arrays
+            prefix: q1
+          x-xsi-type-uniquename: ArrayOfKeyValueOfstringstring_type_q1_tns
+        TranstactionDetails_type_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+          type: object
+          properties:
+            Count:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: integer
+              format: int32
+            Gender:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/Lookup_type_tns'
+            Job:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/Lookup_type_tns'
+          x-xsi-type: TranstactionDetails
+          x-xsi-type-xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+          x-xsi-type-uniquename: TranstactionDetails_type_tns
+        TranstactionDetailsRequest_type_q3:
+          xml:
+            namespace: http://schemas.datacontract.org/2004/07/Mol.Services.DataContracts.AjeerVisa
+            prefix: q3
+          type: object
+          properties:
+            Count:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/Mol.Services.DataContracts.AjeerVisa
+                prefix: q3
+              type: integer
+              format: int32
+            Gender:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/Lookup_type_tns_q3'
+            Job:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/Lookup_type_tns_q3'
+            Nationality:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/Lookup_type_tns_q3'
+            Origin:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/Lookup_type_tns_q3'
+            Religion:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/Lookup_type_tns_q3'
+          x-xsi-type: TranstactionDetailsRequest
+          x-xsi-type-xml:
+            namespace: http://schemas.datacontract.org/2004/07/Mol.Services.DataContracts.AjeerVisa
+            prefix: q3
+          x-xsi-type-uniquename: TranstactionDetailsRequest_type_q3
+        VisaDetails_type_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+          type: object
+          properties:
+            BorderNumber:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: integer
+              format: int64
+            Gender:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/Lookup_type_tns'
+            Job:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/Lookup_type_tns'
+            Nationality:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/Lookup_type_tns'
+            Origin:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/Lookup_type_tns'
+            Religion:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/Lookup_type_tns'
+          x-xsi-type: VisaDetails
+          x-xsi-type-xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+          x-xsi-type-uniquename: VisaDetails_type_tns
+        Credit_type_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+          type: object
+          properties:
+            CreditExpirationDate:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: string
+              format: date-time
+            CreditNumber:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: integer
+              format: int32
+            CreditStartDate:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: string
+              format: date-time
+            Details:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/ArrayOfCreditDetails_type_tns'
+            EstablishmentNumber:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/FileNumber_type_tns'
+          x-xsi-type: Credit
+          x-xsi-type-xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+          x-xsi-type-uniquename: Credit_type_tns
+        Lookup_type_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+          type: object
+          properties:
+            Code:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: string
+              x-nullable: true
+            Name:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: string
+              x-nullable: true
+          x-nullable: true
+          x-xsi-type: Lookup
+          x-xsi-type-xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+          x-xsi-type-uniquename: Lookup_type_tns
+        Lookup_type_tns_q3:
+          xml:
+            namespace: http://schemas.datacontract.org/2004/07/Mol.Services.DataContracts.AjeerVisa
+            prefix: q3
+          type: object
+          properties:
+            Code:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: string
+              x-nullable: true
+            Name:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: string
+              x-nullable: true
+          x-nullable: true
+          x-xsi-type: Lookup
+          x-xsi-type-xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+          x-xsi-type-uniquename: Lookup_type_tns_q3
+        ArrayOfCreditDetails_type_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+          type: object
+          properties:
+            CreditDetails:
+              type: array
+              items:
+                $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/CreditDetails_type_tns'
+              x-nullable: true
+          x-nullable: true
+          x-xsi-type: ArrayOfCreditDetails
+          x-xsi-type-xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+          x-xsi-type-uniquename: ArrayOfCreditDetails_type_tns
+        CreditDetails_type_tns:
+          xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+          type: object
+          properties:
+            ApprovedCredit:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: integer
+              format: int32
+            AvailableCredit:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: integer
+              format: int32
+            Gender:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/Lookup_type_tns'
+            Job:
+              $ref: '#/x-ibm-configuration/targets/AjeerVisaService/definitions/Lookup_type_tns'
+            UsedCredit:
+              xml:
+                namespace: http://mlsd.gov.sa/services/
+                prefix: tns
+              type: integer
+              format: int32
+          x-xsi-type: CreditDetails
+          x-xsi-type-xml:
+            namespace: http://mlsd.gov.sa/services/
+            prefix: tns
+          x-xsi-type-uniquename: CreditDetails_type_tns
+        CommonFault:
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties: {}
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    Fault:
+                      xml:
+                        namespace: http://schemas.xmlsoap.org/soap/envelope/
+                        prefix: soapenv
+                      type: object
+                      properties:
+                        faultcode:
+                          xml:
+                            namespace: ""
+                            prefix: ""
+                          type: string
+                        faultstring:
+                          xml:
+                            namespace: ""
+                            prefix: ""
+                          type: string
+                        faultactor:
+                          xml:
+                            namespace: ""
+                            prefix: ""
+                          type: string
+                        detail:
+                          xml:
+                            namespace: ""
+                            prefix: ""
+                          type: object
+                          properties: {}
+              required:
+              - Body
+          required:
+          - Envelope
+  x-ibm-apiconnect-wsdl:
+    package-version: 2.0.36
+    options: {}
+    messages:
+      info: []
+      warning: []
+      error: []
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+paths:
+  /AddCredit:
+    post:
+      responses:
+        "200":
+          description: 200 OK
+          schema:
+            $ref: '#/definitions/addCreditResponseObject_element_tns'
+        "500":
+          description: ""
+          schema:
+            $ref: '#/definitions/CommonFault'
+      parameters:
+      - name: request
+        required: true
+        in: body
+        schema:
+          $ref: '#/definitions/AddCreditInput'
+  /SubmitVisaTransaction:
+    post:
+      responses:
+        "200":
+          description: 200 OK
+          schema:
+            $ref: '#/definitions/submitVisaTransactionResponseObject_element_tns'
+        "500":
+          description: ""
+          schema:
+            $ref: '#/definitions/CommonFault'
+      parameters:
+      - name: request
+        required: true
+        in: body
+        schema:
+          $ref: '#/definitions/SubmitVisaTransactionInput'
+  /CreditInquiry:
+    post:
+      responses:
+        "200":
+          description: 200 OK
+          schema:
+            $ref: '#/definitions/creditInquiryResponseObject_element_tns'
+        "500":
+          description: ""
+          schema:
+            $ref: '#/definitions/CommonFault'
+      parameters:
+      - name: request
+        required: true
+        in: body
+        schema:
+          $ref: '#/definitions/CreditInquiryInput'
+  /TerminateCredit:
+    post:
+      responses:
+        "200":
+          description: 200 OK
+          schema:
+            $ref: '#/definitions/terminateCreditResponseObject_element_tns'
+        "500":
+          description: ""
+          schema:
+            $ref: '#/definitions/CommonFault'
+      parameters:
+      - name: request
+        required: true
+        in: body
+        schema:
+          $ref: '#/definitions/TerminateCreditInput'
+definitions:
+  AddCreditInput:
+    type: object
+    properties:
+      header:
+        type: object
+        properties:
+          serviceHeaderElement:
+            $ref: '#/definitions/serviceHeaderElement_element_tns'
+      addCreditRequestObject:
+        $ref: '#/definitions/addCreditRequestObject_element_tns'
+  CommonFault:
+    type: object
+    properties:
+      error:
+        type: string
+      Fault:
+        type: object
+        properties:
+          faultcode:
+            type: string
+          faultstring:
+            type: string
+          faultactor:
+            type: string
+          detail:
+            type: object
+            properties:
+              FaultContractFault:
+                $ref: '#/definitions/IAjeerVisaService_AddCredit_FaultContractFault_FaultMessage_tns'
+  SubmitVisaTransactionInput:
+    type: object
+    properties:
+      header:
+        type: object
+        properties:
+          serviceHeaderElement:
+            $ref: '#/definitions/serviceHeaderElement_element_tns'
+      submitVisaTransactionRequestObject:
+        $ref: '#/definitions/submitVisaTransactionRequestObject_element_tns'
+  CreditInquiryInput:
+    type: object
+    properties:
+      header:
+        type: object
+        properties:
+          serviceHeaderElement:
+            $ref: '#/definitions/serviceHeaderElement_element_tns'
+      creditInquiryRequestObject:
+        $ref: '#/definitions/creditInquiryRequestObject_element_tns'
+  TerminateCreditInput:
+    type: object
+    properties:
+      header:
+        type: object
+        properties:
+          serviceHeaderElement:
+            $ref: '#/definitions/serviceHeaderElement_element_tns'
+      terminateCreditRequestObject:
+        $ref: '#/definitions/terminateCreditRequestObject_element_tns'
+  addCreditRequestObject_element_tns:
+    type: object
+    properties:
+      CreditExpirationDate:
+        type: string
+        format: date-time
+      Details:
+        $ref: '#/definitions/ArrayOfTranstactionDetails_type_tns'
+      EstablishmentNumber:
+        $ref: '#/definitions/FileNumber_type_tns'
+      requesterIdNo:
+        type: integer
+        format: int64
+  addCreditResponseObject_element_tns:
+    type: object
+    properties:
+      CreditNumber:
+        type: integer
+        format: int32
+      IsSuccceded:
+        type: boolean
+  IAjeerVisaService_AddCredit_FaultContractFault_FaultMessage_tns:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+        x-nullable: true
+      ErrorMessage:
+        type: string
+        x-nullable: true
+      ErrorMessageLocal:
+        type: string
+        x-nullable: true
+      Insert:
+        $ref: '#/definitions/ArrayOfstring_type_q1_tns'
+      RaisedBy:
+        type: string
+        x-nullable: true
+  submitVisaTransactionRequestObject_element_tns:
+    type: object
+    properties:
+      CreditNumber:
+        type: integer
+        format: int32
+      EstablishmentNumber:
+        $ref: '#/definitions/FileNumber_type_tns'
+      RequesterIdNo:
+        type: integer
+        format: int64
+      visasDetailsCollection:
+        $ref: '#/definitions/ArrayOfTranstactionDetailsRequest_type_q3_tns'
+  submitVisaTransactionResponseObject_element_tns:
+    type: object
+    properties:
+      Details:
+        $ref: '#/definitions/ArrayOfVisaDetails_type_tns'
+      IsSuccceded:
+        type: boolean
+      NicRejectionReason:
+        type: string
+        x-nullable: true
+      OutgoingNumber:
+        type: integer
+        format: int64
+  IAjeerVisaService_SubmitVisaTransaction_FaultContractFault_FaultMessage_tns:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+        x-nullable: true
+      ErrorMessage:
+        type: string
+        x-nullable: true
+      ErrorMessageLocal:
+        type: string
+        x-nullable: true
+      Insert:
+        $ref: '#/definitions/ArrayOfstring_type_q1_tns'
+      RaisedBy:
+        type: string
+        x-nullable: true
+  creditInquiryRequestObject_element_tns:
+    type: object
+    properties:
+      EstablishmentNumber:
+        $ref: '#/definitions/FileNumber_type_tns'
+  creditInquiryResponseObject_element_tns:
+    type: object
+    properties:
+      VisaCredit:
+        $ref: '#/definitions/ArrayOfCredit_type_tns'
+  IAjeerVisaService_CreditInquiry_FaultContractFault_FaultMessage_tns:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+        x-nullable: true
+      ErrorMessage:
+        type: string
+        x-nullable: true
+      ErrorMessageLocal:
+        type: string
+        x-nullable: true
+      Insert:
+        $ref: '#/definitions/ArrayOfstring_type_q1_tns'
+      RaisedBy:
+        type: string
+        x-nullable: true
+  terminateCreditRequestObject_element_tns:
+    type: object
+    properties:
+      CreditNumber:
+        type: integer
+        format: int32
+      EstablishmentNumber:
+        $ref: '#/definitions/FileNumber_type_tns'
+      RequesterIdNo:
+        type: integer
+        format: int64
+  terminateCreditResponseObject_element_tns:
+    type: object
+    properties:
+      IsSuccceded:
+        type: boolean
+  IAjeerVisaService_TerminateCredit_FaultContractFault_FaultMessage_tns:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+        x-nullable: true
+      ErrorMessage:
+        type: string
+        x-nullable: true
+      ErrorMessageLocal:
+        type: string
+        x-nullable: true
+      Insert:
+        $ref: '#/definitions/ArrayOfstring_type_q1_tns'
+      RaisedBy:
+        type: string
+        x-nullable: true
+  serviceHeaderElement_element_tns:
+    type: object
+    properties:
+      Parameters:
+        $ref: '#/definitions/ArrayOfKeyValueOfstringstring_type_q1_tns'
+    x-xsi-type: ServiceHeader
+    x-xsi-type-xml:
+      namespace: http://mlsd.gov.sa/services/
+      prefix: tns
+    x-xsi-type-uniquename: ServiceHeader_type_tns
+  ArrayOfTranstactionDetails_type_tns:
+    type: object
+    properties:
+      TranstactionDetails:
+        type: array
+        items:
+          $ref: '#/definitions/TranstactionDetails_type_tns'
+        x-nullable: true
+    x-nullable: true
+    x-xsi-type: ArrayOfTranstactionDetails
+    x-xsi-type-xml:
+      namespace: http://mlsd.gov.sa/services/
+      prefix: tns
+    x-xsi-type-uniquename: ArrayOfTranstactionDetails_type_tns
+  FileNumber_type_tns:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+        format: int32
+      SequenceNumber:
+        type: integer
+        format: int64
+    required:
+    - SequenceNumber
+    x-nullable: true
+    x-xsi-type: FileNumber
+    x-xsi-type-xml:
+      namespace: http://mlsd.gov.sa/services/
+      prefix: tns
+    x-xsi-type-uniquename: FileNumber_type_tns
+  ArrayOfstring_type_q1_tns:
+    type: object
+    properties:
+      string:
+        type: array
+        items:
+          type: string
+        x-nullable: true
+    x-nullable: true
+    x-xsi-type: ArrayOfstring
+    x-xsi-type-xml:
+      namespace: http://schemas.microsoft.com/2003/10/Serialization/Arrays
+      prefix: q1
+    x-xsi-type-uniquename: ArrayOfstring_type_q1_tns
+  ArrayOfTranstactionDetailsRequest_type_q3_tns:
+    type: object
+    properties:
+      TranstactionDetailsRequest:
+        type: array
+        items:
+          $ref: '#/definitions/TranstactionDetailsRequest_type_q3'
+        x-nullable: true
+    x-nullable: true
+    x-xsi-type: ArrayOfTranstactionDetailsRequest
+    x-xsi-type-xml:
+      namespace: http://schemas.datacontract.org/2004/07/Mol.Services.DataContracts.AjeerVisa
+      prefix: q3
+    x-xsi-type-uniquename: ArrayOfTranstactionDetailsRequest_type_q3_tns
+  ArrayOfVisaDetails_type_tns:
+    type: object
+    properties:
+      VisaDetails:
+        type: array
+        items:
+          $ref: '#/definitions/VisaDetails_type_tns'
+        x-nullable: true
+    x-nullable: true
+    x-xsi-type: ArrayOfVisaDetails
+    x-xsi-type-xml:
+      namespace: http://mlsd.gov.sa/services/
+      prefix: tns
+    x-xsi-type-uniquename: ArrayOfVisaDetails_type_tns
+  ArrayOfCredit_type_tns:
+    type: object
+    properties:
+      Credit:
+        type: array
+        items:
+          $ref: '#/definitions/Credit_type_tns'
+        x-nullable: true
+    x-nullable: true
+    x-xsi-type: ArrayOfCredit
+    x-xsi-type-xml:
+      namespace: http://mlsd.gov.sa/services/
+      prefix: tns
+    x-xsi-type-uniquename: ArrayOfCredit_type_tns
+  ArrayOfKeyValueOfstringstring_type_q1_tns:
+    type: object
+    properties:
+      KeyValueOfstringstring:
+        type: array
+        items:
+          type: object
+          properties:
+            Key:
+              type: string
+              x-nullable: true
+            Value:
+              type: string
+              x-nullable: true
+          required:
+          - Key
+          - Value
+    x-nullable: true
+    x-xsi-type: ArrayOfKeyValueOfstringstring
+    x-xsi-type-xml:
+      namespace: http://schemas.microsoft.com/2003/10/Serialization/Arrays
+      prefix: q1
+    x-xsi-type-uniquename: ArrayOfKeyValueOfstringstring_type_q1_tns
+  TranstactionDetails_type_tns:
+    type: object
+    properties:
+      Count:
+        type: integer
+        format: int32
+      Gender:
+        $ref: '#/definitions/Lookup_type_tns'
+      Job:
+        $ref: '#/definitions/Lookup_type_tns'
+    x-xsi-type: TranstactionDetails
+    x-xsi-type-xml:
+      namespace: http://mlsd.gov.sa/services/
+      prefix: tns
+    x-xsi-type-uniquename: TranstactionDetails_type_tns
+  TranstactionDetailsRequest_type_q3:
+    type: object
+    properties:
+      Count:
+        type: integer
+        format: int32
+      Gender:
+        $ref: '#/definitions/Lookup_type_tns_q3'
+      Job:
+        $ref: '#/definitions/Lookup_type_tns_q3'
+      Nationality:
+        $ref: '#/definitions/Lookup_type_tns_q3'
+      Origin:
+        $ref: '#/definitions/Lookup_type_tns_q3'
+      Religion:
+        $ref: '#/definitions/Lookup_type_tns_q3'
+    x-xsi-type: TranstactionDetailsRequest
+    x-xsi-type-xml:
+      namespace: http://schemas.datacontract.org/2004/07/Mol.Services.DataContracts.AjeerVisa
+      prefix: q3
+    x-xsi-type-uniquename: TranstactionDetailsRequest_type_q3
+  VisaDetails_type_tns:
+    type: object
+    properties:
+      BorderNumber:
+        type: integer
+        format: int64
+      Gender:
+        $ref: '#/definitions/Lookup_type_tns'
+      Job:
+        $ref: '#/definitions/Lookup_type_tns'
+      Nationality:
+        $ref: '#/definitions/Lookup_type_tns'
+      Origin:
+        $ref: '#/definitions/Lookup_type_tns'
+      Religion:
+        $ref: '#/definitions/Lookup_type_tns'
+    x-xsi-type: VisaDetails
+    x-xsi-type-xml:
+      namespace: http://mlsd.gov.sa/services/
+      prefix: tns
+    x-xsi-type-uniquename: VisaDetails_type_tns
+  Credit_type_tns:
+    type: object
+    properties:
+      CreditExpirationDate:
+        type: string
+        format: date-time
+      CreditNumber:
+        type: integer
+        format: int32
+      CreditStartDate:
+        type: string
+        format: date-time
+      Details:
+        $ref: '#/definitions/ArrayOfCreditDetails_type_tns'
+      EstablishmentNumber:
+        $ref: '#/definitions/FileNumber_type_tns'
+    x-xsi-type: Credit
+    x-xsi-type-xml:
+      namespace: http://mlsd.gov.sa/services/
+      prefix: tns
+    x-xsi-type-uniquename: Credit_type_tns
+  Lookup_type_tns:
+    type: object
+    properties:
+      Code:
+        type: string
+        x-nullable: true
+      Name:
+        type: string
+        x-nullable: true
+    x-nullable: true
+    x-xsi-type: Lookup
+    x-xsi-type-xml:
+      namespace: http://mlsd.gov.sa/services/
+      prefix: tns
+    x-xsi-type-uniquename: Lookup_type_tns
+  Lookup_type_tns_q3:
+    type: object
+    properties:
+      Code:
+        type: string
+        x-nullable: true
+      Name:
+        type: string
+        x-nullable: true
+    x-nullable: true
+    x-xsi-type: Lookup
+    x-xsi-type-xml:
+      namespace: http://mlsd.gov.sa/services/
+      prefix: tns
+    x-xsi-type-uniquename: Lookup_type_tns_q3
+  ArrayOfCreditDetails_type_tns:
+    type: object
+    properties:
+      CreditDetails:
+        type: array
+        items:
+          $ref: '#/definitions/CreditDetails_type_tns'
+        x-nullable: true
+    x-nullable: true
+    x-xsi-type: ArrayOfCreditDetails
+    x-xsi-type-xml:
+      namespace: http://mlsd.gov.sa/services/
+      prefix: tns
+    x-xsi-type-uniquename: ArrayOfCreditDetails_type_tns
+  CreditDetails_type_tns:
+    type: object
+    properties:
+      ApprovedCredit:
+        type: integer
+        format: int32
+      AvailableCredit:
+        type: integer
+        format: int32
+      Gender:
+        $ref: '#/definitions/Lookup_type_tns'
+      Job:
+        $ref: '#/definitions/Lookup_type_tns'
+      UsedCredit:
+        type: integer
+        format: int32
+    x-xsi-type: CreditDetails
+    x-xsi-type-xml:
+      namespace: http://mlsd.gov.sa/services/
+      prefix: tns
+    x-xsi-type-uniquename: CreditDetails_type_tns
+tags: []

@@ -1,0 +1,42 @@
+info:
+  title: Simah
+  name: simah
+  version: 1.0.0
+apis:
+  addressbyidforindividual1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/addressbyidforindividual_1.0.0.yaml
+  addressbycr1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/addressbycr_1.0.0.yaml
+  addressbyphonewithpincode-getaddresses1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/addressbyphonewithpincode-getaddresses_1.0.0.yaml
+  addressbyphonewithpinCode-getpincode1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/addressbyphonewithpinCode-getpincode_1.0.0.yaml
+  getindividualemploymentdetails2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getindividualemploymentdetails_2.0.0.yaml
+  fullnationaladdressbygeocode1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/fullnationaladdressbygeocode_1.0.0.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      getindividualemploymentdetails2.0.0: {}
+      addressbyphonewithpinCode-getpincode1.0.0: {}
+      addressbyphonewithpincode-getaddresses1.0.0: {}
+      addressbycr1.0.0: {}
+      addressbyidforindividual1.0.0: {}
+      fullnationaladdressbygeocode1.0.0: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

@@ -1,0 +1,285 @@
+swagger: "2.0"
+info:
+  title: 'GetUnifiedInvoicesList '
+  x-ibm-name: getunifiedinvoiceslist
+  version: 1.0.0
+  description: 'GetUnifiedInvoicesList '
+schemes:
+- https
+basePath: /invoicesmanagement
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        parameter-control:
+          type: blocklist
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(java-invoices-qiwa-info)/api/v1/unified-invoices/search
+        follow-redirects: false
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  GetUnifiedInvoicesListRq_MessageType:
+    type: object
+    properties:
+      GetUnifiedInvoicesListRq:
+        $ref: '#/definitions/GetUnifiedInvoicesListRq_Type'
+  GetUnifiedInvoicesListRs_MessageType:
+    type: object
+    properties:
+      GetNitaqComplianceWeightRs:
+        $ref: '#/definitions/GetUnifiedInvoicesListRs_Type'
+  GetUnifiedInvoicesListRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetUnifiedInvoicesListRq_BodyType'
+  GetUnifiedInvoicesListRq_BodyType:
+    type: object
+    properties:
+      SequenceNumber:
+        type: integer
+      LaborOfficeId:
+        type: integer
+      UnifiedNumber:
+        type: integer
+      InvoiceId:
+        type: string
+      InvoiceTypeId:
+        type: integer
+      SupplyDateFrom:
+        type: string
+      SupplyDateTo:
+        type: string
+      Status:
+        type: integer
+      PageIndex:
+        type: integer
+      PageSize:
+        type: integer
+    required:
+    - PageIndex
+    - PageSize
+  GetUnifiedInvoicesListRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetUnifiedInvoicesListRs_BodyType'
+  GetUnifiedInvoicesListRs_BodyType:
+    type: object
+    properties:
+      TemplateKey:
+        type: string
+      TemplateName:
+        type: string
+      TemplateContent:
+        type: string
+      TemplateContentName:
+        type: string
+      MessageSubject:
+        type: string
+      MessageFromEmail:
+        type: string
+      MessageFromName:
+        type: string
+      MessageToEmail:
+        type: string
+      OwnerIdNo:
+        type: string
+      MessageCC:
+        type: string
+      MessageBcc:
+        type: string
+      merge:
+        type: boolean
+      merge_language:
+        type: string
+      TotalRecordsCount:
+        type: integer
+    required:
+    - TemplateKey
+    - TemplateName
+    - TemplateContent
+    - TemplateContentName
+    - MessageSubject
+    - MessageFromEmail
+    - MessageFromName
+    - MessageToEmail
+    - OwnerIdNo
+    - MessageCC
+    - MessageBcc
+    - merge
+    - merge_language
+    - TotalRecordsCount
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /GetUnifiedInvoicesList:
+    post:
+      operationId: 'GetUnifiedInvoicesList '
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetUnifiedInvoicesListRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: 'GetUnifiedInvoicesList '
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetUnifiedInvoicesListRq_MessageType'
+        description: 'GetUnifiedInvoicesList '
+        required: true

@@ -1,0 +1,73 @@
+swagger: "2.0"
+info:
+  title: Qiwa_QW_ReceiveNotification
+  x-ibm-name: qiwa-qw-receivenotification
+  version: 1.0.0
+schemes:
+- https
+basePath: /qwallet/rb
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  properties: {}
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        parameter-control:
+          type: blocklist
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(ace-qw-q-walletcashout)$(request.path)
+        follow-redirects: false
+        inject-proxy-headers: true
+    finally: []
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+paths:
+  /notifications:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+      parameters:
+      - name: Input Request
+        in: body
+        required: false
+        schema:
+          type: object

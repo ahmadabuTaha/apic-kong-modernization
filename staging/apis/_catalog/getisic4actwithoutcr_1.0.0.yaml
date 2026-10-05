@@ -1,0 +1,234 @@
+swagger: "2.0"
+info:
+  title: GetIsic4ActWithoutCR
+  x-ibm-name: getisic4actwithoutcr
+  version: 1.0.0
+  description: this service is used to get isic4 activities that don’t require a CR
+    number.
+schemes:
+- https
+basePath: /estabmanagement
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-cmpm-open-file-without-cr-other)/estabmanagement/getisic4actwithcr
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  GetIsic4ActWithoutCRRq_MessageType:
+    type: object
+    properties:
+      GetIsic4ActWithoutCRRq:
+        $ref: '#/definitions/GetIsic4ActWithoutCRRq_Type'
+  GetIsic4ActWithoutCRRs_MessageType:
+    type: object
+    properties:
+      GetIsic4ActWithoutCRRs:
+        $ref: '#/definitions/GetIsic4ActWithoutCRRs_Type'
+  GetIsic4ActWithoutCRRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetIsic4ActWithoutCRRq_BodyType'
+  GetIsic4ActWithoutCRRq_BodyType:
+    type: object
+    properties:
+      PageSize:
+        type: integer
+      PageIndex:
+        type: integer
+  GetIsic4ActWithoutCRRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetIsic4ActWithoutCRRs_BodyType'
+  GetIsic4ActWithoutCRRs_BodyType:
+    type: object
+    properties:
+      Isic4Activities:
+        $ref: '#/definitions/Isic4Activities_Type'
+      TotalRecordCount:
+        type: string
+  Isic4Activities_Type:
+    type: object
+    properties:
+      Isic4Activity:
+        type: array
+        items:
+          $ref: '#/definitions/Isic4Activity'
+  Isic4Activity:
+    type: object
+    properties:
+      Isic4ActivityId:
+        type: integer
+      Isic4Activity:
+        type: string
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: string
+      IDNumber:
+        type: string
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /getisic4actwithcr:
+    post:
+      operationId: GetIsic4ActWithoutCR
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetIsic4ActWithoutCRRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: this service is used to get isic4 activities that don’t require
+        a CR number.
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetIsic4ActWithoutCRRq_MessageType'
+        description: GetIsic4ActWithoutCRRq
+        required: true

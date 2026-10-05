@@ -1,0 +1,39 @@
+{
+    "total_results": 1,
+    "results": [
+        {
+            "type": "member",
+            "api_version": "2.0.0",
+            "id": "7da5cb59-9ddf-4c67-a4cd-b3cc54293085",
+            "name": "apicadmin",
+            "title": "apicadmin",
+            "state": "enabled",
+            "scope": "consumer_org",
+            "user": {
+                "id": "25866006-b6a2-425a-9af8-575e47105a8c",
+                "url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/user-registries/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/785bdf2d-c93b-46ce-b98a-305d8db9f540/users/25866006-b6a2-425a-9af8-575e47105a8c",
+                "name": "apicadmin",
+                "type": "user",
+                "email": "apicadmin@takamol.com.sa",
+                "state": "enabled",
+                "title": "apicadmin",
+                "org_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/orgs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c",
+                "username": "apicadmin",
+                "last_name": "admin",
+                "first_name": "apic",
+                "api_version": "2.0.0",
+                "identity_provider": "staging-idp",
+                "user_registry_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/user-registries/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/785bdf2d-c93b-46ce-b98a-305d8db9f540"
+            },
+            "role_urls": [
+                "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/consumer-orgs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/0252ac9f-6dcd-466b-8d90-2a1ec169a9b3/roles/075f0034-1b11-4eb8-8e34-8c72aebcd39b"
+            ],
+            "created_at": "2023-03-11T22:00:00.000Z",
+            "updated_at": "2023-03-11T22:00:00.000Z",
+            "org_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/orgs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c",
+            "catalog_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/catalogs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2",
+            "consumer_org_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/consumer-orgs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/0252ac9f-6dcd-466b-8d90-2a1ec169a9b3",
+            "url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/consumer-orgs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/0252ac9f-6dcd-466b-8d90-2a1ec169a9b3/members/7da5cb59-9ddf-4c67-a4cd-b3cc54293085"
+        }
+    ]
+}

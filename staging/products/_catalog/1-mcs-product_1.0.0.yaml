@@ -1,0 +1,33 @@
+info:
+  name: 1-mcs-product
+  title: 1_MCS_Product
+  version: 1.0.0
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    rate-limits:
+      default:
+        value: 100/1hour
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    apis:
+      async-data-history1.0.0: {}
+      mcs-async-employeeinformation1.0.0: {}
+      async-data-history-revised1.0.0: {}
+apis:
+  async-data-history1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/async-data-history_1.0.0_1.yaml
+  mcs-async-employeeinformation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mcs-async-employeeinformation_1.0.0.yaml
+  async-data-history-revised1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/async-data-history-revised_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

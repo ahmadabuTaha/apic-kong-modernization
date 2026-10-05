@@ -1,0 +1,412 @@
+swagger: "2.0"
+info:
+  title: UpdateVisaStatus
+  description: This API will be used to allow MOFA to push visa update details or
+    status to Qiwa
+  x-ibm-name: updatevisastatus
+  version: TEST
+schemes:
+- https
+basePath: /test/v2
+paths:
+  /updatevisastatus:
+    parameters:
+    - $ref: '#/parameters/X-IBM-Client-Id'
+    post:
+      tags:
+      - Work Visa Contracts Integration -MOFA
+      description: All systems that have been called in the flow.
+      operationId: updatevisastatus
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        description: Request body
+        required: true
+        schema:
+          $ref: '#/definitions/UpdateVisaStatusRq_Type'
+      responses:
+        "200":
+          $ref: '#/responses/Response200'
+        "400":
+          $ref: '#/responses/Response400'
+        "401":
+          $ref: '#/responses/Response401'
+        "403":
+          $ref: '#/responses/Response403'
+        "404":
+          $ref: '#/responses/Response404'
+        "408":
+          $ref: '#/responses/Response408'
+        "409":
+          $ref: '#/responses/Response409'
+        "429":
+          $ref: '#/responses/Response429'
+        "500":
+          $ref: '#/responses/Response500'
+        "501":
+          $ref: '#/responses/Response501'
+        "503":
+          $ref: '#/responses/Response503'
+        "510":
+          $ref: '#/responses/Response510'
+definitions:
+  UpdateVisaStatusRq_Type:
+    type: object
+    description: Request object
+    properties:
+      contractId:
+        type: integer
+        format: int64
+      candidateFullName:
+        type: string
+      candidateArabicFullName:
+        type: string
+      borderNumber:
+        type: integer
+        format: int64
+      documentNumber:
+        type: integer
+        format: int64
+      contractType:
+        type: string
+        enum:
+        - Musaned
+        - Professional
+      statusCode:
+        type: string
+        enum:
+        - PendingForContract
+        - DelegationFeesPayment
+        - WaitingForRatification
+        - ContractRatificationRejected
+        - WaitingForOffice
+        - ApplyVisa
+        - WaitingForEmbassyProcessing
+        - VisaIssuanceUnderProcessing
+        - VisaRejected
+        - VisaIssued
+        - VisaCancelled
+        - PendingForConractCancellationFeesPayment
+        - ContractCancelled
+      eproName:
+        type: string
+      delegationPaymentDate:
+        type: string
+      cancelDelegationPaymentDate:
+        type: string
+      ratificationDate:
+        type: string
+      cancellationDetails:
+        $ref: '#/definitions/cancellationDetails_Type'
+      issuedDetails:
+        $ref: '#/definitions/issuedDetails_Type'
+      departurePoint:
+        type: string
+    required:
+    - contractId
+    - borderNumber
+    - documentNumber
+    - statusCode
+    - contractType
+  issuedDetails_Type:
+    type: object
+    properties:
+      issuedVisaNo:
+        type: integer
+        format: int64
+      embassy:
+        $ref: '#/definitions/embassy_Type'
+      nationalityCode:
+        type: string
+      passportNo:
+        type: string
+      occupationDetails:
+        $ref: '#/definitions/occupationDetails_Type'
+      establishmentName:
+        type: string
+      issuanceDate:
+        type: string
+    required:
+    - issuedVisaNo
+    - embassy
+    - nationalityCode
+    - passportNo
+    - occupationDetails
+    - establishmentName
+    - issuanceDate
+  cancellationDetails_Type:
+    type: object
+    properties:
+      cancellationReason:
+        type: string
+      cancellationDate:
+        type: string
+    required:
+    - cancellationReason
+    - cancellationDate
+  occupationDetails_Type:
+    type: object
+    properties:
+      occupationId:
+        type: integer
+      occupationDesc:
+        type: string
+    required:
+    - occupationId
+    - occupationDesc
+  embassy_Type:
+    type: object
+    properties:
+      embassyCode:
+        type: integer
+      embassyDesc:
+        type: string
+    required:
+    - embassyCode
+    - embassyDesc
+  ResponseModel:
+    type: object
+    description: Response object returned by the get operation
+    properties:
+      message:
+        type: string
+  LocaleDataModel:
+    type: object
+    additionalProperties:
+      type: string
+    example:
+      en-US: English Value
+      ar-SA: Arabic Value
+  ErrorModel:
+    type: object
+    required:
+    - errorCode
+    - errorMessage
+    properties:
+      errorCode:
+        type: string
+        example: EXXXX000
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+parameters:
+  X-IBM-Client-Id:
+    in: header
+    name: X-IBM-Client-Id
+    description: Client id issued by security server
+    required: true
+    type: string
+responses:
+  Response200:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ResponseModel'
+  Response201:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+      Location:
+        type: string
+        description: Id url encoded
+  Response204:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response400:
+    description: The request was rejected by the server due to malformed syntax. Bad
+      Request.
+  Response401:
+    description: The request could not be completed due to lack of valid credentials.
+      Authentication.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response403:
+    description: The request could not be completed because it is not authorized.
+      Authorization
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response404:
+    description: The server has not found anything matching the Request-URI.
+  Response408:
+    description: The client did not produce a request within the time that the server
+      was prepared to wait.
+  Response409:
+    description: The request could not be completed due to a conflict with the current
+      state of the resource. Usually business validation errors will be returned in
+      the body
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response429:
+    description: The request was sent too many times in a given amount of time
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response500:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response501:
+    description: The server does not support the functionality required and does not
+      recognize the request
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response503:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response510:
+    description: Extensions to the request are required for the server to fulfil it.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+    policy:
+    - allow-origin:
+      - $(cors-allowed-origin)
+      allow-credentials: true
+  assembly:
+    execute:
+    - parse:
+        version: 2.2.0
+        title: parse
+        parse-settings-reference:
+          default: apic-default-parsesettings
+    - switch:
+        version: 2.1.0
+        title: switch
+        case:
+        - condition: message.body.ContractType='Professional'
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Service_Config
+              source: "var apim = require('apim');\r\n\r\nvar cfg={\r\n    \"serviceCode\"
+                : \"UVS00001\",\r\n    \"channelId\" : \"Qiwa\",\r\n    \"requestName\"
+                : \"UpdateVisaStatusRq\",\r\n    \"responseName\": \"UpdateVisaStatusRs\",\r\n
+                \   \"errorMap\" :{\r\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid
+                Request\"}\r\n    }\r\n\r\n};\r\napim.setvariable('cfg',cfg);"
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Request
+              source: "var apim = require('apim');\nvar millisecondsvalue = \"\"+(new
+                Date()).getTime();\nvar dt = new Date();\nvar cfg = apim.getvariable('cfg');\nvar
+                OperatorId=apim.getvariable('message.headers.Operator-Id');\nvar appcReq
+                = {\n    [cfg.requestName]:{\n        \"Header\" : {\n            \"TransactionId\"
+                : millisecondsvalue,\n            \"ChannelId\": cfg.channelId,\n
+                \           \"SessionId\": apim.getvariable('message.headers.X-Request-Id'),\n
+                \           \"RequestTime\" : formatDate(dt),\n            \"ServiceCode\":
+                cfg.serviceCode,\n\t\t\t\"DebugFlag\": 1\n\n        },\n        \"Body\"
+                : apim.getvariable('message.body')\n    }\n};\n\nif (typeof OperatorId
+                !== 'undefined')\n    appcReq[cfg.requestName].Header.UserInfo = {\n
+                \       \"IDNumber\" : OperatorId\n    };\n\ndelete appcReq[cfg.requestName].Body.ContractType;\n\napim.setvariable('payload',appcReq);
+                \   \nsession.output.write(appcReq);\napim.output('application/json');\n\n\nfunction
+                formatDate(d)\n{\n    //get the month\n    var month = d.getMonth();\n
+                \   //get the day\n    //convert day to string\n    var day = d.getDate().toString();\n
+                \   //get the year\n    var year = d.getFullYear();\n    var hour
+                = d.getHours().toString();\n    var minitue = d.getMinutes().toString();\n
+                \   var second = d.getSeconds().toString();\n    var millisecond =
+                d.getMilliseconds().toString();\n    //pull the last two digits of
+                the year\n    year = year.toString();\n    \n    //increment month
+                by 1 since it is 0 indexed\n    //converts month to a string\n    month
+                = (month + 1).toString();\n\n    //if month is 1-9 pad right with
+                a 0 for two digits\n    if (month.length === 1)\n        month = \"0\"
+                + month;\n\n    //if day is between 1-9 pad right with a 0 for two
+                digits\n    if (day.length === 1)\n        day = \"0\" + day;\n\n
+                \   if (hour.length === 1)\n        hour = \"0\" + hour;\n\n    if
+                (minitue.length === 1)\n        minitue = \"0\" + minitue;\n\n    if
+                (second.length === 1)\n        second = \"0\" + second;\n        \n
+                \   if (millisecond.length == 1)\n        millisecond = \"00\" + millisecond;\n
+                \       \n    if (millisecond.length == 2)\n        millisecond =
+                \"0\" + millisecond;\n    \n    \n\n    //return the string \"MMddyy\"\n
+                \   return year+\"-\"+month+\"-\"+day+\" \"+hour + \":\" + minitue
+                + \":\" + second+\".\"+millisecond;\n}"
+        - condition: message.body.ContractType='Musaned'
+          execute:
+          - invoke:
+              version: 2.3.0
+              title: invoke
+              backend-type: detect
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: keep
+              chunked-uploads: true
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              websocket-upgrade: false
+              graphql-send-type: detect
+              target-url: $(dp-qiwadp-ajeerphase3)/api/external/v1/mofa/update-visa-status
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: gatewayscript
+              source: |-
+                var apim = require('apim');
+
+                apim.setvariable('message.status.code', 400);
+                apim.setvariable('message.headers.content-type', 'application/json');
+
+                session.output.write(JSON.stringify({
+                    "errorCode": "TIP00001",
+                    "errorMessage": {
+                        "en-US": "Contract type is incorrect",
+                        "ar-SA": "نوع العقد غير صالح"
+                    }
+                }));
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: header
+    error-content: payload

@@ -1,0 +1,1246 @@
+swagger: "2.0"
+info:
+  title: OpenEstablishmentByGSBLicense
+  x-ibm-name: openestablishmentbygsblicense
+  version: 2.0.0
+  description: This API exposes used to open establishment using gsb
+schemes:
+- https
+basePath: /qiwa/esb
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://gw-apic.qiwa.info/takamol/staging/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - map:
+        version: 2.0.0
+        title: map
+        inputs:
+          "":
+            schema:
+              description: ""
+              type: object
+              properties:
+                Envelope:
+                  type: object
+                  properties:
+                    Header:
+                      type: object
+                      name: Header
+                    Body:
+                      type: object
+                      properties:
+                        OpenEstablishmentByGSBLicenseRq:
+                          type: object
+                          properties:
+                            Header:
+                              type: object
+                              properties:
+                                UserId:
+                                  type: string
+                                  xml:
+                                    namespace: ""
+                                  name: UserId
+                                IDNumber:
+                                  type: string
+                                  xml:
+                                    namespace: ""
+                                  name: IDNumber
+                              xml:
+                                namespace: ""
+                              name: Header
+                            Body:
+                              type: object
+                              properties:
+                                EntityInfo:
+                                  type: object
+                                  properties:
+                                    UnifiedNationalNumber:
+                                      type: string
+                                      xml:
+                                        namespace: ""
+                                      name: UnifiedNationalNumber
+                                    IsMain:
+                                      type: string
+                                      xml:
+                                        namespace: ""
+                                      name: IsMain
+                                    EntityName:
+                                      type: string
+                                      xml:
+                                        namespace: ""
+                                      name: EntityName
+                                    EntityISIC4Code:
+                                      type: string
+                                      xml:
+                                        namespace: ""
+                                      name: EntityISIC4Code
+                                    EntityType:
+                                      type: string
+                                      xml:
+                                        namespace: ""
+                                      name: EntityType
+                                    EntityNationalityCode:
+                                      type: string
+                                      xml:
+                                        namespace: ""
+                                      name: EntityNationalityCode
+                                    EntityCityCode:
+                                      type: string
+                                      xml:
+                                        namespace: ""
+                                      name: EntityCityCode
+                                  xml:
+                                    namespace: ""
+                                  name: EntityInfo
+                                LicenseInfo:
+                                  type: object
+                                  properties:
+                                    LicenseNumber:
+                                      type: string
+                                      xml:
+                                        namespace: ""
+                                      name: LicenseNumber
+                                    LicenseTypeCode:
+                                      type: string
+                                      xml:
+                                        namespace: ""
+                                      name: LicenseTypeCode
+                                    IssueDate:
+                                      type: string
+                                      xml:
+                                        namespace: ""
+                                      name: IssueDate
+                                    ExpiryDate:
+                                      type: string
+                                      xml:
+                                        namespace: ""
+                                      name: ExpiryDate
+                                    GSBSourceName:
+                                      type: string
+                                      xml:
+                                        namespace: ""
+                                      name: GSBSourceName
+                                  xml:
+                                    namespace: ""
+                                  name: LicenseInfo
+                                ContactInfo:
+                                  type: object
+                                  properties:
+                                    Telephone:
+                                      type: string
+                                      xml:
+                                        namespace: ""
+                                      name: Telephone
+                                    Mobile:
+                                      type: string
+                                      xml:
+                                        namespace: ""
+                                      name: Mobile
+                                    Email:
+                                      type: string
+                                      xml:
+                                        namespace: ""
+                                      name: Email
+                                  xml:
+                                    namespace: ""
+                                  name: ContactInfo
+                                OwnerInfo:
+                                  type: object
+                                  properties:
+                                    NationalID:
+                                      type: string
+                                      xml:
+                                        namespace: ""
+                                      name: NationalID
+                                    FullName:
+                                      type: object
+                                      properties:
+                                        FirstName:
+                                          type: string
+                                          xml:
+                                            namespace: ""
+                                          name: FirstName
+                                        SecondName:
+                                          type: string
+                                          xml:
+                                            namespace: ""
+                                          name: SecondName
+                                        ThirdName:
+                                          type: string
+                                          xml:
+                                            namespace: ""
+                                          name: ThirdName
+                                        LastName:
+                                          type: string
+                                          xml:
+                                            namespace: ""
+                                          name: LastName
+                                      xml:
+                                        namespace: ""
+                                      name: FullName
+                                    BirthDate:
+                                      type: string
+                                      xml:
+                                        namespace: ""
+                                      name: BirthDate
+                                    NationalityCode:
+                                      type: string
+                                      xml:
+                                        namespace: ""
+                                      name: NationalityCode
+                                    Mobile:
+                                      type: string
+                                      xml:
+                                        namespace: ""
+                                      name: Mobile
+                                    EmailAddress:
+                                      type: string
+                                      xml:
+                                        namespace: ""
+                                      name: EmailAddress
+                                  xml:
+                                    namespace: ""
+                                  name: OwnerInfo
+                                ApplicantInfo:
+                                  type: object
+                                  properties:
+                                    NationalID:
+                                      type: string
+                                      xml:
+                                        namespace: ""
+                                      name: NationalID
+                                    FullName:
+                                      type: object
+                                      properties:
+                                        FirstName:
+                                          type: string
+                                          xml:
+                                            namespace: ""
+                                          name: FirstName
+                                        SecondName:
+                                          type: string
+                                          xml:
+                                            namespace: ""
+                                          name: SecondName
+                                        ThirdName:
+                                          type: string
+                                          xml:
+                                            namespace: ""
+                                          name: ThirdName
+                                        LastName:
+                                          type: string
+                                          xml:
+                                            namespace: ""
+                                          name: LastName
+                                      xml:
+                                        namespace: ""
+                                      name: FullName
+                                    BirthDate:
+                                      type: string
+                                      xml:
+                                        namespace: ""
+                                      name: BirthDate
+                                    NationalityCode:
+                                      type: string
+                                      xml:
+                                        namespace: ""
+                                      name: NationalityCode
+                                  xml:
+                                    namespace: ""
+                                  name: ApplicantInfo
+                                GSBSource:
+                                  type: string
+                                  xml:
+                                    namespace: ""
+                                  name: GSBSource
+                              xml:
+                                namespace: ""
+                              name: Body
+                          xml:
+                            namespace: http://Qiwa/CompanyManagement/OpenEstablishmentByGSBLicense/v1.0
+                            prefix: v1
+                          name: OpenEstablishmentByGSBLicenseRq
+                      name: Body
+                  xml:
+                    namespace: http://www.w3.org/2003/05/soap-envelope
+                    prefix: soap
+                  name: Envelope
+              xml:
+                namespace: ""
+              example: "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\"
+                xmlns:v1=\"http://Qiwa/CompanyManagement/OpenEstablishmentByGSBLicense/v1.0\">\r\n
+                \  <soap:Header/>\r\n   <soap:Body>\r\n      <v1:OpenEstablishmentByGSBLicenseRq>\r\n
+                \        <Header>\r\n            <!--You may enter the following 2
+                items in any order-->\r\n            <!--Optional:-->\r\n            <UserId>?</UserId>\r\n
+                \           <!--Optional:-->\r\n            <IDNumber>?</IDNumber>\r\n
+                \        </Header>\r\n         <Body>\r\n            <!--You may enter
+                the following 6 items in any order-->\r\n            <EntityInfo>\r\n
+                \              <!--You may enter the following 7 items in any order-->\r\n
+                \              <!--Optional:-->\r\n               <UnifiedNationalNumber>?</UnifiedNationalNumber>\r\n
+                \              <IsMain>?</IsMain>\r\n               <EntityName>?</EntityName>\r\n
+                \              <EntityISIC4Code>?</EntityISIC4Code>\r\n               <EntityType>?</EntityType>\r\n
+                \              <EntityNationalityCode>?</EntityNationalityCode>\r\n
+                \              <EntityCityCode>?</EntityCityCode>\r\n            </EntityInfo>\r\n
+                \           <LicenseInfo>\r\n               <!--You may enter the
+                following 5 items in any order-->\r\n               <LicenseNumber>?</LicenseNumber>\r\n
+                \              <LicenseTypeCode>?</LicenseTypeCode>\r\n               <IssueDate>?</IssueDate>\r\n
+                \              <ExpiryDate>?</ExpiryDate>\r\n               <GSBSourceName>?</GSBSourceName>\r\n
+                \           </LicenseInfo>\r\n            <ContactInfo>\r\n               <!--You
+                may enter the following 3 items in any order-->\r\n               <Telephone>?</Telephone>\r\n
+                \              <Mobile>?</Mobile>\r\n               <Email>?</Email>\r\n
+                \           </ContactInfo>\r\n            <OwnerInfo>\r\n               <!--You
+                may enter the following 6 items in any order-->\r\n               <NationalID>?</NationalID>\r\n
+                \              <FullName>\r\n                  <!--You may enter the
+                following 4 items in any order-->\r\n                  <FirstName>?</FirstName>\r\n
+                \                 <SecondName>?</SecondName>\r\n                  <!--Optional:-->\r\n
+                \                 <ThirdName>?</ThirdName>\r\n                  <LastName>?</LastName>\r\n
+                \              </FullName>\r\n               <BirthDate>?</BirthDate>\r\n
+                \              <!--Optional:-->\r\n               <NationalityCode>?</NationalityCode>\r\n
+                \              <!--Optional:-->\r\n               <Mobile>?</Mobile>\r\n
+                \              <!--Optional:-->\r\n               <EmailAddress>?</EmailAddress>\r\n
+                \           </OwnerInfo>\r\n            <ApplicantInfo>\r\n               <!--You
+                may enter the following 4 items in any order-->\r\n               <NationalID>?</NationalID>\r\n
+                \              <FullName>\r\n                  <!--You may enter the
+                following 4 items in any order-->\r\n                  <FirstName>?</FirstName>\r\n
+                \                 <SecondName>?</SecondName>\r\n                  <!--Optional:-->\r\n
+                \                 <ThirdName>?</ThirdName>\r\n                  <LastName>?</LastName>\r\n
+                \              </FullName>\r\n               <BirthDate>?</BirthDate>\r\n
+                \              <!--Optional:-->\r\n               <NationalityCode>?</NationalityCode>\r\n
+                \           </ApplicantInfo>\r\n            <GSBSource>?</GSBSource>\r\n
+                \        </Body>\r\n      </v1:OpenEstablishmentByGSBLicenseRq>\r\n
+                \  </soap:Body>\r\n</soap:Envelope>"
+            variable: request.body
+            content: application/xml
+        outputs:
+          UserId:
+            schema:
+              type: string
+            variable: message.headers.UserId
+            content: application/json
+          IDNumber:
+            schema:
+              type: string
+            variable: message.headers.IDNumber
+            content: application/json
+          "":
+            schema:
+              description: ""
+              type: object
+              properties:
+                GSBSource:
+                  type: string
+                  name: GSBSource
+                EntityInfo:
+                  type: object
+                  properties:
+                    UnifiedNationalNumber:
+                      type: string
+                      name: UnifiedNationalNumber
+                    IsMain:
+                      type: number
+                      name: IsMain
+                    EntityName:
+                      type: string
+                      name: EntityName
+                    EntityType:
+                      type: number
+                      name: EntityType
+                    EntityISIC4Code:
+                      type: number
+                      name: EntityISIC4Code
+                    EntityNationalityCode:
+                      type: number
+                      name: EntityNationalityCode
+                    EntityCityCode:
+                      type: number
+                      name: EntityCityCode
+                  name: EntityInfo
+                LicenseInfo:
+                  type: object
+                  properties:
+                    LicenseNumber:
+                      type: string
+                      name: LicenseNumber
+                    LicenseTypeCode:
+                      type: number
+                      name: LicenseTypeCode
+                    IssueDate:
+                      type: string
+                      name: IssueDate
+                    ExpiryDate:
+                      type: string
+                      name: ExpiryDate
+                    GSBSourceName:
+                      type: string
+                      name: GSBSourceName
+                  name: LicenseInfo
+                ContactInfo:
+                  type: object
+                  properties:
+                    Mobile:
+                      type: string
+                      name: Mobile
+                    Telephone:
+                      type: string
+                      name: Telephone
+                    Email:
+                      type: string
+                      name: Email
+                  name: ContactInfo
+                OwnerInfo:
+                  type: object
+                  properties:
+                    NationalID:
+                      type: string
+                      name: NationalID
+                    FullName:
+                      type: object
+                      properties:
+                        FirstName:
+                          type: string
+                          name: FirstName
+                        SecondName:
+                          type: string
+                          name: SecondName
+                        ThirdName:
+                          type: string
+                          name: ThirdName
+                        LastName:
+                          type: string
+                          name: LastName
+                      name: FullName
+                    BirthDate:
+                      type: string
+                      name: BirthDate
+                    NationalityCode:
+                      type: number
+                      name: NationalityCode
+                    Mobile:
+                      type: string
+                      name: Mobile
+                    EmailAddress:
+                      type: string
+                      name: EmailAddress
+                  name: OwnerInfo
+                ApplicantInfo:
+                  type: object
+                  properties:
+                    NationalID:
+                      type: number
+                      name: NationalID
+                    FullName:
+                      type: object
+                      properties:
+                        FirstName:
+                          type: string
+                          name: FirstName
+                        SecondName:
+                          type: string
+                          name: SecondName
+                        ThirdName:
+                          type: string
+                          name: ThirdName
+                        LastName:
+                          type: string
+                          name: LastName
+                      name: FullName
+                    BirthDate:
+                      type: number
+                      name: BirthDate
+                    NationalityCode:
+                      type: number
+                      name: NationalityCode
+                  name: ApplicantInfo
+              example: " {\r\n            \"GSBSource\": \"rpm\",\r\n            \"EntityInfo\":
+                {\r\n                 \"UnifiedNationalNumber\": \"1821\",\r\n                \"IsMain\":
+                0,\r\n                \"EntityName\": \"EHA\",\r\n                \"EntityType\":
+                1,\r\n                \"EntityISIC4Code\": 421052,\r\n                \"EntityNationalityCode\":
+                1,\r\n                \"EntityCityCode\": 1\r\n            },\r\n
+                \           \"LicenseInfo\": {\r\n                \"LicenseNumber\":
+                \"11/10000119\",\r\n                \"LicenseTypeCode\": 8,\r\n                \"IssueDate\":
+                \"2022-08-01\",\r\n                \"ExpiryDate\": \"2023-08-23\",\r\n
+                \               \"GSBSourceName\": \"جامعة الأمير سطام بن عبدالعزبز\"\r\n
+                \           },\r\n            \"ContactInfo\": {\r\n                \"Mobile\":
+                \"0530303030\",\r\n                \"Telephone\": \"0530303030\",\r\n
+                \               \"Email\": \"e.taye-c@takamol.com.sa\"\r\n            },\r\n
+                \           \"OwnerInfo\": {\r\n                \"NationalID\": \"1089728404\",\r\n
+                \               \"FullName\": {\r\n                    \"FirstName\":
+                \"فاطمه\",\r\n                    \"SecondName\": \"فضل\",\r\n                    \"ThirdName\":
+                \"بن علي\",\r\n                    \"LastName\": \"البحراني\"\r\n
+                \               },\r\n                \"BirthDate\": \"14160312\",\r\n
+                \               \"NationalityCode\": 1,\r\n                \"Mobile\":
+                \"0530303030\",\r\n                \"EmailAddress\": \"e.taye-c@takamol.com.sa\"\r\n
+                \           },\r\n            \"ApplicantInfo\": {\r\n                \"NationalID\":
+                1089728404,\r\n                \"FullName\": {\r\n                    \"FirstName\":
+                \"ETest\",\r\n                    \"SecondName\": \"ETest\",\r\n                    \"ThirdName\":
+                \"ETest\",\r\n                    \"LastName\": \"ETest\"\r\n                },\r\n
+                \               \"BirthDate\": 14160312,\r\n                \"NationalityCode\":
+                1\r\n            }\r\n        }\r\n    \r\n"
+            variable: message.body
+            content: application/json
+        actions:
+        - set: UserId
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Header.UserId
+        - set: IDNumber
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Header.IDNumber
+        - set: .GSBSource
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.GSBSource
+        - set: .EntityInfo.UnifiedNationalNumber
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.EntityInfo.UnifiedNationalNumber
+        - set: .EntityInfo.IsMain
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.EntityInfo.IsMain
+        - set: .EntityInfo.EntityName
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.EntityInfo.EntityName
+        - set: .EntityInfo.EntityISIC4Code
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.EntityInfo.EntityISIC4Code
+        - set: .EntityInfo.EntityType
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.EntityInfo.EntityType
+        - set: .EntityInfo.EntityNationalityCode
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.EntityInfo.EntityNationalityCode
+        - set: .EntityInfo.EntityCityCode
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.EntityInfo.EntityCityCode
+        - set: .LicenseInfo.LicenseNumber
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.LicenseInfo.LicenseNumber
+        - set: .LicenseInfo.LicenseTypeCode
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.LicenseInfo.LicenseTypeCode
+        - set: .LicenseInfo.IssueDate
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.LicenseInfo.IssueDate
+        - set: .LicenseInfo.ExpiryDate
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.LicenseInfo.ExpiryDate
+        - set: .LicenseInfo.GSBSourceName
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.LicenseInfo.GSBSourceName
+        - set: .ContactInfo.Mobile
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.ContactInfo.Mobile
+        - set: .ContactInfo.Telephone
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.ContactInfo.Telephone
+        - set: .ContactInfo.Email
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.ContactInfo.Email
+        - set: .OwnerInfo.NationalID
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.OwnerInfo.NationalID
+        - set: .OwnerInfo.FullName.FirstName
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.OwnerInfo.FullName.FirstName
+        - set: .OwnerInfo.FullName.SecondName
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.OwnerInfo.FullName.SecondName
+        - set: .OwnerInfo.FullName.ThirdName
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.OwnerInfo.FullName.ThirdName
+        - set: .OwnerInfo.FullName.LastName
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.OwnerInfo.FullName.LastName
+        - set: .OwnerInfo.BirthDate
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.OwnerInfo.BirthDate
+        - set: .OwnerInfo.NationalityCode
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.OwnerInfo.NationalityCode
+        - set: .OwnerInfo.Mobile
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.OwnerInfo.Mobile
+        - set: .OwnerInfo.EmailAddress
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.OwnerInfo.EmailAddress
+        - set: .ApplicantInfo.NationalID
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.ApplicantInfo.NationalID
+        - set: .ApplicantInfo.FullName.SecondName
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.ApplicantInfo.FullName.SecondName
+        - set: .ApplicantInfo.FullName.FirstName
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.ApplicantInfo.FullName.FirstName
+        - set: .ApplicantInfo.FullName.ThirdName
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.ApplicantInfo.FullName.ThirdName
+        - set: .ApplicantInfo.FullName.LastName
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.ApplicantInfo.FullName.LastName
+        - set: .ApplicantInfo.BirthDate
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.ApplicantInfo.BirthDate
+        - set: .ApplicantInfo.NationalityCode
+          from: .Envelope.Body.OpenEstablishmentByGSBLicenseRq.Body.ApplicantInfo.NationalityCode
+        options:
+          mapEnablePostProcessingJSON: true
+          mapEmulateV4EmptyJSONObject: false
+          mapEmulateV4DefaultRequiredProps: false
+          mapReferenceLimit: 1
+          includeEmptyXMLElements: false
+          namespaceInheritance: false
+          inlineNamespaces: false
+          mapResolveApicVariables: false
+          mapNullValue: true
+          mapOptimizeSchemaDefinition: true
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\n\nvar cfg={\n    \"serviceCode\" : \"OEGSB001\",\n
+          \   \"channelId\" : \"ESB\",\n    \"requestName\" : \"OpenEstablishmentByGSBLicenseRq\",\n
+          \   \"responseName\": \"OpenEstablishmentByGSBLicenseRs\",\n    \"errorMap\"
+          :{\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid Request\"}\n
+          \   }\n    \n};\n\napim.setvariable('cfg',cfg);"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare_Request
+        source: "var apim = require('apim');\r\n\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\n\r\nvar appcReq
+          = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n            \"TransactionId\"
+          : millisecondsvalue,\r\n            \"ChannelId\": cfg.channelId,\r\n            \"SessionId\":
+          apim.getvariable('message.headers.X-Request-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode,\r\n            \"UserInfo\":
+          {\r\n                \"IDNumber\": apim.getvariable('message.headers.IDNumber')\r\n
+          \           }\r\n        },\r\n        \"Body\" : apim.getvariable('message.body')\r\n
+          \           \r\n        \r\n    }\r\n};\r\n\r\nif (typeof OperatorId !==
+          'undefined')\r\n    appcReq[cfg.requestName].Header.UserInfo = {\r\n        \"IDNumber\"
+          : OperatorId\r\n    };\r\nsession.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n    \r\n    \r\n\r\n    //return
+          the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour
+          + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        header-control:
+          type: blacklist
+          values: []
+        parameter-control:
+          type: whitelist
+          values: []
+        timeout: 60
+        verb: POST
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        target-url: $(ace-cmpm-open-file-without-cr-other)/estabmanagement/openestbygsblic
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_Headers
+        source: "\tvar apim = require('apim');\n\t\n\tapim.output('application/json');\n\n
+          \   \n    \n    var cfg = apim.getvariable('cfg');\n    \n\tvar TransactionId
+          = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.TransactionId\");\n\tvar
+          ChannelId = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.ChannelId\");\n\tvar
+          RequestTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.RequestTime\");\n\tvar
+          SessionId = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.SessionId\");\n\tvar
+          MWRequestTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.MWRequestTime\");\n\tvar
+          MWResponseTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.MWResponseTime\");\n\tvar
+          status = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.ResponseStatus.Status\");\n\t\n\n
+          \   apim.setvariable('message.headers.Transaction-Id',TransactionId,'add');\n
+          \   apim.setvariable('message.headers.Channel-Id',ChannelId,'add');\n    if
+          (RequestTime !== 'undefined')\n\t    apim.setvariable('message.headers.RequestTime',RequestTime,'add');\n\tif
+          (SessionId !== 'undefined')\n        apim.setvariable('message.headers.X-Request-Id',SessionId,'add');\n
+          \    if (MWRequestTime !== 'undefined')\n        apim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');\n
+          \   if (MWResponseTime !== 'undefined')\n        apim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');\n\n
+          \   \n    apim.setvariable('message.headers.Response-Status',status,'add');\n
+          \   "
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Response
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar body = message[cfg.responseName].Body;\n\n\nsession.output.write(body);\napim.output('application/json');"
+          - map:
+              version: 2.0.0
+              title: map
+              inputs:
+                "":
+                  schema:
+                    description: ""
+                    type: object
+                    properties:
+                      FileNumber:
+                        type: number
+                        name: FileNumber
+                      LaborOfficeId:
+                        type: number
+                        name: LaborOfficeId
+                      SequenceNumber:
+                        type: number
+                        name: SequenceNumber
+                      UnifiedNationalNumber:
+                        type: string
+                        name: UnifiedNationalNumber
+                      RequestNumber:
+                        type: string
+                        name: RequestNumber
+                    example: "{\r\n            \"FileNumber\": 4267191,\r\n            \"LaborOfficeId\":
+                      2,\r\n            \"SequenceNumber\": 9821228,\r\n            \"UnifiedNationalNumber\":
+                      \"17071624\",\r\n            \"RequestNumber\": \"2-1587455-2022\"\r\n
+                      \       }"
+                  variable: message.body
+                  content: application/json
+              outputs:
+                "":
+                  schema:
+                    description: ""
+                    type: object
+                    properties:
+                      Envelope:
+                        type: object
+                        properties:
+                          Header:
+                            type: object
+                            name: Header
+                          Body:
+                            type: object
+                            properties:
+                              OpenEstablishmentByGSBLicenseRs:
+                                type: object
+                                properties:
+                                  Body:
+                                    type: object
+                                    properties:
+                                      FileNumber:
+                                        type: string
+                                        xml:
+                                          namespace: ""
+                                        name: FileNumber
+                                      LaborOfficeId:
+                                        type: string
+                                        xml:
+                                          namespace: ""
+                                        name: LaborOfficeId
+                                      SequenceNumber:
+                                        type: string
+                                        xml:
+                                          namespace: ""
+                                        name: SequenceNumber
+                                      UnifiedNationalNumber:
+                                        type: string
+                                        xml:
+                                          namespace: ""
+                                        name: UnifiedNationalNumber
+                                      RequestNumber:
+                                        type: string
+                                        xml:
+                                          namespace: ""
+                                        name: RequestNumber
+                                    xml:
+                                      namespace: ""
+                                    name: Body
+                                xml:
+                                  namespace: http://Qiwa/CompanyManagement/OpenEstablishmentByGSBLicense/v1.0
+                                  prefix: v1
+                                name: OpenEstablishmentByGSBLicenseRs
+                            name: Body
+                        xml:
+                          namespace: http://www.w3.org/2003/05/soap-envelope
+                          prefix: soap
+                        name: Envelope
+                    xml:
+                      namespace: ""
+                    example: "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\"
+                      xmlns:v1=\"http://Qiwa/CompanyManagement/OpenEstablishmentByGSBLicense/v1.0\">\r\n
+                      \  <soap:Header/>\r\n   <soap:Body>\r\n      <v1:OpenEstablishmentByGSBLicenseRs>\r\n
+                      \        <Body>\r\n            <!--You may enter the following
+                      5 items in any order-->\r\n            <!--Optional:-->\r\n
+                      \           <FileNumber>?</FileNumber>\r\n            <!--Optional:-->\r\n
+                      \           <LaborOfficeId>?</LaborOfficeId>\r\n            <!--Optional:-->\r\n
+                      \           <SequenceNumber>?</SequenceNumber>\r\n            <!--Optional:-->\r\n
+                      \           <UnifiedNationalNumber>?</UnifiedNationalNumber>\r\n
+                      \           <RequestNumber>?</RequestNumber>\r\n         </Body>\r\n
+                      \     </v1:OpenEstablishmentByGSBLicenseRs>\r\n   </soap:Body>\r\n</soap:Envelope>"
+                  variable: message.body
+                  content: application/xml
+              actions:
+              - set: .Envelope.Body.OpenEstablishmentByGSBLicenseRs.Body.FileNumber
+                from: .FileNumber
+              - set: .Envelope.Body.OpenEstablishmentByGSBLicenseRs.Body.LaborOfficeId
+                from: .LaborOfficeId
+              - set: .Envelope.Body.OpenEstablishmentByGSBLicenseRs.Body.SequenceNumber
+                from: .SequenceNumber
+              - set: .Envelope.Body.OpenEstablishmentByGSBLicenseRs.Body.UnifiedNationalNumber
+                from: .UnifiedNationalNumber
+              - set: .Envelope.Body.OpenEstablishmentByGSBLicenseRs.Body.RequestNumber
+                from: .RequestNumber
+              options:
+                mapEnablePostProcessingJSON: false
+                mapEmulateV4EmptyJSONObject: false
+                mapEmulateV4DefaultRequiredProps: false
+                mapReferenceLimit: 1
+                mapResolveApicVariables: false
+                mapOptimizeSchemaDefinition: true
+                mapResolveXMLInputDataType: true
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Error
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar error = {\n  \"errorCode\":
+                message[cfg.responseName].Header.ResponseStatus.Code,\n  \"errorMessage\":
+                {\n    \"en-US\": message[cfg.responseName].Header.ResponseStatus.EnglishMsg,\n
+                \   \"ar-SA\": message[cfg.responseName].Header.ResponseStatus.ArabicMsg\n
+                \ }\n};\n\nvar httperror=0;\nif(cfg.errorMap){\n    if(cfg.errorMap[error.errorCode]){\n
+                \      httperror = cfg.errorMap[error.errorCode].code;\n       \n
+                \      //var errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\n
+                \      //var details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\n    }\n}\nif(httperror
+                == 0){\n   httperror = 400;\n   // apim.error('ERROR',400,'Bad Request','Invalid
+                request');\n}\napim.setvariable('message.status.code',httperror,'set');\n\nsession.output.write(error);\napim.output('application/json');"
+          - map:
+              version: 2.0.0
+              title: map
+              inputs:
+                "":
+                  schema:
+                    description: ""
+                    type: object
+                    properties:
+                      errorCode:
+                        type: string
+                        name: errorCode
+                      errorMessage:
+                        type: object
+                        properties:
+                          en-US:
+                            type: string
+                            name: en-US
+                          ar-SA:
+                            type: string
+                            name: ar-SA
+                        name: errorMessage
+                    example: "{\r\n    \"errorCode\": \"ESBSCHEMA\",\r\n    \"errorMessage\":
+                      {\r\n        \"en-US\": \"Schema Validation Error : TIMESTAMP
+                      '2023-03-27 13:37:14.843039';  Node Name  :com.qiwa.esb.openestabbygsblic.HTTP_OpenEstablishmentByGSBLicense.MQ_Input_Node.MQ
+                      Input;  Errror Text  :Node throwing exception. XML Writing Errors
+                      have occurred. A schema validation error has occurred while
+                      validating the message tree. 5005. 2. 1. 1203. cvc-complex-type.2.4.b:
+                      Element \\\"ApplicantInfo\\\" or one of its substitutions is
+                      required.. /Root/XMLNSC/OpenEstablishmentByGSBLicenseRq/Body.
+                      \",\r\n        \"ar-SA\": \"حدث خطأ بالنظام\"\r\n    }\r\n}"
+                  variable: message.body
+                  content: application/json
+              outputs:
+                "":
+                  schema:
+                    description: ""
+                    type: object
+                    properties:
+                      OpenEstablishmentByGSBLicenseRs:
+                        type: object
+                        properties:
+                          errorCode:
+                            type: string
+                            name: errorCode
+                          errorMessage:
+                            type: object
+                            properties:
+                              en-US:
+                                type: string
+                                name: en-US
+                              ar-SA:
+                                type: string
+                                name: ar-SA
+                            xml:
+                              namespace: ""
+                            name: errorMessage
+                        xml:
+                          namespace: ""
+                        name: OpenEstablishmentByGSBLicenseRs
+                    xml:
+                      namespace: ""
+                    example: "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\r\n<OpenEstablishmentByGSBLicenseRs>\r\n
+                      \ <errorCode>ESBSCHEMA</errorCode>\r\n  <errorMessage>\r\n    <en-US>Schema
+                      Validation Error : TIMESTAMP &#x27;2023-03-27 13:37:14.843039&#x27;;
+                      \ Node Name  :com.qiwa.esb.openestabbygsblic.HTTP_OpenEstablishmentByGSBLicense.MQ_Input_Node.MQ
+                      Input;  Errror Text  :Node throwing exception. XML Writing Errors
+                      have occurred. A schema validation error has occurred while
+                      validating the message tree. 5005. 2. 1. 1203. cvc-complex-type.2.4.b:
+                      Element &quot;ApplicantInfo&quot; or one of its substitutions
+                      is required.. /Root/XMLNSC/OpenEstablishmentByGSBLicenseRq/Body.
+                      </en-US>\r\n    <ar-SA>حدث خطأ بالنظام</ar-SA>\r\n  </errorMessage>\r\n</OpenEstablishmentByGSBLicenseRs>"
+                  variable: message.body
+                  content: application/xml
+              actions:
+              - set: .OpenEstablishmentByGSBLicenseRs.errorCode
+                from: .errorCode
+              - set: .OpenEstablishmentByGSBLicenseRs.errorMessage.en-US
+                from: .errorMessage.en-US
+              - set: .OpenEstablishmentByGSBLicenseRs.errorMessage.ar-SA
+                from: .errorMessage.ar-SA
+              options:
+                mapEnablePostProcessingJSON: false
+                mapEmulateV4EmptyJSONObject: false
+                mapEmulateV4DefaultRequiredProps: false
+                mapReferenceLimit: 1
+                mapResolveApicVariables: false
+                mapOptimizeSchemaDefinition: true
+                includeEmptyXMLElements: false
+                namespaceInheritance: false
+                inlineNamespaces: false
+                mapResolveXMLInputDataType: true
+    catch: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+parameters:
+  X-IBM-Client-Id:
+    in: header
+    name: X-IBM-Client-Id
+    description: Client id issued by security server
+    required: true
+    type: string
+  X-IBM-Client-Secret:
+    in: header
+    name: X-IBM-Client-Secret
+    description: Client secret issued by security server
+    required: true
+    type: string
+  X-Request-Id:
+    in: header
+    name: X-Request-Id
+    description: X-Request-Id returned in the response header
+    required: false
+    type: string
+  UserId:
+    in: header
+    name: UserId
+    description: UserI d
+    required: false
+    type: integer
+    format: int32
+definitions:
+  RequestModel:
+    type: object
+    description: This response object returned by the post operation
+    properties:
+      EntityInfo:
+        $ref: '#/definitions/EntityInfo_Type'
+      LicenseInfo:
+        $ref: '#/definitions/LicenseInfo_Type'
+      ContactInfo:
+        $ref: '#/definitions/ContactInfo_Type'
+      OwnerInfo:
+        $ref: '#/definitions/OwnerInfo_Type'
+      ApplicantInfo:
+        $ref: '#/definitions/ApplicantInfo_Type'
+      GSBSource:
+        type: string
+        example: test
+  EntityInfo_Type:
+    type: object
+    properties:
+      UnifiedNationalNumber:
+        type: string
+        example: "11"
+      IsMain:
+        type: string
+        example: "1"
+      EntityName:
+        type: string
+        example: Regression GSB EstName
+      EntityType:
+        type: integer
+        example: "1"
+      EntityISIC4Code:
+        type: integer
+        example: "1220"
+      EntityNationalityCode:
+        type: integer
+        example: "1"
+      EntityCityCode:
+        type: integer
+        example: "1"
+  LicenseInfo_Type:
+    type: object
+    properties:
+      LicenseNumber:
+        type: string
+        example: "1612010111"
+      LicenseTypeCode:
+        type: integer
+        example: "1"
+      IssueDate:
+        type: string
+        example: "2022-08-01"
+      ExpiryDate:
+        type: string
+        example: "2022-08-01"
+      GSBSourceName:
+        type: string
+        example: test
+  ContactInfo_Type:
+    type: object
+    properties:
+      Mobile:
+        type: string
+        example: 550657280
+      Telephone:
+        type: string
+        example: 550657280
+      Email:
+        type: string
+        example: Test@gmail.com
+  OwnerInfo_Type:
+    type: object
+    properties:
+      NationalID:
+        type: string
+        example: "1107072488"
+      FullName:
+        $ref: '#/definitions/FullName_Type'
+      BirthDate:
+        type: string
+        example: "14190215"
+      NationalityCode:
+        type: integer
+        example: "1"
+      Mobile:
+        type: string
+        example: 550657280
+      EmailAddress:
+        type: string
+        example: Test@gmail.com
+  FullName_Type:
+    type: object
+    properties:
+      FirstName:
+        type: string
+        example: FirstName
+      SecondName:
+        type: string
+        example: SecondName
+      ThirdName:
+        type: string
+        example: ThirdName
+      LastName:
+        type: string
+        example: LastName
+  ApplicantInfo_Type:
+    type: object
+    properties:
+      NationalID:
+        type: string
+        example: "1107072488"
+      FullName:
+        $ref: '#/definitions/FullName_Type'
+      BirthDate:
+        type: string
+        example: "14190215"
+      NationalityCode:
+        type: integer
+        example: "1"
+  ResponseModel:
+    type: object
+    description: This response object returned by the Post
+    properties:
+      FileNumber:
+        type: string
+        example: "11"
+      LaborOfficeId:
+        type: integer
+        example: "1"
+      SequenceNumber:
+        type: string
+        example: "111111"
+      UnifiedNationalNumber:
+        type: string
+        example: "11111"
+      RequestNumber:
+        type: string
+        example: 2-1588202-2023
+  LocaleDataModel:
+    type: object
+    additionalProperties:
+      type: string
+    example:
+      en-US: English Value
+      ar-SA: Arabic Value
+  IntegerNumberModel:
+    type: object
+    description: This object use for integer numbers
+    additionalProperties:
+      type: integer
+      example: 1
+  ErrorModel:
+    type: object
+    required:
+    - errorCode
+    - errorMessage
+    properties:
+      errorCode:
+        type: string
+        example: EXXXX000
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+paths:
+  /openestbygsblic:
+    parameters:
+    - $ref: '#/parameters/X-IBM-Client-Id'
+    - $ref: '#/parameters/X-IBM-Client-Secret'
+    - $ref: '#/parameters/UserId'
+    - in: header
+      name: X-Request-Id
+      description: X-Request-Id returned in the response header
+      required: false
+      type: string
+    post:
+      tags:
+      - Open Establishment By GSB License
+      description: Service to open establishment using gsb
+      operationId: openestbygsblic
+      parameters:
+      - name: request
+        in: body
+        schema:
+          $ref: '#/definitions/RequestModel'
+        description: open establishment by gsb license body
+      produces:
+      - application/json
+      responses:
+        "200":
+          $ref: '#/responses/Response200'
+        "400":
+          $ref: '#/responses/Response400'
+        "401":
+          $ref: '#/responses/Response401'
+        "403":
+          $ref: '#/responses/Response403'
+        "404":
+          $ref: '#/responses/Response404'
+        "408":
+          $ref: '#/responses/Response408'
+        "409":
+          $ref: '#/responses/Response409'
+        "429":
+          $ref: '#/responses/Response429'
+        "500":
+          $ref: '#/responses/Response500'
+        "501":
+          $ref: '#/responses/Response501'
+        "503":
+          $ref: '#/responses/Response503'
+        "510":
+          $ref: '#/responses/Response510'
+responses:
+  Response200:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ResponseModel'
+  Response201:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+      Location:
+        type: string
+        description: Id url encoded
+  Response204:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response400:
+    description: The request was rejected by the server due to malformed syntax. Bad
+      Request.
+  Response401:
+    description: The request could not be completed due to lack of valid credentials.
+      Authentication.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response403:
+    description: The request could not be completed because it is not authorized.
+      Authorization
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response404:
+    description: The server has not found anything matching the Request-URI.
+  Response408:
+    description: The client did not produce a request within the time that the server
+      was prepared to wait.
+  Response409:
+    description: The request could not be completed due to a conflict with the current
+      state of the resource. Usually business validation errors will be returned in
+      the body
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response429:
+    description: The request was sent too many times in a given amount of time
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response500:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response501:
+    description: The server does not support the functionality required and does not
+      recognize the request
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response503:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response510:
+    description: Extensions to the request are required for the server to fulfil it.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'

@@ -1,0 +1,580 @@
+swagger: "2.0"
+info:
+  title: GetSaudiACL
+  x-ibm-name: getsaudiacl
+  version: 1.0.0
+  description: This service requests a get the Saudi Certificate Details through QIWA
+    Takamol Internal/External Integration platform.
+schemes:
+- https
+basePath: /qiwa/v1/acl
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - parse:
+        version: 2.0.0
+        title: parse
+        parse-settings-reference:
+          default: apic-default-parsesettings
+    - map:
+        version: 2.0.0
+        title: map
+        inputs:
+          "":
+            schema:
+              description: ""
+              type: object
+              properties:
+                CertificateNumber:
+                  type: string
+                  name: CertificateNumber
+                NationalUnifiedNumber:
+                  type: number
+                  name: NationalUnifiedNumber
+              example: "{\r\n            \"CertificateNumber\": \"418270-17357438\",\r\n
+                \           \"NationalUnifiedNumber\": 1234\r\n        }"
+            variable: request.body
+        outputs:
+          "":
+            schema:
+              description: ""
+              type: object
+              properties:
+                CertificateNumber:
+                  type: string
+                  name: CertificateNumber
+                NationalUnifiedNumber:
+                  type: number
+                  name: NationalUnifiedNumber
+                PageSize:
+                  type: number
+                  name: PageSize
+                PageIndex:
+                  type: number
+                  name: PageIndex
+              example: "{\r\n            \"CertificateNumber\": \"418270-17357438\",\r\n
+                \           \"NationalUnifiedNumber\": 1234,\r\n            \"PageSize\":
+                1,\r\n            \"PageIndex\": 1\r\n        }"
+            variable: message.body
+        actions:
+        - set: .PageSize
+          default: 1
+        - set: .PageIndex
+          default: 1
+        - set: .CertificateNumber
+          from: .CertificateNumber
+        - set: .NationalUnifiedNumber
+          from: .NationalUnifiedNumber
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\r\n\r\nvar cfg={\r\n    \"serviceCode\"
+          : \"GSC00002\",\r\n    \"channelId\" : \"ESB\",\r\n    \"requestName\" :
+          \"GetSaudiCertificateRq\",\r\n    \"responseName\": \"GetSaudiCertificateRs\",\r\n
+          \   \"errorMap\" :{\r\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid
+          Request\"}\r\n    }\r\n    \r\n};\r\napim.setvariable('cfg',cfg);"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare_Request
+        source: "var apim = require('apim');\r\n\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\nvar appcReq
+          = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n            \"TransactionId\"
+          : millisecondsvalue,\r\n            \"ChannelId\": cfg.channelId,\r\n            \"SessionId\":
+          apim.getvariable('message.headers.X-Request-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode\r\n\r\n
+          \       },\r\n        \"Body\" : apim.getvariable('message.body')\r\n            \r\n
+          \       \r\n    }\r\n};\r\n\r\nif (typeof OperatorId !== 'undefined')\r\n
+          \   appcReq[cfg.requestName].Header.UserInfo = {\r\n        \"IDNumber\"
+          : OperatorId\r\n    };\r\nsession.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n    \r\n    \r\n\r\n    //return
+          the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour
+          + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(internal-qiwa-translate-layer)/saudicer/getsaudicert
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        persistent-connection: true
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_Headers
+        source: |-
+          var apim = require('apim');
+          apim.output('application/json');
+          var message = apim.getvariable('message.body');
+          var cfg = apim.getvariable('cfg');
+          var Header = message[cfg.responseName].Header;
+          var TransactionId = Header.TransactionId;
+          var ChannelId = Header.ChannelId;
+          var RequestTime = Header.RequestTime;
+          var SessionId = Header.SessionId;
+          var MWRequestTime = Header.MWRequestTime;
+          var MWResponseTime = Header.MWResponseTime;
+          var status = Header.ResponseStatus.Status;
+          var code = Header.ResponseStatus.Code;
+          apim.setvariable('message.headers.Transaction-Id',TransactionId,'add');
+          apim.setvariable('message.headers.Channel-Id',ChannelId,'add');
+          if (RequestTime !== 'undefined')
+          apim.setvariable('message.headers.RequestTime',RequestTime,'add');
+          if (SessionId !== 'undefined')
+          apim.setvariable('message.headers.X-Request-Id',SessionId,'add');
+          if (MWRequestTime !== 'undefined')
+          apim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');
+          if (MWResponseTime !== 'undefined')
+          apim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');
+          apim.setvariable('message.headers.Response-Status',status,'add');
+          apim.setvariable('message.headers.Response-Code',code,'add');
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Response
+              source: "var apim = require('apim');\r\n\r\n\r\nvar message = apim.getvariable('message.body');\r\nvar
+                cfg = apim.getvariable('cfg');\r\nvar body = message[cfg.responseName].Body;\r\n\r\nsession.output.write(body);\r\napim.output('application/json');"
+          - map:
+              version: 2.0.0
+              title: map
+              inputs:
+                "":
+                  schema:
+                    description: ""
+                    type: object
+                    properties:
+                      SCDetailsList:
+                        type: object
+                        properties:
+                          SCDetailsItem:
+                            type: object
+                            properties:
+                              CertificateNumber:
+                                type: string
+                                name: CertificateNumber
+                              NationalUnifiedNumber:
+                                type: object
+                                properties: {}
+                                name: NationalUnifiedNumber
+                              SaudiCertIssueDate:
+                                type: string
+                                name: SaudiCertIssueDate
+                              SaudiCertExpiryDate:
+                                type: string
+                                name: SaudiCertExpiryDate
+                              SaudiCertStatus:
+                                type: object
+                                properties:
+                                  SaudiCertStatusId:
+                                    type: string
+                                    name: SaudiCertStatusId
+                                  SaudiCertStatusEn:
+                                    type: string
+                                    name: SaudiCertStatusEn
+                                  SaudiCertStatusAr:
+                                    type: string
+                                    name: SaudiCertStatusAr
+                                name: SaudiCertStatus
+                              LaborOfficeId:
+                                type: string
+                                name: LaborOfficeId
+                              SequenceNumber:
+                                type: string
+                                name: SequenceNumber
+                              EstablishmentName:
+                                type: string
+                                name: EstablishmentName
+                              CRNumber:
+                                type: string
+                                name: CRNumber
+                              RenewalStartDate:
+                                type: object
+                                properties: {}
+                                name: RenewalStartDate
+                              RequesterIdNo:
+                                type: string
+                                name: RequesterIdNo
+                              RequesterUserId:
+                                type: string
+                                name: RequesterUserId
+                            name: SCDetailsItem
+                        name: SCDetailsList
+                      TotalRecordsCount:
+                        type: string
+                        name: TotalRecordsCount
+                    example: "{\r\n            \"SCDetailsList\": {\r\n                \"SCDetailsItem\":
+                      {\r\n                    \"CertificateNumber\": \"418270-17357438\",\r\n
+                      \                   \"NationalUnifiedNumber\": {},\r\n                    \"SaudiCertIssueDate\":
+                      \"2022-03-21T14:23:42.690\",\r\n                    \"SaudiCertExpiryDate\":
+                      \"2022-06-19T14:23:42.690\",\r\n                    \"SaudiCertStatus\":
+                      {\r\n                        \"SaudiCertStatusId\": \"1\",\r\n
+                      \                       \"SaudiCertStatusEn\": \"Active\",\r\n
+                      \                       \"SaudiCertStatusAr\": \"نشط\"\r\n                    },\r\n
+                      \                   \"LaborOfficeId\": \"1\",\r\n                    \"SequenceNumber\":
+                      \"355227\",\r\n                    \"EstablishmentName\": \"زهران
+                      للحراسات الامنيه\",\r\n                    \"CRNumber\": \"1010370907\",\r\n
+                      \                   \"RenewalStartDate\": {},\r\n                    \"RequesterIdNo\":
+                      \"1015671413\",\r\n                    \"RequesterUserId\":
+                      \"1619914\"\r\n                }\r\n            },\r\n            \"TotalRecordsCount\":
+                      \"1\"\r\n        }"
+                  variable: message.body
+                  content: application/json
+              outputs:
+                "":
+                  schema:
+                    description: ""
+                    type: object
+                    properties:
+                      CertificateNumber:
+                        type: string
+                        name: CertificateNumber
+                      SaudiCertIssueDate:
+                        type: string
+                        name: SaudiCertIssueDate
+                      SaudiCertExpiryDate:
+                        type: string
+                        name: SaudiCertExpiryDate
+                      EstablishmentName:
+                        type: string
+                        name: EstablishmentName
+                    example: "{\r\n    \"CertificateNumber\": \"418270-17357438\",\r\n
+                      \   \"SaudiCertIssueDate\": \"2022-03-21T14:23:42.690\",\r\n
+                      \   \"SaudiCertExpiryDate\": \"2022-06-19T14:23:42.690\",\r\n
+                      \   \"EstablishmentName\": \"زهران للحراسات الامنيه\"\r\n}"
+                  variable: message.body
+              actions:
+              - set: .CertificateNumber
+                from: .SCDetailsList.SCDetailsItem.CertificateNumber
+              - set: .SaudiCertIssueDate
+                from: .SCDetailsList.SCDetailsItem.SaudiCertIssueDate
+              - set: .SaudiCertExpiryDate
+                from: .SCDetailsList.SCDetailsItem.SaudiCertExpiryDate
+              - set: .EstablishmentName
+                from: .SCDetailsList.SCDetailsItem.EstablishmentName
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Error
+              source: "var apim = require('apim');\r\n\r\nvar message = apim.getvariable('message.body');\r\nvar
+                cfg = apim.getvariable('cfg');          \r\nvar error = {\r\n  \"errorCode\":
+                message[cfg.responseName].Header.ResponseStatus.Code,\r\n  \"errorMessage\":
+                {\r\n    \"en-US\": message[cfg.responseName].Header.ResponseStatus.EnglishMsg,\r\n
+                \   \"ar-SA\": message[cfg.responseName].Header.ResponseStatus.ArabicMsg\r\n
+                \ }\r\n};\r\n\r\nvar httperror=0;\r\nif(cfg.errorMap){\r\n    if(cfg.errorMap[error.errorCode]){\r\n
+                \      httperror = cfg.errorMap[error.errorCode].code;\r\n       \r\n
+                \      //var errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\r\n
+                \      //var details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\r\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\r\n    }\r\n}\r\nif(httperror
+                == 0){\r\n   httperror = 409;\r\n   // apim.error('ERROR',400,'Bad
+                Request','Invalid request');\r\n}\r\napim.setvariable('message.status.code',httperror,'set');\r\n\r\nsession.output.write(error);\r\napim.output('application/json');"
+    catch:
+    - errors:
+      - ValidateError
+      execute:
+      - gatewayscript:
+          version: 2.0.0
+          title: schemaError
+          source: "var apim = require('apim');\r\nvar body = {\r\n                \"Status\":
+            \"Error\",\r\n                \"Code\": \"ESBSCHEMA\",\r\n                \"ArabicMsg\":
+            \"حدث خطأ بالنظام\",\r\n                \"EnglishMsg\": \"Schema Validation
+            Error : Node Name  :com.qiwa.esb.getsaudicertificatedetails.GetSaudiCertificateFlow.MQ_Input_Node.MQ
+            Input;  Errror Text  :Node throwing exception. XML Writing Errors have
+            occurred. A schema validation error has occurred while validating the
+            message tree. 5005. 2. 1. 388. cvc-complex-type.2.4.b: Element \\\"CertificateNumber\\\"
+            or one of its substitutions is required.. /Root/XMLNSC/GetSaudiCertificateRq/Body.
+            \"\r\n            }\r\nsession.output.write(body);\r\napim.output('application/json');"
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+parameters:
+  X-IBM-Client-Id:
+    in: header
+    name: X-IBM-Client-Id
+    description: Client id issued by security server
+    required: true
+    type: string
+  X-IBM-Client-Secret:
+    in: header
+    name: X-IBM-Client-Secret
+    description: Client secret issued by security server
+    required: true
+    type: string
+  X-Request-Id:
+    in: header
+    name: X-Request-Id
+    description: X-Request-Id returned in the response header
+    required: false
+    type: string
+  UserId:
+    in: header
+    name: UserId
+    description: UserI d
+    required: false
+    type: integer
+    format: int32
+definitions:
+  RequestModel:
+    type: object
+    properties:
+      CertificateNumber:
+        type: string
+        minLength: 1
+    required:
+    - CertificateNumber
+  ResponseModel:
+    type: object
+    description: This response object returned by the get operation
+    properties:
+      CertificateNumber:
+        type: string
+        example: ""
+      SaudiCertIssueDate:
+        type: string
+        example: ""
+      SaudiCertExpiryDate:
+        type: string
+        example: ""
+      EstablishmentName:
+        type: string
+        example: ""
+  LocaleDataModel:
+    type: object
+    additionalProperties:
+      type: string
+    example:
+      en-US: English Value
+      ar-SA: Arabic Value
+  IntegerNumberModel:
+    type: object
+    description: This object use for integer numbers
+    additionalProperties:
+      type: integer
+      example: 1
+  ErrorModel:
+    type: object
+    required:
+    - errorCode
+    - errorMessage
+    properties:
+      errorCode:
+        type: string
+        example: EXXXX000
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+paths:
+  /getsaudicert:
+    parameters:
+    - in: header
+      name: X-IBM-Client-Id
+      description: Client id issued by security server
+      required: true
+      type: string
+    - in: header
+      name: X-IBM-Client-Secret
+      description: Client secret issued by security server
+      required: true
+      type: string
+    - in: header
+      name: X-Request-Id
+      description: X-Request-Id returned in the response header
+      required: false
+      type: string
+    - in: header
+      name: UserId
+      description: UserI d
+      required: false
+      type: integer
+      format: int32
+    post:
+      tags:
+      - Getsaudicertificatedetails
+      description: Service for Certificate Details
+      operationId: Getsaudicertificatedetails
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/RequestModel'
+        description: Get Saudi Certificate Details
+        required: true
+      produces:
+      - application/json
+      responses:
+        "200":
+          $ref: '#/responses/Response200'
+        "400":
+          $ref: '#/responses/Response400'
+        "401":
+          $ref: '#/responses/Response401'
+        "403":
+          $ref: '#/responses/Response403'
+        "404":
+          $ref: '#/responses/Response404'
+        "408":
+          $ref: '#/responses/Response408'
+        "409":
+          $ref: '#/responses/Response409'
+        "429":
+          $ref: '#/responses/Response429'
+        "500":
+          $ref: '#/responses/Response500'
+        "501":
+          $ref: '#/responses/Response501'
+        "503":
+          $ref: '#/responses/Response503'
+        "510":
+          $ref: '#/responses/Response510'
+responses:
+  Response200:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ResponseModel'
+  Response201:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+      Location:
+        type: string
+        description: Id url encoded
+  Response204:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response400:
+    description: The request was rejected by the server due to malformed syntax. Bad
+      Request.
+  Response401:
+    description: The request could not be completed due to lack of valid credentials.
+      Authentication.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response403:
+    description: The request could not be completed because it is not authorized.
+      Authorization
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response404:
+    description: The server has not found anything matching the Request-URI.
+  Response408:
+    description: The client did not produce a request within the time that the server
+      was prepared to wait.
+  Response409:
+    description: The request could not be completed due to a conflict with the current
+      state of the resource. Usually business validation errors will be returned in
+      the body
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response429:
+    description: The request was sent too many times in a given amount of time
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response500:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response501:
+    description: The server does not support the functionality required and does not
+      recognize the request
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response503:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response510:
+    description: Extensions to the request are required for the server to fulfil it.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'

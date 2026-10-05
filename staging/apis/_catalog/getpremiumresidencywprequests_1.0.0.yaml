@@ -1,0 +1,339 @@
+swagger: "2.0"
+info:
+  title: GetPremiumResidencyWPRequests
+  version: 1.0.0
+  description: GetPremiumResidencyWPRequests
+  x-ibm-name: getpremiumresidencywprequests
+paths:
+  /getpremresdwpreq:
+    post:
+      operationId: GetPremiumResidencyWPRequests
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetPremiumResidencyWPRequestsRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Validate SC Request
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetPremiumResidencyWPRequestsRq_MessageType'
+        description: GetPremiumResidencyWPRequestsRq
+        required: true
+basePath: /workpermit
+definitions:
+  GetPremiumResidencyWPRequestsRq_MessageType:
+    type: object
+    properties:
+      GetPremiumResidencyWPRequestsRq:
+        $ref: '#/definitions/GetPremiumResidencyWPRequestsRq_Type'
+  GetPremiumResidencyWPRequestsRs_MessageType:
+    type: object
+    properties:
+      GetPremiumResidencyWPRequestsRs:
+        $ref: '#/definitions/GetPremiumResidencyWPRequestsRs_Type'
+  GetPremiumResidencyWPRequestsRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetPremiumResidencyWPRequestsRq_BodyType'
+  GetPremiumResidencyWPRequestsRq_BodyType:
+    type: object
+    properties:
+      RequestReferenceNo:
+        type: string
+      LaborOfficeId:
+        type: integer
+      EstablishmentSequence:
+        type: integer
+      LaborerWPNo:
+        type: integer
+      WPStatusIDs:
+        type: string
+      PageSize:
+        type: integer
+      PageIndex:
+        type: integer
+    required:
+    - PageSize
+    - PageIndex
+  GetPremiumResidencyWPRequestsRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetPremiumResidencyWPRequestsRs_BodyType'
+  GetPremiumResidencyWPRequestsRs_BodyType:
+    type: object
+    properties:
+      WorkPermitsList:
+        $ref: '#/definitions/WPList_Type'
+      PageSize:
+        type: integer
+      PageIndex:
+        type: integer
+      TotalRecordsCount:
+        type: integer
+    required:
+    - PageSize
+    - PageIndex
+    - TotalRecordsCount
+  WPList_Type:
+    type: object
+    properties:
+      WPDetails:
+        type: array
+        items:
+          $ref: '#/definitions/WPDetails_Type'
+    required:
+    - WPDetails
+  WPDetails_Type:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      EstablishmetSequence:
+        type: integer
+      RequestReferenceNo:
+        type: string
+      TotalWPValue:
+        type: integer
+      SadadNumber:
+        type: integer
+      BillRefInfo:
+        type: string
+      LaborerIdNo:
+        type: integer
+      LaborerName:
+        type: string
+      LaborerWPNo:
+        type: integer
+      CurrentWPStartDate:
+        type: string
+      CurrentWPExpiryDate:
+        type: string
+      WorkPermitPeriod:
+        type: integer
+        enum:
+        - 3
+        - 6
+        - 9
+        - 12
+      LabTotalRecordsCount:
+        type: integer
+      NbExemptedLaborers:
+        type: integer
+      WPStatus:
+        $ref: '#/definitions/CodeName_Type'
+      WPCreationDate:
+        type: string
+      SadadExpiryDate:
+        type: string
+      PaymentDate:
+        type: string
+      PaymentMethod:
+        type: integer
+        enum:
+        - 1
+        - 2
+        - 3
+    required:
+    - LaborOfficeId
+    - EstablishmetSequence
+    - RequestReferenceNo
+    - TotalWPValue
+    - SadadNumber
+    - BillRefInfo
+    - LaborerIdNo
+    - LaborerName
+    - LaborerWPNo
+    - CurrentWPStartDate
+    - CurrentWPExpiryDate
+    - WorkPermitPeriod
+    - LabTotalRecordsCount
+    - NbExemptedLaborers
+    - WPStatus
+    - WPCreationDate
+    - SadadExpiryDate
+    - PaymentDate
+    - PaymentMethod
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+    required:
+    - Code
+    - NameAr
+    - NameEn
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(ace-wp-wpcommon)$(request.path)
+        follow-redirects: false
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+schemes:
+- https
+securityDefinitions:
+  clientId:
+    type: apiKey
+    x-key-type: client_id
+    name: X-IBM-Client-Id
+    in: header
+  Oauth2.0:
+    type: oauth2
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    flow: application
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+security:
+- clientId: []
+  Oauth2.0:
+  - IntegrationScope

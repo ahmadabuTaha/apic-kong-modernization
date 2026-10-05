@@ -1,0 +1,525 @@
+swagger: "2.0"
+info:
+  title: GetContractTemplateDetails V2
+  x-ibm-name: getcontracttemplatedetails-v2
+  version: 1.0.0
+  description: Get Contract Template Details
+schemes:
+- https
+basePath: /contractmanagement/v2
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-cntmv2-getscontract)/contractmanagement/getcontracttemplatedetails
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  GetContractTemplateDetailsRq_MessageType:
+    type: object
+    properties:
+      GetContractTemplateDetailsRq:
+        $ref: '#/definitions/GetContractTemplateDetailsRq_Type'
+  GetContractTemplateDetailsRs_MessageType:
+    type: object
+    properties:
+      GetContractTemplateDetailsRs:
+        $ref: '#/definitions/GetContractTemplateDetailsRs_Type'
+  GetContractTemplateDetailsRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetContractTemplateDetailsRq_BodyType'
+  GetContractTemplateDetailsRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetContractTemplateDetailsRs_BodyType'
+  GetContractTemplateDetailsRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      TemplateId:
+        type: integer
+      TemplateName:
+        type: string
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+  GetContractTemplateDetailsRs_BodyType:
+    type: object
+    properties:
+      TemplateDetails:
+        $ref: '#/definitions/TemplateDetails_Type'
+      EstablishmentDetails:
+        $ref: '#/definitions/EstablishmentDetails_Type'
+      RequesterDetails:
+        $ref: '#/definitions/RequesterDetails_Type'
+      ContractDetails:
+        $ref: '#/definitions/ContractDetails_Type'
+    required:
+    - TemplateDetails
+    - EstablishmentDetails
+    - RequesterDetails
+    - ContractDetails
+  TemplateDetails_Type:
+    type: object
+    properties:
+      TemplateId:
+        type: integer
+      TemplateName:
+        type: string
+      TemplateDescription:
+        type: string
+    required:
+    - TemplateId
+    - TemplateName
+    - TemplateDescription
+  EstablishmentDetails_Type:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      NationalAddress:
+        type: string
+      EstablishmentEmail:
+        type: string
+      PhoneNumber:
+        type: string
+      MobileNumber:
+        type: string
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+    - NationalAddress
+    - EstablishmentEmail
+    - PhoneNumber
+    - MobileNumber
+  RequesterDetails_Type:
+    type: object
+    properties:
+      RequesterIdNo:
+        type: integer
+      RequesterName:
+        type: string
+      RequesterType:
+        $ref: '#/definitions/CodeName_Type'
+      RequesterRoleEn:
+        type: string
+      RequesterRoleAr:
+        type: string
+    required:
+    - RequesterIdNo
+    - RequesterName
+    - RequesterType
+    - RequesterRoleEn
+    - RequesterRoleAr
+  ContractDetails_Type:
+    type: object
+    properties:
+      Occupation:
+        $ref: '#/definitions/CodeName_Type'
+      JobTitle:
+        $ref: '#/definitions/JobTitle_Type'
+      ContractType:
+        $ref: '#/definitions/CodeName_Type'
+      ContractDuration:
+        $ref: '#/definitions/CodeName_Type'
+      ContractPeriod:
+        type: integer
+      WorkingHoursType:
+        $ref: '#/definitions/CodeName_Type'
+      DaysPerWeek:
+        type: integer
+      HoursPerDay:
+        type: integer
+      HoursPerWeek:
+        type: integer
+      RestingDays:
+        type: integer
+      Salary:
+        type: string
+      ProbationPeriod:
+        type: integer
+      VacationPeriod:
+        type: integer
+      NoticePeriod:
+        type: integer
+      Allowances:
+        $ref: '#/definitions/Allowances_Type'
+      InKindBenefits:
+        $ref: '#/definitions/InKindBenefits_Type'
+      Commission:
+        $ref: '#/definitions/Commission_Type'
+      OptionalClauses:
+        $ref: '#/definitions/OptionalClauses_Type'
+      Terms:
+        $ref: '#/definitions/Terms_Type'
+      AdditionalTerms:
+        $ref: '#/definitions/AdditionalTerms_Type'
+    required:
+    - Occupation
+    - JobTitle
+    - ContractType
+    - ContractDuration
+    - ContractPeriod
+    - WorkingHoursType
+    - DaysPerWeek
+    - HoursPerDay
+    - HoursPerWeek
+    - RestingDays
+    - Salary
+    - ProbationPeriod
+    - VacationPeriod
+    - Allowances
+    - InKindBenefits
+    - Commission
+    - OptionalClauses
+    - Terms
+    - AdditionalTerms
+  JobTitle_Type:
+    type: object
+    properties:
+      JobTitleAr:
+        type: string
+      JobTitleEng:
+        type: string
+    required:
+    - JobTitleAr
+    - JobTitleEng
+  Allowances_Type:
+    type: object
+    properties:
+      AllowancesItem:
+        type: array
+        items:
+          $ref: '#/definitions/AllowancesItem_Type'
+    required:
+    - AllowancesItem
+  AllowancesItem_Type:
+    type: object
+    properties:
+      AllowanceType:
+        $ref: '#/definitions/CodeName_Type'
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+      Amount:
+        type: number
+    required:
+    - AllowanceType
+    - NameAr
+    - NameEn
+    - Amount
+  InKindBenefits_Type:
+    type: object
+    properties:
+      InKindBenefitsItem:
+        type: array
+        items:
+          $ref: '#/definitions/InKindBenefitsItem_Type'
+    required:
+    - InKindBenefitsItem
+  InKindBenefitsItem_Type:
+    type: object
+    properties:
+      NameEn:
+        type: string
+      NameAr:
+        type: string
+      DescriptionEn:
+        type: string
+      DescriptionAr:
+        type: string
+      Frequency:
+        $ref: '#/definitions/CodeName_Type'
+      DueDate:
+        type: string
+    required:
+    - NameEn
+    - NameAr
+    - DescriptionEn
+    - DescriptionAr
+    - Frequency
+    - DueDate
+  Commission_Type:
+    type: object
+    properties:
+      CommissionItem:
+        type: array
+        items:
+          $ref: '#/definitions/CommissionItem_Type'
+    required:
+    - CommissionItem
+  CommissionItem_Type:
+    type: object
+    properties:
+      CommissionBaseEn:
+        type: string
+      CommissionBaseAr:
+        type: string
+      Percentage:
+        type: integer
+      Frequency:
+        $ref: '#/definitions/CodeName_Type'
+    required:
+    - CommissionBaseEn
+    - CommissionBaseAr
+    - Percentage
+    - Frequency
+  OptionalClauses_Type:
+    type: object
+    properties:
+      OptionalClausesItem:
+        type: array
+        items:
+          $ref: '#/definitions/OptionalClausesItem_Type'
+    required:
+    - OptionalClausesItem
+  OptionalClausesItem_Type:
+    type: object
+    properties:
+      OptionalClausesType:
+        $ref: '#/definitions/CodeName_Type'
+      Period:
+        type: integer
+      Field:
+        type: string
+      Location:
+        type: string
+      FirstParty:
+        type: string
+      SecondParty:
+        type: string
+    required:
+    - OptionalClausesType
+    - Period
+    - Field
+    - Location
+    - FirstParty
+    - SecondParty
+  Terms_Type:
+    type: object
+    properties:
+      TermsItem:
+        type: array
+        items:
+          $ref: '#/definitions/TermsItem_Type'
+    required:
+    - TermsItem
+  TermsItem_Type:
+    type: object
+    properties:
+      TermId:
+        type: integer
+      TermEn:
+        type: string
+      TermAr:
+        type: string
+    required:
+    - TermId
+    - TermEn
+    - TermAr
+  AdditionalTerms_Type:
+    type: object
+    properties:
+      AdditionalTermsItem:
+        type: array
+        items:
+          $ref: '#/definitions/AdditionalTermsItem_Type'
+    required:
+    - AdditionalTermsItem
+  AdditionalTermsItem_Type:
+    type: object
+    properties:
+      NameEn:
+        type: string
+      NameAr:
+        type: string
+    required:
+    - NameEn
+    - NameAr
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+    required:
+    - Code
+    - NameAr
+    - NameEn
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /getcontracttemplatedetails:
+    post:
+      operationId: GetContractTemplateDetails
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetContractTemplateDetailsRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Approve Change Occupation Laborer or Employer
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetContractTemplateDetailsRq_MessageType'
+        description: GetContractTemplateDetailsRq
+        required: true

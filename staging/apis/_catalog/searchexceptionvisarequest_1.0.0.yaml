@@ -1,0 +1,398 @@
+swagger: "2.0"
+info:
+  title: SearchExceptionVisaRequest
+  x-ibm-name: searchexceptionvisarequest
+  version: 1.0.0
+  description: Search Exception Visa Request
+schemes:
+- https
+basePath: /exceptions
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        header-control:
+          type: blacklist
+          values: []
+        parameter-control:
+          type: whitelist
+          values: []
+        timeout: 60
+        verb: keep
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        target-url: $(ace-lbro-lo-exception)/exceptions/searchexceptionvisarequest
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+definitions:
+  SearchExceptionVisaRequestRq_MessageType:
+    type: object
+    properties:
+      SearchExceptionVisaRequestRq:
+        $ref: '#/definitions/SearchExceptionVisaRequestRq_Type'
+  SearchExceptionVisaRequestRs_MessageType:
+    type: object
+    properties:
+      SearchExceptionVisaRequestRs:
+        $ref: '#/definitions/SearchExceptionVisaRequestRs_Type'
+  SearchExceptionVisaRequestRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/SearchExceptionVisaRequestRq_BodyType'
+  SearchExceptionVisaRequestRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      RequestNumber:
+        type: string
+      EstablishmentId:
+        type: string
+      VisaOutGoingNumber:
+        type: integer
+      RequestIdNo:
+        type: integer
+      StatusIds:
+        type: string
+      ExceptionVisaRequestId:
+        type: integer
+      ExceptionRequestId:
+        type: string
+      PageSize:
+        type: integer
+      PageIndex:
+        type: integer
+    required:
+    - PageSize
+    - PageIndex
+  SearchExceptionVisaRequestRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/SearchExceptionVisaRequestRs_BodyType'
+  SearchExceptionVisaRequestRs_BodyType:
+    type: object
+    properties:
+      ExceptionVisasList:
+        $ref: '#/definitions/ExceptionVisasList_Type'
+      TotalRecordsCount:
+        type: integer
+    required:
+    - ExceptionVisasList
+    - TotalRecordsCount
+  ExceptionVisasList_Type:
+    type: object
+    properties:
+      ExceptionVisaItem:
+        type: array
+        items:
+          $ref: '#/definitions/ExceptionVisaItem_Type'
+    required:
+    - ExceptionVisaItem
+  ExceptionVisaItem_Type:
+    type: object
+    properties:
+      ExceptionVisaRequestId:
+        type: integer
+      ExceptionRequestId:
+        type: string
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      EstablishmentId:
+        type: string
+      EntityId:
+        type: string
+      UnifiedNumberId:
+        type: string
+      UnifiedNationalNumber:
+        type: string
+      RequestNumber:
+        type: string
+      RequestYear:
+        type: integer
+      RequestSequence:
+        type: integer
+      RequestStatusId:
+        type: integer
+      VisaOutGoingNumber:
+        type: string
+      VisaIssuedDate:
+        type: string
+      VisaTotalCount:
+        type: integer
+      NICRejectionId:
+        type: integer
+      RejectionDescription:
+        type: string
+      RequesterIdNo:
+        type: integer
+      UserId:
+        type: integer
+      CreationDate:
+        type: string
+      LastModifiedDate:
+        type: string
+      RequestDetailsList:
+        $ref: '#/definitions/RequestDetailsList_Type'
+      IssuedVisasList:
+        $ref: '#/definitions/IssuedVisasList_Type'
+    required:
+    - ExceptionVisaRequestId
+    - ExceptionRequestId
+    - LaborOfficeId
+    - SequenceNumber
+    - RequestYear
+    - RequestSequence
+    - RequestStatusId
+    - VisaOutGoingNumber
+    - VisaIssuedDate
+    - VisaTotalCount
+    - NICRejectionId
+    - RejectionDescription
+    - RequesterIdNo
+    - UserId
+    - CreationDate
+    - LastModifiedDate
+    - RequestDetailsList
+  RequestDetailsList_Type:
+    type: object
+    properties:
+      RequestDetail:
+        $ref: '#/definitions/RequestDetail_Type'
+    required:
+    - RequestDetail
+  RequestDetail_Type:
+    type: object
+    properties:
+      ID:
+        type: integer
+      NationalityId:
+        type: integer
+      OriginId:
+        type: integer
+      JobId:
+        type: integer
+      ReligionId:
+        type: integer
+      GenderId:
+        type: integer
+      NumberOfVisas:
+        type: integer
+      CreationDate:
+        type: string
+    required:
+    - ID
+    - NationalityId
+    - OriginId
+    - JobId
+    - ReligionId
+    - GenderId
+    - NumberOfVisas
+    - CreationDate
+  IssuedVisasList_Type:
+    type: object
+    properties:
+      IssuedVisaInfo:
+        $ref: '#/definitions/IssuedVisaInfo_Type'
+    required:
+    - IssuedVisaInfo
+  IssuedVisaInfo_Type:
+    type: object
+    properties:
+      ID:
+        type: integer
+      ExceptionVisaRequestId:
+        type: integer
+      VisaRequestTypeId:
+        type: integer
+      BorderNumber:
+        type: integer
+      NationalityId:
+        type: integer
+      OriginId:
+        type: integer
+      JobId:
+        type: integer
+      ReligionId:
+        type: integer
+      GenderId:
+        type: integer
+      VisaStatusId:
+        type: integer
+      CreationDate:
+        type: string
+    required:
+    - ID
+    - ExceptionVisaRequestId
+    - VisaRequestTypeId
+    - BorderNumber
+    - NationalityId
+    - OriginId
+    - JobId
+    - ReligionId
+    - GenderId
+    - VisaStatusId
+    - CreationDate
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /searchexceptionvisarequest:
+    post:
+      operationId: SearchExceptionVisaRequest
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/SearchExceptionVisaRequestRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Search Exception Visa Request
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/SearchExceptionVisaRequestRq_MessageType'
+        description: SearchExceptionVisaRequestRq
+        required: true

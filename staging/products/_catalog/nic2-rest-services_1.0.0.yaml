@@ -1,0 +1,488 @@
+swagger: "2.0"
+info:
+  title: NIC2_Rest_Services
+  x-ibm-name: nic2-rest-services
+  version: 1.0.0
+  description: NIC Rest Services
+schemes:
+- https
+basePath: /nic/v1
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(cat-target-hostname)$(cat-target-url-external2)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  GetCitizenInformationNICRq:
+    type: object
+    properties:
+      IdNo:
+        type: string
+      DateOfBirth:
+        type: string
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+  GetCitizenInformationNICRq_MessageType:
+    type: object
+    properties:
+      CitizenInformationNICRq:
+        $ref: '#/definitions/GetCitizenInformationNICRq'
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: string
+      IDNumber:
+        type: string
+  GetCitizenInformationNICRs_MessageType:
+    type: object
+    properties:
+      CitizenInformationNICRs:
+        $ref: '#/definitions/GetCitizenInformationNICRs'
+  GetCitizenInformationNICRs:
+    type: object
+    properties:
+      element1:
+        type: string
+  ForeignerInfoExternalRq_Type:
+    type: object
+    properties:
+      IdOrBorderNum:
+        type: string
+  ForeignerInfoExternalRq_MessageType:
+    type: object
+    properties:
+      ForeignerInfoRq:
+        $ref: '#/definitions/ForeignerInfoExternalRq_Type'
+  BirthDate_Type:
+    type: object
+    properties:
+      GregorianDate:
+        type: string
+      HijriDate:
+        type: string
+  ForeignerInfoExternalRs_Type:
+    type: object
+    properties:
+      BirthDate:
+        $ref: '#/definitions/BirthDate_Type'
+      Gender:
+        type: string
+      MartialStatus:
+        $ref: '#/definitions/MartialStatus_Type'
+      Name:
+        $ref: '#/definitions/Name_Type'
+      TranslatedName:
+        $ref: '#/definitions/Name_Type'
+      LaborOfficeId:
+        type: string
+      SequenceNum:
+        type: string
+      Nationality:
+        $ref: '#/definitions/Nationality_Type'
+      Occupation:
+        $ref: '#/definitions/Occupation_Type'
+      Relationship:
+        $ref: '#/definitions/Relationship_Type'
+      Religion:
+        $ref: '#/definitions/Religion_Type'
+      Residency:
+        $ref: '#/definitions/Residency_Type'
+      Sponsor:
+        type: string
+      Status:
+        $ref: '#/definitions/Status_Type'
+      Travel:
+        $ref: '#/definitions/Travel_Type'
+      Visa:
+        $ref: '#/definitions/Visa_Type'
+  MartialStatus_Type:
+    type: object
+    properties:
+      Code:
+        type: string
+      Name:
+        type: string
+  Name_Type:
+    type: object
+    properties:
+      FullName:
+        type: string
+      FirstName:
+        type: string
+      SecondName:
+        type: string
+      ThirdName:
+        type: string
+      LastName:
+        type: string
+  Nationality_Type:
+    type: object
+    properties:
+      Code:
+        type: string
+      Name:
+        type: string
+  Occupation_Type:
+    type: object
+    properties:
+      Code:
+        type: string
+      Name:
+        type: string
+  Relationship_Type:
+    type: object
+    properties:
+      Code:
+        type: string
+      Name:
+        type: string
+  Religion_Type:
+    type: object
+    properties:
+      Code:
+        type: string
+      Name:
+        type: string
+  ExpiryDate_Type:
+    type: object
+    properties:
+      GregorianDate:
+        type: string
+      HijriDate:
+        type: string
+      IdNum:
+        type: string
+      IdType:
+        type: string
+  IssueDate_Type:
+    type: object
+    properties:
+      GregorianDate:
+        type: string
+      HijriDate:
+        type: string
+      IssuePlace:
+        type: string
+  Residency_Type:
+    type: object
+    properties:
+      ExpiryDate:
+        $ref: '#/definitions/ExpiryDate_Type'
+      IssueDate:
+        $ref: '#/definitions/IssueDate_Type'
+  Type_Type:
+    type: object
+    properties:
+      Code:
+        type: string
+      Name:
+        type: string
+  Sponsor_Type:
+    type: object
+    properties:
+      IdNum:
+        type: string
+      Name:
+        type: string
+      Occupation:
+        type: string
+      Status:
+        type: string
+      Type:
+        $ref: '#/definitions/Type_Type'
+  Status_Type:
+    type: object
+    properties:
+      FingerPrintStatus:
+        type: string
+      PersonStatus:
+        $ref: '#/definitions/Type_Type'
+  Travel_Type:
+    type: object
+    properties:
+      EntryDate:
+        $ref: '#/definitions/BirthDate_Type'
+      LastEntryDate:
+        $ref: '#/definitions/BirthDate_Type'
+      LastExitDate:
+        $ref: '#/definitions/BirthDate_Type'
+      PassportExpiryDate:
+        $ref: '#/definitions/BirthDate_Type'
+      PassportNum:
+        type: string
+      TravelStatus:
+        type: string
+  Visa_Type:
+    type: object
+    properties:
+      FinalExitVisaIssued:
+        type: string
+      VisaExpiryDate:
+        $ref: '#/definitions/BirthDate_Type'
+      VisaType:
+        type: string
+  ForeignerInfoExternalRs_MessageType:
+    type: object
+    properties:
+      ForeignerInfoRs:
+        $ref: '#/definitions/ForeignerInfoExternalRs_Type'
+  ResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+  Error_MessageType:
+    type: object
+    properties:
+      ErrorResponse:
+        $ref: '#/definitions/ResponseStatus_Type'
+  GetEstabSitesRq_Type:
+    type: object
+    properties:
+      UnifiedLicenseNumber:
+        type: string
+      OwnerIdentifier:
+        $ref: '#/definitions/OwnerIdentifier_Type'
+  OwnerIdentifier_Type:
+    type: object
+    properties:
+      CRNumber:
+        type: string
+      CharityID:
+        type: string
+      GovernmentalEntityID:
+        type: string
+      GulfID:
+        type: string
+      NationalID:
+        type: string
+      SevenHundredNumber:
+        type: string
+  GetEstabSitesRs_MessageType:
+    type: object
+    properties:
+      GetEstabSitesRs:
+        $ref: '#/definitions/GetEstabSitesRs_Type'
+  GetEstabSitesRs_Type:
+    type: object
+    properties:
+      ServiceError:
+        $ref: '#/definitions/ServiceError_Type'
+  ServiceError_Type:
+    type: object
+    properties:
+      SourceAgency:
+        type: string
+      ErrorType:
+        type: string
+      RaisedBy:
+        type: string
+      Code:
+        type: string
+      ErrorText:
+        type: string
+      Insert:
+        type: string
+  AuthenticateUserByMobileNICRq_MessageType:
+    type: object
+    properties:
+      AuthenticateUserByMobileRq:
+        $ref: '#/definitions/AuthenticateUserByMobileNICRq_Type'
+  AuthenticateUserByMobileNICRq_Type:
+    type: object
+    properties:
+      IdNo:
+        type: string
+      OTP:
+        type: string
+  AuthenticateUserByMobileNICRs_MessageType:
+    type: object
+    properties:
+      AuthenticateUserByMobileRs:
+        $ref: '#/definitions/AuthenticateUserByMobileNICRs_Type'
+  AuthenticateUserByMobileNICRs_Type:
+    type: object
+    properties:
+      isSuccessful:
+        type: boolean
+  GetLaborerBorderNumberNICRq_MessageType:
+    type: object
+    properties:
+      LaborerBorderNumberRq:
+        $ref: '#/definitions/GetLaborerBorderNumberNICRq_Type'
+  GetLaborerBorderNumberNICRq_Type:
+    type: object
+    properties:
+      LaborerIdNo:
+        type: string
+  GetLaborerBorderNumberNICRs_MessageType:
+    type: object
+    properties:
+      LaborerBorderNumberRs:
+        $ref: '#/definitions/GetLaborerBorderNumberNICRs_Type'
+  GetLaborerBorderNumberNICRs_Type:
+    type: object
+    properties:
+      BorderNumber:
+        type: string
+      LaborerIdNo:
+        type: string
+  GetLaborerPrisonStatusNICRq_MessageType:
+    type: object
+    properties:
+      LaborerPrisonStatusRq:
+        $ref: '#/definitions/GetLaborerPrisonStatusNICRq_Type'
+  GetLaborerPrisonStatusNICRq_Type:
+    type: object
+    properties:
+      LaborerIdNo:
+        type: string
+  GetLaborerPrisonStatusNICRs_MessageType:
+    type: object
+    properties:
+      LaborerPrisonStatusRs:
+        $ref: '#/definitions/GetLaborerPrisonStatusNICRs_Type'
+  GetLaborerPrisonStatusNICRs_Type:
+    type: object
+    properties:
+      GetAlienPrisonStatusResult:
+        type: string
+paths:
+  /get-citizen-info_REMOVED:
+    post:
+      operationId: postGet-citizen-info
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetCitizenInformationNICRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Insert a get-citizen-info
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetCitizenInformationNICRq_MessageType'
+        description: The request body for the operation
+        required: true
+  /get-foreigner-info_REMOVED:
+    post:
+      operationId: postGet-foreigner-info
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/ForeignerInfoExternalRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Insert a get-foreigner-info
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/ForeignerInfoExternalRq_MessageType'
+        description: The request body for the operation
+        required: true
+  /authenticateuserbymobilenic:
+    post:
+      operationId: postAuthenticateuserbymobilenic
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/AuthenticateUserByMobileNICRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Insert a authenticateuserbymobilenic
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/AuthenticateUserByMobileNICRq_MessageType'
+        description: The request body for the operation
+        required: true
+  /getlaborerbordernumnic:
+    post:
+      operationId: postGetlaborerbordernumnic
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetLaborerBorderNumberNICRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Insert a getlaborerbordernumnic
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetLaborerBorderNumberNICRq_MessageType'
+        description: The request body for the operation
+        required: true
+  /getlaborerprisonstatusnic:
+    post:
+      operationId: postGetlaborerprisonstatusnic
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetLaborerPrisonStatusNICRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Insert a getlaborerprisonstatusnic
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetLaborerPrisonStatusNICRq_MessageType'
+        description: The request body for the operation
+        required: true

@@ -1,0 +1,24 @@
+{
+    "total_results": 1,
+    "results": [
+        {
+            "type": "subscription",
+            "api_version": "2.0.0",
+            "id": "78dd64ae-3396-4788-ac52-9ba31f18c4d4",
+            "name": "External-Mowaamah-Product-1.0.0-default-plan",
+            "title": "External-Mowaamah-Product 1.0.0 default-plan",
+            "state": "enabled",
+            "product_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/catalogs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/products/7aee1035-ca62-4dec-bd4c-df9cbc89e0df",
+            "plan": "default-plan",
+            "plan_title": "Default Plan",
+            "task_urls": [],
+            "created_at": "2026-08-05T11:49:06.000Z",
+            "updated_at": "2026-08-05T11:49:06.000Z",
+            "org_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/orgs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c",
+            "catalog_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/catalogs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2",
+            "consumer_org_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/consumer-orgs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/d573f483-0c02-4bc6-9b0f-c0e69910376b",
+            "app_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/apps/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/d573f483-0c02-4bc6-9b0f-c0e69910376b/cd2e809a-f3dc-4866-888a-f2ea33861f5b",
+            "url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/apps/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/d573f483-0c02-4bc6-9b0f-c0e69910376b/cd2e809a-f3dc-4866-888a-f2ea33861f5b/subscriptions/78dd64ae-3396-4788-ac52-9ba31f18c4d4"
+        }
+    ]
+}

@@ -1,0 +1,316 @@
+swagger: "2.0"
+info:
+  title: 'GetQWalletDetails '
+  x-ibm-name: getqwalletdetails
+  version: 1.0.0
+  description: 'GetQWalletDetails '
+schemes:
+- https
+basePath: /qwallet/rb
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-qw-q-walletutilities)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    success-content: payload
+    error-content: payload
+  buffering: true
+definitions:
+  GetQWalletDetailsRq_MessageType:
+    type: object
+    properties:
+      GetQWalletDetailsRq:
+        $ref: '#/definitions/GetQWalletDetailsRq_Type'
+  GetQWalletDetailsRs_MessageType:
+    type: object
+    properties:
+      GetQWalletDetailsRs:
+        $ref: '#/definitions/GetQWalletDetailsRs_Type'
+  GetQWalletDetailsRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetQWalletDetailsRq_BodyType'
+  GetQWalletDetailsRq_BodyType:
+    type: object
+    properties:
+      EstablishmentDetails:
+        $ref: '#/definitions/EstablishmentDetails_Type'
+      VIBAN:
+        type: string
+      QWalletId:
+        type: string
+  EstablishmentDetails_Type:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+  GetQWalletDetailsRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetQWalletDetailsRs_BodyType'
+  GetQWalletDetailsRs_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      VIBAN:
+        type: string
+      QWalletId:
+        type: string
+      CurrentBalance:
+        type: number
+      OnHoldBalance:
+        type: number
+      AvailableBalance:
+        type: number
+      StatusCode:
+        type: integer
+      StatusNameAr:
+        type: string
+      StatusNameEn:
+        type: string
+      CreationDate:
+        type: string
+        pattern: ^(18|19|20)(\d{2})[-](0[1-9]|1[012])[-](0[1-9]|[12]\d|3[01])[ ]([01]\d|2[0-3])[:]([0-5]\d)[:]([0-5]\d)[.]\d{0,5}$
+      CreatedBy:
+        type: string
+      LastModifiedDate:
+        type: string
+        pattern: ^(18|19|20)(\d{2})[-](0[1-9]|1[012])[-](0[1-9]|[12]\d|3[01])[ ]([01]\d|2[0-3])[:]([0-5]\d)[:]([0-5]\d)[.]\d{0,5}$
+      LastModifiedBy:
+        type: string
+      BeneficiaryDetails:
+        $ref: '#/definitions/BeneficiaryDetails_Type'
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+    - VIBAN
+    - QWalletId
+    - CurrentBalance
+    - OnHoldBalance
+    - AvailableBalance
+    - StatusCode
+    - StatusNameAr
+    - StatusNameEn
+    - CreationDate
+    - CreatedBy
+    - LastModifiedDate
+    - LastModifiedBy
+    - BeneficiaryDetails
+  BeneficiaryDetails_Type:
+    type: object
+    properties:
+      BeneficiaryDetailsItem:
+        $ref: '#/definitions/BeneficiaryDetailsItem_Type'
+  BeneficiaryDetailsItem_Type:
+    type: object
+    properties:
+      BeneficiaryName:
+        type: string
+      BeneficiaryAccountNumber:
+        type: string
+      BeneficiaryBankCode:
+        type: string
+      BeneficiaryAddress1:
+        type: string
+      BeneficiaryAddress2:
+        type: string
+      BeneficiaryAddress3:
+        type: string
+      BeneficiaryBankName:
+        type: string
+      BeneficiaryBankSwiftCode:
+        type: string
+      BeneficiaryBankAddress1:
+        type: string
+      BeneficiaryBankAddress2:
+        type: string
+      BeneficiaryBankAddress3:
+        type: string
+    required:
+    - BeneficiaryName
+    - BeneficiaryAccountNumber
+    - BeneficiaryBankCode
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /getqwalletdetails:
+    post:
+      operationId: 'GetQWalletDetails '
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetQWalletDetailsRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Get the details and balance of an establishment e-wallet
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetQWalletDetailsRq_MessageType'
+        description: 'GetQWalletDetails '
+        required: true

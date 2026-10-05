@@ -1,0 +1,27 @@
+info:
+  version: 1.0.0
+  title: ValidateVisasEstablishmentEligibility Product
+  name: validatevisasestablishmenteligibility-product
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    rate-limits:
+      default:
+        value: 100/1hour
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    apis:
+      validatevisasestablishmenteligibility1.0.0: {}
+product: 1.0.0
+apis:
+  validatevisasestablishmenteligibility1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validatevisasestablishmenteligibility_1.0.0.yaml
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

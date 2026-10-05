@@ -1,0 +1,538 @@
+swagger: "2.0"
+info:
+  title: Primary Compliance Score V3
+  x-ibm-name: primary-compliance-score-v3
+  version: primary-compliance-score-v3
+  description: API for retrieving Primary Compliance Score
+  termsOfService: ""
+  contact:
+    email: asim.bhatti@royalcyber.com
+schemes:
+- https
+basePath: /NitaqComplianceScore
+security:
+- OAuth2.0: []
+  clientID: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientID:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: POST
+        target-url: $(ace-prow-primarycompliancescore-v3)/internal/GetPrimaryComplianceScore/v3
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        stop-on-error:
+        - ConnectionError
+        - SOAPError
+        - OperationError
+        persistent-connection: true
+    catch:
+    - default:
+      - set-variable:
+          version: 2.0.0
+          title: set-variable
+          actions:
+          - set: message.status.code
+            value: "200"
+            type: string
+          - set: message.header.content-type
+            value: application/json
+            type: string
+          - set: message.body
+            value: '{     "errorCode": "E000500",     "errorMessage": "Internal server
+              error"              }'
+            type: string
+    finally: []
+  properties:
+    target-url:
+      description: The URL of the target service
+      encoded: false
+      value: http://prow-primarycompliancescore-v3-http-ace.apps.stg.qiwa-nonprod.local/internal/GetPrimaryComplianceScore/v3
+  catalogs: {}
+  application-authentication:
+    certificate: false
+  activity-log:
+    success-content: payload
+    error-content: payload
+    enabled: true
+  buffering: true
+tags:
+- name: ComplianceScore
+  description: To get Primary compliance score and associated information
+definitions:
+  Scores_Type:
+    type: object
+    required:
+    - Compliance
+    - Nitaqat
+    - WorkPermits
+    - NotesInWps
+    - ContractAuthentication
+    properties:
+      Compliance:
+        type: number
+        example: 13
+      Nitaqat:
+        type: number
+        example: 50
+      WorkPermits:
+        type: number
+        example: 0
+      NotesInWps:
+        type: number
+        example: 0
+      ContractAuthentication:
+        type: number
+        example: 0
+  Nitaqat_Type:
+    type: object
+    required:
+    - Color
+    - NextColor
+    - IsGracePeriod
+    - SaudisToBeHired
+    - NationalizationRate
+    - NumberOfSaudis
+    - NumberOfExpats
+    - NumberOfFactorizedSaudis
+    - NumberOfFactorizedExpats
+    - Evaluations
+    - EntityNumber
+    - Activity
+    properties:
+      Color:
+        required:
+        - Id
+        - Ar
+        - En
+        properties:
+          Id:
+            type: number
+            example: 310
+          Ar:
+            type: string
+            example: اخضر متوسط
+          En:
+            type: string
+            example: Medium Green
+        type: object
+      NextColor:
+        required:
+        - Id
+        - Ar
+        - En
+        properties:
+          Id:
+            type: number
+            example: 320
+          Ar:
+            type: string
+            example: اخضر مرتفع
+          En:
+            type: string
+            example: HighGreen
+        type: object
+      IsGracePeriod:
+        type: boolean
+        example: false
+      SaudisToBeHired:
+        type: number
+        example: 2
+      NationalizationRate:
+        type: number
+        example: 30
+      NumberOfSaudis:
+        type: number
+        example: 3
+      NumberOfExpats:
+        type: number
+        example: 14
+      NumberOfFactorizedSaudis:
+        type: number
+        example: 6
+      NumberOfFactorizedExpats:
+        type: number
+        example: 14
+      Evaluations:
+        type: array
+        items:
+          type: object
+          properties:
+            Id:
+              type: number
+              example: 100
+            Ar:
+              type: string
+              example: الأحمر
+            En:
+              type: string
+              example: Red
+            From:
+              type: number
+              example: 0
+            To:
+              type: number
+              example: 26.64
+      EntityNumber:
+        type: string
+        example: 1-285105-460
+      Activity:
+        type: string
+        example: الجملة والتجزئة
+  WorkPermits_Type:
+    type: object
+    required:
+    - Total
+    - Expired
+    - Valid
+    - InProgress
+    - ExpatsMismatch
+    - HasExpats
+    - ExpiredTemp
+    properties:
+      Total:
+        type: number
+        example: 13
+      Expired:
+        type: number
+        example: 13
+      Valid:
+        type: number
+        example: 0
+      InProgress:
+        type: number
+        example: 1
+      ExpatsMismatch:
+        type: boolean
+        example: false
+      HasExpats:
+        type: boolean
+        example: true
+      ExpiredTemp:
+        type: number
+        example: 0
+  NotesInWps_Type:
+    type: object
+    required:
+    - Notes
+    properties:
+      Notes:
+        type: array
+        items:
+          type: object
+          properties:
+            Text:
+              type: string
+              example: عدم الإلتزام بنظام حماية الأجور لشهر 1 سنة 2018
+            TypeId:
+              type: number
+              example: 2
+            StartDate:
+              type: string
+              example: "2018-02-15"
+            EndDate:
+              type: string
+              example: "2028-02-15"
+  ComplianceStatus_Type:
+    type: object
+    required:
+    - Status
+    - Nitaqat
+    - WorkPermits
+    - Notes
+    properties:
+      Status:
+        type: boolean
+        example: false
+      Nitaqat:
+        type: boolean
+        example: true
+      WorkPermits:
+        type: boolean
+        example: false
+      Notes:
+        type: boolean
+        example: false
+  ContractAuthentication_Type:
+    type: object
+    required:
+    - Percentage
+    - NonSaudiInEstablishment
+    - NonSaudiWithAuthenticatedContracts
+    properties:
+      Percentage:
+        type: number
+        example: 0
+      NonSaudiInEstablishment:
+        type: number
+        example: 13
+      NonSaudiWithAuthenticatedContracts:
+        type: number
+        example: 0
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: NPC00001
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  NitaqatComplianceScoreRq_MessageType:
+    type: object
+    properties:
+      NitaqatComplianceScoreRq_V3:
+        $ref: '#/definitions/NitaqatComplianceScoreRq_Type'
+  NitaqatComplianceScoreRs_MessageType:
+    type: object
+    properties:
+      NitaqatComplianceScoreRs_V3:
+        $ref: '#/definitions/NitaqatComplianceScoreRs_Type'
+  NitaqatComplianceScoreRq_Type:
+    type: object
+    properties:
+      Body:
+        $ref: '#/definitions/NitaqatComplianceScoreRq_BodyType'
+  NitaqatComplianceScoreRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/NitaqatComplianceScoreRs_BodyType'
+  NitaqatComplianceScoreRq_BodyType:
+    type: object
+    required:
+    - LabourOfficeId
+    - SequenceNumber
+    properties:
+      LabourOfficeId:
+        type: number
+      SequenceNumber:
+        type: number
+      Notes:
+        $ref: '#/definitions/Notes_ReqType'
+      WorkPermits:
+        $ref: '#/definitions/WorkPermits_ReqType'
+      ContractAuthentication:
+        $ref: '#/definitions/ContractAuthentication_ReqType'
+      LaborerLocation:
+        $ref: '#/definitions/LaborerLocation_ReqType'
+  NitaqatComplianceScoreRs_BodyType:
+    properties:
+      Scores:
+        $ref: '#/definitions/Scores_Type'
+      Nitaqat:
+        $ref: '#/definitions/Nitaqat_Type'
+      WorkPermits:
+        $ref: '#/definitions/WorkPermits_Type'
+      NotesInWps:
+        $ref: '#/definitions/NotesInWps_Type'
+      ComplianceStatus:
+        $ref: '#/definitions/ComplianceStatus_Type'
+      ContractAuthentication:
+        $ref: '#/definitions/ContractAuthentication_Type'
+  Notes_ReqType:
+    type: object
+    required:
+    - FKNoteSourceId
+    properties:
+      FKNoteSourceId:
+        type: number
+  WorkPermits_ReqType:
+    type: object
+    properties:
+      Scores:
+        $ref: '#/definitions/WPEstablishment_ReqType'
+      Nitaqat:
+        $ref: '#/definitions/WPUnified_ReqType'
+  ContractAuthentication_ReqType:
+    type: object
+    required:
+    - TotalLaborersCount
+    - TotalAuthenticatedContracts
+    - TotalAuthenticationPercentage
+    properties:
+      TotalLaborersCount:
+        type: number
+        example: 0
+      TotalAuthenticatedContracts:
+        type: number
+        example: 13
+      TotalAuthenticationPercentage:
+        type: number
+        example: 0
+  LaborerLocation_ReqType:
+    type: object
+    required:
+    - TotalAssignedLaborers
+    - TotalUnassignedLaborers
+    - AssignedPercentage
+    properties:
+      TotalAssignedLaborers:
+        type: number
+        example: 0
+      TotalUnassignedLaborers:
+        type: number
+        example: 13
+      AssignedPercentage:
+        type: number
+        example: 0
+  WPEstablishment_ReqType:
+    type: object
+    required:
+    - Valid
+    - Expired
+    - Pending
+    - ExpiringIn30Days
+    - NoWPGreaterThan90Days
+    - NoWPLessThan90Days
+    properties:
+      Valid:
+        type: number
+        example: 0
+      Expired:
+        type: number
+        example: 13
+      Pending:
+        type: number
+        example: 0
+      ExpiringIn30Days:
+        type: number
+        example: 0
+      NoWPGreaterThan90Days:
+        type: number
+        example: 0
+      NoWPLessThan90Days:
+        type: number
+        example: 0
+  WPUnified_ReqType:
+    type: object
+    required:
+    - Valid
+    - Expired
+    - Pending
+    - ExpiringIn30Days
+    - NoWPGreaterThan90Days
+    - NoWPLessThan90Days
+    properties:
+      Valid:
+        type: number
+        example: 0
+      Expired:
+        type: number
+        example: 13
+      Pending:
+        type: number
+        example: 0
+      ExpiringIn30Days:
+        type: number
+        example: 0
+      NoWPGreaterThan90Days:
+        type: number
+        example: 0
+      NoWPLessThan90Days:
+        type: number
+        example: 0
+paths:
+  /ComplianceScore/V3:
+    post:
+      tags:
+      - ComplianceScore
+      summary: Used to get Nitaq Compliance Score and associated info
+      description: ""
+      operationId: getNitaqComplianceScore
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/NitaqatComplianceScoreRq_MessageType'
+        description: NitaqComplianceScoreRq
+        required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: '#/definitions/NitaqatComplianceScoreRs_MessageType'
+        "405":
+          description: Invalid input

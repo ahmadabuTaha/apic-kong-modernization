@@ -1,0 +1,413 @@
+swagger: "2.0"
+info:
+  title: Nationalization Calculation
+  x-ibm-name: swagger-for-nationalization-calculation
+  version: 1.0.0
+  description: Swagger file for Nationalization Calculation
+  termsOfService: ""
+  contact:
+    email: vinodkumar.b@royalcyber.com
+schemes:
+- https
+basePath: /NationalizationDetail
+security:
+- ClientSecret: []
+  OAuth2.0:
+  - IntegrationScope
+  clientID: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  ClientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientID:
+    type: apiKey
+    in: header
+    x-key-type: client_id
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - gatewayscript:
+        version: 2.0.0
+        title: gatewayscript
+        source: "var apim = require('apim');\n\nvar cfg={\n    \"serviceCode\" : \"EXADV001\",\n
+          \   \"channelId\" : \"Qiwa\",\n\t\"SessionId\" : \"212\",\n    \"requestName\"
+          : \"NitaqatComplianceScoreRq\",\n    \"responseName\": \"NitaqatComplianceScoreRs\",\n
+          \   \"errorMap\" :{\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid
+          Request\"\n            \n        }\n    }\n    \n};\n\n\n\napim.setvariable('cfg',cfg);\napim.output('application/json');"
+    - gatewayscript:
+        version: 2.0.0
+        title: gatewayscript
+        source: "var apim = require('apim');\n\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\nvar dt = new Date();\nvar cfg = apim.getvariable('cfg');\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\n\n\nvar appcReq
+          = {\n    [cfg.requestName]:{\n        \"Header\" : {\n            \"TransactionId\"
+          : millisecondsvalue,\n            \"ChannelId\": cfg.channelId,\n            \"SessionId\":
+          cfg.SessionId, //apim.getvariable('message.headers.X-Request-Id'),\n            \"RequestTime\"
+          : formatDate(dt),\n\t\t\t\"MWRequestTime\" : formatDate(dt),\n            \"ServiceCode\":
+          cfg.serviceCode\n\t\t\n        },\n        \"Body\" : apim.getvariable('message.body')\n
+          \           \n        \n    }\n};\n\nif (typeof OperatorId !== 'undefined')\n
+          \   appcReq[cfg.requestName].Header.UserInfo = {\n        \"IDNumber\" :
+          OperatorId\n    };\nsession.output.write(appcReq);\napim.output('application/json');\n\n\nfunction
+          formatDate(d)\n{\n    //get the month\n    var month = d.getMonth();\n    //get
+          the day\n    //convert day to string\n    var day = d.getDate().toString();\n
+          \   //get the year\n    var year = d.getFullYear();\n    var hour = d.getHours().toString();\n
+          \   var minitue = d.getMinutes().toString();\n    var second = d.getSeconds().toString();\n
+          \   var millisecond = d.getMilliseconds().toString();\n    //pull the last
+          two digits of the year\n    year = year.toString();\n    \n    //increment
+          month by 1 since it is 0 indexed\n    //converts month to a string\n    month
+          = (month + 1).toString();\n\n    //if month is 1-9 pad right with a 0 for
+          two digits\n    if (month.length === 1)\n        month = \"0\" + month;\n\n
+          \   //if day is between 1-9 pad right with a 0 for two digits\n    if (day.length
+          === 1)\n        day = \"0\" + day;\n\n    if (hour.length === 1)\n        hour
+          = \"0\" + hour;\n\n    if (minitue.length === 1)\n        minitue = \"0\"
+          + minitue;\n\n    if (second.length === 1)\n        second = \"0\" + second;\n
+          \       \n    if (millisecond.length == 1)\n        millisecond = \"00\"
+          + millisecond;\n        \n    if (millisecond.length == 2)\n        millisecond
+          = \"0\" + millisecond;\n    \n    \n\n    //return the string \"MMddyy\"\n
+          \   return year+\"-\"+month+\"-\"+day+\" \"+hour + \":\" + minitue + \":\"
+          + second+\".\"+millisecond;\n}"
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: POST
+        chunked-uploads: true
+        persistent-connection: true
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error:
+        - OperationError
+        - SOAPError
+        - ConnectionError
+        target-url: $(ace-prow-nationalizationscore)/internal/GetPrimaryComplianceScore
+        inject-proxy-headers: true
+    - gatewayscript:
+        version: 2.0.0
+        title: gatewayscript
+        source: |
+          var apim = require('apim');
+
+          apim.output('application/json');
+
+          var message = apim.getvariable('message.body');
+          var cfg = apim.getvariable('cfg');
+          var Header = message[cfg.responseName].Header;
+          var TransactionId = Header.TransactionId;
+          var ChannelId = Header.ChannelId;
+          var RequestTime = Header.RequestTime;
+          var SessionId = Header.SessionId;
+          var MWRequestTime = Header.MWRequestTime;
+          var MWResponseTime = Header.MWResponseTime;
+          var status = Header.ResponseStatus.Status;
+          var code = Header.ResponseStatus.Code;
+          apim.setvariable('message.headers.Transaction-Id',TransactionId,'add');
+
+          apim.setvariable('message.headers.Channel-Id',ChannelId,'add');
+          if (RequestTime !== 'undefined')
+           apim.setvariable('message.headers.RequestTime',RequestTime,'add');
+          if (SessionId !== 'undefined')
+           apim.setvariable('message.headers.X-Request-Id',SessionId,'add');
+          if (MWRequestTime !== 'undefined')
+          apim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');
+          if (MWResponseTime !== 'undefined')
+          apim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');
+
+          apim.setvariable('message.headers.Response-Status',status,'add');
+          apim.setvariable('message.headers.Response-Code',code,'add');
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: gatewayscript
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\n//var
+                cfg = apim.getvariable('cfg'); \nvar cfg={\n  \n    \n    \"responseName\":
+                \"NitaqatComplianceScoreRs\",\n   \n    \n};\nvar body = message[cfg.responseName].Body;\n\n\nsession.output.write(body);\napim.output('application/json');"
+        - condition: ($header("Response-Status") = 'Error' or ($header("Response-Status")
+            = 'ERROR'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: gatewayscript
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\n//var
+                cfg = apim.getvariable('cfg');     \nvar cfg={\n  \n    \n    \"responseName\":
+                \"NitaqatComplianceScoreRs\",\n    \"errorMap\" :{\n        \"ESBSCHEMA\"
+                : {\"code\" :400, \"msg\":\"Invalid Request\"},\n        \n    }\n
+                \   \n};\nvar error = {\n  \"errorCode\": message[cfg.responseName].Header.ResponseStatus.Code,\n
+                \ \"errorMessage\": {\n    \"en-US\": message[cfg.responseName].Header.ResponseStatus.EnglishMsg,\n
+                \   \"ar-SA\": message[cfg.responseName].Header.ResponseStatus.ArabicMsg\n
+                \ }\n};\n\nvar httperror=0;\nif(cfg.errorMap){\n    if(cfg.errorMap[error.errorCode]){\n
+                \      httperror = cfg.errorMap[error.errorCode].code;\n       \n
+                \      //var errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\n
+                \      //var details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\n    }\n}\nif(httperror
+                == 0){\n   httperror = 400;\n   // apim.error('ERROR',400,'Bad Request','Invalid
+                request');\n}\napim.setvariable('message.status.code',httperror,'set');\n\n\nif
+                (message[cfg.responseName].Header.BackendError){\n    \nvar resp =
+                {\n        \"errorCode\": error.errorCode,\n        \"errorMessage\":
+                error.errorMessage,\n        \"BackendError\":  message[cfg.responseName].Header.BackendError\n};\n
+                \   session.output.write(resp);\n}\nelse\nsession.output.write(error);\n\napim.output('application/json');"
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: gatewayscript
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\n//var
+                cfg = apim.getvariable('cfg');     \nvar cfg={\n  \n    \n    \"responseName\":
+                \"Error\",\n    \"errorMap\" :{\n        \"ESBSCHEMA\" : {\"code\"
+                :400, \"msg\":\"Invalid Request\"}\n    }\n   \n    \n};\nvar error
+                = {\n  \"errorCode\": message['Error'].Code,\n  \"errorMessage\":
+                {\n    \"en-US\": message['Error'].Detail,\n    \"ar-SA\": 'System
+                Error'\n};\n\nvar httperror=0;\nif(cfg.errorMap){\n    if(cfg.errorMap[error.errorCode]){\n
+                \      httperror = cfg.errorMap[error.errorCode].code;\n       \n
+                \      //var errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\n
+                \      //var details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\n    }\n}\nif(httperror
+                == 0){\n   httperror = 500;\n   // apim.error('ERROR',400,'Bad Request','Invalid
+                request');\n}\napim.setvariable('message.status.code',httperror,'set');\n\nsession.output.write(error);\napim.output('application/json');"
+    catch:
+    - default:
+      - set-variable:
+          version: 2.0.0
+          title: set-variable
+          actions:
+          - set: message.status.code
+            value: "500"
+            type: string
+          - set: message.headers.content-type
+            value: application/json
+            type: string
+          - set: message.body
+            value: '{     "errorCode": "E000500",     "errorMessage": "Internal server
+              error"              }'
+            type: string
+    finally: []
+  properties:
+    target-url:
+      description: The URL of the target service
+      encoded: false
+      value: http://prow-nationalizationscore-http-ace.apps.stg.qiwa-nonprod.local/internal/GetPrimaryComplianceScore
+  activity-log:
+    success-content: payload
+    error-content: payload
+    enabled: true
+  application-authentication:
+    certificate: false
+  buffering: true
+  catalogs: {}
+tags:
+- name: NationalizationScore
+  description: To get nationalization score and associated information
+definitions:
+  Nationalization_Type:
+    type: object
+    required:
+    - EconomicActivity
+    - EntityNumber
+    - UnifiedNoFile
+    - No.ofEstablishments
+    - FactorizedSaudis
+    - FactorizedExpats
+    - ActualSaudis
+    - ActualExpats
+    - NationalizationRate
+    properties:
+      EconomicActivity:
+        type: string
+        example: الجملة والتجزئة
+      EntityNumber:
+        type: string
+        example: 1-285105-460
+      UnifiedNoFile:
+        type: string
+        example: 1-285105
+      No.ofEstablishments:
+        type: number
+        example: 3
+      FactorizedSaudis:
+        type: number
+        example: 14
+      FactorizedExpats:
+        type: number
+        example: 6
+      ActualSaudis:
+        type: number
+        example: 3
+      ActualExpats:
+        type: number
+        example: 9
+      NationalizationRate:
+        type: number
+        example: 30.25
+      SaudiSG4X1:
+        $ref: '#/definitions/CalculationRule'
+      SaudiSHX0.5:
+        $ref: '#/definitions/CalculationRule'
+      SaudiL4X0.5:
+        $ref: '#/definitions/CalculationRule'
+      SaudiL3X0:
+        $ref: '#/definitions/CalculationRule'
+      SaudiSpX4:
+        $ref: '#/definitions/CalculationRule'
+      ExpatX1:
+        $ref: '#/definitions/CalculationRule'
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: NPC00001
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  NationalizationScoreRq_MessageType:
+    type: object
+    properties:
+      NationalizationScoreRq:
+        $ref: '#/definitions/NationalizationScoreRq_Type'
+  NationalizationScoreRs_MessageType:
+    type: object
+    properties:
+      NationalizationScoreRs:
+        $ref: '#/definitions/NationalizationScoreRs_Type'
+  NationalizationScoreRq_Type:
+    type: object
+    properties:
+      Body:
+        $ref: '#/definitions/NationalizationScoreRq_BodyType'
+  NationalizationScoreRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/NationalizationScoreRs_BodyType'
+  NationalizationScoreRq_BodyType:
+    type: object
+    required:
+    - LabourOfficeId
+    - SequenceNumber
+    properties:
+      LabourOfficeId:
+        type: number
+      SequenceNumber:
+        type: number
+  NationalizationScoreRs_BodyType:
+    properties:
+      Scores:
+        $ref: '#/definitions/Nationalization_Type'
+  CalculationRule:
+    type: object
+    properties:
+      NameEn:
+        type: string
+      NameAr:
+        type: string
+      Rule:
+        type: string
+      isSaudis:
+        type: boolean
+      Score:
+        type: number
+        format: double
+        example: 30.25
+paths:
+  /NationalizationScore:
+    post:
+      tags:
+      - NationalizationScore
+      summary: Used to get Nationalization Score and associated info
+      description: ""
+      operationId: getNationalizationScore
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        description: NationalizationScoreRq
+        schema:
+          $ref: '#/definitions/NationalizationScoreRq_MessageType'
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: '#/definitions/NationalizationScoreRs_MessageType'
+        "405":
+          description: Invalid input
+    parameters: []

@@ -1,0 +1,264 @@
+swagger: "2.0"
+info:
+  title: RefundPayment
+  x-ibm-name: refundpayment
+  version: 1.0.0
+  description: The service is used to refund a payment that is performed against a
+    previous payment.
+schemes:
+- https
+basePath: /payment
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-pay-makeandrefpay)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+    - gatewayscript:
+        version: 2.0.0
+        title: gatewayscript
+        source: |
+          var apim = require('apim');
+          var Response = apim.getvariable('message.body');
+          var statusCode = Response.RefundPaymentRs.Header.ResponseStatus.Code ;
+
+
+          if(statusCode == 'E9999998'){
+              var code = 408
+              apim.setvariable('message.status.code',code,'set');
+          }
+          else if(statusCode == '00000000'){
+              var code = 200
+              apim.setvariable('message.status.code',code,'set');
+          }else{
+                var code = 409
+              apim.setvariable('message.status.code',code,'set');
+          }
+    catch: []
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: payload
+    success-content: payload
+  application-authentication:
+    certificate: false
+  buffering: true
+definitions:
+  RefundPaymentRq_MessageType:
+    type: object
+    properties:
+      RefundPaymentRq:
+        $ref: '#/definitions/RefundPaymentRq_Type'
+  RefundPaymentRs_MessageType:
+    type: object
+    properties:
+      RefundPaymentRs:
+        $ref: '#/definitions/RefundPaymentRs_Type'
+  RefundPaymentRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/RefundPaymentRq_BodyType'
+  RefundPaymentRq_BodyType:
+    type: object
+    properties:
+      PaymentReference:
+        type: string
+        default: 93039FFA33B042600000000000X10000
+      RefundType:
+        type: string
+        default: F
+      RefundAmount:
+        type: integer
+        default: "20"
+      Currency:
+        type: string
+        default: EUR
+    required:
+    - PaymentReference
+    - RefundType
+  RefundPaymentRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/RefundPaymentRs_BodyType'
+  RefundPaymentRs_BodyType:
+    type: object
+    properties: {}
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: RP000001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: RP000001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+        default: "465740"
+      IDNumber:
+        type: integer
+        default: "1024812248"
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /refundpayment:
+    post:
+      operationId: RefundPayment
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/RefundPaymentRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Refund payment
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/RefundPaymentRq_MessageType'
+        description: RefundPaymentRq
+        required: true

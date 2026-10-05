@@ -1,0 +1,445 @@
+swagger: "2.0"
+info:
+  title: UpdateContractRequestDraft V2
+  x-ibm-name: updatecontractrequestdraft-v2
+  version: 1.0.0
+  description: This service is used to update the contract request draft.
+schemes:
+- https
+basePath: /contractmanagement/v2
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(cat-target-hostname)$(cat-target-url-contractmgmtv2)/contractmanagement/updatecontractrequestdraft
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  UpdateContractRequestDraftRq_MessageType:
+    type: object
+    properties:
+      UpdateContractRequestDraftRq:
+        $ref: '#/definitions/UpdateContractRequestDraftRq_Type'
+  UpdateContractRequestDraftRs_MessageType:
+    type: object
+    properties:
+      UpdateContractRequestDraftRs:
+        $ref: '#/definitions/UpdateContractRequestDraftRs_Type'
+  UpdateContractRequestDraftRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/UpdateContractRequestDraftRq_BodyType'
+  UpdateContractRequestDraftRq_BodyType:
+    type: object
+    properties:
+      DraftId:
+        type: integer
+        default: "1001"
+      EstablishmentDetails:
+        $ref: '#/definitions/EstablishmentDetails_Type'
+      LaborerDetails:
+        $ref: '#/definitions/LaborerDetails_Type'
+      RequesterDetails:
+        $ref: '#/definitions/RequesterDetails_Type'
+      ContractDetails:
+        $ref: '#/definitions/ContractDetails_Type'
+      LanguageId:
+        type: integer
+        default: "14"
+      DateTypeId:
+        type: integer
+        default: "651"
+    required:
+    - DraftId
+  EstablishmentDetails_Type:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+        default: "1"
+      SequenceNumber:
+        type: integer
+        default: "1"
+      EstablishmentId:
+        type: integer
+        default: "1"
+      UnifiedNumberId:
+        type: integer
+        default: "1"
+      EntityId:
+        type: string
+        default: "1"
+      EstablishmentNameAr:
+        type: string
+        default: test
+      EstablishmentNameEn:
+        type: string
+        default: test
+      EstablishmentEmail:
+        type: string
+        default: test@b.com
+  LaborerDetails_Type:
+    type: object
+    properties:
+      LaborerIdNo:
+        type: integer
+        default: "1"
+      LaborerName:
+        type: string
+        default: test
+      LaborerTypeId:
+        type: integer
+        default: "1"
+      LaborerIdExpiryDate:
+        type: string
+        default: "1756"
+      LaborerEmail:
+        type: string
+        default: test@v.com
+      LaborerMobileNumber:
+        type: integer
+        default: "87687"
+  RequesterDetails_Type:
+    type: object
+    properties:
+      RequesterIdNo:
+        type: integer
+        default: "1"
+      RequesterName:
+        type: string
+        default: test
+      RequesterUserId:
+        type: integer
+        default: "1"
+  ContractDetails_Type:
+    type: object
+    properties:
+      JobTitle:
+        $ref: '#/definitions/JobTitle_Type'
+      LaborerJobNumber:
+        type: integer
+        default: "1"
+      ContractTypeId:
+        type: integer
+        default: "1"
+      ContractDurationId:
+        type: integer
+        default: "1"
+      ContractPeriod:
+        type: integer
+        default: "1"
+      ProbationPeriod:
+        type: integer
+        default: "1"
+      WorkingHoursTypeId:
+        type: integer
+        default: "1"
+      VacationPeriod:
+        type: integer
+        default: "1"
+      Salary:
+        type: number
+        default: "1867"
+      Allowances:
+        type: object
+        properties:
+          AllowancesItems:
+            $ref: '#/definitions/AllowancesItems_Type'
+      StartDate:
+        $ref: '#/definitions/HGDate_Type'
+      ExpiryDate:
+        $ref: '#/definitions/HGDate_Type'
+      RenewalStatusId:
+        type: integer
+        default: "1"
+      NoticePeriod:
+        type: integer
+        default: "1"
+      AddedClauses:
+        type: object
+        properties:
+          AddedClausesItems:
+            $ref: '#/definitions/AddedClausesItems_Type'
+      SalaryFrequency:
+        type: integer
+        default: "1"
+      AdditionalAllowancesList:
+        type: object
+        properties:
+          AllowancesItems:
+            $ref: '#/definitions/AdditionalAllowancesList_Type'
+      HoursPerWeek:
+        type: integer
+        default: "1"
+      DaysPerWeek:
+        type: integer
+        default: "1"
+      HoursPerDay:
+        type: integer
+        default: "1"
+      OptionalArticles:
+        $ref: '#/definitions/OptionalArticles_Type'
+  JobTitle_Type:
+    type: object
+    properties:
+      JobTitleAr:
+        type: string
+        default: test
+      JobTitleEng:
+        type: string
+        default: ar
+  HGDate_Type:
+    type: object
+    properties:
+      HijriDate:
+        type: integer
+        default: "176576"
+      GregDate:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+  AddedClausesItems_Type:
+    type: array
+    items:
+      $ref: '#/definitions/KeyValue_Type'
+  KeyValue_Type:
+    type: object
+    properties:
+      Key:
+        type: string
+        default: "176876"
+      Value:
+        type: string
+        default: "1765"
+  AllowancesItems_Type:
+    type: array
+    items:
+      $ref: '#/definitions/KeyValue_Type'
+  AdditionalAllowancesList_Type:
+    type: array
+    items:
+      $ref: '#/definitions/Items_Type'
+  Items_Type:
+    type: object
+    properties:
+      BenefitNameAr:
+        type: string
+        default: test
+      BenefitNameEn:
+        type: string
+        default: test2
+      Frequency:
+        type: integer
+        default: "1"
+      AmountType:
+        type: integer
+        default: "1"
+      Amount:
+        type: number
+        default: "1676"
+  OptionalArticles_Type:
+    type: object
+    properties:
+      Period:
+        type: integer
+        default: "1"
+      Location:
+        type: string
+        default: "1"
+      WorkField:
+        type: string
+        default: "1"
+  UpdateContractRequestDraftRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/UpdateContractRequestDraftRs_BodyType'
+  UpdateContractRequestDraftRs_BodyType: {}
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: UCRD0001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: UCRD0001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+        default: "465740"
+      IDNumber:
+        type: integer
+        default: "1024812248"
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /updatecontractrequestdraft:
+    post:
+      operationId: UpdateContractRequestDraft
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/UpdateContractRequestDraftRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Update Contract Request Draft
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/UpdateContractRequestDraftRq_MessageType'
+        description: UpdateContractRequestDraftRq
+        required: true

@@ -1,0 +1,30 @@
+info:
+  name: saudi-post
+  title: Saudi Post
+  version: 1.0.0
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    rate-limits:
+      default:
+        value: 100/1hour
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    apis:
+      getcomwaseladdress1.0.0: {}
+      getindivwaseladdress1.0.0: {}
+apis:
+  getcomwaseladdress1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getcomwaseladdress_1.0.0.yaml
+  getindivwaseladdress1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getindivwaseladdress_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

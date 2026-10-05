@@ -1,0 +1,51 @@
+info:
+  version: 1.0.0
+  title: TIP-ContractManagementV2
+  name: tip-contractmanagementv2
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    rate-limits:
+      default:
+        value: 100/1hour
+        hard-limit: false
+    apis:
+      externalServices-getcontractoccupationslist1.0.0: {}
+      externalservices-terminateemploymentcontract1.0.0: {}
+      externalservices_getemploymentcontractslist1.0.0: {}
+      externalservices_updateemploymentcontract1.0.0: {}
+      externalservices_createemploymentcontract1.0.0: {}
+      getcontractspecialtiesapiwrapper1.0.0: {}
+      getcontractworklocationswrapper1.0.0: {}
+      externalservices-uploadfiles1.0.0: {}
+      externalservices-getcontractfileslist1.0.1: {}
+apis:
+  externalservices_createemploymentcontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/externalservices_createemploymentcontract_1.0.0.yaml
+  externalservices_updateemploymentcontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/externalservices_updateemploymentcontract_1.0.0.yaml
+  externalservices_getemploymentcontractslist1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/externalservices_getemploymentcontractslist_1.0.0.yaml
+  externalservices-terminateemploymentcontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/externalservices-terminateemploymentcontract_1.0.0.yaml
+  externalServices-getcontractoccupationslist1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/externalServices-getcontractoccupationslist_1.0.0.yaml
+  externalservices-uploadfiles1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/externalservices-uploadfiles_1.0.0.yaml
+  getcontractspecialtiesapiwrapper1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getcontractspecialtiesapiwrapper_1.0.0.yaml
+  getcontractworklocationswrapper1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getcontractworklocationswrapper_1.0.0.yaml
+  externalservices-getcontractfileslist1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/externalservices-getcontractfileslist_1.0.1.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

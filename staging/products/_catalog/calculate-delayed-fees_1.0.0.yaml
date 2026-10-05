@@ -1,0 +1,234 @@
+swagger: "2.0"
+info:
+  title: Calculate Delayed Fees
+  version: 1.0.0
+  description: Subflow that will calculate the delay fees for both financial compensation
+    & work permit fixed fees.
+  x-ibm-name: calculate-delayed-fees
+paths:
+  /calculatelastdelayedfees:
+    post:
+      operationId: CalculateDelayedFees
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/CalculateDelayedFeesRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Subflow that will calculate the delay fees for both financial compensation
+        & work permit fixed fees.
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/CalculateDelayedFeesRq_MessageType'
+        description: CalculateDelayedFeesRq
+        required: true
+basePath: /workpermit
+definitions:
+  CalculateDelayedFeesRq_MessageType:
+    type: object
+    properties:
+      CalculateDelayedFeesRq:
+        $ref: '#/definitions/CalculateDelayedFeesRq_Type'
+  CalculateDelayedFeesRs_MessageType:
+    type: object
+    properties:
+      CalculateDelayedFeesRs:
+        $ref: '#/definitions/CalculateDelayedFeesRs_Type'
+  CalculateDelayedFeesRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/CalculateDelayedFeesRq_BodyType'
+  CalculateDelayedFeesRq_BodyType:
+    type: object
+    properties:
+      CalculationStartDate:
+        type: integer
+      DelayedYearsCount:
+        type: integer
+    required:
+    - CalculationStartDate
+    - DelayedYearsCount
+  CalculateDelayedFeesRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/CalculateDelayedFeesRs_BodyType'
+  CalculateDelayedFeesRs_BodyType:
+    type: object
+    properties:
+      LastDelayedDate:
+        $ref: '#/definitions/HijriGreg_Type'
+      DelayedExtraFees:
+        type: integer
+      DelayedWPFees:
+        type: integer
+    required:
+    - LastDelayedDate
+    - DelayedExtraFees
+    - DelayedWPFees
+  HijriGreg_Type:
+    type: object
+    properties:
+      Hijri:
+        type: integer
+      Gregorian:
+        type: string
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-wp-delayed)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: allowlist
+          values: []
+        header-control:
+          type: blocklist
+          values: []
+        inject-proxy-headers: true
+        chunked-uploads: true
+        persistent-connection: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+schemes:
+- https
+securityDefinitions:
+  clientId:
+    type: apiKey
+    x-key-type: client_id
+    name: X-IBM-Client-Id
+    in: header
+  clientSecret:
+    type: apiKey
+    x-key-type: client_secret
+    name: X-IBM-Client-Secret
+    in: header
+security:
+- clientId: []
+  clientSecret: []

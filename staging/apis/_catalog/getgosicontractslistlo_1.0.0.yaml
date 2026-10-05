@@ -1,0 +1,267 @@
+swagger: "2.0"
+info:
+  title: GetGosiContractsListLO
+  x-ibm-name: getgosicontractslistlo
+  version: 1.0.0
+  description: This service is used to get a list of contracts sent to GOSI with their
+    status.
+schemes:
+- https
+basePath: /qiwalo
+security:
+- client_id: []
+  client_secret: []
+securityDefinitions:
+  client_secret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  client_id:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-lbro-lo-terminate-contracts)/qiwalo/getgosicontractslistlo
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        persistent-connection: true
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+definitions:
+  GetGosiContractsListLORq_MessageType:
+    type: object
+    properties:
+      GetGosiContractsListLORq:
+        $ref: '#/definitions/GetGosiContractsListLORq_Type'
+  GetGosiContractsListLORs_MessageType:
+    type: object
+    properties:
+      GetGosiContractsListLORs:
+        $ref: '#/definitions/GetGosiContractsListLORs_Type'
+  GetGosiContractsListLORq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetGosiContractsListLORq_BodyType'
+  GetGosiContractsListLORs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetGosiContractsListLORs_BodyType'
+  GetGosiContractsListLORq_BodyType:
+    type: object
+    properties:
+      EstablishmentDetails:
+        $ref: '#/definitions/EstablishmentDetails_Type'
+      LaborerDetails:
+        $ref: '#/definitions/LaborerDetails_Type'
+      RequesterIdNo:
+        type: integer
+      GOSIRequestTypeId:
+        type: integer
+      PageSize:
+        type: integer
+      PageIndex:
+        type: integer
+    required:
+    - PageSize
+    - PageIndex
+  EstablishmentDetails_Type:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      EstablishmentId:
+        type: integer
+      UnifiedNumberId:
+        type: integer
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+  LaborerDetails_Type:
+    type: object
+    properties:
+      LaborerIdNo:
+        type: integer
+      LaborerTypeId:
+        type: integer
+    required:
+    - LaborerIdNo
+  GetGosiContractsListLORs_BodyType:
+    type: object
+    properties:
+      ContractsList:
+        $ref: '#/definitions/ContractsList_Type'
+      TotalRecordsCount:
+        type: integer
+    required:
+    - TotalRecordsCount
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  ContractsList_Type:
+    type: object
+    properties:
+      ContractId:
+        type: integer
+      LaborerIdNo:
+        type: integer
+      LaborerName:
+        type: string
+      RequesterIdNo:
+        type: integer
+      RequesterName:
+        type: string
+      GOSIStatus:
+        $ref: '#/definitions/GOSIStatus_Type'
+      LastModifiedDate:
+        type: string
+    required:
+    - ContractId
+    - LaborerIdNo
+    - LaborerName
+    - RequesterIdNo
+    - RequesterName
+    - LastModifiedDate
+  GOSIStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Description:
+        type: string
+    required:
+    - Status
+    - Description
+paths:
+  /getgosicontractslistlo:
+    post:
+      operationId: GetGosiContractsListLO
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetGosiContractsListLORs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: This service is used to get a list of contracts sent to GOSI with
+        their status.
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetGosiContractsListLORq_MessageType'
+        description: The request body for the operation
+        required: true

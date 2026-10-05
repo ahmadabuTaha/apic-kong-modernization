@@ -1,0 +1,33 @@
+info:
+  name: 1external-saudipost-product
+  title: 1External_SAUDIPOST_Product
+  version: 1.0.0
+apis:
+  saudipost-getcommercialwaseladdress1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/saudipost-getcommercialwaseladdress_1.0.0.yaml
+  sp-getcomwaseladdress1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/sp-getcomwaseladdress_1.0.0.yaml
+  sp-individual-wasel-address1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/sp-individual-wasel-address_1.0.0.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      saudipost-getcommercialwaseladdress1.0.0: {}
+      sp-getcomwaseladdress1.0.0: {}
+      sp-individual-wasel-address1.0.0: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

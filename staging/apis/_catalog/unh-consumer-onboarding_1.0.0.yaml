@@ -1,0 +1,253 @@
+swagger: "2.0"
+info:
+  title: UNHConsumerOnboarding
+  x-ibm-name: unh-consumer-onboarding
+  version: 1.0.0
+  description: This API Onboards the consumers in to the Unified Notifiction hub
+host: $(catalog.host)
+schemes:
+- https
+basePath: /NotificationHubService
+security:
+- OAuth2.0: []
+- clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  properties:
+    target-url:
+      value: http://prow-notificationservices-onboar-http-ace.apps.stg.qiwa-nonprod.local/internal/NotificationHubService/Onboarding
+      description: The URL of the target service
+      encoded: false
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(ace-prow-notificationservices-onboar)/internal/NotificationHubService/Onboarding
+        follow-redirects: false
+        inject-proxy-headers: true
+    catch: []
+    finally: []
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  buffering: true
+  application-authentication:
+    certificate: false
+  catalogs: {}
+definitions:
+  OnboardingRequest_MessageType:
+    type: object
+    properties:
+      NotificationOnboardingRequest:
+        $ref: '#/definitions/OnboardingRq_Type'
+  OnboardingResponse_MessageType:
+    type: object
+    properties:
+      NotificationOnboardingResponse:
+        $ref: '#/definitions/OnboardingRs_Type'
+  OnboardingRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/RequestHeader_Type'
+      Body:
+        $ref: '#/definitions/OnboardingRq_Body'
+  OnboardingRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/OnboardingRs_Body'
+  RequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      ServiceCode:
+        type: string
+        default: NPC00001
+      DebugFlag:
+        type: string
+        default: 1
+  ResponseHeader_Type:
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      ServiceCode:
+        type: string
+        default: UNH00001
+      DebugFlag:
+        type: string
+        default: 1
+      ResponseStatus:
+        $ref: '#/definitions/ResponseStatus'
+      BackendError:
+        $ref: '#/definitions/BackendError'
+  ResponseStatus:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+  BackendError:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+  OnboardingRq_Body:
+    type: object
+    required:
+    - SystemName
+    - EventName
+    - RequestType
+    properties:
+      RequestType:
+        type: string
+      SystemName:
+        type: string
+      EventName:
+        type: string
+      NewSystemName:
+        type: string
+      NewEventName:
+        type: string
+      EventType:
+        type: string
+      TargetPlaceHolders:
+        type: string
+      IsActive:
+        type: string
+      ID:
+        type: string
+      Channel:
+        type: string
+      OnboardingType:
+        type: string
+      Subject:
+        type: string
+      TemplateAR:
+        type: string
+      Priority:
+        type: string
+      TemplateEN:
+        type: string
+      QueueName:
+        type: string
+      DefaultLang:
+        type: string
+      ExpiryInterval:
+        type: string
+      ValueARMale:
+        type: string
+      ValueARFemale:
+        type: string
+      MaxRecpientsSMS:
+        type: string
+      MaxRecpientsEmail:
+        type: string
+  OnboardingRs_Body:
+    type: object
+    properties:
+      status:
+        type: string
+        example: Success
+      Details:
+        type: string
+        example: Onboarding successful
+      id:
+        type: string
+        example: 20
+paths:
+  /Onboarding:
+    post:
+      tags:
+      - Onboarding UNH Consumer
+      description: Onboard new UNH Consumer
+      operationId: unhconsumeronboarding
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/OnboardingRequest_MessageType'
+        description: OnboardingunhRq
+        required: true
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/OnboardingResponse_MessageType'

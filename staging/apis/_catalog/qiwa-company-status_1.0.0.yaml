@@ -1,0 +1,129 @@
+swagger: "2.0"
+info:
+  title: Qiwa_Company_Status
+  x-ibm-name: qiwa-company-status
+  version: 1.0.0
+schemes:
+- https
+basePath: /qiwa/v2
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientID: []
+  clientSecret: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://gw-apic.qiwa.info/takamol/staging/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientID:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: GET
+        chunked-uploads: true
+        persistent-connection: true
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        target-url: $(dp-policies)/api/company_status/{laborOfficeId}/{sequenceNum}
+        username: username
+        password: password
+    catch:
+    - errors: []
+      execute:
+      - invoke:
+          title: invoke
+          version: 2.0.0
+          verb: GET
+          target-url: $(target-url)
+          follow-redirects: false
+          timeout: 60
+          parameter-control:
+            type: blacklist
+          header-control:
+            type: blacklist
+            values:
+            - ^X-IBM-Client-Id$
+          inject-proxy-headers: true
+          stop-on-error:
+          - OperationError
+          - SOAPError
+          - ConnectionError
+    - default:
+      - set-variable:
+          version: 2.0.0
+          title: set-variable
+          actions:
+          - set: message.status.code
+            value: "500"
+            type: string
+          - set: message.headers.content-type
+            value: application/json
+            type: string
+          - set: message.body
+            value: '{     "errorCode": "E000500",     "errorMessage": "Internal server
+              error"              }'
+            type: string
+  properties:
+    target-url:
+      value: http://datapower.qiwa.info:7081
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  catalogs: {}
+  activity-log:
+    success-content: payload
+    error-content: payload
+    enabled: true
+  buffering: true
+paths:
+  /CompanyStatus/{laborOfficeId}/{sequenceNum}:
+    get:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: object
+    parameters:
+    - name: laborOfficeId
+      in: path
+      required: true
+      type: integer
+      format: int32
+    - name: sequenceNum
+      in: path
+      required: true
+      type: integer
+      format: int32

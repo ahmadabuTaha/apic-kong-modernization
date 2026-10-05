@@ -1,0 +1,422 @@
+swagger: "2.0"
+info:
+  title: SearchEstablishingVisas
+  x-ibm-name: searchestablishingvisas
+  version: 1.0.0
+  description: SearchEstablishingVisas
+schemes:
+- https
+basePath: /qiwa/esb
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-estv-establishingutilities)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  SearchEstablishingVisasRq_MessageType:
+    type: object
+    properties:
+      SearchEstablishingVisasRq:
+        $ref: '#/definitions/SearchEstablishingVisasRq_Type'
+  SearchEstablishingVisasRs_MessageType:
+    type: object
+    properties:
+      SearchEstablishingVisasRs:
+        $ref: '#/definitions/SearchEstablishingVisasRs_Type'
+  SearchEstablishingVisasRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/SearchEstablishingVisasRq_BodyType'
+  SearchEstablishingVisasRq_BodyType:
+    type: object
+    properties:
+      KeyValueArr:
+        $ref: '#/definitions/KeyValueArray_Type'
+      ShowTier1:
+        type: integer
+    required:
+    - KeyValueArr
+  KeyValueArray_Type:
+    type: object
+    properties:
+      KeyValuePair:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValuePair_Type'
+  KeyValuePair_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  SearchEstablishingVisasRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/SearchEstablishingVisasRs_BodyType'
+  SearchEstablishingVisasRs_BodyType:
+    type: object
+    properties:
+      EstablishingVisasTiersList:
+        $ref: '#/definitions/EstablishingVisasTiersList_Type'
+  EstablishingVisasTiersList_Type:
+    type: object
+    properties:
+      EstablishingVisasTier:
+        type: array
+        items:
+          $ref: '#/definitions/EstablishingVisasTier_Type'
+  EstablishingVisasTier_Type:
+    type: object
+    properties:
+      TierID:
+        type: integer
+      LaborOfficeId:
+        type: integer
+      EstablishmentSequence:
+        type: integer
+      EstablishmentID:
+        type: integer
+      EntityID:
+        type: string
+      TierStatus:
+        type: integer
+      RefundableStatusId:
+        type: integer
+      RequestDate:
+        type: string
+      TierId:
+        type: integer
+      TierTypeId:
+        type: integer
+      TierBalance:
+        type: integer
+      StatusId:
+        type: integer
+      RequesterIdNo:
+        type: integer
+      UserId:
+        type: integer
+      AllowanceEndDate:
+        type: integer
+      ActionType:
+        type: integer
+      PaymentReference:
+        type: string
+      RequesterMobileNumber:
+        type: string
+      Location:
+        type: string
+      EstablishingVisasRequestsList:
+        $ref: '#/definitions/EstablishingVisasRequestsList_Type'
+      EstablishmentAddressesList:
+        $ref: '#/definitions/EstablishmentAddressesList_Type'
+  EstablishingVisasRequestsList_Type:
+    type: object
+    properties:
+      EstablishingVisasRequest:
+        type: array
+        items:
+          $ref: '#/definitions/EstablishingVisasRequest_Type'
+  EstablishingVisasRequest_Type:
+    type: object
+    properties:
+      RequestID:
+        type: integer
+      RequestYear:
+        type: integer
+      RequestSequence:
+        type: integer
+      RequestedTierId:
+        type: integer
+      RequestStatusId:
+        type: integer
+      VisaOutGoingNumber:
+        type: integer
+      VisaIssuedDate:
+        type: string
+      VisaTotalCount:
+        type: integer
+      NICRejectionId:
+        type: integer
+      NICRejectionDescription:
+        type: string
+      RequesterIdNo:
+        type: integer
+      UserId:
+        type: integer
+      InspectorId:
+        type: integer
+      InsertDate:
+        type: string
+      LastModifiedDate:
+        type: string
+      RequestDetailsList:
+        $ref: '#/definitions/RequestDetailsList_Type'
+      RequestIssuedVisasDetailsList:
+        $ref: '#/definitions/RequestIssuedVisasDetailsList_Type'
+  RequestDetailsList_Type:
+    type: object
+    properties:
+      RequestDetails:
+        type: array
+        items:
+          $ref: '#/definitions/RequestDetails_Type'
+  RequestDetails_Type:
+    type: object
+    properties:
+      ID:
+        type: string
+      EstablishingVisaRequestId:
+        type: string
+      NationaltyId:
+        type: string
+      EmbassyId:
+        type: string
+      JobId:
+        type: string
+      RelgionId:
+        type: string
+      GenderId:
+        type: string
+      Count:
+        type: string
+  RequestIssuedVisasDetailsList_Type:
+    type: object
+    properties:
+      RequestIssuedVisasDetails:
+        type: array
+        items:
+          $ref: '#/definitions/RequestIssuedVisasDetails_Type'
+  RequestIssuedVisasDetails_Type:
+    type: object
+    properties:
+      ID:
+        type: string
+      VisaRequestId:
+        type: string
+      VisaRequestTypeId:
+        type: string
+      BorderNumber:
+        type: string
+      NationaltyId:
+        type: string
+      EmbassyId:
+        type: string
+      JobId:
+        type: string
+      RelgionId:
+        type: string
+      GenderId:
+        type: string
+      VisaStatusId:
+        type: string
+      VisaExpirationDate:
+        type: string
+  EstablishmentAddressesList_Type:
+    type: object
+    properties:
+      EstablishmentAddress:
+        type: array
+        items:
+          $ref: '#/definitions/EstablishmentAddress_Type'
+  EstablishmentAddress_Type:
+    type: object
+    properties:
+      ID:
+        type: string
+      City:
+        type: string
+      District:
+        type: string
+      Street:
+        type: string
+      BuildingNumber:
+        type: string
+      POBox:
+        type: string
+      ZIPCode:
+        type: string
+      AddressDescription:
+        type: string
+      Latitude:
+        type: string
+      Longitude:
+        type: string
+      EstablishmentID:
+        type: string
+      LaborOfficeID:
+        type: string
+      EstablishmentSequenceID:
+        type: string
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: string
+      IDNumber:
+        type: string
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /searchestablishingvisas:
+    post:
+      operationId: SearchEstablishingVisas
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/SearchEstablishingVisasRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Search Establishing Visas
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/SearchEstablishingVisasRq_MessageType'
+        description: SearchEstablishingVisasRq
+        required: true

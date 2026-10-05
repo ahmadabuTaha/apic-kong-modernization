@@ -1,0 +1,278 @@
+swagger: "2.0"
+info:
+  title: RequestExpansionExceptionalBalance
+  x-ibm-name: requestexpansionexceptionalbalance
+  version: 1.0.0
+  description: To request exceptional balance for an eligible expansion establishment
+schemes:
+- https
+basePath: /visa/expansionvisa
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-expv-expanvisa2)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  RequestExpansionExceptionalBalanceRq_MessageType:
+    type: object
+    properties:
+      RequestExpansionExceptionalBalanceRq:
+        $ref: '#/definitions/RequestExpansionExceptionalBalanceRq_Type'
+  RequestExpansionExceptionalBalanceRs_MessageType:
+    type: object
+    properties:
+      RequestExpansionExceptionalBalanceRs:
+        $ref: '#/definitions/RequestExpansionExceptionalBalanceRs_Type'
+  RequestExpansionExceptionalBalanceRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/RequestExpansionExceptionalBalanceRq_BodyType'
+  RequestExpansionExceptionalBalanceRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      PaymentReference:
+        type: string
+      RequestedBalance:
+        type: integer
+      LocationId:
+        type: integer
+      LocationURL:
+        type: string
+      RequesterDetails:
+        $ref: '#/definitions/RequesterDetails_Type'
+      EstablishmentEmail:
+        type: string
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+    - PaymentReference
+    - RequestedBalance
+    - LocationId
+    - LocationURL
+    - RequesterDetails
+    - EstablishmentEmail
+  RequesterDetails_Type:
+    type: object
+    properties:
+      RequesterMobileNumber:
+        type: string
+      RequesterName:
+        type: string
+      RequesterEmail:
+        type: string
+    required:
+    - RequesterMobileNumber
+    - RequesterName
+    - RequesterEmail
+  RequestExpansionExceptionalBalanceRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/RequestExpansionExceptionalBalanceRs_BodyType'
+  RequestExpansionExceptionalBalanceRs_BodyType:
+    type: object
+    properties:
+      ExceptionalBalanceId:
+        type: integer
+      ValidationsErrorsList:
+        $ref: '#/definitions/ValidationsErrorsList_Type'
+    required:
+    - ExceptionalBalanceId
+  ValidationsErrorsList_Type:
+    type: object
+    properties:
+      ValidationError:
+        type: array
+        items:
+          $ref: '#/definitions/ValidationError_Type'
+  ValidationError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ArDescription:
+        type: string
+      EnDescription:
+        type: string
+    required:
+    - ErrorCode
+    - ArDescription
+    - EnDescription
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /reqexpexcepbalance:
+    post:
+      operationId: RequestExpansionExceptionalBalance
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/RequestExpansionExceptionalBalanceRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: To request exceptional balance for an eligible expansion establishment
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/RequestExpansionExceptionalBalanceRq_MessageType'
+        description: RequestExpansionExceptionalBalanceRq
+        required: true

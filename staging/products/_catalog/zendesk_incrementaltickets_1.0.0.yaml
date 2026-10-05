@@ -1,0 +1,109 @@
+swagger: "2.0"
+info:
+  title: Zendesk_IcrementalTickets
+  x-ibm-name: zendesk_incrementaltickets
+  version: 1.0.0
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - gatewayscript:
+        version: 2.0.0
+        title: gatewayscript
+        source: |2+
+
+          var url = context.get('target-url');
+
+          var path = context.get('request.querystring');
+
+          var callingUrl = url + '?' +path;
+
+          context.set('callingUrl',callingUrl);
+
+
+    - invoke:
+        version: 2.2.0
+        title: invoke
+        backend-type: json
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        http-version: HTTP/1.1
+        timeout: 60
+        verb: GET
+        chunked-uploads: true
+        persistent-connection: true
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        websocket-upgrade: false
+        target-url: $(callingUrl)
+    finally: []
+  properties:
+    target-url:
+      value: http://zen-zendesk-http-ace.apps.stg.qiwa-nonprod.local/zendesk/ticketing/v1/api/v2/incremental/tickets
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+basePath: /qiwa/v2
+paths:
+  /IncrementalTickets:
+    get:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+      parameters:
+      - name: sort_by
+        in: query
+        type: string
+        allowEmptyValue: false
+      - name: sort_order
+        in: query
+        type: string
+      - name: page
+        in: query
+        type: integer
+      - name: per_page
+        in: query
+        type: integer
+securityDefinitions:
+  clientID:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+    x-key-type: client_id
+  ClientSecret:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Secret
+    x-key-type: client_secret
+  OAuth2.0:
+    type: oauth2
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    flow: application
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+schemes:
+- https
+security:
+- clientID: []
+  ClientSecret: []
+  OAuth2.0:
+  - IntegrationScope

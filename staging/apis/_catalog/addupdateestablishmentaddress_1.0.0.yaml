@@ -1,0 +1,305 @@
+swagger: "2.0"
+info:
+  title: AddUpdateEstablishmentAddress
+  x-ibm-name: addupdateestablishmentaddress
+  version: 1.0.0
+  description: |+
+    This service specifies an Establishment address or updates the establishment address if it is already existed.
+    This service will take :
+    - The LaborOfficeId
+    - The EstablishmentSequanceNumber
+    - The EstablishmentId
+    - The Address the contains (City, District, Street, BuildingNumber, POBox, ZIPCode, Latitude, Longitude, AddressDescription)
+
+
+
+host: $(catalog.host)
+schemes:
+- https
+basePath: /qiwa/esb
+produces:
+- application/json
+consumes:
+- application/json
+security:
+- clientID: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientID:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  testable: true
+  enforced: true
+  type: rest
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  properties:
+    target-url:
+      value: http://192.168.80.4:30090
+      description: The internal IP of 'icp-cluster.qiwa.info'
+      encoded: false
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-utl-commonapps)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  phase: realized
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  DebugFlag_Type:
+    type: integer
+    default: "1"
+  ServiceCode_Type:
+    type: string
+    default: AUEA0001
+  TransactionId_Type:
+    type: string
+    default: "6222121543"
+  ChannelId_Type:
+    type: string
+    default: Qiwa
+  SessionId_Type:
+    type: string
+    default: "212"
+  RequestTime_Type:
+    type: string
+    default: "2019-10-10T00:00:00.555Z"
+  MWRequestTime_Type:
+    type: string
+    default: '''2019-10-10T00:00:00.555'
+  MWResponseime_Type:
+    type: string
+    default: '''2019-10-10T00:00:00.555'
+  EconomicActivityId_Type:
+    type: string
+    default: "901"
+  AddUpdateEstablishmentAddressRq_MessageType:
+    type: object
+    properties:
+      AddUpdateEstablishmentAddressRq:
+        $ref: '#/definitions/AddUpdateEstablishmentAddressRq_Type'
+  AddUpdateEstablishmentAddressRs_MessageType:
+    type: object
+    properties:
+      AddUpdateEstablishmentAddressRs:
+        $ref: '#/definitions/AddUpdateEstablishmentAddressRs_Type'
+  AddUpdateEstablishmentAddressRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/AddUpdateEstablishmentAddressRq_BodyType'
+  AddUpdateEstablishmentAddressRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+        default: "2"
+      EstablishmentSequenceNumber:
+        type: integer
+        default: "2"
+      EstablishmentId:
+        type: integer
+        default: "2"
+      Address:
+        $ref: '#/definitions/Address_Type'
+    required:
+    - LaborOfficeId
+    - EstablishmentSequenceNumber
+    - EstablishmentId
+    - Address
+  Address_Type:
+    type: object
+    properties:
+      City:
+        type: string
+        default: "99999"
+      District:
+        type: string
+        default: "12"
+      Street:
+        type: string
+        default: "3"
+      BuildingNumber:
+        type: string
+        default: "3"
+      POBox:
+        type: string
+        default: "3"
+      ZIPCode:
+        type: string
+        default: "43"
+      Latitude:
+        type: string
+        default: "21"
+      Longitude:
+        type: string
+        default: "12"
+      AddressDescription:
+        type: string
+        default: Establishment Address
+  AddUpdateEstablishmentAddressRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/AddUpdateEstablishmentAddressRs_BodyType'
+  AddUpdateEstablishmentAddressRs_BodyType:
+    type: object
+    properties: {}
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        $ref: '#/definitions/TransactionId_Type'
+      ChannelId:
+        $ref: '#/definitions/ChannelId_Type'
+      SessionId:
+        $ref: '#/definitions/SessionId_Type'
+      RequestTime:
+        $ref: '#/definitions/RequestTime_Type'
+      MWRequestTime:
+        $ref: '#/definitions/MWRequestTime_Type'
+      ServiceCode:
+        $ref: '#/definitions/ServiceCode_Type'
+      DebugFlag:
+        $ref: '#/definitions/DebugFlag_Type'
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        $ref: '#/definitions/TransactionId_Type'
+      ChannelId:
+        $ref: '#/definitions/ChannelId_Type'
+      SessionId:
+        $ref: '#/definitions/SessionId_Type'
+      RequestTime:
+        $ref: '#/definitions/RequestTime_Type'
+      MWRequestTime:
+        $ref: '#/definitions/MWRequestTime_Type'
+      MWResponseime:
+        $ref: '#/definitions/MWResponseime_Type'
+      ServiceCode:
+        $ref: '#/definitions/ServiceCode_Type'
+      DebugFlag:
+        $ref: '#/definitions/DebugFlag_Type'
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+        default: cetepz
+      value:
+        type: string
+        default: "28.64"
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: string
+        default: Francis
+      IDNumber:
+        type: string
+        default: "4487415334961152"
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /addupdateestablishmentaddress:
+    post:
+      operationId: AddUpdateEstablishmentAddress
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/AddUpdateEstablishmentAddressRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Add Update Establishment Address
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/AddUpdateEstablishmentAddressRq_MessageType'
+        description: AddUpdateEstablishmentAddressRq
+        required: true

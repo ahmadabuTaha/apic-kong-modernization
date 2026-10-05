@@ -1,0 +1,446 @@
+swagger: "2.0"
+info:
+  title: SVP_GetIndividualInfo
+  description: |
+    This service is used to get individual information about all labor bookings or the latest booking.
+  version: 1.0.0
+  x-ibm-name: svp_getindividualinfo
+schemes:
+- https
+basePath: /external/v1
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+paths:
+  /getindividualinfo:
+    get:
+      summary: getindividualinfo
+      description: |
+        This service is used to get individual information about all labor bookings or the latest booking.
+      operationId: getindividualinfo
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/X-IBM-Client-Id'
+      responses:
+        "200":
+          $ref: '#/responses/Response200'
+        "400":
+          $ref: '#/responses/Response400'
+        "401":
+          $ref: '#/responses/Response401'
+        "403":
+          $ref: '#/responses/Response403'
+        "404":
+          $ref: '#/responses/Response404'
+        "408":
+          $ref: '#/responses/Response408'
+        "409":
+          $ref: '#/responses/Response409'
+        "429":
+          $ref: '#/responses/Response429'
+        "500":
+          $ref: '#/responses/Response500'
+        "501":
+          $ref: '#/responses/Response501'
+        "503":
+          $ref: '#/responses/Response503'
+        "510":
+          $ref: '#/responses/Response510'
+definitions:
+  ResponseModel:
+    type: object
+    description: Response returned by SVP_GetLaborResult
+    properties:
+      certificate_issue_date:
+        type: string
+      certificate_number:
+        type: string
+      certificate_valid_until:
+        type: string
+      current_status:
+        type: string
+      occupation_code:
+        type: string
+      occupation_name_ar:
+        type: string
+      occupation_name_en:
+        type: string
+      passport_number:
+        type: string
+      test_date:
+        type: string
+      test_result:
+        type: string
+      update_date:
+        type: string
+  LocaleDataModel:
+    type: object
+    additionalProperties:
+      type: string
+  ErrorModel:
+    type: object
+    required:
+    - errorCode
+    - errorMessage
+    properties:
+      errorCode:
+        type: string
+        example: EXXXX000
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+parameters:
+  X-IBM-Client-Id:
+    in: header
+    name: X-IBM-Client-Id
+    description: Client id issued by security server
+    required: true
+    type: string
+  passport_number:
+    in: query
+    name: passport_number
+    description: passport_number
+    required: true
+    type: integer
+  nationality_id:
+    in: query
+    name: nationality_id
+    description: nationality_id
+    required: true
+    type: integer
+  date_of_birth:
+    in: query
+    name: date_of_birth
+    description: date_of_birth
+    required: true
+    type: string
+  occupation_key:
+    in: query
+    name: occupation_key
+    description: occupation_key
+    required: false
+    type: string
+  multiple:
+    in: query
+    name: multiple
+    description: multiple
+    required: false
+    type: string
+responses:
+  Response200:
+    description: Successful response.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace ID for the request.
+    schema:
+      $ref: '#/definitions/ResponseModel'
+  Response201:
+    description: Created.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace ID for the request.
+      Location:
+        type: string
+        description: Resource location.
+  Response204:
+    description: No Content.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace ID for the request.
+  Response400:
+    description: |
+      The request was rejected due to malformed syntax (Bad Request).
+  Response401:
+    description: |
+      Authentication failed due to invalid credentials.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace ID for the request.
+  Response403:
+    description: |
+      The request is not authorized.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace ID for the request.
+  Response404:
+    description: |
+      The requested resource was not found.
+  Response408:
+    description: |
+      Request Timeout.
+  Response409:
+    description: |
+      Conflict with the current state of the resource.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace ID for the request.
+  Response429:
+    description: |
+      Too many requests.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace ID for the request.
+  Response500:
+    description: |
+      Internal Server Error.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace ID for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response501:
+    description: |
+      Not Implemented.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace ID for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response503:
+    description: |
+      Service Unavailable.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace ID for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response510:
+    description: |
+      Extensions to the request are required.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace ID for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+    policy:
+    - allow-origin:
+      - $(cors-allowed-origin)
+      allow-credentials: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service.
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: header
+    error-content: header
+  assembly:
+    execute:
+    - map:
+        inputs:
+          passport_number:
+            schema:
+              type: string
+            variable: request.parameters.passport_number
+          nationality_id:
+            schema:
+              type: string
+            variable: request.parameters.nationality_id
+          date_of_birth:
+            schema:
+              type: string
+            variable: request.parameters.date_of_birth
+          occupation_key:
+            schema:
+              type: string
+            variable: request.parameters.occupation_key
+          multiple:
+            schema:
+              type: string
+            variable: request.parameters.multiple
+        outputs:
+          output:
+            schema:
+              type: object
+              properties:
+                passport_number:
+                  type: string
+                nationality_id:
+                  type: string
+                date_of_birth:
+                  type: string
+                occupation_key:
+                  type: string
+                multiple:
+                  type: string
+            variable: message.body
+        actions:
+        - set: output.passport_number
+          from: passport_number
+        - set: output.nationality_id
+          from: nationality_id
+        - set: output.date_of_birth
+          from: date_of_birth
+        - set: output.occupation_key
+          from: occupation_key
+        - set: output.multiple
+          from: multiple
+        version: 2.1.0
+        title: map
+        options:
+          mapEmulateV4EmptyJSONObject: false
+          mapEmulateV4DefaultRequiredProps: false
+          mapEnablePostProcessingJSON: false
+          mapReferenceLimit: 1
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\r\n\r\nvar cfg={\r\n    \"serviceCode\"
+          : \"GII00001\",\r\n    \"channelId\" : \"Qiwa\",\r\n    \"requestName\"
+          : \"getIndividualInfoRq\",\r\n    \"responseName\": \"getIndividualInfoRs\",\r\n
+          \   \"errorMap\" :{\r\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid
+          Request\"}\r\n    }\r\n\r\n};\r\napim.setvariable('cfg',cfg);"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare_Request
+        source: "var apim = require('apim');\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\nvar appname
+          = apim.getvariable('client.app.name');\r\nvar millisecondsvalue1 = apim.getvariable('session.globalTransactionID');\r\n\r\nvar
+          appcReq = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n            \"TransactionId\"
+          : millisecondsvalue,\r\n            \"ChannelId\": cfg.channelId,\r\n            \"SessionId\":
+          apim.getvariable('message.headers.X-Request-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode,\r\n            \"DebugFlag\":
+          \"1\",\r\n            \"UserInfo\": {\r\n                \"UserId\": apim.getvariable('message.headers.UserId'),\r\n
+          \               \"IDNumber\": apim.getvariable('message.headers.IDNumber')\t\t\t\t\r\n
+          \           },\r\n            \"UDF\": {\r\n                \"KeyValueArr\":
+          [\r\n                    {\r\n                        \"key\": \"Product\",\r\n
+          \                       \"value\": \"SVPGetIndividualInfo\"\r\n                    },\r\n
+          \                   {\r\n                        \"key\": \"Client\",\r\n
+          \                       \"value\": appname\r\n                    },\r\n
+          \                   {\r\n                        \"key\": \"GlobalTransactionId\",\r\n
+          \                       \"value\": millisecondsvalue1\r\n                    }\t\t\t\t\t\r\n
+          \               ]\r\n            }\t\t\t\r\n        },\r\n        \"Body\"
+          : apim.getvariable('message.body')\r\n            \r\n    }\r\n};\r\n\r\nif
+          (typeof OperatorId !== 'undefined')\r\n    appcReq[cfg.requestName].Header.UserInfo
+          = {\r\n        \"IDNumber\" : OperatorId\r\n    };\r\nsession.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n    \r\n    \r\n\r\n    //return
+          the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour
+          + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: POST
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(ace-tip-workinsaudi)/external/getindividualinfo
+        follow-redirects: false
+        inject-proxy-headers: true
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_Headers
+        source: "var apim = require('apim');\r\napim.output('application/json');\r\n\r\nvar
+          message = apim.getvariable('message.body');\r\nvar cfg = apim.getvariable('cfg');\r\n\r\nvar
+          response = message[cfg.responseName];\r\nvar Header = response.Header;\r\n\r\n//
+          Header values\r\nvar TransactionId = Header.TransactionId;\r\nvar ChannelId
+          = Header.ChannelId;\r\nvar RequestTime = Header.RequestTime;\r\nvar SessionId
+          = Header.SessionId;\r\nvar MWRequestTime = Header.MWRequestTime;\r\nvar
+          MWResponseTime = Header.MWResponseTime;\r\nvar status = Header.ResponseStatus.Status;\r\nvar
+          code = Header.ResponseStatus.Code;\r\n\r\n// Extract x-mofa-request-trace-id
+          from UDF.KeyValueArr\r\nvar requestId = \"\";\r\n\r\nif (Header.UDF && Header.UDF.KeyValueArr)
+          {\r\n\r\n    // Handle array response\r\n    if (Array.isArray(Header.UDF.KeyValueArr))
+          {\r\n\r\n        for (var i = 0; i < Header.UDF.KeyValueArr.length; i++)
+          {\r\n\r\n            var item = Header.UDF.KeyValueArr[i];\r\n\r\n            if
+          (item.key === \"x-svp-request-id\") {\r\n                requestId = item.value;\r\n
+          \           }            \r\n        }\r\n    }\r\n\r\n    // Handle single
+          object response (safety check)\r\n    else {\r\n\r\n        if (Header.UDF.KeyValueArr.key
+          === \"x-svp-request-id\") {\r\n            requestId = Header.UDF.KeyValueArr.value;\r\n
+          \       }\r\n    }\r\n}\r\n\r\n// Existing headers\r\napim.setvariable('message.headers.Transaction-Id',
+          TransactionId, 'add');\r\napim.setvariable('message.headers.Channel-Id',
+          ChannelId, 'add');\r\n\r\nif (RequestTime)\r\n    apim.setvariable('message.headers.RequestTime',
+          RequestTime, 'add');\r\n\r\nif (SessionId)\r\n    apim.setvariable('message.headers.X-Request-Id',
+          SessionId, 'add');\r\n\r\nif (MWRequestTime)\r\n    apim.setvariable('message.headers.MWRequestTime',
+          MWRequestTime, 'add');\r\n\r\nif (MWResponseTime)\r\n    apim.setvariable('message.headers.MWResponseTime',
+          MWResponseTime, 'add');\r\n\r\napim.setvariable('message.headers.Response-Status',
+          status, 'add');\r\napim.setvariable('message.headers.Response-Code', code,
+          'add');\r\napim.setvariable('message.headers.x-user-transaction-id', TransactionId,
+          'add');\r\n\r\n// New header\r\nif (requestId)\r\n    apim.setvariable('message.headers.x-svp-request-id',
+          requestId, 'add');    "
+    - switch:
+        version: 2.1.0
+        title: switch
+        case:
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Response
+              source: "var apim = require('apim');\r\nvar message = apim.getvariable('message.body');\r\nvar
+                cfg = apim.getvariable('cfg');\r\nvar body = message[cfg.responseName].Body;\r\nsession.output.write(body);\r\napim.output('application/json');"
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Error
+              source: "var apim = require('apim');\r\n\r\nvar message = apim.getvariable('message.body');\r\nvar
+                cfg = apim.getvariable('cfg');\r\n\r\nvar responseStatus = message[cfg.responseName].Header.ResponseStatus;\r\n\r\nvar
+                errorCode = responseStatus.Code;\r\n\r\nvar error = {\r\n    \"errorCode\":
+                errorCode,\r\n    \"errorMessage\": {\r\n        \"en-US\": responseStatus.EnglishMsg,\r\n
+                \       \"ar-SA\": responseStatus.ArabicMsg,\r\n        \"BackendError\":responseStatus.BackendError,\r\n
+                \   }\r\n};\r\n\r\nvar httperror = 0;\r\n\r\n// Handle mapped errors\r\nif
+                (cfg.errorMap && cfg.errorMap[errorCode]) {\r\n\r\n    httperror =
+                cfg.errorMap[errorCode].code;\r\n\r\n    // Custom response for ESBSCHEMA\r\n
+                \   if (errorCode === \"ESBSCHEMA\") {\r\n\r\n        error = {\r\n
+                \           \"errorCode\": \"ESBSCHEMA\",\r\n            \"errorMessage\":
+                {\r\n                \"en-US\": \"Schema Validation Error\",\r\n                \"ar-SA\":
+                \"حدث خطأ بالنظام\"\r\n            }\r\n        };\r\n    }\r\n}\r\n\r\n//
+                Default HTTP error\r\nif (httperror === 0) {\r\n    httperror = 409;\r\n}\r\n\r\napim.setvariable('message.status.code',
+                httperror, 'set');\r\n\r\nsession.output.write(error);\r\n\r\napim.output('application/json');"

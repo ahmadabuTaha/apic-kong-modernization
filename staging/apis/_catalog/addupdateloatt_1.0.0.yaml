@@ -1,0 +1,226 @@
+swagger: "2.0"
+info:
+  title: AddUpdateLOAtt
+  x-ibm-name: addupdateloatt
+  version: 1.0.0
+  description: AddUpdateLOAtt
+schemes:
+- https
+basePath: /qiwalo
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-lbro-labor-office)/qiwalo/addupdateloatt
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        persistent-connection: true
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+definitions:
+  AddUpdateLOAttRq_MessageType:
+    type: object
+    properties:
+      AddUpdateLOAttRq:
+        $ref: '#/definitions/AddUpdateLOAttRq_Type'
+  AddUpdateLOAttRs_MessageType:
+    type: object
+    properties:
+      AddUpdateLOAttRs:
+        $ref: '#/definitions/AddUpdateLOAttRs_Type'
+  AddUpdateLOAttRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/AddUpdateLOAttRq_BodyType'
+  AddUpdateLOAttRq_BodyType:
+    type: object
+    properties:
+      AttachmentNameAr:
+        type: string
+      AttachmentNameEn:
+        type: string
+      IsActive:
+        type: integer
+      SubServiceId:
+        type: integer
+      AttachmentTypeCode:
+        type: integer
+  AddUpdateLOAttRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/AddUpdateLOAttRs_BodyType'
+  AddUpdateLOAttRs_BodyType:
+    type: object
+    properties:
+      AttachmentTypeCode:
+        type: integer
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /addupdateloatt:
+    post:
+      operationId: AddUpdateLOAtt
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/AddUpdateLOAttRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Add Update Labor Office Attachment
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/AddUpdateLOAttRq_MessageType'
+        description: AddUpdateLOAttRq
+        required: true

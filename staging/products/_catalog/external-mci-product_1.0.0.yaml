@@ -1,0 +1,78 @@
+info:
+  name: external-mci-product
+  title: External_MCI_Product
+  version: 1.0.0
+apis:
+  getbasiccrinformation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getbasiccrinformation_1.0.0_1.yaml
+  contractinformation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/contractinformation_1.0.0_1.yaml
+  mcichangehistory1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mcichangehistory_1.0.0_1.yaml
+  mcicrinformation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mcicrinformation_1.0.0_2.yaml
+  getbranchescrinformation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getbranchescrinformation_1.0.0_1.yaml
+  mci-getcrinformation2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mci-getcrinformation_2.0.0_1.yaml
+  mci-getcrdetails2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mci-getcrdetails_2.0.0_1.yaml
+  getcrdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getcrdetails_1.0.0_1.yaml
+  mci-getallcrinformation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mci-getallcrinformation_1.0.0_1.yaml
+  mci-getcrownership1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mci-getcrownership_1.0.0_1.yaml
+  mci-getallcrdetails2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mci-getallcrdetails_2.0.0_1.yaml
+  mci-crowners2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mci-crowners_2.0.0_1.yaml
+  mci-crowners1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mci-crowners_1.0.0_1.yaml
+  mci-getalldetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mci-getalldetails_1.0.0_1.yaml
+  mci-rest-services1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mci-rest-services_1.0.0_1.yaml
+  timeline1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/timeline_1.0.0_1.yaml
+  personrelated1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/personrelated_1.0.0_1.yaml
+  mcimanagementinformation1.0.2:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mcimanagementinformation_1.0.2_1.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      mci-rest-services1.0.0: {}
+      getcrdetails1.0.0: {}
+      mci-getalldetails1.0.0: {}
+      mci-crowners1.0.0: {}
+      mci-getallcrdetails2.0.0: {}
+      mci-crowners2.0.0: {}
+      mci-getcrinformation2.0.0: {}
+      mci-getcrownership1.0.0: {}
+      mci-getallcrinformation1.0.0: {}
+      mci-getcrdetails2.0.0: {}
+      mcicrinformation1.0.0: {}
+      mcichangehistory1.0.0: {}
+      getbasiccrinformation1.0.0: {}
+      getbranchescrinformation1.0.0: {}
+      contractinformation1.0.0: {}
+      timeline1.0.0: {}
+      personrelated1.0.0: {}
+      mcimanagementinformation1.0.2: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

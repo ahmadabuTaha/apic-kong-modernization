@@ -1,0 +1,315 @@
+swagger: "2.0"
+info:
+  title: PushSpecialWorkersData V2
+  x-ibm-name: pushspecialworkersdata-v2
+  version: 1.0.0
+  description: PushSpecialWorkersData
+schemes:
+- https
+basePath: /contractmanagement/v2
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-cntmv2-contractcreates)/contractmanagement/pushspecialworkersdata
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  PushSpecialWorkersDataRq_MessageType:
+    type: object
+    properties:
+      PushSpecialWorkersDataRq:
+        $ref: '#/definitions/PushSpecialWorkersDataRq_Type'
+  PushSpecialWorkersDataRs_MessageType:
+    type: object
+    properties:
+      PushSpecialWorkersDataRs:
+        $ref: '#/definitions/PushSpecialWorkersDataRs_Type'
+  PushSpecialWorkersDataRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/PushSpecialWorkersDataRq_BodyType'
+  PushSpecialWorkersDataRq_BodyType:
+    type: object
+    properties:
+      EstablishmentDetails:
+        $ref: '#/definitions/EstablishmentDetails_Type'
+      LaborerDetails:
+        $ref: '#/definitions/LaborerDetails_Type'
+      ContractDetails:
+        $ref: '#/definitions/ContractDetails_Type'
+      ProcessTypeId:
+        type: integer
+    required:
+    - EstablishmentDetails
+    - LaborerDetails
+    - ContractDetails
+    - ProcessTypeId
+  EstablishmentDetails_Type:
+    type: object
+    properties:
+      UnifiedNationalNumber:
+        type: integer
+      HRSDOfficeID:
+        type: integer
+      HRSDEstablishmentID:
+        type: integer
+    required:
+    - HRSDOfficeID
+    - HRSDEstablishmentID
+  LaborerDetails_Type:
+    type: object
+    properties:
+      FirstName:
+        type: string
+      SecondName:
+        type: string
+      ThirdName:
+        type: string
+      LastName:
+        type: string
+      FullEnglishName:
+        type: string
+      NationalIDNumber:
+        type: integer
+      IqamaNumber:
+        type: integer
+      BorderNumber:
+        type: integer
+      Gender:
+        type: integer
+      NationalityId:
+        type: integer
+      EducationLevel:
+        type: string
+      Specialization:
+        type: integer
+      IsStudent:
+        type: integer
+      IsReleasedPrisoner:
+        type: integer
+      CategoryId:
+        type: integer
+    required:
+    - FirstName
+    - SecondName
+    - ThirdName
+    - LastName
+    - FullEnglishName
+    - Gender
+    - NationalIDNumber
+    - EducationLevel
+    - Specialization
+    - IsStudent
+    - IsReleasedPrisoner
+    - CategoryId
+  ContractDetails_Type:
+    type: object
+    properties:
+      ContractStartDate:
+        type: number
+      ContractEndDate:
+        type: number
+      Wage:
+        type: number
+      WPSWage:
+        type: number
+      WorkTypeId:
+        type: integer
+      IsDistanceWorker:
+        type: integer
+      IsFlexibleWorker:
+        type: integer
+      IsFlexibleWorkPlace:
+        type: integer
+      OccupationId:
+        type: integer
+    required:
+    - ContractStartDate
+    - ContractEndDate
+    - Wage
+    - OccupationId
+    - WorkTypeId
+    - IsFlexibleWorkPlace
+    - IsFlexibleWorker
+    - IsDistanceWorker
+  PushSpecialWorkersDataRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/PushSpecialWorkersDataRs_BodyType'
+  PushSpecialWorkersDataRs_BodyType:
+    type: object
+    properties:
+      RequestId:
+        type: integer
+    required:
+    - RequestId
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /pushspecialworkersdata:
+    post:
+      operationId: PushSpecialWorkersData
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/PushSpecialWorkersDataRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: PushSpecialWorkersData
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/PushSpecialWorkersDataRq_MessageType'
+        description: PushSpecialWorkersDataRq
+        required: true

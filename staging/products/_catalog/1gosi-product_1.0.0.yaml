@@ -1,0 +1,45 @@
+info:
+  version: 1.0.0
+  title: 1Gosi - Product
+  name: 1gosi-product
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    rate-limits:
+      default:
+        value: 100/1hour
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    apis:
+      gosi-createcertificatenumber2.0.0: {}
+      async-data-history1.0.0: {}
+      gosi-contributor-history1.0.0: {}
+      gosi-active-contributors1.0.0: {}
+      tip-pushsaudiworkersdata1.0.0: {}
+      tip-pushlaborerwagedata1.0.0: {}
+      tip-pushspecialworkersdata1.0.0: {}
+apis:
+  gosi-createcertificatenumber2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/gosi-createcertificatenumber_2.0.0.yaml
+  async-data-history1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/async-data-history_1.0.0.yaml
+  gosi-contributor-history1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/gosi-contributor-history_1.0.0.yaml
+  gosi-active-contributors1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/gosi-active-contributors_1.0.0.yaml
+  tip-pushsaudiworkersdata1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/tip-pushsaudiworkersdata_1.0.0.yaml
+  tip-pushlaborerwagedata1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/tip-pushlaborerwagedata_1.0.0.yaml
+  tip-pushspecialworkersdata1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/tip-pushspecialworkersdata_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

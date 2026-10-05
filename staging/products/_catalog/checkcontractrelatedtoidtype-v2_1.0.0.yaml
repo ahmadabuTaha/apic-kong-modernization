@@ -1,0 +1,290 @@
+swagger: "2.0"
+info:
+  title: CheckContractRelatedToIdType V2
+  version: 1.0.0
+  description: This service is used to check and validate the transferred employee
+  x-ibm-name: checkcontractrelatedtoidtype-v2
+paths:
+  /checkcontrelatedtoidtype:
+    post:
+      operationId: CheckContractRelatedToIdType
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/CheckContractRelatedToIdTypeRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: check, and validate the laborer in terms
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/CheckContractRelatedToIdTypeRq_MessageType'
+        description: 'to check, and validate the laborer in terms of CM service rules
+          & calculate '
+        required: true
+basePath: /contractmanagement/v2
+definitions:
+  CheckContractRelatedToIdTypeRq_MessageType:
+    type: object
+    properties:
+      CheckContractRelatedToIdTypeRq:
+        $ref: '#/definitions/CheckContractRelatedToIdTypeRq_Type'
+  CheckContractRelatedToIdTypeRs_MessageType:
+    type: object
+    properties:
+      CheckContractRelatedToIdTypeRs:
+        $ref: '#/definitions/CheckContractRelatedToIdTypeRs_Type'
+  CheckContractRelatedToIdTypeRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/CheckContractRelatedToIdTypeRq_BodyType'
+  CheckContractRelatedToIdTypeRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      LaborerIdNo:
+        type: integer
+      LaborerBirthDate:
+        $ref: '#/definitions/Date_Type'
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+    - LaborerIdNo
+  Date_Type:
+    type: object
+    properties:
+      HijriDate:
+        type: integer
+      GregDate:
+        type: string
+  CheckContractRelatedToIdTypeRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/CheckContractRelatedToIdTypeRs_BodyType'
+  CheckContractRelatedToIdTypeRs_BodyType:
+    type: object
+    properties:
+      RelatedToId:
+        type: integer
+      LaborerInfo:
+        $ref: '#/definitions/LaborerInfo_Type'
+    required:
+    - RelatedToId
+    - LaborerInfo
+  LaborerInfo_Type:
+    type: object
+    properties:
+      LaborerName:
+        $ref: '#/definitions/Name_Type'
+      LaborerTypeId:
+        type: integer
+      LaborerIdNo:
+        type: integer
+      LaborerIdExpiryDate:
+        type: string
+      BorderNumber:
+        type: integer
+      LaborerBirthDate:
+        $ref: '#/definitions/Date_Type'
+      Nationality:
+        $ref: '#/definitions/CodeName_Type'
+      Gender:
+        $ref: '#/definitions/CodeName_Type'
+      Religion:
+        $ref: '#/definitions/CodeName_Type'
+      MaritalStatus:
+        $ref: '#/definitions/CodeName_Type'
+      Occupation:
+        $ref: '#/definitions/CodeName_Type'
+    required:
+    - LaborerName
+    - LaborerTypeId
+    - LaborerIdNo
+    - LaborerIdExpiryDate
+    - Nationality
+    - LaborerBirthDate
+    - Gender
+    - Religion
+    - MaritalStatus
+    - Occupation
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: string
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+  Name_Type:
+    type: object
+    properties:
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-cntmv2-contractutilities)/contractmanagement/checkcontrelatedtoidtype
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: allowlist
+          values: []
+        header-control:
+          type: blocklist
+          values: []
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+schemes:
+- https
+securityDefinitions:
+  clientId:
+    type: apiKey
+    x-key-type: client_id
+    name: X-IBM-Client-Id
+    in: header
+  Oauth2.0:
+    type: oauth2
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    flow: application
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+security:
+- clientId: []
+  Oauth2.0:
+  - IntegrationScope

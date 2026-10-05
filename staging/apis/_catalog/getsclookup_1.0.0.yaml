@@ -1,0 +1,284 @@
+swagger: "2.0"
+info:
+  title: GetSCLookUp
+  description: This API returns the list of  Banks, Embassy and AdressTo list for
+    salaray certificate based on filter value
+  x-ibm-name: getsclookup
+  version: 1.0.0
+schemes:
+- https
+basePath: /qiwa/v2
+security:
+- ClientSecret: []
+  OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  ClientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientIdHeader:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://gw-apic.qiwa.info/takamol/staging/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+paths:
+  /GetSCLookUp:
+    post:
+      tags:
+      - GetSCLookUp
+      description: This API returns the list of  Banks, Embassy and AdressTo list
+        for salaray certificate based on filter value
+      operationId: GetSCLookUp
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetSCLookUpRs_MessageType'
+      parameters:
+      - name: requestBody
+        in: body
+        schema:
+          $ref: '#/definitions/GetSCLookUpRq_MessageType'
+      - name: X-IBM-Client-Id
+        in: header
+        required: true
+        type: string
+      - name: X-IBM-Client-Secret
+        in: header
+        required: true
+        type: string
+definitions:
+  GetSCLookUpRq_MessageType:
+    type: object
+    properties:
+      GetSCLookUpRq:
+        $ref: '#/definitions/GetSCLookUpRq_Type'
+  GetSCLookUpRs_MessageType:
+    type: object
+    properties:
+      GetSCLookUpRs:
+        $ref: '#/definitions/GetSCLookUpRs_Type'
+  GetSCLookUpRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetSCLookUpRq_BodyType'
+  GetSCLookUpRq_BodyType:
+    type: object
+    properties:
+      Filter:
+        type: string
+        enum:
+        - Banks
+        - Embassy
+        - AddressTo
+        - All
+        description: Filter value Banks returns only banks list, filter value Embassy
+          returns only embassy list, filter value AddressTo returns only AddressTo
+          list, filter value All returns Embassy,Banks,AddressTo list
+    required:
+    - Filter
+  GetSCLookUpRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetSCLookUpRs_BodyType'
+  GetSCLookUpRs_BodyType:
+    type: object
+    properties:
+      AddressTo:
+        type: array
+        items:
+          $ref: '#/definitions/List_Type'
+      Banks:
+        type: array
+        items:
+          $ref: '#/definitions/List_Type'
+      Embassy:
+        type: array
+        items:
+          $ref: '#/definitions/List_Type'
+  List_Type:
+    type: object
+    description: This response object returned by the get operation
+    properties:
+      Id:
+        type: integer
+      EnDescription:
+        type: string
+      ArDescription:
+        type: string
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-sc-salary-certificate)/GetSCLookUp
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: allowlist
+          values: []
+        header-control:
+          type: blocklist
+          values: []
+        inject-proxy-headers: true
+        persistent-connection: true
+        stop-on-error:
+        - OperationError
+        - SOAPError
+        - ConnectionError
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_Headers
+        source: "var apim = require('apim');\nvar Response = apim.getvariable('message.body');\nvar
+          statusCode = Response.GetSCLookUpRs.Header.ResponseStatus.Code ; \n\n\nif(statusCode
+          == 'ESBSCHEMA' || statusCode == 'E0000004' || statusCode == 'E0001203' ||
+          statusCode == 'E0001202' \n|| statusCode == 'E0001201'  || statusCode ==
+          'E0001200' ){\n    var code = 400\n    apim.setvariable('message.status.code',code,'set');\n}\nelse
+          if(statusCode == 'E0000034' || statusCode == 'E0000046' || statusCode ==
+          'E0000047' || statusCode == 'E0000048' ||statusCode == 'E0001287' ){\n    var
+          code = 401\n    apim.setvariable('message.status.code',code,'set');\n}\nelse
+          if(statusCode == '99999999' || statusCode == 'E0001567'){\n    var code
+          = 500\n    apim.setvariable('message.status.code',code,'set');\n}\nelse
+          if(statusCode == '00000000'){\n    var code = 200\n    apim.setvariable('message.status.code',code,'set');\n}else{\n
+          \     var code = 409\n    apim.setvariable('message.status.code',code,'set');\n}\n"
+    finally: []
+  properties:
+    target-url:
+      value: http://sc-salary-certificate-http-ace.apps.stg.qiwa-nonprod.local/GetSCLookUp
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload

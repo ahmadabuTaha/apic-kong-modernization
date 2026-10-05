@@ -1,0 +1,228 @@
+swagger: "2.0"
+info:
+  title: DeleteDeactivateContractTemplate V2
+  x-ibm-name: deletedeactivatecontracttemplate-v2
+  version: 1.0.0
+  description: This service is used to delete a template in case no contracts were
+    created on it or to deactivate it if there contracts were created on it
+schemes:
+- https
+basePath: /contractmanagement/v2
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-cntmv2-contractutilities)/contractmanagement/deletedeactivatecontracttemplate
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  DeleteDeactivateContractTemplateRq_MessageType:
+    type: object
+    properties:
+      DeleteDeactivateContractTemplateRq:
+        $ref: '#/definitions/DeleteDeactivateContractTemplateRq_Type'
+  DeleteDeactivateContractTemplateRs_MessageType:
+    type: object
+    properties:
+      DeleteDeactivateContractTemplateRs:
+        $ref: '#/definitions/DeleteDeactivateContractTemplateRs_Type'
+  DeleteDeactivateContractTemplateRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/DeleteDeactivateContractTemplateRq_BodyType'
+  DeleteDeactivateContractTemplateRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/DeleteDeactivateContractTemplateRs_BodyType'
+  DeleteDeactivateContractTemplateRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      TemplateId:
+        type: integer
+      DeleteOrDeactivate:
+        type: integer
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+    - TemplateId
+    - DeleteOrDeactivate
+  DeleteDeactivateContractTemplateRs_BodyType:
+    type: object
+    properties: {}
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /deletedeactivatecontracttemplate:
+    post:
+      operationId: DeleteDeactivateContractTemplate
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/DeleteDeactivateContractTemplateRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Delete Deactivate Contract Template
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/DeleteDeactivateContractTemplateRq_MessageType'
+        description: DeleteDeactivateContractTemplateRq
+        required: true

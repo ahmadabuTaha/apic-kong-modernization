@@ -1,0 +1,4219 @@
+swagger: "2.0"
+info:
+  title: GetContractInfo
+  x-ibm-name: getcontractinfo
+  version: 1.0.0
+  description: This service is used to get the contract information
+schemes:
+- https
+basePath: /musaned
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - map:
+        version: 2.0.0
+        title: 'GetContractInfo: input'
+        inputs:
+          input:
+            schema:
+              $ref: '#/definitions/GetMusanedContractInfoRq_Type'
+            variable: request.body
+            content: application/json
+          input_1:
+            schema:
+              type: object
+              properties:
+                ContractIdList:
+                  type: array
+                  name: ContractIdList
+                  items:
+                    type: integer
+                    format: int32
+            variable: request.body
+            content: application/xml
+        outputs:
+          body:
+            schema:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetContractInfoInput'
+            variable: message.body
+            content: application/xml
+          content-type:
+            schema:
+              type: string
+            variable: message.headers.content-type
+          SOAPAction:
+            schema:
+              type: string
+            variable: message.headers.SOAPAction
+        actions:
+        - set: content-type
+          default: text/xml
+        - set: SOAPAction
+          default: http://tempuri.org/IMusanedService/GetContractInfo
+        - set: body.Envelope.Body.G2gGetMusanedContractInfoRequestMessage.ContractIdList.long
+          from: input_1.ContractIdList
+    - invoke:
+        version: 2.0.0
+        title: 'GetContractInfo: invoke'
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: blocklist
+          values: []
+        timeout: 60
+        verb: POST
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(dp-musanedservices)/MusandService/MusanedService.svc
+        cache-response: protocol
+        cache-ttl: 900
+        output: GetContractInfoOut
+        stop-on-error:
+        - SOAPError
+        - OperationError
+    - map:
+        version: 2.0.0
+        title: 'GetContractInfo: output'
+        inputs:
+          input:
+            schema:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetContractInfoOutput'
+            variable: GetContractInfoOut.body
+            content: application/xml
+        outputs:
+          output:
+            schema:
+              $ref: '#/definitions/GetMusanedContractInfoRs_MessageType'
+            variable: message.body
+            content: application/json
+        actions:
+        - create: output.GetContractInfoResult.ContractList
+          foreach: input.Envelope.Body.G2gGetMusanedContractInfoResponseMessage.ContractList.G2gMusanedContract
+          from: input.Envelope.Body.G2gGetMusanedContractInfoResponseMessage.ContractList.G2gMusanedContract
+          actions:
+          - set: Address
+            from: Address
+          - set: BirthDate
+            from: BirthDate
+          - set: CandidateBorderNo
+            from: CandidateBorderNo
+          - set: CandidateFirstName
+            from: CandidateFirstName
+          - set: CandidateReligionId
+            from: CandidateReligionId
+          - set: CandidateSecondName
+            from: CandidateSecondName
+          - set: CandidateSurName
+            from: CandidateSurName
+          - set: ContractDate
+            from: ContractDate
+          - set: ContractId
+            from: ContractId
+          - set: ContractStatusId
+            from: ContractStatusId
+          - set: DocumentNumber
+            from: DocumentNumber
+          - set: EmbassyCode
+            from: EmbassyCode
+          - set: EmployerFirstName
+            from: EmployerFirstName
+          - set: EmployerIdNumber
+            from: EmployerIdNumber
+          - set: EmployerLastName
+            from: EmployerLastName
+          - set: EmployerMobileNo
+            from: EmployerMobileNo
+          - set: EmployerNationalityCode
+            from: EmployerNationalityCode
+          - set: ExternalOfficeId
+            from: ExternalOfficeId
+          - set: GenderId
+            from: GenderId
+          - set: InternalOfficeName
+            from: InternalOfficeName
+          - set: MaritalStatusId
+            from: MaritalStatusId
+          - set: NationalityCode
+            from: NationalityCode
+          - set: OccupationId
+            from: OccupationId
+          - set: PassportExpiryDate
+            from: PassportExpiryDate
+          - set: PassportIssueDate
+            from: PassportIssueDate
+          - set: PassportIssuePlace
+            from: PassportIssuePlace
+          - set: PassportNo
+            from: PassportNo
+        options:
+          mapEnablePostProcessingJSON: false
+          mapEmulateV4EmptyJSONObject: false
+          mapEmulateV4DefaultRequiredProps: false
+          mapReferenceLimit: 1
+    - gatewayscript:
+        version: 2.0.0
+        title: gatewayscript
+        source: |-
+          var util = require('util');
+          var apim = require('apim');
+          var bfJson = apim.getvariable('message.body');
+          var plainJson = {};
+          convertBadgerfishToPlainJSON(bfJson,plainJson);
+          // var obj = JSON.parse(plainJson);
+          apim.setvariable('message.body', plainJson);
+          apim.output('application/json');
+
+          function convertBadgerfishToPlainJSON(inputDocument, outputDocument){
+              for (var property in inputDocument){
+                  if(property.slice(0,1)!= '@'){
+                      var propertyObj = inputDocument[property];
+                      var i = property.indexOf(':');
+                      if (i >= 0){
+                          property = property.slice(i,1);
+                      }
+                      var type = util.safeTypeOf(propertyObj);
+                      switch(type){
+                          case 'array':
+                              outputDocument[property] = [];
+                              convertBadgerfishToPlainJSON(propertyObj,outputDocument[property])
+                              break;
+                          case 'object':
+                              if(propertyObj['$']){
+                                  outputDocument[property] = propertyObj['$'];
+                              }
+                              else {
+                                  outputDocument[property] = {};
+                                  convertBadgerfishToPlainJSON(propertyObj, outputDocument[property])
+                              }
+                              break;
+                          default:
+                              outputDocument[property]=propertyObj;
+                              break;
+                      }
+                  }
+              }
+          }
+    catch:
+    - errors:
+      - RuntimeError
+      - SOAPError
+      - OperationError
+      execute:
+      - gatewayscript:
+          version: 2.0.0
+          title: gatewayscript
+          source: |-
+            var apim = require('apim');
+            apim.setvariable("message.status.reason","Internal Server Error")
+            var resmsg ={
+            "IsSucceeded": false,
+            "ResponseResult": {
+            "ResponseStatus": "Failure",
+            "ResponseCode": "500",
+            "ResponseMessage": "MOFA service Error - Internal Error",
+            "SeverityLevel": "Error",
+            "ResponseDetails": {
+            "ResponseDetail": []
+            }
+            }
+            }
+            apim.setvariable('message.body', resmsg);
+            apim.setvariable("message.status.code",500)
+            apim.output('application/json');
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  targets:
+    MusanedService:
+      swagger: "2.0"
+      info:
+        title: MusanedService
+        description: ""
+        x-ibm-name: musanedservice
+        version: 1.0.0
+      schemes:
+      - https
+      basePath: /MusanedService
+      produces:
+      - application/xml
+      consumes:
+      - text/xml
+      securityDefinitions:
+        clientID:
+          type: apiKey
+          name: X-IBM-Client-Id
+          in: header
+          description: ""
+      security:
+      - clientID: []
+      x-ibm-configuration:
+        type: wsdl
+        phase: realized
+        enforced: true
+        testable: true
+        gateway: datapower-api-gateway
+        cors:
+          enabled: true
+        wsdl-definition:
+          wsdl: MusanedService
+          service: MusanedService
+          port: Musaned_Service_EndPoint
+          soap-version: "1.1"
+        assembly:
+          execute:
+          - invoke:
+              title: invoke
+              target-url: https://g2gtest.mofa.gov.sa/MusandService/MusanedService.svc
+              version: 2.0.0
+              header-control:
+                type: blacklist
+                values: []
+              parameter-control:
+                type: blacklist
+                values: []
+        x-ibm-apiconnect-wsdl:
+          package-version: 1.8.26
+          options: {}
+          messages:
+            info: []
+            warning: []
+            error: []
+      paths:
+        /NewContract:
+          post:
+            summary: Operation NewContract
+            description: ""
+            operationId: NewContract
+            x-ibm-soap:
+              soap-action: http://tempuri.org/IMusanedService/NewContract
+              soap-operation: '{http://tempuri.org/}G2gNewMusanedContractRequestMessage'
+            parameters:
+            - in: body
+              name: body
+              required: true
+              schema:
+                $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/NewContractInput'
+            responses:
+              "500":
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/NewContractFault'
+              default:
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/NewContractOutput'
+        /ActivateContract:
+          post:
+            summary: Operation ActivateContract
+            description: ""
+            operationId: ActivateContract
+            x-ibm-soap:
+              soap-action: http://tempuri.org/IMusanedService/ActivateContract
+              soap-operation: '{http://tempuri.org/}G2gActivateContractRequestMessage'
+            parameters:
+            - in: body
+              name: body
+              required: true
+              schema:
+                $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ActivateContractInput'
+            responses:
+              "500":
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ActivateContractFault'
+              default:
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ActivateContractOutput'
+        /ContractCancelation:
+          post:
+            summary: Operation ContractCancelation
+            description: ""
+            operationId: ContractCancelation
+            x-ibm-soap:
+              soap-action: http://tempuri.org/IMusanedService/ContractCancelation
+              soap-operation: '{http://tempuri.org/}G2gMusanedContractCancelationRequestMessage'
+            parameters:
+            - in: body
+              name: body
+              required: true
+              schema:
+                $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ContractCancelationInput'
+            responses:
+              "500":
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ContractCancelationFault'
+              default:
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ContractCancelationOutput'
+        /GetExternalOfficeList:
+          post:
+            summary: Operation GetExternalOfficeList
+            description: ""
+            operationId: GetExternalOfficeList
+            x-ibm-soap:
+              soap-action: http://tempuri.org/IMusanedService/GetExternalOfficeList
+              soap-operation: '{http://tempuri.org/}G2gGetMusanedOfficeListRequestMessage'
+            parameters:
+            - in: body
+              name: body
+              required: true
+              schema:
+                $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetExternalOfficeListInput'
+            responses:
+              "500":
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetExternalOfficeListFault'
+              default:
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetExternalOfficeListOutput'
+        /GetContractInfo:
+          post:
+            summary: Operation GetContractInfo
+            description: ""
+            operationId: GetContractInfo
+            x-ibm-soap:
+              soap-action: http://tempuri.org/IMusanedService/GetContractInfo
+              soap-operation: '{http://tempuri.org/}G2gGetMusanedContractInfoRequestMessage'
+            parameters:
+            - in: body
+              name: body
+              required: true
+              schema:
+                $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetContractInfoInput'
+            responses:
+              "500":
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetContractInfoFault'
+              default:
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetContractInfoOutput'
+        /GetCountriesLookup:
+          post:
+            summary: Operation GetCountriesLookup
+            description: ""
+            operationId: GetCountriesLookup
+            x-ibm-soap:
+              soap-action: http://tempuri.org/IMusanedService/GetCountriesLookup
+              soap-operation: '{http://tempuri.org/}G2gGetMusanedLookupsRequestMessage'
+            parameters:
+            - in: body
+              name: body
+              required: true
+              schema:
+                $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetCountriesLookupInput'
+            responses:
+              "500":
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetCountriesLookupFault'
+              default:
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetCountriesLookupOutput'
+        /GetEmbassiesLookup:
+          post:
+            summary: Operation GetEmbassiesLookup
+            description: ""
+            operationId: GetEmbassiesLookup
+            x-ibm-soap:
+              soap-action: http://tempuri.org/IMusanedService/GetEmbassiesLookup
+              soap-operation: '{http://tempuri.org/}G2gGetMusanedLookupsRequestMessage'
+            parameters:
+            - in: body
+              name: body
+              required: true
+              schema:
+                $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetEmbassiesLookupInput'
+            responses:
+              "500":
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetEmbassiesLookupFault'
+              default:
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetEmbassiesLookupOutput'
+        /GetOccupationsLookup:
+          post:
+            summary: Operation GetOccupationsLookup
+            description: ""
+            operationId: GetOccupationsLookup
+            x-ibm-soap:
+              soap-action: http://tempuri.org/IMusanedService/GetOccupationsLookup
+              soap-operation: '{http://tempuri.org/}G2gGetMusanedLookupsRequestMessage'
+            parameters:
+            - in: body
+              name: body
+              required: true
+              schema:
+                $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetOccupationsLookupInput'
+            responses:
+              "500":
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetOccupationsLookupFault'
+              default:
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetOccupationsLookupOutput'
+        /GetContractStatusLookup:
+          post:
+            summary: Operation GetContractStatusLookup
+            description: ""
+            operationId: GetContractStatusLookup
+            x-ibm-soap:
+              soap-action: http://tempuri.org/IMusanedService/GetContractStatusLookup
+              soap-operation: '{http://tempuri.org/}G2gGetMusanedLookupsRequestMessage'
+            parameters:
+            - in: body
+              name: body
+              required: true
+              schema:
+                $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetContractStatusLookupInput'
+            responses:
+              "500":
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetContractStatusLookupFault'
+              default:
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetContractStatusLookupOutput'
+        /GetMaritalStatusLookup:
+          post:
+            summary: Operation GetMaritalStatusLookup
+            description: ""
+            operationId: GetMaritalStatusLookup
+            x-ibm-soap:
+              soap-action: http://tempuri.org/IMusanedService/GetMaritalStatusLookup
+              soap-operation: '{http://tempuri.org/}G2gGetMusanedLookupsRequestMessage'
+            parameters:
+            - in: body
+              name: body
+              required: true
+              schema:
+                $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetMaritalStatusLookupInput'
+            responses:
+              "500":
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetMaritalStatusLookupFault'
+              default:
+                description: ""
+                schema:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetMaritalStatusLookupOutput'
+      definitions:
+        Security:
+          xml:
+            namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd
+            prefix: wsse
+          description: Header for WS-Security
+          type: object
+          properties:
+            UsernameToken:
+              xml:
+                namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd
+                prefix: wsse
+              type: object
+              properties:
+                Username:
+                  xml:
+                    namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd
+                    prefix: wsse
+                  type: string
+                Password:
+                  xml:
+                    namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd
+                    prefix: wsse
+                  type: string
+                Nonce:
+                  xml:
+                    namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd
+                    prefix: wsse
+                  type: string
+                  properties:
+                    EncodingType:
+                      xml:
+                        namespace: ""
+                        attribute: true
+                      type: string
+                Created:
+                  xml:
+                    namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd
+                    prefix: wsu
+                  type: string
+            Timestamp:
+              xml:
+                namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd
+                prefix: wsu
+              type: object
+              properties:
+                Created:
+                  xml:
+                    namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd
+                    prefix: wsu
+                  type: string
+                Expires:
+                  xml:
+                    namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd
+                    prefix: wsu
+                  type: string
+                Id:
+                  xml:
+                    namespace: http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd
+                    prefix: wsu
+                    attribute: true
+                  type: string
+        NewContractInput:
+          description: Input message for wsdl operation G2gNewMusanedContractRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/NewContractHeader'
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    G2gNewMusanedContractRequestMessage:
+                      $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/G2gNewMusanedContractRequestMessage_element_tns'
+                  required:
+                  - G2gNewMusanedContractRequestMessage
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gNewMusanedContractRequestMessage
+            wsdl-message-direction-or-name: G2gNewMusanedContractRequestMessageRequest
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Header>
+              <!-- The Security element should be removed if WS-Security is not enabled on the SOAP target-url -->
+              <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+               <wsse:UsernameToken>
+                <wsse:Username>string</wsse:Username>
+                <wsse:Password>string</wsse:Password>
+                <wsse:Nonce EncodingType="string">string</wsse:Nonce>
+                <wsu:Created>string</wsu:Created>
+               </wsse:UsernameToken>
+               <wsu:Timestamp wsu:Id="string">
+                <wsu:Created>string</wsu:Created>
+                <wsu:Expires>string</wsu:Expires>
+               </wsu:Timestamp>
+              </wsse:Security>
+              <q13:ContextInformation xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:MessageId><!-- mandatory -->string</q13:MessageId>
+               <q13:Language><!-- mandatory -->string</q13:Language>
+               <q13:ClientUserId>3</q13:ClientUserId>
+               <q13:ClientUsername>string</q13:ClientUsername>
+               <q13:ClientDisplayName>string</q13:ClientDisplayName>
+               <q13:ClientDateTime>2016-04-18T14:07:37</q13:ClientDateTime>
+               <q13:ClientSessionId>string</q13:ClientSessionId>
+               <q13:ClientIp>string</q13:ClientIp>
+               <q13:ConsumerStationName>string</q13:ConsumerStationName>
+               <q13:ConsumerStationIp>string</q13:ConsumerStationIp>
+               <q13:TransmissionTimestamp>2016-04-18T14:07:37</q13:TransmissionTimestamp>
+               <q13:ExtraMetadata>string</q13:ExtraMetadata>
+               <q13:TransactionId>string</q13:TransactionId>
+              </q13:ContextInformation>
+              <q13:Credential xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:UserName>string</q13:UserName>
+               <q13:Password>string</q13:Password>
+               <q13:PasswordType>string</q13:PasswordType>
+              </q13:Credential>
+             </soapenv:Header>
+             <soapenv:Body>
+              <tns:G2gNewMusanedContractRequestMessage xmlns:q2="http://schemas.datacontract.org/2004/07/MusanedG2GService" xmlns:tns="http://tempuri.org/"><!-- mandatory -->
+               <q2:G2gMusanedContract>
+                <q2:Address>string</q2:Address>
+                <q2:BirthDate>2016-04-18T14:07:37</q2:BirthDate>
+                <q2:CandidateBorderNo>3</q2:CandidateBorderNo>
+                <q2:CandidateFirstName>string</q2:CandidateFirstName>
+                <q2:CandidateReligionId>3</q2:CandidateReligionId>
+                <q2:CandidateSecondName>string</q2:CandidateSecondName>
+                <q2:CandidateSurName>string</q2:CandidateSurName>
+                <q2:ContractDate>2016-04-18T14:07:37</q2:ContractDate>
+                <q2:ContractId>3</q2:ContractId>
+                <q2:ContractStatusId>3</q2:ContractStatusId>
+                <q2:DocumentNumber>string</q2:DocumentNumber>
+                <q2:EmbassyCode>3</q2:EmbassyCode>
+                <q2:EmployerFirstName>string</q2:EmployerFirstName>
+                <q2:EmployerIdNumber>3</q2:EmployerIdNumber>
+                <q2:EmployerLastName>string</q2:EmployerLastName>
+                <q2:EmployerMobileNo>string</q2:EmployerMobileNo>
+                <q2:EmployerNationalityCode>string</q2:EmployerNationalityCode>
+                <q2:ExternalOfficeId>3</q2:ExternalOfficeId>
+                <q2:GenderId>3</q2:GenderId>
+                <q2:InternalOfficeName>string</q2:InternalOfficeName>
+                <q2:MaritalStatusId>3</q2:MaritalStatusId>
+                <q2:NationalityCode>string</q2:NationalityCode>
+                <q2:OccupationId>3</q2:OccupationId>
+                <q2:PassportExpiryDate>2016-04-18T14:07:37</q2:PassportExpiryDate>
+                <q2:PassportIssueDate>2016-04-18T14:07:37</q2:PassportIssueDate>
+                <q2:PassportIssuePlace>string</q2:PassportIssuePlace>
+                <q2:PassportNo>string</q2:PassportNo>
+               </q2:G2gMusanedContract>
+              </tns:G2gNewMusanedContractRequestMessage>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        NewContractHeader:
+          description: Input headers for wsdl operation G2gNewMusanedContractRequestMessage
+          type: object
+          properties:
+            Security:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/Security'
+            ContextInformation:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ContextInformation_element_q13'
+            Credential:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/Credential_element_q13'
+        NewContractOutput:
+          description: Output message for wsdl operation G2gNewMusanedContractRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/NewContractHeaderOut'
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    G2gNewMusanedContractResponseMessage:
+                      $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/G2gNewMusanedContractResponseMessage_element_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gNewMusanedContractRequestMessage
+            wsdl-message-direction-or-name: G2gNewMusanedContractRequestMessageResponse
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Header>
+              <q13:ResponseResult xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:ResponseStatus>string</q13:ResponseStatus>
+               <q13:ResponseCode>3</q13:ResponseCode>
+               <q13:ResponseMessage>string</q13:ResponseMessage>
+               <q13:SeverityLevel>string</q13:SeverityLevel>
+               <q13:ResponseDetails>
+                <q13:ResponseDetail><!-- between zero and unlimited repetitions of this element -->
+                 <q13:Code>3</q13:Code>
+                 <q13:Message>string</q13:Message>
+                 <q13:SeverityLevel>string</q13:SeverityLevel>
+                 <q13:MessageAr>string</q13:MessageAr>
+                </q13:ResponseDetail>
+               </q13:ResponseDetails>
+              </q13:ResponseResult>
+             </soapenv:Header>
+             <soapenv:Body>
+              <tns:G2gNewMusanedContractResponseMessage xmlns:q2="http://schemas.datacontract.org/2004/07/MusanedG2GService" xmlns:tns="http://tempuri.org/">
+               <q2:IsNewContractSavedSuccessfully>true</q2:IsNewContractSavedSuccessfully>
+              </tns:G2gNewMusanedContractResponseMessage>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        NewContractHeaderOut:
+          description: Output headers for wsdl operation G2gNewMusanedContractRequestMessage
+          type: object
+          properties:
+            ResponseResult:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ResponseResult_element_q13'
+        NewContractFault:
+          description: Fault message for wsdl operation G2gNewMusanedContractRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    Fault:
+                      xml:
+                        namespace: http://schemas.xmlsoap.org/soap/envelope/
+                        prefix: soapenv
+                      type: object
+                      properties:
+                        faultcode:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultstring:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultactor:
+                          xml:
+                            namespace: ""
+                          type: string
+                        detail:
+                          xml:
+                            namespace: ""
+                            prefix: ""
+                          type: object
+                          properties:
+                            EsbFaultFault:
+                              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/IMusanedService_NewContract_EsbFaultFault_FaultMessage_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gNewMusanedContractRequestMessage
+            wsdl-message-direction-or-name: EsbFaultFault
+        ActivateContractInput:
+          description: Input message for wsdl operation G2gActivateContractRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ActivateContractHeader'
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    G2gActivateContractRequestMessage:
+                      $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/G2gActivateContractRequestMessage_element_tns'
+                  required:
+                  - G2gActivateContractRequestMessage
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gActivateContractRequestMessage
+            wsdl-message-direction-or-name: G2gActivateContractRequestMessageRequest
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Header>
+              <!-- The Security element should be removed if WS-Security is not enabled on the SOAP target-url -->
+              <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+               <wsse:UsernameToken>
+                <wsse:Username>string</wsse:Username>
+                <wsse:Password>string</wsse:Password>
+                <wsse:Nonce EncodingType="string">string</wsse:Nonce>
+                <wsu:Created>string</wsu:Created>
+               </wsse:UsernameToken>
+               <wsu:Timestamp wsu:Id="string">
+                <wsu:Created>string</wsu:Created>
+                <wsu:Expires>string</wsu:Expires>
+               </wsu:Timestamp>
+              </wsse:Security>
+              <q13:ContextInformation xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:MessageId><!-- mandatory -->string</q13:MessageId>
+               <q13:Language><!-- mandatory -->string</q13:Language>
+               <q13:ClientUserId>3</q13:ClientUserId>
+               <q13:ClientUsername>string</q13:ClientUsername>
+               <q13:ClientDisplayName>string</q13:ClientDisplayName>
+               <q13:ClientDateTime>2016-04-18T14:07:37</q13:ClientDateTime>
+               <q13:ClientSessionId>string</q13:ClientSessionId>
+               <q13:ClientIp>string</q13:ClientIp>
+               <q13:ConsumerStationName>string</q13:ConsumerStationName>
+               <q13:ConsumerStationIp>string</q13:ConsumerStationIp>
+               <q13:TransmissionTimestamp>2016-04-18T14:07:37</q13:TransmissionTimestamp>
+               <q13:ExtraMetadata>string</q13:ExtraMetadata>
+               <q13:TransactionId>string</q13:TransactionId>
+              </q13:ContextInformation>
+              <q13:Credential xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:UserName>string</q13:UserName>
+               <q13:Password>string</q13:Password>
+               <q13:PasswordType>string</q13:PasswordType>
+              </q13:Credential>
+             </soapenv:Header>
+             <soapenv:Body>
+              <tns:G2gActivateContractRequestMessage xmlns:q2="http://schemas.datacontract.org/2004/07/MusanedG2GService" xmlns:tns="http://tempuri.org/"><!-- mandatory -->
+               <q2:ContractId>3</q2:ContractId>
+              </tns:G2gActivateContractRequestMessage>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        ActivateContractHeader:
+          description: Input headers for wsdl operation G2gActivateContractRequestMessage
+          type: object
+          properties:
+            Security:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/Security'
+            ContextInformation:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ContextInformation_element_q13'
+            Credential:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/Credential_element_q13'
+        ActivateContractOutput:
+          description: Output message for wsdl operation G2gActivateContractRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ActivateContractHeaderOut'
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    G2gActivateContractResponseMessage:
+                      $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/G2gActivateContractResponseMessage_element_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gActivateContractRequestMessage
+            wsdl-message-direction-or-name: G2gActivateContractRequestMessageResponse
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Header>
+              <q13:ResponseResult xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:ResponseStatus>string</q13:ResponseStatus>
+               <q13:ResponseCode>3</q13:ResponseCode>
+               <q13:ResponseMessage>string</q13:ResponseMessage>
+               <q13:SeverityLevel>string</q13:SeverityLevel>
+               <q13:ResponseDetails>
+                <q13:ResponseDetail><!-- between zero and unlimited repetitions of this element -->
+                 <q13:Code>3</q13:Code>
+                 <q13:Message>string</q13:Message>
+                 <q13:SeverityLevel>string</q13:SeverityLevel>
+                 <q13:MessageAr>string</q13:MessageAr>
+                </q13:ResponseDetail>
+               </q13:ResponseDetails>
+              </q13:ResponseResult>
+             </soapenv:Header>
+             <soapenv:Body>
+              <tns:G2gActivateContractResponseMessage xmlns:q2="http://schemas.datacontract.org/2004/07/MusanedG2GService" xmlns:tns="http://tempuri.org/">
+               <q2:IsContractActivated>true</q2:IsContractActivated>
+              </tns:G2gActivateContractResponseMessage>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        ActivateContractHeaderOut:
+          description: Output headers for wsdl operation G2gActivateContractRequestMessage
+          type: object
+          properties:
+            ResponseResult:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ResponseResult_element_q13'
+        ActivateContractFault:
+          description: Fault message for wsdl operation G2gActivateContractRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    Fault:
+                      xml:
+                        namespace: http://schemas.xmlsoap.org/soap/envelope/
+                        prefix: soapenv
+                      type: object
+                      properties:
+                        faultcode:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultstring:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultactor:
+                          xml:
+                            namespace: ""
+                          type: string
+                        detail:
+                          xml:
+                            namespace: ""
+                            prefix: ""
+                          type: object
+                          properties:
+                            EsbFaultFault:
+                              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/IMusanedService_ActivateContract_EsbFaultFault_FaultMessage_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gActivateContractRequestMessage
+            wsdl-message-direction-or-name: EsbFaultFault
+        ContractCancelationInput:
+          description: Input message for wsdl operation G2gMusanedContractCancelationRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ContractCancelationHeader'
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    G2gMusanedContractCancelationRequestMessage:
+                      $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/G2gMusanedContractCancelationRequestMessage_element_tns'
+                  required:
+                  - G2gMusanedContractCancelationRequestMessage
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gMusanedContractCancelationRequestMessage
+            wsdl-message-direction-or-name: G2gMusanedContractCancelationRequestMessageRequest
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Header>
+              <!-- The Security element should be removed if WS-Security is not enabled on the SOAP target-url -->
+              <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+               <wsse:UsernameToken>
+                <wsse:Username>string</wsse:Username>
+                <wsse:Password>string</wsse:Password>
+                <wsse:Nonce EncodingType="string">string</wsse:Nonce>
+                <wsu:Created>string</wsu:Created>
+               </wsse:UsernameToken>
+               <wsu:Timestamp wsu:Id="string">
+                <wsu:Created>string</wsu:Created>
+                <wsu:Expires>string</wsu:Expires>
+               </wsu:Timestamp>
+              </wsse:Security>
+              <q13:ContextInformation xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:MessageId><!-- mandatory -->string</q13:MessageId>
+               <q13:Language><!-- mandatory -->string</q13:Language>
+               <q13:ClientUserId>3</q13:ClientUserId>
+               <q13:ClientUsername>string</q13:ClientUsername>
+               <q13:ClientDisplayName>string</q13:ClientDisplayName>
+               <q13:ClientDateTime>2016-04-18T14:07:37</q13:ClientDateTime>
+               <q13:ClientSessionId>string</q13:ClientSessionId>
+               <q13:ClientIp>string</q13:ClientIp>
+               <q13:ConsumerStationName>string</q13:ConsumerStationName>
+               <q13:ConsumerStationIp>string</q13:ConsumerStationIp>
+               <q13:TransmissionTimestamp>2016-04-18T14:07:37</q13:TransmissionTimestamp>
+               <q13:ExtraMetadata>string</q13:ExtraMetadata>
+               <q13:TransactionId>string</q13:TransactionId>
+              </q13:ContextInformation>
+              <q13:Credential xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:UserName>string</q13:UserName>
+               <q13:Password>string</q13:Password>
+               <q13:PasswordType>string</q13:PasswordType>
+              </q13:Credential>
+             </soapenv:Header>
+             <soapenv:Body>
+              <tns:G2gMusanedContractCancelationRequestMessage xmlns:q2="http://schemas.datacontract.org/2004/07/MusanedG2GService" xmlns:tns="http://tempuri.org/"><!-- mandatory -->
+               <q2:ContractId>3</q2:ContractId>
+              </tns:G2gMusanedContractCancelationRequestMessage>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        ContractCancelationHeader:
+          description: Input headers for wsdl operation G2gMusanedContractCancelationRequestMessage
+          type: object
+          properties:
+            Security:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/Security'
+            ContextInformation:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ContextInformation_element_q13'
+            Credential:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/Credential_element_q13'
+        ContractCancelationOutput:
+          description: Output message for wsdl operation G2gMusanedContractCancelationRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ContractCancelationHeaderOut'
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    G2gMusanedContractCancelationResponseMessage:
+                      $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/G2gMusanedContractCancelationResponseMessage_element_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gMusanedContractCancelationRequestMessage
+            wsdl-message-direction-or-name: G2gMusanedContractCancelationRequestMessageResponse
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Header>
+              <q13:ResponseResult xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:ResponseStatus>string</q13:ResponseStatus>
+               <q13:ResponseCode>3</q13:ResponseCode>
+               <q13:ResponseMessage>string</q13:ResponseMessage>
+               <q13:SeverityLevel>string</q13:SeverityLevel>
+               <q13:ResponseDetails>
+                <q13:ResponseDetail><!-- between zero and unlimited repetitions of this element -->
+                 <q13:Code>3</q13:Code>
+                 <q13:Message>string</q13:Message>
+                 <q13:SeverityLevel>string</q13:SeverityLevel>
+                 <q13:MessageAr>string</q13:MessageAr>
+                </q13:ResponseDetail>
+               </q13:ResponseDetails>
+              </q13:ResponseResult>
+             </soapenv:Header>
+             <soapenv:Body>
+              <tns:G2gMusanedContractCancelationResponseMessage xmlns:q2="http://schemas.datacontract.org/2004/07/MusanedG2GService" xmlns:tns="http://tempuri.org/">
+               <q2:IsContractCanceled>true</q2:IsContractCanceled>
+              </tns:G2gMusanedContractCancelationResponseMessage>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        ContractCancelationHeaderOut:
+          description: Output headers for wsdl operation G2gMusanedContractCancelationRequestMessage
+          type: object
+          properties:
+            ResponseResult:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ResponseResult_element_q13'
+        ContractCancelationFault:
+          description: Fault message for wsdl operation G2gMusanedContractCancelationRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    Fault:
+                      xml:
+                        namespace: http://schemas.xmlsoap.org/soap/envelope/
+                        prefix: soapenv
+                      type: object
+                      properties:
+                        faultcode:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultstring:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultactor:
+                          xml:
+                            namespace: ""
+                          type: string
+                        detail:
+                          xml:
+                            namespace: ""
+                            prefix: ""
+                          type: object
+                          properties:
+                            EsbFaultFault:
+                              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/IMusanedService_ContractCancelation_EsbFaultFault_FaultMessage_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gMusanedContractCancelationRequestMessage
+            wsdl-message-direction-or-name: EsbFaultFault
+        GetExternalOfficeListInput:
+          description: Input message for wsdl operation G2gGetMusanedOfficeListRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetExternalOfficeListHeader'
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    G2gGetMusanedOfficeListRequestMessage:
+                      $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/G2gGetMusanedOfficeListRequestMessage_element_tns'
+                  required:
+                  - G2gGetMusanedOfficeListRequestMessage
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gGetMusanedOfficeListRequestMessage
+            wsdl-message-direction-or-name: G2gGetMusanedOfficeListRequestMessageRequest
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Header>
+              <!-- The Security element should be removed if WS-Security is not enabled on the SOAP target-url -->
+              <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+               <wsse:UsernameToken>
+                <wsse:Username>string</wsse:Username>
+                <wsse:Password>string</wsse:Password>
+                <wsse:Nonce EncodingType="string">string</wsse:Nonce>
+                <wsu:Created>string</wsu:Created>
+               </wsse:UsernameToken>
+               <wsu:Timestamp wsu:Id="string">
+                <wsu:Created>string</wsu:Created>
+                <wsu:Expires>string</wsu:Expires>
+               </wsu:Timestamp>
+              </wsse:Security>
+              <q13:ContextInformation xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:MessageId><!-- mandatory -->string</q13:MessageId>
+               <q13:Language><!-- mandatory -->string</q13:Language>
+               <q13:ClientUserId>3</q13:ClientUserId>
+               <q13:ClientUsername>string</q13:ClientUsername>
+               <q13:ClientDisplayName>string</q13:ClientDisplayName>
+               <q13:ClientDateTime>2016-04-18T14:07:37</q13:ClientDateTime>
+               <q13:ClientSessionId>string</q13:ClientSessionId>
+               <q13:ClientIp>string</q13:ClientIp>
+               <q13:ConsumerStationName>string</q13:ConsumerStationName>
+               <q13:ConsumerStationIp>string</q13:ConsumerStationIp>
+               <q13:TransmissionTimestamp>2016-04-18T14:07:37</q13:TransmissionTimestamp>
+               <q13:ExtraMetadata>string</q13:ExtraMetadata>
+               <q13:TransactionId>string</q13:TransactionId>
+              </q13:ContextInformation>
+              <q13:Credential xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:UserName>string</q13:UserName>
+               <q13:Password>string</q13:Password>
+               <q13:PasswordType>string</q13:PasswordType>
+              </q13:Credential>
+             </soapenv:Header>
+             <soapenv:Body>
+              <tns:G2gGetMusanedOfficeListRequestMessage xmlns:q2="http://schemas.datacontract.org/2004/07/MusanedG2GService" xmlns:tns="http://tempuri.org/"><!-- mandatory -->
+               <q2:CountryCode>string</q2:CountryCode>
+               <q2:EmbassyCode>3</q2:EmbassyCode>
+               <q2:OfficeId>3</q2:OfficeId>
+              </tns:G2gGetMusanedOfficeListRequestMessage>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        GetExternalOfficeListHeader:
+          description: Input headers for wsdl operation G2gGetMusanedOfficeListRequestMessage
+          type: object
+          properties:
+            Security:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/Security'
+            ContextInformation:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ContextInformation_element_q13'
+            Credential:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/Credential_element_q13'
+        GetExternalOfficeListOutput:
+          description: Output message for wsdl operation G2gGetMusanedOfficeListRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetExternalOfficeListHeaderOut'
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    G2gGetMusanedOfficeListResponseMessage:
+                      $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/G2gGetMusanedOfficeListResponseMessage_element_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gGetMusanedOfficeListRequestMessage
+            wsdl-message-direction-or-name: G2gGetMusanedOfficeListRequestMessageResponse
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Header>
+              <q13:ResponseResult xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:ResponseStatus>string</q13:ResponseStatus>
+               <q13:ResponseCode>3</q13:ResponseCode>
+               <q13:ResponseMessage>string</q13:ResponseMessage>
+               <q13:SeverityLevel>string</q13:SeverityLevel>
+               <q13:ResponseDetails>
+                <q13:ResponseDetail><!-- between zero and unlimited repetitions of this element -->
+                 <q13:Code>3</q13:Code>
+                 <q13:Message>string</q13:Message>
+                 <q13:SeverityLevel>string</q13:SeverityLevel>
+                 <q13:MessageAr>string</q13:MessageAr>
+                </q13:ResponseDetail>
+               </q13:ResponseDetails>
+              </q13:ResponseResult>
+             </soapenv:Header>
+             <soapenv:Body>
+              <tns:G2gGetMusanedOfficeListResponseMessage xmlns:q2="http://schemas.datacontract.org/2004/07/MusanedG2GService" xmlns:tns="http://tempuri.org/">
+               <q2:OfficeList>
+                <q2:G2gMusanedOffice><!-- between zero and unlimited repetitions of this element -->
+                 <q2:Address>string</q2:Address>
+                 <q2:ContactName>string</q2:ContactName>
+                 <q2:CreateDate>2016-04-18T14:07:37</q2:CreateDate>
+                 <q2:Email>string</q2:Email>
+                 <q2:EmbassyCode>3</q2:EmbassyCode>
+                 <q2:Id>3</q2:Id>
+                 <q2:Mobile>string</q2:Mobile>
+                 <q2:NameAr>string</q2:NameAr>
+                 <q2:NameEn>string</q2:NameEn>
+                 <q2:NationalityCode>string</q2:NationalityCode>
+                 <q2:Phone>string</q2:Phone>
+                 <q2:StatusId>3</q2:StatusId>
+                </q2:G2gMusanedOffice>
+               </q2:OfficeList>
+              </tns:G2gGetMusanedOfficeListResponseMessage>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        GetExternalOfficeListHeaderOut:
+          description: Output headers for wsdl operation G2gGetMusanedOfficeListRequestMessage
+          type: object
+          properties:
+            ResponseResult:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ResponseResult_element_q13'
+        GetExternalOfficeListFault:
+          description: Fault message for wsdl operation G2gGetMusanedOfficeListRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    Fault:
+                      xml:
+                        namespace: http://schemas.xmlsoap.org/soap/envelope/
+                        prefix: soapenv
+                      type: object
+                      properties:
+                        faultcode:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultstring:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultactor:
+                          xml:
+                            namespace: ""
+                          type: string
+                        detail:
+                          xml:
+                            namespace: ""
+                            prefix: ""
+                          type: object
+                          properties:
+                            EsbFaultFault:
+                              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/IMusanedService_GetExternalOfficeList_EsbFaultFault_FaultMessage_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gGetMusanedOfficeListRequestMessage
+            wsdl-message-direction-or-name: EsbFaultFault
+        GetContractInfoInput:
+          description: Input message for wsdl operation G2gGetMusanedContractInfoRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetContractInfoHeader'
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    G2gGetMusanedContractInfoRequestMessage:
+                      $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/G2gGetMusanedContractInfoRequestMessage_element_tns'
+                  required:
+                  - G2gGetMusanedContractInfoRequestMessage
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gGetMusanedContractInfoRequestMessage
+            wsdl-message-direction-or-name: G2gGetMusanedContractInfoRequestMessageRequest
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Header>
+              <!-- The Security element should be removed if WS-Security is not enabled on the SOAP target-url -->
+              <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+               <wsse:UsernameToken>
+                <wsse:Username>string</wsse:Username>
+                <wsse:Password>string</wsse:Password>
+                <wsse:Nonce EncodingType="string">string</wsse:Nonce>
+                <wsu:Created>string</wsu:Created>
+               </wsse:UsernameToken>
+               <wsu:Timestamp wsu:Id="string">
+                <wsu:Created>string</wsu:Created>
+                <wsu:Expires>string</wsu:Expires>
+               </wsu:Timestamp>
+              </wsse:Security>
+              <q13:ContextInformation xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:MessageId><!-- mandatory -->string</q13:MessageId>
+               <q13:Language><!-- mandatory -->string</q13:Language>
+               <q13:ClientUserId>3</q13:ClientUserId>
+               <q13:ClientUsername>string</q13:ClientUsername>
+               <q13:ClientDisplayName>string</q13:ClientDisplayName>
+               <q13:ClientDateTime>2016-04-18T14:07:37</q13:ClientDateTime>
+               <q13:ClientSessionId>string</q13:ClientSessionId>
+               <q13:ClientIp>string</q13:ClientIp>
+               <q13:ConsumerStationName>string</q13:ConsumerStationName>
+               <q13:ConsumerStationIp>string</q13:ConsumerStationIp>
+               <q13:TransmissionTimestamp>2016-04-18T14:07:37</q13:TransmissionTimestamp>
+               <q13:ExtraMetadata>string</q13:ExtraMetadata>
+               <q13:TransactionId>string</q13:TransactionId>
+              </q13:ContextInformation>
+              <q13:Credential xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:UserName>string</q13:UserName>
+               <q13:Password>string</q13:Password>
+               <q13:PasswordType>string</q13:PasswordType>
+              </q13:Credential>
+             </soapenv:Header>
+             <soapenv:Body>
+              <tns:G2gGetMusanedContractInfoRequestMessage xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:q2="http://schemas.datacontract.org/2004/07/MusanedG2GService" xmlns:tns="http://tempuri.org/"><!-- mandatory -->
+               <q2:ContractIdList>
+                <q1:long><!-- between zero and unlimited repetitions of this element -->3</q1:long>
+               </q2:ContractIdList>
+              </tns:G2gGetMusanedContractInfoRequestMessage>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        GetContractInfoHeader:
+          description: Input headers for wsdl operation G2gGetMusanedContractInfoRequestMessage
+          type: object
+          properties:
+            Security:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/Security'
+            ContextInformation:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ContextInformation_element_q13'
+            Credential:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/Credential_element_q13'
+        GetContractInfoOutput:
+          description: Output message for wsdl operation G2gGetMusanedContractInfoRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetContractInfoHeaderOut'
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    G2gGetMusanedContractInfoResponseMessage:
+                      $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/G2gGetMusanedContractInfoResponseMessage_element_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gGetMusanedContractInfoRequestMessage
+            wsdl-message-direction-or-name: G2gGetMusanedContractInfoRequestMessageResponse
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Header>
+              <q13:ResponseResult xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:ResponseStatus>string</q13:ResponseStatus>
+               <q13:ResponseCode>3</q13:ResponseCode>
+               <q13:ResponseMessage>string</q13:ResponseMessage>
+               <q13:SeverityLevel>string</q13:SeverityLevel>
+               <q13:ResponseDetails>
+                <q13:ResponseDetail><!-- between zero and unlimited repetitions of this element -->
+                 <q13:Code>3</q13:Code>
+                 <q13:Message>string</q13:Message>
+                 <q13:SeverityLevel>string</q13:SeverityLevel>
+                 <q13:MessageAr>string</q13:MessageAr>
+                </q13:ResponseDetail>
+               </q13:ResponseDetails>
+              </q13:ResponseResult>
+             </soapenv:Header>
+             <soapenv:Body>
+              <tns:G2gGetMusanedContractInfoResponseMessage xmlns:q2="http://schemas.datacontract.org/2004/07/MusanedG2GService" xmlns:tns="http://tempuri.org/">
+               <q2:ContractList>
+                <q2:G2gMusanedContract><!-- between zero and unlimited repetitions of this element -->
+                 <q2:Address>string</q2:Address>
+                 <q2:BirthDate>2016-04-18T14:07:37</q2:BirthDate>
+                 <q2:CandidateBorderNo>3</q2:CandidateBorderNo>
+                 <q2:CandidateFirstName>string</q2:CandidateFirstName>
+                 <q2:CandidateReligionId>3</q2:CandidateReligionId>
+                 <q2:CandidateSecondName>string</q2:CandidateSecondName>
+                 <q2:CandidateSurName>string</q2:CandidateSurName>
+                 <q2:ContractDate>2016-04-18T14:07:37</q2:ContractDate>
+                 <q2:ContractId>3</q2:ContractId>
+                 <q2:ContractStatusId>3</q2:ContractStatusId>
+                 <q2:DocumentNumber>string</q2:DocumentNumber>
+                 <q2:EmbassyCode>3</q2:EmbassyCode>
+                 <q2:EmployerFirstName>string</q2:EmployerFirstName>
+                 <q2:EmployerIdNumber>3</q2:EmployerIdNumber>
+                 <q2:EmployerLastName>string</q2:EmployerLastName>
+                 <q2:EmployerMobileNo>string</q2:EmployerMobileNo>
+                 <q2:EmployerNationalityCode>string</q2:EmployerNationalityCode>
+                 <q2:ExternalOfficeId>3</q2:ExternalOfficeId>
+                 <q2:GenderId>3</q2:GenderId>
+                 <q2:InternalOfficeName>string</q2:InternalOfficeName>
+                 <q2:MaritalStatusId>3</q2:MaritalStatusId>
+                 <q2:NationalityCode>string</q2:NationalityCode>
+                 <q2:OccupationId>3</q2:OccupationId>
+                 <q2:PassportExpiryDate>2016-04-18T14:07:37</q2:PassportExpiryDate>
+                 <q2:PassportIssueDate>2016-04-18T14:07:37</q2:PassportIssueDate>
+                 <q2:PassportIssuePlace>string</q2:PassportIssuePlace>
+                 <q2:PassportNo>string</q2:PassportNo>
+                </q2:G2gMusanedContract>
+               </q2:ContractList>
+              </tns:G2gGetMusanedContractInfoResponseMessage>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        GetContractInfoHeaderOut:
+          description: Output headers for wsdl operation G2gGetMusanedContractInfoRequestMessage
+          type: object
+          properties:
+            ResponseResult:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ResponseResult_element_q13'
+        GetContractInfoFault:
+          description: Fault message for wsdl operation G2gGetMusanedContractInfoRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    Fault:
+                      xml:
+                        namespace: http://schemas.xmlsoap.org/soap/envelope/
+                        prefix: soapenv
+                      type: object
+                      properties:
+                        faultcode:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultstring:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultactor:
+                          xml:
+                            namespace: ""
+                          type: string
+                        detail:
+                          xml:
+                            namespace: ""
+                            prefix: ""
+                          type: object
+                          properties:
+                            EsbFaultFault:
+                              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/IMusanedService_GetContractInfo_EsbFaultFault_FaultMessage_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gGetMusanedContractInfoRequestMessage
+            wsdl-message-direction-or-name: EsbFaultFault
+        GetCountriesLookupInput:
+          description: Input message for wsdl operation G2gGetMusanedLookupsRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetCountriesLookupHeader'
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    G2gGetMusanedLookupsRequestMessage:
+                      $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/G2gGetMusanedLookupsRequestMessage_element_tns'
+                  required:
+                  - G2gGetMusanedLookupsRequestMessage
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gGetMusanedLookupsRequestMessage
+            wsdl-message-direction-or-name: G2gGetMusanedLookupsRequestMessageRequest
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Header>
+              <!-- The Security element should be removed if WS-Security is not enabled on the SOAP target-url -->
+              <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+               <wsse:UsernameToken>
+                <wsse:Username>string</wsse:Username>
+                <wsse:Password>string</wsse:Password>
+                <wsse:Nonce EncodingType="string">string</wsse:Nonce>
+                <wsu:Created>string</wsu:Created>
+               </wsse:UsernameToken>
+               <wsu:Timestamp wsu:Id="string">
+                <wsu:Created>string</wsu:Created>
+                <wsu:Expires>string</wsu:Expires>
+               </wsu:Timestamp>
+              </wsse:Security>
+              <q13:ContextInformation xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:MessageId><!-- mandatory -->string</q13:MessageId>
+               <q13:Language><!-- mandatory -->string</q13:Language>
+               <q13:ClientUserId>3</q13:ClientUserId>
+               <q13:ClientUsername>string</q13:ClientUsername>
+               <q13:ClientDisplayName>string</q13:ClientDisplayName>
+               <q13:ClientDateTime>2016-04-18T14:07:37</q13:ClientDateTime>
+               <q13:ClientSessionId>string</q13:ClientSessionId>
+               <q13:ClientIp>string</q13:ClientIp>
+               <q13:ConsumerStationName>string</q13:ConsumerStationName>
+               <q13:ConsumerStationIp>string</q13:ConsumerStationIp>
+               <q13:TransmissionTimestamp>2016-04-18T14:07:37</q13:TransmissionTimestamp>
+               <q13:ExtraMetadata>string</q13:ExtraMetadata>
+               <q13:TransactionId>string</q13:TransactionId>
+              </q13:ContextInformation>
+              <q13:Credential xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:UserName>string</q13:UserName>
+               <q13:Password>string</q13:Password>
+               <q13:PasswordType>string</q13:PasswordType>
+              </q13:Credential>
+             </soapenv:Header>
+             <soapenv:Body>
+              <tns:G2gGetMusanedLookupsRequestMessage xmlns:tns="http://tempuri.org/"><!-- mandatory --></tns:G2gGetMusanedLookupsRequestMessage>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        GetCountriesLookupHeader:
+          description: Input headers for wsdl operation G2gGetMusanedLookupsRequestMessage
+          type: object
+          properties:
+            Security:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/Security'
+            ContextInformation:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ContextInformation_element_q13'
+            Credential:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/Credential_element_q13'
+        GetCountriesLookupOutput:
+          description: Output message for wsdl operation G2gGetMusanedLookupsRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetCountriesLookupHeaderOut'
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    G2gGetMusanedLookupsResponseMessage:
+                      $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/G2gGetMusanedLookupsResponseMessage_element_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gGetMusanedLookupsRequestMessage
+            wsdl-message-direction-or-name: G2gGetMusanedLookupsRequestMessageResponse
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Header>
+              <q13:ResponseResult xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:ResponseStatus>string</q13:ResponseStatus>
+               <q13:ResponseCode>3</q13:ResponseCode>
+               <q13:ResponseMessage>string</q13:ResponseMessage>
+               <q13:SeverityLevel>string</q13:SeverityLevel>
+               <q13:ResponseDetails>
+                <q13:ResponseDetail><!-- between zero and unlimited repetitions of this element -->
+                 <q13:Code>3</q13:Code>
+                 <q13:Message>string</q13:Message>
+                 <q13:SeverityLevel>string</q13:SeverityLevel>
+                 <q13:MessageAr>string</q13:MessageAr>
+                </q13:ResponseDetail>
+               </q13:ResponseDetails>
+              </q13:ResponseResult>
+             </soapenv:Header>
+             <soapenv:Body>
+              <tns:G2gGetMusanedLookupsResponseMessage xmlns:q2="http://schemas.datacontract.org/2004/07/MusanedG2GService" xmlns:tns="http://tempuri.org/">
+               <q2:LookupList>
+                <q2:G2gMusanedLookup><!-- between zero and unlimited repetitions of this element -->
+                 <q2:ArabicDesc>string</q2:ArabicDesc>
+                 <q2:Code>string</q2:Code>
+                 <q2:EnglishDesc>string</q2:EnglishDesc>
+                 <q2:Id>3</q2:Id>
+                </q2:G2gMusanedLookup>
+               </q2:LookupList>
+              </tns:G2gGetMusanedLookupsResponseMessage>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        GetCountriesLookupHeaderOut:
+          description: Output headers for wsdl operation G2gGetMusanedLookupsRequestMessage
+          type: object
+          properties:
+            ResponseResult:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ResponseResult_element_q13'
+        GetCountriesLookupFault:
+          description: Fault message for wsdl operation G2gGetMusanedLookupsRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    Fault:
+                      xml:
+                        namespace: http://schemas.xmlsoap.org/soap/envelope/
+                        prefix: soapenv
+                      type: object
+                      properties:
+                        faultcode:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultstring:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultactor:
+                          xml:
+                            namespace: ""
+                          type: string
+                        detail:
+                          xml:
+                            namespace: ""
+                            prefix: ""
+                          type: object
+                          properties:
+                            EsbFaultFault:
+                              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/IMusanedService_GetCountriesLookup_EsbFaultFault_FaultMessage_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gGetMusanedLookupsRequestMessage
+            wsdl-message-direction-or-name: EsbFaultFault
+        GetEmbassiesLookupInput:
+          description: Input message for wsdl operation G2gGetMusanedLookupsRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetEmbassiesLookupHeader'
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    G2gGetMusanedLookupsRequestMessage:
+                      $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/G2gGetMusanedLookupsRequestMessage_element_tns'
+                  required:
+                  - G2gGetMusanedLookupsRequestMessage
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gGetMusanedLookupsRequestMessage
+            wsdl-message-direction-or-name: G2gGetMusanedLookupsRequestMessageRequest
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Header>
+              <!-- The Security element should be removed if WS-Security is not enabled on the SOAP target-url -->
+              <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+               <wsse:UsernameToken>
+                <wsse:Username>string</wsse:Username>
+                <wsse:Password>string</wsse:Password>
+                <wsse:Nonce EncodingType="string">string</wsse:Nonce>
+                <wsu:Created>string</wsu:Created>
+               </wsse:UsernameToken>
+               <wsu:Timestamp wsu:Id="string">
+                <wsu:Created>string</wsu:Created>
+                <wsu:Expires>string</wsu:Expires>
+               </wsu:Timestamp>
+              </wsse:Security>
+              <q13:ContextInformation xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:MessageId><!-- mandatory -->string</q13:MessageId>
+               <q13:Language><!-- mandatory -->string</q13:Language>
+               <q13:ClientUserId>3</q13:ClientUserId>
+               <q13:ClientUsername>string</q13:ClientUsername>
+               <q13:ClientDisplayName>string</q13:ClientDisplayName>
+               <q13:ClientDateTime>2016-04-18T14:07:37</q13:ClientDateTime>
+               <q13:ClientSessionId>string</q13:ClientSessionId>
+               <q13:ClientIp>string</q13:ClientIp>
+               <q13:ConsumerStationName>string</q13:ConsumerStationName>
+               <q13:ConsumerStationIp>string</q13:ConsumerStationIp>
+               <q13:TransmissionTimestamp>2016-04-18T14:07:37</q13:TransmissionTimestamp>
+               <q13:ExtraMetadata>string</q13:ExtraMetadata>
+               <q13:TransactionId>string</q13:TransactionId>
+              </q13:ContextInformation>
+              <q13:Credential xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:UserName>string</q13:UserName>
+               <q13:Password>string</q13:Password>
+               <q13:PasswordType>string</q13:PasswordType>
+              </q13:Credential>
+             </soapenv:Header>
+             <soapenv:Body>
+              <tns:G2gGetMusanedLookupsRequestMessage xmlns:tns="http://tempuri.org/"><!-- mandatory --></tns:G2gGetMusanedLookupsRequestMessage>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        GetEmbassiesLookupHeader:
+          description: Input headers for wsdl operation G2gGetMusanedLookupsRequestMessage
+          type: object
+          properties:
+            Security:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/Security'
+            ContextInformation:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ContextInformation_element_q13'
+            Credential:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/Credential_element_q13'
+        GetEmbassiesLookupOutput:
+          description: Output message for wsdl operation G2gGetMusanedLookupsRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetEmbassiesLookupHeaderOut'
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    G2gGetMusanedLookupsResponseMessage:
+                      $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/G2gGetMusanedLookupsResponseMessage_element_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gGetMusanedLookupsRequestMessage
+            wsdl-message-direction-or-name: G2gGetMusanedLookupsRequestMessageResponse
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Header>
+              <q13:ResponseResult xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:ResponseStatus>string</q13:ResponseStatus>
+               <q13:ResponseCode>3</q13:ResponseCode>
+               <q13:ResponseMessage>string</q13:ResponseMessage>
+               <q13:SeverityLevel>string</q13:SeverityLevel>
+               <q13:ResponseDetails>
+                <q13:ResponseDetail><!-- between zero and unlimited repetitions of this element -->
+                 <q13:Code>3</q13:Code>
+                 <q13:Message>string</q13:Message>
+                 <q13:SeverityLevel>string</q13:SeverityLevel>
+                 <q13:MessageAr>string</q13:MessageAr>
+                </q13:ResponseDetail>
+               </q13:ResponseDetails>
+              </q13:ResponseResult>
+             </soapenv:Header>
+             <soapenv:Body>
+              <tns:G2gGetMusanedLookupsResponseMessage xmlns:q2="http://schemas.datacontract.org/2004/07/MusanedG2GService" xmlns:tns="http://tempuri.org/">
+               <q2:LookupList>
+                <q2:G2gMusanedLookup><!-- between zero and unlimited repetitions of this element -->
+                 <q2:ArabicDesc>string</q2:ArabicDesc>
+                 <q2:Code>string</q2:Code>
+                 <q2:EnglishDesc>string</q2:EnglishDesc>
+                 <q2:Id>3</q2:Id>
+                </q2:G2gMusanedLookup>
+               </q2:LookupList>
+              </tns:G2gGetMusanedLookupsResponseMessage>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        GetEmbassiesLookupHeaderOut:
+          description: Output headers for wsdl operation G2gGetMusanedLookupsRequestMessage
+          type: object
+          properties:
+            ResponseResult:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ResponseResult_element_q13'
+        GetEmbassiesLookupFault:
+          description: Fault message for wsdl operation G2gGetMusanedLookupsRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    Fault:
+                      xml:
+                        namespace: http://schemas.xmlsoap.org/soap/envelope/
+                        prefix: soapenv
+                      type: object
+                      properties:
+                        faultcode:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultstring:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultactor:
+                          xml:
+                            namespace: ""
+                          type: string
+                        detail:
+                          xml:
+                            namespace: ""
+                            prefix: ""
+                          type: object
+                          properties:
+                            EsbFaultFault:
+                              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/IMusanedService_GetEmbassiesLookup_EsbFaultFault_FaultMessage_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gGetMusanedLookupsRequestMessage
+            wsdl-message-direction-or-name: EsbFaultFault
+        GetOccupationsLookupInput:
+          description: Input message for wsdl operation G2gGetMusanedLookupsRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetOccupationsLookupHeader'
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    G2gGetMusanedLookupsRequestMessage:
+                      $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/G2gGetMusanedLookupsRequestMessage_element_tns'
+                  required:
+                  - G2gGetMusanedLookupsRequestMessage
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gGetMusanedLookupsRequestMessage
+            wsdl-message-direction-or-name: G2gGetMusanedLookupsRequestMessageRequest
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Header>
+              <!-- The Security element should be removed if WS-Security is not enabled on the SOAP target-url -->
+              <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+               <wsse:UsernameToken>
+                <wsse:Username>string</wsse:Username>
+                <wsse:Password>string</wsse:Password>
+                <wsse:Nonce EncodingType="string">string</wsse:Nonce>
+                <wsu:Created>string</wsu:Created>
+               </wsse:UsernameToken>
+               <wsu:Timestamp wsu:Id="string">
+                <wsu:Created>string</wsu:Created>
+                <wsu:Expires>string</wsu:Expires>
+               </wsu:Timestamp>
+              </wsse:Security>
+              <q13:ContextInformation xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:MessageId><!-- mandatory -->string</q13:MessageId>
+               <q13:Language><!-- mandatory -->string</q13:Language>
+               <q13:ClientUserId>3</q13:ClientUserId>
+               <q13:ClientUsername>string</q13:ClientUsername>
+               <q13:ClientDisplayName>string</q13:ClientDisplayName>
+               <q13:ClientDateTime>2016-04-18T14:07:37</q13:ClientDateTime>
+               <q13:ClientSessionId>string</q13:ClientSessionId>
+               <q13:ClientIp>string</q13:ClientIp>
+               <q13:ConsumerStationName>string</q13:ConsumerStationName>
+               <q13:ConsumerStationIp>string</q13:ConsumerStationIp>
+               <q13:TransmissionTimestamp>2016-04-18T14:07:37</q13:TransmissionTimestamp>
+               <q13:ExtraMetadata>string</q13:ExtraMetadata>
+               <q13:TransactionId>string</q13:TransactionId>
+              </q13:ContextInformation>
+              <q13:Credential xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:UserName>string</q13:UserName>
+               <q13:Password>string</q13:Password>
+               <q13:PasswordType>string</q13:PasswordType>
+              </q13:Credential>
+             </soapenv:Header>
+             <soapenv:Body>
+              <tns:G2gGetMusanedLookupsRequestMessage xmlns:tns="http://tempuri.org/"><!-- mandatory --></tns:G2gGetMusanedLookupsRequestMessage>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        GetOccupationsLookupHeader:
+          description: Input headers for wsdl operation G2gGetMusanedLookupsRequestMessage
+          type: object
+          properties:
+            Security:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/Security'
+            ContextInformation:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ContextInformation_element_q13'
+            Credential:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/Credential_element_q13'
+        GetOccupationsLookupOutput:
+          description: Output message for wsdl operation G2gGetMusanedLookupsRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetOccupationsLookupHeaderOut'
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    G2gGetMusanedLookupsResponseMessage:
+                      $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/G2gGetMusanedLookupsResponseMessage_element_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gGetMusanedLookupsRequestMessage
+            wsdl-message-direction-or-name: G2gGetMusanedLookupsRequestMessageResponse
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Header>
+              <q13:ResponseResult xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:ResponseStatus>string</q13:ResponseStatus>
+               <q13:ResponseCode>3</q13:ResponseCode>
+               <q13:ResponseMessage>string</q13:ResponseMessage>
+               <q13:SeverityLevel>string</q13:SeverityLevel>
+               <q13:ResponseDetails>
+                <q13:ResponseDetail><!-- between zero and unlimited repetitions of this element -->
+                 <q13:Code>3</q13:Code>
+                 <q13:Message>string</q13:Message>
+                 <q13:SeverityLevel>string</q13:SeverityLevel>
+                 <q13:MessageAr>string</q13:MessageAr>
+                </q13:ResponseDetail>
+               </q13:ResponseDetails>
+              </q13:ResponseResult>
+             </soapenv:Header>
+             <soapenv:Body>
+              <tns:G2gGetMusanedLookupsResponseMessage xmlns:q2="http://schemas.datacontract.org/2004/07/MusanedG2GService" xmlns:tns="http://tempuri.org/">
+               <q2:LookupList>
+                <q2:G2gMusanedLookup><!-- between zero and unlimited repetitions of this element -->
+                 <q2:ArabicDesc>string</q2:ArabicDesc>
+                 <q2:Code>string</q2:Code>
+                 <q2:EnglishDesc>string</q2:EnglishDesc>
+                 <q2:Id>3</q2:Id>
+                </q2:G2gMusanedLookup>
+               </q2:LookupList>
+              </tns:G2gGetMusanedLookupsResponseMessage>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        GetOccupationsLookupHeaderOut:
+          description: Output headers for wsdl operation G2gGetMusanedLookupsRequestMessage
+          type: object
+          properties:
+            ResponseResult:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ResponseResult_element_q13'
+        GetOccupationsLookupFault:
+          description: Fault message for wsdl operation G2gGetMusanedLookupsRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    Fault:
+                      xml:
+                        namespace: http://schemas.xmlsoap.org/soap/envelope/
+                        prefix: soapenv
+                      type: object
+                      properties:
+                        faultcode:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultstring:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultactor:
+                          xml:
+                            namespace: ""
+                          type: string
+                        detail:
+                          xml:
+                            namespace: ""
+                            prefix: ""
+                          type: object
+                          properties:
+                            EsbFaultFault:
+                              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/IMusanedService_GetOccupationsLookup_EsbFaultFault_FaultMessage_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gGetMusanedLookupsRequestMessage
+            wsdl-message-direction-or-name: EsbFaultFault
+        GetContractStatusLookupInput:
+          description: Input message for wsdl operation G2gGetMusanedLookupsRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetContractStatusLookupHeader'
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    G2gGetMusanedLookupsRequestMessage:
+                      $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/G2gGetMusanedLookupsRequestMessage_element_tns'
+                  required:
+                  - G2gGetMusanedLookupsRequestMessage
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gGetMusanedLookupsRequestMessage
+            wsdl-message-direction-or-name: G2gGetMusanedLookupsRequestMessageRequest
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Header>
+              <!-- The Security element should be removed if WS-Security is not enabled on the SOAP target-url -->
+              <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+               <wsse:UsernameToken>
+                <wsse:Username>string</wsse:Username>
+                <wsse:Password>string</wsse:Password>
+                <wsse:Nonce EncodingType="string">string</wsse:Nonce>
+                <wsu:Created>string</wsu:Created>
+               </wsse:UsernameToken>
+               <wsu:Timestamp wsu:Id="string">
+                <wsu:Created>string</wsu:Created>
+                <wsu:Expires>string</wsu:Expires>
+               </wsu:Timestamp>
+              </wsse:Security>
+              <q13:ContextInformation xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:MessageId><!-- mandatory -->string</q13:MessageId>
+               <q13:Language><!-- mandatory -->string</q13:Language>
+               <q13:ClientUserId>3</q13:ClientUserId>
+               <q13:ClientUsername>string</q13:ClientUsername>
+               <q13:ClientDisplayName>string</q13:ClientDisplayName>
+               <q13:ClientDateTime>2016-04-18T14:07:37</q13:ClientDateTime>
+               <q13:ClientSessionId>string</q13:ClientSessionId>
+               <q13:ClientIp>string</q13:ClientIp>
+               <q13:ConsumerStationName>string</q13:ConsumerStationName>
+               <q13:ConsumerStationIp>string</q13:ConsumerStationIp>
+               <q13:TransmissionTimestamp>2016-04-18T14:07:37</q13:TransmissionTimestamp>
+               <q13:ExtraMetadata>string</q13:ExtraMetadata>
+               <q13:TransactionId>string</q13:TransactionId>
+              </q13:ContextInformation>
+              <q13:Credential xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:UserName>string</q13:UserName>
+               <q13:Password>string</q13:Password>
+               <q13:PasswordType>string</q13:PasswordType>
+              </q13:Credential>
+             </soapenv:Header>
+             <soapenv:Body>
+              <tns:G2gGetMusanedLookupsRequestMessage xmlns:tns="http://tempuri.org/"><!-- mandatory --></tns:G2gGetMusanedLookupsRequestMessage>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        GetContractStatusLookupHeader:
+          description: Input headers for wsdl operation G2gGetMusanedLookupsRequestMessage
+          type: object
+          properties:
+            Security:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/Security'
+            ContextInformation:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ContextInformation_element_q13'
+            Credential:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/Credential_element_q13'
+        GetContractStatusLookupOutput:
+          description: Output message for wsdl operation G2gGetMusanedLookupsRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetContractStatusLookupHeaderOut'
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    G2gGetMusanedLookupsResponseMessage:
+                      $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/G2gGetMusanedLookupsResponseMessage_element_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gGetMusanedLookupsRequestMessage
+            wsdl-message-direction-or-name: G2gGetMusanedLookupsRequestMessageResponse
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Header>
+              <q13:ResponseResult xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:ResponseStatus>string</q13:ResponseStatus>
+               <q13:ResponseCode>3</q13:ResponseCode>
+               <q13:ResponseMessage>string</q13:ResponseMessage>
+               <q13:SeverityLevel>string</q13:SeverityLevel>
+               <q13:ResponseDetails>
+                <q13:ResponseDetail><!-- between zero and unlimited repetitions of this element -->
+                 <q13:Code>3</q13:Code>
+                 <q13:Message>string</q13:Message>
+                 <q13:SeverityLevel>string</q13:SeverityLevel>
+                 <q13:MessageAr>string</q13:MessageAr>
+                </q13:ResponseDetail>
+               </q13:ResponseDetails>
+              </q13:ResponseResult>
+             </soapenv:Header>
+             <soapenv:Body>
+              <tns:G2gGetMusanedLookupsResponseMessage xmlns:q2="http://schemas.datacontract.org/2004/07/MusanedG2GService" xmlns:tns="http://tempuri.org/">
+               <q2:LookupList>
+                <q2:G2gMusanedLookup><!-- between zero and unlimited repetitions of this element -->
+                 <q2:ArabicDesc>string</q2:ArabicDesc>
+                 <q2:Code>string</q2:Code>
+                 <q2:EnglishDesc>string</q2:EnglishDesc>
+                 <q2:Id>3</q2:Id>
+                </q2:G2gMusanedLookup>
+               </q2:LookupList>
+              </tns:G2gGetMusanedLookupsResponseMessage>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        GetContractStatusLookupHeaderOut:
+          description: Output headers for wsdl operation G2gGetMusanedLookupsRequestMessage
+          type: object
+          properties:
+            ResponseResult:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ResponseResult_element_q13'
+        GetContractStatusLookupFault:
+          description: Fault message for wsdl operation G2gGetMusanedLookupsRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    Fault:
+                      xml:
+                        namespace: http://schemas.xmlsoap.org/soap/envelope/
+                        prefix: soapenv
+                      type: object
+                      properties:
+                        faultcode:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultstring:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultactor:
+                          xml:
+                            namespace: ""
+                          type: string
+                        detail:
+                          xml:
+                            namespace: ""
+                            prefix: ""
+                          type: object
+                          properties:
+                            EsbFaultFault:
+                              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/IMusanedService_GetContractStatusLookup_EsbFaultFault_FaultMessage_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gGetMusanedLookupsRequestMessage
+            wsdl-message-direction-or-name: EsbFaultFault
+        GetMaritalStatusLookupInput:
+          description: Input message for wsdl operation G2gGetMusanedLookupsRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetMaritalStatusLookupHeader'
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    G2gGetMusanedLookupsRequestMessage:
+                      $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/G2gGetMusanedLookupsRequestMessage_element_tns'
+                  required:
+                  - G2gGetMusanedLookupsRequestMessage
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gGetMusanedLookupsRequestMessage
+            wsdl-message-direction-or-name: G2gGetMusanedLookupsRequestMessageRequest
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Header>
+              <!-- The Security element should be removed if WS-Security is not enabled on the SOAP target-url -->
+              <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+               <wsse:UsernameToken>
+                <wsse:Username>string</wsse:Username>
+                <wsse:Password>string</wsse:Password>
+                <wsse:Nonce EncodingType="string">string</wsse:Nonce>
+                <wsu:Created>string</wsu:Created>
+               </wsse:UsernameToken>
+               <wsu:Timestamp wsu:Id="string">
+                <wsu:Created>string</wsu:Created>
+                <wsu:Expires>string</wsu:Expires>
+               </wsu:Timestamp>
+              </wsse:Security>
+              <q13:ContextInformation xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:MessageId><!-- mandatory -->string</q13:MessageId>
+               <q13:Language><!-- mandatory -->string</q13:Language>
+               <q13:ClientUserId>3</q13:ClientUserId>
+               <q13:ClientUsername>string</q13:ClientUsername>
+               <q13:ClientDisplayName>string</q13:ClientDisplayName>
+               <q13:ClientDateTime>2016-04-18T14:07:37</q13:ClientDateTime>
+               <q13:ClientSessionId>string</q13:ClientSessionId>
+               <q13:ClientIp>string</q13:ClientIp>
+               <q13:ConsumerStationName>string</q13:ConsumerStationName>
+               <q13:ConsumerStationIp>string</q13:ConsumerStationIp>
+               <q13:TransmissionTimestamp>2016-04-18T14:07:37</q13:TransmissionTimestamp>
+               <q13:ExtraMetadata>string</q13:ExtraMetadata>
+               <q13:TransactionId>string</q13:TransactionId>
+              </q13:ContextInformation>
+              <q13:Credential xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:UserName>string</q13:UserName>
+               <q13:Password>string</q13:Password>
+               <q13:PasswordType>string</q13:PasswordType>
+              </q13:Credential>
+             </soapenv:Header>
+             <soapenv:Body>
+              <tns:G2gGetMusanedLookupsRequestMessage xmlns:tns="http://tempuri.org/"><!-- mandatory --></tns:G2gGetMusanedLookupsRequestMessage>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        GetMaritalStatusLookupHeader:
+          description: Input headers for wsdl operation G2gGetMusanedLookupsRequestMessage
+          type: object
+          properties:
+            Security:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/Security'
+            ContextInformation:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ContextInformation_element_q13'
+            Credential:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/Credential_element_q13'
+        GetMaritalStatusLookupOutput:
+          description: Output message for wsdl operation G2gGetMusanedLookupsRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Header:
+                  $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/GetMaritalStatusLookupHeaderOut'
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    G2gGetMusanedLookupsResponseMessage:
+                      $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/G2gGetMusanedLookupsResponseMessage_element_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gGetMusanedLookupsRequestMessage
+            wsdl-message-direction-or-name: G2gGetMusanedLookupsRequestMessageResponse
+          example: |2-
+
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+             <soapenv:Header>
+              <q13:ResponseResult xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+               <q13:ResponseStatus>string</q13:ResponseStatus>
+               <q13:ResponseCode>3</q13:ResponseCode>
+               <q13:ResponseMessage>string</q13:ResponseMessage>
+               <q13:SeverityLevel>string</q13:SeverityLevel>
+               <q13:ResponseDetails>
+                <q13:ResponseDetail><!-- between zero and unlimited repetitions of this element -->
+                 <q13:Code>3</q13:Code>
+                 <q13:Message>string</q13:Message>
+                 <q13:SeverityLevel>string</q13:SeverityLevel>
+                 <q13:MessageAr>string</q13:MessageAr>
+                </q13:ResponseDetail>
+               </q13:ResponseDetails>
+              </q13:ResponseResult>
+             </soapenv:Header>
+             <soapenv:Body>
+              <tns:G2gGetMusanedLookupsResponseMessage xmlns:q2="http://schemas.datacontract.org/2004/07/MusanedG2GService" xmlns:tns="http://tempuri.org/">
+               <q2:LookupList>
+                <q2:G2gMusanedLookup><!-- between zero and unlimited repetitions of this element -->
+                 <q2:ArabicDesc>string</q2:ArabicDesc>
+                 <q2:Code>string</q2:Code>
+                 <q2:EnglishDesc>string</q2:EnglishDesc>
+                 <q2:Id>3</q2:Id>
+                </q2:G2gMusanedLookup>
+               </q2:LookupList>
+              </tns:G2gGetMusanedLookupsResponseMessage>
+             </soapenv:Body>
+            </soapenv:Envelope>
+        GetMaritalStatusLookupHeaderOut:
+          description: Output headers for wsdl operation G2gGetMusanedLookupsRequestMessage
+          type: object
+          properties:
+            ResponseResult:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ResponseResult_element_q13'
+        GetMaritalStatusLookupFault:
+          description: Fault message for wsdl operation G2gGetMusanedLookupsRequestMessage
+          type: object
+          properties:
+            Envelope:
+              xml:
+                namespace: http://schemas.xmlsoap.org/soap/envelope/
+                prefix: soapenv
+              type: object
+              properties:
+                Body:
+                  xml:
+                    namespace: http://schemas.xmlsoap.org/soap/envelope/
+                    prefix: soapenv
+                  type: object
+                  properties:
+                    Fault:
+                      xml:
+                        namespace: http://schemas.xmlsoap.org/soap/envelope/
+                        prefix: soapenv
+                      type: object
+                      properties:
+                        faultcode:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultstring:
+                          xml:
+                            namespace: ""
+                          type: string
+                        faultactor:
+                          xml:
+                            namespace: ""
+                          type: string
+                        detail:
+                          xml:
+                            namespace: ""
+                            prefix: ""
+                          type: object
+                          properties:
+                            EsbFaultFault:
+                              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/IMusanedService_GetMaritalStatusLookup_EsbFaultFault_FaultMessage_tns'
+              required:
+              - Body
+          required:
+          - Envelope
+          x-ibm-schema:
+            wsdl-port: '{http://tempuri.org/}Musaned_Service_EndPoint'
+            wsdl-operation: G2gGetMusanedLookupsRequestMessage
+            wsdl-message-direction-or-name: EsbFaultFault
+        G2gNewMusanedContractRequestMessage_element_tns:
+          xml:
+            namespace: http://tempuri.org/
+            prefix: tns
+            name: G2gNewMusanedContractRequestMessage
+          type: object
+          properties:
+            G2gMusanedContract:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/G2gMusanedContract_type_q2_nil'
+          example: |2-
+
+            <tns:G2gNewMusanedContractRequestMessage xmlns:q2="http://schemas.datacontract.org/2004/07/MusanedG2GService" xmlns:tns="http://tempuri.org/">
+             <q2:G2gMusanedContract>
+              <q2:Address>string</q2:Address>
+              <q2:BirthDate>2016-04-18T14:07:37</q2:BirthDate>
+              <q2:CandidateBorderNo>3</q2:CandidateBorderNo>
+              <q2:CandidateFirstName>string</q2:CandidateFirstName>
+              <q2:CandidateReligionId>3</q2:CandidateReligionId>
+              <q2:CandidateSecondName>string</q2:CandidateSecondName>
+              <q2:CandidateSurName>string</q2:CandidateSurName>
+              <q2:ContractDate>2016-04-18T14:07:37</q2:ContractDate>
+              <q2:ContractId>3</q2:ContractId>
+              <q2:ContractStatusId>3</q2:ContractStatusId>
+              <q2:DocumentNumber>string</q2:DocumentNumber>
+              <q2:EmbassyCode>3</q2:EmbassyCode>
+              <q2:EmployerFirstName>string</q2:EmployerFirstName>
+              <q2:EmployerIdNumber>3</q2:EmployerIdNumber>
+              <q2:EmployerLastName>string</q2:EmployerLastName>
+              <q2:EmployerMobileNo>string</q2:EmployerMobileNo>
+              <q2:EmployerNationalityCode>string</q2:EmployerNationalityCode>
+              <q2:ExternalOfficeId>3</q2:ExternalOfficeId>
+              <q2:GenderId>3</q2:GenderId>
+              <q2:InternalOfficeName>string</q2:InternalOfficeName>
+              <q2:MaritalStatusId>3</q2:MaritalStatusId>
+              <q2:NationalityCode>string</q2:NationalityCode>
+              <q2:OccupationId>3</q2:OccupationId>
+              <q2:PassportExpiryDate>2016-04-18T14:07:37</q2:PassportExpiryDate>
+              <q2:PassportIssueDate>2016-04-18T14:07:37</q2:PassportIssueDate>
+              <q2:PassportIssuePlace>string</q2:PassportIssuePlace>
+              <q2:PassportNo>string</q2:PassportNo>
+             </q2:G2gMusanedContract>
+            </tns:G2gNewMusanedContractRequestMessage>
+        G2gNewMusanedContractResponseMessage_element_tns:
+          xml:
+            namespace: http://tempuri.org/
+            prefix: tns
+            name: G2gNewMusanedContractResponseMessage
+          type: object
+          properties:
+            IsNewContractSavedSuccessfully:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: boolean
+          example: |2-
+
+            <tns:G2gNewMusanedContractResponseMessage xmlns:q2="http://schemas.datacontract.org/2004/07/MusanedG2GService" xmlns:tns="http://tempuri.org/">
+             <q2:IsNewContractSavedSuccessfully>true</q2:IsNewContractSavedSuccessfully>
+            </tns:G2gNewMusanedContractResponseMessage>
+        IMusanedService_NewContract_EsbFaultFault_FaultMessage_tns:
+          xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+            name: EsbFault
+          type: object
+          properties:
+            ErrorCode:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: integer
+              format: int32
+            ErrorMessage:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              x-nullable: true
+            SeverityLevel:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/SeverityLevels_type_q13'
+            ErrorDetails:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ErrorDetails_type_q13'
+          example: |2-
+
+            <q13:EsbFault xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+             <q13:ErrorCode>3</q13:ErrorCode>
+             <q13:ErrorMessage>string</q13:ErrorMessage>
+             <q13:SeverityLevel>string</q13:SeverityLevel>
+             <q13:ErrorDetails>
+              <q13:ErrorDetail><!-- between zero and unlimited repetitions of this element -->
+               <q13:Code>3</q13:Code>
+               <q13:Message>string</q13:Message>
+               <q13:SeverityLevel>string</q13:SeverityLevel>
+              </q13:ErrorDetail>
+             </q13:ErrorDetails>
+            </q13:EsbFault>
+        G2gActivateContractRequestMessage_element_tns:
+          xml:
+            namespace: http://tempuri.org/
+            prefix: tns
+            name: G2gActivateContractRequestMessage
+          type: object
+          properties:
+            ContractId:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int64
+          example: |2-
+
+            <tns:G2gActivateContractRequestMessage xmlns:q2="http://schemas.datacontract.org/2004/07/MusanedG2GService" xmlns:tns="http://tempuri.org/">
+             <q2:ContractId>3</q2:ContractId>
+            </tns:G2gActivateContractRequestMessage>
+        G2gActivateContractResponseMessage_element_tns:
+          xml:
+            namespace: http://tempuri.org/
+            prefix: tns
+            name: G2gActivateContractResponseMessage
+          type: object
+          properties:
+            IsContractActivated:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: boolean
+          example: |2-
+
+            <tns:G2gActivateContractResponseMessage xmlns:q2="http://schemas.datacontract.org/2004/07/MusanedG2GService" xmlns:tns="http://tempuri.org/">
+             <q2:IsContractActivated>true</q2:IsContractActivated>
+            </tns:G2gActivateContractResponseMessage>
+        IMusanedService_ActivateContract_EsbFaultFault_FaultMessage_tns:
+          xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+            name: EsbFault
+          type: object
+          properties:
+            ErrorCode:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: integer
+              format: int32
+            ErrorMessage:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              x-nullable: true
+            SeverityLevel:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/SeverityLevels_type_q13'
+            ErrorDetails:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ErrorDetails_type_q13'
+          example: |2-
+
+            <q13:EsbFault xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+             <q13:ErrorCode>3</q13:ErrorCode>
+             <q13:ErrorMessage>string</q13:ErrorMessage>
+             <q13:SeverityLevel>string</q13:SeverityLevel>
+             <q13:ErrorDetails>
+              <q13:ErrorDetail><!-- between zero and unlimited repetitions of this element -->
+               <q13:Code>3</q13:Code>
+               <q13:Message>string</q13:Message>
+               <q13:SeverityLevel>string</q13:SeverityLevel>
+              </q13:ErrorDetail>
+             </q13:ErrorDetails>
+            </q13:EsbFault>
+        G2gMusanedContractCancelationRequestMessage_element_tns:
+          xml:
+            namespace: http://tempuri.org/
+            prefix: tns
+            name: G2gMusanedContractCancelationRequestMessage
+          type: object
+          properties:
+            ContractId:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int64
+          example: |2-
+
+            <tns:G2gMusanedContractCancelationRequestMessage xmlns:q2="http://schemas.datacontract.org/2004/07/MusanedG2GService" xmlns:tns="http://tempuri.org/">
+             <q2:ContractId>3</q2:ContractId>
+            </tns:G2gMusanedContractCancelationRequestMessage>
+        G2gMusanedContractCancelationResponseMessage_element_tns:
+          xml:
+            namespace: http://tempuri.org/
+            prefix: tns
+            name: G2gMusanedContractCancelationResponseMessage
+          type: object
+          properties:
+            IsContractCanceled:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: boolean
+          example: |2-
+
+            <tns:G2gMusanedContractCancelationResponseMessage xmlns:q2="http://schemas.datacontract.org/2004/07/MusanedG2GService" xmlns:tns="http://tempuri.org/">
+             <q2:IsContractCanceled>true</q2:IsContractCanceled>
+            </tns:G2gMusanedContractCancelationResponseMessage>
+        IMusanedService_ContractCancelation_EsbFaultFault_FaultMessage_tns:
+          xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+            name: EsbFault
+          type: object
+          properties:
+            ErrorCode:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: integer
+              format: int32
+            ErrorMessage:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              x-nullable: true
+            SeverityLevel:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/SeverityLevels_type_q13'
+            ErrorDetails:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ErrorDetails_type_q13'
+          example: |2-
+
+            <q13:EsbFault xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+             <q13:ErrorCode>3</q13:ErrorCode>
+             <q13:ErrorMessage>string</q13:ErrorMessage>
+             <q13:SeverityLevel>string</q13:SeverityLevel>
+             <q13:ErrorDetails>
+              <q13:ErrorDetail><!-- between zero and unlimited repetitions of this element -->
+               <q13:Code>3</q13:Code>
+               <q13:Message>string</q13:Message>
+               <q13:SeverityLevel>string</q13:SeverityLevel>
+              </q13:ErrorDetail>
+             </q13:ErrorDetails>
+            </q13:EsbFault>
+        G2gGetMusanedOfficeListRequestMessage_element_tns:
+          xml:
+            namespace: http://tempuri.org/
+            prefix: tns
+            name: G2gGetMusanedOfficeListRequestMessage
+          type: object
+          properties:
+            CountryCode:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            EmbassyCode:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int32
+              x-nullable: true
+            OfficeId:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int64
+              x-nullable: true
+          example: |2-
+
+            <tns:G2gGetMusanedOfficeListRequestMessage xmlns:q2="http://schemas.datacontract.org/2004/07/MusanedG2GService" xmlns:tns="http://tempuri.org/">
+             <q2:CountryCode>string</q2:CountryCode>
+             <q2:EmbassyCode>3</q2:EmbassyCode>
+             <q2:OfficeId>3</q2:OfficeId>
+            </tns:G2gGetMusanedOfficeListRequestMessage>
+        G2gGetMusanedOfficeListResponseMessage_element_tns:
+          xml:
+            namespace: http://tempuri.org/
+            prefix: tns
+            name: G2gGetMusanedOfficeListResponseMessage
+          type: object
+          properties:
+            OfficeList:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ArrayOfG2gMusanedOffice_type_q2'
+          example: |2-
+
+            <tns:G2gGetMusanedOfficeListResponseMessage xmlns:q2="http://schemas.datacontract.org/2004/07/MusanedG2GService" xmlns:tns="http://tempuri.org/">
+             <q2:OfficeList>
+              <q2:G2gMusanedOffice><!-- between zero and unlimited repetitions of this element -->
+               <q2:Address>string</q2:Address>
+               <q2:ContactName>string</q2:ContactName>
+               <q2:CreateDate>2016-04-18T14:07:37</q2:CreateDate>
+               <q2:Email>string</q2:Email>
+               <q2:EmbassyCode>3</q2:EmbassyCode>
+               <q2:Id>3</q2:Id>
+               <q2:Mobile>string</q2:Mobile>
+               <q2:NameAr>string</q2:NameAr>
+               <q2:NameEn>string</q2:NameEn>
+               <q2:NationalityCode>string</q2:NationalityCode>
+               <q2:Phone>string</q2:Phone>
+               <q2:StatusId>3</q2:StatusId>
+              </q2:G2gMusanedOffice>
+             </q2:OfficeList>
+            </tns:G2gGetMusanedOfficeListResponseMessage>
+        IMusanedService_GetExternalOfficeList_EsbFaultFault_FaultMessage_tns:
+          xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+            name: EsbFault
+          type: object
+          properties:
+            ErrorCode:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: integer
+              format: int32
+            ErrorMessage:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              x-nullable: true
+            SeverityLevel:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/SeverityLevels_type_q13'
+            ErrorDetails:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ErrorDetails_type_q13'
+          example: |2-
+
+            <q13:EsbFault xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+             <q13:ErrorCode>3</q13:ErrorCode>
+             <q13:ErrorMessage>string</q13:ErrorMessage>
+             <q13:SeverityLevel>string</q13:SeverityLevel>
+             <q13:ErrorDetails>
+              <q13:ErrorDetail><!-- between zero and unlimited repetitions of this element -->
+               <q13:Code>3</q13:Code>
+               <q13:Message>string</q13:Message>
+               <q13:SeverityLevel>string</q13:SeverityLevel>
+              </q13:ErrorDetail>
+             </q13:ErrorDetails>
+            </q13:EsbFault>
+        G2gGetMusanedContractInfoRequestMessage_element_tns:
+          xml:
+            namespace: http://tempuri.org/
+            prefix: tns
+            name: G2gGetMusanedContractInfoRequestMessage
+          type: object
+          properties:
+            ContractIdList:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ArrayOflong_type_q1_q2'
+          example: |2-
+
+            <tns:G2gGetMusanedContractInfoRequestMessage xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:q2="http://schemas.datacontract.org/2004/07/MusanedG2GService" xmlns:tns="http://tempuri.org/">
+             <q2:ContractIdList>
+              <q1:long><!-- between zero and unlimited repetitions of this element -->3</q1:long>
+             </q2:ContractIdList>
+            </tns:G2gGetMusanedContractInfoRequestMessage>
+        G2gGetMusanedContractInfoResponseMessage_element_tns:
+          xml:
+            namespace: http://tempuri.org/
+            prefix: tns
+            name: G2gGetMusanedContractInfoResponseMessage
+          type: object
+          properties:
+            ContractList:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ArrayOfG2gMusanedContract_type_q2'
+          example: |2-
+
+            <tns:G2gGetMusanedContractInfoResponseMessage xmlns:q2="http://schemas.datacontract.org/2004/07/MusanedG2GService" xmlns:tns="http://tempuri.org/">
+             <q2:ContractList>
+              <q2:G2gMusanedContract><!-- between zero and unlimited repetitions of this element -->
+               <q2:Address>string</q2:Address>
+               <q2:BirthDate>2016-04-18T14:07:37</q2:BirthDate>
+               <q2:CandidateBorderNo>3</q2:CandidateBorderNo>
+               <q2:CandidateFirstName>string</q2:CandidateFirstName>
+               <q2:CandidateReligionId>3</q2:CandidateReligionId>
+               <q2:CandidateSecondName>string</q2:CandidateSecondName>
+               <q2:CandidateSurName>string</q2:CandidateSurName>
+               <q2:ContractDate>2016-04-18T14:07:37</q2:ContractDate>
+               <q2:ContractId>3</q2:ContractId>
+               <q2:ContractStatusId>3</q2:ContractStatusId>
+               <q2:DocumentNumber>string</q2:DocumentNumber>
+               <q2:EmbassyCode>3</q2:EmbassyCode>
+               <q2:EmployerFirstName>string</q2:EmployerFirstName>
+               <q2:EmployerIdNumber>3</q2:EmployerIdNumber>
+               <q2:EmployerLastName>string</q2:EmployerLastName>
+               <q2:EmployerMobileNo>string</q2:EmployerMobileNo>
+               <q2:EmployerNationalityCode>string</q2:EmployerNationalityCode>
+               <q2:ExternalOfficeId>3</q2:ExternalOfficeId>
+               <q2:GenderId>3</q2:GenderId>
+               <q2:InternalOfficeName>string</q2:InternalOfficeName>
+               <q2:MaritalStatusId>3</q2:MaritalStatusId>
+               <q2:NationalityCode>string</q2:NationalityCode>
+               <q2:OccupationId>3</q2:OccupationId>
+               <q2:PassportExpiryDate>2016-04-18T14:07:37</q2:PassportExpiryDate>
+               <q2:PassportIssueDate>2016-04-18T14:07:37</q2:PassportIssueDate>
+               <q2:PassportIssuePlace>string</q2:PassportIssuePlace>
+               <q2:PassportNo>string</q2:PassportNo>
+              </q2:G2gMusanedContract>
+             </q2:ContractList>
+            </tns:G2gGetMusanedContractInfoResponseMessage>
+        IMusanedService_GetContractInfo_EsbFaultFault_FaultMessage_tns:
+          xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+            name: EsbFault
+          type: object
+          properties:
+            ErrorCode:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: integer
+              format: int32
+            ErrorMessage:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              x-nullable: true
+            SeverityLevel:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/SeverityLevels_type_q13'
+            ErrorDetails:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ErrorDetails_type_q13'
+          example: |2-
+
+            <q13:EsbFault xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+             <q13:ErrorCode>3</q13:ErrorCode>
+             <q13:ErrorMessage>string</q13:ErrorMessage>
+             <q13:SeverityLevel>string</q13:SeverityLevel>
+             <q13:ErrorDetails>
+              <q13:ErrorDetail><!-- between zero and unlimited repetitions of this element -->
+               <q13:Code>3</q13:Code>
+               <q13:Message>string</q13:Message>
+               <q13:SeverityLevel>string</q13:SeverityLevel>
+              </q13:ErrorDetail>
+             </q13:ErrorDetails>
+            </q13:EsbFault>
+        G2gGetMusanedLookupsRequestMessage_element_tns:
+          xml:
+            namespace: http://tempuri.org/
+            prefix: tns
+            name: G2gGetMusanedLookupsRequestMessage
+          type: object
+          properties: {}
+          example: |2-
+
+            <tns:G2gGetMusanedLookupsRequestMessage xmlns:tns="http://tempuri.org/">
+            </tns:G2gGetMusanedLookupsRequestMessage>
+        G2gGetMusanedLookupsResponseMessage_element_tns:
+          xml:
+            namespace: http://tempuri.org/
+            prefix: tns
+            name: G2gGetMusanedLookupsResponseMessage
+          type: object
+          properties:
+            LookupList:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ArrayOfG2gMusanedLookup_type_q2'
+          example: |2-
+
+            <tns:G2gGetMusanedLookupsResponseMessage xmlns:q2="http://schemas.datacontract.org/2004/07/MusanedG2GService" xmlns:tns="http://tempuri.org/">
+             <q2:LookupList>
+              <q2:G2gMusanedLookup><!-- between zero and unlimited repetitions of this element -->
+               <q2:ArabicDesc>string</q2:ArabicDesc>
+               <q2:Code>string</q2:Code>
+               <q2:EnglishDesc>string</q2:EnglishDesc>
+               <q2:Id>3</q2:Id>
+              </q2:G2gMusanedLookup>
+             </q2:LookupList>
+            </tns:G2gGetMusanedLookupsResponseMessage>
+        IMusanedService_GetCountriesLookup_EsbFaultFault_FaultMessage_tns:
+          xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+            name: EsbFault
+          type: object
+          properties:
+            ErrorCode:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: integer
+              format: int32
+            ErrorMessage:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              x-nullable: true
+            SeverityLevel:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/SeverityLevels_type_q13'
+            ErrorDetails:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ErrorDetails_type_q13'
+          example: |2-
+
+            <q13:EsbFault xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+             <q13:ErrorCode>3</q13:ErrorCode>
+             <q13:ErrorMessage>string</q13:ErrorMessage>
+             <q13:SeverityLevel>string</q13:SeverityLevel>
+             <q13:ErrorDetails>
+              <q13:ErrorDetail><!-- between zero and unlimited repetitions of this element -->
+               <q13:Code>3</q13:Code>
+               <q13:Message>string</q13:Message>
+               <q13:SeverityLevel>string</q13:SeverityLevel>
+              </q13:ErrorDetail>
+             </q13:ErrorDetails>
+            </q13:EsbFault>
+        IMusanedService_GetEmbassiesLookup_EsbFaultFault_FaultMessage_tns:
+          xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+            name: EsbFault
+          type: object
+          properties:
+            ErrorCode:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: integer
+              format: int32
+            ErrorMessage:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              x-nullable: true
+            SeverityLevel:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/SeverityLevels_type_q13'
+            ErrorDetails:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ErrorDetails_type_q13'
+          example: |2-
+
+            <q13:EsbFault xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+             <q13:ErrorCode>3</q13:ErrorCode>
+             <q13:ErrorMessage>string</q13:ErrorMessage>
+             <q13:SeverityLevel>string</q13:SeverityLevel>
+             <q13:ErrorDetails>
+              <q13:ErrorDetail><!-- between zero and unlimited repetitions of this element -->
+               <q13:Code>3</q13:Code>
+               <q13:Message>string</q13:Message>
+               <q13:SeverityLevel>string</q13:SeverityLevel>
+              </q13:ErrorDetail>
+             </q13:ErrorDetails>
+            </q13:EsbFault>
+        IMusanedService_GetOccupationsLookup_EsbFaultFault_FaultMessage_tns:
+          xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+            name: EsbFault
+          type: object
+          properties:
+            ErrorCode:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: integer
+              format: int32
+            ErrorMessage:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              x-nullable: true
+            SeverityLevel:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/SeverityLevels_type_q13'
+            ErrorDetails:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ErrorDetails_type_q13'
+          example: |2-
+
+            <q13:EsbFault xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+             <q13:ErrorCode>3</q13:ErrorCode>
+             <q13:ErrorMessage>string</q13:ErrorMessage>
+             <q13:SeverityLevel>string</q13:SeverityLevel>
+             <q13:ErrorDetails>
+              <q13:ErrorDetail><!-- between zero and unlimited repetitions of this element -->
+               <q13:Code>3</q13:Code>
+               <q13:Message>string</q13:Message>
+               <q13:SeverityLevel>string</q13:SeverityLevel>
+              </q13:ErrorDetail>
+             </q13:ErrorDetails>
+            </q13:EsbFault>
+        IMusanedService_GetContractStatusLookup_EsbFaultFault_FaultMessage_tns:
+          xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+            name: EsbFault
+          type: object
+          properties:
+            ErrorCode:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: integer
+              format: int32
+            ErrorMessage:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              x-nullable: true
+            SeverityLevel:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/SeverityLevels_type_q13'
+            ErrorDetails:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ErrorDetails_type_q13'
+          example: |2-
+
+            <q13:EsbFault xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+             <q13:ErrorCode>3</q13:ErrorCode>
+             <q13:ErrorMessage>string</q13:ErrorMessage>
+             <q13:SeverityLevel>string</q13:SeverityLevel>
+             <q13:ErrorDetails>
+              <q13:ErrorDetail><!-- between zero and unlimited repetitions of this element -->
+               <q13:Code>3</q13:Code>
+               <q13:Message>string</q13:Message>
+               <q13:SeverityLevel>string</q13:SeverityLevel>
+              </q13:ErrorDetail>
+             </q13:ErrorDetails>
+            </q13:EsbFault>
+        IMusanedService_GetMaritalStatusLookup_EsbFaultFault_FaultMessage_tns:
+          xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+            name: EsbFault
+          type: object
+          properties:
+            ErrorCode:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: integer
+              format: int32
+            ErrorMessage:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              x-nullable: true
+            SeverityLevel:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/SeverityLevels_type_q13'
+            ErrorDetails:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ErrorDetails_type_q13'
+          example: |2-
+
+            <q13:EsbFault xmlns:q13="http://schemas.mofa.gov.sa/esb/2014/12/">
+             <q13:ErrorCode>3</q13:ErrorCode>
+             <q13:ErrorMessage>string</q13:ErrorMessage>
+             <q13:SeverityLevel>string</q13:SeverityLevel>
+             <q13:ErrorDetails>
+              <q13:ErrorDetail><!-- between zero and unlimited repetitions of this element -->
+               <q13:Code>3</q13:Code>
+               <q13:Message>string</q13:Message>
+               <q13:SeverityLevel>string</q13:SeverityLevel>
+              </q13:ErrorDetail>
+             </q13:ErrorDetails>
+            </q13:EsbFault>
+        ContextInformation_element_q13:
+          xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+          type: object
+          properties:
+            MessageId:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              pattern: '[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}'
+            Language:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/Languages_type_q13'
+            ClientUserId:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: integer
+              format: int64
+            ClientUsername:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              x-nullable: true
+            ClientDisplayName:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              x-nullable: true
+            ClientDateTime:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              format: date-time
+              x-nullable: true
+            ClientSessionId:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              x-nullable: true
+            ClientIp:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              x-nullable: true
+            ConsumerStationName:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              x-nullable: true
+            ConsumerStationIp:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              x-nullable: true
+            TransmissionTimestamp:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              format: date-time
+            ExtraMetadata:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              x-nullable: true
+            TransactionId:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              pattern: '[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}'
+          required:
+          - MessageId
+          - Language
+          x-xsi-type: ContextInformation
+          x-xsi-type-xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+          x-xsi-type-uniquename: ContextInformation_type_q13
+        Credential_element_q13:
+          xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+          type: object
+          properties:
+            UserName:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              x-nullable: true
+            Password:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              x-nullable: true
+            PasswordType:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/PasswordTypes_type_q13'
+          x-xsi-type: Credential
+          x-xsi-type-xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+          x-xsi-type-uniquename: Credential_type_q13
+        ResponseResult_element_q13:
+          xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+          type: object
+          properties:
+            ResponseStatus:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ResponseStatuses_type_q13'
+            ResponseCode:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: integer
+              format: int32
+            ResponseMessage:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              x-nullable: true
+            SeverityLevel:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/SeverityLevels_type_q13'
+            ResponseDetails:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ResponseDetails_type_q13'
+          x-xsi-type: ResponseResult
+          x-xsi-type-xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+          x-xsi-type-uniquename: ResponseResult_type_q13
+        G2gMusanedContract_type_q2:
+          xml:
+            namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+            prefix: q2
+          type: object
+          properties:
+            Address:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            BirthDate:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              format: date-time
+            CandidateBorderNo:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int64
+            CandidateFirstName:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            CandidateReligionId:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int32
+            CandidateSecondName:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            CandidateSurName:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            ContractDate:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              format: date-time
+            ContractId:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int64
+            ContractStatusId:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int32
+            DocumentNumber:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            EmbassyCode:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int32
+            EmployerFirstName:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            EmployerIdNumber:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int64
+            EmployerLastName:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            EmployerMobileNo:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            EmployerNationalityCode:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            ExternalOfficeId:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int64
+            GenderId:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int32
+            InternalOfficeName:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            MaritalStatusId:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int32
+            NationalityCode:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            OccupationId:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int32
+            PassportExpiryDate:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              format: date-time
+            PassportIssueDate:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              format: date-time
+            PassportIssuePlace:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            PassportNo:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+          x-xsi-type: G2gMusanedContract
+          x-xsi-type-xml:
+            namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+            prefix: q2
+          x-xsi-type-uniquename: G2gMusanedContract_type_q2
+        SeverityLevels_type_q13:
+          xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+          type: string
+          enum:
+          - Information
+          - Warning
+          - Error
+          - FatalError
+          x-xsi-type: SeverityLevels
+          x-xsi-type-xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+          x-xsi-type-uniquename: SeverityLevels_type_q13
+        ErrorDetails_type_q13:
+          xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+          type: object
+          properties:
+            ErrorDetail:
+              type: array
+              items:
+                $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ErrorDetail_type_q13'
+              x-nullable: true
+          x-nullable: true
+          x-xsi-type: ErrorDetails
+          x-xsi-type-xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+          x-xsi-type-uniquename: ErrorDetails_type_q13
+        ArrayOfG2gMusanedOffice_type_q2:
+          xml:
+            namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+            prefix: q2
+          type: object
+          properties:
+            G2gMusanedOffice:
+              type: array
+              items:
+                $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/G2gMusanedOffice_type_q2'
+              x-nullable: true
+          x-nullable: true
+          x-xsi-type: ArrayOfG2gMusanedOffice
+          x-xsi-type-xml:
+            namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+            prefix: q2
+          x-xsi-type-uniquename: ArrayOfG2gMusanedOffice_type_q2
+        ArrayOflong_type_q1_q2:
+          xml:
+            namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+            prefix: q2
+          type: object
+          properties:
+            long:
+              type: array
+              items:
+                xml:
+                  namespace: http://schemas.microsoft.com/2003/10/Serialization/Arrays
+                  prefix: q1
+                type: integer
+                format: int64
+          x-nullable: true
+          x-xsi-type: ArrayOflong
+          x-xsi-type-xml:
+            namespace: http://schemas.microsoft.com/2003/10/Serialization/Arrays
+            prefix: q1
+          x-xsi-type-uniquename: ArrayOflong_type_q1_q2
+        ArrayOfG2gMusanedContract_type_q2:
+          xml:
+            namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+            prefix: q2
+          type: object
+          properties:
+            G2gMusanedContract:
+              type: array
+              items:
+                $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/G2gMusanedContract_type_q2'
+              x-nullable: true
+          x-nullable: true
+          x-xsi-type: ArrayOfG2gMusanedContract
+          x-xsi-type-xml:
+            namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+            prefix: q2
+          x-xsi-type-uniquename: ArrayOfG2gMusanedContract_type_q2
+        ArrayOfG2gMusanedLookup_type_q2:
+          xml:
+            namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+            prefix: q2
+          type: object
+          properties:
+            G2gMusanedLookup:
+              type: array
+              items:
+                $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/G2gMusanedLookup_type_q2'
+              x-nullable: true
+          x-nullable: true
+          x-xsi-type: ArrayOfG2gMusanedLookup
+          x-xsi-type-xml:
+            namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+            prefix: q2
+          x-xsi-type-uniquename: ArrayOfG2gMusanedLookup_type_q2
+        Languages_type_q13:
+          xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+          type: string
+          enum:
+          - En
+          - Ar
+          x-xsi-type: Languages
+          x-xsi-type-xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+          x-xsi-type-uniquename: Languages_type_q13
+        PasswordTypes_type_q13:
+          xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+          type: string
+          enum:
+          - Clear
+          - HashedSha1
+          x-xsi-type: PasswordTypes
+          x-xsi-type-xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+          x-xsi-type-uniquename: PasswordTypes_type_q13
+        ResponseStatuses_type_q13:
+          xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+          type: string
+          enum:
+          - Success
+          - SuccessWithWarnings
+          - Failure
+          x-xsi-type: ResponseStatuses
+          x-xsi-type-xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+          x-xsi-type-uniquename: ResponseStatuses_type_q13
+        ResponseDetails_type_q13:
+          xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+          type: object
+          properties:
+            ResponseDetail:
+              type: array
+              items:
+                $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/ResponseDetail_type_q13'
+              x-nullable: true
+          x-nullable: true
+          x-xsi-type: ResponseDetails
+          x-xsi-type-xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+          x-xsi-type-uniquename: ResponseDetails_type_q13
+        ErrorDetail_type_q13:
+          xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+          type: object
+          properties:
+            Code:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: integer
+              format: int32
+            Message:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              x-nullable: true
+            SeverityLevel:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/SeverityLevels_type_q13'
+          x-xsi-type: ErrorDetail
+          x-xsi-type-xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+          x-xsi-type-uniquename: ErrorDetail_type_q13
+        G2gMusanedOffice_type_q2:
+          xml:
+            namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+            prefix: q2
+          type: object
+          properties:
+            Address:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            ContactName:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            CreateDate:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              format: date-time
+            Email:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            EmbassyCode:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int32
+            Id:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int64
+            Mobile:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            NameAr:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            NameEn:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            NationalityCode:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            Phone:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            StatusId:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int32
+          x-xsi-type: G2gMusanedOffice
+          x-xsi-type-xml:
+            namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+            prefix: q2
+          x-xsi-type-uniquename: G2gMusanedOffice_type_q2
+        G2gMusanedLookup_type_q2:
+          xml:
+            namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+            prefix: q2
+          type: object
+          properties:
+            ArabicDesc:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            Code:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            EnglishDesc:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            Id:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int32
+          x-xsi-type: G2gMusanedLookup
+          x-xsi-type-xml:
+            namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+            prefix: q2
+          x-xsi-type-uniquename: G2gMusanedLookup_type_q2
+        ResponseDetail_type_q13:
+          xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+          type: object
+          properties:
+            Code:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: integer
+              format: int32
+            Message:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              x-nullable: true
+            SeverityLevel:
+              $ref: '#/x-ibm-configuration/targets/MusanedService/definitions/SeverityLevels_type_q13'
+            MessageAr:
+              xml:
+                namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+                prefix: q13
+              type: string
+              x-nullable: true
+          x-xsi-type: ResponseDetail
+          x-xsi-type-xml:
+            namespace: http://schemas.mofa.gov.sa/esb/2014/12/
+            prefix: q13
+          x-xsi-type-uniquename: ResponseDetail_type_q13
+        G2gMusanedContract_type_q2_nil:
+          xml:
+            namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+            prefix: q2
+          type: object
+          properties:
+            Address:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            BirthDate:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              format: date-time
+            CandidateBorderNo:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int64
+            CandidateFirstName:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            CandidateReligionId:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int32
+            CandidateSecondName:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            CandidateSurName:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            ContractDate:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              format: date-time
+            ContractId:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int64
+            ContractStatusId:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int32
+            DocumentNumber:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            EmbassyCode:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int32
+            EmployerFirstName:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            EmployerIdNumber:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int64
+            EmployerLastName:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            EmployerMobileNo:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            EmployerNationalityCode:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            ExternalOfficeId:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int64
+            GenderId:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int32
+            InternalOfficeName:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            MaritalStatusId:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int32
+            NationalityCode:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            OccupationId:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: integer
+              format: int32
+            PassportExpiryDate:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              format: date-time
+            PassportIssueDate:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              format: date-time
+            PassportIssuePlace:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+            PassportNo:
+              xml:
+                namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+                prefix: q2
+              type: string
+              x-nullable: true
+          x-nullable: true
+          x-xsi-type: G2gMusanedContract
+          x-xsi-type-xml:
+            namespace: http://schemas.datacontract.org/2004/07/MusanedG2GService
+            prefix: q2
+          x-xsi-type-uniquename: G2gMusanedContract_type_q2_nil
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+definitions:
+  GetMusanedContractInfoRq_MessageType:
+    type: object
+    properties:
+      GetMusanedContractInfoRequestMessage:
+        $ref: '#/definitions/GetMusanedContractInfoRq_Type'
+  GetMusanedContractInfoRs_MessageType:
+    type: object
+    properties:
+      GetContractInfoResult:
+        $ref: '#/definitions/GetMusanedContractInfoRs_Type'
+  GetMusanedContractInfoRq_Type:
+    type: object
+    properties:
+      ContractIdList:
+        type: array
+        items:
+          type: integer
+    required:
+    - ContractIdList
+  GetMusanedContractInfoRs_Type:
+    type: object
+    properties:
+      ContractList:
+        type: array
+        items:
+          type: object
+          properties:
+            Address:
+              type: string
+            BirthDate:
+              type: string
+            CandidateBorderNo:
+              type: string
+            CandidateFirstName:
+              type: string
+            CandidateReligionId:
+              type: string
+            CandidateSecondName:
+              type: string
+            CandidateSurName:
+              type: string
+            ContractDate:
+              type: string
+            ContractId:
+              type: string
+            ContractStatusId:
+              type: string
+            DocumentNumber:
+              type: string
+            EmbassyCode:
+              type: string
+            EmployerFirstName:
+              type: string
+            EmployerIdNumber:
+              type: string
+            EmployerLastName:
+              type: string
+            EmployerMobileNo:
+              type: string
+            EmployerNationalityCode:
+              type: string
+            ExternalOfficeId:
+              type: string
+            GenderId:
+              type: string
+            InternalOfficeName:
+              type: string
+            MaritalStatusId:
+              type: string
+            NationalityCode:
+              type: string
+            OccupationId:
+              type: string
+            PassportExpiryDate:
+              type: string
+            PassportIssueDate:
+              type: string
+            PassportIssuePlace:
+              type: string
+            PassportNo:
+              type: string
+    required:
+    - ContractList
+paths:
+  /getcontractinfo:
+    post:
+      operationId: GetContractInfo
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetMusanedContractInfoRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Get Contract Info
+      parameters:
+      - name: body
+        in: body
+        required: true
+        description: GetMusanedContractInfoRq
+        schema:
+          $ref: '#/definitions/GetMusanedContractInfoRq_Type'

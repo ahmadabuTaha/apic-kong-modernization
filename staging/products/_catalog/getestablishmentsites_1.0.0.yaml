@@ -1,0 +1,690 @@
+swagger: "2.0"
+info:
+  title: MOMRA_GetEstablishmentSites
+  x-ibm-name: getestablishmentsites
+  version: 1.0.0
+  description: EstablishmentSites
+schemes:
+- https
+basePath: /momra/v1
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - map:
+        version: 2.0.0
+        title: map
+        inputs:
+          "":
+            schema:
+              $ref: '#/definitions/GetEstabSitesRq_BodyType'
+            variable: request.body
+            content: application/json
+        outputs:
+          "":
+            schema:
+              $ref: '#/definitions/StrGetEstabSitesRq_BodyType'
+            variable: message.body
+            content: application/json
+        actions:
+        - set: .UnifiedNum
+          from: .unifiedNum
+        - set: .OwnerId.CRNumber
+          from: .ownerId.crNumber
+        - set: .OwnerId.CharityId
+          from: .ownerId.charityId
+        - set: .OwnerId.GovEntityId
+          from: .ownerId.govEntityId
+        - set: .OwnerId.GulfId
+          from: .ownerId.gulfId
+        - set: .OwnerId.NationalId
+          from: .ownerId.nationalId
+        - set: .OwnerId.SevenHundredNum
+          from: .ownerId.sevenHundredNum
+        options:
+          mapEnablePostProcessingJSON: true
+          mapEmulateV4EmptyJSONObject: false
+          mapEmulateV4DefaultRequiredProps: false
+          mapReferenceLimit: 1
+          namespaceInheritance: false
+          includeEmptyXMLElements: false
+          inlineNamespaces: false
+          mapResolveApicVariables: false
+          mapOptimizeSchemaDefinition: true
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\n\nvar cfg={\n    \"serviceCode\" : \"EXGES0001\",\n
+          \   \"channelId\" : \"Integration\",\n    \"requestName\" : \"EstabSitesRq\",\n
+          \   \"responseName\": \"EstabSitesRs\",\n    \"errorMap\" :{\n        \"ESBSCHEMA\"
+          : {\"code\" :400, \"msg\":\"Invalid Request\"}\n    }\n    \n};\n\napim.setvariable('cfg',cfg);"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare_Request
+        source: "var apim = require('apim');\r\n\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\n\r\nvar appcReq
+          = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n            \"TransactionId\"
+          : millisecondsvalue,\r\n            \"ChannelId\": cfg.channelId,\r\n            \"SessionId\":
+          apim.getvariable('message.headers.Reference-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode\r\n        },\r\n
+          \       \"Body\" : apim.getvariable('message.body')\r\n            \r\n
+          \       \r\n    }\r\n};\r\n\r\nif (typeof OperatorId !== 'undefined')\r\n
+          \   appcReq[cfg.requestName].Header.UserInfo = {\r\n        \"IDNumber\"
+          : OperatorId\r\n    };\r\nsession.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n    \r\n    \r\n\r\n    //return
+          the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour
+          + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-tip-momra)/external/getestablishmentsites
+        follow-redirects: false
+        timeout: 60
+        type: blacklist
+        header-control:
+          type: blocklist
+          values: []
+        inject-proxy-headers: true
+        persistent-connection: true
+        parameter-control:
+          type: allowlist
+          values: []
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_Headers
+        source: "var apim = require('apim');\r\napim.output('application/json');\r\nvar
+          message = apim.getvariable('message.body');\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          Header = message[cfg.responseName].Header;\r\nvar TransactionId = Header.TransactionId;\r\nvar
+          ChannelId = Header.ChannelId;\r\nvar RequestTime = Header.RequestTime;\r\nvar
+          SessionId = Header.SessionId; \r\nvar MWRequestTime = Header.MWRequestTime;\r\nvar
+          MWResponseTime = Header.MWResponseTime;\r\nvar status = Header.ResponseStatus.Status;\r\nvar
+          code = Header.ResponseStatus.Code;\r\napim.setvariable('message.headers.Transaction-Id',TransactionId,'add');\r\napim.setvariable('message.headers.Channel-Id',ChannelId,'add');\r\nif
+          (RequestTime !== 'undefined')\r\napim.setvariable('message.headers.RequestTime',RequestTime,'add');\r\nif
+          (SessionId !== 'undefined')\r\napim.setvariable('message.headers.X-Request-Id',SessionId,'add');\r\nif
+          (MWRequestTime !== 'undefined')\r\napim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');\r\nif
+          (MWResponseTime !== 'undefined')\r\napim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');\r\napim.setvariable('message.headers.Response-Status',status,'add');\r\napim.setvariable('message.headers.Response-Code',code,'add');"
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Response
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar body = message[cfg.responseName].Body;\n\n\nsession.output.write(body);\napim.output('application/json');"
+          - map:
+              version: 2.0.0
+              title: map
+              inputs:
+                "":
+                  schema:
+                    $ref: '#/definitions/StrGetEstabSitesRs_BodyType'
+                  variable: message.body
+                  content: application/json
+              outputs:
+                "":
+                  schema:
+                    $ref: '#/definitions/GetEstabSitesRs_BodyType'
+                  variable: message.body
+                  content: application/json
+              actions:
+              - set: .ownerInfo.ownerName
+                from: .OwnerInfo.OwnerName
+              - set: .ownerInfo.ownerId.crNumber
+                from: .OwnerInfo.OwnerIdentifier.CRNumber
+              - set: .ownerInfo.ownerId.charityId
+                from: .OwnerInfo.OwnerIdentifier.CharityId
+              - set: .ownerInfo.ownerId.govEntityId
+                from: .OwnerInfo.OwnerIdentifier.GovEntityId
+              - set: .ownerInfo.ownerId.gulfId
+                from: .OwnerInfo.OwnerIdentifier.GulfId
+              - set: .ownerInfo.ownerId.nationalId
+                from: .OwnerInfo.OwnerIdentifier.NationalId
+              - set: .ownerInfo.ownerId.sevenHundredNum
+                from: .OwnerInfo.OwnerIdentifier.SevenHundredNum
+              - create: .licenseInfoList
+                foreach: .LicenseInfoList.LicenseInfo
+                from: .LicenseInfoList.LicenseInfo
+                actions:
+                - set: unifiedLicenseNumber
+                  from: UnifiedLicenseNumber
+                - set: amanah.amanahCode
+                  from: Amanah.AmanahCode
+                - set: amanah.amanahName
+                  from: Amanah.AmanahName
+                - set: baladiaName
+                  from: BaladiaName
+                - set: issueDate
+                  from: IssueDate
+                - set: expiryDate
+                  from: ExpiryDate
+                - set: licenseStatus
+                  from: LicenseStatus
+                - create: activitiesList
+                  foreach: ActivitiesList.Activity
+                  from: ActivitiesList.Activity
+                  actions:
+                  - set: activityISICCode
+                    from: ActivityISICCode
+                  - set: activityISICDescription
+                    from: ActivityISICDescription
+                  - set: activityAmanahDescription
+                    from: ActivityAmanahDescription
+                  - set: activityArea
+                    from: ActivityArea
+                  - create: boardsList
+                    foreach: BoardsList.Board
+                    from: BoardsList.Board
+                    actions:
+                    - set: boardType
+                      from: BoardType
+                    - set: boardArea
+                      from: BoardArea
+                  - set: commercialName
+                    from: CommercialName
+                  - set: shopArea
+                    from: ShopArea
+                  - set: doorsCount
+                    from: DoorsCount
+                  - set: shopAddress
+                    from: ShopAddress
+                  - set: locationCoordinates.longitude
+                    from: LocationCoordinates.Longitude
+                  - set: locationCoordinates.latitude
+                    from: LocationCoordinates.Latitude
+                - set: shopArea
+                  from: ShopArea
+                - set: commericalName
+                  from: CommericalName
+              options:
+                mapEnablePostProcessingJSON: true
+                mapEmulateV4EmptyJSONObject: false
+                mapEmulateV4DefaultRequiredProps: false
+                mapReferenceLimit: 1
+                inlineNamespaces: false
+                namespaceInheritance: false
+                includeEmptyXMLElements: false
+                mapResolveApicVariables: false
+                mapOptimizeSchemaDefinition: true
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Error
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar error = {\n    \"ErrorResponse\":
+                message[cfg.responseName].Header.ResponseStatus\n}\n\n\nvar httperror=0;\nif(cfg.errorMap){\n
+                \   if(cfg.errorMap[error.ErrorResponse.Code]){\n       httperror
+                = cfg.errorMap[error.ErrorResponse.Code].code;\n       \n       //var
+                errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\n       //var
+                details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\n    }\n}\nif(httperror
+                == 0){\n   httperror = 400;\n   // apim.error('ERROR',400,'Bad Request','Invalid
+                request');\n}\napim.setvariable('message.status.code',httperror,'set');\n\nsession.output.write(error);\napim.output('application/json');"
+    catch: []
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  GetEstabSitesRq_MessageType:
+    type: object
+    properties:
+      GetEstabSitesRq:
+        $ref: '#/definitions/GetEstabSitesRq_Type'
+  GetEstabSitesRs_MessageType:
+    type: object
+    properties:
+      GetEstabSitesRs:
+        $ref: '#/definitions/GetEstabSitesRs_Type'
+  GetEstabSitesRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetEstabSitesRq_BodyType'
+  GetEstabSitesRq_BodyType:
+    type: object
+    properties:
+      unifiedNum:
+        type: integer
+      ownerId:
+        $ref: '#/definitions/ownerId'
+  StrGetEstabSitesRq_BodyType:
+    type: object
+    properties:
+      UnifiedNum:
+        type: string
+      OwnerId:
+        $ref: '#/definitions/OwnerId'
+  ownerId:
+    type: object
+    properties:
+      crNumber:
+        type: integer
+      charityId:
+        type: integer
+      govEntityId:
+        type: integer
+      gulfId:
+        type: integer
+      nationalId:
+        type: integer
+      sevenHundredNum:
+        type: integer
+  OwnerId:
+    type: object
+    properties:
+      CRNumber:
+        type: string
+      CharityId:
+        type: string
+      GovEntityId:
+        type: string
+      GulfId:
+        type: string
+      NationalId:
+        type: string
+      SevenHundredNum:
+        type: string
+  GetEstabSitesRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetEstabSitesRs_BodyType'
+  GetEstabSitesRs_BodyType:
+    type: object
+    properties:
+      ownerInfo:
+        $ref: '#/definitions/ownerInfo'
+      licenseInfoList:
+        type: array
+        items:
+          $ref: '#/definitions/licenseInfoBody'
+    required:
+    - ownerInfo
+  StrGetEstabSitesRs_BodyType:
+    type: object
+    properties:
+      OwnerInfo:
+        $ref: '#/definitions/OwnerInfo'
+      LicenseInfoList:
+        $ref: '#/definitions/LicenseInfoList_Type'
+    required:
+    - OwnerInfo
+  ownerInfo:
+    type: object
+    properties:
+      ownerName:
+        type: string
+      ownerId:
+        $ref: '#/definitions/ownerId'
+    required:
+    - ownerName
+    - ownerId
+  OwnerInfo:
+    type: object
+    properties:
+      OwnerName:
+        type: string
+      OwnerIdentifier:
+        $ref: '#/definitions/StrOwnerId'
+    required:
+    - OwnerName
+  StrOwnerId:
+    type: object
+    properties:
+      CRNumber:
+        type: string
+      CharityId:
+        type: string
+      GovEntityId:
+        type: string
+      GulfId:
+        type: string
+      NationalId:
+        type: string
+      SevenHundredNum:
+        type: string
+  licenseInfoList_Type:
+    type: object
+    properties:
+      licenseInfo:
+        type: array
+        items:
+          $ref: '#/definitions/licenseInfoBody'
+  LicenseInfoList_Type:
+    type: object
+    properties:
+      LicenseInfo:
+        type: array
+        items:
+          $ref: '#/definitions/LicenseInfoBody'
+  licenseInfoBody:
+    type: object
+    properties:
+      unifiedLicenseNumber:
+        type: string
+      amanah:
+        $ref: '#/definitions/amanah'
+      baladiaName:
+        type: string
+      issueDate:
+        type: string
+      expiryDate:
+        type: string
+      licenseStatus:
+        type: string
+      activitiesList:
+        type: array
+        items:
+          $ref: '#/definitions/activity_body'
+      commericalName:
+        type: string
+      shopArea:
+        type: string
+  LicenseInfoBody:
+    type: object
+    properties:
+      UnifiedLicenseNumber:
+        type: string
+      Amanah:
+        $ref: '#/definitions/Amanah'
+      BaladiaName:
+        type: string
+      IssueDate:
+        type: string
+      ExpiryDate:
+        type: string
+      LicenseStatus:
+        type: string
+      ActivitiesList:
+        $ref: '#/definitions/ActivitiesList_Type'
+      CommericalName:
+        type: string
+      ShopArea:
+        type: string
+  amanah:
+    type: object
+    properties:
+      amanahCode:
+        type: string
+      amanahName:
+        type: string
+  Amanah:
+    type: object
+    properties:
+      AmanahCode:
+        type: string
+      AmanahName:
+        type: string
+  activitiesList_Type:
+    type: object
+    properties:
+      activity:
+        type: array
+        items:
+          $ref: '#/definitions/activity_body'
+  ActivitiesList_Type:
+    type: object
+    properties:
+      Activity:
+        type: array
+        items:
+          $ref: '#/definitions/Activity_body'
+  activity_body:
+    type: object
+    properties:
+      activityISICCode:
+        type: string
+      activityISICDescription:
+        type: string
+      activityAmanahDescription:
+        type: string
+      activityArea:
+        type: string
+      boardsList:
+        type: array
+        items:
+          $ref: '#/definitions/boards_Body'
+      commercialName:
+        type: string
+      shopArea:
+        type: string
+      doorsCount:
+        type: string
+      shopAddress:
+        type: string
+      locationCoordinates:
+        $ref: '#/definitions/locationCoordinates'
+  Activity_body:
+    type: object
+    properties:
+      ActivityISICCode:
+        type: string
+      ActivityISICDescription:
+        type: string
+      ActivityAmanahDescription:
+        type: string
+      ActivityArea:
+        type: string
+      BoardsList:
+        $ref: '#/definitions/Boards_Type'
+      CommercialName:
+        type: string
+      ShopArea:
+        type: string
+      DoorsCount:
+        type: string
+      ShopAddress:
+        type: string
+      LocationCoordinates:
+        $ref: '#/definitions/LocationCoordinates'
+  boards_Type:
+    type: object
+    properties:
+      board:
+        type: array
+        items:
+          $ref: '#/definitions/boards_Body'
+  Boards_Type:
+    type: object
+    properties:
+      Board:
+        type: array
+        items:
+          $ref: '#/definitions/Boards_Body'
+  boards_Body:
+    type: object
+    properties:
+      boardType:
+        type: string
+      boardArea:
+        type: string
+  Boards_Body:
+    type: object
+    properties:
+      BoardType:
+        type: string
+      BoardArea:
+        type: string
+  locationCoordinates:
+    type: object
+    properties:
+      longitude:
+        type: string
+      latitude:
+        type: string
+  LocationCoordinates:
+    type: object
+    properties:
+      Longitude:
+        type: string
+      Latitude:
+        type: string
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /get-establishment-sites:
+    post:
+      operationId: EstabSites
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetEstabSitesRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: ""
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetEstabSitesRq_MessageType'
+        description: GetEstabSitesRq
+        required: true

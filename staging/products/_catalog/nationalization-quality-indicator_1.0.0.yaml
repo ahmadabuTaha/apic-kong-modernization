@@ -1,0 +1,245 @@
+swagger: "2.0"
+info:
+  title: NationalizationQualityIndicator
+  x-ibm-name: nationalization-quality-indicator
+  version: 1.0.0
+  description: This API retrieves the Nationalization Quality Score Details
+host: $(catalog.host)
+schemes:
+- https
+basePath: /Indicators
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+- clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://gw-apic.qiwa.info/takamol/staging/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  properties:
+    target-url:
+      value: http://prow-indicators-http-ace.apps.stg.qiwa-nonprod.local/external/GetNationalizationQuality
+      description: The URL of the target service
+      encoded: false
+  assembly:
+    execute:
+    - gatewayscript:
+        version: 2.0.0
+        title: gatewayscript
+        source: "var apim = require('apim');\r\nvar requestBody = apim.getvariable('request.body');\r\nconst
+          responseHeader = requestBody.NationalizationQualityRq.Header;\r\nvar dt
+          = new Date();\r\nresponseHeader.MWResponseTime =formatDate(dt);\r\nconst
+          responseMessage =  {\r\n                \"Status\": \"ERROR\",\r\n                \"Code\":
+          \"NQI00002\",\r\n                \"ArabicMsg\": \"جودة التأميم غير متوفرة\",\r\n
+          \               \"EnglishMsg\": \"Nationalization Quality is not available\"\r\n
+          \           };\r\n responseHeader.ResponseStatus = responseMessage;\r\nvar
+          response={\r\n\t\"NationalizationQualityRs\": \r\n\t\t{\r\n\t\t\"Header\":responseHeader\r\n\t\t}\r\n};\r\n\r\nsession.output.write(response);\r\n\r\n
+          function formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n\r\n    //return the string
+          \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour + \":\" +
+          minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    finally: []
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  buffering: true
+  application-authentication:
+    certificate: false
+  catalogs: {}
+definitions:
+  NationalizationQualityScoreRequest_MessageType:
+    type: object
+    properties:
+      NationalizationQualityRq:
+        $ref: '#/definitions/NationalizationQualityScoreRq_Type'
+  NationalizationQualityScoreResponse_MessageType:
+    type: object
+    properties:
+      NationalizationQualityRs:
+        $ref: '#/definitions/NationalizationQualityScoreRs_Type'
+  NationalizationQualityScoreRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/RequestHeader_Type'
+      Body:
+        $ref: '#/definitions/NationalizationQualityScoreRq_Body'
+  NationalizationQualityScoreRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/NationalizationQualityScoreRs_Body'
+  RequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      ServiceCode:
+        type: string
+        default: NPC00001
+      DebugFlag:
+        type: string
+        default: 1
+  ResponseHeader_Type:
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      ServiceCode:
+        type: string
+        default: NPC00001
+      DebugFlag:
+        type: string
+        default: 1
+      ResponseStatus:
+        $ref: '#/definitions/ResponseStatus'
+      BackendError:
+        $ref: '#/definitions/BackendError'
+  ResponseStatus:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+  BackendError:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+  NationalizationQualityScoreRq_Body:
+    type: object
+    required:
+    - LaborOfficeID
+    - SequenceNumber
+    properties:
+      LaborOfficeID:
+        type: number
+      SequenceNumber:
+        type: number
+  NationalizationQualityScoreRs_Body:
+    type: object
+    required:
+    - NationalizationQualityDetails
+    properties:
+      NationalizationQualityDetails:
+        $ref: '#/definitions/NationalizationQualityDetails_Type'
+  NationalizationQualityDetails_Type:
+    type: object
+    required:
+    - Nationalization
+    - FemaleSaudis
+    - HighlyPaidSaudis
+    - AverageWorkTenure
+    - AverageSalaryForSaudis
+    properties:
+      Nationalization:
+        type: string
+        example: Green
+      FemaleSaudis:
+        type: number
+        example: 0
+      HighlyPaidSaudis:
+        type: number
+        example: 0
+      AverageWorkTenure:
+        type: string
+        example: 100 Days
+      AverageSalaryForSaudis:
+        type: number
+        example: 0
+paths:
+  /NationalizationQualityScore:
+    post:
+      tags:
+      - Nationalization Quality Score
+      description: Used to get Nationalization Quality Score
+      operationId: getNationalizationQualityScore
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/NationalizationQualityScoreRequest_MessageType'
+        description: NationalizationQualityScoreRq
+        required: true
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/NationalizationQualityScoreResponse_MessageType'

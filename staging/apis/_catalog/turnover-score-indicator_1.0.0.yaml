@@ -1,0 +1,249 @@
+swagger: "2.0"
+info:
+  title: TurnOverIndicatorScore
+  x-ibm-name: turnover-score-indicator
+  version: 1.0.0
+  description: This API retrieves the TurnOver Score Details for Different sectors
+schemes:
+- https
+basePath: /indicators
+security:
+- OAuth2.0: []
+- clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  properties:
+    target-url:
+      value: http://prow-indicators-http-ace.apps.stg.qiwa-nonprod.local/external/getturnoverscores
+      description: The URL of the target service
+      encoded: false
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        parameter-control:
+          type: blocklist
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(ace-prow-indicators)/external/getturnoverscores
+        follow-redirects: false
+        inject-proxy-headers: true
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  buffering: true
+  application-authentication:
+    certificate: false
+  catalogs: {}
+definitions:
+  TurnOverScoreRequest_MessageType:
+    type: object
+    properties:
+      TurnOverIndicatorRq:
+        $ref: '#/definitions/TurnOverScoreRq_Type'
+  TurnOverScoreResponse_MessageType:
+    type: object
+    properties:
+      TurnOverIndicatorRs:
+        $ref: '#/definitions/TurnOverScoreRs_Type'
+  TurnOverScoreRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/RequestHeader_Type'
+      Body:
+        $ref: '#/definitions/TurnOverScoreRq_Body'
+  TurnOverScoreRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/TurnOverScoreRs_Body'
+  RequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      RequestTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      ServiceCode:
+        type: string
+        default: TOS00002
+  ResponseHeader_Type:
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      ServiceCode:
+        type: string
+        default: NPC00001
+      DebugFlag:
+        type: string
+        default: 1
+      ResponseStatus:
+        $ref: '#/definitions/ResponseStatus'
+      BackendError:
+        $ref: '#/definitions/BackendError'
+  ResponseStatus:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+  BackendError:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+  TurnOverScoreRq_Body:
+    type: object
+    required:
+    - LaborOfficeID
+    - SequenceNumber
+    - StartDate
+    - EndDate
+    - Category
+    - Period
+    properties:
+      LaborOfficeID:
+        type: number
+      SequenceNumber:
+        type: number
+      StartDate:
+        type: string
+        example: MMDDYYYY
+      EndDate:
+        type: string
+        example: MMDDYYYY
+      Category:
+        type: string
+        example: Establishment
+      Period:
+        type: string
+        example: Month
+  TurnOverScoreRs_Body:
+    type: object
+    required:
+    - YearlyDetails
+    properties:
+      YearlyDetails:
+        $ref: '#/definitions/YearlyScores_Type'
+  YearlyScores_Type:
+    type: array
+    items:
+      properties:
+        Year:
+          type: number
+          example: 2024
+        YearlyScores:
+          $ref: '#/definitions/Scores_Type'
+        MonthlyData:
+          $ref: '#/definitions/MonthlyData_Type'
+  Scores_Type:
+    type: object
+    properties:
+      EstablishmentScore:
+        type: number
+        example: 67
+      EntityScore:
+        type: number
+        example: 56
+      UnifiedScore:
+        type: number
+        example: 70
+      SectorScore:
+        type: number
+        example: 80
+  MonthlyData_Type:
+    type: array
+    items:
+      properties:
+        Month:
+          type: string
+          example: January
+        Scores:
+          $ref: '#/definitions/Scores_Type'
+paths:
+  /turnoverscore:
+    post:
+      tags:
+      - TurnOver Score
+      description: Used to get TurnOver Score
+      operationId: getTurnOverScore
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/TurnOverScoreRequest_MessageType'
+        description: TurnOverScoreRq
+        required: true
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/TurnOverScoreResponse_MessageType'

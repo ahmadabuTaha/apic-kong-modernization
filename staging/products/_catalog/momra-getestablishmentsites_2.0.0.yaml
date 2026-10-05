@@ -1,0 +1,844 @@
+swagger: "2.0"
+info:
+  title: MOMRA_GetEstablishmentSites
+  x-ibm-name: momra-getestablishmentsites
+  version: 2.0.0
+  description: This API exposes MOMRA to get Establishment Sites Service from Qiwa
+    platform
+schemes:
+- https
+basePath: /momra/v2
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\r\nvar cfg={\r\n    \"serviceCode\" :
+          \"EXGES0001\",\r\n    \"channelId\" : \"Integration\",\r\n    \"requestName\"
+          : \"EstabSitesRq\",\r\n    \"responseName\": \"EstabSitesRs\",\r\n    \"errorMap\"
+          :{\r\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid Request\"}\r\n
+          \   }\r\n    \r\n};\r\n\r\nvar Input = apim.getvariable('request.parameters');\r\n\r\n\r\nvar
+          lookuptype = Input.lookupType;\r\nvar  lookupid = Input.lookupId;\r\n\r\n\r\n//var
+          obj = {};\r\n//var res = lookuptype.substring(0, 2);\r\nvar r1 = 'CRNumber';\r\nvar
+          r2 = 'CharityID';\r\nvar r3 = 'GovEntityId';\r\nvar r4 = 'GulfIf';\r\nvar
+          r5 = 'NationalId';\r\nvar r6 = 'SevenHundredNumber';\r\n\r\nif (lookuptype
+          === 'CR_NUM')\r\n{\r\nvar c = {\r\n  \"OwnerId\":{\r\n          [r1]: lookupid\r\n
+          \      }\r\n}\r\n}\r\nelse if(lookuptype === 'CHARITY_ID')\r\n{\r\n  var
+          c = {\r\n  \"OwnerId\":{\r\n          [r2]: lookupid\r\n       }\r\n  }\r\n
+          \ \r\n  \r\n}\r\n\r\nelse if(lookuptype === 'GOV_ENTITY_ID')\r\n{\r\n  var
+          c = {\r\n  \"OwnerId\":{\r\n          [r3]: lookupid\r\n       }\r\n  }\r\n
+          \ \r\n  \r\n}\r\nelse if(lookuptype === 'GULF_ID')\r\n{\r\n  var c = {\r\n
+          \ \"OwnerId\":{\r\n          [r4]: lookupid\r\n       }\r\n  }\r\n  \r\n
+          \ \r\n}\r\nelse if(lookuptype === 'NATIONAL_ID')\r\n{\r\n  var c = {\r\n
+          \ \"OwnerId\":{\r\n          [r5]: lookupid\r\n       }\r\n  }\r\n  \r\n
+          \ \r\n}\r\nelse if(lookuptype === 'SEVEN_HUNDRED_NUM')\r\n{\r\n  var c =
+          {\r\n  \"OwnerId\":{\r\n          [r6]: lookupid\r\n       }\r\n  }\r\n
+          \ \r\n  \r\n}\r\nelse{\r\n  apim.error('MyError', 400, 'Internal Error',
+          'Invalid Input');\r\n  \r\n}\r\n\r\nsession.output.write(c);\r\napim.setvariable('cfg',cfg);\r\napim.output('application/json');\r\n"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare_Request
+        source: "var apim = require('apim');\r\n\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\n\r\nvar appcReq
+          = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n            \"TransactionId\"
+          : millisecondsvalue,\r\n            \"ChannelId\": cfg.channelId,\r\n            \"SessionId\":
+          apim.getvariable('message.headers.X-Request-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode\r\n        },\r\n
+          \       \"Body\" : apim.getvariable('message.body')\r\n            \r\n
+          \       \r\n    }\r\n};\r\n\r\nif (typeof OperatorId !== 'undefined')\r\n
+          \   appcReq[cfg.requestName].Header.UserInfo = {\r\n        \"IDNumber\"
+          : OperatorId\r\n    };\r\nsession.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n    \r\n    \r\n\r\n    //return
+          the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour
+          + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        header-control:
+          type: blacklist
+          values: []
+        parameter-control:
+          type: whitelist
+          values: []
+        timeout: 60
+        verb: POST
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        target-url: $(ace-tip-momra)/external/getestablishmentsites
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_Headers
+        source: "\tvar apim = require('apim');\n\t\n\tapim.output('application/json');\n\n
+          \   \n    \n    var cfg = apim.getvariable('cfg');\n    \n\tvar TransactionId
+          = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.TransactionId\");\n\tvar
+          ChannelId = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.ChannelId\");\n\tvar
+          RequestTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.RequestTime\");\n\tvar
+          SessionId = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.SessionId\");\n\tvar
+          MWRequestTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.MWRequestTime\");\n\tvar
+          MWResponseTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.MWResponseTime\");\n\tvar
+          status = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.ResponseStatus.Status\");\n\t\n\n
+          \   apim.setvariable('message.headers.Transaction-Id',TransactionId,'add');\n
+          \   apim.setvariable('message.headers.Channel-Id',ChannelId,'add');\n    if
+          (RequestTime !== 'undefined')\n\t    apim.setvariable('message.headers.RequestTime',RequestTime,'add');\n\tif
+          (SessionId !== 'undefined')\n        apim.setvariable('message.headers.X-Request-Id',SessionId,'add');\n
+          \    if (MWRequestTime !== 'undefined')\n        apim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');\n
+          \   if (MWResponseTime !== 'undefined')\n        apim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');\n\n
+          \   \n    apim.setvariable('message.headers.Response-Status',status,'add');\n
+          \   "
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Response
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar body = message[cfg.responseName].Body;\n\n\nsession.output.write(body);\napim.output('application/json');"
+          - map:
+              version: 2.0.0
+              title: map
+              inputs:
+                "":
+                  schema:
+                    $ref: '#/definitions/StrGetEstabSitesRs_BodyType'
+                  variable: message.body
+                  content: application/json
+              outputs:
+                "":
+                  schema:
+                    $ref: '#/definitions/GetEstabSitesRs_BodyType'
+                  variable: message.body
+                  content: application/json
+              actions:
+              - set: .ownerInfo.ownerName
+                from: .OwnerInfo.OwnerName
+              - set: .ownerInfo.ownerId.crNumber
+                from: .OwnerInfo.OwnerIdentifier.CRNumber
+              - set: .ownerInfo.ownerId.charityId
+                from: .OwnerInfo.OwnerIdentifier.CharityId
+              - set: .ownerInfo.ownerId.govEntityId
+                from: .OwnerInfo.OwnerIdentifier.GovEntityId
+              - set: .ownerInfo.ownerId.gulfId
+                from: .OwnerInfo.OwnerIdentifier.GulfId
+              - set: .ownerInfo.ownerId.nationalId
+                from: .OwnerInfo.OwnerIdentifier.NationalId
+              - set: .ownerInfo.ownerId.sevenHundredNum
+                from: .OwnerInfo.OwnerIdentifier.SevenHundredNum
+              - create: .licenseInfoList
+                foreach: .LicenseInfoList.LicenseInfo
+                from: .LicenseInfoList.LicenseInfo
+                actions:
+                - set: amanah.amanahCode
+                  from: Amanah.AmanahCode
+                - set: amanah.amanahName
+                  from: Amanah.AmanahName
+                - set: baladiaName
+                  from: BaladiaName
+                - set: issueDate
+                  from: IssueDate
+                - set: expiryDate
+                  from: ExpiryDate
+                - set: licenseStatus
+                  from: LicenseStatus
+                - set: commericalName
+                  from: CommericalName
+                - set: shopArea
+                  from: ShopArea
+                - create: activitiesList
+                  foreach: ActivitiesList
+                  from: ActivitiesList
+                  actions:
+                  - set: activityISICCode
+                    from: Activity
+                  - set: activityISICDescription
+                    from: Activity
+                  - set: activityAmanahDescription
+                    from: Activity
+                  - set: activityArea
+                    from: Activity
+                  - set: commercialName
+                    from: Activity
+                  - set: shopArea
+                    from: Activity
+                  - set: doorsCount
+                    from: Activity
+                  - set: shopAddress
+                    from: Activity
+                  - set: locationCoordinates
+                    from: Activity
+                - create: activitiesList
+                  foreach: .LicenseInfoList.LicenseInfo
+                  from: .LicenseInfoList.LicenseInfo
+                  actions:
+                  - create: boardsList
+                    foreach: ActivitiesList
+                    from: ActivitiesList
+                    actions:
+                    - set: $item
+                      from: Activity
+              options:
+                mapEnablePostProcessingJSON: true
+                mapEmulateV4EmptyJSONObject: false
+                mapEmulateV4DefaultRequiredProps: false
+                mapReferenceLimit: 1
+                includeEmptyXMLElements: false
+                namespaceInheritance: false
+                inlineNamespaces: false
+                mapResolveApicVariables: false
+                mapOptimizeSchemaDefinition: true
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Error
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar error = {\n  \"errorCode\":
+                message[cfg.responseName].Header.ResponseStatus.Code,\n  \"errorMessage\":
+                {\n    \"en-US\": message[cfg.responseName].Header.ResponseStatus.EnglishMsg,\n
+                \   \"ar-SA\": message[cfg.responseName].Header.ResponseStatus.ArabicMsg\n
+                \ }\n};\n\nvar httperror=0;\nif(cfg.errorMap){\n    if(cfg.errorMap[error.errorCode]){\n
+                \      httperror = cfg.errorMap[error.errorCode].code;\n       \n
+                \      //var errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\n
+                \      //var details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\n    }\n}\nif(httperror
+                == 0){\n   httperror = 400;\n   // apim.error('ERROR',400,'Bad Request','Invalid
+                request');\n}\napim.setvariable('message.status.code',httperror,'set');\n\nsession.output.write(error);\napim.output('application/json');"
+    catch: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+parameters:
+  unifiedNumber:
+    in: query
+    name: unifiedNumber
+    description: Personal Identifier
+    required: false
+    type: integer
+  lookupType:
+    in: query
+    name: lookupType
+    description: Lookup type
+    required: true
+    type: string
+    enum:
+    - CR_NUM
+    - CHARITY_ID
+    - GOV_ENTITY_ID
+    - GULF_ID
+    - NATIONAL_ID
+    - SEVEN_HUNDRED_NUM
+  lookupId:
+    in: query
+    name: lookupId
+    description: Lookup id
+    required: true
+    type: string
+  X-IBM-Client-Id:
+    in: header
+    name: X-IBM-Client-Id
+    description: Client id issued by security server
+    required: true
+    type: string
+  X-IBM-Client-Secret:
+    in: header
+    name: X-IBM-Client-Secret
+    description: Client secret issued by security server
+    required: true
+    type: string
+  X-Request-Id:
+    in: header
+    name: X-Request-Id
+    description: X-Request-Id returned in the response header
+    required: false
+    type: string
+definitions:
+  ResponseModel:
+    type: object
+    description: This response object returned by the get operation
+    properties:
+      ownerInfo:
+        $ref: '#/definitions/OwnerInfoModel'
+      licenseInfoList:
+        type: array
+        items:
+          $ref: '#/definitions/LicenseInfoListModel'
+  OwnerInfoModel:
+    type: object
+    properties:
+      ownerName:
+        $ref: '#/definitions/LocaleDataModel'
+        type: string
+        example: "1909185441"
+  StrGetEstabSitesRq_BodyType:
+    type: object
+    properties:
+      UnifiedNum:
+        type: string
+      OwnerId:
+        $ref: '#/definitions/OwnerId'
+    required:
+    - OwnerId
+  ownerId:
+    type: object
+    properties:
+      crNumber:
+        type: integer
+      charityId:
+        type: integer
+      govEntityId:
+        type: integer
+      gulfId:
+        type: integer
+      nationalId:
+        type: integer
+      sevenHundredNum:
+        type: integer
+  OwnerId:
+    type: object
+    properties:
+      CRNumber:
+        type: string
+      CharityId:
+        type: string
+      GovEntityId:
+        type: string
+      GulfId:
+        type: string
+      NationalId:
+        type: string
+      SevenHundredNum:
+        type: string
+  GetEstabSitesRs_BodyType:
+    type: object
+    properties:
+      ownerInfo:
+        $ref: '#/definitions/ownerInfo'
+      licenseInfoList:
+        type: array
+        items:
+          $ref: '#/definitions/licenseInfoBody'
+    required:
+    - ownerInfo
+  StrGetEstabSitesRs_BodyType:
+    type: object
+    properties:
+      OwnerInfo:
+        $ref: '#/definitions/OwnerInfo'
+      LicenseInfoList:
+        $ref: '#/definitions/LicenseInfoList_Type'
+    required:
+    - OwnerInfo
+  ownerInfo:
+    type: object
+    properties:
+      ownerName:
+        type: string
+      ownerId:
+        $ref: '#/definitions/ownerId'
+    required:
+    - ownerName
+    - ownerId
+  OwnerInfo:
+    type: object
+    properties:
+      OwnerName:
+        type: string
+      OwnerIdentifier:
+        $ref: '#/definitions/StrOwnerId'
+    required:
+    - OwnerName
+  StrOwnerId:
+    type: object
+    properties:
+      CRNumber:
+        type: string
+      CharityId:
+        type: string
+      GovEntityId:
+        type: string
+      GulfId:
+        type: string
+      NationalId:
+        type: string
+      SevenHundredNum:
+        type: string
+  licenseInfoList_Type:
+    type: object
+    properties:
+      licenseInfo:
+        type: array
+        items:
+          $ref: '#/definitions/licenseInfoBody'
+  LicenseInfoList_Type:
+    type: object
+    properties:
+      LicenseInfo:
+        type: array
+        items:
+          $ref: '#/definitions/LicenseInfoBody'
+  licenseInfoBody:
+    type: object
+    properties:
+      unifiedLicenseNumber:
+        type: string
+      amanah:
+        $ref: '#/definitions/amanah'
+      baladiaName:
+        type: string
+      issueDate:
+        type: string
+      expiryDate:
+        type: string
+      licenseStatus:
+        type: string
+      activitiesList:
+        type: array
+        items:
+          $ref: '#/definitions/activity_body'
+      commericalName:
+        type: string
+      shopArea:
+        type: string
+  LicenseInfoBody:
+    type: object
+    properties:
+      UnifiedLicenseNumber:
+        type: string
+      Amanah:
+        $ref: '#/definitions/Amanah'
+      BaladiaName:
+        type: string
+      IssueDate:
+        type: string
+      ExpiryDate:
+        type: string
+      LicenseStatus:
+        type: string
+      ActivitiesList:
+        $ref: '#/definitions/ActivitiesList_Type'
+      CommericalName:
+        type: string
+      ShopArea:
+        type: string
+  amanah:
+    type: object
+    properties:
+      amanahCode:
+        type: string
+      amanahName:
+        type: string
+  Amanah:
+    type: object
+    properties:
+      AmanahCode:
+        type: string
+      AmanahName:
+        type: string
+  activitiesList_Type:
+    type: object
+    properties:
+      activity:
+        type: array
+        items:
+          $ref: '#/definitions/activity_body'
+  ActivitiesList_Type:
+    type: object
+    properties:
+      Activity:
+        type: array
+        items:
+          $ref: '#/definitions/Activity_body'
+  activity_body:
+    type: object
+    properties:
+      activityISICCode:
+        type: string
+      activityISICDescription:
+        type: string
+      activityAmanahDescription:
+        type: string
+      activityArea:
+        type: string
+      boardsList:
+        type: array
+        items:
+          $ref: '#/definitions/boards_Body'
+      commercialName:
+        type: string
+      shopArea:
+        type: string
+      doorsCount:
+        type: string
+      shopAddress:
+        type: string
+      locationCoordinates:
+        $ref: '#/definitions/locationCoordinates'
+  Activity_body:
+    type: object
+    properties:
+      ActivityISICCode:
+        type: string
+      ActivityISICDescription:
+        type: string
+      ActivityAmanahDescription:
+        type: string
+      ActivityArea:
+        type: string
+      BoardsList:
+        $ref: '#/definitions/Boards_Type'
+      CommercialName:
+        type: string
+      ShopArea:
+        type: string
+      DoorsCount:
+        type: string
+      ShopAddress:
+        type: string
+      LocationCoordinates:
+        $ref: '#/definitions/LocationCoordinates'
+  boards_Type:
+    type: object
+    properties:
+      board:
+        type: array
+        items:
+          $ref: '#/definitions/boards_Body'
+  Boards_Type:
+    type: object
+    properties:
+      Board:
+        type: array
+        items:
+          $ref: '#/definitions/Boards_Body'
+  boards_Body:
+    type: object
+    properties:
+      boardType:
+        type: string
+      boardArea:
+        type: string
+  Boards_Body:
+    type: object
+    properties:
+      BoardType:
+        type: string
+      BoardArea:
+        type: string
+  locationCoordinates:
+    type: object
+    properties:
+      longitude:
+        type: string
+      latitude:
+        type: string
+  LocationCoordinates:
+    type: object
+    properties:
+      Longitude:
+        type: string
+      Latitude:
+        type: string
+  LicenseInfoListModel:
+    type: object
+    properties:
+      licenseInfo:
+        $ref: '#/definitions/LocaleDataModel'
+      unifiedLicenseNumber:
+        type: string
+        example: "3909185441"
+      amanah:
+        $ref: '#/definitions/NameCodeModel'
+      baladiaName:
+        $ref: '#/definitions/LocaleDataModel'
+        example: نطاق خدمة أمانة عسير
+      issueDate:
+        $ref: '#/definitions/HijriDateModel'
+      expiryDate:
+        $ref: '#/definitions/HijriDateModel'
+      licenseStatus:
+        type: string
+        example: سارية
+      activitiesList:
+        type: array
+        items:
+          $ref: '#/definitions/ActivitiesListModel'
+      commercialName:
+        $ref: '#/definitions/LocaleDataModel'
+      shopArea:
+        type: string
+        example: "0"
+      doorsCount:
+        $ref: '#/definitions/IntegerNumberModel'
+      shopAddress:
+        $ref: '#/definitions/LocaleDataModel'
+      locationCoordinates:
+        $ref: '#/definitions/LocationCoordinatesModel'
+  ActivitiesListModel:
+    type: object
+    properties:
+      activityIsicCode:
+        type: string
+        example: "452041"
+      activityIsicDesc:
+        type: string
+        example: تبديل الزيوت
+      activityAmanahDesc:
+        type: string
+        example: بنشر وغيار زيت
+      activityArea:
+        type: string
+        example: "0"
+      boardsList:
+        type: array
+        items:
+          $ref: '#/definitions/BoardsListModel'
+  BoardsListModel:
+    type: object
+    properties:
+      boardType:
+        type: string
+        example: إرشادية
+      boardArea:
+        type: string
+        example: "6"
+  LocationCoordinatesModel:
+    type: object
+    properties:
+      longitude:
+        type: string
+        example: "211"
+      latitude:
+        type: string
+        example: "234"
+  NameCodeModel:
+    type: object
+    description: 'This object will be used across the model '
+    properties:
+      code:
+        type: string
+        example: "1"
+      name:
+        type: string
+        example: name
+  IntegerNumberModel:
+    type: object
+    description: This object use for integer numbers
+    additionalProperties:
+      type: integer
+      example: 1
+  ErrorModel:
+    type: object
+    required:
+    - errorCode
+    - errorMessage
+    properties:
+      errorCode:
+        type: string
+        example: EXXXX000
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+  HijriDateModel:
+    type: string
+    description: This date object will be used across the model with format yyyy-MM-dd
+      for hijri dates only
+    example: "1439-12-25"
+  LocaleDataModel:
+    type: object
+    additionalProperties:
+      type: string
+    example:
+      en-US: English Value
+      ar-SA: Arabic Value
+paths:
+  /establishment/sites:
+    parameters:
+    - name: unifiedNumber
+      in: query
+      required: false
+      description: Personal Identifier
+      type: integer
+      format: int32
+    - name: lookupType
+      in: query
+      required: false
+      description: Lookup type
+      type: string
+    - name: lookupId
+      in: query
+      required: true
+      description: Lookup id
+      type: string
+    - name: X-IBM-Client-Id
+      in: header
+      required: true
+      description: Client id issued by security server
+      type: string
+    - name: X-IBM-Client-Secret
+      in: header
+      required: true
+      description: Client secret issued by security server
+      type: string
+    - name: X-Request-Id
+      in: header
+      required: false
+      description: X-Request-Id returned in the response header
+      type: string
+    get:
+      tags:
+      - Establishment Sites
+      description: Service to Get Establishment Sites
+      operationId: getEstablishmentSites
+      produces:
+      - application/json
+      responses:
+        "200":
+          $ref: '#/responses/Response200'
+        "400":
+          $ref: '#/responses/Response400'
+        "401":
+          $ref: '#/responses/Response401'
+        "403":
+          $ref: '#/responses/Response403'
+        "404":
+          $ref: '#/responses/Response404'
+        "408":
+          $ref: '#/responses/Response408'
+        "409":
+          $ref: '#/responses/Response409'
+        "429":
+          $ref: '#/responses/Response429'
+        "500":
+          $ref: '#/responses/Response500'
+        "501":
+          $ref: '#/responses/Response501'
+        "503":
+          $ref: '#/responses/Response503'
+        "510":
+          $ref: '#/responses/Response510'
+responses:
+  Response200:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ResponseModel'
+  Response400:
+    description: The request was rejected by the server due to malformed syntax. Bad
+      Request.
+  Response401:
+    description: The request could not be completed due to lack of valid credentials.
+      Authentication.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response403:
+    description: The request could not be completed because it is not authorized.
+      Authorization
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response404:
+    description: The server has not found anything matching the Request-URI.
+  Response408:
+    description: The client did not produce a request within the time that the server
+      was prepared to wait.
+  Response409:
+    description: The request could not be completed due to a conflict with the current
+      state of the resource. Usually business validation errors will be returned in
+      the body
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response429:
+    description: The request was sent too many times in a given amount of time
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response500:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response501:
+    description: The server does not support the functionality required and does not
+      recognize the request
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response503:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response510:
+    description: Extensions to the request are required for the server to fulfil it.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'

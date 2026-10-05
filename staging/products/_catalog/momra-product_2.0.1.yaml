@@ -1,0 +1,40 @@
+info:
+  name: momra-product
+  title: MOMRA-Product
+  version: 2.0.1
+  description: PROD YAML
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    rate-limits:
+      default:
+        value: 100/1hour
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    apis:
+      getestablishmentsize2.0.2: {}
+      validateemployeeoccupation2.0.1: {}
+      validateworkpermitvalidity2.0.0: {}
+      verifysaudizationcertificatevalidity2.0.0: {}
+      verifyviolatedestablishment2.0.1: {}
+apis:
+  getestablishmentsize2.0.2:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getestablishmentsize_2.0.2.yaml
+  validateemployeeoccupation2.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validateemployeeoccupation_2.0.1.yaml
+  validateworkpermitvalidity2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validateworkpermitvalidity_2.0.0_1.yaml
+  verifysaudizationcertificatevalidity2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/verifysaudizationcertificatevalidity_2.0.0_1.yaml
+  verifyviolatedestablishment2.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/verifyviolatedestablishment_2.0.1.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

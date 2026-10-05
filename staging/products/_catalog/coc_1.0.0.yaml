@@ -1,0 +1,30 @@
+info:
+  version: 1.0.0
+  title: CoC
+  name: coc
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    rate-limits:
+      default:
+        value: 100/1minute
+        hard-limit: true
+    apis:
+      verifymemberbynationalnumber-coc1.0.0: {}
+      updateverification-coc1.0.0: {}
+apis:
+  verifymemberbynationalnumber-coc1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/verifymemberbynationalnumber-coc_1.0.0.yaml
+  updateverification-coc1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updateverification-coc_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

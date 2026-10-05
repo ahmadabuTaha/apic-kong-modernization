@@ -1,0 +1,243 @@
+swagger: "2.0"
+info:
+  title: Qiwa_update occupation group
+  x-ibm-name: qiwa-update-occupation-group
+  version: 1.0.0
+  description: update occupation group
+schemes:
+- https
+basePath: /matrixmanagement
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        header-control:
+          type: blacklist
+          values: []
+        parameter-control:
+          type: whitelist
+          values: []
+        timeout: 60
+        verb: keep
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        target-url: $(ace-mtrm-matrixmanagement)/matrixmanagement/updateoccupationgroup
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  updateoccupationgroupRq_MessageType:
+    type: object
+    properties:
+      updateoccupationgroupRq:
+        $ref: '#/definitions/updateoccupationgroupRq_Type'
+  updateoccupationgroupRs_MessageType:
+    type: object
+    properties:
+      updateoccupationgroupRs:
+        $ref: '#/definitions/updateoccupationgroupRs_Type'
+  updateoccupationgroupRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/updateoccupationgroupRq_BodyType'
+  updateoccupationgroupRq_BodyType:
+    type: object
+    properties:
+      OccupationGroupId:
+        type: integer
+      OccupationGroupEN:
+        type: string
+      OccupationGroupAR:
+        type: string
+      IsActive:
+        type: integer
+      Comment:
+        type: string
+    required:
+    - OccupationGroupId
+    - OccupationGroupEN
+    - OccupationGroupAR
+    - IsActive
+    - Comment
+  updateoccupationgroupRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /updateoccupationgroup:
+    post:
+      operationId: updateoccupationgroup
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/updateoccupationgroupRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: update occupation group
+      parameters:
+      - name: X-Request-Id
+        in: header
+        description: X-Request-Id returned in the response header
+        required: false
+        type: string
+      - name: X-IBM-Client-Secret
+        in: header
+        description: Client secret issued by security server
+        required: true
+        type: string
+      - name: X-IBM-Client-Id
+        in: header
+        description: Client id issued by security server
+        required: true
+        type: string
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/updateoccupationgroupRq_MessageType'
+        description: updateoccupationgroupRq
+        required: true

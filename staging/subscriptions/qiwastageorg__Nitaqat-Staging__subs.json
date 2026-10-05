@@ -1,0 +1,24 @@
+{
+    "total_results": 1,
+    "results": [
+        {
+            "type": "subscription",
+            "api_version": "2.0.0",
+            "id": "9da2965f-98af-4b2b-8143-06b3d102edb9",
+            "name": "1Nitaqat-3.0.0-default-plan",
+            "title": "1Nitaqat 3.0.0 default-plan",
+            "state": "enabled",
+            "product_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/catalogs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/products/dd4ab6de-e8a3-47b8-95ad-3fe9bae78517",
+            "plan": "default-plan",
+            "plan_title": "Default Plan",
+            "task_urls": [],
+            "created_at": "2026-08-06T09:25:56.000Z",
+            "updated_at": "2026-08-09T14:29:15.000Z",
+            "org_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/orgs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c",
+            "catalog_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/catalogs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2",
+            "consumer_org_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/consumer-orgs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/d573f483-0c02-4bc6-9b0f-c0e69910376b",
+            "app_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/apps/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/d573f483-0c02-4bc6-9b0f-c0e69910376b/1ab53fb8-ebd3-44be-b8b6-56ef6c3f589f",
+            "url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/apps/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/d573f483-0c02-4bc6-9b0f-c0e69910376b/1ab53fb8-ebd3-44be-b8b6-56ef6c3f589f/subscriptions/9da2965f-98af-4b2b-8143-06b3d102edb9"
+        }
+    ]
+}

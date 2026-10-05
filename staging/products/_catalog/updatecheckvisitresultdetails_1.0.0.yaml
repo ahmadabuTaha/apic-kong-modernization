@@ -1,0 +1,317 @@
+swagger: "2.0"
+info:
+  title: UpdateCheckVisitResultDetails
+  x-ibm-name: updatecheckvisitresultdetails
+  version: 1.0.0
+  description: This service is used to update inspection visits in addition have 2
+    different flows based on the visit status of approved or rejected
+schemes:
+- https
+basePath: /check
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-chmng-updates)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        persistent-connection: true
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+definitions:
+  UpdateCheckVisitResultDetailsRq_MessageType:
+    type: object
+    properties:
+      UpdateCheckVisitResultDetailsRq:
+        $ref: '#/definitions/UpdateCheckVisitResultDetailsRq_Type'
+  UpdateCheckVisitResultDetailsRs_MessageType:
+    type: object
+    properties:
+      UpdateCheckVisitResultDetailsRs:
+        $ref: '#/definitions/UpdateCheckVisitResultDetailsRs_Type'
+  UpdateCheckVisitResultDetailsRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/UpdateCheckVisitResultDetailsRq_BodyType'
+  UpdateCheckVisitResultDetailsRq_BodyType:
+    type: object
+    properties:
+      InspectionVisitID:
+        type: integer
+      RequestNumber:
+        type: integer
+      RequestType:
+        type: integer
+      InspectionVisitStatus:
+        type: integer
+      IsVisited:
+        type: integer
+      IsOwnerResponsed:
+        type: integer
+      InspectorName:
+        type: integer
+      Note:
+        type: integer
+      CheckSubmittedJsonData:
+        $ref: '#/definitions/CheckSubmittedJsonData_Type'
+    required:
+    - InspectionVisitID
+    - RequestNumber
+    - RequestType
+    - InspectionVisitStatus
+    - IsVisited
+    - IsOwnerResponsed
+  CheckSubmittedJsonData_Type:
+    type: object
+    properties:
+      Data:
+        type: array
+        items:
+          $ref: '#/definitions/Data_Type'
+  Data_Type:
+    type: object
+    properties:
+      Id:
+        type: string
+      Label:
+        type: string
+      Values:
+        type: string
+      Note:
+        type: string
+      Attachment:
+        type: string
+      Score:
+        type: integer
+      Weight:
+        type: integer
+      Issue:
+        type: boolean
+      GroupOfAnswers:
+        $ref: '#/definitions/GroupOfAnswers_Type'
+    required:
+    - Id
+    - Label
+    - Values
+    - Note
+    - Attachment
+    - Score
+    - Weight
+    - Issue
+  GroupOfAnswers_Type:
+    type: array
+    items:
+      $ref: '#/definitions/DataItem_Type'
+  DataItem_Type:
+    type: object
+    properties:
+      Id:
+        type: string
+      EnName:
+        type: string
+    required:
+    - Id
+    - EnName
+  UpdateCheckVisitResultDetailsRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/UpdateCheckVisitResultDetailsRs_BodyType'
+  UpdateCheckVisitResultDetailsRs_BodyType:
+    type: object
+    properties:
+      ErrorsList:
+        $ref: '#/definitions/ErrorsList_Type'
+    required:
+    - ErrorsList
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+  ErrorItem_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ArDescription:
+        type: string
+      EnDescription:
+        type: string
+    required:
+    - EnDescription
+    - ArDescription
+    - ErrorCode
+  ErrorsList_Type:
+    type: object
+    properties:
+      ErrorItem:
+        type: array
+        items:
+          $ref: '#/definitions/ErrorItem_Type'
+paths:
+  /updatecheckvisitresultdet:
+    post:
+      operationId: UpdateCheckVisitResultDetails
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/UpdateCheckVisitResultDetailsRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Update Inspector Visit Details Check
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/UpdateCheckVisitResultDetailsRq_MessageType'
+        description: Update Inspector Visit Details Check
+        required: true

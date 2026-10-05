@@ -1,0 +1,303 @@
+swagger: "2.0"
+info:
+  title: CheckLaborerDebt
+  x-ibm-name: checklaborerdebt
+  version: 1.0.1
+  description: This Service is used to Validate Debt and Resolve Debtor Status
+schemes:
+- https
+basePath: /workpermit
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-wp-wpdept)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        persistent-connection: true
+    catch: []
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+definitions:
+  CheckLaborerDebtRq_MessageType:
+    type: object
+    properties:
+      CheckLaborerDebtRq:
+        $ref: '#/definitions/CheckLaborerDebtRq_Type'
+  CheckLaborerDebtRs_MessageType:
+    type: object
+    properties:
+      CheckLaborerDebtRs:
+        $ref: '#/definitions/CheckLaborerDebtRs_Type'
+  CheckLaborerDebtRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/CheckLaborerDebtRq_BodyType'
+  CheckLaborerDebtRq_BodyType:
+    type: object
+    properties:
+      LaborerIdNo:
+        type: integer
+      LaborerName:
+        type: string
+      LaborerStatusId:
+        type: integer
+      WPExpiryDate:
+        type: string
+      SourceLaborOfficeId:
+        type: integer
+      SourceSequenceNumber:
+        type: integer
+      SourceUnifiedNumber:
+        type: integer
+      SourceEstablishmentStatus:
+        type: integer
+      DestinationLaborOfficeId:
+        type: integer
+      DestinationSequenceNumber:
+        type: integer
+      DestinationUnifiedNumber:
+        type: integer
+      SourceEstablishmentId:
+        type: integer
+      DestinationEstablishmentId:
+        type: integer
+    required:
+    - LaborerIdNo
+    - LaborerStatusId
+    - SourceLaborOfficeId
+    - SourceSequenceNumber
+    - SourceUnifiedNumber
+    - SourceEstablishmentStatus
+    - DestinationLaborOfficeId
+    - DestinationSequenceNumber
+    - DestinationUnifiedNumber
+    - SourceEstablishmentId
+    - DestinationEstablishmentId
+  CheckLaborerDebtRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/CheckLaborerDebtRs_BodyType'
+  CheckLaborerDebtRs_BodyType:
+    type: object
+    properties:
+      LaborerId:
+        type: integer
+      LaborerName:
+        type: string
+      DebtLaborOffice:
+        type: integer
+      DebtSequenceNumber:
+        type: integer
+      DebtEstablishmentType:
+        type: integer
+    required:
+    - LaborerId
+    - DebtLaborOffice
+    - DebtSequenceNumber
+    - DebtEstablishmentType
+  GHDate_Type:
+    type: object
+    properties:
+      GregorianDate:
+        type: string
+      HijriDate:
+        type: string
+    required:
+    - GregorianDate
+    - HijriDate
+  CodeandName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      Name:
+        type: string
+    required:
+    - Code
+    - Name
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: string
+      IDNumber:
+        type: string
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+    required:
+    - NameAr
+    - NameEn
+    - Code
+paths:
+  /checklaborerdebt:
+    post:
+      operationId: CheckLaborerDebt
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/CheckLaborerDebtRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: CheckLaborerDebt
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/CheckLaborerDebtRq_MessageType'
+        description: CheckLaborerDebtRq
+        required: true

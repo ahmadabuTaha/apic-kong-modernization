@@ -1,0 +1,28 @@
+info:
+  version: 1.0.0
+  title: Admin-Troubleshoot
+  name: admin-troubleshoot
+  summary: This product is for troubleshoot the API  service for admin users
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    rate-limits:
+      default:
+        value: 100/1hour
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    apis:
+      admingetcontractdetails1.0.0: {}
+apis:
+  admingetcontractdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/admingetcontractdetails_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

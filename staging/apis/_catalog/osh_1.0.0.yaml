@@ -1,0 +1,717 @@
+swagger: "2.0"
+info:
+  title: OSH
+  x-ibm-name: osh
+  version: 1.0.0
+schemes:
+- https
+basePath: /qiwa/v2
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientIdHeader:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://gw-apic.qiwa.info/takamol/staging/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: ($httpVerb() = 'POST' and $operationPath() = '/categoryById')
+          execute:
+          - invoke:
+              title: GetCategoryById
+              version: 2.0.0
+              verb: POST
+              target-url: $(target-url)/categoryById
+              follow-redirects: false
+              timeout: 60
+              parameter-control:
+                type: blacklist
+              header-control:
+                type: blacklist
+                values:
+                - ^X-IBM-Client-Id$
+              inject-proxy-headers: true
+              stop-on-error:
+              - ConnectionError
+        - condition: ($httpVerb() = 'POST' and $operationPath() = '/roles')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: GetAllRoles
+              header-control:
+                type: blacklist
+                values: []
+              parameter-control:
+                type: whitelist
+                values: []
+              timeout: 60
+              verb: POST
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error:
+              - ConnectionError
+              target-url: $(target-url)/roles
+        - condition: ($httpVerb() = 'POST' and $operationPath() = '/performanceCardRequestByUser')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: GetPerformanceCardRequestByUser
+              header-control:
+                type: blacklist
+                values: []
+              parameter-control:
+                type: whitelist
+                values: []
+              timeout: 60
+              verb: POST
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error:
+              - ConnectionError
+              target-url: $(target-url)/performanceCardRequestByUser
+        - condition: ($httpVerb() = 'POST' and $operationPath() = '/patchPerformanceCardRequest')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: PatchPerformanceCardRequest
+              header-control:
+                type: blacklist
+                values: []
+              parameter-control:
+                type: whitelist
+                values: []
+              timeout: 60
+              verb: POST
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error:
+              - ConnectionError
+              target-url: $(target-url)/patchPerformanceCardRequest
+        - condition: ($httpVerb() = 'POST' and $operationPath() = '/performanceCard')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: CreatePerformanceCard
+              header-control:
+                type: blacklist
+                values: []
+              parameter-control:
+                type: whitelist
+                values: []
+              timeout: 60
+              verb: POST
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error:
+              - ConnectionError
+              target-url: $(target-url)/performanceCard
+        - condition: ($httpVerb() = 'POST' and $operationPath() = '/getUserByUserName')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: GetUserByUserName
+              header-control:
+                type: blacklist
+                values: []
+              parameter-control:
+                type: whitelist
+                values: []
+              timeout: 60
+              verb: POST
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error:
+              - ConnectionError
+              target-url: $(target-url)/getUserByUserName
+        - condition: ($httpVerb() = 'POST' and $operationPath() = '/getAllUsers')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: GetAllUsers
+              header-control:
+                type: blacklist
+                values: []
+              parameter-control:
+                type: whitelist
+                values: []
+              timeout: 60
+              verb: POST
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error:
+              - ConnectionError
+              target-url: $(target-url)/getAllUsers
+        - condition: ($httpVerb() = 'POST' and $operationPath() = '/getUserByUUId')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: GetUserByUUId
+              header-control:
+                type: blacklist
+                values: []
+              parameter-control:
+                type: whitelist
+                values: []
+              timeout: 60
+              verb: POST
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error:
+              - ConnectionError
+              target-url: $(target-url)/getUserByUUId
+        - condition: ($httpVerb() = 'POST' and $operationPath() = '/exportUsers')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: ExportUsers
+              header-control:
+                type: blacklist
+                values: []
+              parameter-control:
+                type: whitelist
+                values: []
+              timeout: 60
+              verb: POST
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error:
+              - ConnectionError
+              target-url: $(target-url)/exportUsers
+        - condition: ($httpVerb() = 'POST' and $operationPath() = '/performanceCardById')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: GetPerformanceCardById
+              header-control:
+                type: blacklist
+                values: []
+              parameter-control:
+                type: whitelist
+                values: []
+              timeout: 60
+              verb: POST
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error:
+              - ConnectionError
+              target-url: $(target-url)/performanceCardById
+        - condition: ($httpVerb() = 'POST' and $operationPath() = '/createUser')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: CreateUser
+              header-control:
+                type: blacklist
+                values: []
+              parameter-control:
+                type: whitelist
+                values: []
+              timeout: 60
+              verb: POST
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error:
+              - ConnectionError
+              target-url: $(target-url)/createUser
+        - condition: ($httpVerb() = 'POST' and $operationPath() = '/filesByFileName')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: GetFileByFileName
+              header-control:
+                type: blacklist
+                values: []
+              parameter-control:
+                type: whitelist
+                values: []
+              timeout: 60
+              verb: POST
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error:
+              - ConnectionError
+              target-url: $(target-url)/filesByFileName
+        - condition: ($httpVerb() = 'POST' and $operationPath() = '/files')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: GetAllFiles
+              header-control:
+                type: blacklist
+                values: []
+              parameter-control:
+                type: whitelist
+                values: []
+              timeout: 60
+              verb: POST
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error:
+              - ConnectionError
+              target-url: $(target-url)/files
+        - condition: ($httpVerb() = 'POST' and $operationPath() = '/performanceCardRequestById')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: GetPerformanceCardRequestById
+              header-control:
+                type: blacklist
+                values: []
+              parameter-control:
+                type: whitelist
+                values: []
+              timeout: 60
+              verb: POST
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error:
+              - ConnectionError
+              target-url: $(target-url)/performanceCardRequestById
+        - condition: ($httpVerb() = 'POST' and $operationPath() = '/performanceCardRequestByEstablishmentId')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: GetAllPerformanceCardRequestByEstablishmentId
+              header-control:
+                type: blacklist
+                values: []
+              parameter-control:
+                type: whitelist
+                values: []
+              timeout: 60
+              verb: POST
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error:
+              - ConnectionError
+              target-url: $(target-url)/performanceCardRequestByEstablishmentId
+        - condition: ($httpVerb() = 'POST' and $operationPath() = '/performanceCardRequestFiltered')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: invoke
+              header-control:
+                type: blacklist
+                values: []
+              parameter-control:
+                type: whitelist
+                values: []
+              timeout: 60
+              verb: POST
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error:
+              - ConnectionError
+              target-url: $(target-url)/performanceCardRequestFiltered
+        - condition: ($httpVerb() = 'POST' and $operationPath() = '/performanceCardByEstablishmentId')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: invoke
+              header-control:
+                type: blacklist
+                values: []
+              parameter-control:
+                type: whitelist
+                values: []
+              timeout: 60
+              verb: POST
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error:
+              - ConnectionError
+              target-url: $(target-url)/performanceCardByEstablishmentId
+        - condition: ($httpVerb() = 'POST' and $operationPath() = '/establishmentByCompanyId')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: invoke
+              header-control:
+                type: blacklist
+                values: []
+              parameter-control:
+                type: whitelist
+                values: []
+              timeout: 60
+              verb: POST
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error:
+              - ConnectionError
+              target-url: $(target-url)/establishmentByCompanyId
+        - condition: ($httpVerb() = 'POST' and $operationPath() = '/establishmentById')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: invoke
+              header-control:
+                type: blacklist
+                values: []
+              parameter-control:
+                type: whitelist
+                values: []
+              timeout: 60
+              verb: POST
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error:
+              - ConnectionError
+              target-url: $(target-url)/establishmentById
+        - condition: ($httpVerb() = 'POST' and $operationPath() = '/economicActivityByNitakatId')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: invoke
+              header-control:
+                type: blacklist
+                values: []
+              parameter-control:
+                type: whitelist
+                values: []
+              timeout: 60
+              verb: POST
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error:
+              - ConnectionError
+              target-url: $(target-url)/economicActivityByNitakatId
+        - condition: ($httpVerb() = 'POST' and $operationPath() = '/economicActivity')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: invoke
+              header-control:
+                type: blacklist
+                values: []
+              parameter-control:
+                type: whitelist
+                values: []
+              timeout: 60
+              verb: POST
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error:
+              - ConnectionError
+              target-url: $(target-url)/economicActivity
+        - condition: ($httpVerb() = 'POST' and $operationPath() = '/category')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: invoke
+              header-control:
+                type: blacklist
+                values: []
+              parameter-control:
+                type: whitelist
+                values: []
+              timeout: 60
+              verb: POST
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error:
+              - ConnectionError
+              target-url: $(target-url)/category
+        - condition: ($httpVerb() = 'POST' and $operationPath() = '/assessmentVisitsById')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: invoke
+              header-control:
+                type: blacklist
+                values: []
+              parameter-control:
+                type: whitelist
+                values: []
+              timeout: 60
+              verb: POST
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error:
+              - ConnectionError
+              target-url: $(target-url)/assessmentVisitsById
+        - condition: ($httpVerb() = 'POST' and $operationPath() = '/assessmentVisits')
+          execute:
+          - invoke:
+              version: 2.0.0
+              title: invoke
+              header-control:
+                type: blacklist
+                values: []
+              parameter-control:
+                type: whitelist
+                values: []
+              timeout: 60
+              verb: POST
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error:
+              - ConnectionError
+              target-url: $(target-url)/assessmentVisits
+        - otherwise:
+          - set-variable:
+              version: 2.0.0
+              title: set-variable
+              actions:
+              - set: message.status.code
+                value: "442"
+                type: string
+              - set: message.headers.content-type
+                value: application/json
+                type: string
+              - set: message.body
+                value: '{ "httpCode": "422",                  "httpMessage": "Unprocessable
+                  Entity",                 "moreInformation": "The requested URL is
+                  invalid"}'
+                type: string
+    - set-variable:
+        version: 2.0.0
+        title: set-variable
+        actions:
+        - set: message.headers.content-type
+          value: application/json
+          type: string
+    catch:
+    - errors:
+      - ConnectionError
+      execute:
+      - set-variable:
+          version: 2.0.0
+          title: set-variable
+          actions:
+          - set: message.status.code
+            value: "500"
+            type: string
+          - set: message.headers.content-type
+            value: application/json
+            type: string
+          - set: message.body
+            value: '{ "errorCode": "500", "errorMessage": "Internal server error",
+              "description": "ConnectionError"}'
+            type: string
+    - default:
+      - set-variable:
+          version: 2.0.0
+          title: set-variable
+          actions:
+          - set: message.status.code
+            value: "500"
+            type: string
+          - set: message.headers.content-type
+            value: application/json
+            type: string
+          - set: message.body
+            value: '{ "errorCode": "500", "errorMessage": "Internal server error"
+              }'
+            type: string
+  properties:
+    target-url:
+      value: https://internal-occupational-health-and-safety-api.qiwa.info/api/v1
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    success-content: payload
+    error-content: payload
+    enabled: true
+  buffering: true
+  application-authentication:
+    certificate: false
+  catalogs: {}
+paths:
+  /performanceCardRequestByUser:
+    post:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success
+  /patchPerformanceCardRequest:
+    post:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success
+  /performanceCard:
+    post:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success
+  /getUserByUserName:
+    post:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success
+  /getAllUsers:
+    post:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success
+  /getUserByUUId:
+    post:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success
+  /exportUsers:
+    post:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success
+  /performanceCardById:
+    post:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success
+  /createUser:
+    post:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success
+  /filesByFileName:
+    post:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success
+  /files:
+    post:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success
+  /performanceCardRequestById:
+    post:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success
+  /performanceCardRequestByEstablishmentId:
+    post:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success
+  /performanceCardRequestFiltered:
+    post:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success
+  /performanceCardByEstablishmentId:
+    post:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success
+  /establishmentByCompanyId:
+    post:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success
+  /establishmentById:
+    post:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success
+  /economicActivityByNitakatId:
+    post:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success
+  /economicActivity:
+    post:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success
+  /category:
+    post:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success
+  /assessmentVisitsById:
+    post:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success
+  /assessmentVisits:
+    post:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success
+  /categoryById:
+    post:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success
+  /roles:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []

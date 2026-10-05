@@ -1,0 +1,27 @@
+info:
+  version: 99.0.0
+  title: mnm GetCitizenInformationNIC product
+  name: mnm-getcitizeninformationnic-product
+apis:
+  mnm-getcitizeninformationnic99.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mnm-getcitizeninformationnic_99.0.0.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      mnm-getcitizeninformationnic99.0.0: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

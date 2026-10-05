@@ -1,0 +1,39 @@
+info:
+  version: 1.0.1
+  title: AI-ChatBot
+  name: ai-chatbot
+  summary: This product is for AI Chatbot API services
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      chatbot_init1.0.0: {}
+      qiwa-streaming-v22.0.1: {}
+      qiwa-streaming1.0.1: {}
+      qiwa-streaming-tts1.0.1: {}
+      qiwa-streaming-stt2.0.1: {}
+apis:
+  qiwa-streaming-tts1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-streaming-tts_1.0.1.yaml
+  qiwa-streaming-v22.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-streaming-v2_2.0.1.yaml
+  qiwa-streaming1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-streaming_1.0.1.yaml
+  chatbot_init1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/chatbot_init_1.0.0.yaml
+  qiwa-streaming-stt2.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-streaming-stt_2.0.1.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

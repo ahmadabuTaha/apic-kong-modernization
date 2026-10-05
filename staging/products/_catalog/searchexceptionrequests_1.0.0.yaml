@@ -1,0 +1,464 @@
+swagger: "2.0"
+info:
+  title: SearchExceptionRequests
+  version: 1.0.0
+  description: Search Exception Requests
+  x-ibm-name: searchexceptionrequests
+paths:
+  /searchexceptionrequests:
+    post:
+      operationId: SearchExceptionRequests
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/SearchExceptionRequestsRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Search Exception Requests
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/SearchExceptionRequestsRq_MessageType'
+        description: SearchExceptionRequestsRq
+        required: true
+basePath: /exceptions
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+definitions:
+  SearchExceptionRequestsRq_MessageType:
+    type: object
+    properties:
+      SearchExceptionRequestsRq:
+        $ref: '#/definitions/SearchExceptionRequestsRq_Type'
+  SearchExceptionRequestsRs_MessageType:
+    type: object
+    properties:
+      SearchExceptionRequestsRs:
+        $ref: '#/definitions/SearchExceptionRequestsRs_Type'
+  SearchExceptionRequestsRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/SearchExceptionRequestsRq_BodyType'
+  SearchExceptionRequestsRq_BodyType:
+    type: object
+    properties:
+      ExceptionRequestId:
+        type: string
+      RequesterDetails:
+        $ref: '#/definitions/RequesterDetails_Type'
+      AdminDetails:
+        $ref: '#/definitions/AdminDetails_Type'
+      ReviewerDetails:
+        $ref: '#/definitions/ReviewerDetails_Type'
+      ExceptionType:
+        type: integer
+      StatusId:
+        type: integer
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      EstablishmentId:
+        type: integer
+      PageSize:
+        type: integer
+      PageIndex:
+        type: integer
+      SortBy:
+        type: integer
+      SortDirection:
+        type: integer
+    required:
+    - PageSize
+    - PageIndex
+  SearchExceptionRequestsRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/SearchExceptionRequestsRs_BodyType'
+  SearchExceptionRequestsRs_BodyType:
+    type: object
+    properties:
+      ExceptionsList:
+        $ref: '#/definitions/ExceptionsList_Type'
+      TotalRecordsCount:
+        type: integer
+    required:
+    - TotalRecordsCount
+  ExceptionsList_Type:
+    type: object
+    properties:
+      ExceptionItem:
+        type: array
+        items:
+          $ref: '#/definitions/ExceptionItem_Type'
+    required:
+    - ExceptionItem
+  ExceptionItem_Type:
+    type: object
+    properties:
+      ExceptionRequestId:
+        type: string
+      RequesterUserId:
+        type: integer
+      RequesterIdNo:
+        type: string
+      RequesterName:
+        type: string
+      AdminUserId:
+        type: integer
+      AdminIdNo:
+        type: string
+      ReviewerUserId:
+        type: string
+      ReviewerIdNo:
+        type: string
+      ExceptionType:
+        $ref: '#/definitions/CodeName_Type'
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      EstablishmentId:
+        type: integer
+      EstablishmentName:
+        type: string
+      Balance:
+        $ref: '#/definitions/Balance_Type'
+      Status:
+        $ref: '#/definitions/Status_Type'
+      CreationDate:
+        type: string
+      LastModifiedDate:
+        type: string
+      RejectionReason:
+        type: string
+      RequestNumberList:
+        $ref: '#/definitions/RequestNumberList_Type'
+      Attachments:
+        $ref: '#/definitions/Attachments_Type'
+      RRERequestList:
+        $ref: '#/definitions/RRERequestList_Type'
+      LaborerIdNo:
+        type: string
+      CancelRunAwayReportDetails:
+        $ref: '#/definitions/CancelRunAwayReportDetails_Type'
+    required:
+    - ExceptionRequestId
+    - RequesterUserId
+    - RequesterIdNo
+    - RequesterName
+    - AdminUserId
+    - AdminIdNo
+    - ReviewerUserId
+    - ReviewerIdNo
+    - ExceptionType
+    - LaborOfficeId
+    - SequenceNumber
+    - EstablishmentId
+    - EstablishmentName
+    - Balance
+    - Status
+    - CreationDate
+    - LastModifiedDate
+    - RejectionReason
+    - Attachments
+  RRERequestList_Type:
+    type: object
+    properties:
+      RRERequestItem:
+        $ref: '#/definitions/RRERequestItem_Type'
+    required:
+    - RRERequestItem
+  RRERequestItem_Type:
+    type: object
+    properties:
+      RRERequestId:
+        type: integer
+      RREStatusId:
+        $ref: '#/definitions/Status_Type'
+    required:
+    - RRERequestId
+    - RREStatusId
+  RequestNumberList_Type:
+    type: object
+    properties:
+      RequestNumberItem:
+        type: string
+    required:
+    - RequestNumberItem
+  CancelRunAwayReportDetails_Type:
+    type: object
+    properties:
+      LaborerIdNo:
+        type: integer
+      LaborerStatus:
+        type: integer
+      LaborerStatusName:
+        type: string
+      IqamaExpiryDate:
+        type: string
+      EntryDate:
+        type: string
+      FullName:
+        type: string
+      FullNamEn:
+        type: string
+      Nationality:
+        $ref: '#/definitions/CodeName_Type'
+      Occupation:
+        $ref: '#/definitions/CodeName_Type'
+      Gender:
+        type: string
+      CancelRunAwayReportDate:
+        type: string
+      CancelRunAwayReportTime:
+        type: string
+      CancelRunAwayReportReason:
+        type: string
+    required:
+    - LaborerIdNo
+    - LaborerStatus
+  Attachments_Type:
+    type: object
+    properties:
+      AttachmentDetails:
+        $ref: '#/definitions/AttachmentDetails_Type'
+    required:
+    - AttachmentDetails
+  AttachmentDetails_Type:
+    type: object
+    properties:
+      AttachmentId:
+        type: string
+      AttachmentName:
+        type: string
+    required:
+    - AttachmentId
+    - AttachmentName
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+    required:
+    - Code
+    - NameAr
+    - NameEn
+  RequesterDetails_Type:
+    type: object
+    properties:
+      RequesterIdNo:
+        type: integer
+      RequesterName:
+        type: string
+      RequesterUserId:
+        type: integer
+  AdminDetails_Type:
+    type: object
+    properties:
+      AdminUserId:
+        type: integer
+      AdminIdNo:
+        type: string
+  ReviewerDetails_Type:
+    type: object
+    properties:
+      ReviewerUserId:
+        type: integer
+      ReviewerIdNo:
+        type: string
+  Balance_Type:
+    type: object
+    properties:
+      Balance:
+        type: integer
+      RemainingBalance:
+        type: integer
+      BalanceTypeId:
+        type: integer
+      BalanceTypeEn:
+        type: string
+      BalanceTypeAr:
+        type: string
+    required:
+    - Balance
+    - RemainingBalance
+  Status_Type:
+    type: object
+    properties:
+      StatusId:
+        type: integer
+      StatusEn:
+        type: string
+      StatusAr:
+        type: string
+    required:
+    - StatusId
+    - StatusEn
+    - StatusAr
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(ace-lbro-lo-exception)/exceptions/searchexceptionrequests
+        follow-redirects: false
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+schemes:
+- https

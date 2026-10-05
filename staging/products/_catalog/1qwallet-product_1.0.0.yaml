@@ -1,0 +1,63 @@
+info:
+  version: 1.0.0
+  title: 1QWallet Product
+  name: 1qwallet-product
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    rate-limits:
+      default:
+        value: 100/1hour
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    apis:
+      getqwalletdetails1.0.0: {}
+      getqwallettransactionslist1.0.0: {}
+      makeqwalletpayment1.0.0: {}
+      paysadadbyqwallet1.0.0: {}
+      qiwa-qw-receivenotification1.0.0: {}
+      qiwa-qwallet-createqwallet1.0.0: {}
+      qiwa-qwallet-getbanks1.0.0: {}
+      qiwa-qwallet-qwalletcashoutrequest1.0.0: {}
+      qiwa-qwallet-qwalletcashoutrequestapproval1.0.0: {}
+      updateqwalletdetails1.0.0: {}
+      qiwa-qwallet-interqwalletsbalancetransfer1.0.0: {}
+      qiwa-qwallet-exportqwallettransactions1.0.0: {}
+      qiwa-qwallet-validatetransferdetails1.0.0: {}
+product: 1.0.0
+apis:
+  qiwa-qwallet-exportqwallettransactions1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-qwallet-exportqwallettransactions_1.0.0.yaml
+  qiwa-qwallet-interqwalletsbalancetransfer1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-qwallet-interqwalletsbalancetransfer_1.0.0.yaml
+  qiwa-qw-receivenotification1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-qw-receivenotification_1.0.0.yaml
+  getqwallettransactionslist1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getqwallettransactionslist_1.0.0.yaml
+  updateqwalletdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updateqwalletdetails_1.0.0.yaml
+  qiwa-qwallet-qwalletcashoutrequestapproval1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-qwallet-qwalletcashoutrequestapproval_1.0.0.yaml
+  qiwa-qwallet-qwalletcashoutrequest1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-qwallet-qwalletcashoutrequest_1.0.0.yaml
+  qiwa-qwallet-getbanks1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-qwallet-getbanks_1.0.0.yaml
+  qiwa-qwallet-createqwallet1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-qwallet-createqwallet_1.0.0.yaml
+  paysadadbyqwallet1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/paysadadbyqwallet_1.0.0.yaml
+  makeqwalletpayment1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/makeqwalletpayment_1.0.0.yaml
+  getqwalletdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getqwalletdetails_1.0.0.yaml
+  qiwa-qwallet-validatetransferdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-qwallet-validatetransferdetails_1.0.0.yaml
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

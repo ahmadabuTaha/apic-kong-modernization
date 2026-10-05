@@ -1,0 +1,55 @@
+info:
+  version: 1.0.4
+  title: DependentTransfer Staging
+  name: dependenttransfer-staging
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: true
+    rate-limits:
+      default:
+        value: 100/1hour
+        hard-limit: false
+    apis:
+      approverejectdependenttransferrequest1.0.0: {}
+      approverejectdepindtransferrequest1.0.0: {}
+      checkdependenteligibility1.0.0: {}
+      musanedapproverejectetbysponsor1.0.0: {}
+      musanedsearchindividualtransferrequests1.0.0: {}
+      searchdependenttransferrequests1.0.0: {}
+      submitdependenttransferrequest1.0.0: {}
+      validatetransferreddependent1.0.0: {}
+      validatetransferredindividualdependent1.0.0: {}
+      approverejecthomeworkeretreq1.0.0: {}
+apis:
+  approverejectdependenttransferrequest1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/approverejectdependenttransferrequest_1.0.0.yaml
+  approverejectdepindtransferrequest1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/approverejectdepindtransferrequest_1.0.0_1.yaml
+  checkdependenteligibility1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/checkdependenteligibility_1.0.0.yaml
+  musanedapproverejectetbysponsor1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/musanedapproverejectetbysponsor_1.0.0_1.yaml
+  musanedsearchindividualtransferrequests1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/musanedsearchindividualtransferrequests_1.0.0.yaml
+  searchdependenttransferrequests1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/searchdependenttransferrequests_1.0.0.yaml
+  submitdependenttransferrequest1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/submitdependenttransferrequest_1.0.0.yaml
+  validatetransferreddependent1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validatetransferreddependent_1.0.0.yaml
+  validatetransferredindividualdependent1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validatetransferredindividualdependent_1.0.0_1.yaml
+  approverejecthomeworkeretreq1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/approverejecthomeworkeretreq_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

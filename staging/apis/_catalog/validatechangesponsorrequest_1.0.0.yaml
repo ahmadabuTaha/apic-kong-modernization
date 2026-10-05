@@ -1,0 +1,302 @@
+swagger: "2.0"
+info:
+  title: ValidateChangeSponsorRequest
+  x-ibm-name: validatechangesponsorrequest
+  version: 1.0.0
+  description: ValidateChangeSponsorRequest
+schemes:
+- https
+basePath: /changesponsor
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-emtf-validateset)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+    - gatewayscript:
+        version: 2.0.0
+        title: gatewayscript
+        source: |
+          var apim = require('apim');
+          var Response = apim.getvariable('message.body');
+          var statusCode = Response.ValidateChangeSponsorRequestRs.Header.ResponseStatus.Code ;
+
+
+          if(statusCode == 'E9999998'){
+              var code = 408
+              apim.setvariable('message.status.code',code,'set');
+          }
+          else if(statusCode == '00000000'){
+              var code = 200
+              apim.setvariable('message.status.code',code,'set');
+          }else{
+                var code = 409
+              apim.setvariable('message.status.code',code,'set');
+          }
+    catch: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  ValidateChangeSponsorRequestRq_MessageType:
+    type: object
+    properties:
+      ValidateChangeSponsorRequestRq:
+        $ref: '#/definitions/ValidateChangeSponsorRequestRq_Type'
+  ValidateChangeSponsorRequestRs_MessageType:
+    type: object
+    properties:
+      ValidateChangeSponsorRequestRs:
+        $ref: '#/definitions/ValidateChangeSponsorRequestRs_Type'
+  ValidateChangeSponsorRequestRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/ValidateChangeSponsorRequestRq_BodyType'
+  ValidateChangeSponsorRequestRq_BodyType:
+    type: object
+    properties:
+      DestinationLaborOfficeId:
+        type: integer
+      DestinationSequenceNumber:
+        type: integer
+      LaborersNationalitiesList:
+        $ref: '#/definitions/LaborersNationalitiesList_Type'
+      ValidationLevel:
+        type: integer
+    required:
+    - DestinationLaborOfficeId
+    - DestinationSequenceNumber
+  LaborersNationalitiesList_Type:
+    type: object
+    properties:
+      LaborersNationalitiesItem:
+        type: array
+        items:
+          $ref: '#/definitions/LaborersNationalitiesItem_Type'
+  LaborersNationalitiesItem_Type:
+    type: object
+    properties:
+      Nationality:
+        type: integer
+      NumberOfLaborers:
+        type: integer
+    required:
+    - Nationality
+    - NumberOfLaborers
+  ValidateChangeSponsorRequestRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/ValidateChangeSponsorRequestRs_BodyType'
+  ValidateChangeSponsorRequestRs_BodyType:
+    type: object
+    properties:
+      ValidationsErrorsList:
+        $ref: '#/definitions/ValidationsErrorsList_Type'
+      Balance:
+        $ref: '#/definitions/Balance_Type'
+      DestinationEntityId:
+        type: string
+      DestinationsEstablishmentId:
+        type: string
+      EstablishmentConditionsType:
+        type: integer
+      TierId:
+        type: integer
+      SizeId:
+        type: integer
+      SubEconomicActivityId:
+        type: integer
+  ValidationsErrorsList_Type:
+    type: object
+    properties:
+      ValidationError:
+        type: array
+        items:
+          $ref: '#/definitions/ValidationErrorItem_Type'
+  ValidationErrorItem_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ArDescription:
+        type: string
+      EnDescription:
+        type: string
+    required:
+    - ErrorCode
+    - ArDescription
+    - EnDescription
+  Balance_Type:
+    type: object
+    properties:
+      AvailableBalance:
+        type: integer
+      BalanceType:
+        type: integer
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /validatechangesponsorrequest:
+    post:
+      operationId: ValidateChangeSponsorRequest
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/ValidateChangeSponsorRequestRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Validate Change Sponsor Request
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/ValidateChangeSponsorRequestRq_MessageType'
+        description: ValidateChangeSponsorRequestRq
+        required: true

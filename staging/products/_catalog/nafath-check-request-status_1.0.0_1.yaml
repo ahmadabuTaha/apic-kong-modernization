@@ -1,0 +1,193 @@
+swagger: "2.0"
+info:
+  title: NafathCheckRequestStatus
+  x-ibm-name: nafath-check-request-status
+  version: 1.0.0
+  description: This API checks the status of the request
+schemes:
+- https
+basePath: /Nafath
+security:
+- ClientSecret: []
+  OAuth2.0:
+  - IntegrationScope
+  clientID: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  ClientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientID:
+    type: apiKey
+    in: header
+    x-key-type: client_id
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: keep
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        target-url: $(ace-nfth-nafath)/checkstatus/v1/authstatus
+        persistent-connection: true
+    catch:
+    - default:
+      - set-variable:
+          version: 2.0.0
+          title: set-variable
+          actions:
+          - set: message.status.code
+            value: "500"
+            type: string
+          - set: message.headers.content-type
+            value: application/json
+            type: string
+          - set: message.body
+            value: '{     "errorCode": "E000500",     "errorMessage": "Internal server
+              error"              }'
+            type: string
+    finally: []
+  properties:
+    target-url:
+      value: http://nfth-nafath-http-ace.apps.stg.qiwa-nonprod.local/checkstatus/v1/authstatus
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    success-content: payload
+    error-content: header
+    enabled: true
+  application-authentication:
+    certificate: false
+  buffering: true
+  catalogs: {}
+tags:
+- name: CheckReqStatus
+  description: To check status of request
+definitions:
+  checkRequestStatusRequest:
+    type: object
+    additionalProperties: false
+    properties:
+      id:
+        type: string
+        description: User ID
+        example: "10000000"
+      transactionId:
+        type: string
+        example: 4f699a95-d08d-469c-ac56-98f21a1e29f7
+      random:
+        type: string
+        example: "32"
+  CheckRequestStatusResponse:
+    type: object
+    properties:
+      header:
+        $ref: '#/definitions/ResponseHeader'
+      data:
+        $ref: '#/definitions/CheckRequestStatusResponseData'
+  CheckRequestStatusResponseData:
+    type: object
+    properties:
+      status:
+        $ref: '#/definitions/Status'
+  Status:
+    type: string
+    example: WAITING
+    enum:
+    - WAITING
+    - EXPIRED
+    - REJECTED
+    - COMPLETED
+    description: ' "WAITING": request still in progress.  "EXPIRED": request timed
+      out  “REJECTED”: request has been rejected by user.  "COMPLETED": user authenticated
+      successfully '
+  ResponseHeaderStatus:
+    title: ResponseHeaderStatus
+    description: Response Header Status Structure.
+    type: object
+    properties:
+      code:
+        description: code
+        example: I000000
+        type: string
+      description:
+        description: description
+        example: Success
+        type: string
+  ResponseHeader:
+    title: ResponseHeader
+    description: Response Header Structure.
+    type: object
+    properties:
+      requestID:
+        description: Unique request ID send by the mobile application for auditing
+          purpose.
+        example: 193347a5-86b5-49ae-a3c7-13ff00ea9de6
+        type: string
+        maxLength: 36
+      status:
+        $ref: '#/definitions/ResponseHeaderStatus'
+paths:
+  /CheckRequestStatus:
+    post:
+      description: This API checks the status of the Request
+      summary: Check Request Status
+      tags:
+      - Request Status
+      operationId: checkRequestStatus
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: Request-ID
+        in: header
+        required: false
+        description: Request Unique Identifier
+        type: string
+      - name: requestBody
+        in: body
+        required: false
+        schema:
+          $ref: '#/definitions/checkRequestStatusRequest'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/CheckRequestStatusResponse'
+        default:
+          description: '#### Error Codes List: </br>E222001  AUTHORIZATION FALIURE
+            </br>E222002  DATA NOT AVAILABLE </br>E222003  INCORRECT URL </br>E222004  REQUEST
+            MODEL IS INVALID </br>E222005  NAFATH TRX ID NOT CORRECT </br>E222006  NAFATH
+            TOO MANY HTTP REQUESTS </br>E222007  NAFATH TRX ID HAS EXPIRED </br>E222008  NAFATH
+            THERE IS ACTIVE TRX </br>E222009  HTTP TIMEOUT </br>E222010  UNKNOWN SERVER
+            ERROR'
+          schema:
+            $ref: '#/definitions/ResponseHeader'

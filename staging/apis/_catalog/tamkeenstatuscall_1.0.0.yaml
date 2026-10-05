@@ -1,0 +1,154 @@
+swagger: "2.0"
+info:
+  title: TamkeenStatusCall
+  x-ibm-name: tamkeenstatuscall
+  version: 1.0.0
+schemes:
+- https
+basePath: /qiwa/v2
+securityDefinitions:
+  clientID:
+    type: apiKey
+    x-key-type: client_id
+    name: X-IBM-Client-Id
+    in: header
+  clientSecret:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Secret
+    x-key-type: client_secret
+  OAuth2.0:
+    type: oauth2
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    flow: application
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - gatewayscript:
+        version: 2.0.0
+        title: gatewayscript
+        source: |-
+          var bodyvar = context.get('message.body');
+          context.set('requestBody',bodyvar);
+    - set-variable:
+        version: 2.0.0
+        title: TokenReq
+        actions:
+        - set: message.headers.content-type
+          value: application/x-www-form-urlencoded
+          type: string
+        - set: message.body
+          value: client_secret=8fc9b13c-7631-4986-be72-e18865d721ba&client_id=takamol-ims-qiwa&grant_type=client_credentials
+          type: string
+    - invoke:
+        version: 2.2.0
+        title: TokenInvoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        http-version: HTTP/1.1
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        graphql-send-type: detect
+        websocket-upgrade: false
+        target-url: $(TokenUrl)
+        output: tokenResponse
+    - set-variable:
+        version: 2.0.0
+        title: SetAuthToken
+        actions:
+        - value: $concat('Bearer ',$tokenResponse.access_token)
+          add: message.headers.Authorization
+          type: string
+    - map:
+        version: 2.0.0
+        title: map
+        inputs:
+          requestBody:
+            schema:
+              type: object
+            variable: request.body
+            content: application/json
+        outputs:
+          messageBody:
+            schema:
+              type: object
+            variable: message.body
+            content: application/json
+        actions:
+        - set: messageBody
+          from: requestBody
+    - invoke:
+        version: 2.2.0
+        title: TmknStsInvke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        http-version: HTTP/1.1
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        graphql-send-type: detect
+        websocket-upgrade: false
+        target-url: $(tamkeenstatus-url)/api/v1/assessment/establishment/status
+    finally: []
+    catch: []
+  properties:
+    target-url:
+      value: |
+        https://stg-ims.tamkeen.live/api/v1/assessment/establishment/status
+      description: The URL of the target service
+      encoded: false
+    TokenUrl:
+      value: https://accounts.tamkeen.live/auth/realms/mlsd/protocol/openid-connect/token
+    requestBody: {}
+  application-authentication:
+    certificate: false
+  catalogs: {}
+  activity-log:
+    success-content: payload
+    error-content: payload
+    enabled: true
+  buffering: true
+paths:
+  /tamkeen-status:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+security:
+- clientID: []
+  clientSecret: []
+  OAuth2.0:
+  - IntegrationScope

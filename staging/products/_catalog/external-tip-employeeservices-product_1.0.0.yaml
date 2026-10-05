@@ -1,0 +1,79 @@
+info:
+  name: external-tip-employeeservices-product
+  title: External_TIP_EmployeeServices_Product
+  version: 1.0.0
+apis:
+  get-disabled-employee-information1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/get-disabled-employee-information_1.0.0.yaml
+  employeeverificationwithpermitdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/employeeverificationwithpermitdetails_1.0.0.yaml
+  getestempswithverfication1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getestempswithverfication_1.0.0.yaml
+  getdisabledemployeedetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getdisabledemployeedetails_1.0.0.yaml
+  tip-individualiworkandsalary-employeeservicesv21.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/tip-individualiworkandsalary-employeeservicesv2_1.0.0.yaml
+  employeeverificationwithdata1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/employeeverificationwithdata_1.0.0.yaml
+  disabledemployeepushservice1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/disabledemployeepushservice_1.0.0.yaml
+  getupdatedninsfromdisabledemployee1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getupdatedninsfromdisabledemployee_1.0.0.yaml
+  tip-individualiworkandsalary-employeeservices1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/tip-individualiworkandsalary-employeeservices_1.0.0.yaml
+  getemployeecontractdtleconomy1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getemployeecontractdtleconomy_1.0.0.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  plan-b:
+    title: Plan B
+    description: New Application
+    rate-limits:
+      Default rate-limit:
+        value: 100/1hour
+        hard-limit: false
+    burst-limits:
+      Default burst-limit:
+        value: 10/1second
+    apis:
+      tip-individualiworkandsalary-employeeservices1.0.0: {}
+      employeeverificationwithpermitdetails1.0.0: {}
+  plan-c:
+    title: Plan-C
+    description: This plan is for UniKomm Application
+    rate-limits:
+      Default rate-limit:
+        value: 100/1hour
+        hard-limit: false
+    burst-limits:
+      Default burst-limit:
+        value: 10/1second
+    apis:
+      get-disabled-employee-information1.0.0: {}
+  default-plan:
+    title: Plan A
+    description: Old Application
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+        hard-limit: false
+    apis:
+      get-disabled-employee-information1.0.0: {}
+      employeeverificationwithpermitdetails1.0.0: {}
+      getestempswithverfication1.0.0: {}
+      getdisabledemployeedetails1.0.0: {}
+      tip-individualiworkandsalary-employeeservicesv21.0.0: {}
+      employeeverificationwithdata1.0.0: {}
+      disabledemployeepushservice1.0.0: {}
+      getupdatedninsfromdisabledemployee1.0.0: {}
+      getemployeecontractdtleconomy1.0.0: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

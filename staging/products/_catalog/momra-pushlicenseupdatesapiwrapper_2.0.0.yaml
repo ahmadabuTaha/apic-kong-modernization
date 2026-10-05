@@ -1,0 +1,422 @@
+swagger: "2.0"
+info:
+  title: Momra_PushLicenseUpdatesAPIWrapper
+  x-ibm-name: momra-pushlicenseupdatesapiwrapper
+  version: 2.0.0
+  description: This API exposes used to push license updates momra
+schemes:
+- https
+basePath: /qiwa/v1
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-cmpm-establishment-locations)/estabmanagement/momrapushlicenseupdates
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        persistent-connection: true
+    finally: []
+parameters:
+  X-IBM-Client-Id:
+    in: header
+    name: X-IBM-Client-Id
+    description: Client id issued by security server
+    required: true
+    type: string
+  X-IBM-Client-Secret:
+    in: header
+    name: X-IBM-Client-Secret
+    description: Client secret issued by security server
+    required: true
+    type: string
+  X-Request-Id:
+    in: header
+    name: X-Request-Id
+    description: X-Request-Id returned in the response header
+    required: false
+    type: string
+  UserId:
+    in: header
+    name: UserId
+    description: UserI d
+    required: false
+    type: integer
+    format: int32
+definitions:
+  RequestModel:
+    type: object
+    description: This response object returned by the post operation
+    properties:
+      ReferenceNo:
+        type: string
+        example: d96c1f27-0542-43b9-94f4-3c549549598d
+        description: Unique number for each transaction
+      UpdatedMomraDetails:
+        $ref: '#/definitions/UpdatedMomraDetails'
+      ActionType:
+        type: string
+        example: renew license
+        description: Action type
+      OperationDate:
+        type: string
+        example: 12-12-2014
+        description: The date the request was sent
+  UpdatedMomraDetails:
+    type: object
+    properties:
+      OwnerInfo:
+        $ref: '#/definitions/OwnerInfo'
+      LicenseInfoList:
+        $ref: '#/definitions/LicenseInfoList'
+  OwnerInfo:
+    type: object
+    properties:
+      OwnerName:
+        type: string
+        example: بوفية شوق وذوق للوجبات السريعة
+      OwnerIdentifier:
+        $ref: '#/definitions/OwnerIdentifier'
+  OwnerIdentifier:
+    type: object
+    properties:
+      SevenHundredNumber:
+        type: string
+        example: "7005151936"
+  LicenseInfoList:
+    type: object
+    properties:
+      LicenseInfo:
+        type: array
+        items:
+          $ref: '#/definitions/LicenseInfo'
+  LicenseInfo:
+    type: object
+    properties:
+      LicenseNumber:
+        type: string
+        example: "43211234"
+      Amanah:
+        $ref: '#/definitions/Amanah'
+      BaladiaName:
+        type: string
+        example: بلدية النسيم
+      IssueDate:
+        type: string
+        example: 24-02-1438
+      ExpiryDate:
+        type: string
+        example: 24-02-1446
+      LicenseStatus:
+        $ref: '#/definitions/CodeName_Type'
+      ActivitiesList:
+        $ref: '#/definitions/ActivitiesList'
+      CommercialName:
+        type: string
+        example: مؤسسة ركن البارع  لتقديم الوجبات
+      ShopArea:
+        type: string
+        example: "45"
+      DoorsCount:
+        type: integer
+        example: "0"
+      ShopAddress:
+        type: string
+        example: Riyadh
+      LocationCoordinates:
+        $ref: '#/definitions/LocationCoordinates_type'
+  Amanah:
+    type: object
+    properties:
+      AmanahCode:
+        type: integer
+        example: "1"
+      AmanahName:
+        type: string
+        example: أمانة منطقة الرياض
+  ActivitiesList:
+    type: object
+    properties:
+      Activity:
+        $ref: '#/definitions/Activity_Type'
+  Activity_Type:
+    type: object
+    properties:
+      ActivityISICCode:
+        type: integer
+        example: "561021"
+      ActivityISICDescription:
+        type: string
+        example: البوفيهات  الكافيتريا
+      ActivityArea:
+        type: string
+        example: "45"
+      BoardsList:
+        $ref: '#/definitions/Board'
+  Board:
+    type: object
+    properties:
+      Board:
+        $ref: '#/definitions/Board_Type'
+  Board_Type:
+    type: object
+    properties:
+      BoardType:
+        type: string
+        example: إرشادية
+      BoardArea:
+        type: string
+        example: "3"
+  LocationCoordinates_type:
+    type: object
+    properties:
+      Longitude:
+        type: string
+        example: "46.79435277165217"
+      Latitude:
+        type: string
+        example: "24.687899369838416"
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+        example: "1"
+      Name:
+        type: string
+        example: سارية
+  ResponseModel:
+    type: object
+    description: This response object returned by the Post
+    properties:
+      AgencyRefNo:
+        type: string
+        example: 31a222ae-ee81-47d6-bcf1-cdc6b4d4d14a
+      ResponseStatus:
+        $ref: '#/definitions/ResponseStatus_Type'
+  ResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+        example: SUCCESS
+      Code:
+        type: string
+        example: "00000000"
+      ArabicMsg:
+        type: string
+        example: تمت العملية بنجاح
+      EnglishMsg:
+        type: string
+        example: Success Call
+  LocaleDataModel:
+    type: object
+    additionalProperties:
+      type: string
+    example:
+      en-US: English Value
+      ar-SA: Arabic Value
+  IntegerNumberModel:
+    type: object
+    description: This object use for integer numbers
+    additionalProperties:
+      type: integer
+      example: 1
+  ErrorModel:
+    type: object
+    required:
+    - errorCode
+    - errorMessage
+    properties:
+      errorCode:
+        type: string
+        example: EXXXX000
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+paths:
+  /momrapushlicenseupdates:
+    parameters:
+    - $ref: '#/parameters/X-IBM-Client-Id'
+    - $ref: '#/parameters/X-IBM-Client-Secret'
+    - $ref: '#/parameters/UserId'
+    - in: header
+      name: X-Request-Id
+      description: X-Request-Id returned in the response header
+      required: false
+      type: string
+    post:
+      tags:
+      - Momra Push License Updates
+      description: Service to push license updates
+      operationId: momrapushlicenseupdates
+      parameters:
+      - name: request
+        in: body
+        schema:
+          $ref: '#/definitions/RequestModel'
+        description: momra push license updates
+      produces:
+      - application/json
+      responses:
+        "200":
+          $ref: '#/responses/Response200'
+        "400":
+          $ref: '#/responses/Response400'
+        "401":
+          $ref: '#/responses/Response401'
+        "403":
+          $ref: '#/responses/Response403'
+        "404":
+          $ref: '#/responses/Response404'
+        "408":
+          $ref: '#/responses/Response408'
+        "409":
+          $ref: '#/responses/Response409'
+        "429":
+          $ref: '#/responses/Response429'
+        "500":
+          $ref: '#/responses/Response500'
+        "501":
+          $ref: '#/responses/Response501'
+        "503":
+          $ref: '#/responses/Response503'
+        "510":
+          $ref: '#/responses/Response510'
+responses:
+  Response200:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ResponseModel'
+  Response201:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+      Location:
+        type: string
+        description: Id url encoded
+  Response204:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response400:
+    description: The request was rejected by the server due to malformed syntax. Bad
+      Request.
+  Response401:
+    description: The request could not be completed due to lack of valid credentials.
+      Authentication.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response403:
+    description: The request could not be completed because it is not authorized.
+      Authorization
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response404:
+    description: The server has not found anything matching the Request-URI.
+  Response408:
+    description: The client did not produce a request within the time that the server
+      was prepared to wait.
+  Response409:
+    description: The request could not be completed due to a conflict with the current
+      state of the resource. Usually business validation errors will be returned in
+      the body
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response429:
+    description: The request was sent too many times in a given amount of time
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response500:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response501:
+    description: The server does not support the functionality required and does not
+      recognize the request
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response503:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response510:
+    description: Extensions to the request are required for the server to fulfil it.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'

@@ -1,0 +1,264 @@
+swagger: "2.0"
+info:
+  title: GetUserEligibleServices
+  x-ibm-name: getusereligibleservices
+  version: 1.0.0
+  description: This service is used to This service is used to get user privileges.
+schemes:
+- https
+basePath: /usermanagement
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-usrm-umutilities)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  GetUserEligibleServicesRq_MessageType:
+    type: object
+    properties:
+      GetUserEligibleServicesRq:
+        $ref: '#/definitions/GetUserEligibleServicesRq_Type'
+  GetUserEligibleServicesRs_MessageType:
+    type: object
+    properties:
+      GetUserEligibleServicesRs:
+        $ref: '#/definitions/GetUserEligibleServicesRs_Type'
+  GetUserEligibleServicesRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetUserEligibleServicesRq_BodyType'
+  GetUserEligibleServicesRq_BodyType:
+    type: object
+    properties:
+      IdNo:
+        type: string
+        default: "1000"
+      UserId:
+        type: integer
+        default: "1000"
+      LaborOfficeId:
+        type: integer
+        default: "0"
+      EstablishmentSequence:
+        type: integer
+        default: "0"
+      StatusId:
+        type: integer
+        default: "1"
+      ServiceId:
+        type: integer
+        default: "2"
+      PageSize:
+        type: integer
+        default: "1"
+      PageIndex:
+        type: integer
+        default: "1"
+    required:
+    - IdNo
+    - UserId
+    - LaborOfficeId
+    - EstablishmentSequence
+    - StatusId
+    - ServiceId
+    - PageSize
+    - PageIndex
+  GetUserEligibleServicesRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetUserEligibleServicesRs_BodyType'
+  GetUserEligibleServicesRs_BodyType:
+    type: object
+    properties:
+      TotalRecordsCount:
+        type: integer
+      EligibleServicesList:
+        $ref: '#/definitions/EligibleServicesList_Type'
+  EligibleServicesList_Type:
+    type: object
+    properties:
+      EligibleServicesItem:
+        $ref: '#/definitions/EligibleServicesItem_Type'
+  EligibleServicesItem_Type:
+    type: object
+    properties:
+      IdNo:
+        type: string
+      UserId:
+        type: integer
+      Name:
+        type: string
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      Status:
+        $ref: '#/definitions/Status_Type'
+      Service:
+        $ref: '#/definitions/Service_Type'
+  Status_Type:
+    type: object
+    properties:
+      StatusId:
+        type: integer
+      StatusEn:
+        type: string
+      StatusAr:
+        type: string
+  Service_Type:
+    type: object
+    properties:
+      Service:
+        type: integer
+      ServiceNameEn:
+        type: string
+      ServiceNameAr:
+        type: string
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: GUES0001
+      DebugFlag:
+        type: integer
+        default: "1"
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: GUES0001
+      DebugFlag:
+        type: integer
+        default: "1"
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+paths:
+  /getusereligibleservices:
+    post:
+      operationId: GetUserEligibleServices
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetUserEligibleServicesRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Update User Information
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetUserEligibleServicesRq_MessageType'
+        description: GetUserEligibleServicesRq
+        required: true

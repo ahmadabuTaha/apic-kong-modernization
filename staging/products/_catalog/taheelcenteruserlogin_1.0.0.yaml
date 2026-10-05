@@ -1,0 +1,282 @@
+swagger: "2.0"
+info:
+  title: TaheelCenterUserLogin
+  x-ibm-name: taheelcenteruserlogin
+  version: 1.0.0
+  description: TaheelCenterUserLogin
+schemes:
+- https
+basePath: /usermanagemnet
+security:
+- OAuth2:
+  - IntegrationScope
+  clientId: []
+securityDefinitions:
+  OAuth2:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientId:
+    type: apiKey
+    in: header
+    x-key-type: client_id
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  properties:
+    target-url:
+      value: http://example.com
+      description: The URL of the target service
+      encoded: false
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(cat-target-hostname)$(cat-target-url-taheel)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+    catch: []
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+definitions:
+  TaheelCenterUserLoginRq_MessageType:
+    type: object
+    properties:
+      TaheelCenterTaheelCenterUserLoginRq:
+        $ref: '#/definitions/TaheelCenterUserLoginRq_Type'
+  TaheelCenterUserLoginRs_MessageType:
+    type: object
+    properties:
+      TaheelCenterTaheelCenterUserLoginRs:
+        $ref: '#/definitions/TaheelCenterUserLoginRs_Type'
+  TaheelCenterUserLoginRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/TaheelCenterUserLoginRq_BodyType'
+  TaheelCenterUserLoginRq_BodyType:
+    type: object
+    properties:
+      IdNo:
+        type: integer
+      Email:
+        type: string
+      Password:
+        type: string
+  TaheelCenterUserLoginRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/TaheelCenterUserLoginRs_BodyType'
+  TaheelCenterUserLoginRs_BodyType:
+    type: object
+    properties:
+      User_Id:
+        type: integer
+      Row_Id:
+        type: integer
+      Email:
+        type: string
+      User_Name:
+        type: string
+      Mobile_Number:
+        type: string
+      Name:
+        $ref: '#/definitions/Name_Type'
+      BirthDateH:
+        type: string
+      Phone_Number:
+        type: string
+      Gender:
+        type: string
+      Status:
+        type: string
+      MartialStatus:
+        type: string
+      Occupation:
+        type: string
+      User_Organizations:
+        $ref: '#/definitions/User_Organizations_List'
+  Name_Type:
+    type: object
+    properties:
+      FirstName:
+        type: string
+      FatherName:
+        type: string
+      GrandName:
+        type: string
+      FamilyName:
+        type: string
+    required:
+    - FirstName
+    - FatherName
+    - GrandName
+    - FamilyName
+  User_Organizations_List:
+    type: object
+    properties:
+      User_Organizations_ListItem:
+        type: array
+        items:
+          $ref: '#/definitions/User_Organizations_ListItem_Type'
+  User_Organizations_ListItem_Type:
+    type: object
+    properties:
+      User_Type_Id:
+        type: string
+      User_Roles_Id:
+        type: string
+      Entity_ID:
+        type: integer
+    required:
+    - User_Type_Id
+    - User_Roles_Id
+    - Entity_ID
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /taheelcenteruserlogin:
+    post:
+      operationId: TaheelCenterUserLogin
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/TaheelCenterUserLoginRs_MessageType'
+      description: Search Payment Refund Transactions
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/TaheelCenterUserLoginRq_MessageType'
+        description: TaheelCenterUserLoginRq
+        required: true

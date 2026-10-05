@@ -1,0 +1,33 @@
+info:
+  version: 1.0.0
+  title: External_SCE_Product
+  name: external-sce-product
+apis:
+  sce-checkengineeringlicensevalidity1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/sce-checkengineeringlicensevalidity_1.0.0.yaml
+  sce-checkengineeringlicensevalidity2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/sce-checkengineeringlicensevalidity_2.0.0.yaml
+  sce-checkengineeringlicensevalidity3.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/sce-checkengineeringlicensevalidity_3.0.0.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      sce-checkengineeringlicensevalidity1.0.0: {}
+      sce-checkengineeringlicensevalidity2.0.0: {}
+      sce-checkengineeringlicensevalidity3.0.0: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

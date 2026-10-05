@@ -1,0 +1,294 @@
+swagger: "2.0"
+info:
+  title: AccessManagement SupportCenter
+  x-ibm-name: accessmanagement-supportcenter
+  version: 1.0.0
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - operation-switch:
+        version: 2.0.0
+        title: AccessManagement SupportCenter
+        case:
+        - operations:
+          - verb: get
+            path: /serviceModules
+          execute:
+          - invoke:
+              version: 2.3.0
+              title: service Modules
+              backend-type: json
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: GET
+              chunked-uploads: false
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              websocket-upgrade: false
+              target-url: $(ace-qiwa-support-center)$(srvcModule)
+              inject-proxy-headers: true
+        - operations:
+          - verb: get
+            path: /services
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: gatewayscript
+              source: |-
+                var url = context.get('srvcByModId');
+                var path = context.get('request.querystring');
+                var callingUrl = url + '?' +path;
+                context.set('callingUrl',callingUrl);
+          - invoke:
+              version: 2.3.0
+              title: services by module id
+              backend-type: json
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: GET
+              chunked-uploads: false
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              websocket-upgrade: false
+              target-url: $(ace-qiwa-support-center)$(callingUrl)
+              inject-proxy-headers: true
+        - operations:
+          - verb: post
+            path: /addService
+          execute:
+          - invoke:
+              version: 2.3.0
+              title: Add Service
+              backend-type: json
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: POST
+              chunked-uploads: false
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              websocket-upgrade: false
+              target-url: $(ace-qiwa-support-center)$(addSrvc)
+              inject-proxy-headers: true
+        - operations:
+          - verb: post
+            path: /serviceToUser
+          execute:
+          - invoke:
+              version: 2.3.0
+              title: Service To Users
+              backend-type: json
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: POST
+              chunked-uploads: false
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              websocket-upgrade: false
+              target-url: $(ace-qiwa-support-center)$(srvcToUser)
+              inject-proxy-headers: true
+        - operations:
+          - verb: post
+            path: /unassignedServices
+          execute:
+          - invoke:
+              version: 2.3.0
+              title: Get user's unassigned services
+              backend-type: json
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: POST
+              chunked-uploads: false
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              websocket-upgrade: false
+              target-url: $(ace-qiwa-support-center)$(unAssignedSrvcs)
+              inject-proxy-headers: true
+        - operations:
+          - verb: post
+            path: /grantAccess
+          execute:
+          - invoke:
+              version: 2.3.0
+              title: Grant Access
+              backend-type: json
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: POST
+              chunked-uploads: false
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              websocket-upgrade: false
+              target-url: $(ace-qiwa-support-center)$(grantAccess)
+              inject-proxy-headers: true
+        - operations:
+          - verb: post
+            path: /revokeAccess
+          execute:
+          - invoke:
+              version: 2.3.0
+              title: Revoke Access
+              backend-type: json
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: POST
+              chunked-uploads: false
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              websocket-upgrade: false
+              target-url: $(ace-qiwa-support-center)$(revokeAccess)
+              inject-proxy-headers: true
+        otherwise: []
+  properties:
+    srvcModule:
+      value: /qcgatekeeper/v1/gatekeeper/ServiceModules
+      encoded: false
+    srvcByModId:
+      value: /qcgatekeeper/v1/gatekeeper/Services
+    addSrvc:
+      value: /qcgatekeeper/v1/gatekeeper/Services
+    srvcToUser:
+      value: /qcgatekeeper/v1/gatekeeper/ServiceToUsers
+    unAssignedSrvcs:
+      value: /qcgatekeeper/v1/gatekeeper/UserServiceAbsent
+    grantAccess:
+      value: /qcgatekeeper/v1/gatekeeper/grantAccess
+    revokeAccess:
+      value: /qcgatekeeper/v1/gatekeeper/revokeAccess
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+basePath: /qiwa/v2/accessmanagement
+paths:
+  /serviceModules:
+    get:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+  /services:
+    get:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+  /addService:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+  /serviceToUser:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+  /unassignedServices:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+  /grantAccess:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+  /revokeAccess:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+securityDefinitions:
+  clientID:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+    x-key-type: client_id
+  clientSecret:
+    type: apiKey
+    x-key-type: client_secret
+    name: X-IBM-Client-Secret
+    in: header
+  OAuth2.0:
+    type: oauth2
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    flow: application
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+schemes:
+- https
+security:
+- clientID: []
+  clientSecret: []
+  OAuth2.0:
+  - IntegrationScope

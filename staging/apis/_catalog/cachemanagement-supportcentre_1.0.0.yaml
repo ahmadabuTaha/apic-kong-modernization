@@ -1,0 +1,118 @@
+swagger: "2.0"
+info:
+  title: CacheManagement SupportCentre
+  x-ibm-name: cachemanagement-supportcentre
+  version: 1.0.0
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - operation-switch:
+        version: 2.0.0
+        title: cache management
+        case:
+        - operations:
+          - verb: post
+            path: /cache/get
+          execute:
+          - invoke:
+              version: 2.3.0
+              title: get cache
+              backend-type: json
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: POST
+              chunked-uploads: false
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              websocket-upgrade: false
+              target-url: $(ace-qiwa-support-center)$(cacheget)
+              inject-proxy-headers: true
+        - operations:
+          - verb: post
+            path: /cache/add
+          execute:
+          - invoke:
+              version: 2.3.0
+              title: add cache
+              backend-type: json
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: POST
+              chunked-uploads: false
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              websocket-upgrade: false
+              target-url: $(ace-qiwa-support-center)$(cacheadd)
+              inject-proxy-headers: true
+        otherwise: []
+  properties:
+    cacheget:
+      value: /qc_internalservicemanagement/v1/getcache
+    cacheadd:
+      value: /qc_internalservicemanagement/v1/addcache
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+basePath: /qiwa/v2/cachemanagement
+paths:
+  /cache/get:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+  /cache/add:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+securityDefinitions:
+  clientID:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+    x-key-type: client_id
+  clientSecret:
+    type: apiKey
+    x-key-type: client_secret
+    name: X-IBM-Client-Secret
+    in: header
+  OAuth2.0:
+    type: oauth2
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    flow: application
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+schemes:
+- https
+security:
+- clientID: []
+  clientSecret: []

@@ -1,0 +1,34 @@
+info:
+  version: 1.0.1
+  title: Qiwa_NIC_Services Product
+  name: qiwa-nic-services-product
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: true
+    rate-limits:
+      default:
+        value: 100/1hour
+        hard-limit: false
+    apis:
+      calculaterunawaylaborerdebts1.0.0: {}
+      submitrunawayreporttonic1.0.0: {}
+      cancelrunawayreportinnic1.0.0: {}
+apis:
+  calculaterunawaylaborerdebts1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/calculaterunawaylaborerdebts_1.0.0.yaml
+  submitrunawayreporttonic1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/submitrunawayreporttonic_1.0.0.yaml
+  cancelrunawayreportinnic1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/cancelrunawayreportinnic_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

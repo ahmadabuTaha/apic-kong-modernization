@@ -1,0 +1,318 @@
+swagger: "2.0"
+info:
+  title: GetStandardPolicyRequestDetails
+  x-ibm-name: getstandardpolicyrequestdetails
+  version: 1.0.0
+  description: This service is used to get standard policy request details.
+schemes:
+- https
+basePath: /policies
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(cat-target-hostname)$(cat-target-url-policies)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  GetStandardPolicRequestDetailsRq_MessageType:
+    type: object
+    properties:
+      GetStandardPolicRequestDetailsRq:
+        $ref: '#/definitions/GetStandardPolicRequestDetailsRq_Type'
+  GetStandardPolicRequestDetailsRs_MessageType:
+    type: object
+    properties:
+      GetStandardPolicRequestDetailsRs:
+        $ref: '#/definitions/GetStandardPolicRequestDetailsRs_Type'
+  GetStandardPolicRequestDetailsRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetStandardPolicRequestDetailsRq_BodyType'
+  GetStandardPolicRequestDetailsRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+        default: "12"
+      SequenceNumber:
+        type: integer
+        default: "1003"
+      RequestId:
+        type: integer
+        default: "12554"
+      PageSize:
+        type: integer
+        default: "1"
+      PageIndex:
+        type: integer
+        default: "100"
+  GetStandardPolicRequestDetailsRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetStandardPolicRequestDetailsRs_BodyType'
+  GetStandardPolicRequestDetailsRs_BodyType:
+    type: object
+    properties:
+      StandardPolicyDetailsList:
+        $ref: '#/definitions/StandardPolicyDetailsList_Type'
+      TotalRecordsCount:
+        type: integer
+  StandardPolicyDetailsList_Type:
+    type: object
+    properties:
+      StandardPolicyItem:
+        type: array
+        items:
+          $ref: '#/definitions/StandardPolicyItem_Type'
+  StandardPolicyItem_Type:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      RequestId:
+        type: integer
+      RequesterName:
+        type: string
+      CreationDate:
+        type: string
+      StatusId:
+        $ref: '#/definitions/CodeName_Type'
+      WorkingHours:
+        type: integer
+      RamadanWorkingHours:
+        type: integer
+      OffDaysList:
+        $ref: '#/definitions/OffDaysList_Type'
+      AnnualVacationDays:
+        type: integer
+      VacationAfter5Years:
+        type: integer
+      DateType:
+        type: integer
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+  OffDaysList_Type:
+    type: object
+    properties:
+      OffDaysItem:
+        type: array
+        items:
+          $ref: '#/definitions/OffDaysItem_Type'
+  OffDaysItem_Type:
+    type: object
+    properties:
+      Days:
+        $ref: '#/definitions/DaysType_Type'
+  DaysType_Type:
+    type: object
+    properties:
+      Monday:
+        type: boolean
+      Tuesday:
+        type: boolean
+      Wednesday:
+        type: boolean
+      Thursday:
+        type: boolean
+      Friday:
+        type: boolean
+      Saturday:
+        type: boolean
+      Sunday:
+        type: boolean
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: GSPRD001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: GSPRD001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+        default: "465740"
+      IDNumber:
+        type: integer
+        default: "1024812248"
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /getstandpolreqdet:
+    post:
+      operationId: GetStandardPolicyRequestDetails
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetStandardPolicRequestDetailsRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: GetStandardPolicyRequestDetails
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetStandardPolicRequestDetailsRq_MessageType'
+        description: GetStandardPolicyRequestDetails
+        required: true

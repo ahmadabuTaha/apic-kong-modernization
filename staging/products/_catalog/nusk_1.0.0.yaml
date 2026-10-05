@@ -1,0 +1,30 @@
+info:
+  title: Nusk
+  name: nusk
+  version: 1.0.0
+apis:
+  nusk-getempbasicdetailsbyid1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nusk-getempbasicdetailsbyid_1.0.0.yaml
+  nusk-getempbasicdetailsbybordernum1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nusk-getempbasicdetailsbybordernum_1.0.0.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      nusk-getempbasicdetailsbyid1.0.0: {}
+      nusk-getempbasicdetailsbybordernum1.0.0: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

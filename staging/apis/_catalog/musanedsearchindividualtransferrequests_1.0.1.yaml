@@ -1,0 +1,331 @@
+swagger: "2.0"
+info:
+  title: 'MusanedSearchIndividualTransferRequests '
+  x-ibm-name: musanedsearchindividualtransferrequests
+  version: 1.0.1
+  description: 'This service is used to search the requested employee transfer requests
+    for establishment depending on several details to get specific requests with their
+    details and it will be used from musaned side. '
+schemes:
+- https
+basePath: /depindtransfer
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-det-dependentet)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  MusanedSearchIndividualTransferRequests Rq_MessageType:
+    type: object
+    properties:
+      MusanedSearchIndividualTransferRequests Rq:
+        $ref: '#/definitions/MusanedSearchIndividualTransferRequests Rq_Type'
+  MusanedSearchIndividualTransferRequests Rs_MessageType:
+    type: object
+    properties:
+      MusanedSearchIndividualTransferRequests Rs:
+        $ref: '#/definitions/MusanedSearchIndividualTransferRequests Rs_Type'
+  MusanedSearchIndividualTransferRequests Rq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/MusanedSearchIndividualTransferRequests Rq_BodyType'
+  MusanedSearchIndividualTransferRequests Rq_BodyType:
+    type: object
+    properties:
+      RequestNumber:
+        type: string
+        default: "6"
+      DestinationDetails:
+        $ref: '#/definitions/DestinationDetails_Type'
+      IndividualDetails:
+        $ref: '#/definitions/IndividualDetails_Type'
+      StatusIds:
+        $ref: '#/definitions/StatusIds_Type'
+      PageSize:
+        type: integer
+        default: "1"
+      PageIndex:
+        type: integer
+        default: "10"
+  DestinationDetails_Type:
+    type: object
+    properties:
+      DestinationLaborOfficeId:
+        type: integer
+        default: "1"
+      DestinationSequenceNumber:
+        type: integer
+        default: "19"
+      DestinationEstablishmentName:
+        type: string
+        default: test
+  IndividualDetails_Type:
+    type: object
+    properties:
+      IndividualIdNo:
+        type: string
+        default: "1"
+      IndividualName:
+        type: string
+        default: abv
+      Nationality:
+        $ref: '#/definitions/CodeName_Type'
+      NewOccupation:
+        $ref: '#/definitions/CodeName_Type'
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+        default: "1"
+      NameAr:
+        type: string
+        default: "1"
+      NameEn:
+        type: string
+        default: "65465"
+  StatusIds_Type:
+    type: object
+    properties:
+      Status:
+        type: array
+        items:
+          $ref: '#/definitions/Status_Type'
+  Status_Type:
+    type: object
+    properties:
+      Id:
+        type: integer
+        default: "175"
+  MusanedSearchIndividualTransferRequests Rs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/MusanedSearchIndividualTransferRequests Rs_BodyType'
+  MusanedSearchIndividualTransferRequests Rs_BodyType:
+    type: object
+    properties:
+      ITList:
+        $ref: '#/definitions/ITList_Type'
+      TotalRecordsCount:
+        type: integer
+  ITList_Type:
+    type: object
+    properties:
+      ITRequest:
+        type: array
+        items:
+          $ref: '#/definitions/ITRequest_Type'
+  ITRequest_Type:
+    type: object
+    properties:
+      RequestNumber:
+        type: string
+      DestinationDetails:
+        $ref: '#/definitions/DestinationDetails_Type'
+      IndividualDetails:
+        $ref: '#/definitions/IndividualDetails_Type'
+      RequestDate:
+        type: string
+      Status:
+        $ref: '#/definitions/CodeName_Type'
+      RejectionReason:
+        type: string
+    required:
+    - RequestNumber
+    - DestinationDetails
+    - IndividualDetails
+    - RequestDate
+    - Status
+    - RejectionReason
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "200966842998"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: MSITR001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: MSITR001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+        default: "465740"
+      IDNumber:
+        type: integer
+        default: "1024812248"
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /musanedsearchindtranreq:
+    post:
+      operationId: 'MusanedSearchIndividualTransferRequests '
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/MusanedSearchIndividualTransferRequests Rs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Get Service Sustainability Configuration
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/MusanedSearchIndividualTransferRequests Rq_MessageType'
+        description: MusanedSearchIndividualTransferRequests Rq
+        required: true

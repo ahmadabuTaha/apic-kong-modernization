@@ -1,0 +1,157 @@
+info:
+  version: 2.0.1
+  title: ContractManagement
+  name: contractmanagement
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: true
+    rate-limits:
+      ContractPlan:
+        value: 100000/1hour
+        hard-limit: false
+    apis:
+      approverejectcontractbylaborer1.0.0: {}
+      cancelcontractrequest1.0.0: {}
+      checkcontractinqiwaandgosi1.0.0: {}
+      createcontractbulk1.0.0: {}
+      createcontractrequestdraft1.0.0: {}
+      createcontracttemplate1.0.0: {}
+      createnewcontract1.0.0: {}
+      createnewextcontract1.0.0: {}
+      deletedeactivatecontracttemplate1.0.0: {}
+      getbulklist1.0.0: {}
+      getcontlablist1.0.0: {}
+      getcontractinfo1.0.0: {}
+      getcontractrequestdraft1.0.0: {}
+      getcontractscounts1.0.0: {}
+      getcontractslist1.0.0: {}
+      getcontractspecialties1.0.0: {}
+      getcontractstatuses1.0.0: {}
+      getcontractworklocations1.0.0: {}
+      getestablishmenttemplateslist1.0.0: {}
+      getextcontractdetails1.0.0: {}
+      getgosicontractslist1.0.0: {}
+      getindividualcontractdetails1.0.0: {}
+      getlaborercontractsstatuses1.0.0: {}
+      getsccontractdetails1.0.0: {}
+      pushlaborerwagedata1.0.0: {}
+      pushsaudiworkersdata1.0.0: {}
+      pushspecialworkersdata1.0.0: {}
+      renewcontracts1.0.0: {}
+      requestupdatecontract1.0.0: {}
+      updatecontractrequestdraft1.0.0: {}
+      validateestcontractsauth1.0.0: {}
+      validateempcontract1.0.0: {}
+      getindividualcontractslist1.0.1: {}
+      searchcontractbulk1.0.1: {}
+      updatecontractdetails1.0.1: {}
+      getcontractdetails1.0.1: {}
+      updatecontracttemplatedetails1.0.1: {}
+      getcontracttemplatedetails1.0.1: {}
+      employeeauthind1.0.0: {}
+      resendcontracttogosi1.0.0: {}
+      getgetestablishmentcontracts1.0.0: {}
+      resendcontracts1.0.0: {}
+      getresendcontractslist1.0.0: {}
+      getcontractsstatuslist1.0.0: {}
+apis:
+  createnewcontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/createnewcontract_1.0.0.yaml
+  validateestcontractsauth1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validateestcontractsauth_1.0.0.yaml
+  getcontractdetails1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getcontractdetails_1.0.1_1.yaml
+  validateempcontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validateempcontract_1.0.0.yaml
+  updatecontractdetails1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updatecontractdetails_1.0.1.yaml
+  getsccontractdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getsccontractdetails_1.0.0.yaml
+  getresendcontractslist1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getresendcontractslist_1.0.0.yaml
+  approverejectcontractbylaborer1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/approverejectcontractbylaborer_1.0.0.yaml
+  searchcontractbulk1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/searchcontractbulk_1.0.1.yaml
+  createcontracttemplate1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/createcontracttemplate_1.0.0.yaml
+  getindividualcontractslist1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getindividualcontractslist_1.0.1.yaml
+  resendcontracts1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/resendcontracts_1.0.0.yaml
+  getgetestablishmentcontracts1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getgetestablishmentcontracts_1.0.0.yaml
+  resendcontracttogosi1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/resendcontracttogosi_1.0.0.yaml
+  employeeauthind1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/employeeauthind_1.0.0.yaml
+  updatecontracttemplatedetails1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updatecontracttemplatedetails_1.0.1.yaml
+  getcontracttemplatedetails1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getcontracttemplatedetails_1.0.1.yaml
+  getindividualcontractdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getindividualcontractdetails_1.0.0.yaml
+  updatecontractrequestdraft1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updatecontractrequestdraft_1.0.0.yaml
+  pushsaudiworkersdata1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/pushsaudiworkersdata_1.0.0.yaml
+  pushlaborerwagedata1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/pushlaborerwagedata_1.0.0.yaml
+  pushspecialworkersdata1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/pushspecialworkersdata_1.0.0.yaml
+  renewcontracts1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/renewcontracts_1.0.0.yaml
+  requestupdatecontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/requestupdatecontract_1.0.0.yaml
+  getcontractslist1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getcontractslist_1.0.0.yaml
+  getcontractrequestdraft1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getcontractrequestdraft_1.0.0.yaml
+  getcontractscounts1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getcontractscounts_1.0.0.yaml
+  getlaborercontractsstatuses1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getlaborercontractsstatuses_1.0.0.yaml
+  getgosicontractslist1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getgosicontractslist_1.0.0.yaml
+  getextcontractdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getextcontractdetails_1.0.0.yaml
+  getestablishmenttemplateslist1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getestablishmenttemplateslist_1.0.0.yaml
+  getcontractworklocations1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getcontractworklocations_1.0.0.yaml
+  getcontractstatuses1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getcontractstatuses_1.0.0.yaml
+  getcontractspecialties1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getcontractspecialties_1.0.0.yaml
+  getbulklist1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getbulklist_1.0.0.yaml
+  getcontlablist1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getcontlablist_1.0.0.yaml
+  getcontractinfo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getcontractinfo_1.0.0_1.yaml
+  checkcontractinqiwaandgosi1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/checkcontractinqiwaandgosi_1.0.0.yaml
+  createcontractrequestdraft1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/createcontractrequestdraft_1.0.0.yaml
+  createcontractbulk1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/createcontractbulk_1.0.0.yaml
+  createnewextcontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/createnewextcontract_1.0.0.yaml
+  deletedeactivatecontracttemplate1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/deletedeactivatecontracttemplate_1.0.0.yaml
+  cancelcontractrequest1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/cancelcontractrequest_1.0.0.yaml
+  getcontractsstatuslist1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getcontractsstatuslist_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

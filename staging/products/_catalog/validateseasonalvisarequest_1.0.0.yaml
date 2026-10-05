@@ -1,0 +1,308 @@
+swagger: "2.0"
+info:
+  title: ValidateSeasonalVisaRequest
+  x-ibm-name: validateseasonalvisarequest
+  version: 1.0.0
+  description: This service is used to validate the Seasonal visa request.
+schemes:
+- https
+basePath: /visa/seasonalvisa
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-sese-seasutility)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  ValidateSeasonalVisaRequestRq_MessageType:
+    type: object
+    properties:
+      ValidateSeasonalVisaRequestRq:
+        $ref: '#/definitions/ValidateSeasonalVisaRequestRq_Type'
+  ValidateSeasonalVisaRequestRs_MessageType:
+    type: object
+    properties:
+      ValidateSeasonalVisaRequestRs:
+        $ref: '#/definitions/ValidateSeasonalVisaRequestRs_Type'
+  ValidateSeasonalVisaRequestRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/ValidateSeasonalVisaRequestRq_BodyType'
+  ValidateSeasonalVisaRequestRq_BodyType:
+    type: object
+    properties:
+      EstablishmentId:
+        type: integer
+        default: "1"
+      SequenceNumber:
+        type: integer
+        default: "1765"
+      LaborOfficeId:
+        type: integer
+        default: "15"
+      EndorsementId:
+        type: integer
+        default: "15354"
+      ValidationLevel:
+        type: integer
+        default: "18"
+      VisaDetailsList:
+        $ref: '#/definitions/VisaDetailsList_Type'
+  VisaDetailsList_Type:
+    type: object
+    properties:
+      VisaDetail:
+        type: array
+        items:
+          $ref: '#/definitions/VisaDetail_Type'
+  VisaDetail_Type:
+    type: object
+    properties:
+      Gender:
+        type: integer
+        default: "1"
+      Job:
+        type: integer
+        default: "12"
+      Nationality:
+        type: integer
+        default: "17"
+      Origin:
+        type: integer
+        default: "1"
+      Religion:
+        type: integer
+        default: "5"
+      NumberOfVisas:
+        type: integer
+        default: "16"
+  ValidateSeasonalVisaRequestRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/ValidateSeasonalVisaRequestRs_BodyType'
+  ValidateSeasonalVisaRequestRs_BodyType:
+    type: object
+    properties:
+      EntityId:
+        type: string
+      EstablishmentId:
+        type: integer
+      UnifiedNationalNo:
+        type: integer
+      OwnerId:
+        type: integer
+      EstablishmentTypeId:
+        type: integer
+      SevenHundredNo:
+        type: integer
+      UseUnifiedNationalNoFlag:
+        type: integer
+      ValidationsErrorsList:
+        $ref: '#/definitions/ValidationsErrorsList_Type'
+  ValidationsErrorsList_Type:
+    type: object
+    properties:
+      ValidationError:
+        type: array
+        items:
+          $ref: '#/definitions/ValidationError_Type'
+  ValidationError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ArDescription:
+        type: string
+      EnDescription:
+        type: string
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: VSVR0001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: VSVR0001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+        default: "465740"
+      IDNumber:
+        type: integer
+        default: "1024812248"
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /validseasvisareq:
+    post:
+      operationId: ValidateSeasonalVisaRequest
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/ValidateSeasonalVisaRequestRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Update Refunded
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/ValidateSeasonalVisaRequestRq_MessageType'
+        description: ValidateSeasonalVisaRequestRq
+        required: true

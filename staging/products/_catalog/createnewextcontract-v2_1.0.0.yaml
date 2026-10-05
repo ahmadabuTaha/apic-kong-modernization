@@ -1,0 +1,473 @@
+swagger: "2.0"
+info:
+  title: CreateNewExtContract V2
+  x-ibm-name: createnewextcontract-v2
+  version: 1.0.0
+  description: This service is used to create a new contract for external employees
+    (not Saudi residents).
+schemes:
+- https
+basePath: /contractmanagement/v2
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-cntmv2-contractcreates)/contractmanagement/createnewextcontract
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  CreateNewExtContractRq_MessageType:
+    type: object
+    properties:
+      CreateNewExtContractRq:
+        $ref: '#/definitions/CreateNewExtContractRq_Type'
+  CreateNewExtContractRs_MessageType:
+    type: object
+    properties:
+      CreateNewExtContractRs:
+        $ref: '#/definitions/CreateNewContractRs_Type'
+  CreateNewExtContractRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/CreateNewExtContractRq_BodyType'
+  CreateNewExtContractRq_BodyType:
+    type: object
+    properties:
+      EstablishmentDetails:
+        $ref: '#/definitions/EstablishmentDetails_Type'
+      LaborerDetails:
+        $ref: '#/definitions/LaborerDetails_Type'
+      RequesterDetails:
+        $ref: '#/definitions/RequesterDetails_type'
+      ContractDetails:
+        $ref: '#/definitions/ContractDetails_Type'
+      LanguageId:
+        type: integer
+      DateTypeId:
+        type: integer
+      RelatedToId:
+        type: integer
+    required:
+    - EstablishmentDetails
+    - LaborerDetails
+    - RequesterDetails
+    - ContractDetails
+    - LanguageId
+    - DateTypeId
+    - RelatedToId
+  EstablishmentDetails_Type:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      EstablishmentId:
+        type: integer
+      UnifiedNumberId:
+        type: integer
+      EntityId:
+        type: string
+      EstablishmentNameAr:
+        type: string
+      EstablishmentNameEn:
+        type: string
+      EstablishmentEmail:
+        type: string
+      CRNumber:
+        type: string
+      Address:
+        type: string
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+    - EstablishmentId
+    - UnifiedNumberId
+    - EntityId
+    - EstablishmentNameAr
+    - EstablishmentNameEn
+    - EstablishmentEmail
+  LaborerDetails_Type:
+    type: object
+    properties:
+      PassportNumber:
+        type: string
+      PassportExpiryDate:
+        type: string
+      DOBType:
+        type: integer
+      LaborerDOB:
+        $ref: '#/definitions/HGDate_Type'
+      Gender:
+        type: string
+      Nationality:
+        type: string
+      Religion:
+        type: string
+      MaritalStatus:
+        type: integer
+      AgencyName:
+        type: string
+      AgencyEmail:
+        type: string
+      AgencyMobileNumber:
+        type: string
+      LaborerTypeId:
+        type: integer
+      LaborerName:
+        type: string
+      LaborerEmail:
+        type: string
+      CountryCode:
+        type: string
+      LaborerMobileNumber:
+        type: string
+    required:
+    - PassportNumber
+    - PassportExpiryDate
+    - DOBType
+    - LaborerDOB
+    - Gender
+    - Nationality
+    - Religion
+    - LaborerTypeId
+    - LaborerName
+    - LaborerEmail
+    - CountryCode
+    - LaborerMobileNumber
+  RequesterDetails_type:
+    type: object
+    properties:
+      RequesterIdNo:
+        type: integer
+      RequesterName:
+        type: string
+      RequesterUserId:
+        type: integer
+    required:
+    - RequesterIdNo
+    - RequesterName
+    - RequesterUserId
+  ContractDetails_Type:
+    type: object
+    properties:
+      OccupationId:
+        type: integer
+      JobTitle:
+        $ref: '#/definitions/JobTitle_Type'
+      LaborerJobNumber:
+        type: string
+      ContractTypeId:
+        type: integer
+      ContractDurationId:
+        type: integer
+      ContractPeriod:
+        type: integer
+      ProbationPeriod:
+        type: integer
+      WorkingHoursTypeId:
+        type: integer
+      VacationPeriod:
+        type: integer
+      Salary:
+        type: number
+      Allowances:
+        $ref: '#/definitions/AllowancesItems_Type'
+      StartDate:
+        $ref: '#/definitions/HGDate_Type'
+      ExpiryDate:
+        $ref: '#/definitions/HGDate_Type'
+      RenewalStatusId:
+        type: integer
+      NoticePeriod:
+        type: integer
+      AddedClauses:
+        $ref: '#/definitions/AddedClausesItems_Type'
+      SalaryFrequency:
+        type: string
+      AdditionalAllowancesList:
+        $ref: '#/definitions/AdditionalAllowancesList_Type'
+      HoursPerWeek:
+        type: integer
+      DaysPerWeek:
+        type: integer
+      HoursPerDay:
+        type: integer
+      OptionalArticles:
+        $ref: '#/definitions/OptionalArticles_Type'
+      JoiningDate:
+        type: string
+    required:
+    - OccupationId
+    - JobTitle
+    - LaborerJobNumber
+    - ContractTypeId
+    - ContractDurationId
+    - ProbationPeriod
+    - WorkingHoursTypeId
+    - VacationPeriod
+    - Salary
+    - StartDate
+    - RenewalStatusId
+    - NoticePeriod
+  JobTitle_Type:
+    type: object
+    properties:
+      JobTitleAr:
+        type: string
+      JobTitleEng:
+        type: string
+    required:
+    - JobTitleAr
+    - JobTitleEng
+  AllowancesItems_Type:
+    type: object
+    properties:
+      AllowancesItems:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValue_Type'
+  AddedClausesItems_Type:
+    type: object
+    properties:
+      AddedClausesItems:
+        $ref: '#/definitions/KeyValue_Type'
+  KeyValue_Type:
+    type: object
+    properties:
+      Key:
+        type: string
+      Value:
+        type: string
+  HGDate_Type:
+    type: object
+    properties:
+      HijriDate:
+        type: integer
+      GregDate:
+        type: string
+  CreateNewContractRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/CreateNewContractRs_BodyType'
+  CreateNewContractRs_BodyType:
+    type: object
+    properties:
+      ContractId:
+        type: integer
+      Status:
+        $ref: '#/definitions/CodeName_Type'
+    required:
+    - ContractId
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+  AdditionalAllowancesList_Type:
+    type: object
+    properties:
+      Item:
+        type: array
+        items:
+          $ref: '#/definitions/Item_Type'
+  Item_Type:
+    type: object
+    properties:
+      BenefitNameAr:
+        type: string
+      BenefitNameEn:
+        type: string
+      Frequency:
+        type: integer
+      AmountType:
+        type: integer
+      Amount:
+        type: number
+  OptionalArticles_Type:
+    type: object
+    properties:
+      Period:
+        type: integer
+      Location:
+        type: string
+      WorkField:
+        type: string
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+    required:
+    - Code
+    - NameAr
+    - NameEn
+paths:
+  /createnewextcontract:
+    post:
+      operationId: CreateNewExtContract
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/CreateNewExtContractRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: The scope of this service is to create a new contract for external
+        employees (not Saudi residents).
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/CreateNewExtContractRq_MessageType'
+        description: CreateNewExtContractRq
+        required: true

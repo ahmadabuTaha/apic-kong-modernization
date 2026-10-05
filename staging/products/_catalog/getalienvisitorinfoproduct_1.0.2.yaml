@@ -1,0 +1,30 @@
+info:
+  version: 1.0.2
+  title: GetAlienVisitorInfoProduct
+  name: getalienvisitorinfoproduct
+gateways:
+- datapower-api-gateway
+plans:
+  plana:
+    title: PlanA
+    description: PlanA
+    rate-limits:
+      hundredperminute:
+        value: 100/1minute
+        hard-limit: true
+    apis:
+      getalienvisitorinfo1.0.0: {}
+      getestablishmentlicenseorcrdetails1.0.1: {}
+apis:
+  getalienvisitorinfo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getalienvisitorinfo_1.0.0.yaml
+  getestablishmentlicenseorcrdetails1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getestablishmentlicenseorcrdetails_1.0.1.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

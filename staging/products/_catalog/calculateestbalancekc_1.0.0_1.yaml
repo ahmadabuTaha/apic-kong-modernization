@@ -1,0 +1,639 @@
+swagger: "2.0"
+info:
+  title: CalculateEstBalanceKC
+  x-ibm-name: calculateestbalancekc
+  version: 1.0.0
+  description: ""
+schemes:
+- https
+basePath: /kc
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - gatewayscript:
+        version: 2.0.0
+        title: ReqMap
+        source: "var apim = require('apim');\nvar request= apim.getvariable('message.body');\nrequest.CalculateEstBalanceKCRq.Header.ServiceCode
+          = \"CCSB0001\";\nvar accReq = {\n    \"CalculateChangeSponsorBalanceRq\":
+          {\n        \"Header\": request.CalculateEstBalanceKCRq.Header,\n        \"Body\":
+          request.CalculateEstBalanceKCRq.Body\n        \n    }\n};\n\nsession.output.write(accReq);\napim.output('application/json');"
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-emtf-calcchsp)/changesponsor/calculatechangesponsorbalance
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        persistent-connection: true
+    - map:
+        inputs:
+          input:
+            schema:
+              $ref: '#/definitions/CalculateChangeSponsorBalanceRs_MessageType'
+            variable: message.body
+            content: application/json
+        outputs:
+          output:
+            schema:
+              $ref: '#/definitions/CalculateEstBalanceKCRs_MessageType'
+            variable: message.body
+            content: application/json
+        actions:
+        - set: output.CalculateEstBalanceKCRs.Header.TransactionId
+          from: input.CalculateChangeSponsorBalanceRs.Header.TransactionId
+        - set: output.CalculateEstBalanceKCRs.Header.ChannelId
+          from: input.CalculateChangeSponsorBalanceRs.Header.ChannelId
+        - set: output.CalculateEstBalanceKCRs.Header.SessionId
+          from: input.CalculateChangeSponsorBalanceRs.Header.SessionId
+        - set: output.CalculateEstBalanceKCRs.Header.RequestTime
+          from: input.CalculateChangeSponsorBalanceRs.Header.RequestTime
+        - set: output.CalculateEstBalanceKCRs.Header.MWRequestTime
+          from: input.CalculateChangeSponsorBalanceRs.Header.MWRequestTime
+        - set: output.CalculateEstBalanceKCRs.Header.MWResponseTime
+          from: input.CalculateChangeSponsorBalanceRs.Header.MWResponseTime
+        - set: output.CalculateEstBalanceKCRs.Header.ServiceCode
+          from: input.CalculateChangeSponsorBalanceRs.Header.ServiceCode
+        - set: output.CalculateEstBalanceKCRs.Header.DebugFlag
+          from: input.CalculateChangeSponsorBalanceRs.Header.DebugFlag
+        - set: output.CalculateEstBalanceKCRs.Header.UserInfo.UserId
+          from: input.CalculateChangeSponsorBalanceRs.Header.UserInfo.UserId
+        - set: output.CalculateEstBalanceKCRs.Header.UserInfo.IDNumber
+          from: input.CalculateChangeSponsorBalanceRs.Header.UserInfo.IDNumber
+        - set: output.CalculateEstBalanceKCRs.Header.ResponseStatus.Status
+          from: input.CalculateChangeSponsorBalanceRs.Header.ResponseStatus.Status
+        - set: output.CalculateEstBalanceKCRs.Header.ResponseStatus.Code
+          from: input.CalculateChangeSponsorBalanceRs.Header.ResponseStatus.Code
+        - set: output.CalculateEstBalanceKCRs.Header.ResponseStatus.ArabicMsg
+          from: input.CalculateChangeSponsorBalanceRs.Header.ResponseStatus.ArabicMsg
+        - set: output.CalculateEstBalanceKCRs.Header.ResponseStatus.EnglishMsg
+          from: input.CalculateChangeSponsorBalanceRs.Header.ResponseStatus.EnglishMsg
+        - set: output.CalculateEstBalanceKCRs.Header.BackendError.ErrorCode
+          from: input.CalculateChangeSponsorBalanceRs.Header.BackendError.ErrorCode
+        - set: output.CalculateEstBalanceKCRs.Header.BackendError.ErrorDescription
+          from: input.CalculateChangeSponsorBalanceRs.Header.BackendError.ErrorDescription
+        - set: output.CalculateEstBalanceKCRs.Body.Balance.AvailableBalance
+          from: input.CalculateChangeSponsorBalanceRs.Body.Balance.AvailableBalance
+        - set: output.CalculateEstBalanceKCRs.Body.Balance.BalanceType
+          from: input.CalculateChangeSponsorBalanceRs.Body.Balance.BalanceType
+        - set: output.CalculateEstBalanceKCRs.Body.AllowanceStartDate
+          from: input.CalculateChangeSponsorBalanceRs.Body.AllowanceStartDate
+        - set: output.CalculateEstBalanceKCRs.Body.AllowanceEndDate
+          from: input.CalculateChangeSponsorBalanceRs.Body.AllowanceEndDate
+        - set: output.CalculateEstBalanceKCRs.Body.Establishing.AvailableVisas
+          from: input.CalculateChangeSponsorBalanceRs.Body.Establishing.AvailableVisas
+        - set: output.CalculateEstBalanceKCRs.Body.Establishing.CurrentLaborers
+          from: input.CalculateChangeSponsorBalanceRs.Body.Establishing.CurrentLaborers
+        - set: output.CalculateEstBalanceKCRs.Body.Establishing.PendingEstablishingVisaRequests
+          from: input.CalculateChangeSponsorBalanceRs.Body.Establishing.PendingEstablishingVisaRequests
+        - set: output.CalculateEstBalanceKCRs.Body.Establishing.PendingSponsorTransferRequests
+          from: input.CalculateChangeSponsorBalanceRs.Body.Establishing.PendingSponsorTransferRequests
+        - set: output.CalculateEstBalanceKCRs.Body.Establishing.NotUsedVisas
+          from: input.CalculateChangeSponsorBalanceRs.Body.Establishing.NotUsedVisas
+        - set: output.CalculateEstBalanceKCRs.Body.Establishing.TierId
+          from: input.CalculateChangeSponsorBalanceRs.Body.Establishing.TierId
+        - set: output.CalculateEstBalanceKCRs.Body.Establishing.EntityAjeerPendingLaborers
+          from: input.CalculateChangeSponsorBalanceRs.Body.Establishing.EntityAjeerPendingLaborers
+        - set: output.CalculateEstBalanceKCRs.Body.Expansion.Quota
+          from: input.CalculateChangeSponsorBalanceRs.Body.Expansion.Quota
+        - set: output.CalculateEstBalanceKCRs.Body.Expansion.SizeId
+          from: input.CalculateChangeSponsorBalanceRs.Body.Expansion.SizeId
+        - set: output.CalculateEstBalanceKCRs.Body.Expansion.ColorId
+          from: input.CalculateChangeSponsorBalanceRs.Body.Expansion.ColorId
+        - set: output.CalculateEstBalanceKCRs.Body.Expansion.EconomicActivityId
+          from: input.CalculateChangeSponsorBalanceRs.Body.Expansion.EconomicActivityId
+        - set: output.CalculateEstBalanceKCRs.Body.Expansion.EntitySaudiPercentage
+          from: input.CalculateChangeSponsorBalanceRs.Body.Expansion.EntitySaudiPercentage
+        - set: output.CalculateEstBalanceKCRs.Body.Expansion.EntitySaudisTotalFactorized
+          from: input.CalculateChangeSponsorBalanceRs.Body.Expansion.EntitySaudisTotalFactorized
+        - set: output.CalculateEstBalanceKCRs.Body.Expansion.EntityForeignersTotalFactorized
+          from: input.CalculateChangeSponsorBalanceRs.Body.Expansion.EntityForeignersTotalFactorized
+        - set: output.CalculateEstBalanceKCRs.Body.Expansion.CurrentLaborers
+          from: input.CalculateChangeSponsorBalanceRs.Body.Expansion.CurrentLaborers
+        - set: output.CalculateEstBalanceKCRs.Body.Expansion.NotUsedVisas
+          from: input.CalculateChangeSponsorBalanceRs.Body.Expansion.NotUsedVisas
+        - set: output.CalculateEstBalanceKCRs.Body.Expansion.PendingValue
+          from: input.CalculateChangeSponsorBalanceRs.Body.Expansion.PendingValue
+        - set: output.CalculateEstBalanceKCRs.Body.Expansion.issuedVisas
+          from: input.CalculateChangeSponsorBalanceRs.Body.Expansion.issuedVisas
+        - set: output.CalculateEstBalanceKCRs.Body.Expansion.EntityCLBLaborers
+          from: input.CalculateChangeSponsorBalanceRs.Body.Expansion.EntityCLBLaborers
+        - set: output.CalculateEstBalanceKCRs.Body.Expansion.EntityAjeerPendingLaborers
+          from: input.CalculateChangeSponsorBalanceRs.Body.Expansion.EntityAjeerPendingLaborers
+        - set: 'output.CalculateEstBalanceKCRs.Body.Expansion.RealEntitiesForeignersCount '
+          from: 'input.CalculateChangeSponsorBalanceRs.Body.Expansion.RealEntitiesForeignersCount '
+        - set: output.CalculateEstBalanceKCRs.Body.ProfSkillsDetails.ProfSkillsExempted
+          from: input.CalculateChangeSponsorBalanceRs.Body.ProfSkillsDetails.ProfSkillsExempted
+        - set: output.CalculateEstBalanceKCRs.Body.ProfSkillsDetails.QuotaMaxHigh
+          from: input.CalculateChangeSponsorBalanceRs.Body.ProfSkillsDetails.QuotaMaxHigh
+        - set: output.CalculateEstBalanceKCRs.Body.ProfSkillsDetails.QuotaMaxMedLow
+          from: input.CalculateChangeSponsorBalanceRs.Body.ProfSkillsDetails.QuotaMaxMedLow
+        - set: output.CalculateEstBalanceKCRs.Body.ProfSkillsDetails.QuotaMaxLow
+          from: input.CalculateChangeSponsorBalanceRs.Body.ProfSkillsDetails.QuotaMaxLow
+        - set: output.CalculateEstBalanceKCRs.Body.ProfSkillsDetails.QuotaRealMaxHigh
+          from: input.CalculateChangeSponsorBalanceRs.Body.ProfSkillsDetails.QuotaRealMaxHigh
+        - set: output.CalculateEstBalanceKCRs.Body.ProfSkillsDetails.QuotaRealMaxMedLow
+          from: input.CalculateChangeSponsorBalanceRs.Body.ProfSkillsDetails.QuotaRealMaxMedLow
+        - set: output.CalculateEstBalanceKCRs.Body.ProfSkillsDetails.QuotaRealMaxLow
+          from: input.CalculateChangeSponsorBalanceRs.Body.ProfSkillsDetails.QuotaRealMaxLow
+        - set: output.CalculateEstBalanceKCRs.Body.ProfSkillsDetails.CurrentHigh
+          from: input.CalculateChangeSponsorBalanceRs.Body.ProfSkillsDetails.CurrentHigh
+        - set: output.CalculateEstBalanceKCRs.Body.ProfSkillsDetails.CurrentMed
+          from: input.CalculateChangeSponsorBalanceRs.Body.ProfSkillsDetails.CurrentMed
+        - set: output.CalculateEstBalanceKCRs.Body.ProfSkillsDetails.CurrentLow
+          from: input.CalculateChangeSponsorBalanceRs.Body.ProfSkillsDetails.CurrentLow
+        - set: output.CalculateEstBalanceKCRs.Body.ProfSkillsDetails.CurrentMedLow
+          from: input.CalculateChangeSponsorBalanceRs.Body.ProfSkillsDetails.CurrentMedLow
+        - set: output.CalculateEstBalanceKCRs.Body.ProfSkillsDetails.ETHighSkillOccupations
+          from: input.CalculateChangeSponsorBalanceRs.Body.ProfSkillsDetails.ETHighSkillOccupations
+        - set: output.CalculateEstBalanceKCRs.Body.ProfSkillsDetails.ETMediumSkillOccupations
+          from: input.CalculateChangeSponsorBalanceRs.Body.ProfSkillsDetails.ETMediumSkillOccupations
+        - set: output.CalculateEstBalanceKCRs.Body.ProfSkillsDetails.ETLowSkillOccupations
+          from: input.CalculateChangeSponsorBalanceRs.Body.ProfSkillsDetails.ETLowSkillOccupations
+        - set: output.CalculateEstBalanceKCRs.Body.ProfSkillsDetails.CurrentProffSkillsUsedBalance
+          from: input.CalculateChangeSponsorBalanceRs.Body.ProfSkillsDetails.CurrentProffSkillsUsedBalance
+        - set: output.CalculateEstBalanceKCRs.Body.ProfSkillsDetails.TotalQuota
+          from: input.CalculateChangeSponsorBalanceRs.Body.ProfSkillsDetails.TotalQuota
+        - set: output.CalculateEstBalanceKCRs.Body.ProfSkillsDetails.HighSalarythreshold
+          from: input.CalculateChangeSponsorBalanceRs.Body.ProfSkillsDetails.HighSalarythreshold
+        - set: output.CalculateEstBalanceKCRs.Body.ProfSkillsDetails.MediumSalarythreshold
+          from: input.CalculateChangeSponsorBalanceRs.Body.ProfSkillsDetails.MediumSalarythreshold
+        - set: output.CalculateEstBalanceKCRs.Body.ProfSkillsDetails.MediumLowOccPercentage
+          from: input.CalculateChangeSponsorBalanceRs.Body.ProfSkillsDetails.MediumLowOccPercentage
+        - set: output.CalculateEstBalanceKCRs.Body.ProfSkillsDetails.LowOccPercentage
+          from: input.CalculateChangeSponsorBalanceRs.Body.ProfSkillsDetails.LowOccPercentage
+        - set: output.CalculateEstBalanceKCRs.Body.ProfSkillsDetails.HighHiringCapacity
+          from: input.CalculateChangeSponsorBalanceRs.Body.ProfSkillsDetails.HighHiringCapacity
+        - set: output.CalculateEstBalanceKCRs.Body.ProfSkillsDetails.MedLowHiringCapacity
+          from: input.CalculateChangeSponsorBalanceRs.Body.ProfSkillsDetails.MedLowHiringCapacity
+        - set: output.CalculateEstBalanceKCRs.Body.ProfSkillsDetails.LowHiringCapacity
+          from: input.CalculateChangeSponsorBalanceRs.Body.ProfSkillsDetails.LowHiringCapacity
+        - set: output.CalculateEstBalanceKCRs.Body.ProfSkillsDetails.PotentialHighRemaining
+          from: input.CalculateChangeSponsorBalanceRs.Body.ProfSkillsDetails.PotentialHighRemaining
+        - set: output.CalculateEstBalanceKCRs.Body.ProfSkillsDetails.PotentialMedLowRemaining
+          from: input.CalculateChangeSponsorBalanceRs.Body.ProfSkillsDetails.PotentialMedLowRemaining
+        - set: output.CalculateEstBalanceKCRs.Body.ProfSkillsDetails.PotentialLowRemaining
+          from: input.CalculateChangeSponsorBalanceRs.Body.ProfSkillsDetails.PotentialLowRemaining
+        version: 2.0.0
+        title: ResMap
+        options:
+          mapEnablePostProcessingJSON: true
+          mapEmulateV4EmptyJSONObject: false
+          mapEmulateV4DefaultRequiredProps: false
+          mapReferenceLimit: 1
+          includeEmptyXMLElements: false
+          inlineNamespaces: false
+          mapResolveApicVariables: false
+          mapOptimizeSchemaDefinition: true
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  ProfSkillsDetails_Type:
+    type: object
+    properties:
+      ProfSkillsExempted:
+        type: string
+      QuotaMaxHigh:
+        type: string
+      QuotaMaxMedLow:
+        type: string
+      QuotaMaxLow:
+        type: string
+      QuotaRealMaxHigh:
+        type: string
+      QuotaRealMaxMedLow:
+        type: string
+      QuotaRealMaxLow:
+        type: string
+      CurrentHigh:
+        type: string
+      CurrentMed:
+        type: string
+      CurrentLow:
+        type: string
+      CurrentMedLow:
+        type: string
+      ETHighSkillOccupations:
+        type: string
+      ETMediumSkillOccupations:
+        type: string
+      ETLowSkillOccupations:
+        type: string
+      CurrentProffSkillsUsedBalance:
+        type: string
+      TotalQuota:
+        type: string
+      HighSalarythreshold:
+        type: string
+      MediumSalarythreshold:
+        type: string
+      MediumLowOccPercentage:
+        type: string
+      LowOccPercentage:
+        type: string
+      HighHiringCapacity:
+        type: string
+      MedLowHiringCapacity:
+        type: string
+      LowHiringCapacity:
+        type: string
+      PotentialHighRemaining:
+        type: string
+      PotentialMedLowRemaining:
+        type: string
+      PotentialLowRemaining:
+        type: string
+  Expansion:
+    type: object
+    additionalProperties: false
+    properties:
+      Quota:
+        type: string
+      SizeId:
+        type: string
+      ColorId:
+        type: string
+      EconomicActivityId:
+        type: string
+      EntitySaudiPercentage:
+        type: string
+      EntitySaudisTotalFactorized:
+        type: string
+      EntityForeignersTotalFactorized:
+        type: string
+      CurrentLaborers:
+        type: string
+      NotUsedVisas:
+        type: string
+      PendingValue:
+        type: string
+      issuedVisas:
+        type: string
+      EntityCLBLaborers:
+        type: string
+      EntityAjeerPendingLaborers:
+        type: string
+      'RealEntitiesForeignersCount ':
+        type: string
+  Establishing:
+    type: object
+    additionalProperties: false
+    properties:
+      AvailableVisas:
+        type: string
+      CurrentLaborers:
+        type: string
+      PendingEstablishingVisaRequests:
+        type: string
+      PendingSponsorTransferRequests:
+        type: string
+      NotUsedVisas:
+        type: string
+      TierId:
+        type: string
+      EntityAjeerPendingLaborers:
+        type: string
+  CalculateChangeSponsorBalanceRs_BodyType:
+    type: object
+    additionalProperties: false
+    properties:
+      Balance:
+        $ref: '#/definitions/Balance'
+        properties: {}
+      EstablishmentConditionsType:
+        type: integer
+      AllowanceStartDate:
+        type: string
+      AllowanceEndDate:
+        type: string
+      TierId:
+        type: integer
+      SizeId:
+        type: integer
+      ExpiredEstablishmentId:
+        type: string
+      EntityNoteSourceList:
+        $ref: '#/definitions/EntityNoteSourceList_Type'
+        properties: {}
+      EstablishmentStatusId:
+        type: integer
+      CREndDate:
+        type: string
+      EconomicActivityId:
+        type: integer
+      ColorId:
+        type: integer
+      EntityId:
+        type: integer
+      EstablishmentId:
+        type: integer
+      Establishing:
+        $ref: '#/definitions/Establishing'
+        properties: {}
+      Expansion:
+        $ref: '#/definitions/Expansion'
+        properties: {}
+      ProfSkillsDetails:
+        $ref: '#/definitions/ProfSkillsDetails_Type'
+        properties: {}
+  CalculateEstBalanceKCRs_MessageType:
+    type: object
+    additionalProperties: false
+    properties:
+      CalculateEstBalanceKCRs:
+        $ref: '#/definitions/CalculateEstBalanceKCRs_Type'
+        properties: {}
+  CalculateEstBalanceKCRs_Type:
+    type: object
+    additionalProperties: false
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+        properties: {}
+      Body:
+        $ref: '#/definitions/CalculateEstBalanceKCRs_BodyType'
+        properties: {}
+  CalculateEstBalanceKCRs_BodyType:
+    type: object
+    additionalProperties: false
+    properties:
+      Balance:
+        $ref: '#/definitions/Balance'
+        properties: {}
+      AllowanceStartDate:
+        type: string
+      AllowanceEndDate:
+        type: string
+      TierId:
+        type: integer
+      Establishing:
+        $ref: '#/definitions/Establishing'
+        properties: {}
+      Expansion:
+        $ref: '#/definitions/Expansion'
+        properties: {}
+      ProfSkillsDetails:
+        $ref: '#/definitions/ProfSkillsDetails_Type'
+        properties: {}
+  CalculateEstBalanceKCRq_Type:
+    type: object
+    additionalProperties: false
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+        properties: {}
+      Body:
+        $ref: '#/definitions/CalculateEstBalanceKCRq_BodyType'
+        properties: {}
+  CalculateChangeSponsorBalanceRq_MessageType:
+    type: object
+    properties:
+      CalculateChangeSponsorBalanceRq:
+        $ref: '#/definitions/CalculateChangeSponsorBalanceRq_Type'
+  CalculateChangeSponsorBalanceRs_MessageType:
+    type: object
+    properties:
+      CalculateChangeSponsorBalanceRs:
+        $ref: '#/definitions/CalculateChangeSponsorBalanceRs_Type'
+  CalculateChangeSponsorBalanceRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/CalculateChangeSponsorBalanceRq_BodyType'
+  CalculateChangeSponsorBalanceRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+        default: "1"
+      EstablishmentSequence:
+        type: integer
+        default: "1"
+      ValidationLevel:
+        type: integer
+        default: "1"
+      EstablishmentConditionsType:
+        type: integer
+        default: "1"
+      SizeId:
+        type: integer
+        default: "1"
+      TierId:
+        type: integer
+        default: "1"
+    required:
+    - LaborOfficeId
+    - EstablishmentSequence
+  CalculateEstBalanceKCRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+        default: "1"
+      EstablishmentSequence:
+        type: integer
+        default: "1"
+    required:
+    - LaborOfficeId
+    - EstablishmentSequence
+  CalculateChangeSponsorBalanceRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/CalculateChangeSponsorBalanceRs_BodyType'
+  Balance:
+    type: object
+    properties:
+      AvailableBalance:
+        type: integer
+      BalanceType:
+        type: integer
+  EntityNoteSourceList_Type:
+    type: object
+    properties:
+      EntityNoteSourceItem:
+        type: array
+        items:
+          $ref: '#/definitions/EntityNoteSourceItem_Type'
+  EntityNoteSourceItem_Type:
+    type: object
+    properties:
+      NoteSourceId:
+        type: integer
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: string
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: string
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+        default: "465740"
+      IDNumber:
+        type: integer
+        default: "1024812248"
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /calcestbalance:
+    post:
+      operationId: CalculateChangeSponsorBalance
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/CalculateChangeSponsorBalanceRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: CalculateChangeSponsorBalance
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/CalculateChangeSponsorBalanceRq_MessageType'
+        description: CalculateChangeSponsorBalanceRq
+        required: true

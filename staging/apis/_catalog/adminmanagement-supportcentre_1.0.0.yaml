@@ -1,0 +1,332 @@
+swagger: "2.0"
+info:
+  title: AdminManagement SupportCentre
+  x-ibm-name: adminmanagement-supportcentre
+  version: 1.0.0
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - operation-switch:
+        version: 2.0.0
+        title: admin management
+        case:
+        - operations:
+          - verb: get
+            path: /users/details
+          execute:
+          - invoke:
+              version: 2.3.0
+              title: get user details
+              backend-type: json
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: GET
+              chunked-uploads: false
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              websocket-upgrade: false
+              target-url: $(ace-qiwa-support-center)$(getUserDetails)
+              inject-proxy-headers: true
+        - operations:
+          - verb: post
+            path: /users/account/activate-block
+          execute:
+          - invoke:
+              version: 2.3.0
+              title: activate or block user account
+              backend-type: json
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: POST
+              chunked-uploads: false
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              websocket-upgrade: false
+              target-url: $(ace-qiwa-support-center)$(ActiveBlockUserAccount)
+              inject-proxy-headers: true
+        - operations:
+          - verb: post
+            path: /dsn/insert
+          execute:
+          - invoke:
+              version: 2.3.0
+              title: insert DSN data
+              backend-type: json
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: POST
+              chunked-uploads: false
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              websocket-upgrade: false
+              target-url: $(ace-qiwa-support-center)$(InsertDSNData)
+              inject-proxy-headers: true
+        - operations:
+          - verb: get
+            path: /dsn/inactive/list
+          execute:
+          - invoke:
+              version: 2.3.0
+              title: get inactive DSN list
+              backend-type: json
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: GET
+              chunked-uploads: false
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              websocket-upgrade: false
+              target-url: $(ace-qiwa-support-center)$(GetInactiveDSN)
+              inject-proxy-headers: true
+        - operations:
+          - verb: post
+            path: /dsn/activate
+          execute:
+          - invoke:
+              version: 2.3.0
+              title: activate DSN
+              backend-type: json
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: POST
+              chunked-uploads: false
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              websocket-upgrade: false
+              target-url: $(ace-qiwa-support-center)$(ActiveDSN)
+              inject-proxy-headers: true
+        - operations:
+          - verb: post
+            path: /queries/approve-reject
+          execute:
+          - invoke:
+              version: 2.3.0
+              title: approve or reject query
+              backend-type: json
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: POST
+              chunked-uploads: false
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              websocket-upgrade: false
+              target-url: $(ace-qiwa-support-center)$(ApproveRejectQuery)
+              inject-proxy-headers: true
+        - operations:
+          - verb: get
+            path: /queries/inactive
+          execute:
+          - invoke:
+              version: 2.3.0
+              title: get inactive queries
+              backend-type: json
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: GET
+              chunked-uploads: false
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              websocket-upgrade: false
+              target-url: $(ace-qiwa-support-center)$(InactiveQueries)
+              inject-proxy-headers: true
+        - operations:
+          - verb: post
+            path: /queries/insert
+          execute:
+          - invoke:
+              version: 2.3.0
+              title: insert query data
+              backend-type: json
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: POST
+              chunked-uploads: false
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              websocket-upgrade: false
+              target-url: $(ace-qiwa-support-center)$(InsretQueryData)
+              inject-proxy-headers: true
+        otherwise: []
+  properties:
+    getUserDetails:
+      value: /qc_adminmanagement/v1/getUserDetails
+    ActiveBlockUserAccount:
+      value: /qc_adminmanagement/v1/ActiveBlockUserAccount
+    InsertDSNData:
+      value: /qc_adminmanagement/v1/InsertDSNData
+    GetInactiveDSN:
+      value: /qc_adminmanagement/v1/GetInactiveDSN
+    ActiveDSN:
+      value: /qc_adminmanagement/v1/ActiveDSN
+    ApproveRejectQuery:
+      value: /qc_adminmanagement/v1/ApproveRejectQuery
+    InactiveQueries:
+      value: /qc_adminmanagement/v1/InactiveQueries
+    InsretQueryData:
+      value: /qc_adminmanagement/v1/InsretQueryData
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+basePath: /qiwa/v2/adminmanagement
+paths:
+  /users/details:
+    get:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+  /users/account/activate-block:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+  /dsn/insert:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+  /dsn/inactive/list:
+    get:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+  /dsn/activate:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+  /queries/approve-reject:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+  /queries/inactive:
+    get:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+  /queries/insert:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+securityDefinitions:
+  clientID:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+    x-key-type: client_id
+  clientSecret:
+    type: apiKey
+    x-key-type: client_secret
+    name: X-IBM-Client-Secret
+    in: header
+  OAuth2.0:
+    type: oauth2
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    flow: application
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+schemes:
+- https
+security:
+- clientID: []
+  clientSecret: []
+  OAuth2.0:
+  - IntegrationScope

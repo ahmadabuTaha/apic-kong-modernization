@@ -1,0 +1,33 @@
+info:
+  version: 1.0.1
+  title: lmh-product-databaseteam
+  name: lmh-product-databaseteam
+gateways:
+- datapower-api-gateway
+plans:
+  lmh-product-databaseteam:
+    title: LMH-Product-DataBaseTeam
+    description: For Angel Narciso Team
+    rate-limits:
+      LMH-Product-DataBaseTeam:
+        value: 3/1minute
+        hard-limit: true
+    apis:
+      getlmhoccupationslist: {}
+      getlmhexceptionaluniversities: {}
+      checkemployeepsclassification: {}
+apis:
+  getlmhoccupationslist:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getlmhoccupationslist_1.0.0_2.yaml
+  getlmhexceptionaluniversities:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getlmhexceptionaluniversities_1.0.0_2.yaml
+  checkemployeepsclassification:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/checkemployeepsclassification_1.0.0_2.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

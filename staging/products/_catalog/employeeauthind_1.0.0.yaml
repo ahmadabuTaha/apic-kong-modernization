@@ -1,0 +1,249 @@
+swagger: "2.0"
+info:
+  title: EmployeeAuthInd
+  x-ibm-name: employeeauthind
+  version: 1.0.0
+  description: EmployeeAuthInd
+schemes:
+- https
+basePath: /contractmanagement
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientId: []
+securityDefinitions:
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-cntm-contractauth)/contractmanagement/empauthindicator
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        persistent-connection: true
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+definitions:
+  EmployeeAuthenticationIndicatorRq_MessageType:
+    type: object
+    properties:
+      EmployeeAuthenticationIndicatorRq:
+        $ref: '#/definitions/EmployeeAuthenticationIndicatorRq_Type'
+  EmployeeAuthenticationIndicatorRs_MessageType:
+    type: object
+    properties:
+      EmployeeAuthenticationIndicatorRs:
+        $ref: '#/definitions/EmployeeAuthenticationIndicatorRs_Type'
+  EmployeeAuthenticationIndicatorRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/EmployeeAuthenticationIndicatorRq_BodyType'
+  EmployeeAuthenticationIndicatorRq_BodyType:
+    type: object
+  EmployeeAuthenticationIndicatorRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/EmployeeAuthenticationIndicatorRs_BodyType'
+  EmployeeAuthenticationIndicatorRs_BodyType:
+    type: object
+    properties:
+      ForeignersCount:
+        type: integer
+      SaudisCount:
+        type: integer
+      TotalLaborersCount:
+        type: integer
+      ForeignersAuthenticatedContracts:
+        type: integer
+      SaudisAuthenticatedContracts:
+        type: integer
+      TotalAuthenticatedContracts:
+        type: integer
+      SaudisAuthenticationPercentage:
+        type: string
+      ForeignersAuthenticationPercentage:
+        type: string
+      TotalAuthenticationPercentage:
+        type: string
+      HRSDAuthenticationPercentage:
+        type: string
+    required:
+    - ForeignersCount
+    - SaudisCount
+    - TotalLaborersCount
+    - ForeignersAuthenticatedContracts
+    - SaudisAuthenticatedContracts
+    - TotalAuthenticatedContracts
+    - SaudisAuthenticationPercentage
+    - ForeignersAuthenticationPercentage
+    - TotalAuthenticationPercentage
+    - HRSDAuthenticationPercentage
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /empauthindicator:
+    post:
+      operationId: EmployeeAuthenticationIndicator
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/EmployeeAuthenticationIndicatorRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Update Refunded
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/EmployeeAuthenticationIndicatorRq_MessageType'
+        description: EmployeeAuthenticationIndicatorRq
+        required: true

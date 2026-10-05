@@ -1,0 +1,267 @@
+swagger: "2.0"
+info:
+  title: GetEstablishmentsIMSEvaluation
+  version: 1.0.0
+  description: GetEstablishmentsIMSEvaluation
+  x-ibm-name: getestablishmentsimsevaluation
+paths:
+  /getestimsevaluation:
+    post:
+      operationId: GetEstablishmentsIMSEvaluation
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetEstablishmentsIMSEvaluationRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: 'This service is used to get a specific establishment or all establishments
+        from the IMS evaluation table '
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetEstablishmentsIMSEvaluationRq_MessageType'
+        description: GetEstablishmentsIMSEvaluationRq
+        required: true
+basePath: /common
+definitions:
+  GetEstablishmentsIMSEvaluationRq_MessageType:
+    type: object
+    properties:
+      GetEstablishmentsIMSEvaluationRq:
+        $ref: '#/definitions/GetEstablishmentsIMSEvaluationRq_Type'
+  GetEstablishmentsIMSEvaluationRs_MessageType:
+    type: object
+    properties:
+      GetEstablishmentsIMSEvaluationRs:
+        $ref: '#/definitions/GetEstablishmentsIMSEvaluationRs_Type'
+  GetEstablishmentsIMSEvaluationRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetEstablishmentsIMSEvaluationRq_BodyType'
+  GetEstablishmentsIMSEvaluationRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      IsActive:
+        type: integer
+      PageSize:
+        type: integer
+      PageIndex:
+        type: integer
+    required:
+    - PageSize
+    - PageIndex
+  GetEstablishmentsIMSEvaluationRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetEstablishmentsIMSEvaluationRs_BodyType'
+  GetEstablishmentsIMSEvaluationRs_BodyType:
+    type: object
+    properties:
+      EstablishmentsList:
+        $ref: '#/definitions/EstablishmentDetails_Type'
+      TotalRecordsCount:
+        type: integer
+    required:
+    - EstablishmentsList
+    - TotalRecordsCount
+  EstablishmentDetails_Type:
+    type: array
+    items:
+      type: object
+      properties:
+        Establishment:
+          $ref: '#/definitions/Establishment_Type'
+      required:
+      - Establishment
+  Establishment_Type:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      EntityId:
+        type: integer
+      IsActive:
+        type: integer
+      CreationDate:
+        type: string
+      SelfAssessmentDate:
+        type: string
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+    - EntityId
+    - IsActive
+    - CreationDate
+    - SelfAssessmentDate
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-ims-utility)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: allowlist
+          values: []
+        header-control:
+          type: blocklist
+          values: []
+        inject-proxy-headers: true
+        persistent-connection: true
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+schemes:
+- https
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    flow: application
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientId:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+security:
+- OAuth2.0: []
+  clientId: []

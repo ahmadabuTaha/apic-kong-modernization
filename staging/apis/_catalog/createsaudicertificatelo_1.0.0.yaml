@@ -1,0 +1,243 @@
+swagger: "2.0"
+info:
+  title: CreateSaudiCertificateLO
+  x-ibm-name: createsaudicertificatelo
+  version: 1.0.0
+  description: CreateSaudiCertificateLO
+schemes:
+- https
+basePath: /qiwalo
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-lbro-lo-saudi-certificate)/qiwalo/createsaudicertlo
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  CreateSaudiCertificateLORq_MessageType:
+    type: object
+    properties:
+      CreateSaudiCertificateLORq:
+        $ref: '#/definitions/CreateSaudiCertificateLORq_Type'
+  CreateSaudiCertificateLORs_MessageType:
+    type: object
+    properties:
+      CreateSaudiCertificateLORs:
+        $ref: '#/definitions/CreateSaudiCertificateLORs_Type'
+  CreateSaudiCertificateLORq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/CreateSaudiCertificateLORq_BodyType'
+  CreateSaudiCertificateLORq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      SaudiCertificateId:
+        type: integer
+      RenewalStartDate:
+        type: string
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+  CreateSaudiCertificateLORs_Type:
+    type: object
+    properties:
+      SaudiCertificateId:
+        type: integer
+      ErrorList:
+        $ref: '#/definitions/ErrorList_Type'
+    required:
+    - SaudiCertificateId
+  ErrorList_Type:
+    type: object
+    properties:
+      ErrorItem:
+        type: array
+        items:
+          $ref: '#/definitions/ErrorItem_Type'
+  ErrorItem_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: integer
+      Status:
+        type: string
+      DescriptionAr:
+        type: string
+      DescriptionEn:
+        type: string
+    required:
+    - ErrorCode
+    - Status
+    - DescriptionAr
+    - DescriptionEn
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /createsaudicertlo:
+    post:
+      operationId: CreateSaudiCertificateLO
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/CreateSaudiCertificateLORs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: create Saudization Certificate For LaborOffice
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/CreateSaudiCertificateLORq_MessageType'
+        description: CreateSaudiCertificateLORq
+        required: true

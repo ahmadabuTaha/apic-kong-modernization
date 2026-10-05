@@ -1,0 +1,264 @@
+swagger: "2.0"
+info:
+  title: GetZakatCertificateByCR
+  x-ibm-name: getzakatcertificatebycr
+  version: 1.0.0
+  description: Get Zakat Certificate By CR
+host: $(catalog.host)
+schemes:
+- https
+basePath: /common
+security:
+- clientID: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientID:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  properties:
+    target-url:
+      value: http://example.com
+      description: The URL of the target service
+      encoded: false
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(cat-target-hostname)$(cat-target-url-gazt)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  application-authentication:
+    certificate: false
+definitions:
+  GetZakatCertificateByCRRq_MessageType:
+    type: object
+    properties:
+      GetZakatCertificateByCRRq:
+        $ref: '#/definitions/GetZakatCertificateByCRRq_Type'
+  GetZakatCertificateByCRRs_MessageType:
+    type: object
+    properties:
+      GetZakatCertificateByCRRs:
+        $ref: '#/definitions/GetZakatCertificateByCRRs_Type'
+  GetZakatCertificateByCRRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetZakatCertificateByCRRq_BodyType'
+  GetZakatCertificateByCRRq_BodyType:
+    type: object
+    properties:
+      CRNumber:
+        type: integer
+    required:
+    - CRNumber
+  GetZakatCertificateByCRRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetZakatCertificateByCRRs_BodyType'
+  GetZakatCertificateByCRRs_BodyType:
+    type: object
+    properties:
+      TIN:
+        type: string
+      CertNo:
+        type: string
+      IssueDateG:
+        type: string
+      IssueDateH:
+        type: string
+      ExpiryDateG:
+        type: string
+      ExpiryDateH:
+        type: string
+      CertType:
+        type: string
+      Identifier:
+        $ref: '#/definitions/Identifier_Type'
+      Name:
+        type: string
+      CRnumber:
+        type: string
+      LicenseNumber:
+        type: string
+      Branches:
+        type: array
+        items:
+          $ref: '#/definitions/BranchItem_Type'
+  Identifier_Type:
+    type: object
+    properties:
+      NationalId:
+        type: integer
+      IqamaNumber:
+        type: integer
+      Code700:
+        type: integer
+  BranchItem_Type:
+    type: object
+    properties:
+      BranchName:
+        type: string
+      BranchSerial:
+        type: integer
+      CRNumber:
+        type: string
+      BranchLicenseNo:
+        type: string
+      CityName:
+        type: string
+      CityCode:
+        type: integer
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: string
+      IDNumber:
+        type: string
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /getzakatcertbycr:
+    post:
+      operationId: getzakatcertificatebycr
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetZakatCertificateByCRRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Get Zakat Certificate By CR
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetZakatCertificateByCRRq_MessageType'
+        description: GetZakatCertificateByCRRq
+        required: true

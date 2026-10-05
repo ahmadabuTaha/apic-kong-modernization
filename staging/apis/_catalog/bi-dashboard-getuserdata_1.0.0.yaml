@@ -1,0 +1,59 @@
+swagger: "2.0"
+info:
+  title: BI Dashboard GetUserData
+  x-ibm-name: bi-dashboard-getuserdata
+  version: 1.0.0
+schemes:
+- https
+basePath: /qiwa/v2
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: POST
+        target-url: $(ace-rept-bidashboard)/bidashboard/usermgmt/getUserData
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+    catch: []
+    finally: []
+  properties: {}
+  activity-log:
+    success-content: payload
+    error-content: payload
+    enabled: true
+  application-authentication:
+    certificate: false
+  buffering: true
+  catalogs: {}
+paths:
+  /getUserData:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+      parameters: []

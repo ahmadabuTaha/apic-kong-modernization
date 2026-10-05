@@ -1,0 +1,743 @@
+swagger: "2.0"
+info:
+  title: ValidateOpenUnifiedEst
+  version: 1.0.0
+  description: |
+    This service is used to validate an open unified establishment.
+  x-ibm-name: validateopenunifiedest
+basePath: /estabmanagement
+schemes:
+- https
+paths:
+  /valopenuniest:
+    post:
+      operationId: validateOpenUnifiedEst
+      summary: Validate Open Unified Establishment
+      description: Validates the open unified establishment request.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        description: ValidateOpenUnifiedEstRq
+        required: true
+        schema:
+          $ref: '#/definitions/ValidateOpenUnifiedEstRq_MessageType'
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/ValidateOpenUnifiedEstRs_MessageType'
+definitions:
+  ValidateOpenUnifiedEstRq_MessageType:
+    type: object
+    properties:
+      ValidateOpenUnifiedEstRq:
+        $ref: '#/definitions/ValidateOpenUnifiedEstRq_Type'
+  ValidateOpenUnifiedEstRs_MessageType:
+    type: object
+    properties:
+      ValidateOpenUnifiedEstRs:
+        $ref: '#/definitions/ValidateOpenUnifiedEstRs_Type'
+  ValidateOpenUnifiedEstRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/ValidateOpenUnifiedEstRq_BodyType'
+    required:
+    - Header
+    - Body
+  ValidateOpenUnifiedEstRq_BodyType:
+    type: object
+    properties:
+      CRNationalNumber:
+        type: string
+        pattern: ^[0-9]{10}$
+    required:
+    - CRNationalNumber
+  ValidateOpenUnifiedEstRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/ValidateOpenUnifiedEstRs_BodyType'
+    required:
+    - Header
+    - Body
+  ValidateOpenUnifiedEstRs_BodyType:
+    type: object
+    properties:
+      crInformation:
+        $ref: '#/definitions/CRInformation_Type'
+      Activities:
+        $ref: '#/definitions/Activties_Type'
+      capitalDetails:
+        $ref: '#/definitions/capitalDetails_Type'
+      entityAddress:
+        $ref: '#/definitions/entityAddress_Type'
+      contactInformation:
+        $ref: '#/definitions/contactInformation_Type'
+      fiscalYear:
+        $ref: '#/definitions/fiscalYear_Type'
+      mangmentInformation:
+        $ref: '#/definitions/mangmentInformation_Type'
+      parityList:
+        $ref: '#/definitions/parityList_Type'
+    required:
+    - crInformation
+    - Activities
+    - contactInformation
+    - mangmentInformation
+    - parityList
+  CRInformation_Type:
+    type: object
+    properties:
+      crNationalNumber:
+        type: string
+        pattern: ^\d{10}$
+      entityFullNameAr:
+        type: string
+      entityFullNameEn:
+        type: string
+      capital:
+        type: string
+      companyDuration:
+        type: string
+      isMain:
+        type: boolean
+      isLicenseBased:
+        type: boolean
+      inLiquidationProcess:
+        type: boolean
+      entityType:
+        $ref: '#/definitions/IDName_Type'
+      capitalCurrency:
+        $ref: '#/definitions/IDName_Type'
+      headquarterCity:
+        type: integer
+      companyForm:
+        $ref: '#/definitions/IDName_Type'
+      crIssueDate:
+        $ref: '#/definitions/Date_G_H_Type'
+      crConfirmDate:
+        $ref: '#/definitions/Date_G_H_Type'
+      crStatus:
+        $ref: '#/definitions/IDName_Type'
+      companyCharacterList:
+        $ref: '#/definitions/companyCharacterList_Type'
+      licenseIssuerNationalNo:
+        type: string
+      LaborOfficeId:
+        type: integer
+      HRSDCityId:
+        type: integer
+      QiwaCityId:
+        type: integer
+      NICCityId:
+        type: integer
+      IsPunishment:
+        type: boolean
+      OldEstcrNationalNumber:
+        type: string
+      MCIOldEstCRStatus:
+        type: integer
+    required:
+    - crNationalNumber
+    - entityFullNameAr
+    - capital
+    - isMain
+    - isLicenseBased
+    - entityType
+    - capitalCurrency
+    - companyForm
+    - crIssueDate
+    - crConfirmDate
+    - crStatus
+    - LaborOfficeId
+    - HRSDCityId
+    - QiwaCityId
+    - NICCityId
+  IDName_Type:
+    type: object
+    properties:
+      ID:
+        type: integer
+      Name:
+        type: string
+      NameEn:
+        type: string
+    required:
+    - ID
+  Date_G_H_Type:
+    type: object
+    properties:
+      Gregorian:
+        type: string
+        format: date
+      Hijri:
+        type: string
+  companyCharacterList_Type:
+    type: object
+    properties:
+      companyCharacterItem:
+        type: array
+        items:
+          $ref: '#/definitions/IDName_Type'
+    required:
+    - companyCharacterItem
+  Activties_Type:
+    type: object
+    properties:
+      HighstNitqtActivities:
+        $ref: '#/definitions/HighstNitqtActivities_Type'
+      crActivitiesList:
+        $ref: '#/definitions/crActivitiesList_Type'
+    required:
+    - HighstNitqtActivities
+    - crActivitiesList
+  HighstNitqtActivities_Type:
+    type: object
+    properties:
+      HighstNitqtActivity:
+        type: array
+        items:
+          $ref: '#/definitions/IDName_Type'
+    required:
+    - HighstNitqtActivity
+  crActivitiesList_Type:
+    type: object
+    properties:
+      crActivitiesItem:
+        type: array
+        items:
+          $ref: '#/definitions/crActivitiesItem_Type'
+    required:
+    - crActivitiesItem
+  crActivitiesItem_Type:
+    type: object
+    properties:
+      activityID:
+        type: string
+      isPreLicenseIssued:
+        type: boolean
+      isPostLicenseIssued:
+        type: boolean
+    required:
+    - activityID
+  capitalDetails_Type:
+    type: object
+    properties:
+      contributionCapitalDetails:
+        $ref: '#/definitions/ContributionCapitalDetails_Type'
+      stockCapitalDetails:
+        $ref: '#/definitions/StockCapitalDetails_Type'
+      StockList:
+        $ref: '#/definitions/StockList_Type'
+    required:
+    - StockList
+  ContributionCapitalDetails_Type:
+    type: object
+    properties:
+      capitalTypeId:
+        type: integer
+      cashCapital:
+        type: string
+      inkindCapital:
+        type: string
+      totalCashContribution:
+        type: string
+        minLength: 1
+      totalInkindContribution:
+        type: string
+      contributionValue:
+        type: string
+    required:
+    - capitalTypeId
+    - totalCashContribution
+  StockCapitalDetails_Type:
+    type: object
+    properties:
+      capitalTypeID:
+        type: integer
+      capital:
+        type: string
+        minLength: 1
+      announcedCapital:
+        type: string
+        minLength: 1
+      paidCapital:
+        type: string
+        minLength: 1
+      cashCapital:
+        type: string
+      inkindCapital:
+        type: string
+    required:
+    - capital
+    - announcedCapital
+    - paidCapital
+  StockList_Type:
+    type: object
+    properties:
+      Stock:
+        type: array
+        items:
+          $ref: '#/definitions/Stock_Type'
+    required:
+    - Stock
+  Stock_Type:
+    type: object
+    properties:
+      StockCount:
+        type: string
+        minLength: 1
+      StockValue:
+        type: string
+        minLength: 1
+      StockTypeId:
+        type: integer
+        enum:
+        - 1
+        - 2
+        - 3
+      StockClassId:
+        type: integer
+    required:
+    - StockCount
+    - StockValue
+    - StockTypeId
+  entityAddress_Type:
+    type: object
+    properties:
+      addresstype:
+        $ref: '#/definitions/IDName_Type'
+      fullAddress:
+        type: string
+      nationalAddress:
+        $ref: '#/definitions/nationalAddress_Type'
+  nationalAddress_Type:
+    type: object
+    properties:
+      city:
+        $ref: '#/definitions/IDName_Type'
+      district:
+        $ref: '#/definitions/IDName_Type'
+      streetNameAr:
+        type: string
+      streetNameEn:
+        type: string
+      buildingNo:
+        type: string
+      unitNo:
+        type: string
+      postalCode:
+        type: string
+      additionalNo:
+        type: string
+  fiscalYear_Type:
+    type: object
+    properties:
+      calendarTypeId:
+        type: integer
+      fiscalYearEndMonth:
+        type: string
+        minLength: 1
+      fiscalYearEndDay:
+        type: string
+        minLength: 1
+      firstFiscalYearEndDate:
+        $ref: '#/definitions/Date_G_H_Type'
+    required:
+    - calendarTypeId
+    - fiscalYearEndMonth
+    - fiscalYearEndDay
+    - firstFiscalYearEndDate
+  mangmentInformation_Type:
+    type: object
+    properties:
+      managementStructure:
+        $ref: '#/definitions/IDName_Type'
+      managerList:
+        $ref: '#/definitions/ManagerList_Type'
+    required:
+    - managementStructure
+    - managerList
+  ManagerList_Type:
+    type: object
+    properties:
+      managerItem:
+        type: array
+        items:
+          $ref: '#/definitions/Manager_Type'
+    required:
+    - managerItem
+  Manager_Type:
+    type: object
+    properties:
+      isLicensed:
+        type: integer
+      managerType:
+        $ref: '#/definitions/IDName_Type'
+      personInfo:
+        $ref: '#/definitions/PersonInfo_Type'
+      managerPositionIdList:
+        type: array
+        items:
+          $ref: '#/definitions/ManagerPositionIdList_Type'
+    required:
+    - managerType
+    - personInfo
+    - managerPositionIdList
+  PersonInfo_Type:
+    type: object
+    properties:
+      identifierType:
+        $ref: '#/definitions/IDName_Type'
+      identifierNo:
+        type: string
+        minLength: 1
+      title:
+        $ref: '#/definitions/Name_Type'
+      firstName:
+        $ref: '#/definitions/Name_Type'
+      fatherName:
+        $ref: '#/definitions/Name_Type'
+      grandFatherName:
+        $ref: '#/definitions/Name_Type'
+      familyName:
+        $ref: '#/definitions/Name_Type'
+      nationality:
+        $ref: '#/definitions/IDName_Type'
+    required:
+    - identifierType
+    - identifierNo
+    - firstName
+    - familyName
+    - nationality
+  Name_Type:
+    type: object
+    properties:
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+  ManagerPositionIdList_Type:
+    type: object
+    properties:
+      managerPositionItem:
+        type: array
+        items:
+          $ref: '#/definitions/IDName_Type'
+    required:
+    - managerPositionItem
+  parityList_Type:
+    type: object
+    properties:
+      parityItem:
+        type: array
+        items:
+          $ref: '#/definitions/Partner_Type'
+    required:
+    - parityItem
+  Partner_Type:
+    type: object
+    properties:
+      parityType:
+        $ref: '#/definitions/IDName_Type'
+      partnershipType:
+        $ref: '#/definitions/IDName_Type'
+      personInfo:
+        $ref: '#/definitions/PersonInfo_Type'
+      governmentalEntity:
+        $ref: '#/definitions/governmentalEntity_Type'
+      endowment:
+        $ref: '#/definitions/endowment_Type'
+      civilAssociation:
+        $ref: '#/definitions/civilAssociation_Type'
+      saudiCompany:
+        $ref: '#/definitions/saudiCompany_Type'
+      establishment:
+        $ref: '#/definitions/establishment_Type'
+      gccCompany:
+        $ref: '#/definitions/gccCompany_Type'
+      foreignCompany:
+        $ref: '#/definitions/gccCompany_Type'
+      partnerShare:
+        $ref: '#/definitions/partnerShare_Type'
+    required:
+    - parityType
+    - partnershipType
+  governmentalEntity_Type:
+    type: object
+    properties:
+      identifierType:
+        $ref: '#/definitions/IDName_Type'
+      governmentalEntityNationalNo:
+        type: string
+        minLength: 1
+      governmentalEntityNameAr:
+        type: string
+      governmentalEntityNameEn:
+        type: string
+    required:
+    - identifierType
+    - governmentalEntityNationalNo
+  endowment_Type:
+    type: object
+    properties:
+      identifierType:
+        $ref: '#/definitions/IDName_Type'
+      nationalNo:
+        type: string
+        minLength: 1
+      endowmentNameAr:
+        type: string
+      endowmentNameEn:
+        type: string
+    required:
+    - identifierType
+    - nationalNo
+  civilAssociation_Type:
+    type: object
+    properties:
+      identifierType:
+        $ref: '#/definitions/IDName_Type'
+      nationalNo:
+        type: string
+        minLength: 1
+      civilAssociationNameAr:
+        type: string
+      civilAssociationNameEn:
+        type: string
+    required:
+    - identifierType
+    - nationalNo
+  saudiCompany_Type:
+    type: object
+    properties:
+      identifierType:
+        $ref: '#/definitions/IDName_Type'
+      crNationalNumber:
+        type: string
+        minLength: 1
+      crNumber:
+        type: string
+        minLength: 1
+      companyNameAr:
+        type: string
+      companyNameEn:
+        type: string
+    required:
+    - identifierType
+    - crNationalNumber
+  establishment_Type:
+    type: object
+    properties:
+      identifierType:
+        $ref: '#/definitions/IDName_Type'
+      crNationalNumber:
+        type: string
+        minLength: 1
+      crNumber:
+        type: string
+        minLength: 1
+      establishmentNameAr:
+        type: string
+      establishmentNameEn:
+        type: string
+    required:
+    - identifierType
+    - crNationalNumber
+  gccCompany_Type:
+    type: object
+    properties:
+      identifierType:
+        $ref: '#/definitions/IDName_Type'
+      crNumber:
+        type: string
+        minLength: 1
+      companyNameAr:
+        type: string
+      companyNameEn:
+        type: string
+      nationality:
+        $ref: '#/definitions/IDName_Type'
+    required:
+    - identifierType
+    - crNumber
+  partnerShare_Type:
+    type: object
+    properties:
+      cashContributionCount:
+        type: integer
+      inkindContributionCount:
+        type: integer
+      totalContributionCount:
+        type: integer
+  contactInformation_Type:
+    type: object
+    properties:
+      phoneNo:
+        type: string
+      mobileNo:
+        type: string
+      email:
+        type: string
+      websiteURL:
+        type: string
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: string
+      IDNumber:
+        type: string
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Status
+    - Code
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-cmpm-open-file-with-cr)/estabmanagement/valopenuniest
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: allowlist
+          values: []
+        header-control:
+          type: blocklist
+          values: []
+        inject-proxy-headers: true
+        persistent-connection: true
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+securityDefinitions:
+  clientId:
+    type: apiKey
+    x-key-type: client_id
+    name: X-IBM-Client-Id
+    in: header
+  clientSecret:
+    type: apiKey
+    x-key-type: client_secret
+    name: X-IBM-Client-Secret
+    in: header
+security:
+- clientId: []
+  clientSecret: []

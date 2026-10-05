@@ -1,0 +1,153 @@
+swagger: "2.0"
+info:
+  title: Qiwa_GetPolicies
+  x-ibm-name: qiwa-getpolicies
+  version: 1.0.0
+  description: Qiwa_GetPolicies
+schemes:
+- https
+basePath: /qiwa/v1
+produces:
+- application/json
+consumes:
+- application/json
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://gw-apic.qiwa.info/takamol/staging/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: POST
+        target-url: $(target-url)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        stop-on-error:
+        - ConnectionError
+        - SOAPError
+        - OperationError
+    catch:
+    - default:
+      - set-variable:
+          version: 2.0.0
+          title: set-variable
+          actions:
+          - set: message.status.code
+            value: "201"
+            type: string
+          - set: message.headers.content-type
+            value: application/json
+            type: string
+          - set: message.body
+            value: '{ "errorCode": "500", "errorMessage": "Internal server error"
+              }'
+            type: string
+  properties:
+    target-url:
+      value: http://icp-proxy.qiwa.info:30243/qiwa_getpolicies/v1/GetPolicies
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    success-content: payload
+    error-content: payload
+    enabled: true
+  application-authentication:
+    certificate: false
+  buffering: true
+  catalogs: {}
+definitions:
+  GetPolicyDetailsRq:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      LaborOfficeId:
+        type: string
+      EstablishmentId:
+        type: string
+    required:
+    - LaborOfficeId
+    - EstablishmentId
+    - TransactionId
+  GetPolicyDetailsResponse:
+    type: object
+    properties:
+      count:
+        type: integer
+      companyName:
+        type: string
+      establishmentId:
+        type: string
+      hasActivePolicy:
+        type: boolean
+    required:
+    - count
+    - companyName
+    - establishmentId
+    - hasActivePolicy
+  LocaleDataModel:
+    type: object
+    properties:
+      en-US:
+        type: string
+      ar-SA:
+        type: string
+  ErrorModel:
+    type: object
+    properties:
+      errorCode:
+        type: string
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+    required:
+    - errorCode
+paths:
+  /GetPolicies:
+    post:
+      operationId: postGetPolicies
+      responses:
+        "201":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetPolicyDetailsResponse'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Insert a GetPolicies
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetPolicyDetailsRq'
+        description: The request body for the operation
+        required: true

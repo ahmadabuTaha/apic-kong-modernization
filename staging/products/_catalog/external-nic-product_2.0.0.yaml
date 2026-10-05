@@ -1,0 +1,196 @@
+info:
+  version: 2.0.0
+  title: External_NIC_Product
+  name: external-nic-product
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    rate-limits:
+      default:
+        value: 100/1minute
+        hard-limit: false
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    apis:
+      nic-persontitlerecord1.0.0: {}
+      nic-microgetpersonbasicinfo1.0.0: {}
+      docanceltempworkpermit1.0.0: {}
+      molmicrogetpersonbasicinfo1.0.0: {}
+      valcanceltempworkpermit1.0.0: {}
+      doissuetempworkpermi1.0.0: {}
+      getcurrentdomesticsponsereeinfo1.0.0: {}
+      countdomesticsponsoree1.0.0: {}
+      nic-updatelaborvisaforindividual1.0.0: {}
+      updatelaborvisa1.0.0: {}
+      nicmicroconvertdate1.0.0: {}
+      validateissuelaborvisaforindividual1.0.0: {}
+      microgetmoneybalance1.0.0: {}
+      validateissueworkpermit1.0.0: {}
+      microgetpersonidinfo1.0.0: {}
+      nicdoissuelaborvisa1.0.0: {}
+      nicdoissuelaborvisaforindividual1.0.0: {}
+      microgetfirminformation1.0.0: {}
+      doupdatealiensponsorbusiness1.0.0: {}
+      dosendalienunemployeddata1.0.0: {}
+      validatesendalienunemployeddata1.0.0: {}
+      niccancelledvisas1.0.0: {}
+      docreaterunawayreport1.0.0: {}
+      docancelrunawayreport1.0.0: {}
+      nicgetlaborvisalist1.0.0: {}
+      moldoissueworkpermit1.0.0: {}
+      microgetvisitorvisainfo1.0.0: {}
+      updatemolbusiness1.0.0: {}
+      vrfysuspnsionofrqstdsrvceforid1.0.0: {}
+      nic-listprsnpassportforchngdnationality1.0.0: {}
+      nic-getprsnbasicinfoforchngdnationality1.0.0: {}
+      nic-getprsnaddrsforchngnationality1.0.0: {}
+      nic-getmicroalienspnsrforchngnationality1.0.0: {}
+      listcntctrcrdsforchngdnationality1.0.0: {}
+      nic-listcntctrcrdsforspecialnationality1.0.0: {}
+      nic-getpersondependentsinformation1.0.0: {}
+      nic-issueseasonalvisa2.0.0: {}
+      nic-updateworkeroccupation1.0.0: {}
+      nic-submitvisa2.0.0: {}
+      nic-getauthenticationtoken1.0.0: {}
+      nic-getvisainfofordlv1.0.0: {}
+      nic-violationslistcitiesformlsd1.0.0: {}
+      nic-getpersoninfofordlv1.0.0: {}
+      nic-verifycompensationforvisa1.0.0: {}
+      nic-issuelaborvisaforindividual1.0.0: {}
+      doissuevisa1.0.0: {}
+      validateissuevisa1.0.0: {}
+      nic-listdisablesponsorreqfordlv1.0.0: {}
+      nic-prtissuespecialpermit1.0.0: {}
+      test-runaway1.0.0: {}
+      nic-submitvisa1.0.0: {}
+      validaterunawayrequest1.0.0: {}
+      nic-prtqueryspecialpermit1.0.0: {}
+      nic-openestablishmentfile1.0.0: {}
+      nic-submitlaborertransfer1.0.0: {}
+      nic-submitrunawayrequest2.0.0: {}
+      nic-submitchangeoccupation1.0.0: {}
+apis:
+  nic-persontitlerecord1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-persontitlerecord_1.0.0_1.yaml
+  nic-microgetpersonbasicinfo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-microgetpersonbasicinfo_1.0.0.yaml
+  docanceltempworkpermit1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/docanceltempworkpermit_1.0.0.yaml
+  molmicrogetpersonbasicinfo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/molmicrogetpersonbasicinfo_1.0.0.yaml
+  valcanceltempworkpermit1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/valcanceltempworkpermit_1.0.0.yaml
+  doissuetempworkpermi1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/doissuetempworkpermi_1.0.0.yaml
+  getcurrentdomesticsponsereeinfo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getcurrentdomesticsponsereeinfo_1.0.0.yaml
+  countdomesticsponsoree1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/countdomesticsponsoree_1.0.0.yaml
+  nic-updatelaborvisaforindividual1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-updatelaborvisaforindividual_1.0.0.yaml
+  updatelaborvisa1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updatelaborvisa_1.0.0.yaml
+  nicmicroconvertdate1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nicmicroconvertdate_1.0.0.yaml
+  validateissuelaborvisaforindividual1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validateissuelaborvisaforindividual_1.0.0.yaml
+  microgetmoneybalance1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/microgetmoneybalance_1.0.0.yaml
+  validateissueworkpermit1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validateissueworkpermit_1.0.0.yaml
+  microgetpersonidinfo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/microgetpersonidinfo_1.0.0.yaml
+  nicdoissuelaborvisa1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nicdoissuelaborvisa_1.0.0.yaml
+  nicdoissuelaborvisaforindividual1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nicdoissuelaborvisaforindividual_1.0.0.yaml
+  microgetfirminformation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/microgetfirminformation_1.0.0.yaml
+  doupdatealiensponsorbusiness1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/doupdatealiensponsorbusiness_1.0.0.yaml
+  dosendalienunemployeddata1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/dosendalienunemployeddata_1.0.0.yaml
+  validatesendalienunemployeddata1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validatesendalienunemployeddata_1.0.0.yaml
+  niccancelledvisas1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/niccancelledvisas_1.0.0.yaml
+  docreaterunawayreport1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/docreaterunawayreport_1.0.0.yaml
+  docancelrunawayreport1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/docancelrunawayreport_1.0.0.yaml
+  nicgetlaborvisalist1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nicgetlaborvisalist_1.0.0.yaml
+  moldoissueworkpermit1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/moldoissueworkpermit_1.0.0.yaml
+  microgetvisitorvisainfo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/microgetvisitorvisainfo_1.0.0.yaml
+  updatemolbusiness1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updatemolbusiness_1.0.0.yaml
+  vrfysuspnsionofrqstdsrvceforid1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/vrfysuspnsionofrqstdsrvceforid_1.0.0.yaml
+  nic-listprsnpassportforchngdnationality1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-listprsnpassportforchngdnationality_1.0.0.yaml
+  nic-getprsnbasicinfoforchngdnationality1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-getprsnbasicinfoforchngdnationality_1.0.0.yaml
+  nic-getprsnaddrsforchngnationality1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-getprsnaddrsforchngnationality_1.0.0.yaml
+  nic-getmicroalienspnsrforchngnationality1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-getmicroalienspnsrforchngnationality_1.0.0.yaml
+  listcntctrcrdsforchngdnationality1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/listcntctrcrdsforchngdnationality_1.0.0.yaml
+  nic-listcntctrcrdsforspecialnationality1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-listcntctrcrdsforspecialnationality_1.0.0.yaml
+  nic-getpersondependentsinformation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-getpersondependentsinformation_1.0.0.yaml
+  nic-issueseasonalvisa2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-issueseasonalvisa_2.0.0_1.yaml
+  nic-updateworkeroccupation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-updateworkeroccupation_1.0.0_1.yaml
+  nic-submitvisa2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-submitvisa_2.0.0_1.yaml
+  nic-getauthenticationtoken1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-getauthenticationtoken_1.0.0_1.yaml
+  nic-getvisainfofordlv1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-getvisainfofordlv_1.0.0_1.yaml
+  nic-violationslistcitiesformlsd1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-violationslistcitiesformlsd_1.0.0_1.yaml
+  nic-getpersoninfofordlv1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-getpersoninfofordlv_1.0.0_1.yaml
+  nic-verifycompensationforvisa1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-verifycompensationforvisa_1.0.0_1.yaml
+  nic-issuelaborvisaforindividual1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-issuelaborvisaforindividual_1.0.0_1.yaml
+  doissuevisa1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/doissuevisa_1.0.0.yaml
+  validateissuevisa1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validateissuevisa_1.0.0.yaml
+  nic-listdisablesponsorreqfordlv1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-listdisablesponsorreqfordlv_1.0.0_1.yaml
+  nic-prtissuespecialpermit1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-prtissuespecialpermit_1.0.0_1.yaml
+  test-runaway1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/test-runaway_1.0.0_1.yaml
+  nic-submitvisa1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-submitvisa_1.0.0_1.yaml
+  validaterunawayrequest1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validaterunawayrequest_1.0.0_1.yaml
+  nic-prtqueryspecialpermit1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-prtqueryspecialpermit_1.0.0_1.yaml
+  nic-openestablishmentfile1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-openestablishmentfile_1.0.0_1.yaml
+  nic-submitlaborertransfer1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-submitlaborertransfer_1.0.0_1.yaml
+  nic-submitrunawayrequest2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-submitrunawayrequest_2.0.0_1.yaml
+  nic-submitchangeoccupation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-submitchangeoccupation_1.0.0_1.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

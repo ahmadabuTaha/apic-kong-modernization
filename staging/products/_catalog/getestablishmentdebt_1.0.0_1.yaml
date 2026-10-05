@@ -1,0 +1,283 @@
+swagger: "2.0"
+info:
+  title: GetEstablishmentDebt
+  x-ibm-name: getestablishmentdebt
+  version: 1.0.0
+  description: This service is used to get establishment debts details from the Qiwa
+    DB
+schemes:
+- https
+basePath: /workpermit
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-wp-wpdept)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        persistent-connection: true
+    catch: []
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+definitions:
+  GetEstablishmentDebtRq_MessageType:
+    type: object
+    properties:
+      GetEstablishmentDebtRq:
+        $ref: '#/definitions/GetEstablishmentDebtRq_Type'
+  GetEstablishmentDebtRs_MessageType:
+    type: object
+    properties:
+      GetEstablishmentDebtRs:
+        $ref: '#/definitions/GetEstablishmentDebtRs_Type'
+  GetEstablishmentDebtRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetEstablishmentDebtRq_BodyType'
+  GetEstablishmentDebtRq_BodyType:
+    type: object
+    properties:
+      LaborerIdNo:
+        type: integer
+      SequenceNumber:
+        type: integer
+      LaborOfficeId:
+        type: integer
+      SadadNumber:
+        type: integer
+      LaborerName:
+        type: string
+      Status:
+        type: string
+      PageSize:
+        type: integer
+      PageIndex:
+        type: integer
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+    - PageSize
+    - PageIndex
+  GetEstablishmentDebtRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetEstablishmentDebtRs_BodyType'
+  GetEstablishmentDebtRs_BodyType:
+    type: object
+    properties:
+      EstablishmentDebtList:
+        $ref: '#/definitions/EstablishmentDebtList_Type'
+      TotalRecordCount:
+        type: integer
+    required:
+    - EstablishmentDebtList
+    - TotalRecordCount
+  EstablishmentDebtList_Type:
+    type: object
+    properties:
+      EstablishmentsDebtDetails:
+        type: array
+        items:
+          $ref: '#/definitions/EstablishmentsDebtDetails_Type'
+    required:
+    - EstablishmentsDebtDetails
+  EstablishmentsDebtDetails_Type:
+    type: object
+    properties:
+      DebtLaborerIdNo:
+        type: integer
+      DebtSequenceNumber:
+        type: integer
+      DebtId:
+        type: integer
+      LaborOfficeId:
+        type: integer
+      LaborerName:
+        type: string
+      CreationDate:
+        type: string
+      DebtStatusCode:
+        type: integer
+      Amount:
+        type: number
+      SadadNumber:
+        type: integer
+    required:
+    - DebtLaborerIdNo
+    - DebtSequenceNumber
+    - DebtId
+    - LaborOfficeId
+    - LaborerName
+    - CreationDate
+    - DebtStatusCode
+    - Amount
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /getestablishmentdebt:
+    post:
+      operationId: GetEstablishmentDebt
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetEstablishmentDebtRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Get Establishment Debt
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetEstablishmentDebtRq_MessageType'
+        description: GetEstablishmentDebt Request
+        required: true

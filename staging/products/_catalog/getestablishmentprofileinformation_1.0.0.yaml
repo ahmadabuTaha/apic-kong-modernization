@@ -1,0 +1,2128 @@
+swagger: "2.0"
+info:
+  title: GetEstablishmentProfileInformation
+  x-ibm-name: getestablishmentprofileinformation
+  version: 1.0.0
+  description: this service is used to Get Establishment Profile Information
+schemes:
+- https
+basePath: /estabmanagement
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-cmpm-dashboard-profile)/estabmanagement/getestabprofileinfo
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        persistent-connection: true
+    - gatewayscript:
+        version: 2.0.0
+        title: gatewayscript
+        source: "var apim = require('apim');\r\nvar Response = apim.getvariable('message.body');\r\nvar
+          Status = Response.GetEstabProfileRs.Header.ResponseStatus.Status;\r\napim.setvariable('message.headers.Status',Status,'add');"
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: ($header("Status") = 'SUCCESS')
+          execute:
+          - map:
+              version: 2.0.0
+              title: map
+              inputs:
+                input:
+                  schema:
+                    type: object
+                    properties:
+                      GetEstabProfileRs:
+                        type: object
+                        properties:
+                          Header:
+                            type: object
+                            properties:
+                              TransactionId:
+                                type: string
+                                name: TransactionId
+                              ChannelId:
+                                type: string
+                                name: ChannelId
+                              SessionId:
+                                type: string
+                                name: SessionId
+                              RequestTime:
+                                type: string
+                                name: RequestTime
+                              MWRequestTime:
+                                type: string
+                                name: MWRequestTime
+                              ServiceCode:
+                                type: string
+                                name: ServiceCode
+                              DebugFlag:
+                                type: string
+                                name: DebugFlag
+                              UserInfo:
+                                type: object
+                                properties:
+                                  IDNumber:
+                                    type: string
+                                    name: IDNumber
+                                name: UserInfo
+                              MWResponseTime:
+                                type: string
+                                name: MWResponseTime
+                              ResponseStatus:
+                                type: object
+                                properties:
+                                  Status:
+                                    type: string
+                                    name: Status
+                                  Code:
+                                    type: string
+                                    name: Code
+                                  ArabicMsg:
+                                    type: string
+                                    name: ArabicMsg
+                                  EnglishMsg:
+                                    type: string
+                                    name: EnglishMsg
+                                name: ResponseStatus
+                            name: Header
+                          Body:
+                            type: object
+                            properties:
+                              HasSubscription:
+                                type: number
+                                name: HasSubscription
+                              HasPrivilege:
+                                type: number
+                                name: HasPrivilege
+                              HasEFMPrivilege:
+                                type: number
+                                name: HasEFMPrivilege
+                              HasClosePrivilege:
+                                type: number
+                                name: HasClosePrivilege
+                              HasChangeActivityPrivilege:
+                                type: number
+                                name: HasChangeActivityPrivilege
+                              EstablishmentInfo:
+                                type: object
+                                properties:
+                                  EstablishmentId:
+                                    type: number
+                                    name: EstablishmentId
+                                  LaborOfficeId:
+                                    type: number
+                                    name: LaborOfficeId
+                                  CreationDate:
+                                    type: string
+                                    name: CreationDate
+                                  EstablishmentSizeId:
+                                    type: string
+                                    name: EstablishmentSizeId
+                                  EstablishmentSizeName:
+                                    type: string
+                                    name: EstablishmentSizeName
+                                  EstablishmentSizeNameEn:
+                                    type: string
+                                    name: EstablishmentSizeNameEn
+                                  SequenceNumber:
+                                    type: number
+                                    name: SequenceNumber
+                                  UNLaborOfficeId:
+                                    type: number
+                                    name: UNLaborOfficeId
+                                  UNSequenceNumber:
+                                    type: number
+                                    name: UNSequenceNumber
+                                  EstablishmentName:
+                                    type: string
+                                    name: EstablishmentName
+                                  CRNumber:
+                                    type: string
+                                    name: CRNumber
+                                  CRIssueDate:
+                                    type: object
+                                    properties:
+                                      Hijri:
+                                        type: string
+                                        name: Hijri
+                                      Gregorian:
+                                        type: string
+                                        name: Gregorian
+                                    name: CRIssueDate
+                                  CRExpiryDate:
+                                    type: object
+                                    properties:
+                                      Hijri:
+                                        type: string
+                                        name: Hijri
+                                      Gregorian:
+                                        type: string
+                                        name: Gregorian
+                                    name: CRExpiryDate
+                                  CRstatus:
+                                    type: object
+                                    properties:
+                                      Code:
+                                        type: number
+                                        name: Code
+                                      NameEn:
+                                        type: string
+                                        name: NameEn
+                                      NameAr:
+                                        type: string
+                                        name: NameAr
+                                    name: CRstatus
+                                  CRConfirmDate:
+                                    type: object
+                                    properties:
+                                      Hijri:
+                                        type: string
+                                        name: Hijri
+                                      Gregorian:
+                                        type: string
+                                        name: Gregorian
+                                    name: CRConfirmDate
+                                  HeadquarterCityId:
+                                    type: string
+                                    name: HeadquarterCityId
+                                  isUnifiedMerged:
+                                    type: number
+                                    name: isUnifiedMerged
+                                  isEstablishmentMerged:
+                                    type: number
+                                    name: isEstablishmentMerged
+                                  Nationality:
+                                    type: object
+                                    properties:
+                                      Code:
+                                        type: string
+                                        name: Code
+                                      NameAr:
+                                        type: string
+                                        name: NameAr
+                                      NameEn:
+                                        type: string
+                                        name: NameEn
+                                    name: Nationality
+                                  EstablishmentType:
+                                    type: object
+                                    properties:
+                                      Code:
+                                        type: number
+                                        name: Code
+                                      NameAr:
+                                        type: string
+                                        name: NameAr
+                                      NameEn:
+                                        type: string
+                                        name: NameEn
+                                    name: EstablishmentType
+                                  ContactAddress:
+                                    type: object
+                                    properties:
+                                      PersonFirstName:
+                                        type: string
+                                        name: PersonFirstName
+                                      PersonLastName:
+                                        type: string
+                                        name: PersonLastName
+                                      PersonMobileNumber:
+                                        type: string
+                                        name: PersonMobileNumber
+                                      Email:
+                                        type: string
+                                        name: Email
+                                      City:
+                                        type: object
+                                        properties:
+                                          Code:
+                                            type: number
+                                            name: Code
+                                          NameAr:
+                                            type: string
+                                            name: NameAr
+                                          NameEn:
+                                            type: string
+                                            name: NameEn
+                                        name: City
+                                      ZipCode:
+                                        type: string
+                                        name: ZipCode
+                                      StreetName:
+                                        type: string
+                                        name: StreetName
+                                      BuildingNo:
+                                        type: number
+                                        name: BuildingNo
+                                      District:
+                                        type: string
+                                        name: District
+                                      AdditionalNo:
+                                        type: string
+                                        name: AdditionalNo
+                                      AddressDescription:
+                                        type: string
+                                        name: AddressDescription
+                                      UnitNo:
+                                        type: string
+                                        name: UnitNo
+                                      Coordinates:
+                                        type: object
+                                        properties:
+                                          Longitude:
+                                            type: string
+                                            name: Longitude
+                                          Latitude:
+                                            type: string
+                                            name: Latitude
+                                        name: Coordinates
+                                    name: ContactAddress
+                                  UnifiedNumberId:
+                                    type: number
+                                    name: UnifiedNumberId
+                                  NationalUnifiedNumber:
+                                    type: string
+                                    name: NationalUnifiedNumber
+                                  SevenHundredNumber:
+                                    type: string
+                                    name: SevenHundredNumber
+                                  Isic4Activity:
+                                    type: object
+                                    properties:
+                                      ID:
+                                        type: number
+                                        name: ID
+                                      Name:
+                                        type: string
+                                        name: Name
+                                      NameEn:
+                                        type: string
+                                        name: NameEn
+                                    name: Isic4Activity
+                                  IsMain:
+                                    type: string
+                                    name: IsMain
+                                  Status:
+                                    type: object
+                                    properties:
+                                      Code:
+                                        type: number
+                                        name: Code
+                                      NameAr:
+                                        type: string
+                                        name: NameAr
+                                      NameEn:
+                                        type: string
+                                        name: NameEn
+                                    name: Status
+                                  UnifiedNumberManager:
+                                    type: object
+                                    properties:
+                                      ID:
+                                        type: number
+                                        name: ID
+                                      Name:
+                                        type: string
+                                        name: Name
+                                    name: UnifiedNumberManager
+                                  EstablishmentManagersList:
+                                    type: object
+                                    properties:
+                                      EstablishmentManager:
+                                        type: array
+                                        items:
+                                          type: object
+                                          properties:
+                                            ID:
+                                              type: number
+                                              name: ID
+                                            Name:
+                                              type: string
+                                              name: Name
+                                        name: EstablishmentManager
+                                    name: EstablishmentManagersList
+                                  FinancialYear:
+                                    type: object
+                                    properties:
+                                      Hijri:
+                                        type: number
+                                        name: Hijri
+                                      Greogrian:
+                                        type: string
+                                        name: Greogrian
+                                    name: FinancialYear
+                                  NewLaborOffice:
+                                    type: object
+                                    properties:
+                                      ID:
+                                        type: number
+                                        name: ID
+                                      Name:
+                                        type: string
+                                        name: Name
+                                    name: NewLaborOffice
+                                  CreationType:
+                                    type: string
+                                    name: CreationType
+                                  IsDefault:
+                                    type: integer
+                                  NickName:
+                                    type: string
+                                  IsMainCR:
+                                    type: integer
+                                name: EstablishmentInfo
+                              NitaqatLevel:
+                                type: object
+                                properties:
+                                  CurrentSaudPerc:
+                                    type: string
+                                    name: CurrentSaudPerc
+                                  EconomicActivity:
+                                    type: object
+                                    properties:
+                                      ID:
+                                        type: number
+                                        name: ID
+                                      Name:
+                                        type: string
+                                        name: Name
+                                      NameEn:
+                                        type: string
+                                        name: NameEn
+                                    name: EconomicActivity
+                                  EntityCurrentColor:
+                                    type: object
+                                    properties:
+                                      ID:
+                                        type: string
+                                        name: ID
+                                      Name:
+                                        type: string
+                                        name: Name
+                                    name: EntityCurrentColor
+                                  SaudisCount:
+                                    type: string
+                                    name: SaudisCount
+                                  NonSaudisCount:
+                                    type: string
+                                    name: NonSaudisCount
+                                  TotalLaborersCount:
+                                    type: string
+                                    name: TotalLaborersCount
+                                  EntityTotalCount:
+                                    type: string
+                                    name: EntityTotalCount
+                                  EntitySaudisCount:
+                                    type: string
+                                    name: EntitySaudisCount
+                                  EntityForeignersCount:
+                                    type: string
+                                    name: EntityForeignersCount
+                                  EntitySaudisTotalFactorized:
+                                    type: string
+                                    name: EntitySaudisTotalFactorized
+                                  EntityForeignersTotalFactorized:
+                                    type: string
+                                    name: EntityForeignersTotalFactorized
+                                name: NitaqatLevel
+                              OwnersInfo:
+                                type: object
+                                properties:
+                                  Owner:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        OwnerName:
+                                          type: string
+                                          name: OwnerName
+                                        IDNumber:
+                                          type: number
+                                          name: IDNumber
+                                        OwnerTypeId:
+                                          type: string
+                                          name: OwnerTypeId
+                                        Birthdate:
+                                          type: string
+                                          name: Birthdate
+                                        Email:
+                                          type: string
+                                          name: Email
+                                        MobileNumber:
+                                          type: string
+                                          name: MobileNumber
+                                        IsCRRepresentative:
+                                          type: string
+                                          name: IsCRRepresentative
+                                        StreetName:
+                                          type: string
+                                          name: StreetName
+                                        ZipCode:
+                                          type: string
+                                          name: ZipCode
+                                        BuildingNo:
+                                          type: string
+                                          name: BuildingNo
+                                        Gender:
+                                          type: object
+                                          properties:
+                                            Code:
+                                              type: string
+                                              name: Code
+                                            NameAr:
+                                              type: string
+                                              name: NameAr
+                                            NameEn:
+                                              type: string
+                                              name: NameEn
+                                          name: Gender
+                                        City:
+                                          type: object
+                                          properties:
+                                            Code:
+                                              type: number
+                                              name: Code
+                                            NameAr:
+                                              type: string
+                                              name: NameAr
+                                            NameEn:
+                                              type: string
+                                              name: NameEn
+                                          name: City
+                                        RelationType:
+                                          type: object
+                                          properties:
+                                            Code:
+                                              type: number
+                                              name: Code
+                                            NameAr:
+                                              type: string
+                                              name: NameAr
+                                            NameEn:
+                                              type: string
+                                              name: NameEn
+                                          name: RelationType
+                                        Nationality:
+                                          type: object
+                                          properties:
+                                            Code:
+                                              type: string
+                                              name: Code
+                                            NameAr:
+                                              type: string
+                                              name: NameAr
+                                            NameEn:
+                                              type: string
+                                              name: NameEn
+                                          name: Nationality
+                                    name: Owner
+                                name: OwnersInfo
+                              LicensesInfo:
+                                type: object
+                                properties:
+                                  License:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        LicenseCode:
+                                          type: number
+                                          name: LicenseCode
+                                        LicenseNumber:
+                                          type: string
+                                          name: LicenseNumber
+                                        LicenseName:
+                                          type: string
+                                          name: LicenseName
+                                        LicenseSource:
+                                          type: string
+                                          name: LicenseSource
+                                        LicenseTypeId:
+                                          type: number
+                                          name: LicenseTypeId
+                                        LicenseType:
+                                          type: string
+                                          name: LicenseType
+                                        LicenseStatus:
+                                          type: object
+                                          properties:
+                                            Code:
+                                              type: string
+                                              name: Code
+                                            NameAr:
+                                              type: string
+                                              name: NameAr
+                                            NameEn:
+                                              type: string
+                                              name: NameEn
+                                          name: LicenseStatus
+                                        LicenseIssueDate:
+                                          type: object
+                                          properties:
+                                            Hijri:
+                                              type: string
+                                              name: Hijri
+                                            Gregorian:
+                                              type: string
+                                              name: Gregorian
+                                          name: LicenseIssueDate
+                                        LicenseExpiryDate:
+                                          type: object
+                                          properties:
+                                            Hijri:
+                                              type: string
+                                              name: Hijri
+                                            Gregorian:
+                                              type: string
+                                              name: Gregorian
+                                          name: LicenseExpiryDate
+                                        LicenseArea:
+                                          type: number
+                                          name: LicenseArea
+                                        LicenseAttachementId:
+                                          type: string
+                                          name: LicenseAttachementId
+                                    name: License
+                                name: LicensesInfo
+                              LocationsInfo:
+                                type: object
+                                properties:
+                                  Location:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        LocationId:
+                                          type: string
+                                          name: LocationId
+                                        LocationName:
+                                          type: string
+                                          name: LocationName
+                                        LocationDescription:
+                                          type: string
+                                          name: LocationDescription
+                                        LocationAddress:
+                                          type: string
+                                          name: LocationAddress
+                                        LocationStatus:
+                                          type: object
+                                          properties:
+                                            Code:
+                                              type: number
+                                              name: Code
+                                            NameAr:
+                                              type: string
+                                              name: NameAr
+                                            NameEn:
+                                              type: string
+                                              name: NameEn
+                                          name: LocationStatus
+                                        MunicipalLicenseId:
+                                          type: number
+                                          name: MunicipalLicenseId
+                                        MunicipalLicenseStartDate:
+                                          type: string
+                                          name: MunicipalLicenseStartDate
+                                        MunicipalLicenseExpiryDate:
+                                          type: string
+                                          name: MunicipalLicenseExpiryDate
+                                        Isic4Activity:
+                                          type: object
+                                          properties:
+                                            ID:
+                                              type: number
+                                              name: ID
+                                            Name:
+                                              type: string
+                                              name: Name
+                                            NameEn:
+                                              type: string
+                                              name: NameEn
+                                          name: Isic4Activity
+                                        NBForeigners:
+                                          type: number
+                                          name: NBForeigners
+                                        NBSaudis:
+                                          type: number
+                                          name: NBSaudis
+                                    name: Location
+                                name: LocationsInfo
+                            name: Body
+                        name: GetEstabProfileRs
+                    example: '{"GetEstabProfileRs":{"Header":{"TransactionId":"1642333747","ChannelId":"Qiwa","SessionId":"212","RequestTime":"2019-10-10
+                      00:00:00.555","MWRequestTime":"2019-10-10 00:00:00.555","ServiceCode":"GEPI0002","DebugFlag":"1","UserInfo":{"IDNumber":"1005930282"},"MWResponseTime":"2022-01-16
+                      11:49:09.464","ResponseStatus":{"Status":"SUCCESS","Code":"00000000","ArabicMsg":"تمت
+                      العملية بنجاح","EnglishMsg":"Success Call"}},"Body":{"HasSubscription":1,"HasPrivilege":1,"HasEFMPrivilege":0,"HasClosePrivilege":0,"HasChangeActivityPrivilege":0,"EstablishmentInfo":{"EstablishmentId":4201265,"LaborOfficeId":1,"CreationDate":"2019-05-06
+                      00:00:00","EstablishmentSizeId":"1","EstablishmentSizeName":"صغيرة
+                      (فئة أ)","EstablishmentSizeNameEn":"Small-1","SequenceNumber":187177,"UNLaborOfficeId":1,"UNSequenceNumber":20,"EstablishmentName":"1078129","CRNumber":"","CRIssueDate":{"Hijri":"","Gregorian":""},"CRExpiryDate":{"Hijri":"","Gregorian":""},"CRstatus":{"Code":1,"NameEn":"active","NameAr":"قائم"},"CRConfirmDate":{"Hijri":"","Gregorian":""},"HeadquarterCityId":"","isUnifiedMerged":0,"isEstablishmentMerged":0,"Nationality":{"Code":"1","NameAr":"","NameEn":""},"EstablishmentType":{"Code":1,"NameAr":"","NameEn":""},"ContactAddress":{"PersonFirstName":"Ziad","PersonLastName":"Fady","PersonMobileNumber":"01004455","Email":"fgy.h@hotmail.com","City":{"Code":1,"NameAr":"لا
+                      يوجد","NameEn":"لا يوجد"},"ZipCode":"Test","StreetName":"","BuildingNo":1,"District":"","AdditionalNo":"","AddressDescription":"حي
+                      العزيزية","UnitNo":"","Coordinates":{"Longitude":"","Latitude":""}},"UnifiedNumberId":2267643,"NationalUnifiedNumber":"","SevenHundredNumber":"","Isic4Activity":{"ID":1,"Name":"قائمة","NameEn":"Existent"},"IsMain":"","Status":{"Code":1,"NameAr":"قائمة","NameEn":"Existent"},"UnifiedNumberManager":{"ID":1005930282,"Name":"Lorem
+                      Ipsum dolor sit"},"EstablishmentManagersList":{"EstablishmentManager":[{"ID":1002912390,"Name":"عبدالرحيم
+                      عبدالحميد محمد الحازمي"},{"ID":1002912390,"Name":"عبدالرحيم
+                      عبدالحميد محمد الحازمي"}]},"FinancialYear":{"Hijri":14421229,"Greogrian":"2021-08-07"},"NewLaborOffice":{"ID":1,"Name":"الرياض"},"CreationType":""},"NitaqatLevel":{"CurrentSaudPerc":"","EconomicActivity":{"ID":1,"Name":"قائمة","NameEn":"Existent"},"EntityCurrentColor":{"ID":"","Name":""},"SaudisCount":"","NonSaudisCount":"","TotalLaborersCount":"","EntityTotalCount":"1.00","EntitySaudisCount":"0.00","EntityForeignersCount":"0.00","EntitySaudisTotalFactorized":"1.00","EntityForeignersTotalFactorized":"0.00"},"OwnersInfo":{"Owner":[{"OwnerName":"احمد
+                      بن ظاهر الشهري","IDNumber":1005930282,"OwnerTypeId":"","Birthdate":"","Email":"","MobileNumber":"","IsCRRepresentative":"","StreetName":"الفيصليه
+                      حي المنار            ","ZipCode":"31528","BuildingNo":"","Gender":{"Code":"","NameAr":"","NameEn":""},"City":{"Code":1,"NameAr":"لا
+                      يوجد","NameEn":"لا يوجد"},"RelationType":{"Code":1,"NameAr":"مالك
+                      المؤسسة","NameEn":"Owner"},"Nationality":{"Code":"1","NameAr":"","NameEn":""}},{"OwnerName":"احمد
+                      بن ظاهر الشهري","IDNumber":1005930282,"OwnerTypeId":"","Birthdate":"","Email":"","MobileNumber":"","IsCRRepresentative":"","StreetName":"الفيصليه
+                      حي المنار            ","ZipCode":"31528","BuildingNo":"","Gender":{"Code":"","NameAr":"","NameEn":""},"City":{"Code":1,"NameAr":"لا
+                      يوجد","NameEn":"لا يوجد"},"RelationType":{"Code":1,"NameAr":"مالك
+                      المؤسسة","NameEn":"Owner"},"Nationality":{"Code":"1","NameAr":"","NameEn":""}}]},"LicensesInfo":{"License":[{"LicenseCode":1,"LicenseNumber":"12","LicenseName":"","LicenseSource":"asdf","LicenseTypeId":1,"LicenseType":"1","LicenseStatus":{"Code":"","NameAr":"","NameEn":""},"LicenseIssueDate":{"Hijri":"","Gregorian":""},"LicenseExpiryDate":{"Hijri":"","Gregorian":""},"LicenseArea":0,"LicenseAttachementId":""},{"LicenseCode":1,"LicenseNumber":"12","LicenseName":"","LicenseSource":"asdf","LicenseTypeId":1,"LicenseType":"1","LicenseStatus":{"Code":"","NameAr":"","NameEn":""},"LicenseIssueDate":{"Hijri":"","Gregorian":""},"LicenseExpiryDate":{"Hijri":"","Gregorian":""},"LicenseArea":0,"LicenseAttachementId":""}]},"LocationsInfo":{"Location":[{"LocationId":"69","LocationName":"location","LocationDescription":"location","LocationAddress":"3207,
+                      Mohammed Al Barqi, Al Munsiyah","LocationStatus":{"Code":1,"NameAr":"Active","NameEn":"Active"},"MunicipalLicenseId":40041998308,"MunicipalLicenseStartDate":"05-09-1438","MunicipalLicenseExpiryDate":"2018-05-19T00:00:00","Isic4Activity":{"ID":477262,"Name":"البيع
+                      بالتجزئة للعطور","NameEn":"Existent"},"NBForeigners":0,"NBSaudis":0},{"LocationId":"181","LocationName":"test","LocationDescription":"test","LocationAddress":"6772,
+                      Tabuk Street","LocationStatus":{"Code":1,"NameAr":"Active","NameEn":"Active"},"MunicipalLicenseId":42095547734,"MunicipalLicenseStartDate":"02-11-1442","MunicipalLicenseExpiryDate":"2022-06-01T00:00:00","Isic4Activity":{"ID":477262,"Name":"البيع
+                      بالتجزئة للعطور","NameEn":"Existent"},"NBForeigners":0,"NBSaudis":0}]}}}}'
+                  variable: message.body
+                  content: application/json
+              outputs:
+                output:
+                  schema:
+                    type: object
+                    properties:
+                      GetEstabProfileRs:
+                        type: object
+                        properties:
+                          Header:
+                            type: object
+                            properties:
+                              TransactionId:
+                                type: string
+                                name: TransactionId
+                              ChannelId:
+                                type: string
+                                name: ChannelId
+                              SessionId:
+                                type: string
+                                name: SessionId
+                              RequestTime:
+                                type: string
+                                name: RequestTime
+                              MWRequestTime:
+                                type: string
+                                name: MWRequestTime
+                              ServiceCode:
+                                type: string
+                                name: ServiceCode
+                              DebugFlag:
+                                type: string
+                                name: DebugFlag
+                              UserInfo:
+                                type: object
+                                properties:
+                                  IDNumber:
+                                    type: string
+                                    name: IDNumber
+                                name: UserInfo
+                              MWResponseTime:
+                                type: string
+                                name: MWResponseTime
+                              ResponseStatus:
+                                type: object
+                                properties:
+                                  Status:
+                                    type: string
+                                    name: Status
+                                  Code:
+                                    type: string
+                                    name: Code
+                                  ArabicMsg:
+                                    type: string
+                                    name: ArabicMsg
+                                  EnglishMsg:
+                                    type: string
+                                    name: EnglishMsg
+                                name: ResponseStatus
+                            name: Header
+                          Body:
+                            type: object
+                            properties:
+                              HasSubscription:
+                                type: number
+                                name: HasSubscription
+                              HasPrivilege:
+                                type: number
+                                name: HasPrivilege
+                              HasEFMPrivilege:
+                                type: number
+                                name: HasEFMPrivilege
+                              HasClosePrivilege:
+                                type: number
+                                name: HasClosePrivilege
+                              HasChangeActivityPrivilege:
+                                type: number
+                                name: HasChangeActivityPrivilege
+                              EstablishmentInfo:
+                                type: object
+                                properties:
+                                  EstablishmentId:
+                                    type: number
+                                    name: EstablishmentId
+                                  LaborOfficeId:
+                                    type: number
+                                    name: LaborOfficeId
+                                  CreationDate:
+                                    type: string
+                                    name: CreationDate
+                                  EstablishmentSizeId:
+                                    type: string
+                                    name: EstablishmentSizeId
+                                  EstablishmentSizeName:
+                                    type: string
+                                    name: EstablishmentSizeName
+                                  EstablishmentSizeNameEn:
+                                    type: string
+                                    name: EstablishmentSizeNameEn
+                                  SequenceNumber:
+                                    type: number
+                                    name: SequenceNumber
+                                  UNLaborOfficeId:
+                                    type: number
+                                    name: UNLaborOfficeId
+                                  UNSequenceNumber:
+                                    type: number
+                                    name: UNSequenceNumber
+                                  EstablishmentName:
+                                    type: string
+                                    name: EstablishmentName
+                                  CRNumber:
+                                    type: string
+                                    name: CRNumber
+                                  CRIssueDate:
+                                    type: object
+                                    properties:
+                                      Hijri:
+                                        type: string
+                                        name: Hijri
+                                      Gregorian:
+                                        type: string
+                                        name: Gregorian
+                                    name: CRIssueDate
+                                  CRExpiryDate:
+                                    type: object
+                                    properties:
+                                      Hijri:
+                                        type: string
+                                        name: Hijri
+                                      Gregorian:
+                                        type: string
+                                        name: Gregorian
+                                    name: CRExpiryDate
+                                  CRstatus:
+                                    type: object
+                                    properties:
+                                      Code:
+                                        type: number
+                                        name: Code
+                                      NameEn:
+                                        type: string
+                                        name: NameEn
+                                      NameAr:
+                                        type: string
+                                        name: NameAr
+                                    name: CRstatus
+                                  CRConfirmDate:
+                                    type: object
+                                    properties:
+                                      Hijri:
+                                        type: string
+                                        name: Hijri
+                                      Gregorian:
+                                        type: string
+                                        name: Gregorian
+                                    name: CRConfirmDate
+                                  HeadquarterCityId:
+                                    type: string
+                                    name: HeadquarterCityId
+                                  isUnifiedMerged:
+                                    type: number
+                                    name: isUnifiedMerged
+                                  isEstablishmentMerged:
+                                    type: number
+                                    name: isEstablishmentMerged
+                                  Nationality:
+                                    type: object
+                                    properties:
+                                      Code:
+                                        type: string
+                                        name: Code
+                                      NameAr:
+                                        type: string
+                                        name: NameAr
+                                      NameEn:
+                                        type: string
+                                        name: NameEn
+                                    name: Nationality
+                                  EstablishmentType:
+                                    type: object
+                                    properties:
+                                      Code:
+                                        type: number
+                                        name: Code
+                                      NameAr:
+                                        type: string
+                                        name: NameAr
+                                      NameEn:
+                                        type: string
+                                        name: NameEn
+                                    name: EstablishmentType
+                                  ContactAddress:
+                                    type: object
+                                    properties:
+                                      PersonFirstName:
+                                        type: string
+                                        name: PersonFirstName
+                                      PersonLastName:
+                                        type: string
+                                        name: PersonLastName
+                                      PersonMobileNumber:
+                                        type: string
+                                        name: PersonMobileNumber
+                                      Email:
+                                        type: string
+                                        name: Email
+                                      City:
+                                        type: object
+                                        properties:
+                                          Code:
+                                            type: number
+                                            name: Code
+                                          NameAr:
+                                            type: string
+                                            name: NameAr
+                                          NameEn:
+                                            type: string
+                                            name: NameEn
+                                        name: City
+                                      ZipCode:
+                                        type: string
+                                        name: ZipCode
+                                      StreetName:
+                                        type: string
+                                        name: StreetName
+                                      BuildingNo:
+                                        type: number
+                                        name: BuildingNo
+                                      District:
+                                        type: string
+                                        name: District
+                                      AdditionalNo:
+                                        type: string
+                                        name: AdditionalNo
+                                      AddressDescription:
+                                        type: string
+                                        name: AddressDescription
+                                      UnitNo:
+                                        type: string
+                                        name: UnitNo
+                                      Coordinates:
+                                        type: object
+                                        properties:
+                                          Longitude:
+                                            type: string
+                                            name: Longitude
+                                          Latitude:
+                                            type: string
+                                            name: Latitude
+                                        name: Coordinates
+                                    name: ContactAddress
+                                  UnifiedNumberId:
+                                    type: number
+                                    name: UnifiedNumberId
+                                  NationalUnifiedNumber:
+                                    type: string
+                                    name: NationalUnifiedNumber
+                                  SevenHundredNumber:
+                                    type: string
+                                    name: SevenHundredNumber
+                                  Isic4Activity:
+                                    type: object
+                                    properties:
+                                      ID:
+                                        type: number
+                                        name: ID
+                                      Name:
+                                        type: string
+                                        name: Name
+                                      NameEn:
+                                        type: string
+                                        name: NameEn
+                                    name: Isic4Activity
+                                  IsMain:
+                                    type: string
+                                    name: IsMain
+                                  Status:
+                                    type: object
+                                    properties:
+                                      Code:
+                                        type: number
+                                        name: Code
+                                      NameAr:
+                                        type: string
+                                        name: NameAr
+                                      NameEn:
+                                        type: string
+                                        name: NameEn
+                                    name: Status
+                                  UnifiedNumberManager:
+                                    type: object
+                                    properties:
+                                      ID:
+                                        type: number
+                                        name: ID
+                                      Name:
+                                        type: string
+                                        name: Name
+                                    name: UnifiedNumberManager
+                                  EstablishmentManagersList:
+                                    type: object
+                                    properties:
+                                      EstablishmentManager:
+                                        type: array
+                                        items:
+                                          type: object
+                                          properties:
+                                            ID:
+                                              type: number
+                                              name: ID
+                                            Name:
+                                              type: string
+                                              name: Name
+                                        name: EstablishmentManager
+                                    name: EstablishmentManagersList
+                                  FinancialYear:
+                                    type: object
+                                    properties:
+                                      Hijri:
+                                        type: number
+                                        name: Hijri
+                                      Greogrian:
+                                        type: string
+                                        name: Greogrian
+                                    name: FinancialYear
+                                  NewLaborOffice:
+                                    type: object
+                                    properties:
+                                      ID:
+                                        type: number
+                                        name: ID
+                                      Name:
+                                        type: string
+                                        name: Name
+                                    name: NewLaborOffice
+                                  CreationType:
+                                    type: string
+                                    name: CreationType
+                                  IsDefault:
+                                    type: integer
+                                  NickName:
+                                    type: string
+                                  IsMainCR:
+                                    type: integer
+                                name: EstablishmentInfo
+                              NitaqatLevel:
+                                type: object
+                                properties:
+                                  CurrentSaudPerc:
+                                    type: string
+                                    name: CurrentSaudPerc
+                                  EconomicActivity:
+                                    type: object
+                                    properties:
+                                      ID:
+                                        type: number
+                                        name: ID
+                                      Name:
+                                        type: string
+                                        name: Name
+                                      NameEn:
+                                        type: string
+                                        name: NameEn
+                                    name: EconomicActivity
+                                  EntityCurrentColor:
+                                    type: object
+                                    properties:
+                                      ID:
+                                        type: string
+                                        name: ID
+                                      Name:
+                                        type: string
+                                        name: Name
+                                    name: EntityCurrentColor
+                                  SaudisCount:
+                                    type: string
+                                    name: SaudisCount
+                                  NonSaudisCount:
+                                    type: string
+                                    name: NonSaudisCount
+                                  TotalLaborersCount:
+                                    type: string
+                                    name: TotalLaborersCount
+                                  EntityTotalCount:
+                                    type: string
+                                    name: EntityTotalCount
+                                  EntitySaudisCount:
+                                    type: string
+                                    name: EntitySaudisCount
+                                  EntityForeignersCount:
+                                    type: string
+                                    name: EntityForeignersCount
+                                  EntitySaudisTotalFactorized:
+                                    type: string
+                                    name: EntitySaudisTotalFactorized
+                                  EntityForeignersTotalFactorized:
+                                    type: string
+                                    name: EntityForeignersTotalFactorized
+                                name: NitaqatLevel
+                              OwnersInfo:
+                                type: object
+                                properties:
+                                  Owner:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        OwnerName:
+                                          type: string
+                                          name: OwnerName
+                                        IDNumber:
+                                          type: number
+                                          name: IDNumber
+                                        OwnerTypeId:
+                                          type: string
+                                          name: OwnerTypeId
+                                        Birthdate:
+                                          type: string
+                                          name: Birthdate
+                                        Email:
+                                          type: string
+                                          name: Email
+                                        MobileNumber:
+                                          type: string
+                                          name: MobileNumber
+                                        IsCRRepresentative:
+                                          type: string
+                                          name: IsCRRepresentative
+                                        StreetName:
+                                          type: string
+                                          name: StreetName
+                                        ZipCode:
+                                          type: string
+                                          name: ZipCode
+                                        BuildingNo:
+                                          type: string
+                                          name: BuildingNo
+                                        Gender:
+                                          type: object
+                                          properties:
+                                            Code:
+                                              type: string
+                                              name: Code
+                                            NameAr:
+                                              type: string
+                                              name: NameAr
+                                            NameEn:
+                                              type: string
+                                              name: NameEn
+                                          name: Gender
+                                        City:
+                                          type: object
+                                          properties:
+                                            Code:
+                                              type: number
+                                              name: Code
+                                            NameAr:
+                                              type: string
+                                              name: NameAr
+                                            NameEn:
+                                              type: string
+                                              name: NameEn
+                                          name: City
+                                        RelationType:
+                                          type: object
+                                          properties:
+                                            Code:
+                                              type: number
+                                              name: Code
+                                            NameAr:
+                                              type: string
+                                              name: NameAr
+                                            NameEn:
+                                              type: string
+                                              name: NameEn
+                                          name: RelationType
+                                        Nationality:
+                                          type: object
+                                          properties:
+                                            Code:
+                                              type: string
+                                              name: Code
+                                            NameAr:
+                                              type: string
+                                              name: NameAr
+                                            NameEn:
+                                              type: string
+                                              name: NameEn
+                                          name: Nationality
+                                    name: Owner
+                                name: OwnersInfo
+                              LicensesInfo:
+                                type: object
+                                properties:
+                                  License:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        LicenseCode:
+                                          type: number
+                                          name: LicenseCode
+                                        LicenseNumber:
+                                          type: string
+                                          name: LicenseNumber
+                                        LicenseName:
+                                          type: string
+                                          name: LicenseName
+                                        LicenseSource:
+                                          type: string
+                                          name: LicenseSource
+                                        LicenseTypeId:
+                                          type: number
+                                          name: LicenseTypeId
+                                        LicenseType:
+                                          type: string
+                                          name: LicenseType
+                                        LicenseStatus:
+                                          type: object
+                                          properties:
+                                            Code:
+                                              type: string
+                                              name: Code
+                                            NameAr:
+                                              type: string
+                                              name: NameAr
+                                            NameEn:
+                                              type: string
+                                              name: NameEn
+                                          name: LicenseStatus
+                                        LicenseIssueDate:
+                                          type: object
+                                          properties:
+                                            Hijri:
+                                              type: string
+                                              name: Hijri
+                                            Gregorian:
+                                              type: string
+                                              name: Gregorian
+                                          name: LicenseIssueDate
+                                        LicenseExpiryDate:
+                                          type: object
+                                          properties:
+                                            Hijri:
+                                              type: string
+                                              name: Hijri
+                                            Gregorian:
+                                              type: string
+                                              name: Gregorian
+                                          name: LicenseExpiryDate
+                                        LicenseArea:
+                                          type: number
+                                          name: LicenseArea
+                                        LicenseAttachementId:
+                                          type: string
+                                          name: LicenseAttachementId
+                                    name: License
+                                name: LicensesInfo
+                              LocationsInfo:
+                                type: object
+                                properties:
+                                  Location:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        LocationId:
+                                          type: string
+                                          name: LocationId
+                                        LocationName:
+                                          type: string
+                                          name: LocationName
+                                        LocationDescription:
+                                          type: string
+                                          name: LocationDescription
+                                        LocationAddress:
+                                          type: string
+                                          name: LocationAddress
+                                        LocationStatus:
+                                          type: object
+                                          properties:
+                                            Code:
+                                              type: number
+                                              name: Code
+                                            NameAr:
+                                              type: string
+                                              name: NameAr
+                                            NameEn:
+                                              type: string
+                                              name: NameEn
+                                          name: LocationStatus
+                                        MunicipalLicenseId:
+                                          type: number
+                                          name: MunicipalLicenseId
+                                        MunicipalLicenseStartDate:
+                                          type: string
+                                          name: MunicipalLicenseStartDate
+                                        MunicipalLicenseExpiryDate:
+                                          type: string
+                                          name: MunicipalLicenseExpiryDate
+                                        Isic4Activity:
+                                          type: object
+                                          properties:
+                                            ID:
+                                              type: number
+                                              name: ID
+                                            Name:
+                                              type: string
+                                              name: Name
+                                            NameEn:
+                                              type: string
+                                              name: NameEn
+                                          name: Isic4Activity
+                                        NBForeigners:
+                                          type: number
+                                          name: NBForeigners
+                                        NBSaudis:
+                                          type: number
+                                          name: NBSaudis
+                                    name: Location
+                                name: LocationsInfo
+                            name: Body
+                        name: GetEstabProfileRs
+                    example: '{"GetEstabProfileRs":{"Header":{"TransactionId":"1642333747","ChannelId":"Qiwa","SessionId":"212","RequestTime":"2019-10-10
+                      00:00:00.555","MWRequestTime":"2019-10-10 00:00:00.555","ServiceCode":"GEPI0002","DebugFlag":"1","UserInfo":{"IDNumber":"1005930282"},"MWResponseTime":"2022-01-16
+                      11:49:09.464","ResponseStatus":{"Status":"SUCCESS","Code":"00000000","ArabicMsg":"تمت
+                      العملية بنجاح","EnglishMsg":"Success Call"}},"Body":{"HasSubscription":1,"HasPrivilege":1,"HasEFMPrivilege":0,"HasClosePrivilege":0,"HasChangeActivityPrivilege":0,"EstablishmentInfo":{"EstablishmentId":4201265,"LaborOfficeId":1,"CreationDate":"2019-05-06
+                      00:00:00","EstablishmentSizeId":"1","EstablishmentSizeName":"صغيرة
+                      (فئة أ)","EstablishmentSizeNameEn":"Small-1","SequenceNumber":187177,"UNLaborOfficeId":1,"UNSequenceNumber":20,"EstablishmentName":"1078129","CRNumber":"","CRIssueDate":{"Hijri":"","Gregorian":""},"CRExpiryDate":{"Hijri":"","Gregorian":""},"CRstatus":{"Code":1,"NameEn":"active","NameAr":"قائم"},"CRConfirmDate":{"Hijri":"","Gregorian":""},"HeadquarterCityId":"","isUnifiedMerged":0,"isEstablishmentMerged":0,"Nationality":{"Code":"1","NameAr":"","NameEn":""},"EstablishmentType":{"Code":1,"NameAr":"","NameEn":""},"ContactAddress":{"PersonFirstName":"Ziad","PersonLastName":"Fady","PersonMobileNumber":"01004455","Email":"fgy.h@hotmail.com","City":{"Code":1,"NameAr":"لا
+                      يوجد","NameEn":"لا يوجد"},"ZipCode":"Test","StreetName":"","BuildingNo":1,"District":"","AdditionalNo":"","AddressDescription":"حي
+                      العزيزية","UnitNo":"","Coordinates":{"Longitude":"","Latitude":""}},"UnifiedNumberId":2267643,"NationalUnifiedNumber":"","SevenHundredNumber":"","Isic4Activity":{"ID":1,"Name":"قائمة","NameEn":"Existent"},"IsMain":"","Status":{"Code":1,"NameAr":"قائمة","NameEn":"Existent"},"UnifiedNumberManager":{"ID":1005930282,"Name":"Lorem
+                      Ipsum dolor sit"},"EstablishmentManagersList":{"EstablishmentManager":[{"ID":1002912390,"Name":"عبدالرحيم
+                      عبدالحميد محمد الحازمي"},{"ID":1002912390,"Name":"عبدالرحيم
+                      عبدالحميد محمد الحازمي"}]},"FinancialYear":{"Hijri":14421229,"Greogrian":"2021-08-07"},"NewLaborOffice":{"ID":1,"Name":"الرياض"},"CreationType":""},"NitaqatLevel":{"CurrentSaudPerc":"","EconomicActivity":{"ID":1,"Name":"قائمة","NameEn":"Existent"},"EntityCurrentColor":{"ID":"","Name":""},"SaudisCount":"","NonSaudisCount":"","TotalLaborersCount":"","EntityTotalCount":"1.00","EntitySaudisCount":"0.00","EntityForeignersCount":"0.00","EntitySaudisTotalFactorized":"1.00","EntityForeignersTotalFactorized":"0.00"},"OwnersInfo":{"Owner":[{"OwnerName":"احمد
+                      بن ظاهر الشهري","IDNumber":1005930282,"OwnerTypeId":"","Birthdate":"","Email":"","MobileNumber":"","IsCRRepresentative":"","StreetName":"الفيصليه
+                      حي المنار            ","ZipCode":"31528","BuildingNo":"","Gender":{"Code":"","NameAr":"","NameEn":""},"City":{"Code":1,"NameAr":"لا
+                      يوجد","NameEn":"لا يوجد"},"RelationType":{"Code":1,"NameAr":"مالك
+                      المؤسسة","NameEn":"Owner"},"Nationality":{"Code":"1","NameAr":"","NameEn":""}},{"OwnerName":"احمد
+                      بن ظاهر الشهري","IDNumber":1005930282,"OwnerTypeId":"","Birthdate":"","Email":"","MobileNumber":"","IsCRRepresentative":"","StreetName":"الفيصليه
+                      حي المنار            ","ZipCode":"31528","BuildingNo":"","Gender":{"Code":"","NameAr":"","NameEn":""},"City":{"Code":1,"NameAr":"لا
+                      يوجد","NameEn":"لا يوجد"},"RelationType":{"Code":1,"NameAr":"مالك
+                      المؤسسة","NameEn":"Owner"},"Nationality":{"Code":"1","NameAr":"","NameEn":""}}]},"LicensesInfo":{"License":[{"LicenseCode":1,"LicenseNumber":"12","LicenseName":"","LicenseSource":"asdf","LicenseTypeId":1,"LicenseType":"1","LicenseStatus":{"Code":"","NameAr":"","NameEn":""},"LicenseIssueDate":{"Hijri":"","Gregorian":""},"LicenseExpiryDate":{"Hijri":"","Gregorian":""},"LicenseArea":0,"LicenseAttachementId":""},{"LicenseCode":1,"LicenseNumber":"12","LicenseName":"","LicenseSource":"asdf","LicenseTypeId":1,"LicenseType":"1","LicenseStatus":{"Code":"","NameAr":"","NameEn":""},"LicenseIssueDate":{"Hijri":"","Gregorian":""},"LicenseExpiryDate":{"Hijri":"","Gregorian":""},"LicenseArea":0,"LicenseAttachementId":""}]},"LocationsInfo":{"Location":[{"LocationId":"69","LocationName":"location","LocationDescription":"location","LocationAddress":"3207,
+                      Mohammed Al Barqi, Al Munsiyah","LocationStatus":{"Code":1,"NameAr":"Active","NameEn":"Active"},"MunicipalLicenseId":40041998308,"MunicipalLicenseStartDate":"05-09-1438","MunicipalLicenseExpiryDate":"2018-05-19T00:00:00","Isic4Activity":{"ID":477262,"Name":"البيع
+                      بالتجزئة للعطور","NameEn":"Existent"},"NBForeigners":0,"NBSaudis":0},{"LocationId":"181","LocationName":"test","LocationDescription":"test","LocationAddress":"6772,
+                      Tabuk Street","LocationStatus":{"Code":1,"NameAr":"Active","NameEn":"Active"},"MunicipalLicenseId":42095547734,"MunicipalLicenseStartDate":"02-11-1442","MunicipalLicenseExpiryDate":"2022-06-01T00:00:00","Isic4Activity":{"ID":477262,"Name":"البيع
+                      بالتجزئة للعطور","NameEn":"Existent"},"NBForeigners":0,"NBSaudis":0}]}}}}'
+                  variable: message.body
+                  content: application/json
+              actions:
+              - set: output.GetEstabProfileRs.Header.TransactionId
+                from: input.GetEstabProfileRs.Header.TransactionId
+              - set: output.GetEstabProfileRs.Header.ChannelId
+                from: input.GetEstabProfileRs.Header.ChannelId
+              - set: output.GetEstabProfileRs.Header.SessionId
+                from: input.GetEstabProfileRs.Header.SessionId
+              - set: output.GetEstabProfileRs.Header.RequestTime
+                from: input.GetEstabProfileRs.Header.RequestTime
+              - set: output.GetEstabProfileRs.Header.MWRequestTime
+                from: input.GetEstabProfileRs.Header.MWRequestTime
+              - set: output.GetEstabProfileRs.Header.ServiceCode
+                from: input.GetEstabProfileRs.Header.ServiceCode
+              - set: output.GetEstabProfileRs.Header.DebugFlag
+                from: input.GetEstabProfileRs.Header.DebugFlag
+              - set: output.GetEstabProfileRs.Header.UserInfo.IDNumber
+                from: input.GetEstabProfileRs.Header.UserInfo.IDNumber
+              - set: output.GetEstabProfileRs.Header.ResponseStatus.Status
+                from: input.GetEstabProfileRs.Header.ResponseStatus.Status
+              - set: output.GetEstabProfileRs.Header.ResponseStatus.Code
+                from: input.GetEstabProfileRs.Header.ResponseStatus.Code
+              - set: output.GetEstabProfileRs.Header.ResponseStatus.ArabicMsg
+                from: input.GetEstabProfileRs.Header.ResponseStatus.ArabicMsg
+              - set: output.GetEstabProfileRs.Header.ResponseStatus.EnglishMsg
+                from: input.GetEstabProfileRs.Header.ResponseStatus.EnglishMsg
+              - set: output.GetEstabProfileRs.Body.HasSubscription
+                from: input.GetEstabProfileRs.Body.HasSubscription
+              - set: output.GetEstabProfileRs.Body.HasPrivilege
+                from: input.GetEstabProfileRs.Body.HasPrivilege
+              - set: output.GetEstabProfileRs.Body.HasEFMPrivilege
+                from: input.GetEstabProfileRs.Body.HasEFMPrivilege
+              - set: output.GetEstabProfileRs.Body.HasClosePrivilege
+                from: input.GetEstabProfileRs.Body.HasClosePrivilege
+              - set: output.GetEstabProfileRs.Body.HasChangeActivityPrivilege
+                from: input.GetEstabProfileRs.Body.HasChangeActivityPrivilege
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.EstablishmentId
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.EstablishmentId
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.LaborOfficeId
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.LaborOfficeId
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.CreationDate
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.CreationDate
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.EstablishmentSizeId
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.EstablishmentSizeId
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.EstablishmentSizeName
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.EstablishmentSizeName
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.EstablishmentSizeNameEn
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.EstablishmentSizeNameEn
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.SequenceNumber
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.SequenceNumber
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.UNLaborOfficeId
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.UNLaborOfficeId
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.UNSequenceNumber
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.UNSequenceNumber
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.EstablishmentName
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.EstablishmentName
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.CRNumber
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.CRNumber
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.CRIssueDate.Hijri
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.CRIssueDate.Hijri
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.CRIssueDate.Gregorian
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.CRIssueDate.Gregorian
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.CRExpiryDate.Hijri
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.CRExpiryDate.Hijri
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.CRExpiryDate.Gregorian
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.CRExpiryDate.Gregorian
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.CRstatus.Code
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.CRstatus.Code
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.CRstatus.NameEn
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.CRstatus.NameEn
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.CRstatus.NameAr
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.CRstatus.NameAr
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.CRConfirmDate.Hijri
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.CRConfirmDate.Hijri
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.CRConfirmDate.Gregorian
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.CRConfirmDate.Gregorian
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.HeadquarterCityId
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.HeadquarterCityId
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.isUnifiedMerged
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.isUnifiedMerged
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.isEstablishmentMerged
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.isEstablishmentMerged
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.Nationality
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.Nationality
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.Nationality.Code
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.Nationality.Code
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.Nationality.NameAr
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.Nationality.NameAr
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.Nationality.NameEn
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.Nationality.NameEn
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.EstablishmentType.Code
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.EstablishmentType.Code
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.EstablishmentType.NameAr
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.EstablishmentType.NameAr
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.EstablishmentType.NameEn
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.EstablishmentType.NameEn
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.PersonFirstName
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.PersonFirstName
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.PersonLastName
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.PersonLastName
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.PersonMobileNumber
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.PersonMobileNumber
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.Email
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.Email
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.City.Code
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.City.Code
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.City.NameAr
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.City.NameAr
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.City.NameEn
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.City.NameEn
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.ZipCode
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.ZipCode
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.StreetName
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.StreetName
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.BuildingNo
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.BuildingNo
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.District
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.District
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.AdditionalNo
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.AdditionalNo
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.AddressDescription
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.AddressDescription
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.UnitNo
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.UnitNo
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.Coordinates.Longitude
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.Coordinates.Longitude
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.Coordinates.Latitude
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.ContactAddress.Coordinates.Latitude
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.UnifiedNumberId
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.UnifiedNumberId
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.NationalUnifiedNumber
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.NationalUnifiedNumber
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.SevenHundredNumber
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.SevenHundredNumber
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.Isic4Activity.ID
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.Isic4Activity.ID
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.Isic4Activity.Name
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.Isic4Activity.Name
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.Isic4Activity.NameEn
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.Isic4Activity.NameEn
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.IsMain
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.IsMain
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.Status.Code
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.Status.Code
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.Status.NameAr
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.Status.NameAr
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.Status.NameEn
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.Status.NameEn
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.UnifiedNumberManager.ID
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.UnifiedNumberManager.ID
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.UnifiedNumberManager.Name
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.UnifiedNumberManager.Name
+              - create: output.GetEstabProfileRs.Body.EstablishmentInfo.EstablishmentManagersList.EstablishmentManager
+                foreach: input.GetEstabProfileRs.Body.EstablishmentInfo.EstablishmentManagersList.EstablishmentManager
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.EstablishmentManagersList.EstablishmentManager
+                actions:
+                - set: ID
+                  from: ID
+                - set: Name
+                  from: Name
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.FinancialYear.Hijri
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.FinancialYear.Hijri
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.FinancialYear.Greogrian
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.FinancialYear.Greogrian
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.NewLaborOffice.ID
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.NewLaborOffice.ID
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.NewLaborOffice.Name
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.NewLaborOffice.Name
+              - set: output.GetEstabProfileRs.Body.NitaqatLevel.CurrentSaudPerc
+                from: input.GetEstabProfileRs.Body.NitaqatLevel.CurrentSaudPerc
+              - set: output.GetEstabProfileRs.Body.NitaqatLevel.EconomicActivity.ID
+                from: input.GetEstabProfileRs.Body.NitaqatLevel.EconomicActivity.ID
+              - set: output.GetEstabProfileRs.Body.NitaqatLevel.EconomicActivity.Name
+                from: input.GetEstabProfileRs.Body.NitaqatLevel.EconomicActivity.Name
+              - set: output.GetEstabProfileRs.Body.NitaqatLevel.EconomicActivity.NameEn
+                from: input.GetEstabProfileRs.Body.NitaqatLevel.EconomicActivity.NameEn
+              - set: output.GetEstabProfileRs.Body.NitaqatLevel.EntityCurrentColor.ID
+                from: input.GetEstabProfileRs.Body.NitaqatLevel.EntityCurrentColor.ID
+              - set: output.GetEstabProfileRs.Body.NitaqatLevel.EntityCurrentColor.Name
+                from: input.GetEstabProfileRs.Body.NitaqatLevel.EntityCurrentColor.Name
+              - set: output.GetEstabProfileRs.Body.NitaqatLevel.SaudisCount
+                from: input.GetEstabProfileRs.Body.NitaqatLevel.SaudisCount
+              - set: output.GetEstabProfileRs.Body.NitaqatLevel.NonSaudisCount
+                from: input.GetEstabProfileRs.Body.NitaqatLevel.NonSaudisCount
+              - set: output.GetEstabProfileRs.Body.NitaqatLevel.TotalLaborersCount
+                from: input.GetEstabProfileRs.Body.NitaqatLevel.TotalLaborersCount
+              - set: output.GetEstabProfileRs.Body.NitaqatLevel.EntityTotalCount
+                from: input.GetEstabProfileRs.Body.NitaqatLevel.EntityTotalCount
+              - set: output.GetEstabProfileRs.Body.NitaqatLevel.EntitySaudisCount
+                from: input.GetEstabProfileRs.Body.NitaqatLevel.EntitySaudisCount
+              - set: output.GetEstabProfileRs.Body.NitaqatLevel.EntityForeignersCount
+                from: input.GetEstabProfileRs.Body.NitaqatLevel.EntityForeignersCount
+              - set: output.GetEstabProfileRs.Body.NitaqatLevel.EntitySaudisTotalFactorized
+                from: input.GetEstabProfileRs.Body.NitaqatLevel.EntitySaudisTotalFactorized
+              - set: output.GetEstabProfileRs.Body.NitaqatLevel.EntityForeignersTotalFactorized
+                from: input.GetEstabProfileRs.Body.NitaqatLevel.EntityForeignersTotalFactorized
+              - create: output.GetEstabProfileRs.Body.OwnersInfo.Owner
+                foreach: input.GetEstabProfileRs.Body.OwnersInfo.Owner
+                from: input.GetEstabProfileRs.Body.OwnersInfo.Owner
+                actions:
+                - set: OwnerName
+                  from: OwnerName
+                - set: IDNumber
+                  from: IDNumber
+                - set: OwnerTypeId
+                  from: OwnerTypeId
+                - set: Birthdate
+                  from: Birthdate
+                - set: Email
+                  from: Email
+                - set: MobileNumber
+                  from: MobileNumber
+                - set: IsCRRepresentative
+                  from: IsCRRepresentative
+                - set: StreetName
+                  from: StreetName
+                - set: ZipCode
+                  from: ZipCode
+                - set: BuildingNo
+                  from: BuildingNo
+                - set: Gender.Code
+                  from: Gender.Code
+                - set: Gender.NameAr
+                  from: Gender.NameAr
+                - set: Gender.NameEn
+                  from: Gender.NameEn
+                - set: City.Code
+                  from: City.Code
+                - set: City.NameAr
+                  from: City.NameAr
+                - set: City.NameEn
+                  from: City.NameEn
+                - set: RelationType.Code
+                  from: RelationType.Code
+                - set: RelationType.NameAr
+                  from: RelationType.NameAr
+                - set: RelationType.NameEn
+                  from: RelationType.NameEn
+                - set: Nationality.Code
+                  from: Nationality.Code
+                - set: Nationality.NameAr
+                  from: Nationality.NameAr
+                - set: Nationality.NameEn
+                  from: Nationality.NameEn
+              - create: output.GetEstabProfileRs.Body.LicensesInfo.License
+                foreach: input.GetEstabProfileRs.Body.LicensesInfo.License
+                from: input.GetEstabProfileRs.Body.LicensesInfo.License
+                actions:
+                - set: LicenseCode
+                  from: LicenseCode
+                - set: LicenseNumber
+                  from: LicenseNumber
+                - set: LicenseName
+                  from: LicenseName
+                - set: LicenseSource
+                  from: LicenseSource
+                - set: LicenseTypeId
+                  from: LicenseTypeId
+                - set: LicenseType
+                  from: LicenseType
+                - set: LicenseStatus.Code
+                  from: LicenseStatus.Code
+                - set: LicenseStatus.NameAr
+                  from: LicenseStatus.NameAr
+                - set: LicenseStatus.NameEn
+                  from: LicenseStatus.NameEn
+                - set: LicenseIssueDate.Hijri
+                  from: LicenseIssueDate.Hijri
+                - set: LicenseIssueDate.Gregorian
+                  from: LicenseIssueDate.Gregorian
+                - set: LicenseExpiryDate.Hijri
+                  from: LicenseExpiryDate.Hijri
+                - set: LicenseExpiryDate.Gregorian
+                  from: LicenseExpiryDate.Gregorian
+                - set: LicenseArea
+                  from: LicenseArea
+                - set: LicenseAttachementId
+                  from: LicenseAttachementId
+              - create: output.GetEstabProfileRs.Body.LocationsInfo.Location
+                foreach: input.GetEstabProfileRs.Body.LocationsInfo.Location
+                from: input.GetEstabProfileRs.Body.LocationsInfo.Location
+                actions:
+                - set: LocationId
+                  from: LocationId
+                - set: LocationName
+                  from: LocationName
+                - set: LocationDescription
+                  from: LocationDescription
+                - set: LocationAddress
+                  from: LocationAddress
+                - set: LocationStatus.Code
+                  from: LocationStatus.Code
+                - set: LocationStatus.NameAr
+                  from: LocationStatus.NameAr
+                - set: LocationStatus.NameEn
+                  from: LocationStatus.NameEn
+                - set: MunicipalLicenseId
+                  from: MunicipalLicenseId
+                - set: MunicipalLicenseStartDate
+                  from: MunicipalLicenseStartDate
+                - set: MunicipalLicenseExpiryDate
+                  from: MunicipalLicenseExpiryDate
+                - set: Isic4Activity.ID
+                  from: Isic4Activity.ID
+                - set: Isic4Activity.Name
+                  from: Isic4Activity.Name
+                - set: Isic4Activity.NameEn
+                  from: Isic4Activity.NameEn
+                - set: NBForeigners
+                  from: NBForeigners
+                - set: NBSaudis
+                  from: NBSaudis
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.CreationType
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.CreationType
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.IsDefault
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.IsDefault
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.NickName
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.NickName
+              - set: output.GetEstabProfileRs.Body.EstablishmentInfo.IsMainCR
+                from: input.GetEstabProfileRs.Body.EstablishmentInfo.IsMainCR
+              options:
+                mapEmulateV4EmptyJSONObject: false
+                mapEmulateV4DefaultRequiredProps: false
+                mapEnablePostProcessingJSON: false
+                mapReferenceLimit: 1
+                mapNullValue: true
+    catch: []
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+definitions:
+  GetEstabProfileRq_MessageType:
+    type: object
+    properties:
+      GetEstabProfileRq:
+        $ref: '#/definitions/GetEstabProfileRq_Type'
+  GetEstabProfileRs_MessageType:
+    type: object
+    properties:
+      GetEstabProfileRs:
+        $ref: '#/definitions/GetEstabProfileRs_Type'
+  GetEstabProfileRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetEstabProfileRq_BodyType'
+  GetEstabProfileRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+  GetEstabProfileRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetEstabProfileRs_BodyType'
+  GetEstabProfileRs_BodyType:
+    type: object
+    properties:
+      EstablishmentInfo:
+        $ref: '#/definitions/EstablishmentInfo_Type'
+      NitaqatLevel:
+        $ref: '#/definitions/NitaqatLevel_Type'
+      OwnersInfo:
+        $ref: '#/definitions/OwnersInfo_Type'
+      LicensesInfo:
+        $ref: '#/definitions/LicensesInfo_Type'
+      LocationsInfo:
+        $ref: '#/definitions/LocationsInfo_Type'
+      HasSubscription:
+        type: integer
+      HasPrivilege:
+        type: integer
+      HasEFMPrivilege:
+        type: integer
+      HasClosePrivilege:
+        type: integer
+      HasChangeActivityPrivilege:
+        type: integer
+  EstablishmentInfo_Type:
+    type: object
+    properties:
+      EstablishmentId:
+        type: integer
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      CreationDate:
+        type: string
+      EstablishmentSizeId:
+        type: string
+      EstablishmentSizeName:
+        type: string
+      EstablishmentSizeNameEn:
+        type: string
+      UNLaborOfficeId:
+        type: integer
+      UNSequenceNumber:
+        type: integer
+      EstablishmentName:
+        type: string
+      CRNumber:
+        type: string
+      CRIssueDate:
+        $ref: '#/definitions/Date_Type'
+      CRExpiryDate:
+        $ref: '#/definitions/Date_Type'
+      Nationality:
+        $ref: '#/definitions/CodeName_Type'
+      EstablishmentType:
+        $ref: '#/definitions/CodeName_Type'
+      ContactAddress:
+        $ref: '#/definitions/ContactAddress_Type'
+      UnifiedNumberId:
+        type: integer
+      SevenHundredNumber:
+        type: string
+      NationalUnifiedNumber:
+        type: string
+      Isic4Activity:
+        $ref: '#/definitions/CodeName_Type'
+      IsMain:
+        type: integer
+      Status:
+        $ref: '#/definitions/CodeName_Type'
+      UnifiedNumberManager:
+        $ref: '#/definitions/IDName_Type'
+      EstablishmentManagersList:
+        $ref: '#/definitions/EstablishmentManagersList_Type'
+      FinancialYear:
+        $ref: '#/definitions/Date_Type'
+      NewLaborOffice:
+        $ref: '#/definitions/IDName_Type'
+      CreationType:
+        type: string
+      IsDefault:
+        type: integer
+      NickName:
+        type: string
+      IsMainCR:
+        type: integer
+  ContactAddress_Type:
+    type: object
+    properties:
+      PersonFirstName:
+        type: string
+      PersonLastName:
+        type: string
+      PersonMobileNumber:
+        type: string
+      Email:
+        type: string
+      City:
+        $ref: '#/definitions/CodeName_Type'
+      ZipCode:
+        type: string
+      StreetName:
+        type: string
+      BuildingNo:
+        type: integer
+      District:
+        type: string
+      AdditionalNo:
+        type: integer
+      AddressDescription:
+        type: string
+      UnitNo:
+        type: integer
+      Coordinates:
+        $ref: '#/definitions/Coordinates_Type'
+  Coordinates_Type:
+    type: object
+    properties:
+      Longitude:
+        type: string
+      Latitude:
+        type: string
+  EstablishmentManagersList_Type:
+    type: object
+    properties:
+      EstablishmentManager:
+        type: array
+        items:
+          $ref: '#/definitions/IDName_Type'
+  NitaqatLevel_Type:
+    type: object
+    properties:
+      CurrentSaudPerc:
+        type: integer
+      EconomicActivity:
+        $ref: '#/definitions/CodeName_Type'
+      EntityCurrentColor:
+        $ref: '#/definitions/IDName_Type'
+      SaudisCount:
+        type: integer
+      NonSaudisCount:
+        type: integer
+      TotalLaborersCount:
+        type: integer
+      EntityTotalCount:
+        type: string
+      EntitySaudisCount:
+        type: string
+      EntityForeignersCount:
+        type: string
+      EntitySaudisTotalFactorized:
+        type: string
+      EntityForeignersTotalFactorized:
+        type: string
+  OwnersInfo_Type:
+    type: object
+    properties:
+      Owner:
+        type: array
+        items:
+          $ref: '#/definitions/Owner_Type'
+  Owner_Type:
+    type: object
+    properties:
+      OwnerName:
+        type: string
+      IDNumber:
+        type: integer
+      OwnerTypeId:
+        type: integer
+      Birthdate:
+        type: string
+      Email:
+        type: string
+      MobileNumber:
+        type: string
+      IsCRRepresentative:
+        type: integer
+      StreetName:
+        type: string
+      ZipCode:
+        type: string
+      BuildingNo:
+        type: string
+      Gender:
+        $ref: '#/definitions/CodeName_Type'
+      City:
+        $ref: '#/definitions/CodeName_Type'
+      RelationType:
+        $ref: '#/definitions/CodeName_Type'
+      Nationality:
+        $ref: '#/definitions/CodeName_Type'
+  LicensesInfo_Type:
+    type: object
+    properties:
+      License:
+        type: array
+        items:
+          $ref: '#/definitions/License_Type'
+  License_Type:
+    type: object
+    properties:
+      LicenseType:
+        $ref: '#/definitions/CodeName_Type'
+      LicenseNumber:
+        type: string
+      LicenseName:
+        type: string
+      LicenseSource:
+        type: string
+      LicenseStatus:
+        $ref: '#/definitions/CodeName_Type'
+      LicenseIssueDate:
+        $ref: '#/definitions/Date_Type'
+      LicenseExpiryDate:
+        $ref: '#/definitions/Date_Type'
+      LicenseArea:
+        type: integer
+      LicenseAttachementId:
+        type: integer
+  LocationsInfo_Type:
+    type: object
+    properties:
+      Location:
+        type: array
+        items:
+          $ref: '#/definitions/Location_Type'
+  Location_Type:
+    type: object
+    properties:
+      LocationId:
+        type: string
+      LocationName:
+        type: string
+      LocationDescription:
+        type: string
+      LocationAddress:
+        type: string
+      LocationStatus:
+        $ref: '#/definitions/CodeName_Type'
+      MunicipalLicenseId:
+        type: integer
+      MunicipalLicenseStartDate:
+        type: string
+      MunicipalLicenseExpiryDate:
+        type: string
+      Isic4Activity:
+        $ref: '#/definitions/IDName_Type'
+      NBSaudis:
+        type: integer
+      NBForeigners:
+        type: integer
+  Date_Type:
+    type: object
+    properties:
+      Hijri:
+        type: integer
+      Gregorian:
+        type: string
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+  IDName_Type:
+    type: object
+    properties:
+      ID:
+        type: integer
+      Name:
+        type: string
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: string
+      IDNumber:
+        type: string
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /getestabprofileinfo:
+    post:
+      operationId: GetEstablishmentProfileInformation
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetEstabProfileRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: this service is used to Get Establishment Profile Information
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetEstabProfileRq_MessageType'
+        description: GetEstabProfileRq
+        required: true

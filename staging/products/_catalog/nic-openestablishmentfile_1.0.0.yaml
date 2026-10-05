@@ -1,0 +1,937 @@
+swagger: "2.0"
+info:
+  title: NIC_OpenEstablishmentFile
+  description: This service is used by the consumer to open an establishment file
+    from HRSD through Takamol Internal/External Integration.
+  x-ibm-name: nic-openestablishmentfile
+  version: 1.0.0
+schemes:
+- https
+basePath: /nic/v1
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+paths:
+  /establishment-file:
+    parameters:
+    - $ref: '#/parameters/X-IBM-Client-Id'
+    - $ref: '#/parameters/X-IBM-Client-Secret'
+    post:
+      tags:
+      - Establishment File
+      description: Service to open establishment file
+      operationId: addEstablishmentFile
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/RequestModel'
+        description: open establishment file request body
+      produces:
+      - application/json
+      responses:
+        "201":
+          $ref: '#/responses/Response201'
+        "400":
+          $ref: '#/responses/Response400'
+        "401":
+          $ref: '#/responses/Response401'
+        "403":
+          $ref: '#/responses/Response403'
+        "404":
+          $ref: '#/responses/Response404'
+        "408":
+          $ref: '#/responses/Response408'
+        "409":
+          $ref: '#/responses/Response409'
+        "429":
+          $ref: '#/responses/Response429'
+        "500":
+          $ref: '#/responses/Response500'
+        "501":
+          $ref: '#/responses/Response501'
+        "503":
+          $ref: '#/responses/Response503'
+        "510":
+          $ref: '#/responses/Response510'
+definitions:
+  RequestModel:
+    type: object
+    properties:
+      referenceNumber:
+        type: string
+        example: 86977351-d99c-4bf5-8f19-58bbca4281f1
+      transactionType:
+        $ref: '#/definitions/NameCodeModel'
+      crNumber:
+        $ref: '#/definitions/IntegerNumberModel'
+      nationalNumber:
+        $ref: '#/definitions/IntegerNumberModel'
+      isMain:
+        type: boolean
+        example: "false"
+      mainCr:
+        $ref: '#/definitions/IntegerNumberModel'
+      businessType:
+        $ref: '#/definitions/NameCodeModel'
+      location:
+        $ref: '#/definitions/NameCodeModel'
+      crName:
+        type: string
+        example: Name of CR
+      issueDate:
+        $ref: '#/definitions/HijriDateModel'
+      expiryDate:
+        $ref: '#/definitions/HijriDateModel'
+      nationality:
+        $ref: '#/definitions/NameCodeModel'
+      zipCode:
+        type: string
+        example: "41000"
+      poBox:
+        type: string
+        example: P.O.Box One
+      city:
+        $ref: '#/definitions/NameCodeModel'
+      street:
+        type: string
+        example: Murabba
+      building:
+        $ref: '#/definitions/IntegerNumberModel'
+      crOfficeNumber:
+        $ref: '#/definitions/IntegerNumberModel'
+      fiscalYear:
+        $ref: '#/definitions/NameCodeModel'
+      molOfficeNumber:
+        $ref: '#/definitions/IntegerNumberModel'
+      mainActivityId:
+        $ref: '#/definitions/IntegerNumberModel'
+      branchActivityId:
+        $ref: '#/definitions/IntegerNumberModel'
+      crParties:
+        type: array
+        items:
+          $ref: '#/definitions/CrParties'
+      crRepresentative:
+        $ref: '#/definitions/CrRepresentative'
+      crActivities:
+        type: array
+        items:
+          $ref: '#/definitions/NameCodeModel'
+  CrParties:
+    type: object
+    description: This object will be used across the model
+    properties:
+      name:
+        type: string
+        example: Name of the party
+      relationType:
+        $ref: '#/definitions/NameCodeModel'
+      nationality:
+        $ref: '#/definitions/NameCodeModel'
+      partyId:
+        $ref: '#/definitions/IntegerNumberModel'
+      birthDate:
+        $ref: '#/definitions/GregorianDateModel'
+  CrRepresentative:
+    type: object
+    description: This object will be used across the model
+    properties:
+      name:
+        type: string
+        example: Name of the party representative
+      nationality:
+        $ref: '#/definitions/NameCodeModel'
+      partyId:
+        $ref: '#/definitions/IntegerNumberModel'
+      partyIdType:
+        type: string
+        example: Type of party
+      mobile:
+        type: string
+        example: "0512356125"
+      email:
+        type: string
+        example: a@b.com
+      birthDate:
+        $ref: '#/definitions/GregorianDateModel'
+  ErrorModel:
+    type: object
+    required:
+    - errorCode
+    - errorMessage
+    properties:
+      errorCode:
+        type: string
+        example: EXXXX000
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+  NameCodeModel:
+    type: object
+    description: 'This object will be used across the model '
+    properties:
+      id:
+        type: string
+        example: "1"
+      name:
+        type: string
+        example: name
+  LocaleDataModel:
+    type: object
+    additionalProperties:
+      type: string
+    example:
+      en-US: English Value
+      ar-SA: Arabic Value
+  IntegerNumberModel:
+    type: integer
+    description: This object use for integer numbers
+    additionalProperties:
+      type: integer
+      example: 1
+  GregorianDateModel:
+    type: string
+    description: This date object will be used across the model with format yyyy-MM-dd
+      for gregorian dates only
+    example: "2017-12-31"
+  HijriDateModel:
+    type: string
+    description: This date object will be used across the model with format yyyy-MM-dd
+      for hijri dates only
+    example: "1439-12-25"
+parameters:
+  X-IBM-Client-Id:
+    in: header
+    name: X-IBM-Client-Id
+    description: Client id issued by security server
+    required: true
+    type: string
+  X-Request-Id:
+    in: header
+    name: X-Request-Id
+    description: X-Request-Id returned in the response header
+    required: false
+    type: string
+  X-IBM-Client-Secret:
+    in: header
+    name: X-IBM-Client-Secret
+    description: Client secret issued by security server
+    required: true
+    type: string
+responses:
+  Response201:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+      Location:
+        type: string
+        description: Company Id
+  Response400:
+    description: The request was rejected by the server due to malformed syntax. Bad
+      Request.
+  Response401:
+    description: The request could not be completed due to lack of valid credentials.
+      Authentication.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response403:
+    description: The request could not be completed because it is not authorized.
+      Authorization
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response404:
+    description: The server has not found anything matching the Request-URI.
+  Response408:
+    description: The client did not produce a request within the time that the server
+      was prepared to wait.
+  Response409:
+    description: The request could not be completed due to a conflict with the current
+      state of the resource. Usually business validation errors will be returned in
+      the body
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response429:
+    description: The request was sent too many times in a given amount of time
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response500:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response501:
+    description: The server does not support the functionality required and does not
+      recognize the request
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response503:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response510:
+    description: Extensions to the request are required for the server to fulfil it.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - map:
+        version: 2.0.0
+        title: map
+        inputs:
+          "":
+            schema:
+              description: ""
+              type: object
+              properties:
+                referenceNumber:
+                  type: string
+                  name: referenceNumber
+                transactionType:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      name: id
+                    name:
+                      type: string
+                      name: name
+                  name: transactionType
+                crNumber:
+                  type: string
+                  name: crNumber
+                nationalNumber:
+                  type: number
+                  name: nationalNumber
+                isMain:
+                  type: boolean
+                  name: isMain
+                mainCr:
+                  type: number
+                  name: mainCr
+                businessType:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      name: id
+                    name:
+                      type: string
+                      name: name
+                  name: businessType
+                location:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      name: id
+                    name:
+                      type: string
+                      name: name
+                  name: location
+                crName:
+                  type: string
+                  name: crName
+                issueDate:
+                  type: string
+                  name: issueDate
+                expiryDate:
+                  type: string
+                  name: expiryDate
+                nationality:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      name: id
+                    name:
+                      type: string
+                      name: name
+                  name: nationality
+                zipCode:
+                  type: string
+                  name: zipCode
+                poBox:
+                  type: string
+                  name: poBox
+                city:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      name: id
+                    name:
+                      type: string
+                      name: name
+                  name: city
+                street:
+                  type: string
+                  name: street
+                building:
+                  type: number
+                  name: building
+                crOfficeNumber:
+                  type: number
+                  name: crOfficeNumber
+                fiscalYear:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      name: id
+                    name:
+                      type: string
+                      name: name
+                  name: fiscalYear
+                molOfficeNumber:
+                  type: number
+                  name: molOfficeNumber
+                mainActivityId:
+                  type: number
+                  name: mainActivityId
+                branchActivityId:
+                  type: number
+                  name: branchActivityId
+                crParties:
+                  type: array
+                  items:
+                    properties:
+                      name:
+                        type: string
+                        name: name
+                      relationType:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            name: id
+                          name:
+                            type: string
+                            name: name
+                        name: relationType
+                      nationality:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            name: id
+                          name:
+                            type: string
+                            name: name
+                        name: nationality
+                      partyId:
+                        type: string
+                        name: partyId
+                      birthDate:
+                        type: string
+                        name: birthDate
+                    type: object
+                  name: crParties
+                crRepresentative:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      name: name
+                    nationality:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          name: id
+                        name:
+                          type: string
+                          name: name
+                      name: nationality
+                    partyId:
+                      type: string
+                      name: partyId
+                    partyIdType:
+                      type: string
+                      name: partyIdType
+                    mobile:
+                      type: string
+                      name: mobile
+                    email:
+                      type: string
+                      name: email
+                    birthDate:
+                      type: string
+                      name: birthDate
+                  name: crRepresentative
+                crActivities:
+                  type: array
+                  items:
+                    properties:
+                      id:
+                        type: string
+                        name: id
+                      name:
+                        type: string
+                        name: name
+                    type: object
+                  name: crActivities
+              example: "{\r\n   \"referenceNumber\":\"86977351-d99c-4bf5-8f19-58bbca4281f1\",\r\n
+                \  \"transactionType\":{\r\n      \"id\":\"1\",\r\n      \"name\":\"New CR\"\r\n
+                \  },\r\n   \"crNumber\":\"1010686229\",\r\n   \"nationalNumber\":7021483909,\r\n
+                \  \"isMain\":true,\r\n   \"mainCr\":87876,\r\n   \"businessType\":{\r\n
+                \     \"id\":\"101\",\r\n      \"name\":\"مؤســـسة فـــردية\"\r\n
+                \  },\r\n   \"location\":{\r\n      \"id\":\"1010\",\r\n      \"name\":\"الرياض\"\r\n
+                \  },\r\n   \"crName\":\"مؤسسة ديان للتجارة\",\r\n   \"issueDate\":\"14420626\",\r\n
+                \  \"expiryDate\":\"14430626\",\r\n   \"nationality\":{\r\n      \"id\":\"1\",\r\n
+                \     \"name\":\"السعودية\"\r\n   },\r\n   \"zipCode\":\"14927\",\r\n
+                \  \"poBox\":\"\",\r\n   \"city\":{\r\n      \"id\":\"1010\",\r\n
+                \     \"name\":\"الرياض\"\r\n   },\r\n   \"street\":\"نجم الدين الايوبي\",\r\n
+                \  \"building\":10,\r\n   \"crOfficeNumber\":10,\r\n   \"fiscalYear\":{\r\n
+                \     \"id\":\"2\",\r\n      \"name\":\"Hijri\"\r\n   },\r\n   \"molOfficeNumber\":1,\r\n
+                \  \"mainActivityId\":6,\r\n   \"branchActivityId\":29,\r\n   \"crParties\":[\r\n
+                \     {\r\n         \"name\":\"منى محمد علي قشيش\",\r\n         \"relationType\":{\r\n
+                \           \"id\":\"1\",\r\n            \"name\":\"مالك المؤسسة\"\r\n
+                \        },\r\n         \"nationality\":{\r\n            \"id\":\"23232323\",\r\n
+                \           \"name\":\"السعودية\"\r\n         },\r\n         \"partyId\":\"1106258591\",\r\n
+                \        \"birthDate\":\"1998-01-23T00:00:00\"\r\n      }\r\n   ],\r\n
+                \  \"crRepresentative\":{\r\n      \"name\":\"منى محمد علي قشيش\",\r\n
+                \     \"nationality\":{\r\n         \"id\":\"4434534\",\r\n         \"name\":\"السعودية\"\r\n
+                \     },\r\n      \"partyId\":\"1106258591\",\r\n      \"partyIdType\":\"NID\",\r\n
+                \     \"mobile\":\"966545314146\",\r\n      \"email\":\"munafahad709@gmail.com\",\r\n
+                \     \"birthDate\":\"1998-01-23T00:00:00\"\r\n   },\r\n   \"crActivities\":[\r\n
+                \     {\r\n         \"id\":\"479120\",\r\n         \"name\":\"البيع بالتجزئة عن طريق الانترنت\"\r\n
+                \     }\r\n   ]\r\n}"
+            variable: request.body
+        outputs:
+          "":
+            schema:
+              description: ""
+              type: object
+              properties:
+                ReferenceNo:
+                  type: string
+                TransactionType:
+                  type: object
+                  properties:
+                    Id:
+                      type: number
+                    Name:
+                      type: string
+                CRNo:
+                  type: string
+                NationalNo:
+                  type: number
+                IsMain:
+                  type: boolean
+                MainCR:
+                  type: number
+                BusinessType:
+                  type: object
+                  properties:
+                    Id:
+                      type: number
+                    Name:
+                      type: string
+                Location:
+                  type: object
+                  properties:
+                    Id:
+                      type: number
+                    Name:
+                      type: string
+                CRName:
+                  type: string
+                IssueDate:
+                  type: string
+                ExpiryDate:
+                  type: string
+                Nationality:
+                  type: object
+                  properties:
+                    Id:
+                      type: string
+                    Name:
+                      type: string
+                ZipCode:
+                  type: string
+                POBOX1:
+                  type: string
+                City:
+                  type: object
+                  properties:
+                    Id:
+                      type: number
+                    Name:
+                      type: string
+                eCR_Street:
+                  type: string
+                eCR_Building:
+                  type: number
+                eCR_OfficeNumber:
+                  type: number
+                FiscalYear:
+                  type: object
+                  properties:
+                    Id:
+                      type: number
+                    Name:
+                      type: string
+                MOL_OfficeNo:
+                  type: number
+                MOL_MainActivityID:
+                  type: number
+                MOL_BranchActivityID:
+                  type: number
+                CRParties:
+                  type: array
+                  items:
+                    properties:
+                      Name:
+                        type: string
+                      RelationType:
+                        type: object
+                        properties:
+                          Id:
+                            type: number
+                          Name:
+                            type: string
+                      Nationality:
+                        type: object
+                        properties:
+                          Id:
+                            type: string
+                          Name:
+                            type: string
+                      PartyID:
+                        type: string
+                      BirthDate:
+                        type: string
+                    type: object
+                CRRepresentative:
+                  type: object
+                  properties:
+                    Name:
+                      type: string
+                    Nationality:
+                      type: object
+                      properties:
+                        Id:
+                          type: string
+                        Name:
+                          type: string
+                    PartyID:
+                      type: string
+                    PartyIDType:
+                      type: string
+                    Mobile:
+                      type: string
+                    Email:
+                      type: string
+                    BirthDate:
+                      type: string
+                CRActivities:
+                  type: array
+                  items:
+                    properties:
+                      Id:
+                        type: string
+                      Name:
+                        type: string
+                    type: object
+              example: "{\r\n            \"ReferenceNo\": \"86977351-d99c-4bf5-8f19-58bbca4281f1\",\r\n
+                \           \"TransactionType\": {\r\n                \"Id\": 1,\r\n
+                \               \"Name\": \"New CR\"\r\n            },\r\n            \"CRNo\":
+                \"1010686229\",\r\n            \"NationalNo\": 7021483909,\r\n            \"IsMain\":
+                true,\r\n            \"MainCR\": 87876,\r\n            \"BusinessType\":
+                {\r\n                \"Id\": 101,\r\n                \"Name\": \"مؤســـسة
+                فـــردية\"\r\n            },\r\n            \"Location\": {\r\n                \"Id\":
+                1010,\r\n                \"Name\": \"الرياض\"\r\n            },\r\n
+                \           \"CRName\": \"مؤسسة ديان للتجارة\",\r\n            \"IssueDate\":
+                \"14420626\",\r\n            \"ExpiryDate\": \"14430626\",\r\n            \"Nationality\":
+                {\r\n                \"Id\": \"1\",\r\n                \"Name\": \"السعودية\"\r\n
+                \           },\r\n            \"ZipCode\": \"14927\",\r\n            \"POBOX1\":
+                \"\",\r\n            \"City\": {\r\n                \"Id\": 1010,\r\n
+                \               \"Name\": \"الرياض\"\r\n            },\r\n            \"eCR_Street\":
+                \"نجم الدين الايوبي\",\r\n            \"eCR_Building\": 10,\r\n            \"eCR_OfficeNumber\":
+                10,\r\n            \"FiscalYear\": {\r\n                \"Id\": 2,\r\n
+                \               \"Name\": \"Hijri\"\r\n            },\r\n            \"MOL_OfficeNo\":
+                1,\r\n            \"MOL_MainActivityID\": 6,\r\n            \"MOL_BranchActivityID\":
+                29,\r\n            \"CRParties\": [\r\n                {\r\n                    \"Name\":
+                \"منى محمد علي قشيش\",\r\n                    \"RelationType\": {\r\n
+                \                       \"Id\": 1,\r\n                        \"Name\":
+                \"مالك المؤسسة\"\r\n                    },\r\n                    \"Nationality\":
+                {\r\n                        \"Id\": \"23232323\",\r\n                        \"Name\":
+                \"السعودية\"\r\n                    },\r\n                    \"PartyID\":
+                \"1106258591\",\r\n                    \"BirthDate\": \"1998-01-23T00:00:00\"\r\n
+                \               }\r\n            ],\r\n            \"CRRepresentative\":
+                {\r\n                \"Name\": \"منى محمد علي قشيش\",\r\n                \"Nationality\":
+                {\r\n                    \"Id\": \"4434534\",\r\n                    \"Name\":
+                \"السعودية\"\r\n                },\r\n                \"PartyID\":
+                \"1106258591\",\r\n                \"PartyIDType\": \"NID\",\r\n                \"Mobile\":
+                \"966545314146\",\r\n                \"Email\": \"munafahad709@gmail.com\",\r\n
+                \               \"BirthDate\": \"1998-01-23T00:00:00\"\r\n            },\r\n
+                \           \"CRActivities\": [\r\n                {\r\n                    \"Id\":
+                \"479120\",\r\n                    \"Name\": \"البيع بالتجزئة عن طريق
+                الانترنت\"\r\n                }\r\n            ]\r\n        }"
+            variable: message.body
+        actions:
+        - set: .ReferenceNo
+          from: .referenceNumber
+        - set: .TransactionType.Id
+          from: .transactionType.id
+        - set: .TransactionType.Name
+          from: .transactionType.name
+        - set: .CRNo
+          from: .crNumber
+        - set: .NationalNo
+          from: .nationalNumber
+        - set: .IsMain
+          from: .isMain
+        - set: .MainCR
+          from: .mainCr
+        - set: .BusinessType.Id
+          from: .businessType.id
+        - set: .BusinessType.Name
+          from: .businessType.name
+        - set: .Location.Id
+          from: .location.id
+        - set: .Location.Name
+          from: .location.name
+        - set: .CRName
+          from: .crName
+        - set: .IssueDate
+          from: .issueDate
+        - set: .ExpiryDate
+          from: .expiryDate
+        - set: .Nationality.Id
+          from: .nationality.id
+        - set: .Nationality.Name
+          from: .nationality.name
+        - set: .ZipCode
+          from: .zipCode
+        - set: .POBOX1
+          from: .poBox
+        - set: .City.Id
+          from: .city.id
+        - set: .City.Name
+          from: .city.name
+        - set: .eCR_Street
+          from: .street
+        - set: .eCR_Building
+          from: .building
+        - set: .eCR_OfficeNumber
+          from: .crOfficeNumber
+        - set: .FiscalYear.Id
+          from: .fiscalYear.id
+        - set: .FiscalYear.Name
+          from: .fiscalYear.name
+        - set: .MOL_OfficeNo
+          from: .molOfficeNumber
+        - set: .MOL_MainActivityID
+          from: .mainActivityId
+        - set: .MOL_BranchActivityID
+          from: .branchActivityId
+        - create: .CRParties
+          foreach: .crParties
+          from: .crParties
+          actions:
+          - set: Name
+            from: name
+          - set: RelationType.Id
+            from: relationType.id
+          - set: RelationType.Name
+            from: relationType.name
+          - set: Nationality.Id
+            from: nationality.id
+          - set: Nationality.Name
+            from: nationality.name
+          - set: PartyID
+            from: partyId
+          - set: BirthDate
+            from: birthDate
+        - set: .CRRepresentative.Name
+          from: .crRepresentative.name
+        - set: .CRRepresentative.Nationality.Id
+          from: .crRepresentative.nationality.id
+        - set: .CRRepresentative.Nationality.Name
+          from: .crRepresentative.nationality.name
+        - set: .CRRepresentative.PartyID
+          from: .crRepresentative.partyId
+        - set: .CRRepresentative.PartyIDType
+          from: .crRepresentative.partyIdType
+        - set: .CRRepresentative.Mobile
+          from: .crRepresentative.mobile
+        - set: .CRRepresentative.Email
+          from: .crRepresentative.email
+        - set: .CRRepresentative.BirthDate
+          from: .crRepresentative.birthDate
+        - create: .CRActivities
+          foreach: .crActivities
+          from: .crActivities
+          actions:
+          - set: Id
+            from: id
+          - set: Name
+            from: name
+        options:
+          mapEnablePostProcessingJSON: true
+          mapEmulateV4EmptyJSONObject: false
+          mapEmulateV4DefaultRequiredProps: false
+          mapReferenceLimit: 1
+          inlineNamespaces: false
+          namespaceInheritance: false
+          includeEmptyXMLElements: false
+          mapResolveApicVariables: false
+          mapOptimizeSchemaDefinition: true
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\n\nvar cfg={\n    \"serviceCode\" : \"EXOEF0001\",\n
+          \   \"channelId\" : \"Integration\",\n    \"requestName\" : \"OpenEstablishmentFileRq\",\n
+          \   \"responseName\": \"OpenEstablishmentFileRs\",\n    \"errorMap\" :{\n
+          \       \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid Request\"}\n    }\n
+          \   \n};\n\napim.setvariable('cfg',cfg);"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare_Request
+        source: "var apim = require('apim');\r\n\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\n\r\nvar appcReq
+          = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n            \"TransactionId\"
+          : millisecondsvalue,\r\n            \"ChannelId\": cfg.channelId,\r\n            \"SessionId\":
+          apim.getvariable('message.headers.X-Request-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode\r\n        },\r\n
+          \       \"Body\" : apim.getvariable('message.body')\r\n            \r\n
+          \       \r\n    }\r\n};\r\n\r\nif (typeof OperatorId !== 'undefined')\r\n
+          \   appcReq[cfg.requestName].Header.UserInfo = {\r\n        \"IDNumber\"
+          : OperatorId\r\n    };\r\nsession.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n    \r\n    \r\n\r\n    //return
+          the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour
+          + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        header-control:
+          type: blacklist
+          values: []
+        parameter-control:
+          type: whitelist
+          values: []
+        timeout: 60
+        verb: POST
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        target-url: $(ace-tip-mhrsd-get)/external/openestablishmentfile
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_Headers
+        source: "\tvar apim = require('apim');\n\t\n\tapim.output('application/json');\n\n
+          \   \n    \n    var cfg = apim.getvariable('cfg');\n    \n\tvar TransactionId
+          = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.TransactionId\");\n\tvar
+          ChannelId = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.ChannelId\");\n\tvar
+          RequestTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.RequestTime\");\n\tvar
+          SessionId = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.SessionId\");\n\tvar
+          MWRequestTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.MWRequestTime\");\n\tvar
+          MWResponseTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.MWResponseTime\");\n\tvar
+          status = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.ResponseStatus.Status\");\n\t\n\n
+          \   apim.setvariable('message.headers.Transaction-Id',TransactionId,'add');\n
+          \   apim.setvariable('message.headers.Channel-Id',ChannelId,'add');\n    if
+          (RequestTime !== 'undefined')\n\t    apim.setvariable('message.headers.RequestTime',RequestTime,'add');\n\tif
+          (SessionId !== 'undefined')\n        apim.setvariable('message.headers.X-Request-Id',SessionId,'add');\n
+          \    if (MWRequestTime !== 'undefined')\n        apim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');\n
+          \   if (MWResponseTime !== 'undefined')\n        apim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');\n\n
+          \   \n    apim.setvariable('message.headers.Response-Status',status,'add');\n
+          \   "
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Response
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar body = message[cfg.responseName].Body;\n\n\nsession.output.write(body);\napim.output('application/json');"
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Error
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar error = {\n  \"errorCode\":
+                message[cfg.responseName].Header.ResponseStatus.Code,\n  \"errorMessage\":
+                {\n    \"en-US\": message[cfg.responseName].Header.ResponseStatus.EnglishMsg,\n
+                \   \"ar-SA\": message[cfg.responseName].Header.ResponseStatus.ArabicMsg\n
+                \ }\n};\n\nvar httperror=0;\nif(cfg.errorMap){\n    if(cfg.errorMap[error.errorCode]){\n
+                \      httperror = cfg.errorMap[error.errorCode].code;\n       \n
+                \      //var errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\n
+                \      //var details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\n    }\n}\nif(httperror
+                == 0){\n   httperror = 400;\n   // apim.error('ERROR',400,'Bad Request','Invalid
+                request');\n}\napim.setvariable('message.status.code',httperror,'set');\n\nsession.output.write(error);\napim.output('application/json');"
+    catch: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false

@@ -1,0 +1,351 @@
+swagger: "2.0"
+info:
+  title: A_validatedata
+  x-ibm-name: a-validatedata
+  version: 5.0.0
+schemes:
+- https
+basePath: /a-validatedata
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - map:
+        version: 2.0.0
+        title: map
+        inputs:
+          SevenHundredNumber:
+            schema:
+              type: string
+            variable: request.parameters.sevenhundrednumber
+        outputs:
+          output:
+            schema:
+              description: ""
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    SevenHundred:
+                      type: string
+                      name: SevenHundred
+                    UserType:
+                      type: string
+                      name: UserType
+                  xml:
+                    namespace: ""
+                  name: data
+              xml:
+                namespace: ""
+              example: |-
+                <data>
+                    <SevenHundred>1064059221</SevenHundred>
+                    <UserType>1</UserType>
+                </data>
+            variable: message.body
+            content: application/xml
+        actions:
+        - set: output.data.SevenHundred
+          from: SevenHundredNumber
+        - set: output.data.UserType
+          value: "1"
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: POST
+        chunked-uploads: true
+        persistent-connection: true
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error:
+        - ConnectionError
+        - SOAPError
+        - OperationError
+        target-url: $(demo-url)
+    - parse:
+        version: 2.0.0
+        title: parse
+        parse-settings-reference:
+          default: apic-default-parsesettings
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: ($xpath(message.body, '/sql/@result') = "success")
+          execute:
+          - switch:
+              version: 2.0.0
+              title: switch
+              case:
+              - condition: ($count(message.body.sql.row.column) = 3)
+                execute:
+                - map:
+                    version: 2.0.0
+                    title: map
+                    inputs: {}
+                    outputs:
+                      output_1:
+                        schema:
+                          type: integer
+                        variable: message.status.code
+                    actions:
+                    - set: output_1
+                      value: "200"
+                - xml-to-json:
+                    version: 2.0.0
+                    title: xml-to-json
+              - otherwise:
+                - map:
+                    version: 2.0.0
+                    title: map
+                    inputs: {}
+                    outputs:
+                      output_1:
+                        schema:
+                          type: integer
+                        variable: message.status.code
+                      output:
+                        schema:
+                          type: string
+                        variable: message.body
+                    actions:
+                    - set: output_1
+                      value: "400"
+                    - set: output
+                      value: '''data not found'''
+        - condition: ($xpath(message.body, '/sql/@result') = "error")
+          execute:
+          - map:
+              version: 2.0.0
+              title: map
+              inputs: {}
+              outputs:
+                output_1:
+                  schema:
+                    type: integer
+                  variable: message.status.code
+              actions:
+              - set: output_1
+                value: "400"
+          - xml-to-json:
+              version: 2.0.0
+              title: xml-to-json
+        - otherwise:
+          - map:
+              version: 2.0.0
+              title: map
+              inputs: {}
+              outputs:
+                output_1:
+                  schema:
+                    type: integer
+                  variable: message.status.code
+              actions:
+              - set: output_1
+                value: "400"
+          - xml-to-json:
+              version: 2.0.0
+              title: xml-to-json
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+definitions:
+  DataPortalRequest:
+    type: object
+    additionalProperties: false
+    properties:
+      request:
+        type: object
+        properties:
+          dim:
+            type: object
+            properties:
+              id:
+                type: integer
+              key:
+                type: string
+                enum:
+                - WFS
+              params:
+                type: object
+                properties:
+                  selections:
+                    $ref: '#/definitions/SelectionsType'
+                  filters:
+                    $ref: '#/definitions/FiltersType'
+                required:
+                - filters
+            required:
+            - id
+            - key
+            - params
+        required:
+        - dim
+    required:
+    - request
+  SelectionsType:
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            seq:
+              type: integer
+            grouped:
+              type: boolean
+            func:
+              type: string
+  FiltersType:
+    type: object
+    properties:
+      filter:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            gt:
+              type: string
+            lt:
+              type: string
+            eq:
+              type: string
+            neq:
+              type: string
+            in:
+              type: object
+              properties:
+                value:
+                  type: array
+                  items:
+                    type: string
+          required:
+          - name
+        minItems: 1
+    required:
+    - filter
+  HeaderType:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      ResponseStatus:
+        $ref: '#/definitions/ResponseStatusType'
+      BackendError:
+        $ref: '#/definitions/BackendErrorType'
+  DataPortalRes_BodyType:
+    type: object
+    properties:
+      response:
+        type: object
+        properties:
+          fact:
+            type: object
+            properties:
+              id:
+                type: integer
+              item:
+                type: array
+                items:
+                  $ref: '#/definitions/NameValuePair'
+  ResponseStatusType:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+  BackendErrorType:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+  NameValuePair:
+    type: object
+    properties:
+      name:
+        type: string
+      value:
+        type: string
+      item:
+        $ref: '#/definitions/NameValuePairType'
+  NameValuePairType:
+    type: object
+    properties:
+      name:
+        type: string
+      value:
+        type: string
+      item:
+        $ref: '#/definitions/NameValuePair'
+  DataPortalResponse:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/HeaderType'
+      Body:
+        $ref: '#/definitions/DataPortalRes_BodyType'
+paths:
+  /:
+    parameters:
+    - name: sevenhundrednumber
+      in: query
+      required: true
+      type: string
+    get:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success

@@ -1,0 +1,270 @@
+swagger: "2.0"
+info:
+  title: Qiwa_UM_TerminateOrTransferSubscriptionWhenChangeEstablishmentType
+  x-ibm-name: qiwa-um-terminateortransfersubscriptionwhenchangeestablishmenttype
+  version: 1.0.0
+  description: Terminate Or Transfer Subscription When Change Establishment Type
+schemes:
+- https
+basePath: /qiwa/v1
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://gw-apic.qiwa.info/takamol/staging/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: http://icp-proxy.qiwa.info:32599/usermanagement/terminateortransfersubscriptionwhenchangeestablishmenttype
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  TerminateOrTransferSubscriptionWhenChangeEstablishmentTypeRq_MessageType:
+    type: object
+    properties:
+      TerminateOrTransferSubscriptionWhenChangeEstablishmentTypeRq:
+        $ref: '#/definitions/TerminateOrTransferSubscriptionWhenChangeEstablishmentTypeRq_Type'
+  TerminateOrTransferSubscriptionWhenChangeEstablishmentTypeRs_MessageType:
+    type: object
+    properties:
+      TerminateOrTransferSubscriptionWhenChangeEstablishmentTypeRs:
+        $ref: '#/definitions/TerminateOrTransferSubscriptionWhenChangeEstablishmentTypeRs_Type'
+  TerminateOrTransferSubscriptionWhenChangeEstablishmentTypeRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/TerminateOrTransferSubscriptionWhenChangeEstablishmentTypeRq_BodyType'
+  TerminateOrTransferSubscriptionWhenChangeEstablishmentTypeRq_BodyType:
+    type: object
+    properties:
+      OperationFlag:
+        type: integer
+        enum:
+        - 1
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      OldUnifiedNumber:
+        type: integer
+      OldEstablishmentType:
+        type: integer
+      IsLastEstUnderOldUN:
+        type: integer
+        enum:
+        - 0
+        - 1
+      OldUNOwnerIdNo:
+        type: string
+      EstOldManagerIdNo:
+        type: string
+      NewUnifiedNumber:
+        type: integer
+      NewEstablishmentType:
+        type: integer
+      NewUNOwnerIdNo:
+        type: string
+      EstNewManagerIdNo:
+        type: string
+      NewUNIsBrandNew:
+        type: integer
+        enum:
+        - 0
+        - 1
+    required:
+    - OperationFlag
+    - LaborOfficeId
+    - SequenceNumber
+    - OldUnifiedNumber
+    - OldEstablishmentType
+    - IsLastEstUnderOldUN
+    - OldUNOwnerIdNo
+    - EstOldManagerIdNo
+    - NewUnifiedNumber
+    - NewEstablishmentType
+    - NewUNOwnerIdNo
+    - EstNewManagerIdNo
+    - NewUNIsBrandNew
+  TerminateOrTransferSubscriptionWhenChangeEstablishmentTypeRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /usermanagement/terminateortransfersubscriptionwhenchangeestablishmenttype:
+    post:
+      operationId: TerminateOrTransferSubscriptionWhenChangeEstablishmentType
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/TerminateOrTransferSubscriptionWhenChangeEstablishmentTypeRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Terminate Or Transfer Subscription When Change Establishment Type
+      parameters:
+      - name: X-Request-Id
+        in: header
+        description: X-Request-Id returned in the response header
+        required: false
+        type: string
+      - name: X-IBM-Client-Secret
+        in: header
+        description: Client secret issued by security server
+        required: true
+        type: string
+      - name: X-IBM-Client-Id
+        in: header
+        description: Client id issued by security server
+        required: true
+        type: string
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/TerminateOrTransferSubscriptionWhenChangeEstablishmentTypeRq_MessageType'
+        description: TerminateOrTransferSubscriptionWhenChangeEstablishmentTypeRq
+        required: true

@@ -1,0 +1,48 @@
+info:
+  name: 1sadadpayment
+  title: 1SadadPayment
+  version: 1.1.1
+apis:
+  sadad-refundupload1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/sadad-refundupload_1.0.0.yaml
+  sadad-refundcancel1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/sadad-refundcancel_1.0.0.yaml
+  sadad-billcancel1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/sadad-billcancel_1.0.0.yaml
+  sadad-billupload1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/sadad-billupload_1.0.0.yaml
+  sadad-paymentnotification1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/sadad-paymentnotification_1.0.1.yaml
+  payment_disable_retrial1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/payment_disable_retrial_1.0.0.yaml
+  payment_reset_retrial1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/payment_reset_retrial_1.0.0.yaml
+  payment_update_retrial_config1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/payment_update_retrial_config_1.0.0.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      sadad-billcancel1.0.0: {}
+      sadad-billupload1.0.0: {}
+      sadad-refundcancel1.0.0: {}
+      sadad-refundupload1.0.0: {}
+      sadad-paymentnotification1.0.1: {}
+      payment_disable_retrial1.0.0: {}
+      payment_reset_retrial1.0.0: {}
+      payment_update_retrial_config1.0.0: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

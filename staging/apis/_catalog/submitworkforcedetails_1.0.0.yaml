@@ -1,0 +1,251 @@
+swagger: "2.0"
+info:
+  title: SubmitWorkforceDetails
+  x-ibm-name: submitworkforcedetails
+  version: 1.0.0
+  description: This service is used to save establishments' employment requests in
+    Qiwa DB.
+schemes:
+- https
+basePath: /common
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-cmnv-commonvisautilites)/common/submitworkforcedetails
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  SubmitWorkforceDetailsRq_MessageType:
+    type: object
+    properties:
+      SubmitWorkforceDetailsRq:
+        type: string
+  SubmitWorkforceDetailsRs_MessageType:
+    type: object
+    properties:
+      SubmitWorkforceDetailsRs:
+        $ref: '#/definitions/SubmitWorkforceDetailsRs_Type'
+  SubmitWorkforceDetailsRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/SubmitWorkforceDetailsRs_BodyType'
+  SubmitWorkforceDetailsRq_BodyType:
+    type: object
+    properties:
+      EmployeeOccupationsList:
+        type: string
+      JobTitle:
+        type: string
+      JobDescription:
+        type: string
+      NationalitiesList:
+        type: string
+      EmployerEconomicActivity:
+        type: integer
+      NumberOfEmployees:
+        type: integer
+      WorkCity:
+        type: integer
+      IsMale:
+        type: integer
+      IsFemale:
+        type: integer
+      AgeRangeFrom:
+        type: integer
+      AgeRangeTo:
+        type: integer
+      SalaryRangeFrom:
+        type: number
+      SalaryRangeTo:
+        type: number
+      ExperienceYears:
+        type: integer
+      Email:
+        type: string
+      PhoneNumber:
+        type: string
+    required:
+    - EmployeeOccupationsList
+    - JobDescription
+    - NationalitiesList
+    - NumberOfEmployees
+    - WorkCity
+    - IsMale
+    - IsFemale
+    - AgeRangeFrom
+    - AgeRangeTo
+    - SalaryRangeFrom
+    - SalaryRangeTo
+    - ExperienceYears
+    - Email
+    - PhoneNumber
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        type: string
+      UDF:
+        type: string
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        type: string
+      UDF:
+        type: string
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+      Tmstmp_Type:
+        type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+  SubmitWorkforceDetailsRs_BodyType:
+    type: object
+    properties: {}
+paths:
+  /submitworkforcedetails:
+    post:
+      operationId: SubmitWorkforceDetails
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/SubmitWorkforceDetailsRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: SubmitWorkforceDetails
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/SubmitWorkforceDetailsRq_MessageType'
+        description: SubmitWorkforceDetailsRq
+        required: true

@@ -1,0 +1,96 @@
+info:
+  version: 1.0.0
+  title: ' 1MatrixManagement'
+  name: 1matrixmanagement
+apis:
+  updateeconomicactivity1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updateeconomicactivity_1.0.0.yaml
+  geteconomicactivities1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/geteconomicactivities_1.0.0.yaml
+  updatenationality1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updatenationality_1.0.0.yaml
+  addnationalitymm1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/addnationalitymm_1.0.0.yaml
+  getnationalitiesmm1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getnationalitiesmm_1.0.0.yaml
+  qiwa-mm-updatematrix1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-mm-updatematrix_1.0.0.yaml
+  qiwa-update-occupation-group1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-update-occupation-group_1.0.0.yaml
+  qiwa-addoccupation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-addoccupation_1.0.0.yaml
+  qiwa-mm-getmatrix1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-mm-getmatrix_1.0.0.yaml
+  qiwa-mm-getentityvaluesforaservice1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-mm-getentityvaluesforaservice_1.0.0.yaml
+  qiwa-mm-getentitydetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-mm-getentitydetails_1.0.0.yaml
+  qiwa-mm-getallentities1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-mm-getallentities_1.0.0.yaml
+  qiwa-getoccupationgroup1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-getoccupationgroup_1.0.0.yaml
+  qiwa-getoccupation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-getoccupation_1.0.0.yaml
+  qiwa-getchangeshistory1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-getchangeshistory_1.0.0.yaml
+  qiwa-getchangedetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-getchangedetails_1.0.0.yaml
+  qiwa-mm-updateservice1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-mm-updateservice_1.0.0.yaml
+  qiwa-mm-getmatrixhistoricalchangedetailsdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-mm-getmatrixhistoricalchangedetailsdetails_1.0.0.yaml
+  qiwa-mm-getmatrixhistoricalchanges1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-mm-getmatrixhistoricalchanges_1.0.0.yaml
+  qiwa-updateoccupation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-updateoccupation_1.0.0.yaml
+  qiwa-mm-getservicesdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-mm-getservicesdetails_1.0.0.yaml
+  qiwa-mm-updateentityvaluesforaservice1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-mm-updateentityvaluesforaservice_1.0.0.yaml
+  qiwa-addoccupationgroup1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-addoccupationgroup_1.0.0.yaml
+  addeconomicactivity1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/addeconomicactivity_1.0.0.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      qiwa-addoccupation1.0.0: {}
+      qiwa-addoccupationgroup1.0.0: {}
+      qiwa-getchangedetails1.0.0: {}
+      qiwa-getchangeshistory1.0.0: {}
+      qiwa-getoccupation1.0.0: {}
+      qiwa-getoccupationgroup1.0.0: {}
+      qiwa-mm-getallentities1.0.0: {}
+      qiwa-mm-getentitydetails1.0.0: {}
+      qiwa-mm-getentityvaluesforaservice1.0.0: {}
+      qiwa-mm-getmatrix1.0.0: {}
+      qiwa-mm-getmatrixhistoricalchangedetailsdetails1.0.0: {}
+      qiwa-mm-getmatrixhistoricalchanges1.0.0: {}
+      qiwa-mm-getservicesdetails1.0.0: {}
+      qiwa-mm-updateentityvaluesforaservice1.0.0: {}
+      qiwa-mm-updatematrix1.0.0: {}
+      qiwa-mm-updateservice1.0.0: {}
+      qiwa-update-occupation-group1.0.0: {}
+      qiwa-updateoccupation1.0.0: {}
+      getnationalitiesmm1.0.0: {}
+      addnationalitymm1.0.0: {}
+      updatenationality1.0.0: {}
+      geteconomicactivities1.0.0: {}
+      updateeconomicactivity1.0.0: {}
+      addeconomicactivity1.0.0: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

@@ -1,0 +1,26 @@
+info:
+  title: KnowledgeCenter
+  name: KnowledgeCenter
+  version: 1.0.0
+apis:
+  wdds-certificate-validation-api:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/wdds-certificate-validation-api_1.0.0_1.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      wdds-certificate-validation-api: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

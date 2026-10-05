@@ -1,0 +1,241 @@
+swagger: "2.0"
+info:
+  title: GetSaudizationPercentage
+  x-ibm-name: getsaudizationpercentage
+  version: 1.0.0
+  description: This service is used to get the  configuration for saudization based
+    on Color, Activity, Size.
+schemes:
+- https
+basePath: /common
+produces:
+- application/json
+consumes:
+- application/json
+security:
+- clientID: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+  clientID:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-utl-commonapps3)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  GetSaudizationPercentageRq_MessageType:
+    type: object
+    properties:
+      GetSaudizationPercentageRq:
+        $ref: '#/definitions/GetSaudizationPercentageRq_Type'
+  GetSaudizationPercentageRs_MessageType:
+    type: object
+    properties:
+      GetSaudizationPercentageRs:
+        $ref: '#/definitions/GetSaudizationPercentageRs_Type'
+  GetSaudizationPercentageRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetSaudizationPercentageRq_BodyType'
+  GetSaudizationPercentageRq_BodyType:
+    type: object
+    properties:
+      EstablishmentColor:
+        type: integer
+        default: "100"
+      EstablishmentActivity:
+        type: integer
+        default: "10"
+      EstablishmentSize:
+        type: integer
+        default: "1"
+    required:
+    - EstablishmentColor
+    - EstablishmentActivity
+    - EstablishmentSize
+  GetSaudizationPercentageRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetSaudizationPercentageRs_BodyType'
+  GetSaudizationPercentageRs_BodyType:
+    type: object
+    properties:
+      SaudizationPercentageList:
+        $ref: '#/definitions/SaudizationPercentageList_Type'
+  SaudizationPercentageList_Type:
+    type: object
+    properties:
+      SaudizationPercentageItem:
+        $ref: '#/definitions/SaudizationPercentageItem_Type'
+  SaudizationPercentageItem_Type:
+    type: array
+    items:
+      properties:
+        EstablishmentColor:
+          type: integer
+          default: "100"
+        EstablishmentActivity:
+          type: integer
+          default: "10"
+        EstablishmentSize:
+          type: integer
+          default: "1"
+        EvaluationFrom:
+          type: integer
+          default: "100"
+        EvaluationTo:
+          type: integer
+          default: "10"
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "200966842998"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: GSP00001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "200966842998"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: GSP00001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+        default: "234"
+      IDNumber:
+        type: integer
+        default: "5345"
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+paths:
+  /getsaudizationpercentage:
+    post:
+      operationId: GetSaudizationPercentage
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetSaudizationPercentageRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Get Saudization Percentage
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetSaudizationPercentageRq_MessageType'
+        description: GetSaudizationPercentageRq
+        required: true

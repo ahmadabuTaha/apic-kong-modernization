@@ -1,0 +1,361 @@
+swagger: "2.0"
+info:
+  title: GetForeignerInformationNIC
+  x-ibm-name: getforeignerinformationnic
+  version: 1.0.0
+  description: This service is used to get the information for foreigners based on
+    the border number.
+schemes:
+- https
+basePath: /common
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-nic-nicget)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  GetForeignerInformationNICRq_MessageType:
+    type: object
+    properties:
+      GetForeignerInformationNICRq:
+        $ref: '#/definitions/GetForeignerInformationNICRq_Type'
+  GetForeignerInformationNICRs_MessageType:
+    type: object
+    properties:
+      GetForeignerInformationNICRs:
+        $ref: '#/definitions/GetForeignerInformationNICRs_Type'
+  GetForeignerInformationNICRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetForeignerInformationNICRq_BodyType'
+  GetForeignerInformationNICRq_BodyType:
+    type: object
+    properties:
+      IdOrBorderNo:
+        type: string
+        default: "234"
+    required:
+    - IdOrBorderNo
+  GetForeignerInformationNICRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetForeignerInformationNICRs_BodyType'
+  GetForeignerInformationNICRs_BodyType:
+    type: object
+    properties:
+      BirthDate:
+        $ref: '#/definitions/GHDate_Type'
+      Gender:
+        type: string
+      MartialStatus:
+        $ref: '#/definitions/CodeandName_Type'
+      Name:
+        $ref: '#/definitions/Name_Type'
+      TranslatedName:
+        $ref: '#/definitions/Name_Type'
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      'Nationality ':
+        $ref: '#/definitions/CodeandName_Type'
+      'HRSDNationality ':
+        $ref: '#/definitions/CodeName_Type'
+      Occupation:
+        $ref: '#/definitions/CodeandName_Type'
+      'HRSDOccupation ':
+        $ref: '#/definitions/CodeName_Type'
+      Relationship:
+        $ref: '#/definitions/CodeandName_Type'
+      Religion:
+        $ref: '#/definitions/CodeandName_Type'
+      'HRSDReligion ':
+        $ref: '#/definitions/CodeName_Type'
+      Residency:
+        $ref: '#/definitions/Residency_Type'
+      Sponsor:
+        $ref: '#/definitions/Sponsor_Type'
+      Status:
+        $ref: '#/definitions/Status_type'
+      Travel:
+        $ref: '#/definitions/Travel_Type'
+      Visa:
+        $ref: '#/definitions/Visa_Type'
+  Name_Type:
+    type: object
+    properties:
+      FirstName:
+        type: string
+      FullName:
+        type: string
+      LastName:
+        type: string
+      SecondName:
+        type: string
+      ThirdName:
+        type: string
+  Residency_Type:
+    type: object
+    properties:
+      ExpiryDate:
+        $ref: '#/definitions/GHDate_Type'
+      IdNo:
+        type: integer
+      IdType:
+        type: string
+      IssueDate:
+        $ref: '#/definitions/GHDate_Type'
+      IssuePlace:
+        type: string
+  Sponsor_Type:
+    type: object
+    properties:
+      IdNo:
+        type: integer
+      Name:
+        type: string
+      Occupation:
+        type: string
+      Status:
+        type: string
+      Type:
+        $ref: '#/definitions/CodeandName_Type'
+  Status_type:
+    type: object
+    properties:
+      FingerPrintStatus:
+        type: boolean
+      PersonStatus:
+        $ref: '#/definitions/CodeandName_Type'
+  Travel_Type:
+    type: object
+    properties:
+      EntryDate:
+        $ref: '#/definitions/GHDate_Type'
+      LastEntryDate:
+        $ref: '#/definitions/GHDate_Type'
+      LastExitDate:
+        $ref: '#/definitions/GHDate_Type'
+      PassportExpiryDate:
+        $ref: '#/definitions/GHDate_Type'
+      PassportNumber:
+        type: string
+      TravelStatus:
+        type: string
+  Visa_Type:
+    type: object
+    properties:
+      FinalExitVisaIssued:
+        type: boolean
+      VisaExpiryDate:
+        $ref: '#/definitions/GHDate_Type'
+      VisaType:
+        type: string
+  GHDate_Type:
+    type: object
+    properties:
+      GregorianDate:
+        type: string
+      HijriDate:
+        type: string
+  CodeandName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      Name:
+        type: string
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "200966842998"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: NGFI0001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "200966842998"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: NGFI0001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+        default: "343243"
+      IDNumber:
+        type: integer
+        default: "2344"
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /getforeignerinformationnic:
+    post:
+      operationId: GetForeignerInformationNIC
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetForeignerInformationNICRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Get Foreigner Information NIC
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetForeignerInformationNICRq_MessageType'
+        description: ' GetForeignerInformationNICRq'
+        required: true

@@ -1,0 +1,294 @@
+swagger: "2.0"
+info:
+  title: Qiwa_SC_SubmitRequestByLaborer
+  x-ibm-name: submitscrequestbylaborer
+  version: 1.0.1
+  description: This service is used to request a salary certificate from the establishment
+    by laborer.
+schemes:
+- https
+basePath: /sc
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://gw-apic.qiwa.info/takamol/staging/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-salc-salary-certificate)/sc/subreqbylab
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        stop-on-error:
+        - ConnectionError
+        - OperationError
+        - SOAPError
+    - gatewayscript:
+        version: 2.0.0
+        title: Set Headers
+        source: "var apim = require('apim');\r\nvar Response = apim.getvariable('message.body');\r\nvar
+          statusCode = Response.SubmitSCRequestByLaborerRs.Header.ResponseStatus.Code
+          ;\r\n\r\n\r\nif(statusCode == 'ESBSCHEMA'){\r\n    var code = 400\r\n    apim.setvariable('message.status.code',code,'set');\r\n}\r\nelse
+          if(statusCode == '99999999'){\r\n    var code = 500\r\n    apim.setvariable('message.status.code',code,'set');\r\n}\r\nelse
+          if(statusCode == '00000000'){\r\n    var code = 200\r\n    apim.setvariable('message.status.code',code,'set');\r\n}else{\r\n
+          \     var code = 409\r\n    apim.setvariable('message.status.code',code,'set');\r\n}\r\n"
+    catch:
+    - default:
+      - set-variable:
+          version: 2.0.0
+          title: set-variable
+          actions:
+          - set: message.status.code
+            value: "500"
+            type: string
+          - set: message.headers.content-type
+            value: application/json
+            type: string
+          - set: message.body
+            value: '{"errorCode": "E00500", "errorMessage": "Internal Server Error"}'
+            type: string
+    finally: []
+  properties:
+    target-url:
+      value: $(ace-salc-salary-certificate)/sc/subreqbylab
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    success-content: payload
+    error-content: payload
+    enabled: true
+  application-authentication:
+    certificate: false
+  buffering: true
+  catalogs: {}
+definitions:
+  SubmitSCRequestByLaborerRq_MessageType:
+    type: object
+    properties:
+      SubmitSCRequestByLaborerRq:
+        $ref: '#/definitions/SubmitSCRequestByLaborerRq_Type'
+  SubmitSCRequestByLaborerRs_MessageType:
+    type: object
+    properties:
+      SubmitSCRequestByLaborerRs:
+        $ref: '#/definitions/SubmitSCRequestByLaborerRs_Type'
+  SubmitSCRequestByLaborerRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/SubmitSCRequestByLaborerRq_BodyType'
+  SubmitSCRequestByLaborerRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+        default: "12"
+      SequenceNumber:
+        type: integer
+        default: "1442"
+      AddressedToId:
+        type: integer
+        default: "1"
+      BankId:
+        type: integer
+        default: "1234534"
+      EmbassyId:
+        type: integer
+        default: "55512"
+      EntityName:
+        type: string
+        default: test
+      CertificateTypeId:
+        type: integer
+        default: "12234"
+      LanguageId:
+        type: integer
+        default: "13"
+  SubmitSCRequestByLaborerRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/SubmitSCRequestByLaborerRs_BodyType'
+  SubmitSCRequestByLaborerRs_BodyType:
+    type: object
+    properties:
+      RequestId:
+        type: integer
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: SSCRBL01
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: SSCRBL01
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+        default: "465740"
+      IDNumber:
+        type: integer
+        default: "1024812248"
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /subreqbylab:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/SubmitSCRequestByLaborerRs_MessageType'
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/SubmitSCRequestByLaborerRq_MessageType'

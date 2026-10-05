@@ -1,0 +1,309 @@
+swagger: "2.0"
+info:
+  title: GetEstUnifiedPunishment
+  x-ibm-name: getestunifiedpunishment
+  version: 1.0.0
+  description: Integration with GetEstUnifiedPunishment Service
+schemes:
+- https
+basePath: /common
+security:
+- Oauth2.0:
+  - IntegrationScope
+  clientId: []
+securityDefinitions:
+  Oauth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-utl-commonapps3)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  GetEstUnifiedPunishmentRq_MessageType:
+    type: object
+    properties:
+      GetEstUnifiedPunishmentRq:
+        $ref: '#/definitions/GetEstUnifiedPunishmentRq_Type'
+  GetEstUnifiedPunishmentRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetEstUnifiedPunishmentRq_BodyType'
+  GetEstUnifiedPunishmentRq_BodyType:
+    type: object
+    properties:
+      EstablishmentPunishmentId:
+        type: integer
+        description: EstablishmentPunishmentId
+      LaborOfficeId:
+        type: integer
+        description: LaborOfficeId
+      SequenceNumber:
+        type: integer
+        description: SequenceNumber
+      UnifiedNumber:
+        type: integer
+        description: UnifiedNumber
+      EntityId:
+        type: integer
+        description: EntityId
+      StatusId:
+        type: integer
+        description: StatusId
+      PunishmentSourceId:
+        type: integer
+        description: PunishmentSourceId
+      ServiceIds:
+        type: string
+        description: ServiceIds
+      PunishmentReasonIds:
+        type: string
+        description: PunishmentReasonIds
+      PageSize:
+        type: integer
+        description: PageSize
+      PageIndex:
+        type: integer
+        description: PageSize
+    required:
+    - PageSize
+    - PageIndex
+  GetEstUnifiedPunishmentRs_MessageType:
+    type: object
+    properties:
+      GetEstUnifiedPunishmentRs:
+        $ref: '#/definitions/GetEstUnifiedPunishmentRs_Type'
+  GetEstUnifiedPunishmentRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetEstUnifiedPunishmentRs_BodyType'
+  GetEstUnifiedPunishmentRs_BodyType:
+    type: object
+    properties:
+      IsEstablishmentPunished:
+        type: boolean
+        description: IsEstablishmentPunished
+      IsUnifiedPunished:
+        type: boolean
+        description: IsUnifiedPunished
+      PunishmentDetailsList:
+        $ref: '#/definitions/PunishmentDetailsList_Type'
+    required:
+    - IsEstablishmentPunished
+    - IsUnifiedPunished
+  PunishmentDetailsList_Type:
+    type: object
+    properties:
+      Punishment:
+        $ref: '#/definitions/Punishment_Type'
+  Punishment_Type:
+    type: object
+    properties:
+      EstablishmentPunishmentId:
+        type: integer
+        description: EstablishmentPunishmentId
+      LaborOfficeId:
+        type: integer
+        description: LaborOfficeId
+      SequenceNumber:
+        type: integer
+        description: SequenceNumber
+      UnifiedNumber:
+        type: integer
+        description: UnifiedNumber
+      EntityId:
+        type: integer
+        description: EntityId
+      StatusId:
+        type: integer
+        description: StatusId
+      NoPunishmentsYears:
+        type: integer
+        description: NoPunishmentsYears
+      PunishmentSourceId:
+        type: integer
+        description: PunishmentSourceId
+      ServiceId:
+        type: integer
+        description: ServiceId
+      StartDate:
+        type: integer
+        description: StartDate
+      ExpiredDate:
+        type: string
+        description: ExpiredDate
+      PunishmentEndDate:
+        type: string
+        description: PunishmentEndDate
+      PunishmentReason:
+        type: string
+        description: PunishmentReason
+      PunishmentReasonId:
+        type: integer
+        description: PunishmentReasonId
+      NitaqColorId:
+        type: integer
+        description: NitaqColorId
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /getestunifiedpunishment:
+    post:
+      operationId: GetEstUnifiedPunishment
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetEstUnifiedPunishmentRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: GetEstUnifiedPunishment
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetEstUnifiedPunishmentRq_MessageType'
+        description: GetEstUnifiedPunishmentRq
+        required: true

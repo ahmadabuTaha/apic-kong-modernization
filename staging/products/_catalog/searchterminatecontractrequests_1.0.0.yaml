@@ -1,0 +1,427 @@
+swagger: "2.0"
+info:
+  title: SearchTerminateContractRequests
+  x-ibm-name: searchterminatecontractrequests
+  version: 1.0.0
+  description: This service is used to search Terminate Contract Requests depending
+    on several details to get specific requests with their details.
+schemes:
+- https
+basePath: /tc
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-tc-tcutility)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  SearchTerminateContractRequestsRq_MessageType:
+    type: object
+    properties:
+      SearchTerminateContractRequestsRq:
+        $ref: '#/definitions/SearchTerminateContractRequestsRq_Type'
+  SearchTerminateContractRequestsRs_MessageType:
+    type: object
+    properties:
+      SearchTerminateContractRequestsRs:
+        $ref: '#/definitions/SearchTerminateContractRequestsRs_Type'
+  SearchTerminateContractRequestsRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/SearchTerminateContractRequestsRq_BodyType'
+  SearchTerminateContractRequestsRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      TCRequestId:
+        type: integer
+      RequesterIdNo:
+        type: integer
+      OperatorIdNo:
+        type: integer
+      LaborerDetails:
+        $ref: '#/definitions/LaborerDetails_Type'
+      RequesterTypeId:
+        type: integer
+      StatusIds:
+        type: integer
+      RDUpdateRequestId:
+        type: integer
+      CancelationRequestId:
+        type: integer
+      TCReasonId:
+        type: integer
+      CreationDate:
+        type: string
+      ReleaseDate:
+        type: string
+      RemainingDays:
+        type: integer
+      PageSize:
+        type: integer
+      PageIndex:
+        type: integer
+    required:
+    - CreationDate
+    - PageSize
+    - PageIndex
+  LaborerDetails_Type:
+    type: object
+    properties:
+      LaborerIdNo:
+        type: integer
+      LaborerName:
+        type: string
+  SearchTerminateContractRequestsRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/SearchTerminateContractRequestsRs_BodyType'
+  SearchTerminateContractRequestsRs_BodyType:
+    type: object
+    properties:
+      TotalRecordsCount:
+        type: string
+      TCRequests:
+        $ref: '#/definitions/TCRequests_Type'
+    required:
+    - TotalRecordsCount
+    - TCRequests
+  TCRequests_Type:
+    type: object
+    properties:
+      EstablishmentDetails:
+        $ref: '#/definitions/EstablishmentDetails_Type'
+      RequesterDetails:
+        $ref: '#/definitions/RequesterDetails_Type'
+      LaborerDetails:
+        $ref: '#/definitions/LaborerDetails_TypeRs'
+      TCRequestId:
+        type: integer
+      TCRequestStatus:
+        $ref: '#/definitions/Status_Type'
+      CancelationRequestId:
+        type: integer
+      CancelationRequestStatus:
+        $ref: '#/definitions/Status_Type'
+      CancelationRequestCreationDate:
+        type: string
+      RDUpdateRequestId:
+        type: integer
+      UpdateRDRequestStatus:
+        $ref: '#/definitions/Status_Type'
+      RDUpdateRequestCreationDate:
+        type: string
+      RDRejectionReason:
+        type: string
+      TCCancelationRejectionReason:
+        type: string
+      LaborerRejectionReason:
+        type: string
+      EmployerRejectionReason:
+        type: string
+      RDCount:
+        type: integer
+      RemainingDays:
+        type: integer
+      TCReason:
+        $ref: '#/definitions/CodeName_Type'
+      ReleaseDate:
+        type: string
+      ReleaseDateType:
+        $ref: '#/definitions/CodeName_Type'
+      ReleaseDateReqByLaborer:
+        type: string
+      RDRequestTypeId:
+        $ref: '#/definitions/CodeName_Type'
+      RDUpdateDate:
+        type: string
+      RDCurrentEmployerIdNo:
+        type: integer
+      ContractDetails:
+        $ref: '#/definitions/ContractDetails_Type'
+      CreationDate:
+        type: string
+      PostponingDays:
+        type: integer
+      PostponingJustification:
+        type: string
+      TerminationSubmissionReason:
+        type: string
+    required:
+    - EstablishmentDetails
+    - RequesterDetails
+    - LaborerDetails
+    - TCRequestId
+    - TCRequestStatus
+    - RemainingDays
+    - TCReason
+    - ReleaseDate
+    - ReleaseDateType
+    - ContractDetails
+    - CreationDate
+    - RDRejectionReason
+    - TCCancelationRejectionReason
+    - LaborerRejectionReason
+    - EmployerRejectionReason
+    - RDCount
+    - PostponingDays
+    - PostponingJustification
+    - TerminationSubmissionReason
+  EstablishmentDetails_Type:
+    type: object
+    properties:
+      RequesterIdNo:
+        type: integer
+      RequesterType:
+        $ref: '#/definitions/CodeName_Type'
+    required:
+    - RequesterIdNo
+    - RequesterType
+  RequesterDetails_Type:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      EstablishmentName:
+        type: string
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+    - EstablishmentName
+  LaborerDetails_TypeRs:
+    type: object
+    properties:
+      LaborerIdNo:
+        type: integer
+      LaborerName:
+        type: string
+      LaborerJob:
+        $ref: '#/definitions/CodeName_Type'
+    required:
+    - LaborerIdNo
+    - LaborerName
+    - LaborerJob
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+    required:
+    - Code
+    - NameAr
+    - NameEn
+  Status_Type:
+    type: object
+    properties:
+      StatusId:
+        type: integer
+      StatusEn:
+        type: string
+      StatusAr:
+        type: string
+    required:
+    - StatusId
+    - StatusEn
+    - StatusAr
+  ContractDetails_Type:
+    type: object
+    properties:
+      ContractId:
+        type: integer
+      ContractStartDate:
+        type: string
+      ContractExpiryDate:
+        type: string
+      NoticePeriod:
+        type: integer
+      GOSITerminated:
+        type: integer
+    required:
+    - ContractId
+    - ContractStartDate
+    - ContractExpiryDate
+    - GOSITerminated
+    - NoticePeriod
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /searchtermconreq:
+    post:
+      operationId: SearchTerminateContractRequests
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/SearchTerminateContractRequestsRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Search Terminate Contract Requests
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/SearchTerminateContractRequestsRq_MessageType'
+        description: SearchTerminateContractRequestsRq
+        required: true

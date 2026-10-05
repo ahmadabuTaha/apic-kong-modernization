@@ -1,0 +1,30 @@
+info:
+  version: 1.0.0
+  title: 'External_MOJ_Product '
+  name: external-moj-product
+apis:
+  moj-getcasedetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/moj-getcasedetails_1.0.0.yaml
+  moj-getlaborcaseappointmentinfo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/moj-getlaborcaseappointmentinfo_1.0.0.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      moj-getcasedetails1.0.0: {}
+      moj-getlaborcaseappointmentinfo1.0.0: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

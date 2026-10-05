@@ -1,0 +1,165 @@
+swagger: "2.0"
+info:
+  title: ComplianceScoreChanges
+  x-ibm-name: compliance-score-changes
+  version: 1.0.0
+  description: This API retrieves the overall Compliance Score changes
+schemes:
+- https
+basePath: /ComplianceScore
+security:
+- OAuth2.0: []
+- clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  properties:
+    target-url:
+      value: http://prow-primarycompliancescore-http-ace.apps.stg.qiwa-nonprod.local/external/ComplianceScoreChange
+      description: The URL of the target service
+      encoded: false
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-prow-primarycompliancescore)/external/ComplianceScoreChange
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: allowlist
+          values: []
+        header-control:
+          type: blocklist
+          values: []
+        inject-proxy-headers: true
+        persistent-connection: true
+    finally: []
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  buffering: true
+  application-authentication:
+    certificate: false
+definitions:
+  ComplianceScoreChangeRequest:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/Header'
+      Body:
+        $ref: '#/definitions/ComplianceScoreChangeRq_Body'
+  ComplianceScoreChangeResponse:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/Header'
+      Body:
+        $ref: '#/definitions/ComplianceScoreChangeRs_Body'
+  Header:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      ServiceCode:
+        type: string
+        default: NPC00001
+      ResponseStatus:
+        $ref: '#/definitions/ResponseStatus'
+      BackendError:
+        $ref: '#/definitions/BackendError'
+  ResponseStatus:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+  BackendError:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+  ComplianceScoreChangeRq_Body:
+    type: object
+    required:
+    - LaborerId
+    - LabourOfficeId
+    - SequenceNumber
+    properties:
+      LaborerId:
+        type: number
+      LabourOfficeId:
+        type: number
+      SequenceNumber:
+        type: number
+  ComplianceScoreChangeRs_Body:
+    type: object
+    properties:
+      OverallCompScoreChange:
+        type: number
+paths:
+  /ComplianceScoreChange:
+    post:
+      tags:
+      - Compliance Score Change
+      description: Used to get Nitaq Compliance Score overall change
+      operationId: getComplianceScoreChange
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/ComplianceScoreChangeRequest'
+        description: ComplianceScoreChangeRq
+        required: true
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/ComplianceScoreChangeResponse'
+host: $(catalog.host)

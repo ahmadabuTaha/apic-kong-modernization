@@ -1,0 +1,290 @@
+swagger: "2.0"
+info:
+  title: CreateUpdateSeasEndorseDraft
+  x-ibm-name: createupdateseasendorsedraft
+  version: 1.0.0
+  description: This Service is Used to Creat/Update Seasonal Endorsement Draft.
+schemes:
+- https
+basePath: /visa/seasonalvisa
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-sesv-seasutility)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        persistent-connection: true
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  CreateUpdateSeasEndorseDraftRq_MessageType:
+    type: object
+    properties:
+      CreateUpdateSeasEndorseDraftRq:
+        $ref: '#/definitions/CreateUpdateSeasEndorseDraftRq_Type'
+  CreateUpdateSeasEndorseDraftRs_MessageType:
+    type: object
+    properties:
+      CreateUpdateSeasEndorseDraftRs:
+        $ref: '#/definitions/CreateUpdateSeasEndorseDraftRs_Type'
+  CreateUpdateSeasEndorseDraftRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/CreateUpdateSeasEndorseDraftRq_BodyType'
+  CreateUpdateSeasEndorseDraftRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+        default: "2"
+      GovernmentalSectorId:
+        type: integer
+        default: "25"
+      SequenceNumber:
+        type: integer
+        default: "12"
+      EstablishmentId:
+        type: integer
+        default: "15100"
+      EstablishmentLocation:
+        $ref: '#/definitions/EstablishmentLocation_Type'
+      EndorsementDetalisList:
+        $ref: '#/definitions/EndorsementDetailsList_Type'
+  EndorsementDetailsList_Type:
+    type: object
+    properties:
+      EndorsementDetailsItem:
+        type: array
+        items:
+          $ref: '#/definitions/EndorsementDetailsItem_Type'
+  EndorsementDetailsItem_Type:
+    type: object
+    properties:
+      Nationality:
+        type: integer
+        default: "4"
+      Occupation:
+        type: integer
+        default: "1"
+      TotalVisaNo:
+        type: integer
+        default: "3"
+  EstablishmentLocation_Type:
+    type: object
+    properties:
+      Longitude:
+        type: string
+        default: "34"
+      Latitude:
+        type: string
+        default: "25"
+      City:
+        type: string
+        default: test
+      Area:
+        type: string
+        default: Olaya
+      District:
+        type: string
+        default: Worood
+      Street:
+        type: string
+        default: doow
+      BulidingNo:
+        type: string
+        default: test2
+  CreateUpdateSeasEndorseDraftRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/CreateUpdateSeasEndorseDraftRs_BodyType'
+  CreateUpdateSeasEndorseDraftRs_BodyType:
+    type: object
+    properties:
+      DraftId:
+        type: integer
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: CUSED001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: CUSED001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+        default: "465740"
+      IDNumber:
+        type: integer
+        default: "1024812248"
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /crupseasenddraft:
+    post:
+      operationId: CreateUpdateSeasEndorseDraft
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/CreateUpdateSeasEndorseDraftRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Update Refunded
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/CreateUpdateSeasEndorseDraftRq_MessageType'
+        description: CreateUpdateSeasEndorseDraftRq
+        required: true

@@ -1,0 +1,621 @@
+swagger: "2.0"
+info:
+  title: Qiwa_SC_SearchRequests
+  x-ibm-name: searchscrequests
+  version: 1.0.2
+  description: This service is used to get SC requests details belongs to laborer
+    or establishment or list of SC requests.
+schemes:
+- https
+basePath: /sc
+security:
+- ClientSecret: []
+  OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  ClientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientIdHeader:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://gw-apic.qiwa.info/takamol/staging/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-salc-salary-certificate)/sc/searchscreq
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        stop-on-error:
+        - ConnectionError
+        - OperationError
+        - SOAPError
+        persistent-connection: true
+    - gatewayscript:
+        version: 2.0.0
+        title: Set Header
+        source: "var apim = require('apim');\r\nvar Response = apim.getvariable('message.body');\r\nvar
+          statusCode = Response.SearchSCRequestsRs.Header.ResponseStatus.Code ;\r\n\r\n\r\nif(statusCode
+          == 'ESBSCHEMA' || statusCode == 'E0000004' || statusCode == 'E0001203' ||
+          statusCode == 'E0001202' \r\n|| statusCode == 'E0001201'  || statusCode
+          == 'E0001200' ){\r\n    var code = 400\r\n    apim.setvariable('message.status.code',code,'set');\r\n}\r\nelse
+          if(statusCode == 'E0000034' || statusCode == 'E0000046' || statusCode ==
+          'E0000047' || statusCode == 'E0000048' ){\r\n    var code = 401\r\n    apim.setvariable('message.status.code',code,'set');\r\n}\r\nelse
+          if(statusCode == '99999999'){\r\n    var code = 500\r\n    apim.setvariable('message.status.code',code,'set');\r\n}\r\nelse
+          if(statusCode == '00000000'){\r\n    var code = 200\r\n    apim.setvariable('message.status.code',code,'set');\r\n}else{\r\n
+          \     var code = 409\r\n    apim.setvariable('message.status.code',code,'set');\r\n}"
+    catch:
+    - default:
+      - set-variable:
+          version: 2.0.0
+          title: set-variable
+          actions:
+          - set: message.headers.status.code
+            value: "500"
+            type: string
+          - set: message.headers.content-type
+            value: application/json
+            type: string
+          - set: message.bofy
+            value: '{"errorCode": "E00500", "errorMessage": "Internal Server Error"}'
+            type: string
+    finally: []
+  properties:
+    target-url:
+      value: $(ace-salc-salary-certificate)/sc/searchscreq
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    success-content: payload
+    error-content: payload
+    enabled: true
+  application-authentication:
+    certificate: false
+  buffering: true
+  catalogs: {}
+definitions:
+  SearchSCRequestsRq_MessageType:
+    type: object
+    properties:
+      SearchSCRequestsRq:
+        $ref: '#/definitions/SearchSCRequestsRq_Type'
+  SearchSCRequestsRs_MessageType:
+    type: object
+    properties:
+      SearchSCRequestsRs:
+        $ref: '#/definitions/SearchSCRequestsRs_Type'
+  SearchSCRequestsRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/SearchSCRequestsRq_BodyType'
+  SearchSCRequestsRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      EstablishmentId:
+        type: integer
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+      LaborerIdNo:
+        type: integer
+        default: "16"
+      StatusId:
+        type: integer
+        default: "176"
+      RequestId:
+        type: integer
+        default: "1003"
+      CertificateId:
+        type: string
+        default: "17"
+      LaborerName:
+        type: string
+        default: test
+      RequestDateFrom:
+        type: string
+        default: "1"
+      RequestDateTo:
+        type: string
+        default: "645"
+      StartDateFrom:
+        type: string
+        default: "67"
+      StartDateTo:
+        type: string
+        default: "1"
+      CertificateStatusId:
+        type: integer
+        default: "18"
+      CertificateTypeId:
+        type: integer
+        default: "1"
+      SortBy:
+        type: integer
+      PageSize:
+        type: integer
+        default: "1"
+      PageIndex:
+        type: integer
+        default: "10"
+    required:
+    - PageSize
+    - PageIndex
+  SearchSCRequestsRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/SearchSCRequestsRs_BodyType'
+  SearchSCRequestsRs_BodyType:
+    type: object
+    properties:
+      RequestDetailsList:
+        $ref: '#/definitions/RequestDetailsList_Type'
+      PageSize:
+        type: integer
+      PageIndex:
+        type: integer
+      TotalRecordsCount:
+        type: integer
+    required:
+    - RequestDetailsList
+    - TotalRecordsCount
+  RequestDetailsList_Type:
+    type: object
+    properties:
+      RequestDetails:
+        type: array
+        items:
+          $ref: '#/definitions/RequestDetails_Type'
+  RequestDetails_Type:
+    type: object
+    properties:
+      RequestId:
+        type: integer
+      CertificateId:
+        type: string
+      EstablishmentName:
+        type: string
+      JobTitle:
+        $ref: '#/definitions/JobTitle_Type'
+      Status:
+        $ref: '#/definitions/Status_Type'
+      SCCreationDate:
+        type: string
+      RequestCreationDate:
+        type: string
+      SCExpiryDate:
+        type: string
+      CertificateType:
+        $ref: '#/definitions/CertificateType_Type'
+      AddressedTo:
+        $ref: '#/definitions/AddressedTo_Type'
+      CertificateStatus:
+        $ref: '#/definitions/CertificateStatus_Type'
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      LaborerIdNo:
+        type: integer
+      EntityName:
+        type: string
+      Language:
+        $ref: '#/definitions/Language_Type'
+      LaborerName:
+        type: string
+      ServiceStartDate:
+        type: string
+      Nationality:
+        $ref: '#/definitions/Nationality_Type'
+      Bank:
+        $ref: '#/definitions/Bank_Type'
+      Embassy:
+        $ref: '#/definitions/Embassy_Type'
+      Job:
+        $ref: '#/definitions/Job_Type'
+      TotalSalary:
+        type: number
+      MainSalary:
+        type: number
+      Allowances:
+        $ref: '#/definitions/Allowances_Type'
+      ContractType:
+        $ref: '#/definitions/CodeName_Type'
+      ContractDuration:
+        $ref: '#/definitions/CodeName_Type'
+      ContractExpiryDate:
+        $ref: '#/definitions/HGDate_Type'
+      ContractStartDate:
+        $ref: '#/definitions/HGDate_Type'
+      ContractRenewalStatus:
+        $ref: '#/definitions/CodeName_Type'
+      ContractStatus:
+        $ref: '#/definitions/CodeName_Type'
+      ContractId:
+        type: integer
+      ExpiryReasonEn:
+        type: string
+      ExpiryReasonAr:
+        type: string
+      RejectionReason:
+        type: string
+      HasContract:
+        type: integer
+      SalaryFrequency:
+        $ref: '#/definitions/CodeName_Type'
+      SalaryTypeId:
+        type: integer
+      AdditionalAllowancesList:
+        $ref: '#/definitions/AdditionalAllowancesList_Type'
+    required:
+    - RequestCreationDate
+    - HasContract
+  JobTitle_Type:
+    type: object
+    properties:
+      JobTitleAr:
+        type: string
+      JobTitleEng:
+        type: string
+    required:
+    - JobTitleAr
+    - JobTitleEng
+  Status_Type:
+    type: object
+    properties:
+      StatusId:
+        type: integer
+      StatusAr:
+        type: string
+      StatusEng:
+        type: string
+    required:
+    - StatusId
+    - StatusAr
+    - StatusEng
+  CertificateType_Type:
+    type: object
+    properties:
+      CertificateTypeId:
+        type: integer
+      CertificateTypeAr:
+        type: string
+      CertificateTypeEn:
+        type: string
+    required:
+    - CertificateTypeId
+    - CertificateTypeAr
+    - CertificateTypeEn
+  CertificateStatus_Type:
+    type: object
+    properties:
+      CertificateStatusId:
+        type: integer
+      CertificateStatusAr:
+        type: string
+      CertificateStatusEn:
+        type: string
+    required:
+    - CertificateStatusId
+    - CertificateStatusAr
+    - CertificateStatusEn
+  AddressedTo_Type:
+    type: object
+    properties:
+      AddressedToId:
+        type: integer
+      AddressedToAr:
+        type: string
+      AddressedToEn:
+        type: string
+    required:
+    - AddressedToId
+    - AddressedToAr
+    - AddressedToEn
+  Language_Type:
+    type: object
+    properties:
+      LanguageId:
+        type: integer
+      LanguageAr:
+        type: string
+      LanguageEn:
+        type: string
+    required:
+    - LanguageId
+    - LanguageAr
+    - LanguageEn
+  Nationality_Type:
+    type: object
+    properties:
+      NationalityId:
+        type: integer
+      NationalityAr:
+        type: string
+      NationalityEn:
+        type: string
+    required:
+    - NationalityId
+    - NationalityAr
+    - NationalityEn
+  Bank_Type:
+    type: object
+    properties:
+      BankId:
+        type: integer
+      BankAr:
+        type: string
+      BankEn:
+        type: string
+    required:
+    - BankId
+    - BankAr
+    - BankEn
+  Embassy_Type:
+    type: object
+    properties:
+      EmbassyId:
+        type: integer
+      EmbassyAr:
+        type: string
+      EmbassyEn:
+        type: string
+    required:
+    - EmbassyId
+    - EmbassyAr
+    - EmbassyEn
+  Job_Type:
+    type: object
+    properties:
+      JobId:
+        type: integer
+      JobAr:
+        type: string
+      JobEn:
+        type: string
+    required:
+    - JobId
+    - JobAr
+    - JobEn
+  Allowances_Type:
+    type: object
+    properties:
+      AllowancesItem:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValue_Type'
+    required:
+    - AllowancesItem
+  KeyValue_Type:
+    type: object
+    properties:
+      Key:
+        type: string
+      Value:
+        type: string
+      MonthlyAllowance:
+        type: number
+    required:
+    - Key
+    - Value
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+    required:
+    - Code
+    - NameAr
+    - NameEn
+  HGDate_Type:
+    type: object
+    properties:
+      Hijri:
+        type: integer
+      Gregorian:
+        type: string
+  AdditionalAllowancesList_Type:
+    type: object
+    properties:
+      AdditionalAllowances:
+        type: array
+        items:
+          $ref: '#/definitions/AdditionalAllowances_Type'
+  AdditionalAllowances_Type:
+    type: object
+    properties:
+      BenefitNameAr:
+        type: string
+      BenefitNameEn:
+        type: string
+      Frequency:
+        $ref: '#/definitions/CodeName_Type'
+      AmountType:
+        $ref: '#/definitions/CodeName_Type'
+      Amount:
+        type: number
+      MonthlyAdditionalAmount:
+        type: number
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: SSCR0001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: SSCR0001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /searchscreq:
+    post:
+      operationId: SearchSCRequests
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/SearchSCRequestsRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Search SC Requests
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/SearchSCRequestsRq_MessageType'
+        description: SearchSCRequestsRq
+        required: true

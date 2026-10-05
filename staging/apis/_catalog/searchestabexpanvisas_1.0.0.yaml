@@ -1,0 +1,347 @@
+swagger: "2.0"
+info:
+  title: SearchEstabExpanVisas
+  x-ibm-name: searchestabexpanvisas
+  version: 1.0.0
+  description: This service is used to get establishment visa's details with establishing
+    and expansion types.
+schemes:
+- https
+basePath: /common
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-estv-establishingutilities)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  SearchEstabExpanVisasRq_MessageType:
+    type: object
+    properties:
+      SearchEstabExpanVisasRq:
+        $ref: '#/definitions/SearchEstabExpanVisasRq_Type'
+  SearchEstabExpanVisasRs_MessageType:
+    type: object
+    properties:
+      SearchEstabExpanVisasRs:
+        $ref: '#/definitions/SearchEstabExpanVisasRs_Type'
+  SearchEstabExpanVisasRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/SearchEstabExpanVisasRq_BodyType'
+  SearchEstabExpanVisasRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      VisaRequestStatusId:
+        type: integer
+      VisaRequestTypeId:
+        type: integer
+      VisaRequestNumber:
+        type: string
+      VisaOutGoingNumber:
+        type: string
+      StatusId:
+        type: integer
+      SortBy:
+        type: integer
+      PageSize:
+        type: integer
+      PageIndex:
+        type: integer
+    required:
+    - PageSize
+    - PageIndex
+  SearchEstabExpanVisasRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/SearchEstabExpanVisasRs_BodyType'
+  SearchEstabExpanVisasRs_BodyType:
+    type: object
+    properties:
+      VisaRequestsList:
+        $ref: '#/definitions/VisaRequestsList_Type'
+      TotalRecordsCount:
+        type: integer
+      TotalPagesCount:
+        type: integer
+    required:
+    - VisaRequestsList
+    - TotalRecordsCount
+    - TotalPagesCount
+  VisaRequestsList_Type:
+    type: object
+    properties:
+      VisaRequests:
+        type: array
+        items:
+          $ref: '#/definitions/VisaRequests_Type'
+    required:
+    - VisaRequests
+  VisaRequests_Type:
+    type: object
+    properties:
+      VisaType:
+        $ref: '#/definitions/CodeName_Type'
+      RequestId:
+        type: integer
+      VisaRequestNumber:
+        type: string
+      VisaIssueDate:
+        type: integer
+      InsertDate:
+        type: string
+      VisaOutgoingNumber:
+        type: string
+      RequestStatus:
+        $ref: '#/definitions/CodeName_Type'
+      UserId:
+        type: string
+      RejectionDescription:
+        type: string
+      VisaList:
+        $ref: '#/definitions/VisaList_Type'
+    required:
+    - VisaType
+    - RequestId
+    - VisaIssueDate
+    - InsertDate
+    - VisaOutgoingNumber
+    - RequestStatus
+    - UserId
+    - RejectionDescription
+    - VisaList
+  VisaList_Type:
+    type: object
+    properties:
+      VisaDetails:
+        type: array
+        items:
+          $ref: '#/definitions/VisaDetails_Type'
+  VisaDetails_Type:
+    type: object
+    properties:
+      Nationality:
+        $ref: '#/definitions/CodeName_Type'
+      Embassy:
+        $ref: '#/definitions/CodeName_Type'
+      Religion:
+        $ref: '#/definitions/CodeName_Type'
+      Occupation:
+        $ref: '#/definitions/CodeName_Type'
+      Gender:
+        $ref: '#/definitions/CodeName_Type'
+      ExpirationDate:
+        type: string
+      VisaStatus:
+        $ref: '#/definitions/CodeName_Type'
+      BorderNumbers:
+        $ref: '#/definitions/BorderNumbers_Type'
+    required:
+    - Nationality
+    - Embassy
+    - Religion
+    - Occupation
+    - Gender
+    - ExpirationDate
+    - VisaStatus
+  BorderNumbers_Type:
+    type: object
+    properties:
+      Number:
+        type: integer
+      StatusId:
+        type: integer
+    required:
+    - Number
+    - StatusId
+  CodeName_Type:
+    type: object
+    properties:
+      Id:
+        type: integer
+      NameEn:
+        type: string
+      NameAr:
+        type: string
+    required:
+    - Id
+    - NameEn
+    - NameAr
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /seaestbexpanvisas:
+    post:
+      operationId: SearchEstabExpanVisas
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/SearchEstabExpanVisasRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: SearchEstabExpanVisas
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/SearchEstabExpanVisasRq_MessageType'
+        description: SearchEstabExpanVisas
+        required: true

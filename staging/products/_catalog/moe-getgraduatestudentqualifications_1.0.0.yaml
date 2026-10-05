@@ -1,0 +1,830 @@
+swagger: "2.0"
+info:
+  title: MOE_GetGraduateStudentQualifications
+  x-ibm-name: moe-getgraduatestudentqualifications
+  version: 1.0.0
+  description: StudentQualifications
+schemes:
+- https
+basePath: /moe/v1
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - map:
+        version: 2.0.0
+        title: map
+        inputs:
+          "":
+            schema:
+              $ref: '#/definitions/StudentQualificationsRq_BodyType'
+            variable: request.body
+            content: application/json
+        outputs:
+          "":
+            variable: message.body
+            content: application/json
+        actions:
+        - set: .PersonID
+          from: .personID
+        options:
+          mapEnablePostProcessingJSON: true
+          mapEmulateV4EmptyJSONObject: false
+          mapEmulateV4DefaultRequiredProps: false
+          mapReferenceLimit: 1
+          inlineNamespaces: false
+          namespaceInheritance: false
+          includeEmptyXMLElements: false
+          mapOptimizeSchemaDefinition: true
+          mapResolveApicVariables: false
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\n\nvar cfg={\n    \"serviceCode\" : \"EXGGSQ0001\",\n
+          \   \"channelId\" : \"Integration\",\n    \"requestName\" : \"StudentQualificationsRq\",\n
+          \   \"responseName\": \"StudentQualificationsRs\",\n    \"errorMap\" :{\n
+          \       \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid Request\"}\n    }\n
+          \   \n};\n\napim.setvariable('cfg',cfg);"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare_Request
+        source: "var apim = require('apim');\r\n\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\n\r\nvar appcReq
+          = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n            \"TransactionId\"
+          : millisecondsvalue,\r\n            \"ChannelId\": cfg.channelId,\r\n            \"SessionId\":
+          apim.getvariable('message.headers.Reference-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode\r\n        },\r\n
+          \       \"Body\" : apim.getvariable('message.body')\r\n            \r\n
+          \       \r\n    }\r\n};\r\n\r\nif (typeof OperatorId !== 'undefined')\r\n
+          \   appcReq[cfg.requestName].Header.UserInfo = {\r\n        \"IDNumber\"
+          : OperatorId\r\n    };\r\nsession.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n    \r\n    \r\n\r\n    //return
+          the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour
+          + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-tip-moe)/external/get-graduate-student-qualifications
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_Headers
+        source: "\tvar apim = require('apim');\n\t\n\tapim.output('application/json');\n\n
+          \   \n    \n    var cfg = apim.getvariable('cfg');\n    \n\tvar TransactionId
+          = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.TransactionId\");\n\tvar
+          ChannelId = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.ChannelId\");\n\tvar
+          RequestTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.RequestTime\");\n\tvar
+          SessionId = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.SessionId\");\n\tvar
+          MWRequestTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.MWRequestTime\");\n\tvar
+          MWResponseTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.MWResponseTime\");\n\tvar
+          status = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.ResponseStatus.Status\");\n\t\n\n
+          \   apim.setvariable('message.headers.Transaction-Id',TransactionId,'add');\n
+          \   apim.setvariable('message.headers.Channel-Id',ChannelId,'add');\n    if
+          (RequestTime !== 'undefined')\n\t    apim.setvariable('message.headers.RequestTime',RequestTime,'add');\n\tif
+          (SessionId !== 'undefined')\n        apim.setvariable('message.headers.Reference-Id',SessionId,'add');\n
+          \    if (MWRequestTime !== 'undefined')\n        apim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');\n
+          \   if (MWResponseTime !== 'undefined')\n        apim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');\n\n
+          \   \n    apim.setvariable('message.headers.Response-Status',status,'add');\n
+          \   "
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Response
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar body = message[cfg.responseName].Body;\n\n\nsession.output.write(body);\napim.output('application/json');"
+          - map:
+              version: 2.0.0
+              title: map
+              inputs:
+                "":
+                  schema:
+                    $ref: '#/definitions/StrStudentQualificationsRs_BodyType'
+                  variable: message.body
+                  content: application/json
+              outputs:
+                "":
+                  schema:
+                    $ref: '#/definitions/StudentQualificationsRs_BodyType'
+                  variable: message.body
+                  content: application/json
+              actions:
+              - set: .localHighQualifications.responseStatus
+                from: .LocalHighQualificationsResponse.ResponseStatus
+              - create: .localHighQualifications.qualificationsList
+                foreach: .LocalHighQualificationsResponse.LocalHighQualificationsList.LocalHighQualifications
+                from: .LocalHighQualificationsResponse.LocalHighQualificationsList.LocalHighQualifications
+                actions:
+                - set: instituteName
+                  from: InstituteName
+                - set: collegeName
+                  from: CollegeName
+                - set: sectionName
+                  from: SectionName
+                - set: majorName
+                  from: MajorName
+                - set: minorName
+                  from: MinorName
+                - set: saudiSpeciality
+                  from: SaudiSpeciality
+                - set: studyPeriod
+                  from: StudyPeriod
+                - set: studyModeName
+                  from: StudyModeName
+                - set: gpaTypeName
+                  from: GPATypeName
+                - set: gpa
+                  from: GPA
+                - set: ratingName
+                  from: RatingName
+                - set: graduationDate.gregorianDate
+                  from: GraduationDate.GregorianDate
+                - set: graduationDate.hijriDate
+                  from: GraduationDate.HijriDate
+                - set: degree
+                  from: Degree
+                - set: degreeName
+                  from: DegreeName
+              - set: .qualificationsDetails.personDetails.personName.fullNameEn
+                from: .QualificationsDetailsResponse.PersonDetails.PersonName.FullNameEn
+              - set: .qualificationsDetails.personDetails.personName.fullNameAr
+                from: .QualificationsDetailsResponse.PersonDetails.PersonName.FullNameAr
+              - set: .qualificationsDetails.personDetails.emailAddress
+                from: .QualificationsDetailsResponse.PersonDetails.EmailAddress
+              - set: .qualificationsDetails.personDetails.nationalityName
+                from: .QualificationsDetailsResponse.PersonDetails.NationalityName
+              - set: .abroadQualifications.responseStatus
+                from: .AbroadQualiffcationResponse.ResponseStatus
+              - set: .abroadQualifications.errorDescription
+                from: .AbroadQualiffcationResponse.ErrorDescrption
+              - create: .abroadQualifications.qualificationsList
+                foreach: .AbroadQualiffcationResponse.AbroadQualificationList.AbroadQualification
+                from: .AbroadQualiffcationResponse.AbroadQualificationList.AbroadQualification
+                actions:
+                - set: instituteName.instituteNameAr
+                  from: InstituteName.InstituteNameAr
+                - set: instituteName.instituteNameEn
+                  from: InstituteName.InstituteNameEn
+                - set: collegeNameAr
+                  from: CollegeNameAr
+                - set: collegeNameEn
+                  from: CollegeNameEn
+                - set: sectionName
+                  from: SectionName
+                - set: majorNameAr
+                  from: MajorNameAr
+                - set: majorNameEn
+                  from: MajorNameEn
+                - set: certificateTitleAr
+                  from: CertificateTitleAr
+                - set: certificateTitleEn
+                  from: CertificateTitleEn
+                - set: minorName
+                  from: MinorName
+                - set: saudiSpeciality
+                  from: SaudiSpeciality
+                - set: studyPeriod
+                  from: StudyPeriod
+                - set: studyModeNameAr
+                  from: StudyModeNameAr
+                - set: studyModeNameEn
+                  from: StudyModeNameEn
+                - set: gpaTypeName
+                  from: GPATypeName
+                - set: gpa
+                  from: GPA
+                - set: ratingName
+                  from: RatingName
+                - set: gradutionYear
+                  from: GradutionYear
+                - set: equationDecision
+                  from: EquationDecision
+                - set: equationdegreeName
+                  from: EquationdegreeName
+                - set: equationDecisionText
+                  from: EquationDecisionText
+                - set: degreeName.degreeNameAr
+                  from: DegreeName.DegreeNameAr
+                - set: degreeName.degreeNameEn
+                  from: DegreeName.DegreeNameEn
+                - set: degreeName.degree
+                  from: DegreeName.Degree
+                - set: graduationDate.gregorianDate
+                  from: GraduationDate.GregorianDate
+                - set: graduationDate.hijriDate
+                  from: GraduationDate.HijriDate
+                - set: countryOfStudy.countryOfStudyAr
+                  from: CountryOfStudy.countryOfStudyAr
+                - set: countryOfStudy.countryOfStudyEn
+                  from: CountryOfStudy.countryOfStudyEn
+              - set: .localHighQualifications.errorDescription
+                from: .LocalHighQualificationsResponse.ErrorDescrption
+              options:
+                mapEnablePostProcessingJSON: true
+                mapEmulateV4EmptyJSONObject: false
+                mapEmulateV4DefaultRequiredProps: false
+                mapReferenceLimit: 1
+                includeEmptyXMLElements: false
+                namespaceInheritance: false
+                inlineNamespaces: false
+                mapResolveApicVariables: false
+                mapOptimizeSchemaDefinition: true
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Error
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar error = {\n    \"ErrorResponse\":
+                message[cfg.responseName].Header.ResponseStatus\n}\n\n\nvar httperror=0;\nif(cfg.errorMap){\n
+                \   if(cfg.errorMap[error.ErrorResponse.Code]){\n       httperror
+                = cfg.errorMap[error.ErrorResponse.Code].code;\n       \n       //var
+                errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\n       //var
+                details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\n    }\n}\nif(httperror
+                == 0){\n   httperror = 400;\n   // apim.error('ERROR',400,'Bad Request','Invalid
+                request');\n}\napim.setvariable('message.status.code',httperror,'set');\n\nsession.output.write(error);\napim.output('application/json');"
+    catch: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  StudentQualificationsRq_MessageType:
+    type: object
+    properties:
+      StudentQualificationsRq:
+        $ref: '#/definitions/StudentQualificationsRq_Type'
+  StudentQualificationsRs_MessageType:
+    type: object
+    properties:
+      StudentQualificationsRs:
+        $ref: '#/definitions/StudentQualificationsRs_Type'
+  StudentQualificationsRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/StudentQualificationsRq_BodyType'
+  StudentQualificationsRq_BodyType:
+    type: object
+    properties:
+      personID:
+        type: integer
+  StudentQualificationsRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/StudentQualificationsRs_BodyType'
+  StudentQualificationsRs_BodyType:
+    type: object
+    properties:
+      qualificationsDetails:
+        $ref: '#/definitions/qualificationsDetailsResponse'
+      abroadQualifications:
+        $ref: '#/definitions/abroadQualiffcationResponse'
+      localHighQualifications:
+        $ref: '#/definitions/localHighQualificationsResponse'
+    required:
+    - qualificationsDetails
+    - localHighQualifications
+  StrStudentQualificationsRs_BodyType:
+    type: object
+    properties:
+      QualificationsDetailsResponse:
+        $ref: '#/definitions/StrQualificationsDetailsResponse'
+      AbroadQualiffcationResponse:
+        $ref: '#/definitions/StrAbroadQualiffcationResponse'
+      LocalHighQualificationsResponse:
+        $ref: '#/definitions/StrLocalHighQualificationsResponse'
+    required:
+    - QualificationsDetailsResponse
+    - AbroadQualiffcationResponse
+    - LocalHighQualificationsResponse
+  qualificationsDetailsResponse:
+    type: object
+    properties:
+      personDetails:
+        $ref: '#/definitions/personDetails'
+    required:
+    - personDetails
+  StrQualificationsDetailsResponse:
+    type: object
+    properties:
+      PersonDetails:
+        $ref: '#/definitions/StrPersonDetails'
+    required:
+    - PersonDetails
+  personDetails:
+    type: object
+    properties:
+      nationalityName:
+        type: string
+      emailAddress:
+        type: string
+      personName:
+        $ref: '#/definitions/personName'
+    required:
+    - personName
+  StrPersonDetails:
+    type: object
+    properties:
+      NationalityName:
+        type: string
+      EmailAddress:
+        type: string
+      PersonName:
+        $ref: '#/definitions/StrPersonName'
+    required:
+    - PersonName
+  personName:
+    type: object
+    properties:
+      fullNameAr:
+        type: string
+      fullNameEn:
+        type: string
+    required:
+    - fullNameAr
+    - fullNameEn
+  StrPersonName:
+    type: object
+    properties:
+      FullNameAr:
+        type: string
+      FullNameEn:
+        type: string
+    required:
+    - FullNameAr
+    - FullNameEn
+  abroadQualiffcationResponse:
+    type: object
+    properties:
+      responseStatus:
+        type: string
+      errorDescription:
+        type: string
+      qualificationsList:
+        type: array
+        items:
+          $ref: '#/definitions/abroadQualification'
+    required:
+    - responseStatus
+  StrAbroadQualiffcationResponse:
+    type: object
+    properties:
+      ResponseStatus:
+        type: string
+      ErrorDescrption:
+        type: string
+      AbroadQualificationList:
+        $ref: '#/definitions/StrAbroadQualificationList_Type'
+    required:
+    - ResponseStatus
+  StrAbroadQualificationList_Type:
+    type: object
+    properties:
+      AbroadQualification:
+        type: array
+        items:
+          $ref: '#/definitions/StrAbroadQualification'
+  abroadQualification:
+    type: object
+    properties:
+      instituteName:
+        $ref: '#/definitions/instituteName'
+      collegeNameAr:
+        type: string
+      collegeNameEn:
+        type: string
+      sectionName:
+        type: string
+      majorNameAr:
+        type: string
+      majorNameEn:
+        type: string
+      certificateTitleAr:
+        type: string
+      certificateTitleEn:
+        type: string
+      minorName:
+        type: string
+      saudiSpeciality:
+        type: string
+      studyPeriod:
+        type: string
+      studyModeNameAr:
+        type: string
+      studyModeNameEn:
+        type: string
+      gpaTypeName:
+        type: string
+      gpa:
+        type: string
+      ratingName:
+        type: string
+      gradutionYear:
+        type: string
+      equationDecision:
+        type: string
+      equationdegreeName:
+        type: string
+      equationDecisionText:
+        type: string
+      degreeName:
+        $ref: '#/definitions/degreeName'
+      graduationDate:
+        $ref: '#/definitions/graduationDate'
+      countryOfStudy:
+        $ref: '#/definitions/countryOfStudy'
+    required:
+    - instituteName
+  StrAbroadQualification:
+    type: object
+    properties:
+      InstituteName:
+        $ref: '#/definitions/StrInstituteName'
+      CollegeNameAr:
+        type: string
+      CollegeNameEn:
+        type: string
+      SectionName:
+        type: string
+      MajorNameAr:
+        type: string
+      MajorNameEn:
+        type: string
+      CertificateTitleAr:
+        type: string
+      CertificateTitleEn:
+        type: string
+      MinorName:
+        type: string
+      SaudiSpeciality:
+        type: string
+      StudyPeriod:
+        type: string
+      StudyModeNameAr:
+        type: string
+      StudyModeNameEn:
+        type: string
+      GPATypeName:
+        type: string
+      GPA:
+        type: string
+      RatingName:
+        type: string
+      GradutionYear:
+        type: string
+      EquationDecision:
+        type: string
+      EquationdegreeName:
+        type: string
+      EquationDecisionText:
+        type: string
+      DegreeName:
+        $ref: '#/definitions/StrDegreeName'
+      GraduationDate:
+        $ref: '#/definitions/StrGraduationDate'
+      CountryOfStudy:
+        $ref: '#/definitions/StrCountryOfStudy'
+    required:
+    - InstituteName
+  instituteName:
+    type: object
+    properties:
+      instituteNameAr:
+        type: string
+      instituteNameEn:
+        type: string
+    required:
+    - instituteNameAr
+    - instituteNameEn
+  StrInstituteName:
+    type: object
+    properties:
+      InstituteNameAr:
+        type: string
+      InstituteNameEn:
+        type: string
+    required:
+    - InstituteNameAr
+    - InstituteNameEn
+  degreeName:
+    type: object
+    properties:
+      degreeNameAr:
+        type: string
+      degreeNameEn:
+        type: string
+      degree:
+        type: string
+  StrDegreeName:
+    type: object
+    properties:
+      DegreeNameAr:
+        type: string
+      DegreeNameEn:
+        type: string
+      Degree:
+        type: string
+  graduationDate:
+    type: object
+    properties:
+      gregorianDate:
+        type: string
+      hijriDate:
+        type: string
+  StrGraduationDate:
+    type: object
+    properties:
+      GregorianDate:
+        type: string
+      HijriDate:
+        type: string
+  countryOfStudy:
+    type: object
+    properties:
+      countryOfStudyAr:
+        type: string
+      countryOfStudyEn:
+        type: string
+  StrCountryOfStudy:
+    type: object
+    properties:
+      countryOfStudyAr:
+        type: string
+      countryOfStudyEn:
+        type: string
+  localHighQualificationsResponse:
+    type: object
+    properties:
+      responseStatus:
+        type: string
+      errorDescription:
+        type: string
+      qualificationsList:
+        type: array
+        items:
+          $ref: '#/definitions/localHighQualifications'
+    required:
+    - responseStatus
+  StrLocalHighQualificationsResponse:
+    type: object
+    properties:
+      ResponseStatus:
+        type: string
+      ErrorDescrption:
+        type: string
+      LocalHighQualificationsList:
+        $ref: '#/definitions/StrLocalHighQualifications_Type'
+    required:
+    - ResponseStatus
+  StrLocalHighQualifications_Type:
+    type: object
+    properties:
+      LocalHighQualifications:
+        type: array
+        items:
+          $ref: '#/definitions/StrLocalHighQualifications'
+  localHighQualifications:
+    type: object
+    properties:
+      instituteName:
+        type: string
+      collegeName:
+        type: string
+      sectionName:
+        type: string
+      majorName:
+        type: string
+      minorName:
+        type: string
+      saudiSpeciality:
+        type: string
+      studyPeriod:
+        type: string
+      studyModeName:
+        type: string
+      gpaTypeName:
+        type: string
+      gpa:
+        type: string
+      ratingName:
+        type: string
+      graduationDate:
+        $ref: '#/definitions/graduationDate'
+      degree:
+        type: string
+      degreeName:
+        type: string
+    required:
+    - instituteName
+  StrLocalHighQualifications:
+    type: object
+    properties:
+      InstituteName:
+        type: string
+      CollegeName:
+        type: string
+      SectionName:
+        type: string
+      MajorName:
+        type: string
+      MinorName:
+        type: string
+      SaudiSpeciality:
+        type: string
+      StudyPeriod:
+        type: string
+      StudyModeName:
+        type: string
+      GPATypeName:
+        type: string
+      GPA:
+        type: string
+      RatingName:
+        type: string
+      GraduationDate:
+        $ref: '#/definitions/StrGraduationDate'
+      Degree:
+        type: string
+      DegreeName:
+        type: string
+    required:
+    - InstituteName
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /get-graduate-student-qualifications:
+    post:
+      operationId: GetGraduateStudentQualifications
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/StudentQualificationsRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: ""
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/StudentQualificationsRq_MessageType'
+        description: StudentQualificationsRq
+        required: true

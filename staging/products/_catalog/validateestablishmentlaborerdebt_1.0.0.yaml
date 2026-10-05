@@ -1,0 +1,294 @@
+swagger: "2.0"
+info:
+  title: ValidateEstablishmentLaborerDebt
+  version: 1.0.0
+  description: This service aims to determine if the establishment will have a debt
+    and identify who will be responsible for paying it—whether the old or new establishment—if
+    an employee has an expired work permit, has been transferred, or has had a change
+    in status, according to specific business rules.
+  x-ibm-name: validateestablishmentlaborerdebt
+paths:
+  /validateestablishmentlaborerdebt:
+    post:
+      operationId: ValidateEstablishmentLaborerDebt
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/ValidateEstablishmentLaborerDebtRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: This service aims to determine if the establishment will have a
+        debt and identify who will be responsible for paying it—whether the old or
+        new establishment—if an employee has an expired work permit, has been transferred,
+        or has had a change in status, according to specific business rules.
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/ValidateEstablishmentLaborerDebtRq_MessageType'
+        description: ValidateEstablishmentLaborerDebtRq
+        required: true
+basePath: /workpermit
+definitions:
+  ValidateEstablishmentLaborerDebtRq_MessageType:
+    type: object
+    properties:
+      ValidateEstablishmentLaborerDebtRq:
+        $ref: '#/definitions/ValidateEstablishmentLaborerDebtRq_Type'
+  ValidateEstablishmentLaborerDebtRs_MessageType:
+    type: object
+    properties:
+      ValidateEstablishmentLaborerDebtRs:
+        $ref: '#/definitions/ValidateEstablishmentLaborerDebtRs_Type'
+  ValidateEstablishmentLaborerDebtRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/ValidateEstablishmentLaborerDebtRq_BodyType'
+  ValidateEstablishmentLaborerDebtRq_BodyType:
+    type: object
+    properties:
+      LaborerIdNo:
+        type: integer
+      LaborerDebtType:
+        type: integer
+        enum:
+        - 1
+        - 2
+      Old_LaborerStatusId:
+        type: integer
+      New_LaborerStatusId:
+        type: integer
+      WorkPermitExpiryDate:
+        type: string
+      Old_ServiceStartDate:
+        type: string
+      New_ServiceStartDate:
+        type: string
+      Old_EstablishmentStatusId:
+        type: integer
+      Old_FK_UnifiedNumberId:
+        type: integer
+      New_FK_UnifiedNumberId:
+        type: integer
+      Old_CRNumber:
+        type: integer
+      New_CRNumber:
+        type: integer
+      Old_EstablishmentSequenceNumber:
+        type: integer
+      New_EstablishmentSequenceNumber:
+        type: integer
+      Old_FK_CurrentLaborOfficeId:
+        type: integer
+      New_FK_CurrentLaborOfficeId:
+        type: integer
+      ChangeStatusDate:
+        type: string
+      New_LastExitDate:
+        type: string
+      FK_ServiceEndReasonId:
+        type: integer
+    required:
+    - LaborerIdNo
+    - LaborerDebtType
+    - Old_LaborerStatusId
+    - Old_ServiceStartDate
+    - Old_EstablishmentStatusId
+    - Old_FK_UnifiedNumberId
+    - New_FK_UnifiedNumberId
+    - Old_CRNumber
+    - New_CRNumber
+    - Old_EstablishmentSequenceNumber
+    - New_EstablishmentSequenceNumber
+    - Old_FK_CurrentLaborOfficeId
+    - New_FK_CurrentLaborOfficeId
+  ValidateEstablishmentLaborerDebtRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/ValidateEstablishmentLaborerDebtRs_BodyType'
+  ValidateEstablishmentLaborerDebtRs_BodyType:
+    type: object
+    properties:
+      HasDebt:
+        type: integer
+      LaborerIdNo:
+        type: integer
+      IsExempted:
+        type: integer
+      DebtLaborOffice:
+        type: integer
+      DebtSequenceNumber:
+        type: integer
+      DebtHolder:
+        type: integer
+      ExcludingLastQuarter:
+        type: integer
+      CalculationEndDate:
+        type: string
+      CalculationEndDateType:
+        type: integer
+      DebtTypeCode:
+        type: integer
+    required:
+    - HasDebt
+    - LaborerIdNo
+    - IsExempted
+    - CalculationEndDate
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-wp-delayed)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: allowlist
+          values: []
+        header-control:
+          type: blocklist
+          values: []
+        inject-proxy-headers: true
+        chunked-uploads: true
+        persistent-connection: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+schemes:
+- https
+securityDefinitions:
+  clientId:
+    type: apiKey
+    x-key-type: client_id
+    name: X-IBM-Client-Id
+    in: header
+  clientSecret:
+    type: apiKey
+    x-key-type: client_secret
+    name: X-IBM-Client-Secret
+    in: header
+security:
+- clientId: []
+  clientSecret: []

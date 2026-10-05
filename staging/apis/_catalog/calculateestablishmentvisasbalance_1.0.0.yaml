@@ -1,0 +1,263 @@
+swagger: "2.0"
+info:
+  title: CalculateEstablishmentVisasBalance
+  x-ibm-name: calculateestablishmentvisasbalance
+  version: 1.0.0
+  description: CalculateEstablishmentVisasBalance
+schemes:
+- https
+basePath: /common
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-cmnv-commonvisautilites)/common/calculateestablishmentvisasbalance
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  CalculateEstablishmentVisasBalanceRq_MessageType:
+    type: object
+    properties:
+      CalculateEstablishmentVisasBalanceRq:
+        $ref: '#/definitions/CalculateEstablishmentVisasBalanceRq_Type'
+  CalculateEstablishmentVisasBalanceRs_MessageType:
+    type: object
+    properties:
+      CalculateEstablishmentVisasBalanceRs:
+        $ref: '#/definitions/CalculateEstablishmentVisasBalanceRs_Type'
+  CalculateEstablishmentVisasBalanceRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/CalculateEstablishmentVisasBalanceRq_BodyType'
+  CalculateEstablishmentVisasBalanceRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      EstablishmentSequence:
+        type: integer
+    required:
+    - LaborOfficeId
+    - EstablishmentSequence
+  CalculateEstablishmentVisasBalanceRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/CalculateEstablishmentVisasBalanceRs_BodyType'
+  CalculateEstablishmentVisasBalanceRs_BodyType:
+    type: object
+    properties:
+      WorkVisa:
+        $ref: '#/definitions/WorkVisa_Type'
+      VisitVisa:
+        $ref: '#/definitions/VisitVisa_Type'
+      SeasonalVisa:
+        $ref: '#/definitions/SeasonalVisa_Type'
+    required:
+    - WorkVisa
+    - VisitVisa
+    - SeasonalVisa
+  WorkVisa_Type:
+    type: object
+    properties:
+      VisaTypeId:
+        type: integer
+      UnusedIssuedVisas:
+        type: integer
+      AllowedQuota:
+        type: integer
+    required:
+    - VisaTypeId
+    - UnusedIssuedVisas
+    - AllowedQuota
+  VisitVisa_Type:
+    type: object
+    properties:
+      AllowedQuota:
+        type: integer
+      UnusedIssuedVisas:
+        type: integer
+      PackageNearestExpiration:
+        type: string
+    required:
+    - AllowedQuota
+    - UnusedIssuedVisas
+    - PackageNearestExpiration
+  SeasonalVisa_Type:
+    type: object
+    properties:
+      AllowedQuota:
+        type: integer
+      UnusedIssuedVisas:
+        type: integer
+    required:
+    - AllowedQuota
+    - UnusedIssuedVisas
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /calculateestablishmentvisasbalance:
+    post:
+      operationId: CalculateEstablishmentVisasBalance
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/CalculateEstablishmentVisasBalanceRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Calculate Establishment Visas Balance
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/CalculateEstablishmentVisasBalanceRq_MessageType'
+        description: CalculateEstablishmentVisasBalanceRq
+        required: true

@@ -1,0 +1,76 @@
+swagger: "2.0"
+info:
+  title: Querycenter_PunishmentAccountreActivation
+  x-ibm-name: querycenter_punishmentaccountreactivation
+  version: 1.0.0
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.2.0
+        title: invoke
+        backend-type: json
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: POST
+        chunked-uploads: true
+        persistent-connection: true
+        http-version: HTTP/1.1
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        websocket-upgrade: false
+        target-url: $(ace-qry-qry-center)/qc_servicemanagement/v1/UpdatePunishmentStatus
+    finally: []
+  properties: {}
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+basePath: /qiwa/v2
+paths:
+  /qcservicemanagement/UpdatePunishmentStatus:
+    parameters: []
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+securityDefinitions:
+  clientID:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+    x-key-type: client_id
+  ClientSecret:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Secret
+    x-key-type: client_secret
+  OAuth2.0:
+    type: oauth2
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    flow: application
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+schemes:
+- https
+security:
+- clientID: []
+  ClientSecret: []
+  OAuth2.0:
+  - IntegrationScope

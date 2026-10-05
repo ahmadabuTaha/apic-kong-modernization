@@ -1,0 +1,294 @@
+swagger: "2.0"
+info:
+  title: AddOrUpdateUserPrivileges
+  x-ibm-name: addorupdateuserprivileges
+  version: 1.0.0
+  description: This service is used to add or update user privileges.
+schemes:
+- https
+basePath: /usermanagement
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-usrm-addorterminate)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  AddOrUpdateUserPrivilegesRq_MessageType:
+    type: object
+    properties:
+      AddOrUpdateUserPrivilegesRq:
+        $ref: '#/definitions/AddOrUpdateUserPrivilegesRq_Type'
+  AddOrUpdateUserPrivilegesRs_MessageType:
+    type: object
+    properties:
+      AddOrUpdateUserPrivilegesRs:
+        $ref: '#/definitions/AddOrUpdateUserPrivilegesRs_Type'
+  AddOrUpdateUserPrivilegesRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/AddOrUpdateUserPrivilegesRq_BodyType'
+  AddOrUpdateUserPrivilegesRq_BodyType:
+    type: object
+    properties:
+      UserId:
+        type: integer
+        default: "465740"
+      IdNo:
+        type: string
+        default: "1058873835"
+      EstablishmentsList:
+        $ref: '#/definitions/EstablishmentsList_Type'
+      AddOrUpdate:
+        type: integer
+        default: "0"
+  EstablishmentsList_Type:
+    type: object
+    properties:
+      EstablishmentsItem:
+        type: array
+        items:
+          $ref: '#/definitions/EstablishmentsItem_Type'
+  EstablishmentsItem_Type:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+        default: "14"
+      EstablishmentSequence:
+        type: integer
+        default: "1945387"
+      EstablishmentId:
+        type: integer
+        default: "778610"
+      ServicesList:
+        $ref: '#/definitions/ServicesList_Type'
+  ServicesList_Type:
+    type: object
+    properties:
+      ServicesItem:
+        type: array
+        items:
+          $ref: '#/definitions/ServicesItem_Type'
+  ServicesItem_Type:
+    type: object
+    properties:
+      ServiceId:
+        type: integer
+        default: "5"
+  AddOrUpdateUserPrivilegesRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/AddOrUpdateUserPrivilegesRs_BodyType'
+  AddOrUpdateUserPrivilegesRs_BodyType:
+    type: object
+    properties:
+      EstablishmentsInfoList:
+        $ref: '#/definitions/EstablishmentsInfoList_Type'
+  EstablishmentsInfoList_Type:
+    type: object
+    properties:
+      EstablishmentsInfoItem:
+        type: array
+        items:
+          $ref: '#/definitions/EstablishmentsInfoItem_Type'
+  EstablishmentsInfoItem_Type:
+    type: object
+    properties:
+      LaborofficeId:
+        type: integer
+      EstablishmentSequence:
+        type: integer
+      EstablishmentId:
+        type: integer
+      Status:
+        type: string
+      StatusDescription:
+        type: string
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: AOUUP001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: AOUUP001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+        default: "465740"
+      IDNumber:
+        type: integer
+        default: "1024812248"
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /addorupdateuserprivileges:
+    post:
+      operationId: AddOrUpdateUserPrivileges
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/AddOrUpdateUserPrivilegesRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Add or Update User privileges
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/AddOrUpdateUserPrivilegesRq_MessageType'
+        description: AddOrUpdateUserPrivilegesRq
+        required: true

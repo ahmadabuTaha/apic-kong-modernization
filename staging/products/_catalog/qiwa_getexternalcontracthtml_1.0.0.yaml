@@ -1,0 +1,135 @@
+swagger: "2.0"
+info:
+  title: Qiwa_GetExternalContractHTML
+  description: This service is used to get external contract details and convert them
+    to an HTML format.
+  version: 1.0.0
+  x-ibm-name: qiwa_getexternalcontracthtml
+basePath: /workinsaudi
+schemes:
+- https
+paths:
+  /getexternalcontracthtml:
+    post:
+      summary: Get External Contract HTML
+      operationId: getExternalContractHTML
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/GetExternalContractHTMLRq'
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/GetExternalContractHTMLRs'
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+definitions:
+  GetExternalContractHTMLRq:
+    type: object
+    required:
+    - Header
+    - Body
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetExternalContractHTMLRq_BodyType'
+  GetExternalContractHTMLRs:
+    type: object
+    required:
+    - Header
+    - Body
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetExternalContractHTMLRs_BodyType'
+  GetExternalContractHTMLRq_BodyType:
+    type: object
+    required:
+    - ContractId
+    properties:
+      ContractId:
+        type: integer
+        format: int64
+        example: 12345
+  GetExternalContractHTMLRs_BodyType:
+    type: object
+    required:
+    - ContractHTML
+    properties:
+      ContractHTML:
+        type: string
+        example: <html><body>Contract Content</body></html>
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      Timestamp:
+        type: string
+        format: date-time
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      ResponseCode:
+        type: string
+      ResponseMessage:
+        type: string
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-ws-externalcontractget)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: allowlist
+          values: []
+        header-control:
+          type: blocklist
+          values: []
+        inject-proxy-headers: true
+        chunked-uploads: true
+        persistent-connection: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+securityDefinitions:
+  clientId:
+    type: apiKey
+    x-key-type: client_id
+    name: X-IBM-Client-Id
+    in: header
+  Oauth2.0:
+    type: oauth2
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    flow: application
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+security:
+- clientId: []
+  Oauth2.0:
+  - IntegrationScope

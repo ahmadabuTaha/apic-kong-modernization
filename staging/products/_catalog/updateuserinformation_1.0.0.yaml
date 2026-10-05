@@ -1,0 +1,240 @@
+swagger: "2.0"
+info:
+  title: UpdateUserInformation
+  x-ibm-name: updateuserinformation
+  version: 1.0.0
+  description: This service is used to update user information .
+schemes:
+- https
+basePath: /usermanagement
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-usrm-umsubmits)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  UpdateUserInformationRq_MessageType:
+    type: object
+    properties:
+      UpdateUserInformationRq:
+        $ref: '#/definitions/UpdateUserInformationRq_Type'
+  UpdateUserInformationRs_MessageType:
+    type: object
+    properties:
+      UpdateUserInformationRs:
+        $ref: '#/definitions/UpdateUserInformationRs_Type'
+  UpdateUserInformationRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/UpdateUserInformationRq_BodyType'
+  UpdateUserInformationRq_BodyType:
+    type: object
+    properties:
+      IdNo:
+        type: string
+        default: "5"
+      Name:
+        type: string
+        default: Hwert
+      DateOfBirth:
+        type: string
+        default: "19980818"
+      Email:
+        type: string
+        default: blah@blah.blah
+      MobileNumber:
+        type: string
+        default: 7785239
+      StatusId:
+        type: integer
+        default: "1"
+      NationalityId:
+        type: integer
+        default: "3"
+      GenderId:
+        type: integer
+        default: "2"
+      ReligionId:
+        type: integer
+        default: "1"
+      IdExpiryDate:
+        type: string
+        default: "2021-08-18"
+      UserName:
+        type: string
+        default: balh
+      Password:
+        type: string
+        default: blanhd
+      IsMobileVerified:
+        type: boolean
+        default: "true"
+    required:
+    - IdNo
+    - Name
+    - DateOfBirth
+    - Email
+    - MobileNumber
+    - StatusId
+    - NationalityId
+    - GenderId
+    - ReligionId
+    - IdExpiryDate
+    - UserName
+    - Password
+  UpdateUserInformationRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/UpdateUserInformationRs_BodyType'
+  UpdateUserInformationRs_BodyType:
+    type: object
+    properties:
+      ValidationsErrorList: {}
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: UUI00001
+      DebugFlag:
+        type: integer
+        default: "1"
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: UUI00001
+      DebugFlag:
+        type: integer
+        default: "1"
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+paths:
+  /updateuserinformation:
+    post:
+      operationId: UpdateUserInformation
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/UpdateUserInformationRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Update User Information
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/UpdateUserInformationRq_MessageType'
+        description: UpdateUserInformationRq
+        required: true

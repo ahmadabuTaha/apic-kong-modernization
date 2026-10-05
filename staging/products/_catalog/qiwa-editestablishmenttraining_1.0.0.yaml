@@ -1,0 +1,329 @@
+swagger: "2.0"
+info:
+  title: Qiwa_EditEstablishmentTraining
+  x-ibm-name: qiwa-editestablishmenttraining
+  version: 1.0.0
+  description: Service is used to update the training details of a establishment training
+basePath: /qiwa/v2
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://gw-apic.qiwa.info/takamol/staging/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-trni-trainingmanagement)/external/edittraining/
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        stop-on-error:
+        - ConnectionError
+        - OperationError
+        - SOAPError
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_Headers
+        source: "var apim = require('apim');\r\nvar Response = apim.getvariable('message.body');\r\nvar
+          statusCode = Response.EditEstablishmentTrainingRs.Header.ResponseStatus.Code
+          ;\r\n\r\n\r\nif(statusCode == 'ESBSCHEMA' || statusCode == 'E0000004'){\r\n
+          \   var code = 400\r\n    apim.setvariable('message.status.code',code,'set');\r\n}\r\nelse
+          if(statusCode == '99999999'){\r\n    var code = 500\r\n    apim.setvariable('message.status.code',code,'set');\r\n}\r\nelse
+          if(statusCode == 'E0000046' || statusCode == 'E0000047' || statusCode ==
+          'E0000048'){\r\n    var code = 401\r\n    apim.setvariable('message.status.code',code,'set');\r\n}\r\nelse
+          if(statusCode == '00000000'){\r\n    var code = 200\r\n    apim.setvariable('message.status.code',code,'set');\r\n}else{\r\n
+          \     var code = 409\r\n    apim.setvariable('message.status.code',code,'set');\r\n}\r\n"
+    catch:
+    - errors: []
+      execute:
+      - set-variable:
+          version: 2.0.0
+          title: set-variable
+          actions:
+          - set: message.status.code
+            value: "500"
+            type: string
+          - set: message.header.content-type
+            value: application/json
+            type: string
+          - set: message.body
+            value: '{     "errorCode": "E000500",     "errorMessage": "Internal server
+              error" }'
+            type: string
+          description: API failure handling
+    finally: []
+  properties:
+    target-url:
+      value: http://trni-trainingmanagement-http-ace.apps.stg.qiwa-nonprod.local/external/edittraining/
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+definitions:
+  EditEstablishmentTrainingRq_MessageType:
+    type: object
+    properties:
+      EditEstablishmentTrainingRq:
+        $ref: '#/definitions/EditEstablishmentTrainingRq_Type'
+  EditEstablishmentTrainingRs_MessageType:
+    type: object
+    properties:
+      EditEstablishmentTrainingRs:
+        $ref: '#/definitions/EditEstablishmentTrainingRs_Type'
+  EditEstablishmentTrainingRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/EditEstablishmentTrainingRq_BodyType'
+  EditEstablishmentTrainingRq_BodyType:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: string
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      EstablishmentId:
+        type: integer
+      TrainingId:
+        type: integer
+      TrainingName:
+        type: string
+      TrainingProvider:
+        type: string
+      TrainerName:
+        type: string
+      TrainerNationality:
+        type: integer
+      TrainingCountry:
+        type: integer
+      TrainingCity:
+        type: string
+      TrainingType:
+        type: integer
+      TrainingStartDate:
+        $ref: '#/definitions/GregorianDateModel'
+      TrainingEndDate:
+        $ref: '#/definitions/GregorianDateModel'
+      TrainingHours:
+        type: integer
+      HasCertification:
+        type: string
+      TrainingCostType:
+        type: integer
+      TrainingCost:
+        type: string
+    additionalProperties: false
+  GregorianDateModel:
+    type: string
+    description: This date object will be used across the model with format yyyy-MM-dd
+      HH:MM:SS.sssfor gregorian dates only
+    example: "2021-12-31T22:00:00.000Z"
+  EditEstablishmentTrainingRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/EditEstablishmentTrainingRs_BodyType'
+  EditEstablishmentTrainingRs_BodyType:
+    type: object
+    properties:
+      responseMessage:
+        type: string
+    additionalProperties: false
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: EXEET001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: EXEET001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+        default: "465740"
+      IDNumber:
+        type: integer
+        default: "1024812248"
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /training-indicators/edit:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/EditEstablishmentTrainingRs_MessageType'
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: X-IBM-Client-Id
+        in: header
+        description: Client id issued by security server.
+        required: true
+        type: string
+      - name: X-IBM-Client-Secret
+        in: header
+        description: Client secret issued by security server
+        required: true
+        type: string
+      - name: X-Request-Id
+        in: header
+        description: X-Request-Id returned in the response header
+        required: false
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/EditEstablishmentTrainingRq_MessageType'

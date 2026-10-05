@@ -1,0 +1,161 @@
+info:
+  version: 1.0.0
+  title: TIP-WrapperServices
+  name: tip-wrapperservices
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      nic-getcitizeninformationwrapper1.0.0: {}
+      getshoplicensedetailsapiwrapper1.0.0: {}
+      getgraduatestudentqualificationsapiwrapper1.0.0: {}
+      getestablishmentalldata-sp1.0.0: {}
+      getestablishmentname-sp1.0.0: {}
+      chatbotsirajapiwrapper1.0.0: {}
+      getsaudizationcertificateapiwrapper1.0.0: {}
+      createwpscertificateapiwrapper1.0.0: {}
+      findwpscertificatesapiwrapper1.0.0: {}
+      getemployerandworkerdataapiwrapper1.0.0: {}
+      getpolicyissuancestatusAPIWrapper1.0.0: {}
+      getcontractcancellationstatusapiwrapper1.0.0: {}
+      getibanaccountnumberapiwrapper1.0.0: {}
+      getworkertransferstatusapiwrapper1.0.0: {}
+      getcontracttypeandcostapiwrapper1.0.0: {}
+      getqualificationsforskillsportalapiwrapper1.0.0: {}
+      pushsadadpaymentnotificationapiwrapper1.0.0: {}
+      employeejobshistoryapiwrapper1.0.0: {}
+      automatevisitsfordomesticworker1.0.0: {}
+      employeecomplianceverification1.0.0: {}
+      worker-examination-inquiry1.0.0: {}
+      pushbillingcancellednotificationstip1.0.0: {}
+      pushbillingconfirmednotificationstip1.0.0: {}
+      ajeerfindwpscertificateapiwrapper1.0.0: {}
+      ajeercreatewpscertificateapiwrapper1.0.0: {}
+      pushbillexecutionnotificationtip1.0.0: {}
+      validatesaudicertificateapiwrapper1.0.0: {}
+      submitsaudicertificateapiwrapper1.0.0: {}
+      getsaudicertificateapiwrapper1.0.0: {}
+      listspecialtiesunderaategory1.0.0: {}
+      returnusercertificate1.0.0: {}
+      listcategoriesunderarole1.0.0: {}
+      returnuseridandcertificates1.0.0: {}
+      updatecontractgosistatus1.0.0: {}
+      nic-getforeignerinformationwrapper1.0.0: {}
+      getindividualbasiccontractdetails1.0.1: {}
+      dependentsforspecialresidencyholders1.0.0: {}
+      healthinsurance1.0.1: {}
+      startupestablishment1.0.0: {}
+      disabledlaborer1.0.0: {}
+      mowaamahcertificatecancel1.0.0: {}
+      mowaamahcertificateupdate1.0.0: {}
+      mowaamahcertificatenew1.0.0: {}
+      createnewpartnershiptrainee1.0.0: {}
+      deactivatenewpartnershiptrainee1.0.0: {}
+      deactivatefakesaudizationcontract1.0.0: {}
+apis:
+  deactivatefakesaudizationcontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/deactivatefakesaudizationcontract_1.0.0.yaml
+  mowaamahcertificatecancel1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mowaamahcertificatecancel_1.0.0.yaml
+  startupestablishment1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/startupestablishment_1.0.0.yaml
+  createnewpartnershiptrainee1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/createnewpartnershiptrainee_1.0.0.yaml
+  deactivatenewpartnershiptrainee1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/deactivatenewpartnershiptrainee_1.0.0.yaml
+  mowaamahcertificateupdate1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mowaamahcertificateupdate_1.0.0.yaml
+  mowaamahcertificatenew1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/mowaamahcertificatenew_1.0.0.yaml
+  disabledlaborer1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/disabledlaborer_1.0.0.yaml
+  getindividualbasiccontractdetails1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getindividualbasiccontractdetails_1.0.1.yaml
+  healthinsurance1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/healthinsurance_1.0.1.yaml
+  dependentsforspecialresidencyholders1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/dependentsforspecialresidencyholders_1.0.0.yaml
+  getshoplicensedetailsapiwrapper1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getshoplicensedetailsapiwrapper_1.0.0.yaml
+  nic-getforeignerinformationwrapper1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-getforeignerinformationwrapper_1.0.0.yaml
+  updatecontractgosistatus1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updatecontractgosistatus_1.0.0.yaml
+  getgraduatestudentqualificationsapiwrapper1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getgraduatestudentqualificationsapiwrapper_1.0.0.yaml
+  pushbillexecutionnotificationtip1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/pushbillexecutionnotificationtip_1.0.0.yaml
+  findwpscertificatesapiwrapper1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/findwpscertificatesapiwrapper_1.0.0.yaml
+  getsaudizationcertificateapiwrapper1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getsaudizationcertificateapiwrapper_1.0.0.yaml
+  createwpscertificateapiwrapper1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/createwpscertificateapiwrapper_1.0.0.yaml
+  pushbillingconfirmednotificationstip1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/pushbillingconfirmednotificationstip_1.0.0.yaml
+  pushbillingcancellednotificationstip1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/pushbillingcancellednotificationstip_1.0.0.yaml
+  listspecialtiesunderaategory1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/listspecialtiesunderaategory_1.0.0.yaml
+  listcategoriesunderarole1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/listcategoriesunderarole_1.0.0.yaml
+  returnusercertificate1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/returnusercertificate_1.0.0.yaml
+  returnuseridandcertificates1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/returnuseridandcertificates_1.0.0.yaml
+  submitsaudicertificateapiwrapper1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/submitsaudicertificateapiwrapper_1.0.0.yaml
+  ajeerfindwpscertificateapiwrapper1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ajeerfindwpscertificateapiwrapper_1.0.0.yaml
+  validatesaudicertificateapiwrapper1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validatesaudicertificateapiwrapper_1.0.0.yaml
+  getsaudicertificateapiwrapper1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getsaudicertificateapiwrapper_1.0.0.yaml
+  ajeercreatewpscertificateapiwrapper1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ajeercreatewpscertificateapiwrapper_1.0.0.yaml
+  nic-getcitizeninformationwrapper1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-getcitizeninformationwrapper_1.0.0.yaml
+  worker-examination-inquiry1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/worker-examination-inquiry_1.0.0.yaml
+  employeecomplianceverification1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/employeecomplianceverification_1.0.0_1.yaml
+  employeejobshistoryapiwrapper1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/employeejobshistoryapiwrapper_1.0.0.yaml
+  automatevisitsfordomesticworker1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/automatevisitsfordomesticworker_1.0.0.yaml
+  getqualificationsforskillsportalapiwrapper1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getqualificationsforskillsportalapiwrapper_1.0.0.yaml
+  getpolicyissuancestatusAPIWrapper1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getpolicyissuancestatusAPIWrapper_1.0.0.yaml
+  getibanaccountnumberapiwrapper1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getibanaccountnumberapiwrapper_1.0.0.yaml
+  getworkertransferstatusapiwrapper1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getworkertransferstatusapiwrapper_1.0.0.yaml
+  getcontractcancellationstatusapiwrapper1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getcontractcancellationstatusapiwrapper_1.0.0.yaml
+  getemployerandworkerdataapiwrapper1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getemployerandworkerdataapiwrapper_1.0.0.yaml
+  getcontracttypeandcostapiwrapper1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getcontracttypeandcostapiwrapper_1.0.0.yaml
+  pushsadadpaymentnotificationapiwrapper1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/pushsadadpaymentnotificationapiwrapper_1.0.0.yaml
+  chatbotsirajapiwrapper1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/chatbotsirajapiwrapper_1.0.0.yaml
+  getestablishmentname-sp1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getestablishmentname-sp_1.0.0.yaml
+  getestablishmentalldata-sp1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getestablishmentalldata-sp_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

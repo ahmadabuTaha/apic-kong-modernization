@@ -1,0 +1,330 @@
+swagger: "2.0"
+info:
+  title: SC ValidateRequest
+  x-ibm-name: validatescrequest
+  version: 1.0.0
+  description: This service is used to validate a salary certificate request.
+schemes:
+- https
+basePath: /sc
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        header-control:
+          type: blacklist
+          values: []
+        parameter-control:
+          type: whitelist
+          values: []
+        timeout: 60
+        verb: POST
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error:
+        - OperationError
+        - SOAPError
+        - ConnectionError
+        target-url: $(ace-salc-salary-certificate)/sc/valscreq
+    - gatewayscript:
+        version: 2.0.0
+        title: gatewayscript
+        source: |+
+          var apim = require('apim');
+
+
+          apim.output('application/json');
+
+          var cfg = {
+              "responseName": "ValidateSCRequestRs"
+          };
+
+          var status = apim.getvariable("message.body."+cfg.responseName+".Header.ResponseStatus.Status");
+
+          apim.setvariable('message.headers.Response-Status',status,'add');
+
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: ($header("Response-Status") = 'Error' or ($header("Response-Status")
+            = 'ERROR'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: gatewayscript
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\n\nvar
+                cfg={\n    \"responseName\": \"ValidateSCRequestRs\",\n    \"errorMap\"
+                :{\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid Request\"},\n\t\t\"E0000098\"
+                \ : {\"code\" :409, \"msg\":\"Conflict\"},\n\t\t\"E0000486\"  : {\"code\"
+                :409, \"msg\":\"Conflict\"}\n    }\n    \n};\n\nvar error = {\n  \"errorCode\":
+                message[cfg.responseName].Header.ResponseStatus.Code\n};\n\nvar httperror
+                = 0;\nif(cfg.errorMap){\n    if(cfg.errorMap[error.errorCode]){\n
+                \      httperror = cfg.errorMap[error.errorCode].code;\n       \n
+                \   }\n}\n\nif (httperror == 0){\n    httperror = 400;\n}\n\napim.setvariable('message.status.code',httperror,'set');\n\nsession.output.write(message);\napim.output('application/json');\n\n\n\n"
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute: []
+    catch:
+    - default:
+      - set-variable:
+          version: 2.0.0
+          title: set-variable
+          actions:
+          - set: message.status.code
+            value: "500"
+            type: string
+          - set: message.headers.content-type
+            value: application/json
+            type: string
+          - set: message.body
+            value: '{"errorCode": "E00500", "errorMessage": "Internal Server Error"}'
+            type: string
+  properties:
+    target-url:
+      value: http://icp-proxy.qiwa.info:31622/sc/valscreq
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    success-content: payload
+    error-content: payload
+    enabled: true
+  application-authentication:
+    certificate: false
+  catalogs: {}
+  buffering: true
+definitions:
+  ValidateSCRequestRq_MessageType:
+    type: object
+    properties:
+      ValidateSCRequestRq:
+        $ref: '#/definitions/ValidateSCRequestRq_Type'
+  ValidateSCRequestRs_MessageType:
+    type: object
+    properties:
+      ValidateSCRequestRs:
+        $ref: '#/definitions/ValidateSCRequestRs_Type'
+  ValidateSCRequestRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/ValidateSCRequestRq_BodyType'
+  ValidateSCRequestRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+        default: "12"
+      SequenceNumber:
+        type: integer
+        default: "1232"
+      LaborerIdNo:
+        type: integer
+        default: "10002"
+      ValidationLevel:
+        type: integer
+        default: "1"
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+    - LaborerIdNo
+    - ValidationLevel
+  ValidateSCRequestRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/ValidateSCRequestRs_BodyType'
+  ValidateSCRequestRs_BodyType:
+    type: object
+    properties:
+      LaborerName:
+        type: string
+      NationalityCode:
+        type: string
+      ServiceStartDate:
+        type: string
+      JobCode:
+        type: integer
+      EstablishmentName:
+        type: string
+      PKLaborerId:
+        type: integer
+      UnifiedNumberId:
+        type: integer
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: VSCR0001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: VSCR0001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+        default: "465740"
+      IDNumber:
+        type: integer
+        default: "1024812248"
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /valscreq:
+    post:
+      operationId: ValidateSCRequest
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/ValidateSCRequestRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Validate SC Request
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/ValidateSCRequestRq_MessageType'
+        description: ValidateSCRequestRq
+        required: true

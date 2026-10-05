@@ -1,0 +1,339 @@
+swagger: "2.0"
+info:
+  title: GetUnusedMOMRALicensesV2
+  x-ibm-name: getunusedmomralicensesv2
+  version: 1.0.0
+  description: get unused MOMRA licenses V2 for the establishment using its commercial
+    number
+schemes:
+- https
+basePath: /estabmanagement
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-cmpm-establishment-locations)/estabmanagement/getunusedmomralicensesv2
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+definitions:
+  GetUnusedMOMRALicensesV2Rq_MessageType:
+    type: object
+    properties:
+      GetUnusedMOMRALicensesV2Rq:
+        $ref: '#/definitions/GetUnusedMOMRALicensesV2Rq_Type'
+  GetUnusedMOMRALicensesV2Rs_MessageType:
+    type: object
+    properties:
+      GetUnusedMOMRALicensesV2Rs:
+        $ref: '#/definitions/GetUnusedMOMRALicensesV2Rs_Type'
+  GetUnusedMOMRALicensesV2Rq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetUnusedMOMRALicensesV2Rq_BodyType'
+  GetUnusedMOMRALicensesV2Rq_BodyType:
+    type: object
+    properties:
+      NationalUnifiedNumber:
+        type: integer
+      SubNationalUnifiedNumber:
+        type: integer
+  GetUnusedMOMRALicensesV2Rs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetUnusedMOMRALicensesV2Rs_BodyType'
+  GetUnusedMOMRALicensesV2Rs_BodyType:
+    type: object
+    properties:
+      OwnerInfo:
+        $ref: '#/definitions/OwnerInfo_Type'
+      MunicipalLicenses:
+        $ref: '#/definitions/MunicipalLicenses_Type'
+      NationalAddress:
+        $ref: '#/definitions/NationalAddress_Type'
+  OwnerInfo_Type:
+    type: object
+    properties:
+      OwnerName:
+        type: string
+      OwnerIdentifier:
+        $ref: '#/definitions/OwnerIdentifier_Type'
+  OwnerIdentifier_Type:
+    type: object
+    properties:
+      CRNumber:
+        type: string
+      CharityId:
+        type: string
+      GovernmentalEntityId:
+        type: string
+      GulfId:
+        type: string
+      NationalId:
+        type: string
+      SevenHundredNumber:
+        type: string
+  MunicipalLicenses_Type:
+    type: object
+    properties:
+      License:
+        $ref: '#/definitions/License_Type'
+  NationalAddress_Type:
+    type: object
+    properties:
+      BuildingNo:
+        type: integer
+      ZipCode:
+        type: integer
+      UnitNo:
+        type: integer
+      AddtionalNo:
+        type: integer
+      City:
+        $ref: '#/definitions/Name_Type'
+      DistrictArea:
+        $ref: '#/definitions/Name_Type'
+      StreetName:
+        $ref: '#/definitions/Name_Type'
+  License_Type:
+    type: object
+    properties:
+      UnifiedLicenseNumber:
+        type: string
+      Amanah:
+        $ref: '#/definitions/CodeName_Type'
+      BaladiaName:
+        type: string
+      IssueDate:
+        type: string
+      ExipryDate:
+        type: string
+      LicenseStatus:
+        type: string
+      ActivitiesStructure:
+        $ref: '#/definitions/Activity_Type'
+      CommercialName:
+        type: string
+      ShopArea:
+        type: integer
+      DoorsCount:
+        type: integer
+      ShopAddress:
+        type: string
+      LocationCoordinates:
+        $ref: '#/definitions/Location_type'
+  Activity_Type:
+    type: object
+    properties:
+      ActivityISICCode:
+        type: string
+      ActivityISICDescription:
+        type: string
+      ActivityAmanahDescription:
+        type: string
+      ActivityArea:
+        type: integer
+      Boards:
+        $ref: '#/definitions/Boards_Type'
+  Boards_Type:
+    type: object
+    properties:
+      BoardType:
+        type: string
+      BoardArea:
+        type: integer
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: string
+      Name:
+        type: string
+  Name_Type:
+    type: object
+    properties:
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+  Location_type:
+    type: object
+    properties:
+      Longitude:
+        type: string
+      Latitude:
+        type: string
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: string
+      IDNumber:
+        type: string
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /getunusedmomlicensesv2:
+    post:
+      operationId: GetUnusedMOMRALicensesV2
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetUnusedMOMRALicensesV2Rs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: get unused MOMRA licenses V2 for the establishment using its commercial
+        number
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetUnusedMOMRALicensesV2Rq_MessageType'
+        description: GetUnusedMOMRALicensesV2Rq
+        required: true

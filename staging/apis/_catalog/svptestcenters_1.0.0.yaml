@@ -1,0 +1,143 @@
+swagger: "2.0"
+info:
+  title: SVPTestCenters
+  x-ibm-name: svptestcenters
+  version: 1.0.0
+  description: Get and update SVP Test Centers
+schemes:
+- https
+basePath: /api/v1/web_service
+security:
+- clientID: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientID:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        target-url: $(svp-international-api)/$(request.path)?$(request.querystring)
+        username: ibm-connect-user
+        password: fcxUmYI
+    catch: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+definitions:
+  PutSVPTestCentersRq_MessageType:
+    type: object
+    properties:
+      status:
+        type: string
+  GetSVPTestCentersRq_MessageType:
+    type: object
+    properties:
+      country:
+        type: string
+  GetSVPTestCentersRS_MessageType:
+    type: array
+    items:
+      $ref: '#/definitions/test_centers'
+  test_centers:
+    type: object
+    properties:
+      test_center_id:
+        type: integer
+      status:
+        type: string
+      test_center_city:
+        type: string
+      test_center_name:
+        type: string
+paths:
+  /test_center_status_requests:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      parameters:
+      - name: id
+        in: query
+        required: true
+        type: integer
+        format: int32
+      - name: status
+        in: body
+        required: true
+        schema:
+          type: string
+      consumes: []
+      produces:
+      - application/json
+    parameters:
+    - name: id
+      in: query
+      required: true
+      type: string
+  /test_centers:
+    get:
+      operationId: ""
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetSVPTestCentersRS_MessageType'
+      description: SVPOccupations
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetSVPTestCentersRq_MessageType'
+        description: 'Get Test Centers '
+        required: true
+    parameters:
+    - name: country
+      in: query
+      required: false
+      type: string

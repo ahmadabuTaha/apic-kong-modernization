@@ -1,0 +1,507 @@
+swagger: "2.0"
+info:
+  title: NIC_SubmitVisa
+  x-ibm-name: nic-submitvisa
+  version: 1.0.0
+schemes:
+- https
+basePath: /nic/v1
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - map:
+        version: 2.0.0
+        title: map
+        inputs:
+          "":
+            schema:
+              description: ""
+              type: object
+              properties:
+                laborOfficeId:
+                  type: string
+                  name: laborOfficeId
+                sequenceNumber:
+                  type: string
+                  name: sequenceNumber
+                unifiedNationalNumber:
+                  type: string
+                  name: unifiedNationalNumber
+                requesterIdNo:
+                  type: string
+                  name: requesterIdNo
+                requestSequence:
+                  type: string
+                  name: requestSequence
+                requestYear:
+                  type: string
+                  name: requestYear
+                reasonAddActivity:
+                  type: string
+                  name: reasonAddActivity
+                reasonExtendedActivity:
+                  type: string
+                  name: reasonExtendedActivity
+                reasonFinalExit:
+                  type: string
+                  name: reasonFinalExit
+                reasonGovernmentContract:
+                  type: string
+                  name: reasonGovernmentContract
+                reasonNewCompany:
+                  type: string
+                  name: reasonNewCompany
+                reasonPrivateContract:
+                  type: string
+                  name: reasonPrivateContract
+                reasonSeasonalEmployee:
+                  type: string
+                  name: reasonSeasonalEmployee
+                reasonVisaNotUsed:
+                  type: string
+                  name: reasonVisaNotUsed
+                visaType:
+                  type: string
+                  name: visaType
+                visaRequestList:
+                  type: object
+                  properties:
+                    visa:
+                      type: array
+                      items:
+                        properties:
+                          gender:
+                            type: string
+                            name: gender
+                          job:
+                            type: string
+                            name: job
+                          nationality:
+                            type: string
+                            name: nationality
+                          origin:
+                            type: string
+                            name: origin
+                          religion:
+                            type: string
+                            name: religion
+                          numberOfVisas:
+                            type: string
+                            name: numberOfVisas
+                        type: object
+                      name: visa
+                  name: visaRequestList
+              example: " {\r\n            \"laborOfficeId\": \"1\",\r\n            \"sequenceNumber\":
+                \"2133\",\r\n            \"unifiedNationalNumber\": \"1011209903\",\r\n
+                \           \"requesterIdNo\": \"1011209903\",\r\n            \"requestSequence\":
+                \"1211574\",\r\n            \"requestYear\": \"1442\",\r\n            \"reasonAddActivity\":
+                \"1\",\r\n            \"reasonExtendedActivity\": \"1\",\r\n            \"reasonFinalExit\":
+                \"1\",\r\n            \"reasonGovernmentContract\": \"1\",\r\n            \"reasonNewCompany\":
+                \"1\",\r\n            \"reasonPrivateContract\": \"1\",\r\n            \"reasonSeasonalEmployee\":
+                \"1\",\r\n            \"reasonVisaNotUsed\": \"1\",\r\n            \"visaType\":
+                \"2\",\r\n            \"visaRequestList\": {\r\n                \"visa\":
+                [{\r\n                    \"gender\": \"1\",\r\n                    \"job\":
+                \"2133031\",\r\n                    \"nationality\": \"311\",\r\n
+                \                   \"origin\": \"1\",\r\n                    \"religion\":
+                \"1\",\r\n                    \"numberOfVisas\": \"1\"\r\n                },\r\n
+                \               {\r\n                    \"gender\": \"1\",\r\n                    \"job\":
+                \"1217311\",\r\n                    \"nationality\": \"325\",\r\n
+                \                   \"origin\": \"1\",\r\n                    \"religion\":
+                \"1\",\r\n                    \"numberOfVisas\": \"1\"\r\n                }]\r\n
+                \           }\r\n        \r\n}"
+            variable: request.body
+            content: application/json
+        outputs:
+          "":
+            schema:
+              description: ""
+              type: object
+              properties:
+                LaborOfficeId:
+                  type: string
+                SequenceNumber:
+                  type: string
+                UnifiedNationalNumber:
+                  type: string
+                RequesterIdNo:
+                  type: string
+                RequestSequence:
+                  type: string
+                RequestYear:
+                  type: string
+                ReasonAddActivity:
+                  type: string
+                ReasonExtendedActivity:
+                  type: string
+                ReasonFinalExit:
+                  type: string
+                ReasonGovernmentContract:
+                  type: string
+                ReasonNewCompany:
+                  type: string
+                ReasonPrivateContract:
+                  type: string
+                ReasonSeasonalEmployee:
+                  type: string
+                ReasonVisaNotUsed:
+                  type: string
+                VisaType:
+                  type: string
+                VisaRequestList:
+                  type: object
+                  properties:
+                    Visa:
+                      type: array
+                      items:
+                        properties:
+                          Gender:
+                            type: string
+                          Job:
+                            type: string
+                          Nationality:
+                            type: string
+                          Origin:
+                            type: string
+                          Religion:
+                            type: string
+                          NumberOfVisas:
+                            type: string
+                        type: object
+              example: " {\r\n            \"LaborOfficeId\": \"1\",\r\n            \"SequenceNumber\":
+                \"2133\",\r\n            \"UnifiedNationalNumber\": \"1011209903\",\r\n
+                \           \"RequesterIdNo\": \"1011209903\",\r\n            \"RequestSequence\":
+                \"1211574\",\r\n            \"RequestYear\": \"1442\",\r\n            \"ReasonAddActivity\":
+                \"1\",\r\n            \"ReasonExtendedActivity\": \"1\",\r\n            \"ReasonFinalExit\":
+                \"1\",\r\n            \"ReasonGovernmentContract\": \"1\",\r\n            \"ReasonNewCompany\":
+                \"1\",\r\n            \"ReasonPrivateContract\": \"1\",\r\n            \"ReasonSeasonalEmployee\":
+                \"1\",\r\n            \"ReasonVisaNotUsed\": \"1\",\r\n            \"VisaType\":
+                \"2\",\r\n            \"VisaRequestList\": {\r\n                \"Visa\":
+                [{\r\n                    \"Gender\": \"1\",\r\n                    \"Job\":
+                \"2133031\",\r\n                    \"Nationality\": \"311\",\r\n
+                \                   \"Origin\": \"1\",\r\n                    \"Religion\":
+                \"1\",\r\n                    \"NumberOfVisas\": \"1\"\r\n                },\r\n
+                \               {\r\n                    \"Gender\": \"1\",\r\n                    \"Job\":
+                \"1217311\",\r\n                    \"Nationality\": \"325\",\r\n
+                \                   \"Origin\": \"1\",\r\n                    \"Religion\":
+                \"1\",\r\n                    \"NumberOfVisas\": \"1\"\r\n                }]\r\n
+                \           }\r\n        \r\n}"
+            variable: message.body
+            content: application/json
+        actions:
+        - set: .LaborOfficeId
+          from: .laborOfficeId
+        - set: .SequenceNumber
+          from: .sequenceNumber
+        - set: .UnifiedNationalNumber
+          from: .unifiedNationalNumber
+        - set: .RequesterIdNo
+          from: .requesterIdNo
+        - set: .RequestSequence
+          from: .requestSequence
+        - set: .RequestYear
+          from: .requestYear
+        - set: .ReasonAddActivity
+          from: .reasonAddActivity
+        - set: .ReasonExtendedActivity
+          from: .reasonExtendedActivity
+        - set: .ReasonFinalExit
+          from: .reasonFinalExit
+        - set: .ReasonGovernmentContract
+          from: .reasonGovernmentContract
+        - set: .ReasonNewCompany
+          from: .reasonNewCompany
+        - set: .ReasonPrivateContract
+          from: .reasonPrivateContract
+        - set: .ReasonSeasonalEmployee
+          from: .reasonSeasonalEmployee
+        - set: .ReasonVisaNotUsed
+          from: .reasonVisaNotUsed
+        - set: .VisaType
+          from: .visaType
+        - create: .VisaRequestList.Visa
+          foreach: .visaRequestList.visa
+          from: .visaRequestList.visa
+          actions:
+          - set: NumberOfVisas
+            from: numberOfVisas
+          - set: Religion
+            from: religion
+          - set: Origin
+            from: origin
+          - set: Nationality
+            from: nationality
+          - set: Job
+            from: job
+          - set: Gender
+            from: gender
+        options:
+          mapEnablePostProcessingJSON: true
+          mapEmulateV4EmptyJSONObject: false
+          mapEmulateV4DefaultRequiredProps: false
+          mapReferenceLimit: 1
+          includeEmptyXMLElements: false
+          namespaceInheritance: false
+          inlineNamespaces: false
+          mapResolveApicVariables: false
+          mapOptimizeSchemaDefinition: true
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\n\nvar cfg={\n    \"serviceCode\" : \"NSVR0001\",\n
+          \   \"channelId\" : \"Integration\",\n    \"requestName\" : \"SubmitVisaRequestNICRq\",\n
+          \   \"responseName\": \"SubmitVisaRequestNICRs\"\n    \n};\n\napim.setvariable('cfg',cfg);"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare_Request
+        source: "var apim = require('apim');\r\n\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\n\r\nvar appcReq
+          = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n            \"TransactionId\"
+          : millisecondsvalue,\r\n            \"ChannelId\": cfg.channelId,\r\n            \"SessionId\":
+          apim.getvariable('message.headers.Reference-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode\r\n        },\r\n
+          \       \"Body\" : apim.getvariable('message.body')\r\n            \r\n
+          \       \r\n    }\r\n};\r\n\r\nif (typeof OperatorId !== 'undefined')\r\n
+          \   appcReq[cfg.requestName].Header.UserInfo = {\r\n        \"IDNumber\"
+          : OperatorId\r\n    };\r\nsession.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n    \r\n    \r\n\r\n    //return
+          the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour
+          + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-nic-nicsubmit)/common/subvisareqnic
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_Headers
+        source: "\tvar apim = require('apim');\n    apim.output('application/json');\n
+          \   \n    var cfg = apim.getvariable('cfg');\n    \n\tvar TransactionId
+          = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.TransactionId\");\n\tvar
+          ChannelId = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.ChannelId\");\n\tvar
+          RequestTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.RequestTime\");\n\tvar
+          SessionId = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.SessionId\");\n\tvar
+          MWRequestTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.MWRequestTime\");\n\tvar
+          MWResponseTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.MWResponseTime\");\n\tvar
+          status = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.ResponseStatus.Status\");\n\t\n\n
+          \   apim.setvariable('message.headers.Transaction-Id',TransactionId,'add');\n
+          \   apim.setvariable('message.headers.Channel-Id',ChannelId,'add');\n    if
+          (RequestTime !== 'undefined')\n\t    apim.setvariable('message.headers.RequestTime',RequestTime,'add');\n\tif
+          (SessionId !== 'undefined')\n        apim.setvariable('message.headers.Reference-Id',SessionId,'add');\n
+          \    if (MWRequestTime !== 'undefined')\n        apim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');\n
+          \   if (MWResponseTime !== 'undefined')\n        apim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');\n\n
+          \   \n    apim.setvariable('message.headers.Response-Status',status,'add');\n
+          \   "
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Response
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar body = message[cfg.responseName].Body;\n\nsession.output.write(body);\napim.output('application/json');"
+          - map:
+              version: 2.0.0
+              title: map
+              inputs:
+                "":
+                  schema:
+                    description: ""
+                    type: object
+                    properties:
+                      LaborOfficeId:
+                        type: string
+                        name: LaborOfficeId
+                      NICVisaDate:
+                        type: string
+                        name: NICVisaDate
+                      NICVisaNumber:
+                        type: string
+                        name: NICVisaNumber
+                      RequestYear:
+                        type: string
+                        name: RequestYear
+                      RequestSequence:
+                        type: string
+                        name: RequestSequence
+                      VisaList:
+                        type: object
+                        properties:
+                          Visa:
+                            type: object
+                            properties:
+                              BorderNumber:
+                                type: string
+                                name: BorderNumber
+                              Job:
+                                type: string
+                                name: Job
+                              Nationality:
+                                type: string
+                                name: Nationality
+                              Religion:
+                                type: string
+                                name: Religion
+                              Gender:
+                                type: string
+                                name: Gender
+                              Origin:
+                                type: string
+                                name: Origin
+                            name: Visa
+                        name: VisaList
+                    example: "{\r\n    \"LaborOfficeId\": \"5\",\r\n    \"NICVisaDate\":
+                      \"14420521\",\r\n    \"NICVisaNumber\": \"1\",\r\n    \"RequestYear\":
+                      \"1441\",\r\n    \"RequestSequence\": \"1111111\",\r\n    \"VisaList\":
+                      {\r\n        \"Visa\": {\r\n            \"BorderNumber\": \"4123142453\",\r\n
+                      \           \"Job\": \"1112031\",\r\n            \"Nationality\":
+                      \"1\",\r\n            \"Religion\": \"1\",\r\n            \"Gender\":
+                      \"1\",\r\n            \"Origin\": \"1\"\r\n        }\r\n    }\r\n}"
+                  variable: message.body
+                  content: application/json
+              outputs:
+                "":
+                  schema:
+                    description: ""
+                    type: object
+                    properties:
+                      laborOfficeId:
+                        type: string
+                        name: laborOfficeId
+                      nicVisaDate:
+                        type: string
+                        name: nicVisaDate
+                      nicVisaNumber:
+                        type: string
+                        name: nicVisaNumber
+                      requestYear:
+                        type: string
+                        name: requestYear
+                      requestSequence:
+                        type: string
+                        name: requestSequence
+                      visaList:
+                        type: object
+                        properties:
+                          visa:
+                            type: object
+                            properties:
+                              borderNumber:
+                                type: string
+                                name: borderNumber
+                              job:
+                                type: string
+                                name: job
+                              nationality:
+                                type: string
+                                name: nationality
+                              religion:
+                                type: string
+                                name: religion
+                              gender:
+                                type: string
+                                name: gender
+                              origin:
+                                type: string
+                                name: origin
+                            name: visa
+                        name: visaList
+                    example: "{\r\n    \"laborOfficeId\": \"5\",\r\n    \"nicVisaDate\":
+                      \"14420521\",\r\n    \"nicVisaNumber\": \"1\",\r\n    \"requestYear\":
+                      \"1441\",\r\n    \"requestSequence\": \"1111111\",\r\n    \"visaList\":
+                      {\r\n        \"visa\": {\r\n            \"borderNumber\": \"4123142453\",\r\n
+                      \           \"job\": \"1112031\",\r\n            \"nationality\":
+                      \"1\",\r\n            \"religion\": \"1\",\r\n            \"gender\":
+                      \"1\",\r\n            \"origin\": \"1\"\r\n        }\r\n    }\r\n}"
+                  variable: message.body
+                  content: application/json
+              actions:
+              - set: .laborOfficeId
+                from: .LaborOfficeId
+              - set: .nicVisaDate
+                from: .NICVisaDate
+              - set: .nicVisaNumber
+                from: .NICVisaNumber
+              - set: .requestYear
+                from: .RequestYear
+              - set: .requestSequence
+                from: .RequestSequence
+              - set: .visaList.visa.borderNumber
+                from: .VisaList.Visa.BorderNumber
+              - set: .visaList.visa.job
+                from: .VisaList.Visa.Job
+              - set: .visaList.visa.nationality
+                from: .VisaList.Visa.Nationality
+              - set: .visaList.visa.religion
+                from: .VisaList.Visa.Religion
+              - set: .visaList.visa.gender
+                from: .VisaList.Visa.Gender
+              - set: .visaList.visa.origin
+                from: .VisaList.Visa.Origin
+              options:
+                mapEnablePostProcessingJSON: true
+                mapEmulateV4EmptyJSONObject: false
+                mapEmulateV4DefaultRequiredProps: false
+                mapReferenceLimit: 1
+                includeEmptyXMLElements: false
+                namespaceInheritance: false
+                inlineNamespaces: false
+                mapResolveApicVariables: false
+                mapOptimizeSchemaDefinition: true
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Error
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar error = {\n    \"ErrorResponse\":
+                message[cfg.responseName].Header.ResponseStatus\n}\n\nsession.output.write(error);\napim.output('application/json');"
+    catch: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+paths:
+  /submit-visa: {}

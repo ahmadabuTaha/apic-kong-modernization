@@ -1,0 +1,288 @@
+swagger: "2.0"
+info:
+  title: ValidateEstContractsAuth V2
+  x-ibm-name: validateestcontractsauth-v2
+  version: 1.0.0
+  description: 'This service is used to validate establishment contracts auth '
+schemes:
+- https
+basePath: /contractmanagement/v2
+securityDefinitions:
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+  Oauth2.0:
+    type: oauth2
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    flow: application
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-cntmv2-contractauth)/contractmanagement/ValidateEstContractsAuth
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        persistent-connection: true
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+definitions:
+  ValidateEstablishmentContractsAuthenticationRq_MessageType:
+    type: object
+    properties:
+      ValidateEstablishmentContractsAuthenticationRq:
+        $ref: '#/definitions/ValidateEstablishmentContractsAuthenticationRq_Type'
+  ValidateEstablishmentContractsAuthenticationRs_MessageType:
+    type: object
+    properties:
+      ValidateEstablishmentContractsAuthenticationRs:
+        $ref: '#/definitions/ValidateEstablishmentContractsAuthenticationRs_Type'
+  ValidateEstablishmentContractsAuthenticationRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/ValidateEstablishmentContractsAuthenticationRq_BodyType'
+  ValidateEstablishmentContractsAuthenticationRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      ServiceCode:
+        type: string
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+    - ServiceCode
+  ValidateEstablishmentContractsAuthenticationRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/ValidateEstablishmentContractsAuthenticationRs_BodyType'
+  ValidateEstablishmentContractsAuthenticationRs_BodyType:
+    type: object
+    properties:
+      ForeignersCount:
+        type: integer
+      SaudisCount:
+        type: integer
+      TotalLaborersCount:
+        type: integer
+      ForeignersAuthenticatedContracts:
+        type: integer
+      SaudisAuthenticatedContracts:
+        type: integer
+      TotalAuthenticatedContracts:
+        type: integer
+      SaudisAuthenticationPercentage:
+        type: integer
+      ForeignersAuthenticationPercentage:
+        type: integer
+      TotalAuthenticationPercentage:
+        type: integer
+      IsExempted:
+        type: integer
+      HasNoLabrers:
+        type: integer
+      ErrorList:
+        $ref: '#/definitions/ErrorList_Type'
+    required:
+    - ForeignersCount
+    - SaudisCount
+    - TotalLaborersCount
+    - ForeignersAuthenticatedContracts
+    - SaudisAuthenticatedContracts
+    - TotalAuthenticatedContracts
+    - SaudisAuthenticationPercentage
+    - ForeignersAuthenticationPercentage
+    - TotalAuthenticationPercentage
+    - IsExempted
+    - HasNoLabrers
+  ErrorList_Type:
+    type: object
+    properties:
+      Error:
+        type: array
+        items:
+          $ref: '#/definitions/Error_Type'
+    required:
+    - Error
+  Error_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      DescriptionEn:
+        type: string
+      DescriptionAr:
+        type: string
+    required:
+    - ErrorCode
+    - DescriptionEn
+    - DescriptionAr
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /ValidateEstContractsAuth:
+    post:
+      operationId: ValidateEstablishmentContractsAuthentication
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/ValidateEstablishmentContractsAuthenticationRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: 'ValidateEstablishmentContractsAuthentication '
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/ValidateEstablishmentContractsAuthenticationRq_MessageType'
+        description: The scope of this service is to validate the establishment in
+          terms of contract authentication.
+        required: true
+security:
+- clientId: []
+  Oauth2.0:
+  - IntegrationScope

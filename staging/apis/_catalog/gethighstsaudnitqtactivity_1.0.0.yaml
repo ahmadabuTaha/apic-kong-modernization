@@ -1,0 +1,255 @@
+swagger: "2.0"
+info:
+  title: GetHighstSaudNitqtActivity
+  x-ibm-name: gethighstsaudnitqtactivity
+  version: 1.0.0
+  description: This service is used to get highest saudization nitaqat activity based
+    on the isic4 activities.
+schemes:
+- https
+basePath: /estabmanagement
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(cat-target-hostname)$(cat-target-url-estabmanagement)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  GetHighstSaudNitqtActivityRq_MessageType:
+    type: object
+    properties:
+      GetHighstSaudNitqtActivityRq:
+        $ref: '#/definitions/GetHighstSaudNitqtActivityRq_Type'
+  GetHighstSaudNitqtActivityRs_MessageType:
+    type: object
+    properties:
+      GetHighstSaudNitqtActivityRs:
+        $ref: '#/definitions/GetHighstSaudNitqtActivityRs_Type'
+  GetHighstSaudNitqtActivityRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetHighstSaudNitqtActivityRq_BodyType'
+  GetHighstSaudNitqtActivityRq_BodyType:
+    type: object
+    properties:
+      ListOfISIC4Activities:
+        $ref: '#/definitions/ListOfISIC4Activities_Type'
+  GetHighstSaudNitqtActivityRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetHighstSaudNitqtActivityRs_BodyType'
+  GetHighstSaudNitqtActivityRs_BodyType:
+    type: object
+    properties:
+      NitaqCode:
+        type: integer
+      NitaqName:
+        type: string
+      SaudPercentage:
+        type: integer
+    required:
+    - NitaqName
+    - NitaqCode
+    - SaudPercentage
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "200966842998"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: GHSNA001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: GHSNA001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+        default: "23432"
+      IDNumber:
+        type: integer
+        default: "324324"
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+  ListOfISIC4Activities_Type:
+    type: object
+    properties:
+      Item:
+        type: array
+        items:
+          $ref: '#/definitions/Item_Type'
+  Item_Type:
+    type: object
+    properties:
+      ISIC4Code:
+        type: integer
+        default: "9100"
+    required:
+    - ISIC4Code
+paths:
+  /gethighstsaudnitqtactivity:
+    post:
+      operationId: GetHighstSaudNitqtActivity
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetHighstSaudNitqtActivityRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Get Highst Saud Nitqt Activity
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetHighstSaudNitqtActivityRq_MessageType'
+        description: GetHighstSaudNitqtActivityRq
+        required: true

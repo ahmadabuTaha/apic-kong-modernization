@@ -1,0 +1,59 @@
+info:
+  version: 1.0.0
+  title: NICMusaned
+  name: nicmusaned
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      validatecompensationforvisa1.0.0: {}
+      docompensationforvisa1.0.0: {}
+      opensponsorfileforindividual1.0.0: {}
+      microconvertdate1.0.0: {}
+      getcurrentdomesticsponsorinfo1.0.0: {}
+      doissuelaborvisa1.0.0: {}
+      microlistpersondependents1.0.0: {}
+      validateissuelaborvisa1.0.0: {}
+      getvisainformation1.0.0: {}
+      cancelledvisas1.0.0: {}
+      microlistpersonoccupations1.0.0: {}
+      doissuelaborvisaforindividual1.0.0: {}
+apis:
+  microlistpersonoccupations1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/microlistpersonoccupations_1.0.0.yaml
+  cancelledvisas1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/cancelledvisas_1.0.0.yaml
+  getvisainformation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getvisainformation_1.0.0.yaml
+  validateissuelaborvisa1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validateissuelaborvisa_1.0.0.yaml
+  getcurrentdomesticsponsorinfo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getcurrentdomesticsponsorinfo_1.0.0.yaml
+  microconvertdate1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/microconvertdate_1.0.0.yaml
+  doissuelaborvisa1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/doissuelaborvisa_1.0.0.yaml
+  microlistpersondependents1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/microlistpersondependents_1.0.0.yaml
+  validatecompensationforvisa1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validatecompensationforvisa_1.0.0.yaml
+  docompensationforvisa1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/docompensationforvisa_1.0.0.yaml
+  opensponsorfileforindividual1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/opensponsorfileforindividual_1.0.0.yaml
+  doissuelaborvisaforindividual1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/doissuelaborvisaforindividual_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

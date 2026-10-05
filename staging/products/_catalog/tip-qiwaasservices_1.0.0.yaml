@@ -1,0 +1,59 @@
+info:
+  version: 1.0.0
+  title: TIP-QiwaAsServices
+  name: tip-qiwaasservices
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      qaas_getemploymentcontractslist1.0.0: {}
+      qaas-getcontractfileslist1.0.0: {}
+      qaas_getcontractspecialties1.0.0: {}
+      qaas_getcontractexecutionlocations1.0.0: {}
+      qaas_getcontractworklocations1.0.0: {}
+      qaas_getcontractoccupationslist1.0.0: {}
+      qaas_uploadfiles1.0.0: {}
+      qaas_createemploymentcontract1.0.0: {}
+      qaas_updateemploymentcontract1.0.0: {}
+      qaas-terminateemploymentcontract1.0.0: {}
+      qaas_getemploymentcontractdetails1.0.0: {}
+      qaas_translegacyempcontract1.0.0: {}
+apis:
+  qaas_getemploymentcontractslist1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qaas_getemploymentcontractslist_1.0.0.yaml
+  qaas_getcontractoccupationslist1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qaas_getcontractoccupationslist_1.0.0.yaml
+  qaas-getcontractfileslist1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qaas-getcontractfileslist_1.0.0.yaml
+  qaas_getemploymentcontractdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qaas_getemploymentcontractdetails_1.0.0.yaml
+  qaas_getcontractexecutionlocations1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qaas_getcontractexecutionlocations_1.0.0.yaml
+  qaas_updateemploymentcontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qaas_updateemploymentcontract_1.0.0.yaml
+  qaas-terminateemploymentcontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qaas-terminateemploymentcontract_1.0.0.yaml
+  qaas_getcontractworklocations1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qaas_getcontractworklocations_1.0.0.yaml
+  qaas_getcontractspecialties1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qaas_getcontractspecialties_1.0.0.yaml
+  qaas_uploadfiles1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qaas_uploadfiles_1.0.0.yaml
+  qaas_createemploymentcontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qaas_createemploymentcontract_1.0.0.yaml
+  qaas_translegacyempcontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qaas_translegacyempcontract_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

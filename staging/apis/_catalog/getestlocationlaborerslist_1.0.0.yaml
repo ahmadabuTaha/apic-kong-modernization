@@ -1,0 +1,328 @@
+swagger: "2.0"
+info:
+  title: GetEstLocationLaborersList
+  x-ibm-name: getestlocationlaborerslist
+  version: 1.0.0
+  description: This service is used to get all foreign laborers under a specific establishment
+    with specific laborer details in addition to the assigned location for each laborer.
+schemes:
+- https
+basePath: /transloc
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-cmpm-establishment-locations)/transloc/getestloclablist
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        persistent-connection: true
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+definitions:
+  GetEstLocationLaborersListRq_MessageType:
+    type: object
+    properties:
+      GetEstLocationLaborersListRq:
+        $ref: '#/definitions/GetEstLocationLaborersListRq_Type'
+  GetEstLocationLaborersListRs_MessageType:
+    type: object
+    properties:
+      GetEstLocationLaborersListRs:
+        $ref: '#/definitions/GetEstLocationLaborersListRs_Type'
+  GetEstLocationLaborersListRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetEstLocationLaborersListRq_BodyType'
+  GetEstLocationLaborersListRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      LocationId:
+        type: integer
+      LaborerIdNo:
+        type: integer
+      LaborerFirstName:
+        type: string
+      laborerLastName:
+        type: string
+      Gender:
+        type: integer
+      NationalityId:
+        type: integer
+      AssignedLaborers:
+        type: integer
+      PageSize:
+        type: integer
+      PageIndex:
+        type: integer
+      OccupationIds:
+        type: string
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+    - PageSize
+    - PageIndex
+  GetEstLocationLaborersListRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetEstLocationLaborersListRs_BodyType'
+  GetEstLocationLaborersListRs_BodyType:
+    type: object
+    properties:
+      Laborers:
+        $ref: '#/definitions/Laborers_Type'
+      TotalLaborersCount:
+        type: integer
+    required:
+    - Laborers
+    - TotalLaborersCount
+  Laborers_Type:
+    type: object
+    properties:
+      LaborersDetails:
+        type: array
+        items:
+          $ref: '#/definitions/LaborersDetails_Type'
+  LaborersDetails_Type:
+    type: object
+    properties:
+      LaborerIdNo:
+        type: integer
+      BorderNumber:
+        type: integer
+      LaborerName:
+        $ref: '#/definitions/LaborerName_Type'
+      Gender:
+        type: string
+      Nationality:
+        $ref: '#/definitions/CodeName_Type'
+      LocationDetails:
+        $ref: '#/definitions/Location_Type'
+    required:
+    - LaborerIdNo
+    - BorderNumber
+    - LaborerName
+    - Gender
+    - Nationality
+    - LocationDetails
+  LaborerName_Type:
+    type: object
+    properties:
+      FirstName:
+        type: string
+      SecondName:
+        type: string
+      ThirdName:
+        type: string
+      FourthName:
+        type: string
+      FullName:
+        type: string
+    required:
+    - FirstName
+    - SecondName
+    - ThirdName
+    - FourthName
+    - FullName
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      Name:
+        type: string
+      NameEn:
+        type: string
+    required:
+    - Code
+    - Name
+  Location_Type:
+    type: object
+    properties:
+      LocationId:
+        type: string
+      LocationName:
+        type: string
+      LocationDescription:
+        type: string
+    required:
+    - LocationId
+    - LocationName
+    - LocationDescription
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /getestloclablist:
+    post:
+      operationId: GetEstLocationLaborersList
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetEstLocationLaborersListRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: This service is used to get all foreign laborers under a specific
+        establishment with specific laborer details in addition to the assigned location
+        for each laborer..
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetEstLocationLaborersListRq_MessageType'
+        description: GetEstLocationLaborersListRq
+        required: true

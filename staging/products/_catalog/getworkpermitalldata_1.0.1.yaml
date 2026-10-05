@@ -1,0 +1,374 @@
+swagger: "2.0"
+info:
+  title: GetWorkPermitAllData
+  x-ibm-name: getworkpermitalldata
+  version: 1.0.1
+  description: Get all work permit needed data for calculating
+schemes:
+- https
+basePath: /workpermit
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-wp-getwpalldata)$(request.path)
+        follow-redirects: false
+        timeout: 120
+        parameter-control:
+          type: blocklist
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        persistent-connection: true
+    catch: []
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+definitions:
+  GetWorkPermitAllDataRq_MessageType:
+    type: object
+    properties:
+      GetWorkPermitAllDataRq:
+        $ref: '#/definitions/GetWorkPermitAllDataRq_Type'
+  GetWorkPermitAllDataRs_MessageType:
+    type: object
+    properties:
+      GetWorkPermitAllDataRs:
+        $ref: '#/definitions/GetWorkPermitAllDataRs_Type'
+  GetWorkPermitAllDataRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetWorkPermitAllDataRq_BodyType'
+  GetWorkPermitAllDataRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      LaborersList:
+        $ref: '#/definitions/LaborersList_Type'
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+    - LaborersList
+  LaborersList_Type:
+    type: object
+    properties:
+      Laborers:
+        type: array
+        items:
+          $ref: '#/definitions/Laborers_Type'
+    required:
+    - Laborers
+  Laborers_Type:
+    type: object
+    properties:
+      LaborerId:
+        type: integer
+    required:
+    - LaborerId
+  GetWorkPermitAllDataRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetWorkPermitAllDataRs_BodyType'
+  GetWorkPermitAllDataRs_BodyType:
+    type: object
+    properties:
+      UnifiedNumberId:
+        type: integer
+      FinancialYear:
+        $ref: '#/definitions/FinancialYear_Type'
+      LaborerInfo:
+        $ref: '#/definitions/LaborerInfoList_Type'
+      ForeginLaborersCount:
+        type: integer
+      SaudiLaborersCount:
+        type: integer
+      OwnersCount:
+        type: integer
+      TotalLaborersCount:
+        type: integer
+      IsIndustrialEstablishment:
+        type: integer
+      IsAjeerlExemptedEstablishment:
+        type: integer
+      IsEconomicalEstablishment:
+        type: integer
+      PaidExtraFees:
+        type: number
+      PaidEquivalentFees:
+        type: number
+      Exemptions:
+        $ref: '#/definitions/Exemptions_Type'
+    required:
+    - UnifiedNumberId
+    - FinancialYear
+    - LaborerInfo
+    - ForeginLaborersCount
+    - SaudiLaborersCount
+    - OwnersCount
+    - TotalLaborersCount
+    - IsAjeerlExemptedEstablishment
+    - IsEconomicalEstablishment
+    - IsIndustrialEstablishment
+    - PaidExtraFees
+    - PaidEquivalentFees
+    - Exemptions
+  FinancialYear_Type:
+    type: object
+    properties:
+      FinancialYearStartHijri:
+        type: integer
+      FinancialYearExpiryHijri:
+        type: integer
+      FinancialYearStartGreg:
+        type: string
+      FinancialYearExpiryGreg:
+        type: string
+    required:
+    - FinancialYearStartHijri
+    - FinancialYearExpiryHijri
+    - FinancialYearStartGreg
+    - FinancialYearExpiryGreg
+  LaborerInfoList_Type:
+    type: object
+    properties:
+      Laborer:
+        type: array
+        items:
+          $ref: '#/definitions/LabInfo_Type'
+    required:
+    - Laborer
+  LabInfo_Type:
+    type: object
+    properties:
+      LaborerName:
+        type: string
+      IdNumber:
+        type: integer
+      IdExpiryDate:
+        type: string
+      KingdomEntryDate:
+        type: string
+      IsDependant:
+        type: integer
+      IsHomeWorker:
+        type: integer
+      IsGovTransferred:
+        type: integer
+      TransferDate:
+        type: string
+      DebtCalculationEndDate:
+        type: string
+      WorkPermitId:
+        type: integer
+      WorkPermitStartDate:
+        type: string
+      WorkPermitExpDate:
+        type: string
+      IsExempted:
+        type: integer
+      ExemptionTypeId:
+        type: integer
+      CurrentWorkPermitStartDate:
+        $ref: '#/definitions/HijriGreg_Type'
+      LastDelayedDate:
+        $ref: '#/definitions/HijriGreg_Type'
+      Count_Regular:
+        type: integer
+      Count_Delayed:
+        type: integer
+      DelayedFees:
+        type: integer
+      DelayedWPFees:
+        type: integer
+    required:
+    - LaborerName
+    - IdNumber
+    - IdExpiryDate
+    - KingdomEntryDate
+    - TransferDate
+    - IsDependant
+    - IsHomeWorker
+    - IsGovTransferred
+    - DebtCalculationEndDate
+    - WorkPermitId
+    - WorkPermitStartDate
+    - WorkPermitExpDate
+    - IsExempted
+    - ExemptionTypeId
+    - CurrentWorkPermitStartDate
+    - LastDelayedDate
+    - Count_Regular
+    - Count_Delayed
+    - DelayedFees
+    - DelayedWPFees
+  NewlyJoined_Type:
+    type: object
+    properties:
+      ServiceStartDate:
+        type: string
+      IqamaExpirationDate:
+        type: string
+    required:
+    - ServiceStartDate
+    - IqamaExpirationDate
+  Exemptions_Type:
+    type: object
+    properties:
+      FarmersAllowedCount:
+        type: integer
+      SmallEstablishmentAllowedUnits:
+        type: integer
+      SmallEstablishmentAllowedMonths:
+        type: integer
+      SmallEstablishmentUsedCount:
+        type: integer
+      SmallEstablishmentUsedMonths:
+        type: integer
+      SmallEstablishmentUsedUnits:
+        type: number
+    required:
+    - FarmersAllowedCount
+    - SmallEstablishmentAllowedUnits
+    - SmallEstablishmentAllowedMonths
+    - SmallEstablishmentUsedCount
+    - SmallEstablishmentUsedMonths
+    - SmallEstablishmentUsedUnits
+  HijriGreg_Type:
+    type: object
+    properties:
+      Hijri:
+        type: integer
+      Gregorian:
+        type: string
+    required:
+    - Hijri
+    - Gregorian
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+paths:
+  /getwpalldata:
+    post:
+      operationId: GetWorkPermitAllData
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetWorkPermitAllDataRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Get Work Permit All Data
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetWorkPermitAllDataRq_MessageType'
+        description: GetWorkPermitAllDataRq
+        required: true

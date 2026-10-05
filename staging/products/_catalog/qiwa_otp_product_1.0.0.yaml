@@ -1,0 +1,32 @@
+info:
+  version: 1.0.0
+  title: Qiwa_OTP_Product
+  name: qiwa_otp_product
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      qiwa_generateotp1.0.0: {}
+      qiwa_validateotp1.0.0: {}
+      otp_sessionapi1.0.0: {}
+apis:
+  qiwa_generateotp1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa_generateotp_1.0.0.yaml
+  qiwa_validateotp1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa_validateotp_1.0.0.yaml
+  otp_sessionapi1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/otp_sessionapi_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

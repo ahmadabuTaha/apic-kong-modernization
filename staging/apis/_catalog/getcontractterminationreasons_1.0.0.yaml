@@ -1,0 +1,306 @@
+swagger: "2.0"
+info:
+  title: GetContractTerminationReasons
+  x-ibm-name: getcontractterminationreasons
+  version: 1.0.0
+  description: GetContractTerminationReasons
+schemes:
+- https
+basePath: /tc
+security:
+- Oauth2.0:
+  - IntegrationScope
+  clientId: []
+securityDefinitions:
+  Oauth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-tc-tcutility)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        persistent-connection: true
+    catch: []
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+definitions:
+  GetContractTerminationReasonsRq_MessageType:
+    type: object
+    properties:
+      GetContractTerminationReasonsRq:
+        $ref: '#/definitions/GetContractTerminationReasonsRq_Type'
+  GetContractTerminationReasonsRs_MessageType:
+    type: object
+    properties:
+      GetContractTerminationReasonsRs:
+        $ref: '#/definitions/GetContractTerminationReasonsRs_Type'
+  GetContractTerminationReasonsRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetContractTerminationReasonsRq_BodyType'
+  GetContractTerminationReasonsRq_BodyType:
+    type: object
+    properties:
+      ShowAll:
+        type: integer
+      AllowedForEstablishment:
+        type: integer
+        enum:
+        - 0
+        - 1
+      AllowedForWorker:
+        type: integer
+        enum:
+        - 0
+        - 1
+      OnlyForFemaleWorkers:
+        type: integer
+        enum:
+        - 0
+        - 1
+      AllowedForSpecifiedContract:
+        type: integer
+        enum:
+        - 0
+        - 1
+      AllowedForUnspecifiedContract:
+        type: integer
+        enum:
+        - 0
+        - 1
+      IsDirectTermination:
+        type: integer
+        enum:
+        - 0
+        - 1
+    required:
+    - ShowAll
+  GetContractTerminationReasonsRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetContractTerminationReasonsRs_BodyType'
+  GetContractTerminationReasonsRs_BodyType:
+    type: object
+    properties:
+      'TCReasonsList ':
+        $ref: '#/definitions/ReasonsList_type'
+      TotalRecordsCount:
+        type: integer
+  ReasonsList_type:
+    type: object
+    properties:
+      TCReason:
+        type: array
+        items:
+          $ref: '#/definitions/Reason_type'
+  Reason_type:
+    type: object
+    properties:
+      ReasonId:
+        type: integer
+      ReasonEN:
+        type: string
+      ReasonAr:
+        type: string
+      AllowedForEstablishment:
+        type: integer
+      AllowedForWorker:
+        type: integer
+      OnlyForFemaleWorkers:
+        type: integer
+      AllowedForSpecifiedContract:
+        type: integer
+      AllowedForUnspecifiedContract:
+        type: integer
+      IsDirectTermination:
+        type: integer
+      NoticePeriodTypeEn:
+        type: string
+      NoticePeriodTypeAr:
+        type: string
+      IsActive:
+        type: integer
+    required:
+    - ReasonId
+    - ReasonEN
+    - ReasonAr
+    - AllowedForEstablishment
+    - AllowedForWorker
+    - OnlyForFemaleWorkers
+    - AllowedForSpecifiedContract
+    - AllowedForUnspecifiedContract
+    - IsDirectTermination
+    - NoticePeriodTypeEn
+    - NoticePeriodTypeAr
+    - IsActive
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /getconttermreasons:
+    post:
+      operationId: GetContractTerminationReasons
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetContractTerminationReasonsRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: This service will be used to return the termination reasons and
+        it’s related configurations
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetContractTerminationReasonsRq_MessageType'
+        description: GetContractTerminationReasonsRq
+        required: true

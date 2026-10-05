@@ -1,0 +1,39 @@
+info:
+  version: 1.0.0
+  title: FinalExitReEntryVisasObjections Staging
+  name: finalexitreentryvisasobjections-staging
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: true
+    apis:
+      getfinalexitreentryvisaslist1.0.0: {}
+      searchobjectionsrequests1.0.0: {}
+      submitobjectionrequest1.0.0: {}
+      validateobjectionrequest1.0.0: {}
+      nic-getfinalexitreentryvisasrequests1.0.0: {}
+      getlaborersnamesandestablishments1.0.0: {}
+apis:
+  getfinalexitreentryvisaslist1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getfinalexitreentryvisaslist_1.0.0.yaml
+  searchobjectionsrequests1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/searchobjectionsrequests_1.0.0.yaml
+  submitobjectionrequest1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/submitobjectionrequest_1.0.0.yaml
+  validateobjectionrequest1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validateobjectionrequest_1.0.0.yaml
+  nic-getfinalexitreentryvisasrequests1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nic-getfinalexitreentryvisasrequests_1.0.0.yaml
+  getlaborersnamesandestablishments1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getlaborersnamesandestablishments_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

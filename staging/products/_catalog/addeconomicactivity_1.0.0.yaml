@@ -1,0 +1,260 @@
+swagger: "2.0"
+info:
+  title: AddEconomicActivity
+  version: 1.0.0
+  description: This service is used by the consumer to Add the Economic Activity details.
+  x-ibm-name: addeconomicactivity
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+paths:
+  /addeconomicactivity:
+    post:
+      operationId: AddEconomicActivity
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/AddEconomicActivityRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: This service is used by the consumer to Add the Economic Activity
+        details.
+      parameters:
+      - name: X-Request-Id
+        in: header
+        description: X-Request-Id returned in the response header
+        required: false
+        type: string
+      - name: X-IBM-Client-Secret
+        in: header
+        description: Client secret issued by security server
+        required: true
+        type: string
+      - name: X-IBM-Client-Id
+        in: header
+        description: Client id issued by security server
+        required: true
+        type: string
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/AddEconomicActivityRq_MessageType'
+        description: AddEconomicActivityRq
+        required: true
+basePath: /matrixmanagement
+definitions:
+  AddEconomicActivityRq_MessageType:
+    type: object
+    properties:
+      AddEconomicActivityRq:
+        $ref: '#/definitions/AddEconomicActivityRq_Type'
+  AddEconomicActivityRs_MessageType:
+    type: object
+    properties:
+      AddEconomicActivityRs:
+        $ref: '#/definitions/AddEconomicActivityRs_Type'
+  AddEconomicActivityRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/AddEconomicActivityRq_BodyType'
+  AddEconomicActivityRq_BodyType:
+    type: object
+    properties:
+      EconomicActivityId:
+        type: integer
+      ActivityName_Ar:
+        type: string
+      ActivityName_En:
+        type: string
+      ExplanationAr:
+        type: string
+        minLength: 2
+        maxLength: 1200
+      ExplanationEn:
+        type: string
+        minLength: 2
+        maxLength: 1200
+      IsISIC4:
+        type: integer
+      ChapterNumber:
+        type: integer
+      IsHidden:
+        type: integer
+      IsIndustrial:
+        type: integer
+      IsActive:
+        type: integer
+      Comment:
+        type: string
+    required:
+    - EconomicActivityId
+    - ActivityName_Ar
+    - IsISIC4
+    - IsHidden
+    - IsIndustrial
+    - Comment
+  AddEconomicActivityRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-mtrm-matrixmanagement)/matrixmanagement/addeconomicactivity
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        persistent-connection: true
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+schemes:
+- https

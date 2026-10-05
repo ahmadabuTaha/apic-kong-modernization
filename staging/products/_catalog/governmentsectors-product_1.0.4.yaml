@@ -1,0 +1,43 @@
+info:
+  version: 1.0.4
+  title: GovernmentSectors Product
+  name: governmentsectors-product
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: true
+    rate-limits:
+      default:
+        value: 100/1hour
+        hard-limit: false
+    apis:
+      addupdategovernmentalagentprivileges1.0.0: {}
+      assigngovernmentagentrole1.0.0: {}
+      assigngovernmentalagentprivilege1.0.0: {}
+      checkgovernmentalagenteligibility1.0.0: {}
+      getgovernmentsectorsources1.0.0: {}
+      getservicesubservicesectorslist1.0.0: {}
+apis:
+  addupdategovernmentalagentprivileges1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/addupdategovernmentalagentprivileges_1.0.0.yaml
+  assigngovernmentagentrole1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/assigngovernmentagentrole_1.0.0.yaml
+  assigngovernmentalagentprivilege1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/assigngovernmentalagentprivilege_1.0.0.yaml
+  checkgovernmentalagenteligibility1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/checkgovernmentalagenteligibility_1.0.0.yaml
+  getgovernmentsectorsources1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getgovernmentsectorsources_1.0.0.yaml
+  getservicesubservicesectorslist1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getservicesubservicesectorslist_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

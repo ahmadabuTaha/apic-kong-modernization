@@ -1,0 +1,48 @@
+info:
+  name: 1external-musaned-product-1-0-0
+  title: 1External_MUSANED_Product
+  version: 1.0.0
+apis:
+  musaned-checkvipauthorization1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/musaned-checkvipauthorization_1.0.0.yaml
+  musaned-searchindividualtransferrequests1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/musaned-searchindividualtransferrequests_1.0.0.yaml
+  musanes-approverejectetbysponsor1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/musanes-approverejectetbysponsor_1.0.0.yaml
+  musaned-getnicestabbalance1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/musaned-getnicestabbalance_1.0.0.yaml
+  musaned-getemployername1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/musaned-getemployername_1.0.0.yaml
+  musanedgetemployername2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/musanedgetemployername_2.0.0.yaml
+  musaned-approverejectetbysponsor1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/musaned-approverejectetbysponsor_1.0.0.yaml
+  musaned-getistigdamdomesticlaborerslist1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/musaned-getistigdamdomesticlaborerslist_1.0.0.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      musaned-checkvipauthorization1.0.0: {}
+      musaned-searchindividualtransferrequests1.0.0: {}
+      musanes-approverejectetbysponsor1.0.0: {}
+      musaned-getnicestabbalance1.0.0: {}
+      musaned-getemployername1.0.0: {}
+      musanedgetemployername2.0.0: {}
+      musaned-approverejectetbysponsor1.0.0: {}
+      musaned-getistigdamdomesticlaborerslist1.0.0: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

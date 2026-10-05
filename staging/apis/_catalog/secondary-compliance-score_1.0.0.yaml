@@ -1,0 +1,253 @@
+swagger: "2.0"
+info:
+  title: SecondaryComplianceScore
+  x-ibm-name: secondary-compliance-score
+  version: 1.0.0
+  description: This API retrieves the Secondary Compliance Score
+host: $(catalog.host)
+schemes:
+- https
+basePath: /NitaqComplianceScore
+security:
+- OAuth2.0:
+  - IntegrationScope
+- clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  properties: {}
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-prow-indicators)/external/GetSecondaryComplianceScore
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: allowlist
+          values: []
+        header-control:
+          type: blocklist
+          values: []
+        inject-proxy-headers: true
+        persistent-connection: true
+    finally: []
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  buffering: true
+  application-authentication:
+    certificate: false
+  catalogs: {}
+definitions:
+  SecondaryComplianceScoreRequest_MessageType:
+    type: object
+    properties:
+      SecondaryComplianceScoreRequest:
+        $ref: '#/definitions/SecondaryComplianceScoreRq_Type'
+  SecondaryComplianceScoreResponse_MessageType:
+    type: object
+    properties:
+      SecondaryComplianceScoreResponse:
+        $ref: '#/definitions/SecondaryComplianceScoreRs_Type'
+  SecondaryComplianceScoreRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/RequestHeader_Type'
+      Body:
+        $ref: '#/definitions/SecondaryComplianceScoreRq_Body'
+  SecondaryComplianceScoreRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/SecondaryComplianceScoreRs_Body'
+  RequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      ServiceCode:
+        type: string
+        default: NPC00001
+      DebugFlag:
+        type: string
+        default: 1
+  ResponseHeader_Type:
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10T00:00:00.555Z"
+      ServiceCode:
+        type: string
+        default: NPC00001
+      DebugFlag:
+        type: string
+        default: 1
+      ResponseStatus:
+        $ref: '#/definitions/ResponseStatus'
+      BackendError:
+        $ref: '#/definitions/BackendError'
+  ResponseStatus:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+  BackendError:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+  SecondaryComplianceScoreRq_Body:
+    type: object
+    required:
+    - LaborOfficeID
+    - SequenceNumber
+    properties:
+      LaborOfficeID:
+        type: number
+      SequenceNumber:
+        type: number
+  SecondaryComplianceScoreRs_Body:
+    type: object
+    required:
+    - WorkPolicy
+    - DWD
+    - SelfAssessment
+    - OverallSecondaryScore
+    properties:
+      WorkPolicy:
+        $ref: '#/definitions/WorkPolicy_Type'
+      DWD:
+        $ref: '#/definitions/DWD_Type'
+      SelfAssessment:
+        $ref: '#/definitions/SelfAssessment_Type'
+      OverallSecondaryScore:
+        type: number
+        example: 100
+  WorkPolicy_Type:
+    type: object
+    required:
+    - ActiveWorkPolicy
+    - Score
+    properties:
+      ActiveWorkPolicy:
+        type: string
+        example: "yes"
+      Score:
+        type: number
+        example: 0
+  DWD_Type:
+    type: object
+    required:
+    - ActiveDWD
+    - Score
+    properties:
+      ActiveDWD:
+        type: string
+        example: "yes"
+      Score:
+        type: number
+        example: 100
+      ExpiryDate:
+        type: string
+        example: "2024-01-10"
+  SelfAssessment_Type:
+    type: object
+    required:
+    - ActiveSelfAssessment
+    - Score
+    properties:
+      ActiveSelfAssessment:
+        type: string
+        example: "yes"
+      Score:
+        type: number
+        example: 100
+      SubmissionDate:
+        type: string
+        example: "2024-01-10"
+paths:
+  /SecondaryComplianceScore:
+    post:
+      tags:
+      - Secondary Compliance Score
+      description: Used to get Secondary Compliance Score
+      operationId: getSecondaryComplianceScore
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/SecondaryComplianceScoreRequest_MessageType'
+        description: SecondaryComplianceScoreChangeRq
+        required: true
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/SecondaryComplianceScoreResponse_MessageType'

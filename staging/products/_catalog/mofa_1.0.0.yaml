@@ -1,0 +1,45 @@
+info:
+  version: 1.0.0
+  title: Mofa
+  name: mofa
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    rate-limits:
+      default:
+        value: 100/1minute
+        hard-limit: true
+    apis:
+      getexternaloffices1.0.0: {}
+      getembassiesrequest1.0.0: {}
+      getstatusesofbordernumbers1.0.0: {}
+      cancelworkercontract1.0.0: {}
+      submitnewcontractrequest1.0.0: {}
+      getcontractinformation1.0.0: {}
+      updatevisastatus1.0.0: {}
+apis:
+  getexternaloffices1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getexternaloffices_1.0.0.yaml
+  getembassiesrequest1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getembassiesrequest_1.0.0.yaml
+  getstatusesofbordernumbers1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getstatusesofbordernumbers_1.0.0.yaml
+  cancelworkercontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/cancelworkercontract_1.0.0.yaml
+  submitnewcontractrequest1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/submitnewcontractrequest_1.0.0.yaml
+  getcontractinformation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getcontractinformation_1.0.0.yaml
+  updatevisastatus1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updatevisastatus_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

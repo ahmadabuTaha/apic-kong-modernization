@@ -1,0 +1,331 @@
+swagger: "2.0"
+info:
+  title: GetLaborerTransferDraft
+  x-ibm-name: getlaborertransferdraft
+  version: 1.0.0
+  description: This service is used to get a transfer laborer/ change sponsor draft
+    request.
+schemes:
+- https
+basePath: /changesponsor
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-emtf-getetlists)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+    - gatewayscript:
+        version: 2.0.0
+        title: gatewayscript
+        source: |
+          var apim = require('apim');
+          var Response = apim.getvariable('message.body');
+          var statusCode = Response.GetLaborerTransferDraftRs.Header.ResponseStatus.Code ;
+
+
+          if(statusCode == 'E9999998'){
+              var code = 408
+              apim.setvariable('message.status.code',code,'set');
+          }
+          else if(statusCode == '00000000'){
+              var code = 200
+              apim.setvariable('message.status.code',code,'set');
+          }else{
+                var code = 409
+              apim.setvariable('message.status.code',code,'set');
+          }
+    catch: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  GetLaborerTransferDraftRq_MessageType:
+    type: object
+    properties:
+      GetLaborerTransferDraftRq:
+        $ref: '#/definitions/GetLaborerTransferDraftRq_Type'
+  GetLaborerTransferDraftRs_MessageType:
+    type: object
+    properties:
+      GetLaborerTransferDraftRs:
+        $ref: '#/definitions/GetLaborerTransferDraftRs_Type'
+  GetLaborerTransferDraftRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetLaborerTransferDraftRq_BodyType'
+  GetLaborerTransferDraftRq_BodyType:
+    type: object
+    properties:
+      DraftId:
+        type: integer
+        default: "1003"
+  GetLaborerTransferDraftRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetLaborerTransferDraftRs_BodyType'
+  GetLaborerTransferDraftRs_BodyType:
+    type: object
+    properties:
+      DestinationDetails:
+        $ref: '#/definitions/DestinationDetails_Type'
+      RequesterDetails:
+        $ref: '#/definitions/RequesterDetails_Type'
+      SponsorId:
+        type: integer
+      BalanceDetails:
+        $ref: '#/definitions/BalanceDetails_Type'
+      RequestDetailsList:
+        $ref: '#/definitions/RequestDetailsList_Type'
+  RequestDetailsList_Type:
+    type: object
+    properties:
+      LaborerSourceDetails:
+        type: array
+        items:
+          $ref: '#/definitions/LaborerSourceDetails_Type'
+  LaborerSourceDetails_Type:
+    type: object
+    properties:
+      LaborerDetails:
+        $ref: '#/definitions/LaborerDetails_Type'
+      SourceDetails:
+        $ref: '#/definitions/SourceDetails_Type'
+      TransferType:
+        type: integer
+  BalanceDetails_Type:
+    type: object
+    properties:
+      Balance:
+        type: string
+      BalanceType:
+        type: integer
+  LaborerDetails_Type:
+    type: object
+    properties:
+      LaborerName:
+        type: string
+      LaborerIdNo:
+        type: integer
+      IqamaExpiryDate:
+        type: string
+  SourceDetails_Type:
+    type: object
+    properties:
+      SourceLaborOfficeId:
+        type: integer
+      SourceSequenceNumber:
+        type: integer
+      SourceEstablishmentId:
+        type: integer
+      SourceEntityId:
+        type: string
+      SourceEstablishmentName:
+        type: string
+  DestinationDetails_Type:
+    type: object
+    properties:
+      DestinationLaborOfficeId:
+        type: integer
+      DestinationSequenceNumber:
+        type: integer
+      DestinationEstablishmentId:
+        type: integer
+      DestinationEntityId:
+        type: string
+      DestinationEstablishmentName:
+        type: string
+  RequesterDetails_Type:
+    type: object
+    properties:
+      RequesterUserId:
+        type: integer
+      RequesterIdNo:
+        type: integer
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: GLTD0001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: GLTD0001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+        default: "465740"
+      IDNumber:
+        type: integer
+        default: "1024812248"
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /getlaborertransferdraft:
+    post:
+      operationId: GetLaborerTransferDraft
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetLaborerTransferDraftRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: GetLaborerTransferDraft
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetLaborerTransferDraftRq_MessageType'
+        description: GetLaborerTransferDraftRq
+        required: true

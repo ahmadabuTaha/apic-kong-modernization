@@ -1,0 +1,36 @@
+info:
+  version: 1.0.0
+  title: 1QI_QiwaIndividual
+  name: 1qi-qiwaindividual
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    rate-limits:
+      default:
+        value: 100/1hour
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    apis:
+      qiwa-getlaborersworkhistory1.0.0: {}
+      qiwa-donationticket1.0.0: {}
+      swagger-for-nationalization-calculation1.0.0: {}
+      qiwa-getdonationticketcomments1.0.0: {}
+product: 1.0.0
+apis:
+  qiwa-getlaborersworkhistory1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-getlaborersworkhistory_1.0.0.yaml
+  qiwa-donationticket1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-donationticket_1.0.0.yaml
+  swagger-for-nationalization-calculation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/swagger-for-nationalization-calculation_1.0.0_1.yaml
+  qiwa-getdonationticketcomments1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-getdonationticketcomments_1.0.0.yaml
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

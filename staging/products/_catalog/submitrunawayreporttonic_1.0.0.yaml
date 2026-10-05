@@ -1,0 +1,270 @@
+swagger: "2.0"
+info:
+  title: SubmitRunAwayReportToNIC
+  x-ibm-name: submitrunawayreporttonic
+  version: 1.0.0
+  description: SubmitRunAwayReportToNIC
+schemes:
+- https
+basePath: /nic
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-nic-nicrunaway)/nic/submitrunawayreporttonic
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  SubmitRunAwayReportToNICRq_MessageType:
+    type: object
+    properties:
+      SubmitRunAwayReportToNICRq:
+        $ref: '#/definitions/SubmitRunAwayReportToNICRq_Type'
+  SubmitRunAwayReportToNICRs_MessageType:
+    type: object
+    properties:
+      SubmitRunAwayReportToNICRs:
+        $ref: '#/definitions/SubmitRunAwayReportToNICRs_Type'
+  SubmitRunAwayReportToNICRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/SubmitRunAwayReportToNICRq_BodyType'
+  SubmitRunAwayReportToNICRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/SubmitRunAwayReportToNICRs_BodyType'
+  SubmitRunAwayReportToNICRq_BodyType:
+    type: object
+    properties:
+      LaborerIdNo:
+        type: integer
+      RequestId:
+        type: integer
+      RequesterIdNo:
+        type: integer
+      CreatedBy:
+        type: integer
+      RequestDate:
+        type: string
+      Language:
+        type: string
+      NbOfTries:
+        type: integer
+    required:
+    - LaborerIdNo
+    - RequestId
+    - RequesterIdNo
+    - CreatedBy
+    - RequestDate
+    - Language
+    - NbOfTries
+  SubmitRunAwayReportToNICRs_BodyType:
+    type: object
+    properties:
+      ReporterName:
+        type: string
+      RequesterID:
+        type: integer
+      CreatedBy:
+        type: integer
+      RequesterName:
+        type: string
+      ReturnCode:
+        type: integer
+      ReturnMessage:
+        type: string
+      RunawayDate:
+        type: number
+      LaborerId:
+        type: integer
+      LaborerFirstEntryDate:
+        type: number
+      LaborerNationality:
+        type: string
+      LaborerOccupation:
+        type: string
+      LaborerPassportNo:
+        type: integer
+      LaborerName:
+        type: string
+      ResExpDate:
+        type: number
+      SponsorId:
+        type: integer
+      SponsorName:
+        type: string
+      SequenceNo:
+        type: integer
+      TotalRunawayRecords:
+        type: integer
+    required:
+    - ReturnMessage
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /submitrunawayreporttonic:
+    post:
+      operationId: SubmitRunAwayReportToNIC
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/SubmitRunAwayReportToNICRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Submit Run Away Report To NIC
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/SubmitRunAwayReportToNICRq_MessageType'
+        description: SubmitRunAwayReportToNICRq
+        required: true

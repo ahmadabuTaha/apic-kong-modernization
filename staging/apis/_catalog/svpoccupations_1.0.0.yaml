@@ -1,0 +1,94 @@
+swagger: "2.0"
+info:
+  title: SVPOccupations
+  x-ibm-name: svpoccupations
+  version: 1.0.0
+  description: Get SVP Occupations
+schemes:
+- https
+basePath: /api/v1/web_service
+security:
+- clientID: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientID:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        parameter-control:
+          type: blocklist
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(svp-international-api)/api/v1/web_service/occupations
+        follow-redirects: false
+        inject-proxy-headers: true
+        username: ibm-connect-user
+        password: fcxUmYI
+    catch: []
+  properties: {}
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+definitions:
+  GetSVPOccupationsRS_MessageType:
+    type: array
+    items:
+      $ref: '#/definitions/occupations'
+  occupations:
+    type: object
+    properties:
+      occupation_id:
+        type: integer
+      category_id:
+        type: integer
+      category_name_ar:
+        type: string
+      category_name_en:
+        type: string
+      occupation_name:
+        type: string
+      status:
+        type: string
+paths:
+  /occupations:
+    get:
+      operationId: ""
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetSVPOccupationsRS_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: SVPOccupations

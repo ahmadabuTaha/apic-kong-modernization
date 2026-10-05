@@ -1,0 +1,735 @@
+swagger: "2.0"
+info:
+  title: OpenFarmingEstablishmentFileTIP
+  x-ibm-name: openfarmingestablishmentfiletip
+  version: 1.0.0
+  description: OpenFarmingEstablishmentFiletip
+schemes:
+- https
+basePath: /qiwa/esb
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - map:
+        version: 2.0.0
+        title: map
+        inputs:
+          "":
+            schema:
+              description: ""
+              type: object
+              properties:
+                EstablishmentName:
+                  type: string
+                  name: EstablishmentName
+                EstablishmentType:
+                  type: number
+                  name: EstablishmentType
+                LaborOfficeId:
+                  type: number
+                  name: LaborOfficeId
+                EstablishmentActivity:
+                  type: number
+                  name: EstablishmentActivity
+                LicenseInfo:
+                  type: object
+                  properties:
+                    Number:
+                      type: string
+                      name: Number
+                    IssueDate:
+                      type: string
+                      name: IssueDate
+                    ExpiryDate:
+                      type: string
+                      name: ExpiryDate
+                    LicenseType:
+                      type: string
+                      name: LicenseType
+                  name: LicenseInfo
+                OwnerInfo:
+                  type: object
+                  properties:
+                    IdNumber:
+                      type: string
+                      name: IdNumber
+                    BirthDate:
+                      type: string
+                      name: BirthDate
+                    FullName:
+                      type: string
+                      name: FullName
+                    Nationality:
+                      type: number
+                      name: Nationality
+                  name: OwnerInfo
+                ContactInfo:
+                  type: object
+                  properties:
+                    City:
+                      type: number
+                      name: City
+                    Telephone:
+                      type: string
+                      name: Telephone
+                    Mobile:
+                      type: string
+                      name: Mobile
+                    Email:
+                      type: string
+                      name: Email
+                  name: ContactInfo
+              example: "{\r\n    \"EstablishmentName\": \"estab test\",\r\n    \"EstablishmentType\":
+                1,\r\n    \"LaborOfficeId\": 1,\r\n    \"EstablishmentActivity\":
+                15,\r\n    \"LicenseInfo\": {\r\n        \"Number\": \"87654322266\",\r\n
+                \       \"IssueDate\": \"2022-08-01\",\r\n        \"ExpiryDate\":
+                \"2024-08-24\",\r\n        \"LicenseType\": \"ترخيص السجل الزراعي\"\r\n
+                \   },\r\n    \"OwnerInfo\": {\r\n        \"IdNumber\": \"1012624092\",\r\n
+                \       \"BirthDate\": \"1969-09-12\",\r\n        \"FullName\": \"testname\",\r\n
+                \       \"Nationality\": 1\r\n    },\r\n    \"ContactInfo\": {\r\n
+                \       \"City\": 1,\r\n        \"Telephone\": \"0546935831\",\r\n
+                \       \"Mobile\": \"0546935821\",\r\n        \"Email\": \"Sara.Alhilo@inspirejo.com\"\r\n
+                \   }\r\n}"
+            variable: request.body
+        outputs:
+          "":
+            schema:
+              description: ""
+              type: object
+              properties:
+                EstablishmentName:
+                  type: string
+                  name: EstablishmentName
+                EstablishmentType:
+                  type: number
+                  name: EstablishmentType
+                LaborOfficeId:
+                  type: number
+                  name: LaborOfficeId
+                EstablishmentActivity:
+                  type: number
+                  name: EstablishmentActivity
+                LicenseInfo:
+                  type: object
+                  properties:
+                    Number:
+                      type: string
+                      name: Number
+                    IssueDate:
+                      type: string
+                      name: IssueDate
+                    ExpiryDate:
+                      type: string
+                      name: ExpiryDate
+                    LicenseType:
+                      type: string
+                      name: LicenseType
+                  name: LicenseInfo
+                OwnerInfo:
+                  type: object
+                  properties:
+                    IdNumber:
+                      type: string
+                      name: IdNumber
+                    BirthDate:
+                      type: string
+                      name: BirthDate
+                    FullName:
+                      type: string
+                      name: FullName
+                    Nationality:
+                      type: number
+                      name: Nationality
+                  name: OwnerInfo
+                ContactInfo:
+                  type: object
+                  properties:
+                    City:
+                      type: number
+                      name: City
+                    Telephone:
+                      type: string
+                      name: Telephone
+                    Mobile:
+                      type: string
+                      name: Mobile
+                    Email:
+                      type: string
+                      name: Email
+                  name: ContactInfo
+              example: "{\r\n    \"EstablishmentName\": \"estab test\",\r\n    \"EstablishmentType\":
+                1,\r\n    \"LaborOfficeId\": 1,\r\n    \"EstablishmentActivity\":
+                15,\r\n    \"LicenseInfo\": {\r\n        \"Number\": \"87654322266\",\r\n
+                \       \"IssueDate\": \"2022-08-01\",\r\n        \"ExpiryDate\":
+                \"2024-08-24\",\r\n        \"LicenseType\": \"ترخيص السجل الزراعي\"\r\n
+                \   },\r\n    \"OwnerInfo\": {\r\n        \"IdNumber\": \"1012624092\",\r\n
+                \       \"BirthDate\": \"1969-09-12\",\r\n        \"FullName\": \"testname\",\r\n
+                \       \"Nationality\": 1\r\n    },\r\n    \"ContactInfo\": {\r\n
+                \       \"City\": 1,\r\n        \"Telephone\": \"0546935831\",\r\n
+                \       \"Mobile\": \"0546935821\",\r\n        \"Email\": \"Sara.Alhilo@inspirejo.com\"\r\n
+                \   }\r\n}"
+            variable: message.body
+        actions:
+        - set: .EstablishmentName
+          from: .EstablishmentName
+        - set: .EstablishmentType
+          from: .EstablishmentType
+          default: 1
+        - set: .LaborOfficeId
+          from: .LaborOfficeId
+        - set: .EstablishmentActivity
+          from: .EstablishmentActivity
+          default: 15
+        - set: .LicenseInfo.Number
+          from: .LicenseInfo.Number
+        - set: .LicenseInfo.IssueDate
+          from: .LicenseInfo.IssueDate
+        - set: .LicenseInfo.ExpiryDate
+          from: .LicenseInfo.ExpiryDate
+        - set: .LicenseInfo.LicenseType
+          from: .LicenseInfo.LicenseType
+          default: ترخيص السجل الزراعي
+        - set: .OwnerInfo.IdNumber
+          from: .OwnerInfo.IdNumber
+        - set: .OwnerInfo.BirthDate
+          from: .OwnerInfo.BirthDate
+        - set: .OwnerInfo.FullName
+          from: .OwnerInfo.FullName
+        - set: .OwnerInfo.Nationality
+          from: .OwnerInfo.Nationality
+        - set: .ContactInfo.City
+          from: .ContactInfo.City
+        - set: .ContactInfo.Telephone
+          from: .ContactInfo.Telephone
+        - set: .ContactInfo.Mobile
+          from: .ContactInfo.Mobile
+        - set: .ContactInfo.Email
+          from: .ContactInfo.Email
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\n\nvar cfg={\n    \"serviceCode\" : \"OFEF0001\",\n
+          \   \"channelId\" : \"Musaned\",\n    \"requestName\" : \"OpenFarmingEstablishmentFileRq\",\n
+          \   \"responseName\": \"OpenFarmingEstablishmentFileRs\",\n    \"errorMap\"
+          :{\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid Request\"}\n
+          \   }\n    \n};\n\napim.setvariable('cfg',cfg);"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare_Request
+        source: "var apim = require('apim');\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\nvar TransactionId
+          = apim.getvariable('message.headers.TransactionId');\r\n\r\nfunction CreateGuid()
+          {  \r\n   function _p8(s) {  \r\n      var p = (Math.random().toString(16)+\"000000000\").substr(2,8);
+          \ \r\n      return s ? \"-\" + p.substr(0,4) + \"-\" + p.substr(4,4) : p
+          ;  \r\n   }  \r\n   return _p8() + _p8(true) + _p8(true) + _p8();  \r\n}
+          \ \r\nvar guid = CreateGuid();\r\nvar appcReq = {\r\n    [cfg.requestName]:{\r\n
+          \       \"Header\" : {\r\n            \"TransactionId\" : TransactionId,\r\n
+          \           \"ChannelId\": cfg.channelId,\r\n            \"SessionId\":
+          apim.getvariable('message.headers.X-Request-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode,\r\n\t\t\t\"DebugFlag\":
+          \"1\",\r\n\t\t\t\"UserInfo\": {\r\n                \"IDNumber\": apim.getvariable('message.headers.IDNumber')\r\n
+          \           },\r\n            \"UDF\": {\r\n                \"KeyValueArr\":
+          {\r\n                    \"key\": \"GUID\",\r\n                    \"value\":
+          guid\r\n                }\r\n            }\r\n\r\n        },\r\n        \"Body\"
+          : apim.getvariable('message.body')\r\n            \r\n        \r\n    }\r\n};\r\n\r\nif
+          (typeof OperatorId !== 'undefined')\r\n    appcReq[cfg.requestName].Header.UserInfo
+          = {\r\n        \"IDNumber\" : OperatorId\r\n    };\r\nsession.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n    \r\n    \r\n\r\n    //return
+          the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour
+          + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: POST
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        target-url: $(ace-cmpm-open-file-without-cr-other)/estabmanagement/openfarmingestfile
+        persistent-connection: true
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_Headers
+        source: "var apim = require('apim');\r\napim.output('application/json');\r\nvar
+          message = apim.getvariable('message.body');\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          Header = message[cfg.responseName].Header;\r\nvar TransactionId = Header.TransactionId;\r\nvar
+          ChannelId = Header.ChannelId;\r\nvar RequestTime = Header.RequestTime;\r\nvar
+          SessionId = Header.SessionId;\r\nvar MWRequestTime = Header.MWRequestTime;\r\nvar
+          MWResponseTime = Header.MWResponseTime;\r\nvar status = Header.ResponseStatus.Status;\r\nvar
+          code = Header.ResponseStatus.Code;\r\napim.setvariable('message.headers.Transaction-Id',TransactionId,'add');\r\napim.setvariable('message.headers.Channel-Id',ChannelId,'add');\r\nif
+          (RequestTime !== 'undefined')\r\napim.setvariable('message.headers.RequestTime',RequestTime,'add');\r\nif
+          (SessionId !== 'undefined')\r\napim.setvariable('message.headers.X-Request-Id',SessionId,'add');\r\nif
+          (MWRequestTime !== 'undefined')\r\napim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');\r\nif
+          (MWResponseTime !== 'undefined')\r\napim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');\r\napim.setvariable('message.headers.Response-Status',status,'add');\r\napim.setvariable('message.headers.Response-Code',code,'add');"
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Response
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar body = message[cfg.responseName].Body;\n
+                apim.setvariable('message.status.code','201','set');\nsession.output.write(body);\napim.output('application/json');"
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Error
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar error = {\n  \"errorCode\":
+                message[cfg.responseName].Header.ResponseStatus.Code,\n  \"errorMessage\":
+                {\n    \"en-US\": message[cfg.responseName].Header.ResponseStatus.EnglishMsg,\n
+                \   \"ar-SA\": message[cfg.responseName].Header.ResponseStatus.ArabicMsg\n
+                \ }\n};\n\nvar httperror=0;\nif(cfg.errorMap){\n    if(cfg.errorMap[error.errorCode]){\n
+                \      httperror = cfg.errorMap[error.errorCode].code;\n       \n
+                \      //var errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\n
+                \      //var details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\n    }\n}\nif(httperror
+                == 0){\n   httperror = 409;\n   // apim.error('ERROR',400,'Bad Request','Invalid
+                request');\n}\napim.setvariable('message.status.code',httperror,'set');\n\nsession.output.write(error);\napim.output('application/json');"
+    catch: []
+    finally: []
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+parameters:
+  X-IBM-Client-Id:
+    in: header
+    name: X-IBM-Client-Id
+    description: Client id issued by security server
+    required: true
+    type: string
+  X-IBM-Client-Secret:
+    in: header
+    name: X-IBM-Client-Secret
+    description: Client secret issued by security server
+    required: true
+    type: string
+  X-Request-Id:
+    in: header
+    name: X-Request-Id
+    description: X-Request-Id returned in the response header
+    required: false
+    type: string
+  TransactionId:
+    name: TransactionId
+    in: header
+    required: true
+    type: string
+definitions:
+  OpenFarmingEstablishmentFileRq_MessageType:
+    type: object
+    properties:
+      OpenFarmingEstablishmentFileRq:
+        $ref: '#/definitions/OpenFarmingEstablishmentFileRq_Type'
+  OpenFarmingEstablishmentFileRs_MessageType:
+    type: object
+    properties:
+      OpenFarmingEstablishmentFileRs:
+        $ref: '#/definitions/OpenFarmingEstablishmentFileRs_Type'
+  OpenFarmingEstablishmentFileRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/OpenFarmingEstablishmentFileRq_BodyType'
+  OpenFarmingEstablishmentFileRq_BodyType:
+    type: object
+    properties:
+      EstablishmentName:
+        type: string
+      EstablishmentType:
+        type: integer
+      LaborOfficeId:
+        type: integer
+      EstablishmentActivity:
+        type: integer
+      LicenseInfo:
+        $ref: '#/definitions/LicenseInfo_Type'
+      OwnerInfo:
+        $ref: '#/definitions/OwnerInfo_Type'
+      ContactInfo:
+        $ref: '#/definitions/ContactInfo_Type'
+  OpenFarmingEstablishmentFileRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/OpenFarmingEstablishmentFileRs_BodyType'
+  OpenFarmingEstablishmentFileRs_BodyType:
+    type: object
+    properties:
+      EstablishmentId:
+        type: string
+      RequestNumber:
+        type: string
+      SevenHundred:
+        type: string
+      LaborOfficeId:
+        type: string
+      SequenceNumber:
+        type: string
+  LicenseInfo_Type:
+    type: object
+    properties:
+      Number:
+        type: string
+      IssueDate:
+        type: string
+      ExpiryDate:
+        type: string
+      LicenseType:
+        type: string
+  ContactInfo_Type:
+    type: object
+    properties:
+      City:
+        type: integer
+      Telephone:
+        type: string
+      Mobile:
+        type: string
+      Email:
+        type: string
+  OwnerInfo_Type:
+    type: object
+    properties:
+      IdNumber:
+        type: string
+      BirthDate:
+        type: integer
+      FullName:
+        type: string
+      Nationality:
+        type: integer
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+  LocaleDataModel:
+    type: object
+    additionalProperties:
+      type: string
+    example:
+      en-US: English Value
+      ar-SA: Arabic Value
+  ErrorModel:
+    type: object
+    required:
+    - errorCode
+    - errorMessage
+    properties:
+      errorCode:
+        type: string
+        example: EXXXX000
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+paths:
+  /openfarmingestfile:
+    post:
+      operationId: OpenFarmingEstablishmentFile
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          $ref: '#/responses/Response200'
+        "400":
+          $ref: '#/responses/Response400'
+        "401":
+          $ref: '#/responses/Response401'
+        "403":
+          $ref: '#/responses/Response403'
+        "404":
+          $ref: '#/responses/Response404'
+        "408":
+          $ref: '#/responses/Response408'
+        "409":
+          $ref: '#/responses/Response409'
+        "429":
+          $ref: '#/responses/Response429'
+        "500":
+          $ref: '#/responses/Response500'
+        "501":
+          $ref: '#/responses/Response501'
+        "503":
+          $ref: '#/responses/Response503'
+        "510":
+          $ref: '#/responses/Response510'
+      description: to open establsihment using other license
+      parameters:
+      - name: body
+        in: body
+        required: true
+        description: OpenFarmingEstablishmentFileRq
+        schema:
+          $ref: '#/definitions/OpenFarmingEstablishmentFileRq_BodyType'
+    parameters:
+    - in: header
+      name: X-IBM-Client-Id
+      description: Client id issued by security server
+      required: true
+      type: string
+    - in: header
+      name: X-IBM-Client-Secret
+      description: Client secret issued by security server
+      required: true
+      type: string
+    - in: header
+      name: X-Request-Id
+      description: X-Request-Id returned in the response header
+      required: false
+      type: string
+    - name: TransactionId
+      in: header
+      required: true
+      type: string
+responses:
+  Response200:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/OpenFarmingEstablishmentFileRs_BodyType'
+  Response201:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+      Location:
+        type: string
+        description: Id url encoded
+  Response204:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response400:
+    description: The request was rejected by the server due to malformed syntax. Bad
+      Request.
+  Response401:
+    description: The request could not be completed due to lack of valid credentials.
+      Authentication.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response403:
+    description: The request could not be completed because it is not authorized.
+      Authorization
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response404:
+    description: The server has not found anything matching the Request-URI.
+  Response408:
+    description: The client did not produce a request within the time that the server
+      was prepared to wait.
+  Response409:
+    description: The request could not be completed due to a conflict with the current
+      state of the resource. Usually business validation errors will be returned in
+      the body
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response429:
+    description: The request was sent too many times in a given amount of time
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response500:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response501:
+    description: The server does not support the functionality required and does not
+      recognize the request
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response503:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response510:
+    description: Extensions to the request are required for the server to fulfil it.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'

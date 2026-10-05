@@ -1,0 +1,377 @@
+swagger: "2.0"
+info:
+  title: ValidateContract V2
+  version: 1.0.0
+  description: Validate Contract Management
+  x-ibm-name: validatecontract-v2
+paths:
+  /validatecontract:
+    post:
+      operationId: ValidateContract
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/ValidateContractRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Validate Contract
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/ValidateContractRq_MessageType'
+        description: ValidateContractRq
+        required: true
+basePath: /contractmanagement/v2
+definitions:
+  ValidateContractRq_MessageType:
+    type: object
+    properties:
+      ValidateContractRq:
+        $ref: '#/definitions/ValidateContractRq_Type'
+  ValidateContractRs_MessageType:
+    type: object
+    properties:
+      ValidateContractRs:
+        $ref: '#/definitions/ValidateContractRs_Type'
+  ValidateContractRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/ValidateContractRq_BodyType'
+    required:
+    - Header
+    - Body
+  ValidateContractRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      LaborerIdNo:
+        type: integer
+      LaborerBirthDate:
+        $ref: '#/definitions/HGDate_Type'
+      OccupationId:
+        type: integer
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+    - LaborerIdNo
+    - LaborerBirthDate
+    - OccupationId
+  HGDate_Type:
+    type: object
+    properties:
+      HijriDate:
+        type: integer
+      GregDate:
+        $ref: '#/definitions/Tmstmp_Type'
+  ValidateContractRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/ValidateContractRs_BodyType'
+  ValidateContractRs_BodyType:
+    type: object
+    properties:
+      ValidationsErrorList:
+        $ref: '#/definitions/ValidationsErrorList_Type'
+      RelatedToId:
+        type: integer
+        enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+      LaborerInfo:
+        $ref: '#/definitions/LaborerInfo_Type'
+    required:
+    - RelatedToId
+    - LaborerInfo
+  ValidationsErrorList_Type:
+    type: object
+    properties:
+      ValidationsError:
+        type: array
+        items:
+          $ref: '#/definitions/ValidationsError_Type'
+    required:
+    - ValidationsError
+  ValidationsError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ArDescription:
+        type: string
+      EnDescription:
+        type: string
+    required:
+    - ErrorCode
+    - ArDescription
+    - EnDescription
+  LaborerInfo_Type:
+    type: object
+    properties:
+      LaborerName:
+        $ref: '#/definitions/Name_Type'
+      LaborerTypeId:
+        type: integer
+        enum:
+        - 1
+        - 2
+      LaborerIdNo:
+        type: integer
+      LaborerIdExpiryDate:
+        type: string
+      BorderNumber:
+        type: integer
+      PassportNumber:
+        type: string
+      Nationality:
+        $ref: '#/definitions/CodeName_Type'
+      Gender:
+        $ref: '#/definitions/Gender_CodeName_Type'
+      Religion:
+        $ref: '#/definitions/CodeName_Type'
+      MaritalStatus:
+        $ref: '#/definitions/Marital_CodeName_Type'
+      Occupation:
+        $ref: '#/definitions/CodeName_Type'
+      IsBarmawiLaborer:
+        type: integer
+    required:
+    - LaborerName
+    - LaborerTypeId
+    - LaborerIdNo
+    - LaborerIdExpiryDate
+    - Nationality
+    - Gender
+    - Religion
+    - MaritalStatus
+    - IsBarmawiLaborer
+  Tmstmp_Type:
+    type: object
+  Name_Type:
+    type: object
+    properties:
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+    required:
+    - NameAr
+    - NameEn
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+    required:
+    - Code
+    - NameAr
+    - NameEn
+  Gender_CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+        enum:
+        - 1
+        - 2
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+    required:
+    - Code
+    - NameAr
+    - NameEn
+  Marital_CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+        enum:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+    required:
+    - Code
+    - NameAr
+    - NameEn
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - ServiceCode
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - ServiceCode
+    - RequestTime
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Status
+    - Code
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-cntmv2-contractutilities)/contractmanagement/validatecontract
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: allowlist
+          values: []
+        header-control:
+          type: blocklist
+          values: []
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+schemes:
+- https
+securityDefinitions:
+  clientId:
+    type: apiKey
+    x-key-type: client_id
+    name: X-IBM-Client-Id
+    in: header
+  Oauth2.0:
+    type: oauth2
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    flow: application
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+security:
+- clientId: []
+  Oauth2.0:
+  - IntegrationScope

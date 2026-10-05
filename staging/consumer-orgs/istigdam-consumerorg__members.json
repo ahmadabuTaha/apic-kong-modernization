@@ -1,0 +1,39 @@
+{
+    "total_results": 1,
+    "results": [
+        {
+            "type": "member",
+            "api_version": "2.0.0",
+            "id": "5a745074-0e32-49d7-8939-da17f8137b97",
+            "name": "noor",
+            "title": "noor",
+            "state": "enabled",
+            "scope": "consumer_org",
+            "user": {
+                "id": "8a11913f-a865-4cd6-9110-ad6e4b0d4299",
+                "url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/user-registries/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/dc8cbaa1-ad3c-4313-84af-bf65d02a1006/users/8a11913f-a865-4cd6-9110-ad6e4b0d4299",
+                "name": "noor",
+                "type": "user",
+                "state": "enabled",
+                "title": "noor",
+                "org_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/orgs/338934cc-d4ef-4cfd-9792-0995d0113158",
+                "metadata": {},
+                "username": "noor",
+                "last_name": "Mithiger",
+                "first_name": "Noor",
+                "api_version": "2.0.0",
+                "identity_provider": "qiwa-ldap",
+                "user_registry_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/user-registries/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/dc8cbaa1-ad3c-4313-84af-bf65d02a1006"
+            },
+            "role_urls": [
+                "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/consumer-orgs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/08fee85f-8fb3-4af3-bc92-882a783e566c/roles/e4593d09-4b57-47bf-bb54-0104e3c260b6"
+            ],
+            "created_at": "2025-09-22T13:43:11.000Z",
+            "updated_at": "2025-09-22T13:43:11.000Z",
+            "org_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/orgs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c",
+            "catalog_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/catalogs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2",
+            "consumer_org_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/consumer-orgs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/08fee85f-8fb3-4af3-bc92-882a783e566c",
+            "url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/consumer-orgs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/08fee85f-8fb3-4af3-bc92-882a783e566c/members/5a745074-0e32-49d7-8939-da17f8137b97"
+        }
+    ]
+}

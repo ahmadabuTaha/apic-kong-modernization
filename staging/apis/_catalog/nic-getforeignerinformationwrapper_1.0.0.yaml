@@ -1,0 +1,1251 @@
+swagger: "2.0"
+info:
+  title: NIC_GetForeignerInformationWrapper
+  description: This service is used to get the information for foreigners based on
+    the border number.
+  x-ibm-name: nic-getforeignerinformationwrapper
+  version: 1.0.0
+schemes:
+- https
+basePath: /qiwa/v1
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+paths:
+  /getforeignerinformationwrapper/IdOrBorderNo/{IdOrBorderNo}:
+    parameters:
+    - $ref: '#/parameters/X-IBM-Client-Id'
+    - $ref: '#/parameters/X-IBM-Client-Secret'
+    - $ref: '#/parameters/IdOrBorderNo'
+    get:
+      tags:
+      - NIC_GetForeignerInformation
+      description: This service is used to get the information for foreigners based
+        on the border number
+      operationId: nic-getforeignerinformation
+      produces:
+      - application/json
+      responses:
+        "200":
+          $ref: '#/responses/Response200'
+        "400":
+          $ref: '#/responses/Response400'
+        "401":
+          $ref: '#/responses/Response401'
+        "403":
+          $ref: '#/responses/Response403'
+        "404":
+          $ref: '#/responses/Response404'
+        "408":
+          $ref: '#/responses/Response408'
+        "409":
+          $ref: '#/responses/Response409'
+        "429":
+          $ref: '#/responses/Response429'
+        "500":
+          $ref: '#/responses/Response500'
+        "501":
+          $ref: '#/responses/Response501'
+        "503":
+          $ref: '#/responses/Response503'
+        "510":
+          $ref: '#/responses/Response510'
+definitions:
+  ResponseModel:
+    type: object
+    description: This response object returned by the post operation
+    properties:
+      BirthDate:
+        $ref: '#/definitions/GHDate_Type'
+      Gender:
+        type: string
+      MartialStatus:
+        $ref: '#/definitions/Code_Type'
+      Name:
+        $ref: '#/definitions/Name_Type'
+      TranslatedName:
+        $ref: '#/definitions/Name_Type'
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      Nationality:
+        $ref: '#/definitions/CodeandName_Type'
+      HRSDNationality:
+        $ref: '#/definitions/CodeName_Type'
+      Occupation:
+        $ref: '#/definitions/CodeandName_Type'
+      HRSDOccupation:
+        $ref: '#/definitions/CodeName_Type'
+      Relationship:
+        $ref: '#/definitions/CodeandName_Type'
+      Religion:
+        $ref: '#/definitions/CodeandName_Type'
+      HRSDReligion:
+        $ref: '#/definitions/CodeName_Type'
+      Residency:
+        $ref: '#/definitions/Residency_Type'
+      Sponsor:
+        $ref: '#/definitions/Sponsor_Type'
+      Status:
+        $ref: '#/definitions/Status_type'
+      Travel:
+        $ref: '#/definitions/Travel_Type'
+      Visa:
+        $ref: '#/definitions/Visa_Type'
+  GHDate_Type:
+    type: object
+    properties:
+      GregorianDate:
+        type: string
+      HijriDate:
+        type: string
+  CodeandName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      Name:
+        type: string
+  Name_Type:
+    type: object
+    properties:
+      FullName:
+        type: string
+      FirstName:
+        type: string
+      SecondName:
+        type: string
+      ThirdName:
+        type: string
+      LastName:
+        type: string
+  Residency_Type:
+    type: object
+    properties:
+      ExpiryDate:
+        $ref: '#/definitions/GHDate_Type'
+      IdNo:
+        type: integer
+      IdType:
+        type: string
+      IssueDate:
+        $ref: '#/definitions/GHDate_Type'
+      IssuePlace:
+        type: string
+  Sponsor_Type:
+    type: object
+    properties:
+      IdNo:
+        type: integer
+      Name:
+        type: string
+      Occupation:
+        type: string
+      Status:
+        type: string
+      Type:
+        $ref: '#/definitions/CodeandName_Type'
+  Status_type:
+    type: object
+    properties:
+      FingerPrintStatus:
+        type: boolean
+      PersonStatus:
+        $ref: '#/definitions/CodeandName_Type'
+  Travel_Type:
+    type: object
+    properties:
+      EntryDate:
+        $ref: '#/definitions/GHDate_Type'
+      LastEntryDate:
+        $ref: '#/definitions/GHDate_Type'
+      LastExitDate:
+        $ref: '#/definitions/GHDate_Type'
+      PassportExpiryDate:
+        $ref: '#/definitions/GHDate_Type'
+      PassportNumber:
+        type: integer
+      TravelStatus:
+        type: string
+  Visa_Type:
+    type: object
+    properties:
+      FinalExitVisaIssued:
+        type: boolean
+      VisaExpiryDate:
+        $ref: '#/definitions/GHDate_Type'
+      VisaType:
+        type: string
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+  Code_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+  LocaleDataModel:
+    type: object
+    additionalProperties:
+      type: string
+    example:
+      en-US: English Value
+      ar-SA: Arabic Value
+  IntegerNumberModel:
+    type: object
+    description: This object use for integer numbers
+    additionalProperties:
+      type: integer
+      example: 1
+  ErrorModel:
+    type: object
+    required:
+    - errorCode
+    - errorMessage
+    properties:
+      errorCode:
+        type: string
+        example: EXXXX000
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+parameters:
+  X-IBM-Client-Id:
+    in: header
+    name: X-IBM-Client-Id
+    description: Client id issued by security server
+    required: true
+    type: string
+  X-IBM-Client-Secret:
+    in: header
+    name: X-IBM-Client-Secret
+    description: Client secret issued by security server
+    required: true
+    type: string
+  IdOrBorderNo:
+    in: path
+    name: IdOrBorderNo
+    description: IdOrBorderNo
+    required: true
+    type: integer
+responses:
+  Response200:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ResponseModel'
+  Response201:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+      Location:
+        type: string
+        description: Id url encoded
+  Response204:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response400:
+    description: The request was rejected by the server due to malformed syntax. Bad
+      Request.
+  Response401:
+    description: The request could not be completed due to lack of valid credentials.
+      Authentication.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response403:
+    description: The request could not be completed because it is not authorized.
+      Authorization
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response404:
+    description: The server has not found anything matching the Request-URI.
+  Response408:
+    description: The client did not produce a request within the time that the server
+      was prepared to wait.
+  Response409:
+    description: The request could not be completed due to a conflict with the current
+      state of the resource. Usually business validation errors will be returned in
+      the body
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response429:
+    description: The request was sent too many times in a given amount of time
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response500:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response501:
+    description: The server does not support the functionality required and does not
+      recognize the request
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response503:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response510:
+    description: Extensions to the request are required for the server to fulfil it.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - map:
+        version: 2.0.0
+        title: map
+        inputs:
+          IdOrBorderNo:
+            schema:
+              type: integer
+              format: int32
+            variable: request.parameters.IdOrBorderNo
+        outputs:
+          "":
+            schema:
+              type: object
+              properties:
+                IdOrBorderNo:
+                  type: string
+              example: '{"IdOrBorderNo":"2184048292"}'
+            variable: message.body
+        actions:
+        - set: .IdOrBorderNo
+          from: IdOrBorderNo
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\r\nvar cfg={\r\n    \"serviceCode\" :
+          \"NGFI0001\",\r\n    \"channelId\" : \"Qiwa\",\r\n    \"requestName\" :
+          \"GetForeignerInformationNICRq\",\r\n    \"responseName\": \"GetForeignerInformationNICRs\",\r\n
+          \   \"errorMap\" :{\r\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid
+          Request\"}\r\n    }\r\n    \r\n};\r\napim.setvariable('cfg',cfg);"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare_Request
+        source: "var apim = require('apim');\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\nvar appcReq
+          = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n            \"TransactionId\"
+          : millisecondsvalue,\r\n            \"ChannelId\": cfg.channelId,\r\n            \"SessionId\":
+          apim.getvariable('message.headers.X-Request-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode,\r\n\t\t\t\"DebugFlag\":
+          1\r\n\r\n        },\r\n        \"Body\" : apim.getvariable('message.body')\r\n
+          \           \r\n        \r\n    }\r\n};\r\n\r\nif (typeof OperatorId !==
+          'undefined')\r\n    appcReq[cfg.requestName].Header.UserInfo = {\r\n        \"IDNumber\"
+          : OperatorId\r\n    };\r\nsession.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n    \r\n    \r\n\r\n    //return
+          the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour
+          + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: POST
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(ace-nic-getcitizen)/common/getcitizeninformationnic
+        follow-redirects: false
+        inject-proxy-headers: true
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_Headers
+        source: "var apim = require('apim');\r\napim.output('application/json');\r\nvar
+          message = apim.getvariable('message.body');\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          Header = message[cfg.responseName].Header;\r\nvar TransactionId = Header.TransactionId;\r\nvar
+          ChannelId = Header.ChannelId;\r\nvar RequestTime = Header.RequestTime;\r\nvar
+          SessionId = Header.SessionId;\r\nvar MWRequestTime = Header.MWRequestTime;\r\nvar
+          MWResponseTime = Header.MWResponseTime;\r\nvar status = Header.ResponseStatus.Status;\r\nvar
+          code = Header.ResponseStatus.Code;\r\napim.setvariable('message.headers.Transaction-Id',TransactionId,'add');\r\napim.setvariable('message.headers.Channel-Id',ChannelId,'add');\r\nif
+          (RequestTime !== 'undefined')\r\napim.setvariable('message.headers.RequestTime',RequestTime,'add');\r\nif
+          (SessionId !== 'undefined')\r\napim.setvariable('message.headers.X-Request-Id',SessionId,'add');\r\nif
+          (MWRequestTime !== 'undefined')\r\napim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');\r\nif
+          (MWResponseTime !== 'undefined')\r\napim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');\r\napim.setvariable('message.headers.Response-Status',status,'add');\r\napim.setvariable('message.headers.Response-Code',code,'add');"
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Response
+              source: "var apim = require('apim');\r\n\r\n\r\nvar message = apim.getvariable('message.body');\r\nvar
+                cfg = apim.getvariable('cfg');\r\nvar body = message[cfg.responseName].Body;\r\n\r\nsession.output.write(body);\r\napim.output('application/json');"
+          - map:
+              version: 2.0.0
+              title: map
+              inputs:
+                "":
+                  schema:
+                    type: object
+                    properties:
+                      BirthDate:
+                        type: object
+                        properties:
+                          GregorianDate:
+                            type: string
+                            name: GregorianDate
+                          HijriDate:
+                            type: string
+                            name: HijriDate
+                        name: BirthDate
+                      Travel:
+                        type: object
+                        properties:
+                          EntryDate:
+                            type: object
+                            properties:
+                              GregorianDate:
+                                type: string
+                                name: GregorianDate
+                              HijriDate:
+                                type: string
+                                name: HijriDate
+                            name: EntryDate
+                          LastEntryDate:
+                            type: object
+                            properties:
+                              GregorianDate:
+                                type: string
+                                name: GregorianDate
+                              HijriDate:
+                                type: string
+                                name: HijriDate
+                            name: LastEntryDate
+                          LastExitDate:
+                            type: object
+                            properties:
+                              GregorianDate:
+                                type: string
+                                name: GregorianDate
+                              HijriDate:
+                                type: string
+                                name: HijriDate
+                            name: LastExitDate
+                          PassportExpiryDate:
+                            type: object
+                            properties:
+                              GregorianDate:
+                                type: string
+                                name: GregorianDate
+                              HijriDate:
+                                type: string
+                                name: HijriDate
+                            name: PassportExpiryDate
+                          PassportNumber:
+                            type: string
+                            name: PassportNumber
+                          TravelStatus:
+                            type: string
+                            name: TravelStatus
+                        name: Travel
+                      Visa:
+                        type: object
+                        properties:
+                          FinalExitVisaIssued:
+                            type: string
+                            name: FinalExitVisaIssued
+                          VisaExpiryDate:
+                            type: object
+                            properties:
+                              GregorianDate:
+                                type: string
+                                name: GregorianDate
+                              HijriDate:
+                                type: string
+                                name: HijriDate
+                            name: VisaExpiryDate
+                          VisaType:
+                            type: string
+                            name: VisaType
+                        name: Visa
+                      Status:
+                        type: object
+                        properties:
+                          FingerPrintStatus:
+                            type: string
+                            name: FingerPrintStatus
+                          PersonStatus:
+                            type: object
+                            properties:
+                              Name:
+                                type: string
+                                name: Name
+                              Code:
+                                type: string
+                                name: Code
+                            name: PersonStatus
+                        name: Status
+                      Name:
+                        type: object
+                        properties:
+                          FirstName:
+                            type: string
+                            name: FirstName
+                          LastName:
+                            type: string
+                            name: LastName
+                          FullName:
+                            type: string
+                            name: FullName
+                          SecondName:
+                            type: string
+                            name: SecondName
+                          ThirdName:
+                            type: object
+                            properties: {}
+                            name: ThirdName
+                        name: Name
+                      TranslatedName:
+                        type: object
+                        properties:
+                          FirstName:
+                            type: string
+                            name: FirstName
+                          LastName:
+                            type: string
+                            name: LastName
+                          SecondName:
+                            type: string
+                            name: SecondName
+                          ThirdName:
+                            type: object
+                            properties: {}
+                            name: ThirdName
+                          FullName:
+                            type: string
+                            name: FullName
+                        name: TranslatedName
+                      Residency:
+                        type: object
+                        properties:
+                          IdNo:
+                            type: string
+                            name: IdNo
+                          IdType:
+                            type: string
+                            name: IdType
+                          ExpiryDate:
+                            type: object
+                            properties:
+                              GregorianDate:
+                                type: string
+                                name: GregorianDate
+                              HijriDate:
+                                type: string
+                                name: HijriDate
+                            name: ExpiryDate
+                          IssueDate:
+                            type: object
+                            properties:
+                              GregorianDate:
+                                type: string
+                                name: GregorianDate
+                              HijriDate:
+                                type: string
+                                name: HijriDate
+                            name: IssueDate
+                          IssuePlace:
+                            type: string
+                            name: IssuePlace
+                        name: Residency
+                      MaritalStatus:
+                        type: object
+                        properties:
+                          Code:
+                            type: string
+                            name: Code
+                          Name:
+                            type: string
+                            name: Name
+                          NameAr:
+                            type: string
+                            name: NameAr
+                        name: MaritalStatus
+                      LaborOfficeId:
+                        type: string
+                        name: LaborOfficeId
+                      SequenceNumber:
+                        type: string
+                        name: SequenceNumber
+                      Nationality:
+                        type: object
+                        properties:
+                          Name:
+                            type: string
+                            name: Name
+                          Code:
+                            type: string
+                            name: Code
+                        name: Nationality
+                      HRSDNationality:
+                        type: object
+                        properties:
+                          Code:
+                            type: string
+                            name: Code
+                          NameAr:
+                            type: string
+                            name: NameAr
+                          NameEn:
+                            type: string
+                            name: NameEn
+                        name: HRSDNationality
+                      Occupation:
+                        type: object
+                        properties:
+                          Name:
+                            type: string
+                            name: Name
+                          Code:
+                            type: string
+                            name: Code
+                        name: Occupation
+                      HRSDOccupation:
+                        type: object
+                        properties:
+                          Code:
+                            type: string
+                            name: Code
+                          NameAr:
+                            type: string
+                            name: NameAr
+                          NameEn:
+                            type: string
+                            name: NameEn
+                        name: HRSDOccupation
+                      Relationship:
+                        type: object
+                        properties:
+                          Name:
+                            type: object
+                            properties: {}
+                            name: Name
+                          Code:
+                            type: string
+                            name: Code
+                        name: Relationship
+                      Religion:
+                        type: object
+                        properties:
+                          Name:
+                            type: string
+                            name: Name
+                          Code:
+                            type: string
+                            name: Code
+                        name: Religion
+                      HRSDReligion:
+                        type: object
+                        properties:
+                          Code:
+                            type: string
+                            name: Code
+                          NameAr:
+                            type: string
+                            name: NameAr
+                          NameEn:
+                            type: string
+                            name: NameEn
+                        name: HRSDReligion
+                      Gender:
+                        type: string
+                        name: Gender
+                      Sponsor:
+                        type: object
+                        properties:
+                          IdNo:
+                            type: string
+                            name: IdNo
+                          Name:
+                            type: string
+                            name: Name
+                          Occupation:
+                            type: string
+                            name: Occupation
+                          Status:
+                            type: string
+                            name: Status
+                          Type:
+                            type: object
+                            properties:
+                              Name:
+                                type: string
+                                name: Name
+                              Code:
+                                type: string
+                                name: Code
+                            name: Type
+                        name: Sponsor
+                    example: '{"BirthDate":{"GregorianDate":"1967-01-01T00:00:00","HijriDate":"13860920"},"Travel":{"EntryDate":{"GregorianDate":"2002-05-31T00:00:00","HijriDate":"19/03/1423"},"LastEntryDate":{"GregorianDate":"2024-08-07T00:00:00","HijriDate":"1446/02/03"},"LastExitDate":{"GregorianDate":"2024-07-13T00:00:00","HijriDate":"1446/01/07"},"PassportExpiryDate":{"GregorianDate":"2028-09-24T00:00:00","HijriDate":"1450/05/05"},"PassportNumber":"J137651","TravelStatus":"Inside
+                      Kingdom"},"Visa":{"FinalExitVisaIssued":"false","VisaExpiryDate":{"GregorianDate":"2024-09-11T00:00:00","HijriDate":"1446/03/08"},"VisaType":"Single"},"Status":{"FingerPrintStatus":"true","PersonStatus":{"Name":"Valid","Code":"0"}},"Name":{"FirstName":"عماد","LastName":"الصيد","FullName":"عماد
+                      الاعماري  الصيد","SecondName":"الاعماري","ThirdName":{}},"TranslatedName":{"FirstName":"EMAD","LastName":"ALSAYD","SecondName":"A","ThirdName":{},"FullName":"EMAD
+                      A  ALSAYD"},"Residency":{"IdNo":"2184048292","IdType":"Head
+                      of Household","ExpiryDate":{"GregorianDate":"2024-12-20T00:00:00","HijriDate":"14460619"},"IssueDate":{"GregorianDate":"2002-07-23T00:00:00","HijriDate":"14230513"},"IssuePlace":"Passports
+                      -Dammam"},"MaritalStatus":{"Code":"2","Name":"MARRIED","NameAr":"متزوج"},"LaborOfficeId":"1","SequenceNumber":"2565285","Nationality":{"Name":"Tunisia","Code":"201"},"HRSDNationality":{"Code":"312","NameAr":"تونسي","NameEn":"Tunisian"},"Occupation":{"Name":"Purchasing
+                      Representative","Code":"332302"},"HRSDOccupation":{"Code":"332302","NameAr":"مندوب
+                      مشتريات","NameEn":"Purchasing Representative"},"Relationship":{"Name":{},"Code":"0"},"Religion":{"Name":"Islam","Code":"1"},"HRSDReligion":{"Code":"1","NameAr":"مسلم","NameEn":"Muslim"},"Gender":"MALE","Sponsor":{"IdNo":"7013185272","Name":"شركة
+                      الحلول الفنية المتطورة للصناعة","Occupation":"اصلاح وصيانة المحولات
+                      الكهربائية الخاصة بنقل الطاقة أو توزيعها أو الأنواع  المتخصصة","Status":"مفعلة","Type":{"Name":"شركة
+                      بسجل تجاري","Code":"25"}}}'
+                  variable: message.body
+                  content: application/json
+              outputs:
+                "":
+                  schema:
+                    type: object
+                    properties:
+                      BirthDate:
+                        type: object
+                        properties:
+                          GregorianDate:
+                            type: string
+                            name: GregorianDate
+                          HijriDate:
+                            type: string
+                            name: HijriDate
+                        name: BirthDate
+                      Gender:
+                        type: string
+                        name: Gender
+                      MartialStatus:
+                        type: object
+                        properties:
+                          Code:
+                            type: number
+                            name: Code
+                          NameAr:
+                            type: string
+                            name: NameAr
+                          NameEn:
+                            type: string
+                            name: NameEn
+                        name: MartialStatus
+                      Name:
+                        type: object
+                        properties:
+                          FullName:
+                            type: string
+                            name: FullName
+                          FirstName:
+                            type: string
+                            name: FirstName
+                          SecondName:
+                            type: string
+                            name: SecondName
+                          ThirdName:
+                            type: object
+                            properties: {}
+                            name: ThirdName
+                          LastName:
+                            type: string
+                            name: LastName
+                        name: Name
+                      TranslatedName:
+                        type: object
+                        properties:
+                          FullName:
+                            type: string
+                            name: FullName
+                          FirstName:
+                            type: string
+                            name: FirstName
+                          SecondName:
+                            type: string
+                            name: SecondName
+                          ThirdName:
+                            type: object
+                            properties: {}
+                            name: ThirdName
+                          LastName:
+                            type: string
+                            name: LastName
+                        name: TranslatedName
+                      LaborOfficeId:
+                        type: number
+                        name: LaborOfficeId
+                      SequenceNumber:
+                        type: number
+                        name: SequenceNumber
+                      Nationality:
+                        type: object
+                        properties:
+                          Code:
+                            type: number
+                            name: Code
+                          Name:
+                            type: string
+                            name: Name
+                        name: Nationality
+                      HRSDNationality:
+                        type: object
+                        properties:
+                          Code:
+                            type: number
+                            name: Code
+                          NameAr:
+                            type: string
+                            name: NameAr
+                          NameEn:
+                            type: string
+                            name: NameEn
+                        name: HRSDNationality
+                      Occupation:
+                        type: object
+                        properties:
+                          Code:
+                            type: number
+                            name: Code
+                          Name:
+                            type: string
+                            name: Name
+                        name: Occupation
+                      HRSDOccupation:
+                        type: object
+                        properties:
+                          Code:
+                            type: number
+                            name: Code
+                          NameAr:
+                            type: string
+                            name: NameAr
+                          NameEn:
+                            type: string
+                            name: NameEn
+                        name: HRSDOccupation
+                      Relationship:
+                        type: object
+                        properties:
+                          Code:
+                            type: number
+                            name: Code
+                          Name:
+                            type: object
+                            properties: {}
+                            name: Name
+                        name: Relationship
+                      Religion:
+                        type: object
+                        properties:
+                          Code:
+                            type: number
+                            name: Code
+                          Name:
+                            type: string
+                            name: Name
+                        name: Religion
+                      HRSDReligion:
+                        type: object
+                        properties:
+                          Code:
+                            type: number
+                            name: Code
+                          NameAr:
+                            type: string
+                            name: NameAr
+                          NameEn:
+                            type: string
+                            name: NameEn
+                        name: HRSDReligion
+                      Residency:
+                        type: object
+                        properties:
+                          ExpiryDate:
+                            type: object
+                            properties:
+                              GregorianDate:
+                                type: string
+                                name: GregorianDate
+                              HijriDate:
+                                type: string
+                                name: HijriDate
+                            name: ExpiryDate
+                          IdNo:
+                            type: number
+                            name: IdNo
+                          IdType:
+                            type: string
+                            name: IdType
+                          IssueDate:
+                            type: object
+                            properties:
+                              GregorianDate:
+                                type: string
+                                name: GregorianDate
+                              HijriDate:
+                                type: string
+                                name: HijriDate
+                            name: IssueDate
+                          IssuePlace:
+                            type: string
+                            name: IssuePlace
+                        name: Residency
+                      Sponsor:
+                        type: object
+                        properties:
+                          IdNo:
+                            type: number
+                            name: IdNo
+                          Name:
+                            type: string
+                            name: Name
+                          Occupation:
+                            type: string
+                            name: Occupation
+                          Status:
+                            type: string
+                            name: Status
+                          Type:
+                            type: object
+                            properties:
+                              Code:
+                                type: number
+                                name: Code
+                              Name:
+                                type: string
+                                name: Name
+                            name: Type
+                        name: Sponsor
+                      Status:
+                        type: object
+                        properties:
+                          FingerPrintStatus:
+                            type: boolean
+                            name: FingerPrintStatus
+                          PersonStatus:
+                            type: object
+                            properties:
+                              Code:
+                                type: number
+                                name: Code
+                              Name:
+                                type: string
+                                name: Name
+                            name: PersonStatus
+                        name: Status
+                      Travel:
+                        type: object
+                        properties:
+                          EntryDate:
+                            type: object
+                            properties:
+                              GregorianDate:
+                                type: string
+                                name: GregorianDate
+                              HijriDate:
+                                type: string
+                                name: HijriDate
+                            name: EntryDate
+                          LastEntryDate:
+                            type: object
+                            properties:
+                              GregorianDate:
+                                type: string
+                                name: GregorianDate
+                              HijriDate:
+                                type: string
+                                name: HijriDate
+                            name: LastEntryDate
+                          LastExitDate:
+                            type: object
+                            properties:
+                              GregorianDate:
+                                type: string
+                                name: GregorianDate
+                              HijriDate:
+                                type: string
+                                name: HijriDate
+                            name: LastExitDate
+                          PassportExpiryDate:
+                            type: object
+                            properties:
+                              GregorianDate:
+                                type: string
+                                name: GregorianDate
+                              HijriDate:
+                                type: string
+                                name: HijriDate
+                            name: PassportExpiryDate
+                          PassportNumber:
+                            type: number
+                            name: PassportNumber
+                          TravelStatus:
+                            type: string
+                            name: TravelStatus
+                        name: Travel
+                      Visa:
+                        type: object
+                        properties:
+                          FinalExitVisaIssued:
+                            type: boolean
+                            name: FinalExitVisaIssued
+                          VisaExpiryDate:
+                            type: object
+                            properties:
+                              GregorianDate:
+                                type: string
+                                name: GregorianDate
+                              HijriDate:
+                                type: string
+                                name: HijriDate
+                            name: VisaExpiryDate
+                          VisaType:
+                            type: string
+                            name: VisaType
+                        name: Visa
+                    example: '{"BirthDate":{"GregorianDate":"string","HijriDate":"string"},"Gender":"string","MartialStatus":{"Code":0,"NameAr":"string","NameEn":"string"},"Name":{"FullName":"string","FirstName":"string","SecondName":"string","ThirdName":{},"LastName":"string"},"TranslatedName":{"FullName":"string","FirstName":"string","SecondName":"string","ThirdName":{},"LastName":"string"},"LaborOfficeId":0,"SequenceNumber":0,"Nationality":{"Code":0,"Name":"string"},"HRSDNationality":{"Code":0,"NameAr":"string","NameEn":"string"},"Occupation":{"Code":0,"Name":"string"},"HRSDOccupation":{"Code":0,"NameAr":"string","NameEn":"string"},"Relationship":{"Code":0,"Name":{}},"Religion":{"Code":0,"Name":"string"},"HRSDReligion":{"Code":0,"NameAr":"string","NameEn":"string"},"Residency":{"ExpiryDate":{"GregorianDate":"string","HijriDate":"string"},"IdNo":0,"IdType":"string","IssueDate":{"GregorianDate":"string","HijriDate":"string"},"IssuePlace":"string"},"Sponsor":{"IdNo":0,"Name":"string","Occupation":"string","Status":"string","Type":{"Code":0,"Name":"string"}},"Status":{"FingerPrintStatus":true,"PersonStatus":{"Code":0,"Name":"string"}},"Travel":{"EntryDate":{"GregorianDate":"string","HijriDate":"string"},"LastEntryDate":{"GregorianDate":"string","HijriDate":"string"},"LastExitDate":{"GregorianDate":"string","HijriDate":"string"},"PassportExpiryDate":{"GregorianDate":"string","HijriDate":"string"},"PassportNumber":0,"TravelStatus":"string"},"Visa":{"FinalExitVisaIssued":true,"VisaExpiryDate":{"GregorianDate":"string","HijriDate":"string"}}}'
+                  variable: message.body
+                  content: application/json
+              actions:
+              - set: .BirthDate.GregorianDate
+                from: .BirthDate.GregorianDate
+              - set: .BirthDate.HijriDate
+                from: .BirthDate.HijriDate
+              - set: .Gender
+                from: .Gender
+              - set: .MartialStatus.Code
+                from: .MaritalStatus.Code
+              - set: .MartialStatus.NameEn
+                from: .MaritalStatus.Name
+              - set: .MartialStatus.NameAr
+                from: .MaritalStatus.NameAr
+              - set: .Name.FullName
+                from: .Name.FullName
+              - set: .Name.FirstName
+                from: .Name.FirstName
+              - set: .Name.SecondName
+                from: .Name.SecondName
+              - set: .Name.ThirdName
+                from: .Name.ThirdName
+              - set: .Name.LastName
+                from: .Name.LastName
+              - set: .TranslatedName.FullName
+                from: .TranslatedName.FullName
+              - set: .TranslatedName.FirstName
+                from: .TranslatedName.FirstName
+              - set: .TranslatedName.SecondName
+                from: .TranslatedName.SecondName
+              - set: .TranslatedName.ThirdName
+                from: .TranslatedName.ThirdName
+              - set: .TranslatedName.LastName
+                from: .TranslatedName.LastName
+              - set: .LaborOfficeId
+                from: .LaborOfficeId
+              - set: .SequenceNumber
+                from: .SequenceNumber
+              - set: .Nationality.Code
+                from: .Nationality.Code
+              - set: .Nationality.Name
+                from: .Nationality.Name
+              - set: .HRSDNationality.Code
+                from: .HRSDNationality.Code
+              - set: .HRSDNationality.NameAr
+                from: .HRSDNationality.NameAr
+              - set: .HRSDNationality.NameEn
+                from: .HRSDNationality.NameEn
+              - set: .Occupation.Code
+                from: .Occupation.Code
+              - set: .Occupation.Name
+                from: .Occupation.Name
+              - set: .HRSDOccupation.Code
+                from: .HRSDOccupation.Code
+              - set: .HRSDOccupation.NameAr
+                from: .HRSDOccupation.NameAr
+              - set: .HRSDOccupation.NameEn
+                from: .HRSDOccupation.NameEn
+              - set: .Relationship.Code
+                from: .Relationship.Code
+              - set: .Relationship.Name
+                from: .Relationship.Name
+              - set: .Religion.Code
+                from: .Religion.Code
+              - set: .Religion.Name
+                from: .Religion.Name
+              - set: .HRSDReligion.Code
+                from: .HRSDReligion.Code
+              - set: .HRSDReligion.NameAr
+                from: .HRSDReligion.NameAr
+              - set: .HRSDReligion.NameEn
+                from: .HRSDReligion.NameEn
+              - set: .Residency.ExpiryDate.GregorianDate
+                from: .Residency.ExpiryDate.GregorianDate
+              - set: .Residency.ExpiryDate.HijriDate
+                from: .Residency.ExpiryDate.HijriDate
+              - set: .Residency.IdNo
+                from: .Residency.IdNo
+              - set: .Residency.IdType
+                from: .Residency.IdType
+              - set: .Residency.IssueDate.GregorianDate
+                from: .Residency.IssueDate.GregorianDate
+              - set: .Residency.IssueDate.HijriDate
+                from: .Residency.IssueDate.HijriDate
+              - set: .Residency.IssuePlace
+                from: .Residency.IssuePlace
+              - set: .Sponsor.IdNo
+                from: .Sponsor.IdNo
+              - set: .Sponsor.Name
+                from: .Sponsor.Name
+              - set: .Sponsor.Occupation
+                from: .Sponsor.Occupation
+              - set: .Sponsor.Status
+                from: .Sponsor.Status
+              - set: .Sponsor.Type.Code
+                from: .Sponsor.Type.Code
+              - set: .Sponsor.Type.Name
+                from: .Sponsor.Type.Name
+              - set: .Status.FingerPrintStatus
+                from: .Status.FingerPrintStatus
+              - set: .Status.PersonStatus.Code
+                from: .Status.PersonStatus.Code
+              - set: .Status.PersonStatus.Name
+                from: .Status.PersonStatus.Name
+              - set: .Travel.EntryDate.GregorianDate
+                from: .Travel.EntryDate.GregorianDate
+              - set: .Travel.EntryDate.HijriDate
+                from: .Travel.EntryDate.HijriDate
+              - set: .Travel.LastEntryDate.GregorianDate
+                from: .Travel.LastEntryDate.GregorianDate
+              - set: .Travel.LastEntryDate.HijriDate
+                from: .Travel.LastEntryDate.HijriDate
+              - set: .Travel.LastExitDate.GregorianDate
+                from: .Travel.LastExitDate.GregorianDate
+              - set: .Travel.LastExitDate.HijriDate
+                from: .Travel.LastExitDate.HijriDate
+              - set: .Travel.PassportExpiryDate.GregorianDate
+                from: .Travel.PassportExpiryDate.GregorianDate
+              - set: .Travel.PassportExpiryDate.HijriDate
+                from: .Travel.PassportExpiryDate.HijriDate
+              - set: .Travel.PassportNumber
+                from: .Travel.PassportNumber
+              - set: .Travel.TravelStatus
+                from: .Travel.TravelStatus
+              - set: .Visa.FinalExitVisaIssued
+                from: .Visa.FinalExitVisaIssued
+              - set: .Visa.VisaExpiryDate.GregorianDate
+                from: .Visa.VisaExpiryDate.GregorianDate
+              - set: .Visa.VisaExpiryDate.HijriDate
+                from: .Visa.VisaExpiryDate.HijriDate
+              - set: .Visa.VisaType
+                from: .Visa.VisaType
+              options:
+                mapEmulateV4EmptyJSONObject: false
+                mapEmulateV4DefaultRequiredProps: false
+                mapEnablePostProcessingJSON: false
+                mapReferenceLimit: 1
+                mapNullValue: true
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Error
+              source: "var apim = require('apim');\r\n\r\nvar message = apim.getvariable('message.body');\r\nvar
+                cfg = apim.getvariable('cfg');          \r\nvar error = {\r\n  \"errorCode\":
+                message[cfg.responseName].Header.ResponseStatus.Code,\r\n  \"errorMessage\":
+                {\r\n    \"en-US\": message[cfg.responseName].Header.ResponseStatus.EnglishMsg,\r\n
+                \   \"ar-SA\": message[cfg.responseName].Header.ResponseStatus.ArabicMsg\r\n
+                \ }\r\n};\r\n\r\nvar httperror=0;\r\nif(cfg.errorMap){\r\n    if(cfg.errorMap[error.errorCode]){\r\n
+                \      httperror = cfg.errorMap[error.errorCode].code;\r\n       \r\n
+                \      //var errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\r\n
+                \      //var details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\r\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\r\n    }\r\n}\r\nif(httperror
+                == 0){\r\n   httperror = 409;\r\n   // apim.error('ERROR',400,'Bad
+                Request','Invalid request');\r\n}\r\napim.setvariable('message.status.code',httperror,'set');\r\n\r\nsession.output.write(error);\r\napim.output('application/json');"
+    finally: []
+    catch: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload

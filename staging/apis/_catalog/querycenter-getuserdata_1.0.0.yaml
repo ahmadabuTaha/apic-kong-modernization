@@ -1,0 +1,115 @@
+swagger: "2.0"
+info:
+  title: QueryCenter_GetUserData
+  x-ibm-name: querycenter-getuserdata
+  version: 1.0.0
+schemes:
+- https
+basePath: /qiwa/v2
+security:
+- clientID: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://gw-apic.qiwa.info/takamol/staging/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: ""
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientID:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        parameter-control:
+          type: blocklist
+        timeout: 60
+        verb: POST
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(ace-qry-qry-center)/qc_userauthentication/v1/getUserData
+        follow-redirects: false
+        inject-proxy-headers: true
+    catch: []
+    finally: []
+  properties: {}
+  application-authentication:
+    certificate: false
+  activity-log:
+    success-content: payload
+    error-content: payload
+    enabled: true
+  buffering: true
+  catalogs: {}
+definitions:
+  UserDataRs:
+    type: object
+    additionalProperties: false
+    properties:
+      Header:
+        $ref: '#/definitions/Header'
+        properties: {}
+      Body:
+        $ref: '#/definitions/Body'
+        properties: {}
+  Body:
+    type: object
+    additionalProperties: false
+    properties:
+      Id:
+        type: integer
+      Username:
+        type: string
+      FullName:
+        type: string
+      Pwd:
+        type: string
+      FKUserRolesId:
+        type: integer
+      IsPwdReset:
+        type: boolean
+      MobileNumber:
+        type: string
+      Email:
+        type: string
+  Header:
+    type: object
+    additionalProperties: false
+    properties:
+      responsecode:
+        type: string
+      response:
+        type: string
+paths:
+  /userData:
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []

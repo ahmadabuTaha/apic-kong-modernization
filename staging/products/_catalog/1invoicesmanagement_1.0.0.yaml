@@ -1,0 +1,79 @@
+info:
+  version: 1.0.0
+  title: 1InvoicesManagement
+  name: 1invoicesmanagement
+gateways:
+- datapower-api-gateway
+plans:
+  plan-a:
+    title: Plan A
+    description: This plan is for Salary Certificate  Application
+    rate-limits: {}
+    burst-limits: {}
+    apis:
+      getunifiedinvoicedetails1.0.0: {}
+      getunifiedinvoiceslist1.0.0: {}
+      qiwa-ui-insertunifiedinvoices1.0.0: {}
+  plan-b:
+    title: Plan B
+    description: This plan is for e-invoice application
+    rate-limits:
+      Default rate-limit:
+        value: 100/1hour
+        hard-limit: false
+    burst-limits:
+      Default burst-limit:
+        value: 10/1second
+    apis:
+      qiwa-ui-pdfcreator1.0.0: {}
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: true
+    rate-limits:
+      default:
+        value: 100/1hour
+        hard-limit: false
+    apis:
+      qiwa-ui-insertpoliciesreplica1.0.0: {}
+      qiwa-uim-resetbulkinvoicesfailedbyeinvoice1.0.0: {}
+      qiwa-uim-resetinvoicefailedbyeinvoice1.0.0: {}
+      qiwa-ui-pdfcreator1.0.0: {}
+      updateestablishmentaddress1.0.0: {}
+      getunifiedinvoicedetails1.0.0: {}
+      updatevatnumber1.0.0: {}
+      qiwa-ui-getunifiedinvoiceslist1.0.0: {}
+      qiwa-ui-insertunifiedinvoices1.0.0: {}
+      getunifiedinvoiceslist1.0.0: {}
+      insertindividualunifiedinvoices1.0.0: {}
+product: 1.0.0
+apis:
+  qiwa-ui-insertpoliciesreplica1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-ui-insertpoliciesreplica_1.0.0.yaml
+  qiwa-uim-resetbulkinvoicesfailedbyeinvoice1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-uim-resetbulkinvoicesfailedbyeinvoice_1.0.0.yaml
+  qiwa-uim-resetinvoicefailedbyeinvoice1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-uim-resetinvoicefailedbyeinvoice_1.0.0.yaml
+  qiwa-ui-pdfcreator1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-ui-pdfcreator_1.0.0.yaml
+  updateestablishmentaddress1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updateestablishmentaddress_1.0.0.yaml
+  getunifiedinvoicedetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getunifiedinvoicedetails_1.0.0.yaml
+  updatevatnumber1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updatevatnumber_1.0.0.yaml
+  qiwa-ui-getunifiedinvoiceslist1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-ui-getunifiedinvoiceslist_1.0.0.yaml
+  qiwa-ui-insertunifiedinvoices1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-ui-insertunifiedinvoices_1.0.0.yaml
+  getunifiedinvoiceslist1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getunifiedinvoiceslist_1.0.0.yaml
+  insertindividualunifiedinvoices1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/insertindividualunifiedinvoices_1.0.0.yaml
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

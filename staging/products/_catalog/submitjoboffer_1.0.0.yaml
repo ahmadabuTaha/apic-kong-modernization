@@ -1,0 +1,323 @@
+swagger: "2.0"
+info:
+  title: SubmitJobOffer
+  x-ibm-name: submitjoboffer
+  version: 1.0.0
+  description: SubmitJobOffer
+schemes:
+- https
+basePath: /lmh
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-cmnv-commonvisasubmit)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  SubmitJobOfferRq_MessageType:
+    type: object
+    properties:
+      SubmitJobOfferRq:
+        $ref: '#/definitions/SubmitJobOfferRq_Type'
+  SubmitJobOfferRs_MessageType:
+    type: object
+    properties:
+      SubmitJobOfferRs:
+        $ref: '#/definitions/SubmitJobOfferRs_Type'
+  SubmitJobOfferRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/SubmitJobOfferRq_BodyType'
+  SubmitJobOfferRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      OccupationId:
+        type: integer
+      GenderId:
+        type: integer
+      NationalityId:
+        type: integer
+      EmbassyId:
+        type: integer
+      ReligionId:
+        type: integer
+      CountryId:
+        type: integer
+      ExperienceYearsId:
+        type: integer
+      EducationEvaluationId:
+        type: integer
+      IsExceptionalUniversity:
+        type: integer
+      PassportNumber:
+        type: string
+      DateOfBirth:
+        type: string
+      MonthlySalary:
+        type: integer
+      IsSVPPassed:
+        type: integer
+  SubmitJobOfferRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/SubmitJobOfferRs_BodyType'
+  SubmitJobOfferRs_BodyType:
+    type: object
+    properties:
+      RequestNumber:
+        type: string
+        description: IsEstablishmentPunished
+      VisaOutGoingNumber:
+        type: integer
+        description: IsUnifiedPunished
+      ValidationsErrorsList:
+        $ref: '#/definitions/ValidationsErrorsList_Type'
+      VisaList:
+        $ref: '#/definitions/VisaList_Type'
+      LMHClassification:
+        $ref: '#/definitions/LMHClassification_Type'
+  ValidationsErrorsList_Type:
+    type: object
+    properties:
+      ValidationError:
+        $ref: '#/definitions/ValidationError_Type'
+  ValidationError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+        description: EstablishmentPunishmentId
+      ArDescription:
+        type: string
+        description: LaborOfficeId
+      EnDescription:
+        type: string
+        description: SequenceNumber
+  VisaList_Type:
+    type: object
+    properties:
+      Visa:
+        $ref: '#/definitions/VisaDetails_Type'
+  VisaDetails_Type:
+    type: object
+    properties:
+      BorderNumber:
+        type: integer
+        description: EstablishmentPunishmentId
+      Job:
+        type: integer
+        description: Job
+      Nationality:
+        type: integer
+        description: Nationality
+      ReligionId:
+        type: integer
+        description: ReligionId
+      GenderId:
+        type: integer
+        description: GenderId
+      Origin:
+        type: integer
+        description: Origin
+  LMHClassification_Type:
+    type: object
+    properties:
+      ProfessionalSkills:
+        $ref: '#/definitions/ProfessionalSkills_Type'
+      SalaryPoints:
+        type: integer
+        description: Origin
+      EducationPoints:
+        type: integer
+        description: Origin
+      ExperiencePoints:
+        type: integer
+        description: Origin
+      TotalPoints:
+        type: integer
+        description: Origin
+  ProfessionalSkills_Type:
+    type: object
+    properties:
+      DescriptionEn:
+        type: string
+        description: DescriptionEn
+      DescriptionAr:
+        type: string
+        description: DescriptionAr
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /submitjoboffer:
+    post:
+      operationId: SubmitJobOffer
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/SubmitJobOfferRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Get Unrelated Occupations Details
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/SubmitJobOfferRq_MessageType'
+        description: SubmitJobOfferRq
+        required: true

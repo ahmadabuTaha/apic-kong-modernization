@@ -1,0 +1,375 @@
+swagger: "2.0"
+info:
+  title: SearchInvestorVisaRequest
+  version: 1.0.0
+  description: SearchInvestorVisaRequest
+  x-ibm-name: searchinvestorvisarequest
+paths:
+  /searchinvvisareq:
+    post:
+      operationId: SearchInvestorVisaRequest
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/SearchInvestorVisaRequestRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: searchinvvisareq
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/SearchInvestorVisaRequestRq_MessageType'
+        description: searchinvvisareq
+        required: true
+basePath: /visa/investorvisa
+securityDefinitions:
+  clientId:
+    type: apiKey
+    x-key-type: client_id
+    name: X-IBM-Client-Id
+    in: header
+  Oauth2.0:
+    type: oauth2
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    flow: application
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+security:
+- clientId: []
+  Oauth2.0:
+  - IntegrationScope
+definitions:
+  SearchInvestorVisaRequestRq_MessageType:
+    type: object
+    properties:
+      SearchInvestorVisaRequestRq:
+        $ref: '#/definitions/SearchInvestorVisaRequestRq_Type'
+  SearchInvestorVisaRequestRs_MessageType:
+    type: object
+    properties:
+      SearchInvestorVisaRequestRs:
+        $ref: '#/definitions/SearchInvestorVisaRequestRs_Type'
+  SearchInvestorVisaRequestRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/SearchInvestorVisaRequestRq_BodyType'
+  SearchInvestorVisaRequestRq_BodyType:
+    type: object
+    properties:
+      InvestorVisaRequestId:
+        type: integer
+      LaborOfficeId:
+        type: integer
+      SequanceNumber:
+        type: integer
+      RequestStatusIds:
+        type: string
+      PageSize:
+        type: integer
+      PageIndex:
+        type: integer
+    required:
+    - PageSize
+    - PageIndex
+  SearchInvestorVisaRequestRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/SearchInvestorVisaRequestRs_BodyType'
+  SearchInvestorVisaRequestRs_BodyType:
+    type: object
+    properties:
+      InvestorVisasList:
+        $ref: '#/definitions/InvestorVisasList_Type'
+      TotalRecordsCount:
+        type: integer
+    required:
+    - InvestorVisasList
+    - TotalRecordsCount
+  InvestorVisasList_Type:
+    type: object
+    properties:
+      InvestorVisa:
+        $ref: '#/definitions/InvestorVisa_Type'
+    required:
+    - InvestorVisa
+  InvestorVisa_Type:
+    type: object
+    properties:
+      InvestorVisaRequestId:
+        type: integer
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      RequestNumber:
+        type: string
+      RequestStatusId:
+        type: integer
+      UserId:
+        type: integer
+      IdNumber:
+        type: integer
+      InsertDate:
+        type: string
+        format: date-time
+      RequestYear:
+        type: string
+        format: date
+      RequestSequence:
+        type: integer
+      VisaOutGoingNumber:
+        type: string
+      VisaIssuedDate:
+        type: string
+        format: date
+      NICRejectionId:
+        type: integer
+      RejectionDescription:
+        type: string
+      PassportNumber:
+        type: string
+      Nationality:
+        $ref: '#/definitions/CodeName_Type'
+      Embassy:
+        $ref: '#/definitions/CodeName_Type'
+      Job:
+        $ref: '#/definitions/CodeName_Type'
+      Religion:
+        $ref: '#/definitions/CodeName_Type'
+      Gender:
+        $ref: '#/definitions/CodeName_Type'
+      IssuedVisasList:
+        $ref: '#/definitions/IssuedVisasList_Type'
+    required:
+    - InvestorVisaRequestId
+    - LaborOfficeId
+    - SequenceNumber
+    - RequestNumber
+    - RequestStatusId
+    - UserId
+    - IdNumber
+    - InsertDate
+    - RequestYear
+    - RequestSequence
+    - VisaOutGoingNumber
+    - VisaIssuedDate
+    - NICRejectionId
+    - RejectionDescription
+    - PassportNumber
+    - Nationality
+    - Embassy
+    - Job
+    - Religion
+    - Gender
+    - IssuedVisasList
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      NameEn:
+        type: string
+      NameAr:
+        type: string
+    required:
+    - Code
+    - NameEn
+    - NameAr
+  IssuedVisasList_Type:
+    type: object
+    properties:
+      IssuedVisaInfo:
+        $ref: '#/definitions/IssuedVisaInfo_Type'
+    required:
+    - IssuedVisaInfo
+  IssuedVisaInfo_Type:
+    type: object
+    properties:
+      ID:
+        type: integer
+      InvestorVisaRequestId:
+        type: integer
+      VisaRequestTypeId:
+        type: integer
+      BorderNumber:
+        type: integer
+      Nationality:
+        $ref: '#/definitions/CodeName_Type'
+      Embassy:
+        $ref: '#/definitions/CodeName_Type'
+      Job:
+        $ref: '#/definitions/CodeName_Type'
+      Religion:
+        type: integer
+      Gender:
+        $ref: '#/definitions/CodeName_Type'
+      VisaStatusId:
+        type: integer
+      InsertDate:
+        type: string
+        format: datetime
+    required:
+    - ID
+    - InvestorVisaRequestId
+    - VisaRequestTypeId
+    - BorderNumber
+    - Nationality
+    - Embassy
+    - Job
+    - Religion
+    - Gender
+    - VisaStatusId
+    - InsertDate
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(ace-fi-investorget)$(request.path)
+        follow-redirects: false
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+schemes:
+- https

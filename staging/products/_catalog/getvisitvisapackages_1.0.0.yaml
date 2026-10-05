@@ -1,0 +1,202 @@
+swagger: "2.0"
+info:
+  title: GetVisitVisaPackages
+  x-ibm-name: getvisitvisapackages
+  version: 1.0.0
+  description: GetVisitVisaPackages
+schemes:
+- https
+basePath: /visa/visitvisa
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-vstv-vvutilities2)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  GetVisitVisaPackagesRq_MessageType:
+    type: object
+    properties:
+      GetVisitVisaPackagesRq:
+        $ref: '#/definitions/GetVisitVisaPackagesRq_Type'
+  GetVisitVisaPackagesRs_MessageType:
+    type: object
+    properties:
+      GetVisitVisaPackagesRs:
+        $ref: '#/definitions/GetVisitVisaPackagesRs_Type'
+  GetVisitVisaPackagesRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetVisitVisaPackagesRq_BodyType'
+  GetVisitVisaPackagesRq_BodyType:
+    type: object
+    properties:
+      PackageID:
+        type: string
+      EconomicActivityId:
+        type: integer
+    required:
+    - PackageID
+    - EconomicActivityId
+  GetVisitVisaPackagesRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetVisitVisaPackagesRs_BodyType'
+  GetVisitVisaPackagesRs_BodyType:
+    type: object
+    properties:
+      PackagesList:
+        $ref: '#/definitions/PackagesList_Type'
+  PackagesList_Type:
+    type: object
+    properties:
+      PackageInfo:
+        $ref: '#/definitions/PackageInfo_Type'
+  PackageInfo_Type:
+    type: array
+    items:
+      properties:
+        PackageID:
+          type: string
+        NumberOfVisas:
+          type: string
+        Validity:
+          type: string
+        Price:
+          type: string
+        DiscountPercentage:
+          type: string
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+paths:
+  /getvisitvisapackages:
+    post:
+      operationId: GetVisitVisaPackages
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetVisitVisaPackagesRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Get Visit Visa Packages
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetVisitVisaPackagesRq_MessageType'
+        description: GetVisitVisaPackagesRq
+        required: true

@@ -1,0 +1,670 @@
+swagger: "2.0"
+info:
+  title: MHRSD3_Rest_Services
+  x-ibm-name: mhrsd3-rest-services
+  version: 1.0.0
+  description: MHRSD_Rest_Services
+schemes:
+- https
+basePath: /mhrsd/v1
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(cat-target-hostname)$(cat-target-url-external2)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  LaborerInfoExternalRq_Type:
+    type: object
+    properties:
+      IdNo:
+        type: string
+      IqamaExpiryDate:
+        type: string
+  LaborerInfoExternalRq_MessageType:
+    type: object
+    properties:
+      LaborerInfoExternalRq:
+        $ref: '#/definitions/LaborerInfoExternalRq_Type'
+  LaborerInfoExternalRs_Type:
+    type: object
+    properties:
+      EstablishmentInfo:
+        $ref: '#/definitions/EstablishmentInfo_Type'
+      LaborerInformation:
+        $ref: '#/definitions/LaborerInformation_Type'
+  LaborerInfoExternalRs_MessageType:
+    type: object
+    properties:
+      LaborerInfoExternalRs:
+        $ref: '#/definitions/LaborerInfoExternalRs_Type'
+  EstablishmentInfo_Type:
+    type: object
+    properties:
+      EstablishmentId:
+        type: string
+      EstablishmentName:
+        type: string
+      LaborOfficeId:
+        type: string
+      SequanceNumber:
+        type: string
+      UnifiedNumberId:
+        type: string
+  LaborerInformation_Type:
+    type: object
+    properties:
+      PKLaborerId:
+        type: string
+      LaborerIdNo:
+        type: string
+      FirstName:
+        type: string
+      SecondName:
+        type: string
+      ThirdName:
+        type: string
+      FourthName:
+        type: string
+      Gender:
+        type: string
+      BirthOfDate:
+        type: string
+      Nationality:
+        $ref: '#/definitions/Nationality_Type'
+      EducationalStatus:
+        $ref: '#/definitions/EducationalStatus_Type'
+      Qualification:
+        $ref: '#/definitions/Qualification_Type'
+      Job:
+        $ref: '#/definitions/Job_Type'
+      LaborerStatus:
+        $ref: '#/definitions/LaborerStatus_Type'
+      AccomodationStatus:
+        $ref: '#/definitions/AccomodationStatus_Type'
+      EntryDate:
+        type: string
+      ReligionId:
+        type: string
+      IdReleaseDate:
+        type: string
+      IqamaExpirationDate:
+        type: string
+      ServiceStartDate:
+        type: string
+      ServiceEndDate:
+        type: string
+      PassportNo:
+        type: string
+      PassportSource:
+        type: string
+      PassportReleaseDate:
+        type: string
+      BorderNo:
+        type: string
+      WorkPermitTypeId:
+        type: string
+      WorkPermitStartDate:
+        type: string
+      WorkPermitEndDate:
+        type: string
+      TotalRecordCount:
+        type: string
+  Nationality_Type:
+    type: object
+    properties:
+      NationalityCode:
+        type: string
+      NationalityName:
+        type: string
+  EducationalStatus_Type:
+    type: object
+    properties:
+      EducationalStatusCode:
+        type: string
+      EducationalStatusName:
+        type: string
+  Qualification_Type:
+    type: object
+    properties:
+      QualificationCode:
+        type: string
+      QualificationName:
+        type: string
+  Job_Type:
+    type: object
+    properties:
+      JobCode:
+        type: string
+      JobName:
+        type: string
+  LaborerStatus_Type:
+    type: object
+    properties:
+      LaborerStatusCode:
+        type: string
+      LaborerStatusName:
+        type: string
+  AccomodationStatus_Type:
+    type: object
+    properties:
+      AccomodationStatusCode:
+        type: string
+      AccomodationStatusName:
+        type: string
+  ResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+  Error_MessageType:
+    type: object
+    properties:
+      ErrorResponse:
+        $ref: '#/definitions/ResponseStatus_Type'
+  SaudizationStatusbyOwnerIdRq_MessageType:
+    type: object
+    properties:
+      SaudizationStatusbyOwnerIdRq:
+        $ref: '#/definitions/SaudizationStatusbyOwnerIdRq_Type'
+  SaudizationStatusbyOwnerIdRq_Type:
+    type: object
+    properties:
+      IdNumber:
+        type: string
+  SaudizationStatusbyOwnerIdRs_MessageType:
+    type: object
+    properties:
+      SaudizationStatusbyOwnerIdRs:
+        $ref: '#/definitions/SaudizationStatusbyOwnerIdRs_Type'
+  SaudizationStatusbyOwnerIdRs_Type:
+    type: object
+    properties:
+      SaudizationStatus:
+        type: string
+  SaudizationStatusByCrRq_MessageType:
+    type: object
+    properties:
+      SaudizationStatusByCrRq:
+        $ref: '#/definitions/SaudizationStatusByCrRq_Type'
+  SaudizationStatusByCrRq_Type:
+    type: object
+    properties:
+      CrNum:
+        type: string
+  SaudizationStatusByCrRs_MessageType:
+    type: object
+    properties:
+      SaudizationStatusByCrRs:
+        $ref: '#/definitions/SaudizationStatusByCrRs_Type'
+  SaudizationStatusByCrRs_Type:
+    type: object
+    properties:
+      SaudizationStatus:
+        type: string
+  EstabNitaqHistoryWeekCountRq_MessageType:
+    type: object
+    properties:
+      EstabNitaqHistoryWeekCountRq:
+        $ref: '#/definitions/EstabNitaqHistoryWeekCountRq_Type'
+  EstabNitaqHistoryWeekCountRq_Type:
+    type: object
+    properties:
+      laborOfficeId:
+        type: integer
+      sequenceNo:
+        type: number
+      inquiryDate:
+        type: string
+      weeksCount:
+        type: integer
+  EstabNitaqHistoryWeekCountRs_MessageType:
+    type: object
+    properties:
+      EstabNitaqHistoryWeekCountRs:
+        $ref: '#/definitions/EstabNitaqHistoryWeekCountRs_Type'
+  EstabNitaqHistoryWeekCountRs_Type:
+    type: object
+    properties:
+      laborOffice:
+        type: integer
+      sequenceNumbe:
+        type: integer
+      entitySaudiLaborersCount:
+        type: number
+      weekDate:
+        type: string
+      nitaq:
+        type: string
+  EstablishmentBranchesDetailsRq_MessageType:
+    type: object
+    properties:
+      EstablishmentBranchesDetailsRq:
+        $ref: '#/definitions/EstablishmentBranchesDetailsRq_Type'
+  EstablishmentBranchesDetailsRq_Type:
+    type: object
+    properties:
+      idNumOrUnifiedNum:
+        type: number
+  EstablishmentBranchesDetailsRs_MessageType:
+    type: object
+    properties:
+      EstablishmentBranchesDetailsRs:
+        $ref: '#/definitions/EstablishmentBranchesDetailsRs_Type'
+  EstablishmentBranchesDetailsRs_Type:
+    type: object
+    properties:
+      cRn:
+        type: number
+      economicActivity:
+        type: string
+      establishmentName:
+        type: string
+      laborOffice:
+        type: integer
+      laborOfficeName:
+        type: string
+      sequenceNum:
+        type: number
+      municipalLicenseNum:
+        type: integer
+      nitaq:
+        type: string
+      otherLicenseNum:
+        type: string
+      otherLicenseType:
+        type: integer
+      saudisCount:
+        type: integer
+      size:
+        type: string
+      foreignersCount:
+        type: string
+  CandidateHasRunningEstablishmentsRq_MessageType:
+    type: object
+    properties:
+      CandidateHasRunningEstablishmentsRq:
+        $ref: '#/definitions/CandidateHasRunningEstablishmentsRq_Type'
+  CandidateHasRunningEstablishmentsRq_Type:
+    type: object
+    properties:
+      idNumber:
+        type: number
+  CandidateHasRunningEstablishmentsRs_MessgeType:
+    type: object
+    properties:
+      CandidateHasRunningEstablishmentsRs:
+        $ref: '#/definitions/CandidateHasRunningEstablishmentsRs_Type'
+  CandidateHasRunningEstablishmentsRs_Type:
+    type: object
+    properties:
+      hasEstablishments:
+        type: boolean
+  EstablishmentTawteenInfoByOwnerIdOrSevenHundredNumberRq_MessageType:
+    type: object
+    properties:
+      EstablishmentTawteenInfoByOwnerIdOrSevenHundredNumberRq:
+        $ref: '#/definitions/EstablishmentTawteenInfoByOwnerIdOrSevenHundredNumberRq_Type'
+  EstablishmentTawteenInfoByOwnerIdOrSevenHundredNumberRq_Type:
+    type: object
+    properties:
+      OwnerIdOrSevenHundredStruct:
+        $ref: '#/definitions/OwnerIdOrSevenHundredStruct_Type'
+  EstablishmentTawteenInfoByOwnerIdOrSevenHundredNumberRs_MessageType:
+    type: object
+    properties:
+      EstablishmentTawteenInfoByOwnerIdOrSevenHundredNumberRs:
+        $ref: '#/definitions/EstablishmentTawteenInfoByOwnerIdOrSevenHundredNumberRs_Type'
+  EstablishmentTawteenInfoByOwnerIdOrSevenHundredNumberRs_Type:
+    type: object
+    properties:
+      tawteenDataList:
+        type: array
+        items:
+          $ref: '#/definitions/TawteenDataList_Type'
+  OwnerIdOrSevenHundredStruct_Type:
+    type: object
+    properties:
+      ownerIdOrSevenHundred:
+        type: string
+      ownerIdOrSevenHundredType:
+        type: string
+  TawteenDataList_Type:
+    type: object
+    properties:
+      establishmentName:
+        type: string
+      economicActivityID:
+        type: integer
+      economicActivityName:
+        type: string
+      tawteenStatus:
+        type: string
+  TawteenInfoEstabFileNumRq_MessageType:
+    type: object
+    properties:
+      TawteenInfoEstabFileNumRq:
+        $ref: '#/definitions/TawteenInfoEstabFileNumRq_Type'
+  TawteenInfoEstabFileNumRq_Type:
+    type: object
+    properties:
+      ownerIdOrSevenHundred:
+        $ref: '#/definitions/ownerIdOrSevenHundred_Type'
+      laborOfficeId:
+        type: string
+      sequenceNum:
+        type: string
+    required:
+    - laborOfficeId
+    - sequenceNum
+  TawteenInfoEstabFileNumRs_MessageType:
+    type: object
+    properties:
+      TawteenInfoEstabFileNumRs:
+        $ref: '#/definitions/TawteenInfoEstabFileNumRs_Type'
+  TawteenInfoEstabFileNumRs_Type:
+    type: object
+    properties:
+      establishmentName:
+        type: string
+      economicActivityId:
+        type: string
+      economicActivityName:
+        type: string
+      tawteenStatus:
+        type: string
+  ownerIdOrSevenHundred_Type:
+    type: object
+    properties:
+      ownerIdOrSevenHundred:
+        type: string
+      ownerIdOrSevenHundredType:
+        type: string
+    required:
+    - ownerIdOrSevenHundred
+  EstablishmentTawteenInfoByLicenseNumberRq_MessageType:
+    type: object
+    properties:
+      EstablishmentTawteenInfoByLicenseNumberRq:
+        $ref: '#/definitions/EstablishmentTawteenInfoByLicenseNumberRq_Type'
+  EstablishmentTawteenInfoByLicenseNumberRq_Type:
+    type: object
+    properties:
+      ownerIdOrSevenHundred:
+        $ref: '#/definitions/ownerIdOrSevenHundred_Type'
+      licenseNum:
+        type: string
+      licenseType:
+        type: string
+    required:
+    - licenseNum
+    - licenseType
+  EstablishmentTawteenInfoByLicenseNumberRs_MessageType:
+    type: object
+    properties:
+      EstablishmentTawteenInfoByLicenseNumberRs:
+        $ref: '#/definitions/EstablishmentTawteenInfoByLicenseNumberRs_Type'
+  EstablishmentTawteenInfoByLicenseNumberRs_Type:
+    type: object
+    properties:
+      establishmentName:
+        type: string
+      economicActivityId:
+        type: string
+      economicActivityName:
+        type: string
+      tawteenStatus:
+        type: string
+  EstablishmentTawteenInfoByEstablishmentMunicipalityLicenseNumberRq_MessageType:
+    type: object
+    properties:
+      EstablishmentTawteenInfoByEstablishmentMunicipalityLicenseNumberRq:
+        $ref: '#/definitions/EstablishmentTawteenInfoByEstablishmentMunicipalityLicenseNumberRq_Type'
+  EstablishmentTawteenInfoByEstablishmentMunicipalityLicenseNumberRq_Type:
+    type: object
+    properties:
+      ownerIdOrSevenHundred:
+        $ref: '#/definitions/ownerIdOrSevenHundred_Type'
+      municipalityLicenseNum:
+        type: string
+  EstablishmentTawteenInfoByEstablishmentMunicipalityLicenseNumberRs_MessageType:
+    type: object
+    properties:
+      EstablishmentTawteenInfoByEstablishmentMunicipalityLicenseNumberRs:
+        $ref: '#/definitions/EstablishmentTawteenInfoByEstablishmentMunicipalityLicenseNumberRs_Type'
+  EstablishmentTawteenInfoByEstablishmentMunicipalityLicenseNumberRs_Type:
+    type: object
+    properties:
+      establishmentName:
+        type: string
+      economicActivityId:
+        type: string
+      economicActivityName:
+        type: string
+      tawteenStatus:
+        type: string
+  TawteenInformationbyCRNumberRq_MessageType:
+    type: object
+    properties:
+      TawteenInformationbyCRNumberRq:
+        $ref: '#/definitions/TawteenInformationbyCRNumberRq_Type'
+  TawteenInformationbyCRNumberRq_Type:
+    type: object
+    properties:
+      ownerIdOrSevenHundred:
+        $ref: '#/definitions/ownerIdOrSevenHundred_Type'
+      crNum:
+        type: string
+  TawteenInformationbyCRNumberRs_MessageType:
+    type: object
+    properties:
+      TawteenInformationbyCRNumberRs:
+        $ref: '#/definitions/TawteenInformationbyCRNumberRs_Type'
+  TawteenInformationbyCRNumberRs_Type:
+    type: object
+    properties:
+      establishmentName:
+        type: string
+      economicActivityId:
+        type: string
+      economicActivityName:
+        type: string
+      tawteenStatus:
+        type: string
+paths:
+  /getestabnitaqhistory:
+    post:
+      operationId: postGetestabnitaqhistory
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/EstabNitaqHistoryWeekCountRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Insert a getestabnitaqhistory
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/EstabNitaqHistoryWeekCountRq_MessageType'
+        description: The request body for the operation
+        required: true
+  /getestabbranchesdetails:
+    post:
+      operationId: postGetestabbranchesdetails
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/EstablishmentBranchesDetailsRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Insert a getestabbranchesdetails
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/EstablishmentBranchesDetailsRq_MessageType'
+        description: The request body for the operation
+        required: true
+  /checkestabownership:
+    post:
+      operationId: postCheckestabownership
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/CandidateHasRunningEstablishmentsRs_MessgeType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Insert a checkestabownership
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/CandidateHasRunningEstablishmentsRq_MessageType'
+        description: The request body for the operation
+        required: true
+  /gettawteeninfobyowneridsevenhundred:
+    post:
+      operationId: postGettawteeninfobyowneridsevenhundred
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/EstablishmentTawteenInfoByOwnerIdOrSevenHundredNumberRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Insert a gettawteeninfobyowneridsevenhundred
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/EstablishmentTawteenInfoByOwnerIdOrSevenHundredNumberRq_MessageType'
+        description: The request body for the operation
+        required: true
+  /gettawteeninfobyestabfilenum:
+    post:
+      operationId: postGettawteeninfobyestabfilenum
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/TawteenInfoEstabFileNumRs_Type'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Insert a gettawteeninfobyestabfilenum
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/TawteenInfoEstabFileNumRq_MessageType'
+        description: The request body for the operation
+        required: true
+  /gettawteeninfobyestablicensenum:
+    post:
+      operationId: postGettawteeninfobyestablicensenum
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/EstablishmentTawteenInfoByLicenseNumberRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Insert a gettawteeninfobyestablicensenum
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/EstablishmentTawteenInfoByLicenseNumberRq_MessageType'
+        description: The request body for the operation
+        required: true
+  /gettawteeninfobymunicipalitylicensenum:
+    post:
+      operationId: postGettawteeninfobymunicipalitylicensenum
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/EstablishmentTawteenInfoByEstablishmentMunicipalityLicenseNumberRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Insert a gettawteeninfobymunicipalitylicensenum
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/EstablishmentTawteenInfoByEstablishmentMunicipalityLicenseNumberRq_MessageType'
+        description: The request body for the operation
+        required: true
+  /gettawteeninfobycrnumber:
+    post:
+      operationId: postGettawteeninfobycrnumber
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/TawteenInformationbyCRNumberRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Insert a gettawteeninfobycrnumber
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/TawteenInformationbyCRNumberRq_MessageType'
+        description: The request body for the operation
+        required: true

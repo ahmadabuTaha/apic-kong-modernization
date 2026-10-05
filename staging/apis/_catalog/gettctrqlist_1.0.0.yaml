@@ -1,0 +1,377 @@
+swagger: "2.0"
+info:
+  title: GetTCTRqList
+  version: 1.0.0
+  description: GetTCTRqList
+  x-ibm-name: gettctrqlist
+paths:
+  /gettctrqlist:
+    post:
+      operationId: GetTCTRqList
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetTCTRqListRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Get Training Contract Termination Requests List
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetTCTRqListRq_MessageType'
+        description: GetTCTRqListRq
+        required: true
+basePath: /trncntr
+definitions:
+  GetTCTRqListRq_MessageType:
+    type: object
+    properties:
+      GetTCTRqListRq:
+        $ref: '#/definitions/GetTCTRqListRq_Type'
+  GetTCTRqListRs_MessageType:
+    type: object
+    properties:
+      GetTCTRqListRs:
+        $ref: '#/definitions/GetTCTRqListRs_Type'
+  GetTCTRqListRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetTCTRqListRq_BodyType'
+  GetTCTRqListRq_BodyType:
+    type: object
+    properties:
+      NationalUnifiedNumber:
+        type: integer
+        description: Optional. If all 3 fields (LaborOfficeId, SequenceNumber, TCTRequestId)
+          are not null then return E0003416
+      LaborOfficeId:
+        type: integer
+        description: Conditional. Mandatory if SequenceNumber is not null. If M &
+          Null then return E0000485
+      SequenceNumber:
+        type: integer
+        description: Conditional. Mandatory if LaborOfficeId is not null. If M & Null
+          then return E0000485
+      TraineeIdNo:
+        type: integer
+        description: 'Conditional. If channel is ''Qiwa Individuals'': If Null return
+          E0003318. If value is not equal Header.UserInfo.IDNumber return E0003415'
+      TCTRequestId:
+        type: integer
+        description: Optional
+      RequesterIdNo:
+        type: integer
+        description: Optional
+      RequesterTypeId:
+        type: integer
+        description: Optional. 1=Employer, 2=Trainee
+      StatusIds:
+        type: string
+        description: Optional. Could be integer(s) passed as comma separated
+      ReleaseDate:
+        type: string
+        format: date
+        description: Optional
+      CreationDate:
+        type: string
+        format: date-time
+        description: Optional
+      PageSize:
+        type: integer
+        description: Mandatory
+      PageIndex:
+        type: integer
+        description: Mandatory
+    required:
+    - PageSize
+    - PageIndex
+  GetTCTRqListRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetTCTRqListRs_BodyType'
+  GetTCTRqListRs_BodyType:
+    type: object
+    properties:
+      TCTRequests:
+        type: array
+        items:
+          $ref: '#/definitions/TCTRequests_Type'
+      TotalRecordsCount:
+        type: integer
+        description: Mandatory total number of records
+    required:
+    - TCTRequests
+    - TotalRecordsCount
+  TCTRequests_Type:
+    type: object
+    properties:
+      TCTRequestId:
+        type: integer
+        description: Mandatory
+      NationalUnifiedNumber:
+        type: integer
+        description: Optional
+      LaborOfficeId:
+        type: integer
+        description: Mandatory
+      SequenceNumber:
+        type: integer
+        description: Mandatory
+      TraineeIdNo:
+        type: integer
+        description: Mandatory
+      TraineeName:
+        type: string
+        description: Mandatory
+      RequesterDetails:
+        $ref: '#/definitions/RequesterDetails_Type'
+        description: Mandatory
+      TCTRequestStatus:
+        $ref: '#/definitions/CodeName_Type'
+        description: Mandatory
+      TCTReason:
+        $ref: '#/definitions/CodeName_Type'
+        description: Optional
+      TCTNotes:
+        type: string
+        description: Optional
+      TrainingContract:
+        $ref: '#/definitions/ContractDetails_Type'
+        description: Mandatory
+      ReleaseDate:
+        type: string
+        format: date
+        description: Mandatory
+      ReleaseDateType:
+        $ref: '#/definitions/CodeName_Type'
+        description: Mandatory
+      CreationDate:
+        type: string
+        format: date-time
+        description: Mandatory
+    required:
+    - TCTRequestId
+    - LaborOfficeId
+    - SequenceNumber
+    - TraineeIdNo
+    - TraineeName
+    - RequesterDetails
+    - TCTRequestStatus
+    - TrainingContract
+    - ReleaseDate
+    - ReleaseDateType
+    - CreationDate
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+        description: Mandatory
+      NameEn:
+        type: string
+        description: Mandatory
+      NameAr:
+        type: string
+        description: Mandatory
+    required:
+    - Code
+    - NameEn
+    - NameAr
+  RequesterDetails_Type:
+    type: object
+    properties:
+      RequesterIdNo:
+        type: integer
+        description: Mandatory
+      RequesterType:
+        $ref: '#/definitions/CodeName_Type'
+        description: Mandatory
+    required:
+    - RequesterIdNo
+    - RequesterType
+  ContractDetails_Type:
+    type: object
+    properties:
+      TrainingContractId:
+        type: integer
+        description: Mandatory
+      ExpiryDate:
+        type: string
+        format: date
+        description: Mandatory
+      NoticePeriod:
+        type: integer
+        description: Mandatory
+    required:
+    - TrainingContractId
+    - ExpiryDate
+    - NoticePeriod
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(ace-trncntr-getterminations)$(request.path)
+        follow-redirects: false
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+schemes:
+- https
+securityDefinitions:
+  clientId:
+    type: apiKey
+    x-key-type: client_id
+    name: X-IBM-Client-Id
+    in: header
+  Oauth2.0:
+    type: oauth2
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    flow: application
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+security:
+- clientId: []
+  Oauth2.0:
+  - IntegrationScope

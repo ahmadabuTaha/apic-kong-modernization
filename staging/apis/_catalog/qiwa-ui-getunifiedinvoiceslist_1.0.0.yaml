@@ -1,0 +1,574 @@
+swagger: "2.0"
+info:
+  title: Qiwa_UI_GetUnifiedInvoicesList
+  x-ibm-name: qiwa-ui-getunifiedinvoiceslist
+  version: 1.0.0
+  description: This service is used to get the list of Unified Invoices related to
+    a certain unified number.
+schemes:
+- https
+basePath: /qiwa/v1
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - gatewayscript:
+        version: 2.0.0
+        title: convertParmToInt
+        source: "var apim = require('apim');\r\nvar reqPar = apim.getvariable('request.parameters');\r\nvar
+          UnifiedNumber = parseInt(reqPar.unifiedNumber);\r\nvar InvoiceId = reqPar.invoiceId;\r\nvar
+          InvoiceTypeId = parseInt(reqPar.invoiceTypeId);\r\nvar SupplyDateFrom =
+          reqPar.supplyDateFrom;\r\nvar SupplyDateTo = reqPar.supplyDateTo;\r\nvar
+          PageIndex = parseInt(reqPar.pageIndex);\r\nvar PageSize = parseInt(reqPar.pageSize);\r\n\r\nvar
+          Body = {\r\n            \"UnifiedNumber\": UnifiedNumber,\r\n            \"InvoiceId\":
+          InvoiceId,\r\n            \"InvoiceTypeId\": InvoiceTypeId,\r\n            \"SupplyDateFrom\":
+          SupplyDateFrom,\r\n            \"SupplyDateTo\": SupplyDateTo,\r\n            \"PageIndex\":
+          PageIndex,\r\n            \"PageSize\": PageSize\r\n        }\r\n        \r\nsession.output.write(Body);\r\napim.output('application/json');"
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\n\nvar cfg={\n    \"serviceCode\" : \"GUIL0001\",\n
+          \   \"channelId\" : \"Integration\",\n    \"requestName\" : \"GetUnifiedInvoicesListRq\",\n
+          \   \"responseName\": \"GetUnifiedInvoicesListRs\",\n    \"errorMap\" :{\n
+          \       \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid Request\"}\n    }\n
+          \   \n};\n\napim.setvariable('cfg',cfg);"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare_Request
+        source: |-
+          var apim = require('apim');
+          var millisecondsvalue = ""+(new Date()).getTime();
+          var dt = new Date();
+          var cfg = apim.getvariable('cfg');
+          var OperatorId=apim.getvariable('message.headers.Operator-Id');
+          var appcReq = {
+          [cfg.requestName]:{
+          "Header" : {
+          "TransactionId" : millisecondsvalue,
+          "ChannelId": cfg.channelId,
+          "SessionId": apim.getvariable('message.headers.X-Request-Id'),
+          "RequestTime" : formatDate(dt),
+          "ServiceCode": cfg.serviceCode
+
+
+
+          },
+          "Body" : apim.getvariable('message.body')
+
+
+          }
+          };
+
+
+
+          if (typeof OperatorId !== 'undefined')
+          appcReq[cfg.requestName].Header.UserInfo = {
+          "IDNumber" : OperatorId
+          };
+          session.output.write(appcReq);
+          apim.output('application/json');
+
+
+
+
+          function formatDate(d)
+          {
+          //get the month
+          var month = d.getMonth();
+          //get the day
+          //convert day to string
+          var day = d.getDate().toString();
+          //get the year
+          var year = d.getFullYear();
+          var hour = d.getHours().toString();
+          var minitue = d.getMinutes().toString();
+          var second = d.getSeconds().toString();
+          var millisecond = d.getMilliseconds().toString();
+          //pull the last two digits of the year
+          year = year.toString();
+
+          //increment month by 1 since it is 0 indexed
+          //converts month to a string
+          month = (month + 1).toString();
+
+
+
+          //if month is 1-9 pad right with a 0 for two digits
+          if (month.length === 1)
+          month = "0" + month;
+
+
+
+          //if day is between 1-9 pad right with a 0 for two digits
+          if (day.length === 1)
+          day = "0" + day;
+
+
+
+          if (hour.length === 1)
+          hour = "0" + hour;
+
+
+
+          if (minitue.length === 1)
+          minitue = "0" + minitue;
+
+
+
+          if (second.length === 1)
+          second = "0" + second;
+
+          if (millisecond.length == 1)
+          millisecond = "00" + millisecond;
+
+          if (millisecond.length == 2)
+          millisecond = "0" + millisecond;
+
+
+
+
+          //return the string "MMddyy"
+          return year+"-"+month+"-"+day+" "+hour + ":" + minitue + ":" + second+"."+millisecond;
+          }
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        header-control:
+          type: blacklist
+          values: []
+        parameter-control:
+          type: whitelist
+          values: []
+        timeout: 60
+        verb: POST
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        target-url: $(ace-uim-unifiedinvoices)/invoicesmanagement/getunifiedinvoiceslist
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+parameters:
+  unifiedNumber:
+    in: query
+    name: unifiedNumber
+    description: Version Type
+    required: false
+    type: integer
+    format: int32
+  invoiceId:
+    in: query
+    name: invoiceId
+    description: Invoice Id
+    required: false
+    type: string
+  invoiceTypeId:
+    in: query
+    name: invoiceTypeId
+    description: |
+      Invoice Type Id:
+        1- Establishment Visa
+        2- Visit Visa
+        3- User Management
+        Null- retrieve all types
+    required: false
+    type: integer
+    format: int32
+  supplyDateFrom:
+    in: query
+    name: supplyDateFrom
+    description: Supply Date From
+    required: false
+    type: string
+  supplyDateTo:
+    in: query
+    name: supplyDateTo
+    description: Supply Date To
+    required: false
+    type: string
+  paymentStatusID:
+    in: query
+    name: paymentStatusID
+    description: |
+      PaymentStatusID:
+        3- Paid
+        5- Refund
+        Null- retrieve all
+    required: false
+    type: integer
+    format: int32
+  pageIndex:
+    in: query
+    name: pageIndex
+    description: Page Index
+    required: false
+    type: integer
+    format: int32
+  pageSize:
+    in: query
+    name: pageSize
+    description: Page Size
+    required: false
+    type: integer
+    format: int32
+  X-IBM-Client-Id:
+    in: header
+    name: X-IBM-Client-Id
+    description: Client id issued by security server
+    required: true
+    type: string
+  X-IBM-Client-Secret:
+    in: header
+    name: X-IBM-Client-Secret
+    description: Client secret issued by security server
+    required: true
+    type: string
+  X-Request-Id:
+    in: header
+    name: X-Request-Id
+    description: X-Request-Id returned in the response header
+    required: false
+    type: string
+definitions:
+  ResponseModel:
+    type: object
+    description: This response object returned by the get operation
+    properties:
+      UnifiedInvoicesList:
+        $ref: '#/definitions/UnifiedInvoicesListModel'
+  UnifiedInvoicesListModel:
+    type: object
+    properties:
+      UnifiedInvoice:
+        type: array
+        items:
+          $ref: '#/definitions/UnifiedInvoiceModel'
+    required:
+    - UnifiedInvoice
+  UnifiedInvoiceModel:
+    type: object
+    properties:
+      invoiceID:
+        type: string
+        example: W-EV-HP-21-854B51115E-000000000015763
+      invoiceTypeID:
+        type: integer
+        description: |
+          1- Establishment Visa
+          2- Visit Visa
+          3- User Management
+        example: 1
+      total:
+        type: number
+        example: 1080.99
+      supplyDate:
+        type: string
+        example: 10-05-2022
+      unifiedNumber:
+        type: integer
+        example: 12345
+      paymentBrand:
+        type: string
+        example: visa
+      paymentStatusID:
+        type: integer
+        description: |
+          PaymentStatusID: 3: Paid
+                           5: Refund
+        example: 1
+      templateKey:
+        type: string
+        example: 0vMrTJDN9ChIe8iBYxknmg
+      templateName:
+        type: string
+        example: Unified Invoice Template AR
+      templateContent:
+        type: string
+        example: Qiwa Invoice
+      templateContentName:
+        type: string
+        example: Qiwa Invoice
+      messageSubject:
+        type: string
+        example: Invoice
+      messageFromEmail:
+        type: string
+        example: noreply@qiwa.info
+      messageFromName:
+        type: string
+        example: قوى
+      messageToEmail:
+        type: string
+        example: maram@qiwa.info
+      ownerIdNo:
+        type: string
+        example: "987654321"
+      messageCC:
+        type: string
+        example: maram@qiwa.info
+      messageBcc:
+        type: string
+        example: maram@qiwa.info
+      merge:
+        type: boolean
+        example: true
+      merge_language:
+        type: string
+        example: handlebars
+      totalRecordsCount:
+        type: integer
+        example: 1
+    required:
+    - invoiceID
+    - invoiceTypeID
+    - total
+    - supplyDate
+    - unifiedNumber
+    - paymentBrand
+    - paymentStatusID
+    - templateKey
+    - templateName
+    - templateContent
+    - templateContentName
+    - messageSubject
+    - messageFromEmail
+    - messageFromName
+    - messageToEmail
+    - ownerIdNo
+    - messageCC
+    - messageBcc
+    - merge
+    - merge_language
+    - totalRecordsCount
+  ErrorModel:
+    type: object
+    required:
+    - errorCode
+    - errorMessage
+    properties:
+      errorCode:
+        type: string
+        example: EXXXX000
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+  LocaleDataModel:
+    type: object
+    additionalProperties:
+      type: string
+    example:
+      en-US: English Value
+      ar-SA: Arabic Value
+paths:
+  /invoicemanagement/getunifiedinvoiceslist:
+    parameters:
+    - name: unifiedNumber
+      in: query
+      required: false
+      description: Version Type
+      type: integer
+      format: int32
+    - name: invoiceId
+      in: query
+      required: false
+      description: Invoice Id
+      type: string
+    - name: invoiceTypeId
+      in: query
+      required: false
+      description: |
+        Invoice Type Id:
+          1- Establishment Visa
+          2- Visit Visa
+          3- User Management
+          Null- retrieve all types
+      type: integer
+      format: int32
+    - name: supplyDateFrom
+      in: query
+      required: false
+      description: Supply Date From
+      type: string
+    - name: supplyDateTo
+      in: query
+      required: false
+      description: Supply Date To
+      type: string
+    - name: paymentStatusID
+      in: query
+      required: false
+      description: |
+        PaymentStatusID:
+          3- Paid
+          5- Refund
+          Null- retrieve all
+      type: integer
+      format: int32
+    - name: pageIndex
+      in: query
+      required: false
+      description: Page Index
+      type: integer
+      format: int32
+    - name: pageSize
+      in: query
+      required: false
+      description: Page Size
+      type: integer
+      format: int32
+    - name: X-IBM-Client-Id
+      in: header
+      required: true
+      description: Client id issued by security server
+      type: string
+    - name: X-IBM-Client-Secret
+      in: header
+      required: true
+      description: Client secret issued by security server
+      type: string
+    - name: X-Request-Id
+      in: header
+      required: false
+      description: X-Request-Id returned in the response header
+      type: string
+    get:
+      tags:
+      - Get Unified Invoices List
+      description: Service to Get Unified Invoices List
+      operationId: getunifiedinvoiceslist
+      produces:
+      - application/json
+      responses:
+        "200":
+          $ref: '#/responses/Response200'
+        "400":
+          $ref: '#/responses/Response400'
+        "401":
+          $ref: '#/responses/Response401'
+        "403":
+          $ref: '#/responses/Response403'
+        "404":
+          $ref: '#/responses/Response404'
+        "408":
+          $ref: '#/responses/Response408'
+        "409":
+          $ref: '#/responses/Response409'
+        "429":
+          $ref: '#/responses/Response429'
+        "500":
+          $ref: '#/responses/Response500'
+        "501":
+          $ref: '#/responses/Response501'
+        "503":
+          $ref: '#/responses/Response503'
+        "510":
+          $ref: '#/responses/Response510'
+responses:
+  Response200:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ResponseModel'
+  Response400:
+    description: The request was rejected by the server due to malformed syntax. Bad
+      Request.
+  Response401:
+    description: The request could not be completed due to lack of valid credentials.
+      Authentication.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response403:
+    description: The request could not be completed because it is not authorized.
+      Authorization
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response404:
+    description: The server has not found anything matching the Request-URI.
+  Response408:
+    description: The client did not produce a request within the time that the server
+      was prepared to wait.
+  Response409:
+    description: The request could not be completed due to a conflict with the current
+      state of the resource. Usually business validation errors will be returned in
+      the body
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response429:
+    description: The request was sent too many times in a given amount of time
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response500:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response501:
+    description: The server does not support the functionality required and does not
+      recognize the request
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response503:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response510:
+    description: Extensions to the request are required for the server to fulfil it.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'

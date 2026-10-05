@@ -1,0 +1,345 @@
+swagger: "2.0"
+info:
+  title: GetSaudiCertificate
+  x-ibm-name: getsaudicertificate
+  version: 1.0.2
+  description: GetSaudiCertificate. PROD YAML
+schemes:
+- https
+basePath: /saudicer
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-cmpm-saudi-certificate)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        persistent-connection: true
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+definitions:
+  GetSaudiCertificateRq_MessageType:
+    type: object
+    properties:
+      GetSaudiCertificateRq:
+        $ref: '#/definitions/GetSaudiCertificateRq_Type'
+  GetSaudiCertificateRs_MessageType:
+    type: object
+    properties:
+      GetSaudiCertificateRs:
+        $ref: '#/definitions/GetSaudiCertificateRs_Type'
+  GetSaudiCertificateRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetSaudiCertificateRq_BodyType'
+  GetSaudiCertificateRq_BodyType:
+    type: object
+    properties:
+      CertificateNumber:
+        type: string
+      NationalUnifiedNumber:
+        type: integer
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      SaudiCertStatusId:
+        type: integer
+      LastRequestChange:
+        type: string
+      SortBy:
+        type: integer
+      SortDirection:
+        type: integer
+      RenewalStartDate:
+        type: string
+      SaudiCertIssueDate:
+        type: string
+      RequesterIdNo:
+        type: integer
+      RequesterName:
+        type: string
+      RenewalIdNo:
+        type: integer
+      RenewalUserName:
+        type: string
+      PageSize:
+        type: integer
+      PageIndex:
+        type: integer
+    required:
+    - PageSize
+    - PageIndex
+  GetSaudiCertificateRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetSaudiCertificateRs_BodyType'
+  GetSaudiCertificateRs_BodyType:
+    type: object
+    properties:
+      SCDetailsList:
+        $ref: '#/definitions/SCDetailsList_Type'
+      TotalRecordsCount:
+        type: integer
+    required:
+    - SCDetailsList
+    - TotalRecordsCount
+  SCDetailsList_Type:
+    type: object
+    properties:
+      SCDetailsItem:
+        type: array
+        items:
+          $ref: '#/definitions/SCDetailsItem_Type'
+  SCDetailsItem_Type:
+    type: object
+    properties:
+      CertificateNumber:
+        type: string
+      NationalUnifiedNumber:
+        type: integer
+      SaudiCertIssueDate:
+        type: string
+      SaudiCertExpiryDate:
+        type: string
+      SaudiCertStatus:
+        $ref: '#/definitions/SaudiCertStatus_Type'
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      EstablishmentName:
+        type: string
+      CRNumber:
+        type: integer
+      RequesterIdNo:
+        type: integer
+      RequesterUserId:
+        type: integer
+      RenewalStartDate:
+        type: string
+      NitaqatColor:
+        $ref: '#/definitions/NitaqatColor_Type'
+      RenewalIdNo:
+        type: integer
+      RenewalUserId:
+        type: integer
+      RenewalUserName:
+        type: string
+      RequesterName:
+        type: string
+      LastModifyDate:
+        type: string
+      RemainingDays:
+        type: integer
+      EntitySaudiPercentage:
+        type: string
+      TotalRecordsCount:
+        type: integer
+    required:
+    - SaudiCertIssueDate
+    - SaudiCertExpiryDate
+    - SaudiCertStatus
+    - LaborOfficeId
+    - SequenceNumber
+    - EstablishmentName
+    - CRNumber
+    - TotalRecordsCount
+  SaudiCertStatus_Type:
+    type: object
+    properties:
+      SaudiCertStatusId:
+        type: integer
+      SaudiCertStatusEn:
+        type: string
+      SaudiCertStatusAr:
+        type: string
+    required:
+    - SaudiCertStatusId
+    - SaudiCertStatusEn
+    - SaudiCertStatusAr
+  NitaqatColor_Type:
+    type: object
+    properties:
+      Code:
+        type: string
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+    required:
+    - Code
+    - NameAr
+    - NameEn
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /getsaudicert:
+    post:
+      operationId: GetSaudiCertificate
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetSaudiCertificateRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Validate SC Request
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetSaudiCertificateRq_MessageType'
+        description: GetSaudiCertificateRq
+        required: true

@@ -1,0 +1,62 @@
+info:
+  version: 1.0.0
+  title: Qiwa_WorkInSaudi Product
+  name: qiwa_workinsaudi-product
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      qiwa_getexternalcontractlist1.0.0: {}
+      qiwa_getexternalcontractdetails1.0.0: {}
+      qiwa_approverejectexternalcontract1.0.0: {}
+      qiwa_createexternalcontract1.0.0: {}
+      qiwa_valideligadminjrney1.0.0: {}
+      qiwa_updatecontractmissinginformation1.0.0: {}
+      qiwa_approvedrejectcontractmissinginformation1.0.0: {}
+      qiwa_getexternalcontracthtml1.0.0: {}
+      qiwa_updateexternalcontract1.0.0: {}
+      qiwa_cancelexternalcontract1.0.0: {}
+      qiwa_updatevisastatus1.0.0: {}
+      qiwa_getexternalcontractbybordernumber1.0.0: {}
+      qiwa-requestupdateexternalcontract1.0.0: {}
+apis:
+  qiwa_cancelexternalcontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa_cancelexternalcontract_1.0.0.yaml
+  qiwa-requestupdateexternalcontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-requestupdateexternalcontract_1.0.0.yaml
+  qiwa_getexternalcontractbybordernumber1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa_getexternalcontractbybordernumber_1.0.0.yaml
+  qiwa_updatevisastatus1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa_updatevisastatus_1.0.0.yaml
+  qiwa_updateexternalcontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa_updateexternalcontract_1.0.0.yaml
+  qiwa_getexternalcontracthtml1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa_getexternalcontracthtml_1.0.0.yaml
+  qiwa_getexternalcontractdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa_getexternalcontractdetails_1.0.0.yaml
+  qiwa_approvedrejectcontractmissinginformation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa_approvedrejectcontractmissinginformation_1.0.0.yaml
+  qiwa_updatecontractmissinginformation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa_updatecontractmissinginformation_1.0.0.yaml
+  qiwa_valideligadminjrney1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa_valideligadminjrney_1.0.0.yaml
+  qiwa_createexternalcontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa_createexternalcontract_1.0.0.yaml
+  qiwa_getexternalcontractlist1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa_getexternalcontractlist_1.0.0.yaml
+  qiwa_approverejectexternalcontract1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa_approverejectexternalcontract_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

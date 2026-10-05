@@ -1,0 +1,81 @@
+info:
+  version: 1.0.1
+  title: WorkInSaudi
+  name: workinsaudi
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    rate-limits:
+      default:
+        value: 100/1minute
+        hard-limit: true
+    apis:
+      pushcontractdetailstows1.0.0: {}
+      wsgetresume1.0.0: {}
+      getresumebasicinformation1.0.0: {}
+      getresumeliteinformation1.0.0: {}
+      wsupdateresumecertificate1.0.0: {}
+      wsupdateresumelanguages1.0.0: {}
+      wsupdateresumeexperience1.0.0: {}
+      wsupdateresumemaindetails1.0.0: {}
+      wsaddresume1.0.0: {}
+      wsupdateresumeinterests1.0.0: {}
+      wsupdateresumeeducation1.0.0: {}
+      wsupdateresumeskills1.0.0: {}
+      wsdeleteresumesubdetails1.0.0: {}
+      wsupdateresumestatus1.0.0: {}
+      svp_getlistofmandatedcountriesandoccupations1.0.0: {}
+  plan-a:
+    title: Plan - A
+    rate-limits:
+      Default rate-limit:
+        value: 100/1minute
+        hard-limit: true
+    burst-limits:
+      Default burst-limit:
+        value: 10/1second
+    apis:
+      getresumebasicinformation1.0.0: {}
+    description: This plan is used for the application StaffMarketPlace
+apis:
+  pushcontractdetailstows1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/pushcontractdetailstows_1.0.0.yaml
+  wsgetresume1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/wsgetresume_1.0.0.yaml
+  getresumebasicinformation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getresumebasicinformation_1.0.0.yaml
+  getresumeliteinformation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getresumeliteinformation_1.0.0.yaml
+  wsupdateresumecertificate1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/wsupdateresumecertificate_1.0.0.yaml
+  wsupdateresumelanguages1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/wsupdateresumelanguages_1.0.0.yaml
+  wsupdateresumeexperience1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/wsupdateresumeexperience_1.0.0.yaml
+  wsupdateresumemaindetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/wsupdateresumemaindetails_1.0.0.yaml
+  wsaddresume1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/wsaddresume_1.0.0.yaml
+  wsupdateresumeinterests1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/wsupdateresumeinterests_1.0.0.yaml
+  wsupdateresumeeducation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/wsupdateresumeeducation_1.0.0.yaml
+  wsupdateresumeskills1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/wsupdateresumeskills_1.0.0.yaml
+  wsdeleteresumesubdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/wsdeleteresumesubdetails_1.0.0.yaml
+  wsupdateresumestatus1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/wsupdateresumestatus_1.0.0.yaml
+  svp_getlistofmandatedcountriesandoccupations1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/svp_getlistofmandatedcountriesandoccupations_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

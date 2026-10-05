@@ -1,0 +1,602 @@
+swagger: "2.0"
+info:
+  title: QAAS_GetEmploymentContractsList
+  description: This service is used to Get Employment Contract List from Qiwa.
+  x-ibm-name: qaas_getemploymentcontractslist
+  version: 1.0.0
+schemes:
+- https
+basePath: /external/v1
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    x-ibm-oauth-provider: externaliamprovider
+    flow: application
+    tokenUrl: $(keycloak-token)/realms/TIP/protocol/openid-connect/token
+    scopes:
+      contract:scope: allow access to contract APIs
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+security:
+- OAuth2.0:
+  - contract:scope
+  clientIdHeader: []
+paths:
+  /qaas/contract/getemploymentcontractslist:
+    parameters:
+    - $ref: '#/parameters/X-IBM-Client-Id'
+    get:
+      tags:
+      - QiwaAsAService
+      description: This service is used to Get Establishment Details from Qiwa DB
+        and provide it to Service Now
+      operationId: getemploymentcontractslist
+      produces:
+      - application/json
+      responses:
+        "200":
+          $ref: '#/responses/Response200'
+        "400":
+          $ref: '#/responses/Response400'
+        "401":
+          $ref: '#/responses/Response401'
+        "403":
+          $ref: '#/responses/Response403'
+        "404":
+          $ref: '#/responses/Response404'
+        "408":
+          $ref: '#/responses/Response408'
+        "409":
+          $ref: '#/responses/Response409'
+        "429":
+          $ref: '#/responses/Response429'
+        "500":
+          $ref: '#/responses/Response500'
+        "501":
+          $ref: '#/responses/Response501'
+        "503":
+          $ref: '#/responses/Response503'
+        "510":
+          $ref: '#/responses/Response510'
+definitions:
+  ResponseModel:
+    type: object
+    description: This response object returned by the get operation
+    properties:
+      ContractsList:
+        $ref: '#/definitions/ContractsList_Type'
+      TotalRecordsCount:
+        type: integer
+        example: 20
+  ContractsList_Type:
+    type: array
+    items:
+      type: object
+      description: This response object returned by the get operation
+      properties:
+        ContractsItem:
+          $ref: '#/definitions/ContractsItem_Type'
+  ContractsItem_Type:
+    type: object
+    properties:
+      LaborOfficeID:
+        type: integer
+      SequenceNumber:
+        type: integer
+      RequesterName:
+        type: string
+      ContractId:
+        type: integer
+      LaborerIdNo:
+        type: integer
+      LaborerName:
+        type: string
+      JobTitle:
+        $ref: '#/definitions/JobTitle_Type'
+      Occupation:
+        $ref: '#/definitions/CodeName_Type'
+      ContractPeriod:
+        type: integer
+      ContractType:
+        $ref: '#/definitions/CodeName_Type'
+      JoiningDate:
+        type: string
+      ContractStartDate:
+        type: string
+      ContractExpiryDate:
+        type: string
+      DateTypeId:
+        type: integer
+      ContractStatus:
+        $ref: '#/definitions/CodeName_Type'
+      NoticePeriod:
+        type: integer
+      ProbationPeriod:
+        type: integer
+      CreationDate:
+        type: string
+      LastModifiedDate:
+        type: string
+      LastWorkingDay:
+        type: string
+  JobTitle_Type:
+    type: object
+    properties:
+      JobTitleEn:
+        type: string
+      JobTitleAr:
+        type: string
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      NameEn:
+        type: string
+      NameAr:
+        type: string
+  LocaleDataModel:
+    type: object
+    additionalProperties:
+      type: string
+    example:
+      en-US: English Value
+      ar-SA: Arabic Value
+  ErrorModel:
+    type: object
+    required:
+    - errorCode
+    - errorMessage
+    properties:
+      errorCode:
+        type: string
+        example: EXXXX000
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+parameters:
+  X-IBM-Client-Id:
+    in: header
+    name: X-IBM-Client-Id
+    description: Client id issued by security server
+    required: true
+    type: string
+  NationalUnifiedNumber:
+    in: header
+    name: NationalUnifiedNumber
+    description: NationalUnifiedNumber
+    required: true
+    type: string
+  LaborOfficeId:
+    in: query
+    name: LaborOfficeId
+    description: LaborOfficeId
+    required: false
+    type: integer
+  SequenceNumber:
+    in: query
+    name: SequenceNumber
+    description: SequenceNumber
+    required: false
+    type: integer
+  LaborerIdNo:
+    in: query
+    name: LaborerIdNo
+    description: LaborerIdNo
+    required: false
+    type: integer
+  LaborerName:
+    in: query
+    name: LaborerName
+    description: LaborerName
+    required: false
+    type: string
+  ContractId:
+    in: query
+    name: ContractId
+    description: ContractId
+    required: false
+    type: integer
+  StatusId:
+    in: query
+    name: StatusId
+    description: StatusId
+    required: false
+    type: string
+  PageSize:
+    in: query
+    name: PageSize
+    description: PageSize
+    required: true
+    type: integer
+  PageIndex:
+    in: query
+    name: PageIndex
+    description: PageIndex
+    required: true
+    type: integer
+responses:
+  Response200:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ResponseModel'
+  Response201:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+      Location:
+        type: string
+        description: Id url encoded
+  Response204:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response400:
+    description: The request was rejected by the server due to malformed syntax. Bad
+      Request.
+  Response401:
+    description: The request could not be completed due to lack of valid credentials.
+      Authentication.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response403:
+    description: The request could not be completed because it is not authorized.
+      Authorization
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response404:
+    description: The server has not found anything matching the Request-URI.
+  Response408:
+    description: The client did not produce a request within the time that the server
+      was prepared to wait.
+  Response409:
+    description: The request could not be completed due to a conflict with the current
+      state of the resource. Usually business validation errors will be returned in
+      the body
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response429:
+    description: The request was sent too many times in a given amount of time
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response500:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response501:
+    description: The server does not support the functionality required and does not
+      recognize the request
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response503:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response510:
+    description: Extensions to the request are required for the server to fulfil it.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - gatewayscript:
+        version: 2.0.0
+        title: NUNValidation
+        source: "var apim = require('apim'); \r\nvar authHeader = apim.getvariable('request.headers.Authorization');\r\n//var
+          request = apim.getvariable('request.body');\r\nvar param = apim.getvariable('request.headers.NationalUnifiedNumber');\r\n//
+          Check if UnifiedNumberId exists in the request body\r\nif (!param) {\r\n
+          \   context.reject(\"ValidationError\", \"NationalUnifiedNumber is missing
+          in the request body\");\r\n    context.message.statusCode = 400; // Bad
+          Request\r\n    context.message.body.write({\r\n        error: \" NationalUnifiedNumber
+          is required and must be included in the request body\"\r\n    });\r\n    context.message.headers[\"Content-Type\"]
+          = \"application/json\";\r\n    // Exit early as the validation failed\r\n
+          \   return;\r\n}\r\n\r\n//var reqNationalUnifiedNumber = param.NationalUnifiedNumber;\r\nvar
+          base64Url = authHeader.split('.')[1];\r\nvar base64 = base64Url.replace('-',
+          '+').replace('_', '/');\r\nvar decodedData = JSON.parse(Buffer.from(base64,
+          'base64'));\r\nvar tokenUnifiedNationalNumbers = decodedData.UnifiedNationalNumbers;\r\n\r\n//
+          Check if the UnifiedNumberId exists in the token's UnifiedNationalNumbers\r\nif
+          (tokenUnifiedNationalNumbers.includes(param)) {\r\n    session.output.write({});\r\n}
+          else {\r\n    context.reject(\"Forbidden\", \"NationalUnifiedNumber is not
+          valid\");\r\n    context.message.statusCode = 403; // Forbidden\r\n    context.message.body.write({\r\n
+          \       error: \"NationalUnifiedNumber is not valid\"\r\n    });\r\n    context.message.headers[\"Content-Type\"]
+          = \"application/json\";\r\n}"
+    - map:
+        inputs:
+          NationalUnifiedNumber:
+            schema:
+              type: string
+            variable: request.headers.NationalUnifiedNumber
+          LaborOfficeId:
+            schema:
+              type: integer
+              format: int32
+            variable: request.parameters.LaborOfficeId
+          SequenceNumber:
+            schema:
+              type: integer
+              format: int32
+            variable: request.parameters.SequenceNumber
+          LaborerIdNo:
+            schema:
+              type: integer
+              format: int32
+            variable: request.parameters.LaborerIdNo
+          LaborerName:
+            schema:
+              type: string
+            variable: request.parameters.LaborerName
+          ContractId:
+            schema:
+              type: integer
+              format: int32
+            variable: request.parameters.ContractId
+          StatusId:
+            schema:
+              type: string
+            variable: request.parameters.StatusId
+          PageSize:
+            schema:
+              type: integer
+              format: int32
+            variable: request.parameters.PageSize
+          PageIndex:
+            schema:
+              type: integer
+              format: int32
+            variable: request.parameters.PageIndex
+        outputs:
+          "":
+            schema:
+              type: object
+              properties:
+                NationalUnifiedNumber:
+                  type: number
+                LaborOfficeId:
+                  type: number
+                SequenceNumber:
+                  type: number
+                LaborerIdNo:
+                  type: number
+                LaborerName:
+                  type: string
+                ContractId:
+                  type: number
+                StatusId:
+                  type: string
+                PageSize:
+                  type: number
+                PageIndex:
+                  type: number
+            variable: message.body
+            content: application/json
+        actions:
+        - set: .NationalUnifiedNumber
+          from: NationalUnifiedNumber
+        - set: .LaborOfficeId
+          from: LaborOfficeId
+        - set: .SequenceNumber
+          from: SequenceNumber
+        - set: .LaborerIdNo
+          from: LaborerIdNo
+        - set: .LaborerName
+          from: LaborerName
+        - set: .ContractId
+          from: ContractId
+        - set: .StatusId
+          from: StatusId
+        - set: .PageSize
+          from: PageSize
+        - set: .PageIndex
+          from: PageIndex
+        version: 2.0.0
+        title: map
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\n \nvar cfg={\n    \"serviceCode\" :
+          \"GECL0001\",\n    \"channelId\" : \"Masdar\",\n    \"requestName\" : \"GetEmploymentContractsListRq\",\n
+          \   \"responseName\": \"GetEmploymentContractsListRs\",\n    \"errorMap\"
+          :{\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid Request\"}\n
+          \   }\n};\napim.setvariable('cfg',cfg);"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare_Request
+        source: "var apim = require('apim');\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\nvar appcReq
+          = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n            \"TransactionId\"
+          : millisecondsvalue,\r\n            \"ChannelId\": cfg.channelId,\r\n            \"SessionId\":
+          apim.getvariable('message.headers.X-Request-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode,\r\n\t\t\t
+          \     \"DebugFlag\": \"1\",\r\n            \"UserInfo\": {\r\n                \"UserId\":
+          apim.getvariable('message.headers.UserId'),\r\n                \"IDNumber\":
+          apim.getvariable('message.headers.IDNumber')\t\t\t\t\r\n            },\t\t\t
+          \     \r\n\r\n        },\r\n        \"Body\" : apim.getvariable('message.body')\r\n
+          \   }\r\n};\r\n\r\nif (typeof OperatorId !== 'undefined')\r\n    appcReq[cfg.requestName].Header.UserInfo
+          = {\r\n        \"IDNumber\" : OperatorId\r\n    };\r\napim.setvariable('payload',appcReq);
+          \   \r\nsession.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n    \r\n    \r\n\r\n    //return
+          the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour
+          + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    - invoke:
+        version: 2.0.0
+        title: MainBE
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: POST
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(ace-cntmv2-getcon-details)/contractmanagement/getempcontlist
+        follow-redirects: false
+        inject-proxy-headers: true
+        output: MainBERs
+    - gatewayscript:
+        version: 2.0.0
+        title: PrepareReqForLogging
+        source: "var apim=require('apim');\r\nvar appconnectrequest = apim.getvariable('payload');\r\nvar
+          APIRes = apim.getvariable('MainBERs.body');\r\nvar appname = apim.getvariable('client.app.name');\r\nvar
+          UDFPayload = {\r\n                \"KeyValueArr\": [\r\n                    {\r\n
+          \                       \"key\": \"Product\",\r\n                        \"value\":
+          \"QiwaAsService\"\r\n                    },\r\n                    {\r\n
+          \                       \"key\": \"Client\",\r\n                        \"value\":
+          appname\r\n                    }\r\n                ]\r\n            };\t
+          \r\n\r\nappconnectrequest.GetEmploymentContractsListRq.Header.UDF = UDFPayload;\r\nvar
+          jsonData= {\r\n\t\"LogAPIData\": {\r\n\t\t\"GetEmploymentContractsListRq\":
+          appconnectrequest.GetEmploymentContractsListRq,\r\n\t\t\"GetEmploymentContractsListRs\":
+          APIRes.GetEmploymentContractsListRs\r\n\t}\r\n}\r\nsession.output.write(jsonData);\r\napim.output('application/json');\r\n"
+    - invoke:
+        version: 2.3.0
+        title: LoggingBE
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        http-version: HTTP/1.1
+        timeout: 60
+        verb: POST
+        chunked-uploads: true
+        persistent-connection: true
+        cache-response: protocol
+        cache-ttl: 900
+        websocket-upgrade: false
+        graphql-send-type: detect
+        target-url: $(ace-tip-internal)/external/logwrapperapidata
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_Headers
+        source: |-
+          var apim = require('apim');
+          apim.output('application/json');
+          var message = apim.getvariable('MainBERs.body');
+          var cfg = apim.getvariable('cfg');
+          var Header = message[cfg.responseName].Header;
+          var TransactionId = Header.TransactionId;
+          var ChannelId = Header.ChannelId;
+          var RequestTime = Header.RequestTime;
+          var SessionId = Header.SessionId;
+          var MWRequestTime = Header.MWRequestTime;
+          var MWResponseTime = Header.MWResponseTime;
+          var status = Header.ResponseStatus.Status;
+          var code = Header.ResponseStatus.Code;
+          apim.setvariable('message.headers.Transaction-Id',TransactionId,'add');
+          apim.setvariable('message.headers.Channel-Id',ChannelId,'add');
+          if (RequestTime !== 'undefined')
+          apim.setvariable('message.headers.RequestTime',RequestTime,'add');
+          if (SessionId !== 'undefined')
+          apim.setvariable('message.headers.X-Request-Id',SessionId,'add');
+          if (MWRequestTime !== 'undefined')
+          apim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');
+          if (MWResponseTime !== 'undefined')
+          apim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');
+          apim.setvariable('message.headers.Response-Status',status,'add');
+          apim.setvariable('message.headers.Response-Code',code,'add');
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Response
+              source: |-
+                var apim = require('apim');
+                var message = apim.getvariable('MainBERs.body');
+                var cfg = apim.getvariable('cfg');
+                var body = message[cfg.responseName].Body;
+                session.output.write(body);
+                apim.output('application/json');
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Error
+              source: "var apim = require('apim');\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar error = {\n  \"errorCode\":
+                message[cfg.responseName].Header.ResponseStatus.Code,\n  \"errorMessage\":
+                {\n    \"en-US\": message[cfg.responseName].Header.ResponseStatus.EnglishMsg,\n
+                \   \"ar-SA\": message[cfg.responseName].Header.ResponseStatus.ArabicMsg\n
+                \ }\n};\n \nvar httperror=0;\nif(cfg.errorMap){\n    if(cfg.errorMap[error.errorCode]){\n
+                \      httperror = cfg.errorMap[error.errorCode].code;\n       //var
+                errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\n       //var
+                details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\n    }\n}\nif(httperror
+                == 0){\n   httperror = 409;\n   // apim.error('ERROR',400,'Bad Request','Invalid
+                request');\n}\napim.setvariable('message.status.code',httperror,'set');\n
+                \nsession.output.write(error);\napim.output('application/json');"
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload

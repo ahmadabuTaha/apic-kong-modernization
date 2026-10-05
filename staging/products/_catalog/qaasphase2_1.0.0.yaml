@@ -1,0 +1,65 @@
+info:
+  version: 1.0.0
+  title: QaasPhase2
+  name: qaasphase2
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      qaas_createemploymentcontractv21.0.0: {}
+      qaas_updateemploymentcontractv21.0.0: {}
+      qaas-terminateemploymentcontractv21.0.0: {}
+      qaas_getemploymentcontractdetailsv21.0.0: {}
+      qaas_getemploymentcontractslistv21.0.0: {}
+      qaas_checksevhunenablement1.0.0: {}
+      qaas_enabledisablesevhunverifyotp1.0.1: {}
+      qaas_enabledisablesevhungenerateotp1.0.1: {}
+      qaas_enabledisablesevhunresendotp1.0.0: {}
+      qaas_getalluserestablishments1.0.0: {}
+      qaas_getallenabled700relatedtotheuser1.0.0: {}
+      qaas_getdisableduserestablishment1.0.1: {}
+      qaas_revokesevenhun1.0.0: {}
+      qaas_translegacyempcontractv21.0.0: {}
+apis:
+  qaas_revokesevenhun1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qaas_revokesevenhun_1.0.0.yaml
+  qaas_getdisableduserestablishment1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qaas_getdisableduserestablishment_1.0.1.yaml
+  qaas_getallenabled700relatedtotheuser1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qaas_getallenabled700relatedtotheuser_1.0.0.yaml
+  qaas_getemploymentcontractdetailsv21.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qaas_getemploymentcontractdetailsv2_1.0.0.yaml
+  qaas_getemploymentcontractslistv21.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qaas_getemploymentcontractslistv2_1.0.0.yaml
+  qaas_checksevhunenablement1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qaas_checksevhunenablement_1.0.0.yaml
+  qaas_enabledisablesevhunresendotp1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qaas_enabledisablesevhunresendotp_1.0.0.yaml
+  qaas_enabledisablesevhungenerateotp1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qaas_enabledisablesevhungenerateotp_1.0.1.yaml
+  qaas_enabledisablesevhunverifyotp1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qaas_enabledisablesevhunverifyotp_1.0.1.yaml
+  qaas_getalluserestablishments1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qaas_getalluserestablishments_1.0.0.yaml
+  qaas-terminateemploymentcontractv21.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qaas-terminateemploymentcontractv2_1.0.0.yaml
+  qaas_updateemploymentcontractv21.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qaas_updateemploymentcontractv2_1.0.0.yaml
+  qaas_createemploymentcontractv21.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qaas_createemploymentcontractv2_1.0.0.yaml
+  qaas_translegacyempcontractv21.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qaas_translegacyempcontractv2_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

@@ -1,0 +1,413 @@
+swagger: "2.0"
+info:
+  title: Qiwa_SC_CheckExpiry
+  x-ibm-name: qiwa-checkscexpiry
+  version: 1.0.1
+  description: This API checks the expiry and retrieves the salary certificate details  from
+    Qiwa platform
+schemes:
+- https
+basePath: /qiwa/v2
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientIdHeader:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://gw-apic.qiwa.info/takamol/staging/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - gatewayscript:
+        version: 2.0.0
+        title: service_config
+        source: "var apim= require('apim');\n\nvar cfg = {\n    \n    \"serviceCode\"
+          : \"CSCE0002\",\n    \"channelId\" : \"Qiwa\",\n\t\"SessionId\" : \"1\",\n
+          \   \"requestName\" : \"CheckSCExpiryRq\",\n    \"responseName\": \"CheckSCExpiryRs\",\n
+          \   \"errorMap\" :{\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid
+          Request\"},\n        \"E0000812\" : {\"code\" :409, \"msg\":\"Conflict\"},\n
+          \       \"E0000813\" : {\"code\" :409, \"msg\":\"Conflict\"},\n        \"E0000814\"
+          : {\"code\" :409, \"msg\":\"Conflict\"},\n        \"E0000815\" : {\"code\"
+          :400, \"msg\":\"Return Code\"}\n    }\n};\n\napim.setvariable('cfg', cfg);\napim.output('application/json');"
+    - gatewayscript:
+        version: 2.0.0
+        title: Build_Request
+        source: "var apim = require('apim');\n\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\nvar dt = new Date();\nvar cfg = apim.getvariable('cfg');\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\n\nvar CertificateNumber
+          = apim.getvariable('request.parameters.CertificateNumber');\nvar NationalId
+          = apim.getvariable('request.parameters.NationalId');\n\n\n\nvar appcReq
+          = {\n    [cfg.requestName]:{\n        \"Header\" : {\n            \"TransactionId\"
+          : millisecondsvalue,\n            \"ChannelId\": cfg.channelId,\n            \"SessionId\":
+          cfg.SessionId, //apim.getvariable('message.headers.X-Request-Id'),\n            \"RequestTime\"
+          : formatDate(dt),\n\t\t\t\"MWRequestTime\" : formatDate(dt),\n            \"ServiceCode\":
+          cfg.serviceCode\n\t\t\n        },\n        \"Body\" : {\n            \"CertificateNumber\":
+          CertificateNumber,\n            \"NationalId\": NationalId\n}\n        //apim.getvariable('message.body')\n
+          \           \n        \n    }\n};\n\nif (typeof OperatorId !== 'undefined')\n
+          \   appcReq[cfg.requestName].Header.UserInfo = {\n        \"IDNumber\" :
+          OperatorId\n    };\nsession.output.write(appcReq);\napim.output('application/json');\n\n\nfunction
+          formatDate(d)\n{\n    //get the month\n    var month = d.getMonth();\n    //get
+          the day\n    //convert day to string\n    var day = d.getDate().toString();\n
+          \   //get the year\n    var year = d.getFullYear();\n    var hour = d.getHours().toString();\n
+          \   var minitue = d.getMinutes().toString();\n    var second = d.getSeconds().toString();\n
+          \   var millisecond = d.getMilliseconds().toString();\n    //pull the last
+          two digits of the year\n    year = year.toString();\n    \n    //increment
+          month by 1 since it is 0 indexed\n    //converts month to a string\n    month
+          = (month + 1).toString();\n\n    //if month is 1-9 pad right with a 0 for
+          two digits\n    if (month.length === 1)\n        month = \"0\" + month;\n\n
+          \   //if day is between 1-9 pad right with a 0 for two digits\n    if (day.length
+          === 1)\n        day = \"0\" + day;\n\n    if (hour.length === 1)\n        hour
+          = \"0\" + hour;\n\n    if (minitue.length === 1)\n        minitue = \"0\"
+          + minitue;\n\n    if (second.length === 1)\n        second = \"0\" + second;\n
+          \       \n    if (millisecond.length == 1)\n        millisecond = \"00\"
+          + millisecond;\n        \n    if (millisecond.length == 2)\n        millisecond
+          = \"0\" + millisecond;\n    \n    \n\n    //return the string \"MMddyy\"\n
+          \   return year+\"-\"+month+\"-\"+day+\" \"+hour + \":\" + minitue + \":\"
+          + second+\".\"+millisecond;\n}"
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: POST
+        target-url: $(ace-salc-salary-certificate)/salaryCertificate/check/expiry
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        stop-on-error:
+        - OperationError
+        - SOAPError
+        - ConnectionError
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_Headers
+        source: |-
+          var apim = require('apim');
+
+          apim.output('application/json');
+
+          var message = apim.getvariable('message.body');
+          var cfg = apim.getvariable('cfg');
+          var Header = message[cfg.responseName].Header;
+          var TransactionId = Header.TransactionId;
+          var ChannelId = Header.ChannelId;
+          var RequestTime = Header.RequestTime;
+          var SessionId = Header.SessionId;
+          var MWRequestTime = Header.MWRequestTime;
+          var MWResponseTime = Header.MWResponseTime;
+          var status = Header.ResponseStatus.Status;
+
+
+
+          apim.setvariable('message.headers.Transaction-Id',TransactionId,'add');
+          apim.setvariable('message.headers.Channel-Id',ChannelId,'add');
+          if (RequestTime !== 'undefined')
+           apim.setvariable('message.headers.RequestTime',RequestTime,'add');
+          if (SessionId !== 'undefined')
+           apim.setvariable('message.headers.X-Request-Id',SessionId,'add');
+          if (MWRequestTime !== 'undefined')
+          apim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');
+          if (MWResponseTime !== 'undefined')
+          apim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');
+
+          apim.setvariable('message.headers.Response-Status',status,'add');
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: ($header("Response-Status") = "SUCCESS")
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: gatewayscript
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg'); \n\nvar body = message[cfg.responseName].Body;\n\n\nsession.output.write(body);\napim.output('application/json');"
+        - condition: ($header("Response-Status") = "ERROR" or $header("Response-Status")
+            = "Error")
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: gatewayscript
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');     \n\nvar error = {\n  \"errorCode\":
+                message[cfg.responseName].Header.ResponseStatus.Code,\n  \"errorMessage\":
+                {\n    \"en-US\": message[cfg.responseName].Header.ResponseStatus.EnglishMsg,\n
+                \   \"ar-SA\": message[cfg.responseName].Header.ResponseStatus.ArabicMsg\n
+                \ }\n};\n\nvar httperror=0;\nif(cfg.errorMap){\n    if(cfg.errorMap[error.errorCode]){\n
+                \      httperror = cfg.errorMap[error.errorCode].code;\n \n    }\n}\nif(httperror
+                == 0){\n   httperror = 400;\n   // apim.error('ERROR',400,'Bad Request','Invalid
+                request');\n}\n\napim.setvariable('message.status.code',httperror,'set');\n\nsession.output.write(error);\napim.output('application/json');"
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: gatewayscript
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');
+                \nvar cfg = apim.getvariable('cfg');       \n\nvar error = {\n  \"errorCode\":
+                message['Error'].Code,\n  \"errorMessage\": {\n    \"en-US\": message['Error'].Detail,\n
+                \   \"ar-SA\": 'System Error'\n};\n\nvar httperror=0;\nif(cfg.errorMap){\n
+                \   if(cfg.errorMap[error.errorCode]){\n       httperror = cfg.errorMap[error.errorCode].code;\n
+                \      \n       //var errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\n
+                \      //var details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\n    }\n}\nif(httperror
+                == 0){\n   httperror = 500;\n   // apim.error('ERROR',400,'Bad Request','Invalid
+                request');\n}\napim.setvariable('message.status.code',httperror,'set');\n\nsession.output.write(error);\napim.output('application/json');"
+    catch:
+    - default:
+      - set-variable:
+          version: 2.0.0
+          title: set-variable
+          actions:
+          - set: message.status.code
+            value: "500"
+            type: string
+          - set: message.headers.content-type
+            value: application/json
+            type: string
+          - set: message.body
+            value: '{     "errorCode": "E000500",     "errorMessage": "Internal server
+              error"              }'
+            type: string
+    finally: []
+  properties:
+    target-url:
+      value: $(ace-salc-salary-certificate)/salaryCertificate/check/expiry
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  catalogs: {}
+  activity-log:
+    success-content: payload
+    error-content: payload
+    enabled: true
+  buffering: true
+parameters:
+  CertificateNumber:
+    in: query
+    name: CertificateNumber
+    description: certificate number to validate
+    required: true
+    type: string
+  NationalId:
+    in: query
+    name: NationalId
+    description: National id
+    required: true
+    type: string
+  X-IBM-Client-Id:
+    in: header
+    name: X-IBM-Client-Id
+    description: Client id issued by security server
+    required: true
+    type: string
+  X-IBM-Client-Secret:
+    in: header
+    name: X-IBM-Client-Secret
+    description: Client secret issued by security server
+    required: true
+    type: string
+  X-Request-Id:
+    in: header
+    name: X-Request-Id
+    description: X-Request-Id returned in the response header
+    required: false
+    type: string
+definitions:
+  ResponseModel:
+    type: object
+    description: This response object returned by the get operation
+    properties:
+      headers:
+        $ref: '#/definitions/Headers'
+      CertificateNumber:
+        type: string
+        example: 1-123456
+      NationalId:
+        type: string
+        example: "32"
+      EmployeeName:
+        type: string
+        example: Test
+      SalaryCertificateStatusId:
+        type: string
+        example: "1"
+      SalaryCertificateStatusEn:
+        type: string
+        example: Active
+      SalaryCertificateStatusAr:
+        type: string
+        example: نشط
+      EstablishmentName:
+        type: string
+        example: مسة محمد العجيمـى للمقاولات
+      JobNameEn:
+        type: string
+        example: Engineer
+      JobNameAr:
+        type: string
+        example: مهندس
+      JobStartingDate:
+        type: string
+        example: "1995-01-10 00:00:00"
+      ContractStatusId:
+        type: string
+        example: "15"
+      ContractStatusEn:
+        type: string
+        example: Active
+      ContractStatusAr:
+        type: string
+        example: ساري
+      CertificateStartDate:
+        type: string
+        example: "2022-04-07 14:43:47.330"
+      CertificateExpiryDate:
+        type: string
+        example: "2022-06-07 14:43:47.330"
+  ErrorModel:
+    type: object
+    required:
+    - errorCode
+    - errorMessage
+    properties:
+      headers:
+        $ref: '#/definitions/Headers'
+      errorCode:
+        type: string
+        example: EXXXX000
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+  LocaleDataModel:
+    type: object
+    additionalProperties:
+      type: string
+    example:
+      en-US: English Value
+      ar-SA: Arabic Value
+  Headers:
+    type: object
+    properties:
+      X-Request-Id:
+        type: string
+        example: 123e4567-e89b-12d3-a456-426614174000
+  HeadersErrorModel:
+    type: object
+    properties:
+      headers:
+        $ref: '#/definitions/Headers'
+paths:
+  /salaryCertificate/check/expiry:
+    parameters:
+    - name: CertificateNumber
+      in: query
+      required: false
+      description: certificate number to validate
+      type: string
+    - name: NationalId
+      in: query
+      required: false
+      description: National id
+      type: string
+    - name: X-IBM-Client-Id
+      in: header
+      required: true
+      description: Client id issued by security server
+      type: string
+    - name: X-IBM-Client-Secret
+      in: header
+      required: true
+      description: Client secret issued by security server
+      type: string
+    - name: X-Request-Id
+      in: header
+      required: false
+      description: X-Request-Id returned in the response header
+      type: string
+    get:
+      tags:
+      - CheckSCExpiry
+      description: Service to check the expiry and retrieves the salary certificate
+        details  from Qiwa platform
+      operationId: CheckSCExpiry
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/ResponseModel'
+        "400":
+          description: The request was rejected by the server due to malformed syntax.
+            Bad Request.
+        "401":
+          description: The request could not be completed due to lack of valid credentials.
+            Authentication.
+          schema:
+            $ref: '#/definitions/HeadersErrorModel'
+        "403":
+          description: The request could not be completed because it is not authorized.
+            Authorization
+          schema:
+            $ref: '#/definitions/HeadersErrorModel'
+        "404":
+          description: The server has not found anything matching the Request-URI.
+        "408":
+          description: The client did not produce a request within the time that the
+            server was prepared to wait.
+        "409":
+          description: The request could not be completed due to a conflict with the
+            current state of the resource. Usually business validation errors will
+            be returned in the body
+          schema:
+            $ref: '#/definitions/HeadersErrorModel'
+        "429":
+          description: The request was sent too many times in a given amount of time
+          schema:
+            $ref: '#/definitions/HeadersErrorModel'
+        "500":
+          description: The server encountered an unexpected condition which prevented
+            it from fulfilling the request.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        "501":
+          description: The server does not support the functionality required and
+            does not recognize the request
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        "503":
+          description: The server encountered an unexpected condition which prevented
+            it from fulfilling the request.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        "510":
+          description: Extensions to the request are required for the server to fulfil
+            it.
+          schema:
+            $ref: '#/definitions/ErrorModel'

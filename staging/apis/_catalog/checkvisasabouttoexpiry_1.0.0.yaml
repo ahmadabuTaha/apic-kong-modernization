@@ -1,0 +1,294 @@
+swagger: "2.0"
+info:
+  title: CheckVisasAboutToExpiry
+  x-ibm-name: checkvisasabouttoexpiry
+  version: 1.0.0
+  description: 'This service is used to check the visa expiration before 30 days. '
+schemes:
+- https
+basePath: /common
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-vstv-vvutilities2)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+definitions:
+  CheckVisasAboutToExpiryRq_MessageType:
+    type: object
+    properties:
+      CheckVisasAboutToExpiryRq:
+        $ref: '#/definitions/CheckVisasAboutToExpiryRq_Type'
+  CheckVisasAboutToExpiryRs_MessageType:
+    type: object
+    properties:
+      CheckVisasAboutToExpiryRs:
+        $ref: '#/definitions/CheckVisasAboutToExpiryRs_Type'
+  CheckVisasAboutToExpiryRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/CheckVisasAboutToExpiryRq_BodyType'
+  CheckVisasAboutToExpiryRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+        default: "1"
+      SequenceNumber:
+        type: integer
+        default: "1715563"
+      EstablishmentId:
+        type: integer
+        default: "76765"
+      PageIndex:
+        type: integer
+        default: "100"
+      PageSize:
+        type: integer
+        default: "1"
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+    - PageIndex
+    - PageSize
+  CheckVisasAboutToExpiryRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/CheckVisasAboutToExpiryRs_BodyType'
+  CheckVisasAboutToExpiryRs_BodyType:
+    type: object
+    properties:
+      VisasList:
+        $ref: '#/definitions/VisasList_Type'
+      TotalRecordsCount:
+        type: integer
+      TotalPagesCount:
+        type: integer
+    required:
+    - VisasList
+    - TotalRecordsCount
+    - TotalPagesCount
+  VisasList_Type:
+    type: object
+    properties:
+      Visas:
+        type: array
+        items:
+          $ref: '#/definitions/Visas_Type'
+  Visas_Type:
+    type: object
+    properties:
+      BorderNumbers:
+        type: integer
+      VisaType:
+        $ref: '#/definitions/CodeName_Type'
+      ExpirationDate:
+        type: string
+    required:
+    - BorderNumbers
+    - VisaType
+    - ExpirationDate
+  CodeName_Type:
+    type: object
+    properties:
+      Id:
+        type: integer
+      NameEn:
+        type: string
+      NameAr:
+        type: string
+    required:
+    - Id
+    - NameEn
+    - NameAr
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "200966842998"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: CVATE001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: CVATE001
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+        default: "23432"
+      IDNumber:
+        type: integer
+        default: "324324"
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /checkvisasabouttoexpiry:
+    post:
+      operationId: CheckVisasAboutToExpiry
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/CheckVisasAboutToExpiryRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: CheckVisasAboutToExpiry
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/CheckVisasAboutToExpiryRq_MessageType'
+        description: CheckVisasAboutToExpiry
+        required: true

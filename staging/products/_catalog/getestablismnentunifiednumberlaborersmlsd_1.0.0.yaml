@@ -1,0 +1,380 @@
+swagger: "2.0"
+info:
+  title: GetEstablismnentUnifiedNumberLaborersMLSD
+  x-ibm-name: getestablismnentunifiednumberlaborersmlsd
+  version: 1.0.0
+  description: GetEstablismnentUnifiedNumberLaborersMLSD
+schemes:
+- https
+basePath: /common
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - gatewayscript:
+        version: 2.0.0
+        title: gatewayscript
+        source: "var response = {\n  \"GetEstablismnentUnifiedNumberLaborersMLSDRs\":
+          {\n    \"Header\": {\n      \"TransactionId\": \"6222121543\",\n      \"ChannelId\":
+          \"Qiwa\",\n      \"SessionId\": \"212\",\n      \"RequestTime\": \"2019-10-10
+          00:00:00.555\",\n      \"MWRequestTime\": \"2019-10-10 00:00:00.555\",\n
+          \     \"MWResponseTime\": \"2019-10-10 00:00:00.555\",\n      \"ServiceCode\":
+          \"MGEUNL01\",\n      \"DebugFlag\": \"1\",\n      \"UserInfo\": {\n        \"UserId\":
+          \"465740\",\n        \"IDNumber\": \"1024812248\"\n      },\n      \"ResponseStatus\":
+          {\n        \"Status\": \"SUCCESS\",\n        \"Code\": \"00000000\",\n        \"ArabicMsg\":
+          \"تمت العملية بنجاح\",\n        \"EnglishMsg\": \"Success Call\"\n      }\n
+          \   },\n    \"Body\": {\n      \"LaborersList\": {\n        \"LaborersItem\":
+          [\n          {\n            \"Name\": \"Etta Maldonado\",\n            \"PassportNumber\":
+          \"A323456\",\n            \"Job\": \"1034511\",\n            \"Gender\":
+          \"1\",\n            \"LaborerStatus\": \"Active\",\n            \"LaborerId\":
+          \"345678\",\n            \"IqamaNumber\": \"2345454534\",\n            \"BorderNumber\":
+          \"5908104218673152\",\n            \"Nationality\": \"377\",\n            \"IqamaDetails\":
+          {\n              \"IqamaStatus\": \"Active\",\n              \"IqamaExpiryDate\":
+          \"22-01-2022\"\n            },\n            \"WorkPermitDetails\": {\n              \"WorkPermitStatus\":
+          \"Active\",\n              \"WorkPermitExpiryDate\": \"22-01-2022\"\n            },\n
+          \           \"FileNumber\": {\n              \"LaborOfficeId\": \"1\",\n
+          \             \"SequenceNumber\": \"89\"\n            },\n            \"EstablishmentDetails\":
+          {\n              \"EstablishmentName\": \"establishment name\",\n              \"EstablishmentActivity\":
+          \"30\"\n            },\n\t\t\t\"TransferType\":\"1\",\n            \"IsEligibleForInternalTransfer\":
+          \"1\"\n          }\n        ]\n      }\n    }\n  }\n}\n\nsession.output.write(response)\n"
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  GetEstablismnentUnifiedNumberLaborersMLSDRq_MessageType:
+    type: object
+    properties:
+      GetEstablismnentUnifiedNumberLaborersMLSDRq:
+        $ref: '#/definitions/GetEstablismnentUnifiedNumberLaborersMLSDRq_Type'
+  GetEstablismnentUnifiedNumberLaborersMLSDRs_MessageType:
+    type: object
+    properties:
+      GetEstablismnentUnifiedNumberLaborersMLSDRs:
+        $ref: '#/definitions/GetEstablismnentUnifiedNumberLaborersMLSDRs_Type'
+  GetEstablismnentUnifiedNumberLaborersMLSDRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetEstablismnentUnifiedNumberLaborersMLSDRq_BodyType'
+  GetEstablismnentUnifiedNumberLaborersMLSDRq_BodyType:
+    type: object
+    properties:
+      FileNumber:
+        $ref: '#/definitions/FileNumber_Type'
+      IdNo:
+        type: string
+        default: "2345454534"
+      PassportNumber:
+        type: string
+        default: A323456
+      IsForUnified:
+        type: integer
+        default: "1"
+      FiltersList:
+        $ref: '#/definitions/FiltersList_Type'
+      PageSize:
+        type: integer
+        default: "2"
+      PageIndex:
+        type: integer
+        default: "1"
+    required:
+    - FileNumber
+    - IsForUnified
+    - PageSize
+    - PageIndex
+  FileNumber_Type:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+        default: "1"
+      SequenceNumber:
+        type: integer
+        default: "89"
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+  FiltersList_Type:
+    type: object
+    properties:
+      Filter:
+        type: array
+        items:
+          $ref: '#/definitions/Filter_Type'
+  Filter_Type:
+    type: object
+    properties:
+      Key:
+        type: string
+        default: JOB
+      Value:
+        type: string
+        default: "10345"
+  GetEstablismnentUnifiedNumberLaborersMLSDRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetEstablismnentUnifiedNumberLaborersMLSDRs_BodyType'
+  GetEstablismnentUnifiedNumberLaborersMLSDRs_BodyType:
+    type: object
+    properties:
+      LaborersList:
+        $ref: '#/definitions/LaborersList_Type'
+  LaborersList_Type:
+    type: object
+    properties:
+      LaborersItem:
+        type: array
+        items:
+          $ref: '#/definitions/LaborersItem_Type'
+  LaborersItem_Type:
+    type: object
+    properties:
+      Name:
+        type: string
+      PassportNumber:
+        type: string
+      Job:
+        type: string
+      Gender:
+        type: string
+      LaborerStatus:
+        type: string
+      LaborerId:
+        type: string
+      IqamaNumber:
+        type: string
+      BorderNumber:
+        type: string
+      Nationality:
+        type: string
+      IqamaDetails:
+        $ref: '#/definitions/IqamaDetails_Type'
+      WorkPermitDetails:
+        $ref: '#/definitions/WorkPermitDetails_Type'
+      FileNumber:
+        $ref: '#/definitions/FileNumberRs_Type'
+      EstablishmentDetails:
+        $ref: '#/definitions/EstablishmentDetails_Type'
+      TransferType:
+        type: integer
+      IsEligibleForInternalTransfer:
+        type: integer
+    required:
+    - Name
+    - PassportNumber
+    - Job
+    - Gender
+    - LaborerStatus
+    - LaborerId
+    - IqamaNumber
+    - BorderNumber
+    - Nationality
+    - IqamaDetails
+    - WorkPermitDetails
+    - FileNumber
+    - EstablishmentDetails
+    - IsEligibleForInternalTransfer
+  IqamaDetails_Type:
+    type: object
+    properties:
+      IqamaStatus:
+        type: string
+      IqamaExpiryDate:
+        type: string
+    required:
+    - IqamaStatus
+    - IqamaExpiryDate
+  WorkPermitDetails_Type:
+    type: object
+    properties:
+      WorkPermitStatus:
+        type: string
+      WorkPermitExpiryDate:
+        type: string
+    required:
+    - WorkPermitStatus
+    - WorkPermitExpiryDate
+  FileNumberRs_Type:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+  EstablishmentDetails_Type:
+    type: object
+    properties:
+      EstablishmentName:
+        type: string
+      EstablishmentActivity:
+        type: string
+    required:
+    - EstablishmentName
+    - EstablishmentActivity
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: MGEUNL01
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        default: "6222121543"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        default: "212"
+      RequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWRequestTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      MWResponseTime:
+        type: string
+        default: "2019-10-10 00:00:00.555"
+      ServiceCode:
+        type: string
+        default: MGEUNL01
+      DebugFlag:
+        type: integer
+        default: "1"
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+        default: "465740"
+      IDNumber:
+        type: integer
+        default: "1024812248"
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /getestablismnentunifiednumberlaborersmlsd:
+    post:
+      operationId: GetEstablismnentUnifiedNumberLaborersMLSD
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetEstablismnentUnifiedNumberLaborersMLSDRs_MessageType'
+      description: Submit Change Sponsor Request
+      parameters:
+      - name: body
+        in: body
+        required: true
+        description: GetEstablismnentUnifiedNumberLaborersMLSDRq
+        schema:
+          $ref: '#/definitions/GetEstablismnentUnifiedNumberLaborersMLSDRq_MessageType'

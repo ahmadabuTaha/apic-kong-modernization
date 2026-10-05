@@ -1,0 +1,236 @@
+swagger: "2.0"
+info:
+  title: Qiwa_ApproveRejectExternalContract
+  version: 1.0.0
+  description: This service is used to approve or reject external contract
+  x-ibm-name: qiwa_approverejectexternalcontract
+schemes:
+- https
+basePath: /workinsaudi
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+  OAuth2.0:
+    type: oauth2
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    flow: application
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+paths:
+  /approverejectexternalcontract:
+    post:
+      operationId: ApproveRejectExternalContract
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/ApproveRejectExternalContractRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: This service is used to approve or reject external contract
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/ApproveRejectExternalContractRq_MessageType'
+        description: ApproveRejectExternalContract
+        required: true
+definitions:
+  ApproveRejectExternalContractRq_MessageType:
+    type: object
+    properties:
+      ApproveRejectExternalContractRq:
+        $ref: '#/definitions/ApproveRejectExternalContractRq_Type'
+  ApproveRejectExternalContractRs_MessageType:
+    type: object
+    properties:
+      ApproveRejectExternalContractRs:
+        $ref: '#/definitions/ApproveRejectExternalContractRs_Type'
+  ApproveRejectExternalContractRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/ApproveRejectExternalContractRq_BodyType'
+  ApproveRejectExternalContractRq_BodyType:
+    type: object
+    properties:
+      ContractId:
+        type: integer
+      IsApproved:
+        type: integer
+        enum:
+        - 0
+        - 1
+        - 2
+        - 3
+      EmbassyCode:
+        type: integer
+      EPROCode:
+        type: integer
+      RejectionReason:
+        type: string
+      ModificationReason:
+        type: string
+      CancellationReason:
+        type: string
+      ReasonText:
+        type: string
+    required:
+    - ContractId
+    - IsApproved
+  ApproveRejectExternalContractRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(ace-ws-externalcontractsubmit)$(request.path)
+        follow-redirects: false
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload

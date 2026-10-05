@@ -1,0 +1,1028 @@
+swagger: "2.0"
+info:
+  title: IMSGetEstablishmentInformationAPIWrapper
+  description: This service is used to get establishment information from Qiwa DB
+  x-ibm-name: imsgetestablishmentinformationapiwrapper
+  version: 1.0.0
+schemes:
+- https
+basePath: /external/v1
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+paths:
+  /imsgetEstInfo:
+    parameters:
+    - $ref: '#/parameters/X-IBM-Client-Id'
+    get:
+      tags:
+      - IMSGetEstablishmentInformationAPIWrapper
+      description: This service is used to get establishment information from Qiwa
+        DB
+      operationId: imsgetestablishmentinformationapiwrapper
+      produces:
+      - application/json
+      responses:
+        "200":
+          $ref: '#/responses/Response200'
+        "400":
+          $ref: '#/responses/Response400'
+        "401":
+          $ref: '#/responses/Response401'
+        "403":
+          $ref: '#/responses/Response403'
+        "404":
+          $ref: '#/responses/Response404'
+        "408":
+          $ref: '#/responses/Response408'
+        "409":
+          $ref: '#/responses/Response409'
+        "429":
+          $ref: '#/responses/Response429'
+        "500":
+          $ref: '#/responses/Response500'
+        "501":
+          $ref: '#/responses/Response501'
+        "503":
+          $ref: '#/responses/Response503'
+        "510":
+          $ref: '#/responses/Response510'
+definitions:
+  ResponseModel:
+    type: object
+    description: Response object returned by the get operation
+    properties:
+      cRNumber:
+        type: string
+      unifiedNumberId:
+        type: integer
+      isMainBranch:
+        type: integer
+      nationalUnifiedNumber:
+        type: string
+      establishmentId:
+        type: integer
+      establishmentName:
+        type: string
+      establishmentStatusId:
+        type: integer
+      establishmentStatus:
+        $ref: '#/definitions/CodeName_Type'
+      mainEconomicActivity:
+        $ref: '#/definitions/IDName_Type'
+      subEconomicActivity:
+        $ref: '#/definitions/IDName_Type'
+      sizeId:
+        type: integer
+      sizeName:
+        type: string
+      colorId:
+        type: integer
+      nitaqatColor:
+        $ref: '#/definitions/IDName_Type'
+      colorCode:
+        type: string
+      EconomicActivity:
+        $ref: '#/definitions/IDName_Type'
+      saudis:
+        type: integer
+      foreigners:
+        type: integer
+      totalLaborerCount:
+        type: integer
+      entitySaudiPercentage:
+        type: integer
+      City:
+        $ref: '#/definitions/CodeName_Type'
+      EstablishmentType:
+        $ref: '#/definitions/CodeName_Type'
+      entityId:
+        type: integer
+      entityForeignersCount:
+        type: integer
+      entitySaudisCount:
+        type: integer
+      entityTotalCount:
+        type: integer
+      entitySaudisTotalFactorized:
+        type: integer
+      entityForeignersTotalFactorized:
+        type: integer
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+  IDName_Type:
+    type: object
+    properties:
+      Id:
+        type: integer
+      Name:
+        type: string
+      NameEn:
+        type: string
+  LocaleDataModel:
+    type: object
+    additionalProperties:
+      type: string
+    example:
+      en-US: English Value
+      ar-SA: Arabic Value
+  IntegerNumberModel:
+    type: object
+    description: This object use for integer numbers
+    additionalProperties:
+      type: integer
+      example: 1
+  ErrorModel:
+    type: object
+    required:
+    - errorCode
+    - errorMessage
+    properties:
+      errorCode:
+        type: string
+        example: EXXXX000
+      errorMessage:
+        $ref: '#/definitions/LocaleDataModel'
+parameters:
+  X-IBM-Client-Id:
+    in: header
+    name: X-IBM-Client-Id
+    description: Client id issued by security server
+    required: true
+    type: string
+  X-IBM-Client-Secret:
+    in: header
+    name: X-IBM-Client-Secret
+    description: Client secret issued by security server
+    required: false
+    type: string
+  X-Request-Id:
+    in: header
+    name: X-Request-Id
+    description: X-Request-Id returned in the response header
+    required: false
+    type: string
+  UserId:
+    in: header
+    name: UserId
+    description: UserI d
+    required: false
+    type: integer
+  laborOfficeId:
+    in: query
+    name: laborOfficeId
+    description: laborOfficeId
+    required: true
+    type: integer
+  sequenceNumber:
+    in: query
+    name: sequenceNumber
+    description: sequenceNumber
+    required: true
+    type: integer
+responses:
+  Response200:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ResponseModel'
+  Response201:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+      Location:
+        type: string
+        description: Id url encoded
+  Response204:
+    description: Response
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response400:
+    description: The request was rejected by the server due to malformed syntax. Bad
+      Request.
+  Response401:
+    description: The request could not be completed due to lack of valid credentials.
+      Authentication.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response403:
+    description: The request could not be completed because it is not authorized.
+      Authorization
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response404:
+    description: The server has not found anything matching the Request-URI.
+  Response408:
+    description: The client did not produce a request within the time that the server
+      was prepared to wait.
+  Response409:
+    description: The request could not be completed due to a conflict with the current
+      state of the resource. Usually business validation errors will be returned in
+      the body
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response429:
+    description: The request was sent too many times in a given amount of time
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+  Response500:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response501:
+    description: The server does not support the functionality required and does not
+      recognize the request
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response503:
+    description: The server encountered an unexpected condition which prevented it
+      from fulfilling the request.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+  Response510:
+    description: Extensions to the request are required for the server to fulfil it.
+    headers:
+      X-Request-Id:
+        type: string
+        description: Trace Id for the request.
+    schema:
+      $ref: '#/definitions/ErrorModel'
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - map:
+        version: 2.0.0
+        title: map
+        inputs:
+          laborOfficeId:
+            schema:
+              type: integer
+              format: int32
+            variable: request.parameters.laborOfficeId
+          sequenceNumber:
+            schema:
+              type: integer
+              format: int32
+            variable: request.parameters.sequenceNumber
+        outputs:
+          "":
+            schema:
+              type: object
+              properties:
+                LaborOfficeId:
+                  type: string
+                  name: LaborOfficeId
+                SequenceNumber:
+                  type: string
+                  name: SequenceNumber
+              example: '{"LaborOfficeId":"9","SequenceNumber":"1831097"}'
+            variable: message.body
+            content: application/json
+        actions:
+        - set: .LaborOfficeId
+          from: laborOfficeId
+        - set: .SequenceNumber
+          from: sequenceNumber
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\r\nvar cfg={\r\n    \"serviceCode\" :
+          \"MRC00001\",\r\n    \"channelId\" : \"Qiwa\",\r\n    \"requestName\" :
+          \"GetEstablishmentInformationQiwaRq\",\r\n    \"responseName\": \"GetEstablishmentInformationQiwaRs\",\r\n
+          \   \"errorMap\" :{\r\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid
+          Request\"}\r\n    }\r\n    \r\n};\r\napim.setvariable('cfg',cfg);"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare_Request
+        source: "var apim = require('apim');\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\nvar appcReq
+          = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n            \"TransactionId\"
+          : millisecondsvalue,\r\n            \"ChannelId\": cfg.channelId,\r\n            \"SessionId\":
+          apim.getvariable('message.headers.X-Request-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode,\r\n\t\t\t\"DebugFlag\":
+          1\r\n\r\n        },\r\n        \"Body\" : apim.getvariable('message.body')\r\n
+          \   }\r\n};\r\n\r\nif (typeof OperatorId !== 'undefined')\r\n    appcReq[cfg.requestName].Header.UserInfo
+          = {\r\n        \"IDNumber\" : OperatorId\r\n    };\r\napim.setvariable('payload',appcReq);
+          \   \r\nsession.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n    \r\n    \r\n\r\n    //return
+          the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour
+          + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    - invoke:
+        version: 2.2.0
+        title: MainBE
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        http-version: HTTP/1.1
+        timeout: 60
+        verb: POST
+        chunked-uploads: true
+        persistent-connection: true
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        graphql-send-type: detect
+        websocket-upgrade: false
+        target-url: $(ace-cmpm-dashboard-profile)/estabmanagement/getestablishmentinformationqiwa
+    - gatewayscript:
+        version: 2.0.0
+        title: ReqForLogging
+        source: "var apim=require('apim');\r\nvar appconnectrequest = apim.getvariable('payload');\r\nvar
+          APIRes = apim.getvariable('message.body');\r\nvar appname = apim.getvariable('client.app.name');\r\nvar
+          UDFPayload = {\r\n                \"KeyValueArr\": [\r\n                    {\r\n
+          \                       \"key\": \"Product\",\r\n                        \"value\":
+          \"TIP-Wrapper\"\r\n                    },\r\n                    {\r\n                        \"key\":
+          \"Client\",\r\n                        \"value\": appname\r\n                    }\r\n
+          \               ]\r\n            };\t \r\n\r\nappconnectrequest.GetEstablishmentInformationQiwaRq.Header.UDF
+          = UDFPayload;\r\nvar jsonData= {\r\n\t\"LogAPIData\": {\r\n\t\t\"GetEstablishmentInformationQiwaRq\":
+          appconnectrequest.GetEstablishmentInformationQiwaRq,\r\n\t\t\"GetEstablishmentInformationQiwaRs\":
+          APIRes.GetEstablishmentInformationQiwaRs\r\n\t}\r\n}\r\nsession.output.write(jsonData);\r\napim.output('application/json');\r\n"
+    - invoke:
+        version: 2.2.0
+        title: LoggingBE
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        http-version: HTTP/1.1
+        timeout: 60
+        verb: POST
+        chunked-uploads: true
+        persistent-connection: true
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        graphql-send-type: detect
+        websocket-upgrade: false
+        target-url: $(ace-tip-internal)/external/logwrapperapidata
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_Headers
+        source: "var apim = require('apim');\r\napim.output('application/json');\r\nvar
+          message = apim.getvariable('message.body');\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          Header = message[cfg.responseName].Header;\r\nvar TransactionId = Header.TransactionId;\r\nvar
+          ChannelId = Header.ChannelId;\r\nvar RequestTime = Header.RequestTime;\r\nvar
+          SessionId = Header.SessionId;\r\nvar MWRequestTime = Header.MWRequestTime;\r\nvar
+          MWResponseTime = Header.MWResponseTime;\r\nvar status = Header.ResponseStatus.Status;\r\nvar
+          code = Header.ResponseStatus.Code;\r\napim.setvariable('message.headers.Transaction-Id',TransactionId,'add');\r\napim.setvariable('message.headers.Channel-Id',ChannelId,'add');\r\nif
+          (RequestTime !== 'undefined')\r\napim.setvariable('message.headers.RequestTime',RequestTime,'add');\r\nif
+          (SessionId !== 'undefined')\r\napim.setvariable('message.headers.X-Request-Id',SessionId,'add');\r\nif
+          (MWRequestTime !== 'undefined')\r\napim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');\r\nif
+          (MWResponseTime !== 'undefined')\r\napim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');\r\napim.setvariable('message.headers.Response-Status',status,'add');\r\napim.setvariable('message.headers.Response-Code',code,'add');"
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Response
+              source: "var apim = require('apim');\r\nvar message = apim.getvariable('message.body');\r\nvar
+                cfg = apim.getvariable('cfg');\r\nvar body = message[cfg.responseName].Body;\r\nsession.output.write(body);\r\napim.output('application/json');"
+          - map:
+              version: 2.0.0
+              title: map
+              inputs:
+                "":
+                  schema:
+                    type: object
+                    properties:
+                      EstablishmentInfo:
+                        type: object
+                        properties:
+                          EstablishmentId:
+                            type: number
+                            name: EstablishmentId
+                          EstablishmentName:
+                            type: string
+                            name: EstablishmentName
+                          LaborOfficeId:
+                            type: number
+                            name: LaborOfficeId
+                          SequenceNumber:
+                            type: number
+                            name: SequenceNumber
+                          EstablishmentType:
+                            type: object
+                            properties:
+                              Code:
+                                type: number
+                                name: Code
+                              NameAr:
+                                type: string
+                                name: NameAr
+                              NameEn:
+                                type: string
+                                name: NameEn
+                            name: EstablishmentType
+                          EstablishmentStatus:
+                            type: object
+                            properties:
+                              Code:
+                                type: number
+                                name: Code
+                              NameAr:
+                                type: string
+                                name: NameAr
+                              NameEn:
+                                type: string
+                                name: NameEn
+                            name: EstablishmentStatus
+                          StatusModificationDate:
+                            type: "null"
+                            name: StatusModificationDate
+                          CreationDate:
+                            type: string
+                            name: CreationDate
+                          CRNumber:
+                            type: string
+                            name: CRNumber
+                          CRIssueDate:
+                            type: object
+                            properties:
+                              Hijri:
+                                type: "null"
+                                name: Hijri
+                              Gregorian:
+                                type: string
+                                name: Gregorian
+                            name: CRIssueDate
+                          CRExpiryDate:
+                            type: object
+                            properties:
+                              Hijri:
+                                type: number
+                                name: Hijri
+                              Gregorian:
+                                type: string
+                                name: Gregorian
+                            name: CRExpiryDate
+                          CRStatus:
+                            type: object
+                            properties:
+                              Code:
+                                type: number
+                                name: Code
+                              NameAr:
+                                type: string
+                                name: NameAr
+                              NameEn:
+                                type: string
+                                name: NameEn
+                            name: CRStatus
+                          MunicipalLicenseInfo:
+                            type: object
+                            properties:
+                              MunicipalLicenseId:
+                                type: "null"
+                                name: MunicipalLicenseId
+                              MunicipalLicenseStartDate:
+                                type: "null"
+                                name: MunicipalLicenseStartDate
+                              MunicipalLicenseExpiryDate:
+                                type: "null"
+                                name: MunicipalLicenseExpiryDate
+                              MunicipalLicenseSource:
+                                type: "null"
+                                name: MunicipalLicenseSource
+                            name: MunicipalLicenseInfo
+                          Notes:
+                            type: "null"
+                            name: Notes
+                          SevenHundredNumber:
+                            type: "null"
+                            name: SevenHundredNumber
+                          UnifiedNumberId:
+                            type: number
+                            name: UnifiedNumberId
+                          OwnerId:
+                            type: "null"
+                            name: OwnerId
+                          Pk_OwnerId:
+                            type: "null"
+                            name: Pk_OwnerId
+                          NationalUnifiedNumber:
+                            type: string
+                            name: NationalUnifiedNumber
+                          UseUnifiedNationalNumberFlag:
+                            type: "null"
+                            name: UseUnifiedNationalNumberFlag
+                          Nationality:
+                            type: object
+                            properties:
+                              Code:
+                                type: number
+                                name: Code
+                              NameAr:
+                                type: string
+                                name: NameAr
+                              NameEn:
+                                type: string
+                                name: NameEn
+                            name: Nationality
+                          Email:
+                            type: "null"
+                            name: Email
+                          City:
+                            type: object
+                            properties:
+                              Code:
+                                type: "null"
+                                name: Code
+                              NameAr:
+                                type: string
+                                name: NameAr
+                              NameEn:
+                                type: string
+                                name: NameEn
+                            name: City
+                          StreetName:
+                            type: "null"
+                            name: StreetName
+                          District:
+                            type: "null"
+                            name: District
+                          Isic4Activity:
+                            type: object
+                            properties:
+                              Id:
+                                type: number
+                                name: Id
+                              Name:
+                                type: string
+                                name: Name
+                            name: Isic4Activity
+                          MainEconomicActivity:
+                            type: object
+                            properties:
+                              Id:
+                                type: "null"
+                                name: Id
+                              Name:
+                                type: "null"
+                                name: Name
+                            name: MainEconomicActivity
+                          IsMain:
+                            type: number
+                            name: IsMain
+                          WaselDetails:
+                            type: object
+                            properties:
+                              WASELZipCode:
+                                type: "null"
+                                name: WASELZipCode
+                              WASELPrimary:
+                                type: "null"
+                                name: WASELPrimary
+                              WASELSecondary:
+                                type: "null"
+                                name: WASELSecondary
+                              WASELCity:
+                                type: "null"
+                                name: WASELCity
+                              WASELStreet:
+                                type: "null"
+                                name: WASELStreet
+                              WASELExpiryDate:
+                                type: "null"
+                                name: WASELExpiryDate
+                              WASELStatus:
+                                type: "null"
+                                name: WASELStatus
+                            name: WaselDetails
+                          NICAccountNumber:
+                            type: string
+                            name: NICAccountNumber
+                          UNLaborOfficeId:
+                            type: number
+                            name: UNLaborOfficeId
+                          UNSequenceNumber:
+                            type: number
+                            name: UNSequenceNumber
+                          NitaqatLevel:
+                            type: object
+                            properties:
+                              NitaqatColor:
+                                type: object
+                                properties:
+                                  Id:
+                                    type: number
+                                    name: Id
+                                  Name:
+                                    type: "null"
+                                    name: Name
+                                name: NitaqatColor
+                              ColorCode:
+                                type: string
+                                name: ColorCode
+                              EstablishmentSizeId:
+                                type: string
+                                name: EstablishmentSizeId
+                              EstablishmentSizeName:
+                                type: string
+                                name: EstablishmentSizeName
+                              EstablishmentSizeNameEn:
+                                type: string
+                                name: EstablishmentSizeNameEn
+                              SaudisCount:
+                                type: number
+                                name: SaudisCount
+                              NonSaudisCount:
+                                type: number
+                                name: NonSaudisCount
+                              TotalLaborersCount:
+                                type: number
+                                name: TotalLaborersCount
+                              EntitySaudiPercentage:
+                                type: string
+                                name: EntitySaudiPercentage
+                              EntityId:
+                                type: string
+                                name: EntityId
+                              EntityTotalCount:
+                                type: string
+                                name: EntityTotalCount
+                              EntitySaudisCount:
+                                type: string
+                                name: EntitySaudisCount
+                              EntityForeignersCount:
+                                type: string
+                                name: EntityForeignersCount
+                              EntitySaudisTotalFactorized:
+                                type: string
+                                name: EntitySaudisTotalFactorized
+                              EntityForeignersTotalFactorized:
+                                type: string
+                                name: EntityForeignersTotalFactorized
+                            name: NitaqatLevel
+                          FinancialYear:
+                            type: object
+                            properties:
+                              Hijri:
+                                type: number
+                                name: Hijri
+                              Greogrian:
+                                type: string
+                                name: Greogrian
+                            name: FinancialYear
+                          OriginalEntityId:
+                            type: string
+                            name: OriginalEntityId
+                        name: EstablishmentInfo
+                    example: '{"EstablishmentInfo":{"EstablishmentId":3526689,"EstablishmentName":"مؤسسة
+                      حافظ غازي ابراهيم ابوجوف لبيع المواد الغذائية","LaborOfficeId":9,"SequenceNumber":1831097,"EstablishmentType":{"Code":1,"NameAr":"فردية","NameEn":"Individual"},"EstablishmentStatus":{"Code":1,"NameAr":"قائمة","NameEn":"Existent"},"StatusModificationDate":null,"CreationDate":"2018-10-29
+                      00:00:00","CRNumber":"4030312856","CRIssueDate":{"Hijri":null,"Gregorian":"2018-10-28"},"CRExpiryDate":{"Hijri":14530827,"Gregorian":"2031-12-12"},"CRStatus":{"Code":1,"NameAr":"قائم","NameEn":"active"},"MunicipalLicenseInfo":{"MunicipalLicenseId":null,"MunicipalLicenseStartDate":null,"MunicipalLicenseExpiryDate":null,"MunicipalLicenseSource":null},"Notes":null,"SevenHundredNumber":null,"UnifiedNumberId":1789479,"OwnerId":null,"Pk_OwnerId":null,"NationalUnifiedNumber":"7005026807","UseUnifiedNationalNumberFlag":null,"Nationality":{"Code":1,"NameAr":"Saudi","NameEn":"Saudi"},"Email":null,"City":{"Code":null,"NameAr":"جدة","NameEn":"Jeddah"},"StreetName":null,"District":null,"Isic4Activity":{"Id":6236,"Name":"البيع
+                      بالجملة للمياه المعبأه بأنواعها"},"MainEconomicActivity":{"Id":null,"Name":null},"IsMain":1,"WaselDetails":{"WASELZipCode":null,"WASELPrimary":null,"WASELSecondary":null,"WASELCity":null,"WASELStreet":null,"WASELExpiryDate":null,"WASELStatus":null},"NICAccountNumber":"1088987662","UNLaborOfficeId":4,"UNSequenceNumber":1629015,"NitaqatLevel":{"NitaqatColor":{"Id":3,"Name":null},"ColorCode":"CAD400","EstablishmentSizeId":"1","EstablishmentSizeName":"صغيرة
+                      (فئة أ)","EstablishmentSizeNameEn":"Small-1","SaudisCount":0,"NonSaudisCount":3,"TotalLaborersCount":3,"EntitySaudiPercentage":"25.00","EntityId":"4-1629015-100","EntityTotalCount":"4.00","EntitySaudisCount":"0.00","EntityForeignersCount":"3.00","EntitySaudisTotalFactorized":"1.00","EntityForeignersTotalFactorized":"3.00"},"FinancialYear":{"Hijri":14421229,"Greogrian":"2021-08-07"},"OriginalEntityId":"4-1629015-460"}}'
+                  variable: message.body
+              outputs:
+                "":
+                  schema:
+                    type: object
+                    properties:
+                      cRNumber:
+                        type: string
+                        name: cRNumber
+                      unifiedNumberId:
+                        type: number
+                        name: unifiedNumberId
+                      isMainBranch:
+                        type: number
+                        name: isMainBranch
+                      nationalUnifiedNumber:
+                        type: string
+                        name: nationalUnifiedNumber
+                      establishmentId:
+                        type: number
+                        name: establishmentId
+                      establishmentName:
+                        type: string
+                        name: establishmentName
+                      establishmentStatusId:
+                        type: number
+                        name: establishmentStatusId
+                      establishmentStatus:
+                        type: object
+                        properties:
+                          Code:
+                            type: number
+                            name: Code
+                          NameAr:
+                            type: string
+                            name: NameAr
+                          NameEn:
+                            type: string
+                            name: NameEn
+                        name: establishmentStatus
+                      mainEconomicActivity:
+                        type: object
+                        properties:
+                          Id:
+                            type: number
+                            name: Id
+                          Name:
+                            type: string
+                            name: Name
+                          NameEn:
+                            type: string
+                            name: NameEn
+                        name: mainEconomicActivity
+                      subEconomicActivity:
+                        type: object
+                        properties:
+                          Id:
+                            type: number
+                            name: Id
+                          Name:
+                            type: string
+                            name: Name
+                          NameEn:
+                            type: string
+                            name: NameEn
+                        name: subEconomicActivity
+                      sizeId:
+                        type: number
+                        name: sizeId
+                      sizeName:
+                        type: string
+                        name: sizeName
+                      colorId:
+                        type: number
+                        name: colorId
+                      nitaqatColor:
+                        type: object
+                        properties:
+                          Id:
+                            type: number
+                            name: Id
+                          Name:
+                            type: string
+                            name: Name
+                          NameEn:
+                            type: string
+                            name: NameEn
+                        name: nitaqatColor
+                      colorCode:
+                        type: string
+                        name: colorCode
+                      EconomicActivity:
+                        type: object
+                        properties:
+                          Id:
+                            type: number
+                            name: Id
+                          Name:
+                            type: string
+                            name: Name
+                          NameEn:
+                            type: string
+                            name: NameEn
+                        name: EconomicActivity
+                      saudis:
+                        type: number
+                        name: saudis
+                      foreigners:
+                        type: number
+                        name: foreigners
+                      totalLaborerCount:
+                        type: number
+                        name: totalLaborerCount
+                      entitySaudiPercentage:
+                        type: number
+                        name: entitySaudiPercentage
+                      City:
+                        type: object
+                        properties:
+                          Code:
+                            type: number
+                            name: Code
+                          NameAr:
+                            type: string
+                            name: NameAr
+                          NameEn:
+                            type: string
+                            name: NameEn
+                        name: City
+                      EstablishmentType:
+                        type: object
+                        properties:
+                          Code:
+                            type: number
+                            name: Code
+                          NameAr:
+                            type: string
+                            name: NameAr
+                          NameEn:
+                            type: string
+                            name: NameEn
+                        name: EstablishmentType
+                      entityId:
+                        type: number
+                        name: entityId
+                      entityForeignersCount:
+                        type: number
+                        name: entityForeignersCount
+                      entitySaudisCount:
+                        type: number
+                        name: entitySaudisCount
+                      entityTotalCount:
+                        type: number
+                        name: entityTotalCount
+                      entitySaudisTotalFactorized:
+                        type: number
+                        name: entitySaudisTotalFactorized
+                      entityForeignersTotalFactorized:
+                        type: number
+                        name: entityForeignersTotalFactorized
+                    example: '{"cRNumber":"string","unifiedNumberId":0,"isMainBranch":0,"nationalUnifiedNumber":"string","establishmentId":0,"establishmentName":"string","establishmentStatusId":0,"establishmentStatus":{"Code":0,"NameAr":"string","NameEn":"string"},"mainEconomicActivity":{"Id":0,"Name":"string","NameEn":"string"},"subEconomicActivity":{"Id":0,"Name":"string","NameEn":"string"},"sizeId":0,"sizeName":"string","colorId":0,"nitaqatColor":{"Id":0,"Name":"string","NameEn":"string"},"colorCode":"string","EconomicActivity":{"Id":0,"Name":"string","NameEn":"string"},"saudis":0,"foreigners":0,"totalLaborerCount":0,"entitySaudiPercentage":0,"City":{"Code":0,"NameAr":"string","NameEn":"string"},"EstablishmentType":{"Code":0,"NameAr":"string","NameEn":"string"},"entityId":0,"entityForeignersCount":0,"entitySaudisCount":0,"entityTotalCount":0,"entitySaudisTotalFactorized":0,"entityForeignersTotalFactorized":0}'
+                  variable: message.body
+                  content: application/json
+              actions:
+              - set: .cRNumber
+                from: .EstablishmentInfo.CRNumber
+              - set: .unifiedNumberId
+                from: .EstablishmentInfo.UnifiedNumberId
+              - set: .isMainBranch
+                from: .EstablishmentInfo.IsMain
+              - set: .nationalUnifiedNumber
+                from: .EstablishmentInfo.NationalUnifiedNumber
+              - set: .establishmentId
+                from: .EstablishmentInfo.EstablishmentId
+              - set: .establishmentName
+                from: .EstablishmentInfo.EstablishmentName
+              - set: .establishmentStatusId
+                from: .EstablishmentInfo.EstablishmentStatus.Code
+              - set: .establishmentStatus.Code
+                from: .EstablishmentInfo.EstablishmentStatus.Code
+              - set: .establishmentStatus.NameAr
+                from: .EstablishmentInfo.EstablishmentStatus.NameAr
+              - set: .establishmentStatus.NameEn
+                from: .EstablishmentInfo.EstablishmentStatus.NameEn
+              - set: .mainEconomicActivity.Id
+                from: .EstablishmentInfo.MainEconomicActivity.Id
+              - set: .mainEconomicActivity.Name
+                from: .EstablishmentInfo.MainEconomicActivity.Name
+              - set: .subEconomicActivity.Id
+                from: .EstablishmentInfo.Isic4Activity.Id
+              - set: .subEconomicActivity.Name
+                from: .EstablishmentInfo.Isic4Activity.Name
+              - set: .sizeId
+                from: .EstablishmentInfo.NitaqatLevel.EstablishmentSizeId
+              - set: .sizeName
+                from: .EstablishmentInfo.NitaqatLevel.EstablishmentSizeName
+              - set: .colorId
+                from: .EstablishmentInfo.NitaqatLevel.NitaqatColor.Id
+              - set: .nitaqatColor.Id
+                from: .EstablishmentInfo.NitaqatLevel.NitaqatColor.Id
+              - set: .nitaqatColor.Name
+                from: .EstablishmentInfo.NitaqatLevel.NitaqatColor.Name
+              - set: .colorCode
+                from: .EstablishmentInfo.NitaqatLevel.ColorCode
+              - set: .EconomicActivity.Id
+                from: .EstablishmentInfo.MainEconomicActivity.Id
+              - set: .EconomicActivity.Name
+                from: .EstablishmentInfo.MainEconomicActivity.Name
+              - set: .saudis
+                from: .EstablishmentInfo.NitaqatLevel.SaudisCount
+              - set: .foreigners
+                from: .EstablishmentInfo.NitaqatLevel.NonSaudisCount
+              - set: .totalLaborerCount
+                from: .EstablishmentInfo.NitaqatLevel.TotalLaborersCount
+              - set: .entitySaudiPercentage
+                from: .EstablishmentInfo.NitaqatLevel.EntitySaudiPercentage
+              - set: .City.Code
+                from: .EstablishmentInfo.City.Code
+              - set: .City.NameAr
+                from: .EstablishmentInfo.City.NameAr
+              - set: .City.NameEn
+                from: .EstablishmentInfo.City.NameEn
+              - set: .EstablishmentType.Code
+                from: .EstablishmentInfo.EstablishmentType.Code
+              - set: .EstablishmentType.NameAr
+                from: .EstablishmentInfo.EstablishmentType.NameAr
+              - set: .EstablishmentType.NameEn
+                from: .EstablishmentInfo.EstablishmentType.NameEn
+              - set: .entityId
+                from: .EstablishmentInfo.NitaqatLevel.EntityId
+              - set: .entityForeignersCount
+                from: .EstablishmentInfo.NitaqatLevel.EntityForeignersCount
+              - set: .entitySaudisCount
+                from: .EstablishmentInfo.NitaqatLevel.EntitySaudisCount
+              - set: .entityTotalCount
+                from: .EstablishmentInfo.NitaqatLevel.EntityTotalCount
+              - set: .entitySaudisTotalFactorized
+                from: .EstablishmentInfo.NitaqatLevel.EntitySaudisTotalFactorized
+              - set: .entityForeignersTotalFactorized
+                from: .EstablishmentInfo.NitaqatLevel.EntityForeignersTotalFactorized
+              options:
+                mapEmulateV4EmptyJSONObject: false
+                mapEmulateV4DefaultRequiredProps: false
+                mapEnablePostProcessingJSON: false
+                mapReferenceLimit: 1
+                mapNullValue: true
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Error
+              source: "var apim = require('apim');\r\nvar message = apim.getvariable('message.body');\r\nvar
+                cfg = apim.getvariable('cfg');          \r\nvar error = {\r\n  \"errorCode\":
+                message[cfg.responseName].Header.ResponseStatus.Code,\r\n  \"errorMessage\":
+                {\r\n    \"en-US\": message[cfg.responseName].Header.ResponseStatus.EnglishMsg,\r\n
+                \   \"ar-SA\": message[cfg.responseName].Header.ResponseStatus.ArabicMsg\r\n
+                \ }\r\n};\r\n\r\nvar httperror=0;\r\nif(cfg.errorMap){\r\n    if(cfg.errorMap[error.errorCode]){\r\n
+                \      httperror = cfg.errorMap[error.errorCode].code;\r\n       \r\n
+                \      //var errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\r\n
+                \      //var details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\r\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\r\n    }\r\n}\r\nif(httperror
+                == 0){\r\n   httperror = 409;\r\n   // apim.error('ERROR',400,'Bad
+                Request','Invalid request');\r\n}\r\napim.setvariable('message.status.code',httperror,'set');\r\n\r\nsession.output.write(error);\r\napim.output('application/json');"
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload

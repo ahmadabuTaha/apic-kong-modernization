@@ -1,0 +1,337 @@
+swagger: "2.0"
+info:
+  title: Seven Hundred Dashboard – Entity Cards
+  x-ibm-name: seven-hundred-entities
+  version: 1.0.0
+  description: |
+    Returns a paginated list of Nitaqat entity cards under a given SevenHundredNumberMCI.
+    Called on page load (alongside /header) and on every pagination event.
+  contact:
+    email: a.imtiaz-c@takamol.sa
+schemes:
+- https
+basePath: /seven-hundred-dashboard
+consumes:
+- application/json
+produces:
+- application/json
+security:
+- OAuth2.0:
+  - IntegrationScope
+  clientID: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  clientID:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  properties:
+    target-url:
+      value: http://prow-700dashboard-http-ace.apps.stg.qiwa-nonprod.local/sevenhundreddashboard
+      description: ACE backend base URL for 700 Dashboard service
+      encoded: false
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  buffering: true
+  application-authentication:
+    certificate: false
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: keep
+        chunked-uploads: true
+        persistent-connection: true
+        target-url: $(ace-prow-sevenhundredentities)/seven-hundred-dashboard/entities
+        follow-redirects: false
+        inject-proxy-headers: true
+tags:
+- name: Entity Cards
+  description: Paginated Nitaqat entity cards under a 700 number
+definitions:
+  RequestHeader:
+    type: object
+    required:
+    - TransactionId
+    - ChannelId
+    - SessionId
+    - ServiceCode
+    properties:
+      TransactionId:
+        type: string
+        description: Unique transaction identifier
+        example: "1234435"
+      ChannelId:
+        type: string
+        description: Calling channel
+        default: Qiwa
+      SessionId:
+        type: string
+        example: "212"
+      RequestTime:
+        type: string
+        format: date-time
+        example: "2026-01-01T00:00:00.000Z"
+      MWRequestTime:
+        type: string
+        format: date-time
+        example: "2026-01-01T00:00:00.000Z"
+      ServiceCode:
+        type: string
+        description: Must be QW700002
+        default: QW700002
+      UserInfo:
+        type: object
+        properties:
+          UserId:
+            type: string
+            example: "123456"
+          IDNumber:
+            type: string
+            example: "1098765432"
+  ResponseStatus:
+    type: object
+    properties:
+      Status:
+        type: string
+        example: Success
+      Code:
+        type: string
+        example: "00000000"
+      ArabicMsg:
+        type: string
+        example: تمت العملية بنجاح
+      EnglishMsg:
+        type: string
+        example: Success
+  ResponseHeader:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+        example: "1234435"
+      ChannelId:
+        type: string
+        default: Qiwa
+      SessionId:
+        type: string
+        example: "212"
+      RequestTime:
+        type: string
+        format: date-time
+        example: "2026-01-01T00:00:00.000Z"
+      MWRequestTime:
+        type: string
+        format: date-time
+        example: "2026-01-01T00:00:00.000Z"
+      MWResponseTime:
+        type: string
+        format: date-time
+        example: "2026-01-01T00:00:00.120Z"
+      ServiceCode:
+        type: string
+        example: QW700002
+      ResponseStatus:
+        $ref: '#/definitions/ResponseStatus'
+  Get700EntitiesRequest:
+    type: object
+    properties:
+      Get700EntitiesRq:
+        type: object
+        required:
+        - Header
+        - Body
+        properties:
+          Header:
+            $ref: '#/definitions/RequestHeader'
+          Body:
+            $ref: '#/definitions/Get700EntitiesReqBody'
+  Get700EntitiesReqBody:
+    type: object
+    required:
+    - UnifiedNumber
+    - PageIndex
+    - PageSize
+    properties:
+      UnifiedNumber:
+        type: string
+        description: unified number (MCI)
+        example: "7001648109"
+      PageIndex:
+        type: integer
+        minimum: 1
+        description: 1-based page number
+        example: 1
+      PageSize:
+        type: integer
+        minimum: 5
+        maximum: 15
+        description: Number of entity rows per page (5–15)
+        example: 10
+  Get700EntitiesResponse:
+    type: object
+    properties:
+      Get700EntitiesRs:
+        type: object
+        properties:
+          Header:
+            $ref: '#/definitions/ResponseHeader'
+          Body:
+            $ref: '#/definitions/Get700EntitiesRsBody'
+  Get700EntitiesRsBody:
+    type: object
+    properties:
+      TotalEntityCount:
+        type: integer
+        description: Total number of entities across all pages
+        example: 3
+      Entities:
+        type: array
+        items:
+          $ref: '#/definitions/EntityCard'
+  EntityCard:
+    type: object
+    properties:
+      EntityNumber:
+        type: string
+        description: Unique entity identifier
+        example: 9-144862-460
+      EntityName:
+        type: string
+        description: Unified entity name
+        example: Nama Telecom Company
+      Activity:
+        type: string
+        description: Economic activity sector
+        example: Transportation
+      NitaqatColorBand:
+        type: string
+        description: Nitaqat color band (Arabic label)
+        example: بلاتيني
+      NitaqatColorBandEnglish:
+        type: string
+        description: Nitaqat color band (English label)
+        example: Platinum
+      EntityColorId:
+        type: integer
+        description: Color identifier for the Nitaqat band
+        example: 5
+      NationalizationRate:
+        type: number
+        format: double
+        description: Saudi nationalization percentage (%)
+        example: 38.5
+      EstablishmentCount:
+        type: integer
+        description: Number of establishments under this entity
+        example: 91
+paths:
+  /entities:
+    post:
+      tags:
+      - Entity Cards
+      summary: Get Paginated Entity List under a 700
+      description: |
+        Returns a paginated list of Nitaqat entities under the given 700 number.
+        Called on page load alongside /header, and on every pagination event.
+      operationId: get700Entities
+      parameters:
+      - name: body
+        in: body
+        required: true
+        description: Get700EntitiesRq message
+        schema:
+          $ref: '#/definitions/Get700EntitiesRequest'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/Get700EntitiesResponse'
+          examples:
+            application/json: |
+              {
+                "Get700EntitiesRs": {
+                  "Header": {
+                    "TransactionId": "1234435",
+                    "ChannelId": "Qiwa",
+                    "SessionId": "212",
+                    "RequestTime": "2026-01-01T00:00:00.000Z",
+                    "MWRequestTime": "2026-01-01T00:00:00.000Z",
+                    "MWResponseTime": "2026-01-01T00:00:00.120Z",
+                    "ServiceCode": "QW700002",
+                    "ResponseStatus": {
+                      "Status": "Success",
+                      "Code": "00000000",
+                      "ArabicMsg": "تمت العملية بنجاح",
+                      "EnglishMsg": "Success"
+                    }
+                  },
+                  "Body": {
+                    "TotalEntityCount": 3,
+                    "Entities": [
+                      {
+                        "EntityNumber": "9-144862-460",
+                        "EntityName": "Nama Telecom Company",
+                        "Activity": "Transportation",
+                        "NitaqatColorBand": "بلاتيني",
+                        "NitaqatColorBandEnglish": "Platinum",
+                        "EntityColorId": 5,
+                        "NationalizationRate": 38.5,
+                        "EstablishmentCount": 91
+                      },
+                      {
+                        "EntityNumber": "9-144862-461",
+                        "EntityName": "Al-Aman Trading Company",
+                        "Activity": "Retail Trade",
+                        "NitaqatColorBand": "بلاتيني",
+                        "NitaqatColorBandEnglish": "High Green",
+                        "EntityColorId": 4,
+                        "NationalizationRate": 42.0,
+                        "EstablishmentCount": 23
+                      },
+                      {
+                        "EntityNumber": "9-144862-462",
+                        "EntityName": "Al-Inshaaat Construction",
+                        "Activity": "Construction",
+                        "NitaqatColorBand": "بلاتيني",
+                        "NitaqatColorBandEnglish": "Medium",
+                        "EntityColorId": 2,
+                        "NationalizationRate": 22.3,
+                        "EstablishmentCount": 20
+                      }
+                    ]
+                  }
+                }
+              }
+        "400":
+          description: Bad Request – missing or invalid input
+        "404":
+          description: Not Found – SevenHundredNumber does not exist
+        "500":
+          description: Internal Server Error

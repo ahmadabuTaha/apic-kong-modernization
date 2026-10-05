@@ -1,0 +1,86 @@
+swagger: "2.0"
+info:
+  title: Test-POC
+  x-ibm-name: test-poc
+  version: 1.0.0
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - gatewayscript:
+        version: 2.0.0
+        title: gatewayscript
+        source: "var apim = require('apim');\nvar appname = context.get('client.app.name');\nvar
+          file = {\n \n  \"qiwastageapps\": {\n \n    \"UnifiedNumberId\": [\n \n
+          \     123456,\n \n      9876543,\n \n      7001781587\n \n    ],\n \n    \"SequenceNumber\":
+          [\n \n      12345611,\n \n      111111,\n \n      70017811587\n \n    ]\n
+          \n  },\n \n  \"externalapp\": {\n \n    \"UnifiedNumberId\": [\n \n      123456,\n
+          \n      9876543,\n \n      70017481587\n \n    ],\n \n    \"SequenceNumber\":
+          [\n \n      12345611,\n \n      111111,\n \n      70017811587\n \n    ]\n
+          \n  }\n \n}\nvar request = apim.getvariable('message.body');\nvar val =
+          request.EstablishmentDetails.SequenceNumber;//parsing id from request\n//var
+          propertyFileName = \"local:///commonconfig/properties.json\";\n \n\t\t  var
+          array =file[appname].SequenceNumber;\n        var Response =array.includes(val);\n\t\tif
+          (Response == true)\n\t\t{\n\t\tsession.output.write(Response);\n\t\t}\n\t\telse
+          {\n\t\tsession.reject('SequenceNumber is not matched');\n\t\t}\n "
+    catch:
+    - errors:
+      - AssemblyRateLimitError
+      execute:
+      - gatewayscript:
+          version: 2.0.0
+          title: gatewayscript
+          source: |-
+            var response = {
+              "code" : 503,
+              "reason" : "rate limit exceeded"
+            }
+            context.set('message.body', response);
+            context.set('message.headers.Content-Type' , "application/json");
+            context.set('message.status.code' , 503);
+    finally: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+    status:
+      value: working
+    privateKey:
+      value: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7cWTkQS7chfr/iA1QNL5I2mhgRIUs/b3qpLpZyHMtT4Yz115iExA0rApf1ilie/A98o65gH631p6gaF624WFfE5EhSN8k/h0DZZnJkWBEq8zXnxOBj0JRpjxhHg8uueejSi++fUpOn0w9QMPQO3Ip8e7VtiuoL3YIhT0lSMKIh6Wy3NizIIy+DEcoPRMcqwS9LAKUEkd7hSjWagFV2eYiWJebVCr4uYYHtx4mfIOInQxfNBv1mNFG6q/WtDwOhMDjKohgFT1fHgEj4v20dG/pZBkSp8gR/0vlwgxco9nc/R1PDk9FoQhGPqlV924Of45Rr0KzJye6UeClC/cbx6VZAgMBAAECggEAFObUJU/Pde/KyWvWcDcxcNZKBVIet6Gj5+JulUxw64COqoE9mRofGICGt6EeBEllxMKjf7QAbWeVULXSufnv7bY03M1PdMSRX6uYto1rerzdnr2yYyQidRBgc0Py1XcNiXvgTxGRk6rXyYzLSREX7e14gIRL4flI5DJXWyz95FNq/7JE9evx4akp9IFVsn3XyQiLwggMq+vhf+X2eYiOYm7sjdzHEkXiPC5u2pnQgfHh1KvsfeZn33gn8YCYiwstXKodIx1dASEi7CPmT/lHyFbgoNQfByV9m8HKHm5+0QqziOYglWwnAd4Iu65+UZobu95s3dIN17PXf1vlFf9twQKBgQDrY6jCXVNcZlTy53ZCYMcuWUrMfNs9twkjdZcxnS8xjksbbA02ldfPwpH8qY1CYIFhIdMXvSeZ0gW8QHuub+zKYiiQJqK1yQhGOsCKouEXBPf1vlvV+ofz+uEprm1JzxfZUWd5VAKgl7+KGIbMbaX0I5/pt4JaFOEHv5vfIopeTQKBgQDL2v/MoAibVqDsXYa0A+2Q7gbgPyfzWWnBbXQBwxHWPhzvDk1eEf+uEh4omRNL9FHnQw/8czD6uALRVt4al+Cr00bYg5+k7Jqz3CUGnrDr0mTRXn/LlY5v1ZnrOFmwcDT5UhYKFZqbULgzN5T+Gr1kKg+aIV+8WZOgCQy7kWRhPQKBgHpVVQOOlSBUXpnPCXr96QaBiYo06Yxtb+Zp2qYCVuCeXxJlWYig34QuTsjNJYj1tsfQWHDh8Y7Tw/9OU/kYWivkT8h7C90GGbLGHgLvG6RnBKdGw1u11KpMHHEZIdtWMcLTt78qliL4Oqd+j6/23GTBjv5cTPacG0d3oX6Z6OeRAoGAclcguQ5eJXreghUnU9sMKglINAlYiCbzqXmR4tceLxPhuLhF7uibh3BEGDNb3nNoaRV1ZvzZURdbBT37D+F2NAoqJ5EUPzYyw4VMAz2JMIxu3fxqI698GAAv9/5AWDVnkRxYnkll0Y3h82BOooQvDHqHC8WCZCu+ILpSuPYg3mUCgYEA1jDIJcH74MFCKLtUTGQdE5DBLvz+lN0T8xkkHIOQMD9a7/mBQwTMtRrtF2E0HhNpNAbdGkYO4pgWrtPtaRMJqoxN8FHZLO3PK37XKk+Paef030YQ+2tQVPUpPwcCPeipu0f71v3OR6U7SsfIr/I+haZh901UhDf+XXcJq4aBeJM=
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+  categories: []
+basePath: /test
+paths:
+  /uni:
+    get:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+schemes:
+- https
+securityDefinitions:
+  clientId:
+    type: apiKey
+    x-key-type: client_id
+    name: X-IBM-Client-Id
+    in: header
+security:
+- clientId: []

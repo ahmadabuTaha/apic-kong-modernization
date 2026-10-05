@@ -1,0 +1,473 @@
+swagger: "2.0"
+info:
+  title: GetLaborOfficeDetails
+  x-ibm-name: getlaborofficedetails
+  version: 1.0.0
+  description: GetLaborOfficeDetails. PROD YAML
+schemes:
+- https
+basePath: /qiwalo
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-lbro-labor-office)/qiwalo/Getlaborofficedetails
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        persistent-connection: true
+    finally: []
+    catch: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+definitions:
+  GetLaborOfficeDetailsRq_MessageType:
+    type: object
+    properties:
+      GetLaborOfficeDetailsRq:
+        $ref: '#/definitions/GetLaborOfficeDetailsRq_Type'
+  GetLaborOfficeDetailsRs_MessageType:
+    type: object
+    properties:
+      GetLaborOfficeDetailsRs:
+        $ref: '#/definitions/GetLaborOfficeDetailsRs_Type'
+  GetLaborOfficeDetailsRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetLaborOfficeDetailsRq_BodyType'
+  GetLaborOfficeDetailsRq_BodyType:
+    type: object
+    properties:
+      OfficeID:
+        type: integer
+      OfficeStatusId:
+        type: integer
+      LOServiceID:
+        type: integer
+      CreationDate:
+        type: string
+      OfficeName:
+        type: integer
+      RegionId:
+        type: integer
+      IsElectronicOffice:
+        type: integer
+      IsKioskMachine:
+        type: integer
+      IsQiwa:
+        type: integer
+      PageSize:
+        type: integer
+      PageIndex:
+        type: integer
+    required:
+    - PageSize
+    - PageIndex
+  GetLaborOfficeDetailsRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetLaborOfficeDetailsRs_BodyType'
+  GetLaborOfficeDetailsRs_BodyType:
+    type: object
+    properties:
+      LODetailsList:
+        $ref: '#/definitions/LODetailsList_Type'
+      TotalRecordsCount:
+        type: integer
+  LODetailsList_Type:
+    type: object
+    properties:
+      LOItems:
+        type: array
+        items:
+          $ref: '#/definitions/LOItems_Type'
+  LOItems_Type:
+    type: object
+    properties:
+      Address:
+        $ref: '#/definitions/Address_Type'
+      Location:
+        type: string
+      OfficeName:
+        type: string
+      OfficeDescription:
+        type: string
+      OfficePhoneNumber:
+        type: string
+      OfficeEmail:
+        type: string
+      OfficeCode:
+        type: string
+      DailyCapacity:
+        type: integer
+      WorkingHourForm:
+        type: integer
+      WorkingHourTo:
+        type: integer
+      HourlyCapacity:
+        type: integer
+      LOContactPerson:
+        type: string
+      OfficeStatus:
+        $ref: '#/definitions/OfficeStatus_Type'
+      IsElectronicOffice:
+        type: integer
+      IsKioskMachine:
+        type: integer
+      IsQiwa:
+        type: integer
+      LOServicesList:
+        $ref: '#/definitions/LOServicesList_Type'
+      LOUserInfoList:
+        $ref: '#/definitions/LOUserInfoList_Type'
+    required:
+    - Address
+    - Location
+    - OfficeName
+    - OfficeStatus
+    - LOServicesList
+    - LOUserInfoList
+  Address_Type:
+    type: object
+    properties:
+      City:
+        $ref: '#/definitions/City_Type'
+      Region:
+        $ref: '#/definitions/Region_Type'
+      District:
+        type: string
+      Street:
+        type: string
+      BuildingNumber:
+        type: string
+      AddressDescription:
+        type: string
+      POBox:
+        type: string
+      ZIPCode:
+        type: string
+      Latitude:
+        type: string
+      Longitude:
+        type: string
+    required:
+    - Latitude
+    - Longitude
+  City_Type:
+    type: object
+    properties:
+      CityId:
+        type: integer
+      CityNameAr:
+        type: string
+      CityNameEn:
+        type: string
+    required:
+    - CityId
+    - CityNameAr
+    - CityNameEn
+  Region_Type:
+    type: object
+    properties:
+      RegionId:
+        type: integer
+      RegionNameAr:
+        type: string
+      RegionNameEn:
+        type: string
+    required:
+    - RegionId
+    - RegionNameAr
+    - RegionNameEn
+  OfficeStatus_Type:
+    type: object
+    properties:
+      OfficeStatusId:
+        type: integer
+      OfficeStatusAr:
+        type: string
+      OfficeStatusEn:
+        type: string
+    required:
+    - OfficeStatusId
+    - OfficeStatusAr
+    - OfficeStatusEn
+  LOServicesList_Type:
+    type: object
+    properties:
+      LOServicesItem:
+        type: array
+        items:
+          $ref: '#/definitions/LOServicesItem_Type'
+      SubServicesList:
+        $ref: '#/definitions/SubServicesList_Type'
+  SubServicesList_Type:
+    type: object
+    properties:
+      SubServicesItem:
+        type: array
+        items:
+          $ref: '#/definitions/SubServicesItem_Type'
+  SubServicesItem_Type:
+    type: object
+    properties:
+      SubServiceId:
+        type: integer
+      SubServiceNameAr:
+        type: string
+      SubServiceNameEn:
+        type: string
+      SubServiceStatusId:
+        type: integer
+  LOServicesItem_Type:
+    type: object
+    properties:
+      LOServiceID:
+        type: integer
+      ServiceNameAr:
+        type: string
+      ServiceNameEn:
+        type: string
+      ServiceStatus:
+        type: integer
+      RequesterType:
+        $ref: '#/definitions/CodeName_Type'
+    required:
+    - LOServiceID
+    - ServiceNameAr
+    - ServiceNameEn
+    - ServiceStatus
+    - RequesterType
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+    required:
+    - Code
+    - NameAr
+    - NameEn
+  LOUserInfoList_Type:
+    type: object
+    properties:
+      LOUserItem:
+        type: array
+        items:
+          $ref: '#/definitions/LOUserItem_Type'
+  LOUserItem_Type:
+    type: object
+    properties:
+      IdNo:
+        type: string
+      UserStatus:
+        $ref: '#/definitions/UserStatus_Type'
+      UserType:
+        $ref: '#/definitions/UserType_Type'
+      UserEmail:
+        type: string
+      UserName:
+        type: string
+    required:
+    - IdNo
+    - UserStatus
+    - UserType
+  UserStatus_Type:
+    type: object
+    properties:
+      UserStatusId:
+        type: integer
+      UserStatusNameAr:
+        type: string
+      UserStatusNameEn:
+        type: string
+    required:
+    - UserStatusId
+    - UserStatusNameAr
+    - UserStatusNameEn
+  UserType_Type:
+    type: object
+    properties:
+      UserTypeId:
+        type: integer
+      UserTypeNameAr:
+        type: string
+      UserTypeNameEn:
+        type: string
+    required:
+    - UserTypeId
+    - UserTypeNameAr
+    - UserTypeNameEn
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /Getlaborofficedetails:
+    post:
+      operationId: GetLaborOfficeDetails
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetLaborOfficeDetailsRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: GetLaborOfficeDetails
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetLaborOfficeDetailsRq_MessageType'
+        description: GetLaborOfficeDetails
+        required: true

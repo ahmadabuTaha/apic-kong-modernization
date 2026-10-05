@@ -1,0 +1,37 @@
+info:
+  version: 1.0.4
+  title: NitaqatCalculators Staging
+  name: nitaqatcalculators-staging
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: true
+    rate-limits:
+      default:
+        value: 100/1hour
+        hard-limit: false
+    apis:
+      geteconomicandisic4act1.0.0: {}
+      getnitaqinformation1.0.0: {}
+      nitaqatcalculator1.0.0: {}
+      nitaqatpubliccalc1.0.1: {}
+apis:
+  geteconomicandisic4act1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/geteconomicandisic4act_1.0.0_2.yaml
+  getnitaqinformation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getnitaqinformation_1.0.0_1.yaml
+  nitaqatcalculator1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nitaqatcalculator_1.0.0_1.yaml
+  nitaqatpubliccalc1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/nitaqatpubliccalc_1.0.1_3.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

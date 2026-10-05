@@ -1,0 +1,27 @@
+info:
+  title: ajeerterminatecontracttest
+  name: ajeerterminatecontracttest
+  version: 1.0.0
+apis:
+  ajeer-terminatecontracttest:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ajeer-terminatecontract_test.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      ajeer-terminatecontracttest: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

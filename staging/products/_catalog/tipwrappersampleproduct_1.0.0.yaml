@@ -1,0 +1,78 @@
+info:
+  version: 1.0.0
+  title: TIPWrapperSampleProduct
+  name: tipwrappersampleproduct
+  summary: TIP Portal provides information on Takamol’s API products. Allows users
+    to subscribe to a plan and create applications to make use of offered APIs
+  description: |+
+    `TIP Portal` provides information on Takamol’s `API` products. Allows users to `subscribe` to a `plan` and create `apps` to make use of offered `APIs`,
+    Those APIs are Wrappers for Services, which provides integration with `QIWA`, `HRSD`, Government Entities, and other `3rd Parties` Services
+
+    Those `APIs` are serving the following capabilities:
+
+    1. `Employees`: are Managing the Employees and their related data.
+    2. `Establishments`: are Managing the Establishments and their related data.
+    3. `Payments`:are related to the Payments and Donations.
+    4. `Utilities`:Encompasses various supporting services and functionalities that enhance business operations and user experience.
+
+    **`note`: created by Architecture team for testing `apic` developer `portal`**
+
+  contact:
+    name: TIP Support Team
+    email: tip@takamol.com.sa
+    url: https://qiwa.sa
+  categories:
+  - TIP
+  termsOfService: "The Saudi Arabian Ministry of Human Resources and Social Development
+    created the online platform Qiwa to make founding and operating a business in
+    the Kingdom easier and more streamlined. It is an integrated platform that offers
+    numerous services and tools for businesses, such as creating a new company, issuing
+    commercial permits, enabling access to financial institutions, and offering training
+    and development programmes. \n\nThe platform seeks to enhance the business climate
+    in the Kingdom by encouraging entrepreneurship, drawing in outside capital, and
+    giving Saudi citizens employment opportunities. With the provision of a seamless
+    and effective business ecosystem, Qiwa in Saudi Arabia seeks to increase their
+    companies’ competitiveness and support the nation’s economic growth."
+  license:
+    name: TIP License
+gateways:
+- datapower-api-gateway
+plans:
+  100-transaction-per-hour-plan:
+    title: 100 transaction per hour Plan
+    description: |
+      This Plan Allows External Parties for Subscribing `TIP` `API's` to have 100 transactions per hour
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      getadaasurveyapi1.0.0: {}
+      insertnewadaasurveryapi1.0.0: {}
+      tiptestscopedcliebntapi1.0.0: {}
+  25-transaciton-per-second-plan:
+    title: 25 transaciton per Second plan
+    description: This Plan Allows External Parties for Subscribing `TIP` `API's` to
+      have 25 transactions per second
+    rate-limits:
+      default:
+        value: 100/1hour
+    approval: false
+    apis:
+      getadaasurveyapi1.0.0: {}
+      insertnewadaasurveryapi1.0.0: {}
+      tiptestscopedcliebntapi1.0.0: {}
+apis:
+  getadaasurveyapi1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getadaasurveyapi_1.0.0.yaml
+  insertnewadaasurveryapi1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/insertnewadaasurveryapi_1.0.0.yaml
+  tiptestscopedcliebntapi1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/tiptestscopedcliebntapi_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

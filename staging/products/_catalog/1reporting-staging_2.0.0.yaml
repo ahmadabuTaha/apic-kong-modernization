@@ -1,0 +1,68 @@
+info:
+  version: 2.0.0
+  title: 1Reporting Staging
+  name: 1reporting-staging
+apis:
+  getestablishmentallowanceperiod1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getestablishmentallowanceperiod_1.0.0_1.yaml
+  getestablishmentinformation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getestablishmentinformation_1.0.0_2.yaml
+  getestablishmentuserstotalsmlsd1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getestablishmentuserstotalsmlsd_1.0.0.yaml
+  getestablishmentwpstatustotalsmlsd1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getestablishmentwpstatustotalsmlsd_1.0.0.yaml
+  getimsestablishmentdurationsmlsd1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getimsestablishmentdurationsmlsd_1.0.0_1.yaml
+gateways:
+- datapower-api-gateway
+product: 1.0.0
+plans:
+  default:
+    title: Default Plan
+    description: Default Plan
+    approval: true
+    rate-limits:
+      default:
+        value: 400/1hour
+        hard-limit: true
+    apis:
+      getestablishmentwpstatustotalsmlsd1.0.0: {}
+      getimsestablishmentdurationsmlsd1.0.0: {}
+      getestablishmentallowanceperiod1.0.0: {}
+      getestablishmentinformation1.0.0: {}
+      getestablishmentuserstotalsmlsd1.0.0: {}
+  plan-a:
+    title: Plan A
+    description: Specific plan for week.
+    approval: true
+    rate-limits:
+      Plan A rate-limit:
+        value: 21000/1hour
+        hard-limit: true
+    apis:
+      getestablishmentwpstatustotalsmlsd1.0.0: {}
+      getimsestablishmentdurationsmlsd1.0.0: {}
+      getestablishmentallowanceperiod1.0.0: {}
+      getestablishmentinformation1.0.0: {}
+      getestablishmentuserstotalsmlsd1.0.0: {}
+  plan-b:
+    title: Plan B
+    description: Specific plan for 12h.
+    approval: true
+    rate-limits:
+      Plan B rate-limit:
+        value: 21000/1hour
+        hard-limit: true
+    apis:
+      getestablishmentwpstatustotalsmlsd1.0.0: {}
+      getimsestablishmentdurationsmlsd1.0.0: {}
+      getestablishmentallowanceperiod1.0.0: {}
+      getestablishmentinformation1.0.0: {}
+      getestablishmentuserstotalsmlsd1.0.0: {}
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

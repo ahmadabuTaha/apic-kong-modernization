@@ -1,0 +1,39 @@
+info:
+  version: 1.0.0
+  title: 1External_SAMA_Product
+  name: 1external-sama-product
+apis:
+  akibaninquiry1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/akibaninquiry_1.0.0.yaml
+  entityibanverification1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/entityibanverification_1.0.0.yaml
+  establishmententityibanverification2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/establishmententityibanverification_2.0.0.yaml
+  ibanverificationcallback2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/ibanverificationcallback_2.0.0.yaml
+  individualibanverification1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/individualibanverification_1.0.0.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      akibaninquiry1.0.0: {}
+      entityibanverification1.0.0: {}
+      establishmententityibanverification2.0.0: {}
+      ibanverificationcallback2.0.0: {}
+      individualibanverification1.0.0: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

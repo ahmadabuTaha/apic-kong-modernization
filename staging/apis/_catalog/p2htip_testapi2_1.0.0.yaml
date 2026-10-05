@@ -1,0 +1,133 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: p2htip_testapi2
+  x-ibm-name: p2htip_testapi2
+basePath: /p2htiptest2
+x-ibm-configuration:
+  properties:
+    target-url:
+      value: https://tip-v2-auth.stage.tiptech.sa/oauth2/jwks
+      description: URL of the proxy policy
+      encoded: false
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - gatewayscript:
+        version: 2.0.0
+        title: set-subscription-id
+        source: "\r\nvar appMetadata = context.get('client.app.metadata');\r\nvar
+          planName = context.get('plan.name');\r\nvar subscriptionId = appMetadata[planName];\r\n\r\n\r\ncontext.set(\"subscription_id\",
+          subscriptionId);"
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: subscription_id != null
+          execute:
+          - ratelimit:
+              version: 2.2.0
+              title: ratelimit-consume
+              source: plan-named
+              rate-limit:
+              - name: tip-rate-limit
+                operation: consume
+          - invoke:
+              version: 2.2.0
+              title: invoke
+              backend-type: detect
+              header-control:
+                type: blocklist
+                values: []
+              parameter-control:
+                type: allowlist
+                values: []
+              http-version: HTTP/1.1
+              timeout: 60
+              verb: keep
+              chunked-uploads: true
+              persistent-connection: true
+              cache-response: protocol
+              cache-ttl: 900
+              stop-on-error: []
+              graphql-send-type: detect
+              websocket-upgrade: false
+              target-url: $(target-url)
+        - otherwise:
+          - throw:
+              version: 2.1.0
+              title: throw
+              name: UndefinedSubscription
+              error-status-reason: Undefined subscription
+              error-status-code: "503"
+              message: Please contact Takamol Integration Portal support
+    finally: []
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+paths:
+  /:
+    get:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+    put:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+    delete:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+    head:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+    patch:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+securityDefinitions:
+  clientID:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+security:
+- clientID: []
+schemes:
+- https

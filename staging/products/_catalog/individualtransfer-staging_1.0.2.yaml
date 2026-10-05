@@ -1,0 +1,37 @@
+info:
+  version: 1.0.2
+  title: IndividualTransfer Staging
+  name: individualtransfer-staging
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: true
+    rate-limits:
+      default:
+        value: 100/1hour
+        hard-limit: false
+    apis:
+      approverejectdepindtransferrequest1.0.0: {}
+      musanedapproverejectetbysponsor1.0.0: {}
+      validatetransferredindividualdependent1.0.0: {}
+      musanedsearchindividualtransferrequests1.0.1: {}
+apis:
+  approverejectdepindtransferrequest1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/approverejectdepindtransferrequest_1.0.0.yaml
+  musanedapproverejectetbysponsor1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/musanedapproverejectetbysponsor_1.0.0.yaml
+  musanedsearchindividualtransferrequests1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/musanedsearchindividualtransferrequests_1.0.1.yaml
+  validatetransferredindividualdependent1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/validatetransferredindividualdependent_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

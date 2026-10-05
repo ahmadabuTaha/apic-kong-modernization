@@ -1,0 +1,277 @@
+swagger: "2.0"
+info:
+  title: MOE Rest Services
+  x-ibm-name: moe-rest-services
+  version: 1.0.0
+  description: MOE_Rest_Services
+schemes:
+- https
+basePath: /moe/v1
+securityDefinitions:
+  ClientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(cat-target-hostname)$(cat-target-url-external)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  GetQualificationsRq_MessageType:
+    type: object
+    properties:
+      StudentQualificationsRq:
+        $ref: '#/definitions/GetQualificationsRq_Type'
+  GetQualificationsRq_Type:
+    type: object
+    properties:
+      PersonalID:
+        type: string
+  GetQualificationsRs_MessageType:
+    type: object
+    properties:
+      StudentQualificationsRs:
+        $ref: '#/definitions/GetQualificationsRs_Type'
+  GetQualificationsRs_Type:
+    type: object
+    properties:
+      QualificationsDetails:
+        $ref: '#/definitions/QualificationsDetails_Type'
+      AbroadQualiffcation:
+        $ref: '#/definitions/AbroadQualiffcations_Type'
+      LocalHighQualifications:
+        $ref: '#/definitions/LocalHighQualifications_Type'
+  PersonName_Type:
+    type: object
+    properties:
+      FullNameAr:
+        type: string
+      FullNameEn:
+        type: string
+  PersonDetails_Type:
+    type: object
+    properties:
+      NationalityName:
+        type: string
+      EmailAddress:
+        type: string
+      PersonName:
+        $ref: '#/definitions/PersonName_Type'
+  QualificationsDetails_Type:
+    type: object
+    properties:
+      PersonDetails:
+        $ref: '#/definitions/PersonDetails_Type'
+  AbroadQualiffcations_Type:
+    type: object
+    properties:
+      ResponseStatus:
+        type: string
+      ErrorDescrption:
+        type: string
+      AbroadQualificationList:
+        type: array
+        items:
+          $ref: '#/definitions/AbroadQualificationList_Type'
+  InstituteName_Type:
+    type: object
+    properties:
+      InstituteNameAr:
+        type: string
+      InstituteNameEn:
+        type: string
+  AbroadQualification_Type:
+    type: object
+    properties:
+      InstituteName:
+        $ref: '#/definitions/InstituteName_Type'
+      CollegeNameAr:
+        type: string
+      CollegeNameEn:
+        type: string
+      SectionName:
+        type: string
+      MajorNameAr:
+        type: string
+      MajorNameEn:
+        type: string
+      CertificateTitleAr:
+        type: string
+      CertificateTitleEn:
+        type: string
+      MinorName:
+        type: string
+      SaudiSpeciality:
+        type: string
+      StudyPeriod:
+        type: string
+      StudyModeNameAr:
+        type: string
+      StudyModeNameEn:
+        type: string
+      GPATypeName:
+        type: string
+      GPA:
+        type: string
+      RatingName:
+        type: string
+      GradutionYear:
+        type: string
+      EquationDecision:
+        type: string
+      EquationDegreeName:
+        type: string
+      EquationDecisionText:
+        type: string
+      DegreeName:
+        $ref: '#/definitions/DegreeName_Type'
+      GraduationDate:
+        $ref: '#/definitions/GraduationDate_Type'
+      CountryOfStudy:
+        $ref: '#/definitions/CountryOfStudy_Type'
+  DegreeName_Type:
+    type: object
+    properties:
+      DegreeNameAr:
+        type: string
+      DegreeNameEn:
+        type: string
+      Degree:
+        type: string
+  GraduationDate_Type:
+    type: object
+    properties:
+      GregorianDate:
+        type: string
+      HijriDate:
+        type: string
+  CountryOfStudy_Type:
+    type: object
+    properties:
+      CountryOfStudyAr:
+        type: string
+      CountryOfStudyEn:
+        type: string
+  AbroadQualificationList_Type:
+    type: object
+    properties:
+      AbroadQualification:
+        $ref: '#/definitions/AbroadQualiffcations_Type'
+  LocalHighQualifications_Type:
+    type: object
+    properties:
+      ResponseStatus:
+        type: string
+      ErrorDescrption:
+        type: string
+      LocalHighQualificationsList:
+        type: array
+        items:
+          $ref: '#/definitions/LocalHighQualificationsList_Type'
+  LocalHighQualification_Type:
+    type: object
+    properties:
+      InstituteName:
+        type: string
+      CollegeName:
+        type: string
+      SectionName:
+        type: object
+        properties: {}
+      MajorName:
+        type: string
+      MinorName:
+        type: string
+      SaudiSpeciality:
+        type: string
+      StudyPeriod:
+        type: string
+      StudyModeName:
+        type: string
+      GPATypeName:
+        type: string
+      GPA:
+        type: string
+      RatingName:
+        type: string
+      GraduationDate:
+        $ref: '#/definitions/GraduationDate_Type'
+      Degree:
+        type: string
+      DegreeName:
+        type: string
+  LocalHighQualificationsList_Type:
+    type: object
+    properties:
+      LocalHighQualifications:
+        $ref: '#/definitions/LocalHighQualification_Type'
+  ResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+  Error_MessageType:
+    type: object
+    properties:
+      ErrorResponse:
+        $ref: '#/definitions/ResponseStatus_Type'
+paths:
+  /get-graduate-student-qualifications2:
+    post:
+      operationId: postGetGraduateQualifications
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetQualificationsRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Insert a GetGraduateQualifications
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/GetQualificationsRs_MessageType'
+        description: The request body for the operation
+        required: true

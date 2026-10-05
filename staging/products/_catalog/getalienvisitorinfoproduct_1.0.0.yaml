@@ -1,0 +1,27 @@
+info:
+  version: 1.0.0
+  title: GetAlienVisitorInfoProduct
+  name: getalienvisitorinfoproduct
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    rate-limits:
+      default:
+        value: 5/1minute
+        hard-limit: true
+    apis:
+      getalienvisitorinfo1.0.0: {}
+apis:
+  getalienvisitorinfo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getalienvisitorinfo_1.0.0_2.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

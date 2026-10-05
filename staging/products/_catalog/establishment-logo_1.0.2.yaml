@@ -1,0 +1,36 @@
+info:
+  version: 1.0.2
+  title: Establishment_LOGO
+  name: establishment-logo
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    rate-limits:
+      default:
+        value: 100/1hour
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    apis:
+      deleteestablishmentlogo1.0.0: {}
+      getestablishmentlogo1.0.0: {}
+      addestablishmentlogo1.0.0: {}
+      updateestablishmentlogo1.0.0: {}
+product: 1.0.0
+apis:
+  deleteestablishmentlogo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/deleteestablishmentlogo_1.0.0.yaml
+  getestablishmentlogo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getestablishmentlogo_1.0.0.yaml
+  addestablishmentlogo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/addestablishmentlogo_1.0.0.yaml
+  updateestablishmentlogo1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updateestablishmentlogo_1.0.0.yaml
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

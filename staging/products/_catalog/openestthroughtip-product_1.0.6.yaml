@@ -1,0 +1,52 @@
+info:
+  version: 1.0.6
+  title: OpenEstthroughTIP Product
+  name: openestthroughtip-product
+  summary: This product is for EFM services used by TIP
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    rate-limits:
+      default:
+        value: 100/1hour
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    apis:
+      cancelgsblicensetip1.0.1: {}
+      openestablishmentbygsblicensetip1.0.1: {}
+      openestablishmentbymirastip1.0.1: {}
+      openestablishmentbysbctip1.0.1: {}
+      updatelicenseinfogsbtip1.0.1: {}
+      openfarmingestablishmentfiletip1.0.0: {}
+      updatelicenseinfogsbtipv22.0.0: {}
+      openunifiedestablishmentbysbctip1.0.2: {}
+      updateestlicensecrtip2.0.0: {}
+product: 1.0.0
+apis:
+  openunifiedestablishmentbysbctip1.0.2:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/openunifiedestablishmentbysbctip_1.0.2.yaml
+  updatelicenseinfogsbtip1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updatelicenseinfogsbtip_1.0.1.yaml
+  updatelicenseinfogsbtipv22.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updatelicenseinfogsbtipv2_2.0.0.yaml
+  openfarmingestablishmentfiletip1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/openfarmingestablishmentfiletip_1.0.0.yaml
+  openestablishmentbysbctip1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/openestablishmentbysbctip_1.0.1.yaml
+  cancelgsblicensetip1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/cancelgsblicensetip_1.0.1.yaml
+  openestablishmentbymirastip1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/openestablishmentbymirastip_1.0.1.yaml
+  openestablishmentbygsblicensetip1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/openestablishmentbygsblicensetip_1.0.1.yaml
+  updateestlicensecrtip2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/updateestlicensecrtip_2.0.0.yaml
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

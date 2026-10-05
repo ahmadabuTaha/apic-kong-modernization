@@ -1,0 +1,392 @@
+swagger: "2.0"
+info:
+  title: SubmitChangeSponsorRequestLO
+  x-ibm-name: submitchangesponsorrequestlo
+  version: 1.0.0
+  description: This service is used to create a change sponsor/transfer laborer request
+    with its details after the validation.
+schemes:
+- https
+basePath: /qiwalo
+security:
+- clientId: []
+  clientSecret: []
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-lbro-lo-employee-transfer)/qiwalo/submitchangsponrequestlo
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+definitions:
+  SubmitChangeSponsorRequestLORq_MessageType:
+    type: object
+    properties:
+      SubmitChangeSponsorRequestLORq:
+        $ref: '#/definitions/SubmitChangeSponsorRequestLORq_Type'
+  SubmitChangeSponsorRequestLORs_MessageType:
+    type: object
+    properties:
+      SubmitChangeSponsorRequestLORs:
+        $ref: '#/definitions/SubmitChangeSponsorRequestLORs_Type'
+  SubmitChangeSponsorRequestLORq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/SubmitChangeSponsorRequestLORq_BodyType'
+  SubmitChangeSponsorRequestLORq_BodyType:
+    type: object
+    properties:
+      DestinationDetails:
+        $ref: '#/definitions/DestinationDetails_Type'
+      SourceLaborerList:
+        $ref: '#/definitions/SourceLaborerList_Type'
+      LaborersNationalitiesList:
+        $ref: '#/definitions/LaborersNationalitiesList_Type'
+      ChangeOrTransfer:
+        type: integer
+      IsWithcontract:
+        type: integer
+    required:
+    - ChangeOrTransfer
+    - DestinationDetails
+    - SourceLaborerList
+    - LaborersNationalitiesList
+  SubmitChangeSponsorRequestLORs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/SubmitChangeSponsorRequestLORs_BodyType'
+  SubmitChangeSponsorRequestLORs_BodyType:
+    type: object
+    properties:
+      ValidationsErrorsList:
+        $ref: '#/definitions/ValidationsErrorsList_Type'
+      LaborerIdNo:
+        type: integer
+      IdNoContractList:
+        $ref: '#/definitions/IdNoContractList_Type'
+      LaborerRequestNumList:
+        $ref: '#/definitions/LaborerRequestNumList_Type'
+      NotRegisteredLaborers:
+        $ref: '#/definitions/NotRegisteredLaborers_Type'
+      LaborersWithPendingReq:
+        $ref: '#/definitions/LaborersWithPendingReq_Type'
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+  DestinationDetails_Type:
+    type: object
+    properties:
+      DestinationLaborOfficeId:
+        type: integer
+      DestinationSequenceNumber:
+        type: integer
+    required:
+    - DestinationLaborOfficeId
+    - DestinationSequenceNumber
+  SourceLaborerList_Type:
+    type: object
+    properties:
+      SourceLaborerItem:
+        type: array
+        items:
+          $ref: '#/definitions/SourceLaborerItem_Type'
+  SourceLaborerItem_Type:
+    type: object
+    properties:
+      SourceLaborOfficeId:
+        type: integer
+      SourceSequenceNumber:
+        type: integer
+      LaborerList:
+        $ref: '#/definitions/LaborerList_Type'
+    required:
+    - SourceLaborOfficeId
+    - SourceSequenceNumber
+  LaborerList_Type:
+    type: object
+    properties:
+      LaborerItem:
+        type: array
+        items:
+          $ref: '#/definitions/LaborerItem_Type'
+  LaborerItem_Type:
+    type: object
+    properties:
+      LaborerName:
+        type: string
+      LaborerIdNo:
+        type: string
+    required:
+    - LaborerName
+    - LaborerIdNo
+  LaborersNationalitiesList_Type:
+    type: object
+    properties:
+      LaborersNationalitiesItem:
+        type: array
+        items:
+          $ref: '#/definitions/LaborersNationalitiesItem_Type'
+  LaborersNationalitiesItem_Type:
+    type: object
+    properties:
+      Nationality:
+        type: integer
+      NumberOfLaborers:
+        type: integer
+    required:
+    - Nationality
+    - NumberOfLaborers
+  ValidationsErrorsList_Type:
+    type: object
+    properties:
+      ValidationError:
+        type: array
+        items:
+          $ref: '#/definitions/ValidationError_Type'
+  IdNoContractList_Type:
+    type: object
+    properties:
+      IdNoContractItem:
+        type: array
+        items:
+          $ref: '#/definitions/IdNoContractItem_Type'
+  LaborerRequestNumList_Type:
+    type: object
+    properties:
+      LaborerRequestNumItem:
+        type: array
+        items:
+          $ref: '#/definitions/LaborerRequestNumItem_Type'
+  NotRegisteredLaborers_Type:
+    type: object
+    properties:
+      NotRegisterLaborer:
+        type: array
+        items:
+          $ref: '#/definitions/NotRegisterLaborer_Type'
+  LaborersWithPendingReq_Type:
+    type: object
+    properties:
+      Laborers:
+        type: array
+        items:
+          $ref: '#/definitions/Laborers_Type'
+  Laborers_Type:
+    type: object
+    properties:
+      LaborerIdNo:
+        type: integer
+    required:
+    - LaborerIdNo
+  ValidationError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ArDescription:
+        type: string
+      EnDescription:
+        type: string
+    required:
+    - ErrorCode
+    - ArDescription
+    - EnDescription
+  LaborerRequestNumItem_Type:
+    type: object
+    properties:
+      RequestNumber:
+        type: string
+      LaborerIdNo:
+        type: string
+      SourceLaborOfficeId:
+        type: integer
+      SourceSequenceNumber:
+        type: integer
+    required:
+    - RequestNumber
+    - LaborerIdNo
+    - SourceLaborOfficeId
+    - SourceSequenceNumber
+  IdNoContractItem_Type:
+    type: object
+    properties:
+      LaborerIdNo:
+        type: integer
+      ContractId:
+        type: integer
+      IsValid:
+        type: integer
+    required:
+    - LaborerIdNo
+    - ContractId
+    - IsValid
+  NotRegisterLaborer_Type:
+    type: object
+    properties:
+      LaborerIdNo:
+        type: integer
+    required:
+    - LaborerIdNo
+paths:
+  /submitchangsponrequestlo:
+    post:
+      operationId: SubmitChangeSponsorRequestLO
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/SubmitChangeSponsorRequestLORs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: SubmitChangeSponsorRequestLORs
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/SubmitChangeSponsorRequestLORq_MessageType'
+        description: SubmitChangeSponsorRequestLORq
+        required: true

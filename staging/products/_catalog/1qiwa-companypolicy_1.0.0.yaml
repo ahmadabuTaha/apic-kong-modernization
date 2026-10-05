@@ -1,0 +1,27 @@
+info:
+  name: 1qiwa-companypolicy
+  title: 1qiwa-companypolicy
+  version: 1.0.0
+apis:
+  qwia-getcompanypolicystatus1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qwia-getcompanypolicystatus_1.0.0.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      qwia-getcompanypolicystatus1.0.0: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

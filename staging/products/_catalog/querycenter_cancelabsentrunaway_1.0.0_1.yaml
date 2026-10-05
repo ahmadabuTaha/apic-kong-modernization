@@ -1,0 +1,80 @@
+swagger: "2.0"
+info:
+  title: QueryCenter_CancelAbsentRunaway
+  x-ibm-name: querycenter_cancelabsentrunaway
+  version: 1.0.0
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.2.0
+        title: invoke
+        backend-type: json
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        http-version: HTTP/1.1
+        timeout: 60
+        verb: POST
+        chunked-uploads: true
+        persistent-connection: true
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        websocket-upgrade: false
+        target-url: $(ace-ctfl-absentservices)$(target-url)
+    finally: []
+  properties:
+    target-url:
+      value: /cancelabsentrunawaystatus
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+basePath: /qiwa/v2
+paths:
+  /cancelabsentrunawaystatus:
+    parameters: []
+    post:
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+securityDefinitions:
+  clientID:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+    x-key-type: client_id
+  ClientSecret:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Secret
+    x-key-type: client_secret
+  OAuth2.0:
+    type: oauth2
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    flow: application
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+schemes:
+- https
+security:
+- clientID: []
+  ClientSecret: []
+  OAuth2.0:
+  - IntegrationScope

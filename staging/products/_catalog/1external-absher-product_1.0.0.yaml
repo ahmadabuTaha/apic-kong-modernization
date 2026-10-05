@@ -1,0 +1,39 @@
+info:
+  version: 1.0.0
+  title: 1External Absher Product
+  name: 1external-absher-product
+  summary: This product is for Absher SMS services
+  description: |
+    PROD yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    rate-limits:
+      default:
+        value: 100/1hour
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    apis:
+      getdetailedsmsstatus1.0.0: {}
+      getsmsstatus1.0.0: {}
+      submitsmsrequest1.0.0: {}
+      sendotpwithdynamictemplate1.0.0: {}
+product: 1.0.0
+apis:
+  submitsmsrequest1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/submitsmsrequest_1.0.0.yaml
+  getdetailedsmsstatus1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getdetailedsmsstatus_1.0.0.yaml
+  getsmsstatus1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getsmsstatus_1.0.0.yaml
+  sendotpwithdynamictemplate1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/sendotpwithdynamictemplate_1.0.0.yaml
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

@@ -1,0 +1,27 @@
+info:
+  version: 1.0.0
+  title: svp-takamol-webservices
+  name: svp-takamol-webservices
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    rate-limits:
+      default:
+        value: 100/1hour
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    apis:
+      takamol-svp-rest-api-v11.0.7: {}
+apis:
+  takamol-svp-rest-api-v11.0.7:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/takamol-svp-rest-api-v1_1.0.7.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

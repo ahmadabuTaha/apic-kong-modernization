@@ -1,0 +1,43 @@
+{
+    "total_results": 2,
+    "results": [
+        {
+            "type": "subscription",
+            "api_version": "2.0.0",
+            "id": "e0e69604-3928-478b-97fc-e3ec57bfec5c",
+            "name": "AI-ChatBot-1.0.1-default-plan",
+            "title": "AI-ChatBot 1.0.1 default-plan",
+            "state": "enabled",
+            "product_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/catalogs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/products/449f3ad5-dd40-44fb-b412-0817432fbd90",
+            "plan": "default-plan",
+            "plan_title": "Default Plan",
+            "task_urls": [],
+            "created_at": "2026-08-05T07:00:59.000Z",
+            "updated_at": "2026-08-05T07:00:59.000Z",
+            "org_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/orgs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c",
+            "catalog_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/catalogs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2",
+            "consumer_org_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/consumer-orgs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/c4d7b2fb-97c9-44ef-b676-d597d1138f18",
+            "app_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/apps/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/c4d7b2fb-97c9-44ef-b676-d597d1138f18/adf81664-5141-43d1-92f2-b319438d6b37",
+            "url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/apps/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/c4d7b2fb-97c9-44ef-b676-d597d1138f18/adf81664-5141-43d1-92f2-b319438d6b37/subscriptions/e0e69604-3928-478b-97fc-e3ec57bfec5c"
+        },
+        {
+            "type": "subscription",
+            "api_version": "2.0.0",
+            "id": "70c209dc-9c68-434e-a739-f7bd652b0ce5",
+            "name": "ChatBot-1.0.0-default-plan",
+            "title": "ChatBot 1.0.0 default-plan",
+            "state": "enabled",
+            "product_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/catalogs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/products/6d2127a3-5652-440a-80db-1796decfe71b",
+            "plan": "default-plan",
+            "plan_title": "Default Plan",
+            "task_urls": [],
+            "created_at": "2025-06-30T08:00:40.000Z",
+            "updated_at": "2025-06-30T08:00:40.000Z",
+            "org_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/orgs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c",
+            "catalog_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/catalogs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2",
+            "consumer_org_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/consumer-orgs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/c4d7b2fb-97c9-44ef-b676-d597d1138f18",
+            "app_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/apps/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/c4d7b2fb-97c9-44ef-b676-d597d1138f18/adf81664-5141-43d1-92f2-b319438d6b37",
+            "url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/apps/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/c4d7b2fb-97c9-44ef-b676-d597d1138f18/adf81664-5141-43d1-92f2-b319438d6b37/subscriptions/70c209dc-9c68-434e-a739-f7bd652b0ce5"
+        }
+    ]
+}

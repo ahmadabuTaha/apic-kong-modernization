@@ -1,0 +1,360 @@
+swagger: "2.0"
+info:
+  title: NIC_GetCitizenInformation
+  x-ibm-name: nic-getcitizeninformation
+  version: 2.0.0
+schemes:
+- https
+basePath: /nic/v2
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+    - map:
+        version: 2.0.0
+        title: map
+        inputs:
+          "":
+            schema:
+              description: ""
+              type: object
+              properties:
+                dateOfBirth:
+                  type: string
+                  name: dateOfBirth
+                idNo:
+                  type: string
+                  name: idNo
+            variable: request.body
+            content: application/json
+        outputs:
+          "":
+            schema:
+              type: object
+              properties:
+                DateOfBirth:
+                  type: string
+                  name: DateOfBirth
+                IdNo:
+                  type: string
+                  name: IdNo
+            variable: message.body
+            content: application/json
+        actions:
+        - set: .DateOfBirth
+          from: .dateOfBirth
+        - set: .IdNo
+          from: .idNo
+        options:
+          mapEnablePostProcessingJSON: true
+          mapEmulateV4EmptyJSONObject: false
+          mapEmulateV4DefaultRequiredProps: false
+          mapReferenceLimit: 1
+          includeEmptyXMLElements: false
+          namespaceInheritance: false
+          inlineNamespaces: false
+          mapResolveApicVariables: false
+          mapOptimizeSchemaDefinition: true
+    - gatewayscript:
+        version: 2.0.0
+        title: Service_Config
+        source: "var apim = require('apim');\n\nvar cfg={\n    \"serviceCode\" : \"NGCI0001\",\n
+          \   \"channelId\" : \"Qiwa\",\n    \"requestName\" : \"GetCitizenInformationNICRq\",\n
+          \   \"responseName\": \"GetCitizenInformationNICRs\",\n    \"errorMap\"
+          :{\n        \"ESBSCHEMA\" : {\"code\" :400, \"msg\":\"Invalid Request\"}\n
+          \   }\n    \n};\n\napim.setvariable('cfg',cfg);"
+    - gatewayscript:
+        version: 2.0.0
+        title: Prepare_Request
+        source: "var apim = require('apim');\r\n\r\nvar millisecondsvalue = \"\"+(new
+          Date()).getTime();\r\nvar dt = new Date();\r\nvar cfg = apim.getvariable('cfg');\r\nvar
+          OperatorId=apim.getvariable('message.headers.Operator-Id');\r\n\r\nvar appcReq
+          = {\r\n    [cfg.requestName]:{\r\n        \"Header\" : {\r\n            \"TransactionId\"
+          : millisecondsvalue,\r\n            \"ChannelId\": cfg.channelId,\r\n            \"SessionId\":
+          apim.getvariable('message.headers.Reference-Id'),\r\n            \"RequestTime\"
+          : formatDate(dt),\r\n            \"ServiceCode\": cfg.serviceCode\r\n        },\r\n
+          \       \"Body\" : apim.getvariable('message.body')\r\n            \r\n
+          \       \r\n    }\r\n};\r\n\r\nif (typeof OperatorId !== 'undefined')\r\n
+          \   appcReq[cfg.requestName].Header.UserInfo = {\r\n        \"IDNumber\"
+          : OperatorId\r\n    };\r\nsession.output.write(appcReq);\r\napim.output('application/json');\r\n\r\n\r\nfunction
+          formatDate(d)\r\n{\r\n    //get the month\r\n    var month = d.getMonth();\r\n
+          \   //get the day\r\n    //convert day to string\r\n    var day = d.getDate().toString();\r\n
+          \   //get the year\r\n    var year = d.getFullYear();\r\n    var hour =
+          d.getHours().toString();\r\n    var minitue = d.getMinutes().toString();\r\n
+          \   var second = d.getSeconds().toString();\r\n    var millisecond = d.getMilliseconds().toString();\r\n
+          \   //pull the last two digits of the year\r\n    year = year.toString();\r\n
+          \   \r\n    //increment month by 1 since it is 0 indexed\r\n    //converts
+          month to a string\r\n    month = (month + 1).toString();\r\n\r\n    //if
+          month is 1-9 pad right with a 0 for two digits\r\n    if (month.length ===
+          1)\r\n        month = \"0\" + month;\r\n\r\n    //if day is between 1-9
+          pad right with a 0 for two digits\r\n    if (day.length === 1)\r\n        day
+          = \"0\" + day;\r\n\r\n    if (hour.length === 1)\r\n        hour = \"0\"
+          + hour;\r\n\r\n    if (minitue.length === 1)\r\n        minitue = \"0\"
+          + minitue;\r\n\r\n    if (second.length === 1)\r\n        second = \"0\"
+          + second;\r\n        \r\n    if (millisecond.length == 1)\r\n        millisecond
+          = \"00\" + millisecond;\r\n        \r\n    if (millisecond.length == 2)\r\n
+          \       millisecond = \"0\" + millisecond;\r\n    \r\n    \r\n\r\n    //return
+          the string \"MMddyy\"\r\n    return year+\"-\"+month+\"-\"+day+\" \"+hour
+          + \":\" + minitue + \":\" + second+\".\"+millisecond;\r\n}"
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-nic-getcitizen)/common/getcitizeninformationnic
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blacklist
+        header-control:
+          type: blacklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+    - gatewayscript:
+        version: 2.0.0
+        title: Set_Headers
+        source: "\tvar apim = require('apim');\n\t\n\tapim.output('application/json');\n\n
+          \   \n    \n    var cfg = apim.getvariable('cfg');\n    \n\tvar TransactionId
+          = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.TransactionId\");\n\tvar
+          ChannelId = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.ChannelId\");\n\tvar
+          RequestTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.RequestTime\");\n\tvar
+          SessionId = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.SessionId\");\n\tvar
+          MWRequestTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.MWRequestTime\");\n\tvar
+          MWResponseTime = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.MWResponseTime\");\n\tvar
+          status = \"\"+apim.getvariable(\"message.body.\"+cfg.responseName+\".Header.ResponseStatus.Status\");\n\t\n\n
+          \   apim.setvariable('message.headers.Transaction-Id',TransactionId,'add');\n
+          \   apim.setvariable('message.headers.Channel-Id',ChannelId,'add');\n    if
+          (RequestTime !== 'undefined')\n\t    apim.setvariable('message.headers.RequestTime',RequestTime,'add');\n\tif
+          (SessionId !== 'undefined')\n        apim.setvariable('message.headers.Reference-Id',SessionId,'add');\n
+          \    if (MWRequestTime !== 'undefined')\n        apim.setvariable('message.headers.MWRequestTime',MWRequestTime,'add');\n
+          \   if (MWResponseTime !== 'undefined')\n        apim.setvariable('message.headers.MWResponseTime',MWResponseTime,'add');\n\n
+          \   \n    apim.setvariable('message.headers.Response-Status',status,'add');\n
+          \   "
+    - switch:
+        version: 2.0.0
+        title: switch
+        case:
+        - condition: (($header("Response-Status") = 'SUCCESS'))
+          execute:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Response
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar body = {\n    \"CitizenInformationNICRs\"
+                : message[cfg.responseName].Body\n}; \n\n\n\n\n\nsession.output.write(body);\napim.output('application/json');"
+          - map:
+              version: 2.0.0
+              title: map
+              inputs:
+                input:
+                  schema:
+                    description: ""
+                    type: object
+                    properties:
+                      CitizenInformationNICRs:
+                        type: object
+                        properties:
+                          BirthHijriDate:
+                            type: string
+                            name: BirthHijriDate
+                          BirthPlace:
+                            type: string
+                            name: BirthPlace
+                          Name:
+                            type: object
+                            properties:
+                              FirstName:
+                                type: string
+                                name: FirstName
+                              SecondName:
+                                type: string
+                                name: SecondName
+                              ThirdName:
+                                type: string
+                                name: ThirdName
+                              LastName:
+                                type: string
+                                name: LastName
+                            name: Name
+                          Gender:
+                            type: string
+                            name: Gender
+                          IdExpiry:
+                            type: object
+                            properties:
+                              GregorianDate:
+                                type: string
+                                name: GregorianDate
+                              HijriDate:
+                                type: string
+                                name: HijriDate
+                              IdNo:
+                                type: string
+                                name: IdNo
+                              MaritalStatus:
+                                type: string
+                                name: MaritalStatus
+                              Profession:
+                                type: string
+                                name: Profession
+                              Status:
+                                type: string
+                                name: Status
+                            name: IdExpiry
+                        name: CitizenInformationNICRs
+                    example: "{\r\n    \"CitizenInformationNICRs\": {\r\n        \"BirthHijriDate\":
+                      \"14160417\",\r\n        \"BirthPlace\": \"جيزان\",\r\n        \"Name\":
+                      {\r\n            \"FirstName\": \"مروه\",\r\n            \"SecondName\":
+                      \"ادريس\",\r\n            \"ThirdName\": \"احمد\",\r\n            \"LastName\":
+                      \"عبيري\"\r\n        },\r\n        \"Gender\": \"F\",\r\n        \"IdExpiry\":
+                      {\r\n            \"GregorianDate\": \"2022-09-09T00:00:00\",\r\n
+                      \           \"HijriDate\": \"14440213\",\r\n            \"IdNo\":
+                      \"1092437423\",\r\n            \"MaritalStatus\": \"متزوجه\",\r\n
+                      \           \"Profession\": \"طلبة\",\r\n            \"Status\":
+                      \"Alive\"\r\n        }\r\n    }\r\n}"
+                  variable: message.body
+              outputs:
+                output:
+                  schema:
+                    description: ""
+                    type: object
+                    properties:
+                      birthHijriDate:
+                        type: string
+                        name: birthHijriDate
+                      birthPlace:
+                        type: string
+                        name: birthPlace
+                      name:
+                        type: object
+                        properties:
+                          firstName:
+                            type: string
+                            name: firstName
+                          secondName:
+                            type: string
+                            name: secondName
+                          thirdName:
+                            type: string
+                            name: thirdName
+                          lastName:
+                            type: string
+                            name: lastName
+                        name: name
+                      gender:
+                        type: string
+                        name: gender
+                      idExpiry:
+                        type: object
+                        properties:
+                          gregorianDate:
+                            type: string
+                            name: gregorianDate
+                          hijriDate:
+                            type: string
+                            name: hijriDate
+                          idNo:
+                            type: string
+                            name: idNo
+                          maritalStatus:
+                            type: string
+                            name: maritalStatus
+                          profession:
+                            type: string
+                            name: profession
+                          status:
+                            type: string
+                            name: status
+                        name: idExpiry
+                    example: "{\r\n        \"BirthHijriDate\": \"14160417\",\r\n        \"BirthPlace\":
+                      \"جيزان\",\r\n        \"Name\": {\r\n            \"FirstName\":
+                      \"مروه\",\r\n            \"SecondName\": \"ادريس\",\r\n            \"ThirdName\":
+                      \"احمد\",\r\n            \"LastName\": \"عبيري\"\r\n        },\r\n
+                      \       \"Gender\": \"F\",\r\n        \"IdExpiry\": {\r\n            \"GregorianDate\":
+                      \"2022-09-09T00:00:00\",\r\n            \"HijriDate\": \"14440213\",\r\n
+                      \           \"IdNo\": \"1092437423\",\r\n            \"MaritalStatus\":
+                      \"متزوجه\",\r\n            \"Profession\": \"طلبة\",\r\n            \"Status\":
+                      \"Alive\"\r\n        }\r\n}"
+                  variable: message.body
+              actions:
+              - set: output.birthHijriDate
+                from: input.CitizenInformationNICRs.BirthHijriDate
+              - set: output.birthPlace
+                from: input.CitizenInformationNICRs.BirthPlace
+              - set: output.name.firstName
+                from: input.CitizenInformationNICRs.Name.FirstName
+              - set: output.name.secondName
+                from: input.CitizenInformationNICRs.Name.SecondName
+              - set: output.name.thirdName
+                from: input.CitizenInformationNICRs.Name.ThirdName
+              - set: output.name.lastName
+                from: input.CitizenInformationNICRs.Name.LastName
+              - set: output.gender
+                from: input.CitizenInformationNICRs.Gender
+              - set: output.idExpiry.gregorianDate
+                from: input.CitizenInformationNICRs.IdExpiry.GregorianDate
+              - set: output.idExpiry.hijriDate
+                from: input.CitizenInformationNICRs.IdExpiry.HijriDate
+              - set: output.idExpiry.idNo
+                from: input.CitizenInformationNICRs.IdExpiry.IdNo
+              - set: output.idExpiry.maritalStatus
+                from: input.CitizenInformationNICRs.IdExpiry.MaritalStatus
+              - set: output.idExpiry.profession
+                from: input.CitizenInformationNICRs.IdExpiry.Profession
+              - set: output.idExpiry.status
+                from: input.CitizenInformationNICRs.IdExpiry.Status
+              options:
+                mapEnablePostProcessingJSON: true
+                mapEmulateV4EmptyJSONObject: false
+                mapEmulateV4DefaultRequiredProps: false
+                mapReferenceLimit: 1
+                includeEmptyXMLElements: false
+                namespaceInheritance: false
+                inlineNamespaces: false
+                mapResolveApicVariables: false
+                mapOptimizeSchemaDefinition: true
+        - otherwise:
+          - gatewayscript:
+              version: 2.0.0
+              title: Prepare_Error
+              source: "var apim = require('apim');\n\nvar message = apim.getvariable('message.body');\nvar
+                cfg = apim.getvariable('cfg');          \nvar error = {\n    \"ErrorResponse\":
+                message[cfg.responseName].Header.ResponseStatus\n}\n\n\nvar httperror=0;\nif(cfg.errorMap){\n
+                \   if(cfg.errorMap[error.ErrorResponse.Code]){\n       httperror
+                = cfg.errorMap[error.ErrorResponse.Code].code;\n       \n       //var
+                errmgs = cfg.errorMap[error.ErrorResponse.Code].msg;\n       //var
+                details = error.ErrorResponse.Code + ':' + error.ErrorResponse.EnglishMsg;\n
+                \      //apim.error('ERROR',httperror,errmgs,details);\n    }\n}\nif(httperror
+                == 0){\n   httperror = 400;\n   // apim.error('ERROR',400,'Bad Request','Invalid
+                request');\n}\napim.setvariable('message.status.code',httperror,'set');\n\nsession.output.write(error);\napim.output('application/json');"
+    catch: []
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+paths:
+  /get-citizen-info:
+    post:
+      responses:
+        "200":
+          schema:
+            type: string
+          description: success

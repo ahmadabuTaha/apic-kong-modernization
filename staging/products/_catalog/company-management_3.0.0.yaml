@@ -1,0 +1,32 @@
+info:
+  version: 3.0.0
+  title: Company-Management
+  name: company-management
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      getnationalunifiednumberviolationsdebts1.0.0: {}
+      verifylaborermeccalocation1.0.0: {}
+      getcrnationalnumberests1.0.0: {}
+apis:
+  verifylaborermeccalocation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/verifylaborermeccalocation_1.0.0.yaml
+  getnationalunifiednumberviolationsdebts1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getnationalunifiednumberviolationsdebts_1.0.0.yaml
+  getcrnationalnumberests1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getcrnationalnumberests_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

@@ -1,0 +1,62 @@
+{
+    "total_results": 3,
+    "results": [
+        {
+            "type": "subscription",
+            "api_version": "2.0.0",
+            "id": "88768153-a738-433b-9ccc-4b7aaa8fb470",
+            "name": "GetServiceNowTicketDetails_product-1.0.0-default-plan",
+            "title": "GetServiceNowTicketDetails_product 1.0.0 default-plan",
+            "state": "enabled",
+            "product_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/catalogs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/products/0d3d2442-e832-410f-a131-3e7023b63a32",
+            "plan": "default-plan",
+            "plan_title": "Default Plan",
+            "task_urls": [],
+            "created_at": "2026-08-06T05:51:32.000Z",
+            "updated_at": "2026-08-06T05:51:32.000Z",
+            "org_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/orgs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c",
+            "catalog_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/catalogs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2",
+            "consumer_org_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/consumer-orgs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/d573f483-0c02-4bc6-9b0f-c0e69910376b",
+            "app_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/apps/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/d573f483-0c02-4bc6-9b0f-c0e69910376b/37b111ce-9b9c-4b63-a9f5-ca6b65dc5fff",
+            "url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/apps/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/d573f483-0c02-4bc6-9b0f-c0e69910376b/37b111ce-9b9c-4b63-a9f5-ca6b65dc5fff/subscriptions/88768153-a738-433b-9ccc-4b7aaa8fb470"
+        },
+        {
+            "type": "subscription",
+            "api_version": "2.0.0",
+            "id": "bf07f90a-9ade-4976-bbe1-6da4b76300b1",
+            "name": "Servicenow-1.0.0-default-plan",
+            "title": "Servicenow 1.0.0 default-plan",
+            "state": "enabled",
+            "product_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/catalogs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/products/159fc6f0-3cf8-4144-9467-c067573c19d8",
+            "plan": "default-plan",
+            "plan_title": "Default Plan",
+            "task_urls": [],
+            "created_at": "2026-08-04T16:09:48.000Z",
+            "updated_at": "2026-08-04T16:09:48.000Z",
+            "org_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/orgs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c",
+            "catalog_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/catalogs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2",
+            "consumer_org_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/consumer-orgs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/d573f483-0c02-4bc6-9b0f-c0e69910376b",
+            "app_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/apps/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/d573f483-0c02-4bc6-9b0f-c0e69910376b/37b111ce-9b9c-4b63-a9f5-ca6b65dc5fff",
+            "url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/apps/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/d573f483-0c02-4bc6-9b0f-c0e69910376b/37b111ce-9b9c-4b63-a9f5-ca6b65dc5fff/subscriptions/bf07f90a-9ade-4976-bbe1-6da4b76300b1"
+        },
+        {
+            "type": "subscription",
+            "api_version": "2.0.0",
+            "id": "04fb8c5c-d6cf-46d2-b712-d65c5d371950",
+            "name": "servicenowqiwacustcont-product-1.0.0-default-plan",
+            "title": "servicenowqiwacustcont product 1.0.0 default-plan",
+            "state": "enabled",
+            "product_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/catalogs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/products/933557a7-9b58-412f-b80b-028b8006ee97",
+            "plan": "default-plan",
+            "plan_title": "Default Plan",
+            "task_urls": [],
+            "created_at": "2026-08-04T16:03:43.000Z",
+            "updated_at": "2026-08-04T16:03:43.000Z",
+            "org_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/orgs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c",
+            "catalog_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/catalogs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2",
+            "consumer_org_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/consumer-orgs/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/d573f483-0c02-4bc6-9b0f-c0e69910376b",
+            "app_url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/apps/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/d573f483-0c02-4bc6-9b0f-c0e69910376b/37b111ce-9b9c-4b63-a9f5-ca6b65dc5fff",
+            "url": "https://apic-mgmt-platform-api-apic.apps.stg.qiwa-nonprod.local/api/apps/d85fa30c-cdd6-4095-bd3b-b4c1ec45010c/521321cf-160e-4b89-99c1-4f6ec3fcb1c2/d573f483-0c02-4bc6-9b0f-c0e69910376b/37b111ce-9b9c-4b63-a9f5-ca6b65dc5fff/subscriptions/04fb8c5c-d6cf-46d2-b712-d65c5d371950"
+        }
+    ]
+}

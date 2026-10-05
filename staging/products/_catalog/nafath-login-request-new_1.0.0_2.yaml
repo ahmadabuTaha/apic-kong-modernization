@@ -1,0 +1,208 @@
+swagger: "2.0"
+info:
+  title: NafathLoginRequest
+  x-ibm-name: nafath-login-request-new
+  version: 1.0.0
+  description: nafath-login-request-new
+schemes:
+- https
+basePath: /Nafath/LoginRequests
+security:
+- ClientSecret: []
+  OAuth2.0:
+  - IntegrationScope
+  clientID: []
+securityDefinitions:
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+  ClientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientID:
+    type: apiKey
+    in: header
+    x-key-type: client_id
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        version: 2.0.0
+        title: invoke
+        backend-type: detect
+        header-control:
+          type: blocklist
+          values: []
+        parameter-control:
+          type: allowlist
+          values: []
+        timeout: 60
+        verb: POST
+        chunked-uploads: true
+        persistent-connection: true
+        cache-response: protocol
+        cache-ttl: 900
+        stop-on-error: []
+        target-url: $(ace-nfth-nafath)/nafathlogin/v1/authorize
+    catch:
+    - default:
+      - set-variable:
+          version: 2.0.0
+          title: set-variable
+          actions:
+          - set: message.status.code
+            value: "500"
+            type: string
+          - set: message.headers.content-type
+            value: application/json
+            type: string
+          - set: message.body
+            value: '{     "errorCode": "E000500",     "errorMessage": "Internal server
+              error"              }'
+            type: string
+    finally: []
+  properties:
+    target-url:
+      value: http://nfth-nafath-http-ace.apps.stg.qiwa-nonprod.local/nafathlogin/v1/authorize
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    success-content: payload
+    error-content: header
+    enabled: true
+  application-authentication:
+    certificate: false
+  buffering: true
+  catalogs: {}
+tags:
+- name: NationalizationScore
+  description: To get nationalization score and associated information
+definitions:
+  sendNAFITHRequest:
+    type: object
+    additionalProperties: false
+    properties:
+      callbackURL:
+        type: string
+        description: Callback URL
+        example: http://test.com
+      id:
+        type: string
+        description: User ID
+        example: "10000000"
+  sendNAFITHResponse:
+    type: object
+    properties:
+      header:
+        $ref: '#/definitions/ResponseHeader'
+      data:
+        $ref: '#/definitions/sendNAFITHResponseData'
+  sendNAFITHResponseData:
+    type: object
+    required:
+    - transactionId
+    - random
+    properties:
+      transactionId:
+        $ref: '#/definitions/transactionId'
+      random:
+        $ref: '#/definitions/random'
+      referenceId:
+        $ref: '#/definitions/requestReferenceId'
+  transactionId:
+    type: string
+    description: Request API Transaction-ID
+  requestReferenceId:
+    type: string
+    description: Request API Reference Id
+  random:
+    type: string
+    description: is the random value that should be displayed to the user
+  ResponseHeaderStatus:
+    title: ResponseHeaderStatus
+    description: Response Header Status Structure.
+    type: object
+    properties:
+      code:
+        description: code
+        example: I000000
+        type: string
+      description:
+        description: description
+        example: Success
+        type: string
+  ResponseHeader:
+    title: ResponseHeader
+    description: Response Header Structure.
+    type: object
+    properties:
+      requestID:
+        description: Unique request ID send by the mobile application for auditing
+          purpose.
+        example: 193347a5-86b5-49ae-a3c7-13ff00ea9de6
+        type: string
+        maxLength: 36
+      status:
+        $ref: '#/definitions/ResponseHeaderStatus'
+paths:
+  /send:
+    post:
+      description: This API initiates a new request within Nafath app for the tarsended
+        User
+      summary: Send Login Request
+      tags:
+      - NAFATH Login Request
+      operationId: sendNAFITHRequest
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: Request-ID
+        in: header
+        required: false
+        type: string
+        description: Request Unique Identifier
+      - name: requestBody
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/sendNAFITHRequest'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/sendNAFITHResponse'
+          headers: {}
+        default:
+          description: '#### Error Codes List: </br> E222001   -->  AUTHORIZATION
+            FALIURE </br>E222002   -->  DATA NOT AVAILABLE </br>E222003   -->  INCORRECT
+            URL </br>E222004   -->  REQUEST MODEL IS INVALID </br>E222005   -->  NAFATH
+            TRX ID NOT CORRECT </br>E222006   -->  NAFATH TOO MANY HTTP REQUESTS </br>E222007   -->  NAFATH
+            TRX ID HAS EXPIRED </br>E222008   -->  NAFATH THERE IS ACTIVE TRX </br>E222009   -->  HTTP
+            TIMEOUT </br>E222010   -->  UNKNOWN SERVER ERROR '
+          schema:
+            $ref: '#/definitions/ResponseHeader'
+          examples:
+            application/json:
+              header:
+                requestID: 193347a5-86b5-49ae-a3c7-13ff00ea9de6
+                status:
+                  code: E999999
+                  description: General Error
+          headers: {}

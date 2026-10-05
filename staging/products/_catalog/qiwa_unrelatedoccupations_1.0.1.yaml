@@ -1,0 +1,32 @@
+info:
+  version: 1.0.1
+  title: Qiwa_UnrelatedOccupations
+  name: qiwa_unrelatedoccupations
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      endofservicerewardlookup1.0.0: {}
+      qiwa-activityunrelatedoccupations1.0.1: {}
+      endofservicereward1.0.0: {}
+apis:
+  endofservicerewardlookup1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/endofservicerewardlookup_1.0.0_1.yaml
+  qiwa-activityunrelatedoccupations1.0.1:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/qiwa-activityunrelatedoccupations_1.0.1.yaml
+  endofservicereward1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/endofservicereward_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

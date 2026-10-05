@@ -1,0 +1,36 @@
+info:
+  name: sendqiwareports
+  title: sendqiwareports
+  version: 2.0.1
+apis:
+  sendqiwareports3.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/sendqiwareports_3.0.0.yaml
+  workpermitreports1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/workpermitreports_1.0.0.yaml
+  employeetransferreports1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/employeetransferreports_1.0.0.yaml
+  saudicertificatereports1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/saudicertificatereports_1.0.0.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      sendqiwareports3.0.0: {}
+      workpermitreports1.0.0: {}
+      employeetransferreports1.0.0: {}
+      saudicertificatereports1.0.0: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

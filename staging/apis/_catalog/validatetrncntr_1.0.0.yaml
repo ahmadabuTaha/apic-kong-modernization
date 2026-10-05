@@ -1,0 +1,271 @@
+swagger: "2.0"
+info:
+  title: 'ValidateTrnCntr '
+  version: 1.0.0
+  description: 'ValidateTrnCntr '
+  x-ibm-name: validatetrncntr
+paths:
+  /valtrncntr:
+    post:
+      operationId: ValidateTrnCntr
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/ValidateTrnCntrRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: 'ValidateTrnCntr '
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/ValidateTrnCntrRq_MessageType'
+        description: ValidateTrnCntr
+        required: true
+basePath: /trncntr
+definitions:
+  ValidateTrnCntrRq_MessageType:
+    type: object
+    properties:
+      ValidateTrnCntrRq:
+        $ref: '#/definitions/ValidateTrnCntrRq_Type'
+  ValidateTrnCntrRs_MessageType:
+    type: object
+    properties:
+      ValidateTrnCntrRs:
+        $ref: '#/definitions/ValidateTrnCntrRs_Type'
+  ValidateTrnCntrRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/ValidateTrnCntrRq_BodyType'
+  ValidateTrnCntrRq_BodyType:
+    type: object
+    properties:
+      TraineeIdNo:
+        type: integer
+      TraineeDoB:
+        type: integer
+      ContractStartDate:
+        type: string
+        format: date-time
+    required:
+    - TraineeIdNo
+    - TraineeDoB
+  ValidateTrnCntrRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/ValidateTrnCntrRs_BodyType'
+  ValidateTrnCntrRs_BodyType:
+    type: object
+    properties:
+      TraineeInfo:
+        $ref: '#/definitions/TraineeInfo_Type'
+      TotalRecordsCount:
+        type: integer
+    required:
+    - TraineeInfo
+  TraineeInfo_Type:
+    type: object
+    properties:
+      TraineeIdNo:
+        type: integer
+      TraineeName:
+        type: string
+      TraineeBirthDate:
+        type: integer
+      Nationality:
+        $ref: '#/definitions/CodeName_Type'
+      Gender:
+        $ref: '#/definitions/CodeName_Type'
+      MaritalStatus:
+        $ref: '#/definitions/CodeName_Type'
+    required:
+    - TraineeIdNo
+    - TraineeName
+    - TraineeBirthDate
+    - Nationality
+    - Gender
+    - MaritalStatus
+  CodeName_Type:
+    type: object
+    properties:
+      Code:
+        type: integer
+      NameAr:
+        type: string
+      NameEn:
+        type: string
+    required:
+    - Code
+    - NameAr
+    - NameEn
+  HGDate_Type:
+    type: object
+    properties:
+      Hijri:
+        type: integer
+      Greogrian:
+        type: string
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-trncntr-utilities)$(request.path)
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: allowlist
+          values: []
+        header-control:
+          type: blocklist
+          values: []
+        inject-proxy-headers: true
+        chunked-uploads: true
+        persistent-connection: true
+  properties:
+    target-url:
+      value: http://example.com/operation-name
+      description: The URL of the target service
+      encoded: false
+schemes:
+- https
+securityDefinitions:
+  clientId:
+    type: apiKey
+    x-key-type: client_id
+    name: X-IBM-Client-Id
+    in: header
+  Oauth2.0:
+    type: oauth2
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    flow: application
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+security:
+- clientId: []
+  Oauth2.0:
+  - IntegrationScope

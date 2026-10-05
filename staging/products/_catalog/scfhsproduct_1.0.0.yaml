@@ -1,0 +1,30 @@
+info:
+  name: scfhsproduct
+  title: External_SCFHS_Product
+  version: 1.0.0
+apis:
+  scfhs-checkmedicallicensevalidity1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/scfhs-checkmedicallicensevalidity_1.0.0.yaml
+  scfhs-checkmedicallicensevalidity2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/scfhs-checkmedicallicensevalidity_2.0.0.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      scfhs-checkmedicallicensevalidity1.0.0: {}
+      scfhs-checkmedicallicensevalidity2.0.0: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

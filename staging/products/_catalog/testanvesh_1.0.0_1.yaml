@@ -1,0 +1,33 @@
+info:
+  title: testanvesh
+  name: testanvesh
+  version: 1.0.0
+apis:
+  testanvesh1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/testanvesh_1.0.0.yaml
+  sbctesting2.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/sbctesting_2.0.0.yaml
+  externalservices_createemploymentcontract1.0.2:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/externalservices_createemploymentcontract_1.0.2.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      testanvesh1.0.0: {}
+      sbctesting2.0.0: {}
+      externalservices_createemploymentcontract1.0.2: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

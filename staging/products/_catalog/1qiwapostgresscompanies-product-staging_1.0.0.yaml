@@ -1,0 +1,31 @@
+info:
+  name: 1qiwapostgresscompanies-product-staging
+  title: 1QiwaPostgressCompanies Product Staging
+  version: 1.0.0
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: true
+    rate-limits:
+      default:
+        value: 100/1hour
+        hard-limit: false
+    apis:
+      insertcompany1.0.0: {}
+      insertpostgresautoreport1.0.0: {}
+apis:
+  insertcompany1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/insertcompany_1.0.0_1.yaml
+  insertpostgresautoreport1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/insertpostgresautoreport_1.0.0_1.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

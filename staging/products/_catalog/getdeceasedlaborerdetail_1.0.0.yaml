@@ -1,0 +1,364 @@
+swagger: "2.0"
+info:
+  title: GetDeceasedLaborerDetail
+  description: This API fetches all the details of a deceased laborer.
+  x-ibm-name: getdeceasedlaborerdetail
+  version: 1.0.0
+schemes:
+- https
+basePath: /qiwa/v2
+security:
+- ClientSecret: []
+  OAuth2.0:
+  - IntegrationScope
+  clientIdHeader: []
+securityDefinitions:
+  ClientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientIdHeader:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+  OAuth2.0:
+    type: oauth2
+    flow: application
+    x-ibm-oauth-provider: takamol-native-oauth-porvider
+    tokenUrl: https://$(catalog.url)/takamol-oauth/oauth2/token
+    scopes:
+      IntegrationScope: This scope for all integration services in Takamol
+paths:
+  /GetDeceasedLaborerDetail:
+    post:
+      tags:
+      - GetDeceasedLaborerDetail
+      description: This API fetches all the details of a deceased laborer
+      operationId: GetDeceasedLaborerDetail
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/GetDeceasedLaborerDetailRs_MessageType'
+      parameters:
+      - name: X-IBM-Client-Id
+        in: header
+        required: true
+        type: string
+      - name: X-IBM-Client-Secret
+        in: header
+        required: true
+        type: string
+      - name: requestBody
+        in: body
+        schema:
+          $ref: '#/definitions/GetDeceasedLaborerDetailRq_MessageType'
+definitions:
+  GetDeceasedLaborerDetailRq_MessageType:
+    type: object
+    properties:
+      GetDeceasedLaborerDetailRq:
+        $ref: '#/definitions/GetDeceasedLaborerDetailRq_Type'
+  GetDeceasedLaborerDetailRs_MessageType:
+    type: object
+    properties:
+      GetDeceasedLaborerDetailRs:
+        $ref: '#/definitions/GetDeceasedLaborerDetailRs_Type'
+  GetDeceasedLaborerDetailRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/GetDeceasedLaborerDetailRq_BodyType'
+  GetDeceasedLaborerDetailRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: string
+      SequenceNumber:
+        type: string
+      UserIdNumber:
+        type: string
+      LaborerId:
+        type: string
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+    - UserIdNumber
+    - LaborerId
+  GetDeceasedLaborerDetailRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/GetDeceasedLaborerDetailRs_BodyType'
+  GetDeceasedLaborerDetailRs_BodyType:
+    type: object
+    properties:
+      LaborerId:
+        type: string
+      FullName:
+        type: string
+      NationalityEn:
+        type: string
+      NationalityAr:
+        type: string
+      DOB:
+        type: string
+      GenderEn:
+        type: string
+      GenderAr:
+        type: string
+      MaritalStatusEn:
+        type: string
+      MaritalStatusAr:
+        type: string
+      Speciality:
+        type: string
+      Email:
+        type: string
+      PhoneNumber:
+        type: string
+      IBAN:
+        type: string
+      BankName:
+        type: string
+      Occupation:
+        type: string
+      ServiceStartDate:
+        type: string
+      ServiceEndDate:
+        type: string
+      Salary:
+        type: string
+      ContractId:
+        type: string
+      ContractTypeEn:
+        type: string
+      ContractTypeAr:
+        type: string
+      isContractAvailable:
+        type: boolean
+      TotalAnnualVacations:
+        type: string
+      PendingLeavesAmount:
+        type: string
+      RequestReceivedDate:
+        type: string
+      RequestStatusEn:
+        type: string
+      RequestStatusAr:
+        type: string
+      Status:
+        type: string
+      LateSalaryAmount:
+        type: string
+      Loans:
+        type: string
+      AdditionalFinancialObligations:
+        type: string
+      EndOfService:
+        type: string
+      Embassy:
+        $ref: '#/definitions/EmbassyArr_Type'
+      PaymentMethodEn:
+        type: string
+      PaymentMethodAr:
+        type: string
+      BeneficiaryName:
+        type: string
+      BeneficiaryAddress:
+        type: string
+      BeneficiaryNumber:
+        type: string
+      FinalSettlementAmount:
+        type: string
+      PaymentDate:
+        type: string
+      PaymentReferenceNumber:
+        type: string
+      OriginalContractSalary:
+        type: string
+      OriginalServiceStartDate:
+        type: string
+    required:
+    - LaborerId
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+  EmbassyArr_Type:
+    type: array
+    items:
+      $ref: '#/definitions/Embassy_Type'
+  Embassy_Type:
+    type: object
+    properties:
+      EmbassyNameEn:
+        type: string
+      BankNameEn:
+        type: string
+      IBAN:
+        type: string
+      BankNameAr:
+        type: string
+      EmbassyNameAr:
+        type: string
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-deceased-worker)/GetDeceasedLaborerDetail
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+          values: []
+        header-control:
+          type: blocklist
+          values: []
+        inject-proxy-headers: true
+        persistent-connection: true
+    - gatewayscript:
+        version: 2.0.0
+        title: set headers
+        source: "var apim = require('apim');\nvar Response = apim.getvariable('message.body');\nvar
+          statusCode = Response.GetDeceasedLaborerDetailRs.Header.ResponseStatus.Code
+          ;\n\nif(statusCode == 'ESBSCHEMA' || statusCode == 'E0000004' || statusCode
+          == 'E0001203' || statusCode == 'E0001202' \n|| statusCode == 'E0001201'
+          \ || statusCode == 'E0001200' ){\n    var code = 400\n    apim.setvariable('message.status.code',code,'set');\n}\nelse
+          if(statusCode == 'E0000747' || statusCode == 'E0000034' || statusCode ==
+          'E0000046' || statusCode == 'E0000047' || statusCode == 'E0000048' ||statusCode
+          == 'E0001287' || statusCode == 'E0001592'   || statusCode == 'E0000980'
+          || statusCode == 'E0000131' || statusCode == 'E0000132'  || statusCode ==
+          'E0000128'){\n    var code = 401\n    apim.setvariable('message.status.code',code,'set');\n}\nelse
+          if(statusCode == '99999999' || statusCode == 'E0001567'){\n    var code
+          = 500\n    apim.setvariable('message.status.code',code,'set');\n}\nelse
+          if(statusCode == '00000000'){\n    var code = 200\n    apim.setvariable('message.status.code',code,'set');\n}else{\n
+          \     var code = 409\n    apim.setvariable('message.status.code',code,'set');\n}\n"
+    finally: []
+  properties:
+    target-url:
+      value: http://deceased-worker-http-ace.apps.stg.qiwa-nonprod.local/GetDeceasedLaborerDetail
+      description: The URL of the target service
+      encoded: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload

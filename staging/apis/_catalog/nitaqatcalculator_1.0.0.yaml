@@ -1,0 +1,332 @@
+swagger: "2.0"
+info:
+  title: NitaqatCalculator
+  x-ibm-name: nitaqatcalculator
+  version: 1.0.0
+  description: Calculate the number of Saudis to be hired to reach next level based
+    on current establishment emp count, isic4 and nitaqat activities and used to create
+    a reverse nationalization plan based on user desired nitaqat color
+schemes:
+- https
+basePath: /NitaqatCalculators
+securityDefinitions:
+  clientSecret:
+    type: apiKey
+    name: X-IBM-Client-Secret
+    in: header
+    x-key-type: client_secret
+  clientId:
+    type: apiKey
+    name: X-IBM-Client-Id
+    in: header
+    x-key-type: client_id
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        title: invoke
+        version: 2.0.0
+        verb: keep
+        target-url: $(ace-ntc-nitaqat)/NitaqatCalculators/NitaqatCalculator
+        follow-redirects: false
+        timeout: 60
+        parameter-control:
+          type: blocklist
+        header-control:
+          type: blocklist
+          values:
+          - ^X-IBM-Client-Id$
+        inject-proxy-headers: true
+        persistent-connection: true
+    finally: []
+  properties:
+    target-url:
+      value: http://ntc-nitaqat-http-ace.apps.stg.qiwa-nonprod.local/NitaqatCalculators/NitaqatCalculator
+      description: The URL of the target service
+      encoded: false
+  application-authentication:
+    certificate: false
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+definitions:
+  NitaqatCalculatorRq_MessageType:
+    type: object
+    properties:
+      NitaqatCalculatorRq:
+        $ref: '#/definitions/NitaqatCalculatorRq_Type'
+  NitaqatCalculatorRs_MessageType:
+    type: object
+    properties:
+      NitaqatCalculatorRs:
+        $ref: '#/definitions/NitaqatCalculatorRs_Type'
+  NitaqatCalculatorRq_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLRequestHeader_Type'
+      Body:
+        $ref: '#/definitions/NitaqatCalculatorRq_BodyType'
+  NitaqatCalculatorRq_BodyType:
+    type: object
+    properties:
+      LaborOfficeId:
+        type: integer
+      SequenceNumber:
+        type: integer
+      SaudisCount:
+        type: integer
+      NonSaudisCount:
+        type: integer
+      NitaqActivityId:
+        type: integer
+      Isic4Code:
+        type: integer
+      DesiredSaudisCount:
+        type: integer
+      DesiredNonSaudisCount:
+        type: integer
+      DesiredColor:
+        $ref: '#/definitions/IDName_Type'
+      DesiredPeriod:
+        type: integer
+      IsReverseCalculator:
+        type: boolean
+    required:
+    - LaborOfficeId
+    - SequenceNumber
+    - SaudisCount
+    - NonSaudisCount
+    - NitaqActivityId
+    - Isic4Code
+    - IsReverseCalculator
+  IDName_Type:
+    type: object
+    properties:
+      ID:
+        type: integer
+      Name:
+        type: string
+    required:
+    - ID
+    - Name
+  NitaqatCalculatorRs_Type:
+    type: object
+    properties:
+      Header:
+        $ref: '#/definitions/ESBXMLResponseHeader_Type'
+      Body:
+        $ref: '#/definitions/NitaqatCalculatorRs_BodyType'
+  NitaqatCalculatorRs_BodyType:
+    type: object
+    properties:
+      Isic4Activity:
+        $ref: '#/definitions/IDName_Type'
+      NitaqActivity:
+        $ref: '#/definitions/IDName_Type'
+      SelectedCalculator:
+        $ref: '#/definitions/SelectedCalculator_Type'
+    required:
+    - Isic4Activity
+    - NitaqActivity
+    - SelectedCalculator
+  SelectedCalculator_Type:
+    type: object
+    properties:
+      NitaqatPrivate:
+        $ref: '#/definitions/NitaqatPrivate_Type'
+      NitaqatReverse:
+        $ref: '#/definitions/NitaqatReverse_Type'
+  NitaqatPrivate_Type:
+    type: object
+    properties:
+      Colors:
+        $ref: '#/definitions/Colors_Type'
+      Nationalization:
+        type: number
+      EntityCurrentColor:
+        $ref: '#/definitions/IDName_Type'
+      RealQuota:
+        type: integer
+      DesiredColors:
+        $ref: '#/definitions/Colors_Type'
+      DesiredNationalization:
+        type: number
+      EntityDesiredColor:
+        $ref: '#/definitions/IDName_Type'
+      DesiredQuota:
+        type: integer
+  Colors_Type:
+    type: object
+    properties:
+      Color:
+        type: array
+        items:
+          $ref: '#/definitions/Color_Type'
+    required:
+    - Color
+  Color_Type:
+    type: object
+    properties:
+      ColorInfo:
+        $ref: '#/definitions/IDName_Type'
+      ColValue:
+        type: number
+      SaudisToBeHired:
+        type: integer
+      DesiredSaudisToBeHired:
+        type: integer
+    required:
+    - ColorInfo
+    - ColValue
+  NitaqatReverse_Type:
+    type: object
+    properties:
+      SaudisToBeHired:
+        type: integer
+      NonSaudisToBeRemoved:
+        type: integer
+      SaudisToBeRemoved:
+        type: integer
+      NonSaudisToBeHired:
+        type: integer
+      DesiredPeriod:
+        type: integer
+      EntityCurrentColor:
+        $ref: '#/definitions/IDName_Type'
+  ESBXMLRequestHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+    required:
+    - ServiceCode
+    - ChannelId
+    - TransactionId
+    - RequestTime
+  ESBXMLResponseHeader_Type:
+    type: object
+    properties:
+      TransactionId:
+        type: string
+      ChannelId:
+        type: string
+      SessionId:
+        type: string
+      RequestTime:
+        type: string
+      MWRequestTime:
+        type: string
+      MWResponseTime:
+        type: string
+      ServiceCode:
+        type: string
+      DebugFlag:
+        type: integer
+      UserInfo:
+        $ref: '#/definitions/UserInfo_Type'
+      UDF:
+        $ref: '#/definitions/UDF_Type'
+      ResponseStatus:
+        $ref: '#/definitions/MWResponseStatus_Type'
+      BackendError:
+        $ref: '#/definitions/BackendError_Type'
+    required:
+    - TransactionId
+    - ChannelId
+    - RequestTime
+    - ServiceCode
+  UDF_Type:
+    type: object
+    properties:
+      KeyValueArr:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValueArr_Type'
+  KeyValueArr_Type:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  Tmstmp_Type:
+    type: object
+  UserInfo_Type:
+    type: object
+    properties:
+      UserId:
+        type: integer
+      IDNumber:
+        type: integer
+  MWResponseStatus_Type:
+    type: object
+    properties:
+      Status:
+        type: string
+      Code:
+        type: string
+      ArabicMsg:
+        type: string
+      EnglishMsg:
+        type: string
+    required:
+    - Code
+    - Status
+    - ArabicMsg
+    - EnglishMsg
+  BackendError_Type:
+    type: object
+    properties:
+      ErrorCode:
+        type: string
+      ErrorDescription:
+        type: string
+paths:
+  /NitaqatCalculator:
+    post:
+      operationId: NitaqatCalculator
+      responses:
+        "200":
+          description: The operation was successful.
+          schema:
+            $ref: '#/definitions/NitaqatCalculatorRs_MessageType'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      description: Nitaqat Calculator
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/NitaqatCalculatorRq_MessageType'
+        description: NitaqatCalculatorRq
+        required: true
+security:
+- clientSecret: []
+  clientId: []

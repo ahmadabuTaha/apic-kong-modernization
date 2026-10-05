@@ -1,0 +1,38 @@
+info:
+  version: 1.0.0
+  title: Servicenow
+  name: servicenow
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      servicenow_getindividualdetails1.0.0: {}
+      servicenow_getestablishmentdetails1.0.0: {}
+      servicenow_getdelegatordetails1.0.0: {}
+      servicenowauth1.0.0: {}
+      getzendeskticketdetails1.0.0: {}
+apis:
+  getzendeskticketdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getzendeskticketdetails_1.0.0.yaml
+  servicenowauth1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/servicenowauth_1.0.0.yaml
+  servicenow_getindividualdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/servicenow_getindividualdetails_1.0.0.yaml
+  servicenow_getestablishmentdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/servicenow_getestablishmentdetails_1.0.0.yaml
+  servicenow_getdelegatordetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/servicenow_getdelegatordetails_1.0.0.yaml
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true

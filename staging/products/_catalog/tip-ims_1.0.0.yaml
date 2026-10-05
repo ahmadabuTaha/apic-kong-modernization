@@ -1,0 +1,39 @@
+info:
+  title: TIP-IMS
+  name: tip-ims
+  version: 1.0.0
+apis:
+  getalluserestablishmentdetails1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/getalluserestablishmentdetails_1.0.0.yaml
+  tip-deactivateestablishmentimsevaluation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/tip-deactivateestablishmentimsevaluation_1.0.0.yaml
+  tip-getestablishmentsimsevaluation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/tip-getestablishmentsimsevaluation_1.0.0.yaml
+  tip-addestablishmentimsevaluation1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/tip-addestablishmentimsevaluation_1.0.0.yaml
+  imsgetestablishmentinformationapiwrapper1.0.0:
+    $ref: /home/admin/ibm/ocp/apic/backups/20260903-122146/30-catalogs/staging/products/_catalog/imsgetestablishmentinformationapiwrapper_1.0.0.yaml
+gateways:
+- datapower-api-gateway
+plans:
+  default-plan:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limits:
+      default:
+        value: 100/1hour
+    apis:
+      tip-addestablishmentimsevaluation1.0.0: {}
+      tip-getestablishmentsimsevaluation1.0.0: {}
+      tip-deactivateestablishmentimsevaluation1.0.0: {}
+      getalluserestablishmentdetails1.0.0: {}
+      imsgetestablishmentinformationapiwrapper1.0.0: {}
+product: 1.0.0
+visibility:
+  view:
+    type: public
+    enabled: true
+  subscribe:
+    type: authenticated
+    enabled: true
