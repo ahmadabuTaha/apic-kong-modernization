@@ -2,57 +2,49 @@
 
 ## Active Task
 
-**Phase:** Phase 1 / Phase 2 Boundary  
-**Task:** 004 — Source Precedence and Identity Bridge Closure  
+**Phase:** Phase 1 — Object Extraction & Normalization  
+**Task:** 005 — Extractor Implementation  
 **Status:** READY_FOR_CODEX  
-**Task Type:** Architecture/evidence validation only — no implementation
+**Task Type:** Implementation
 
 ### Prompt
 
 Read and execute:
 
-`codex/comm/prompts/phase-1-004-source-precedence-and-identity-bridge.md`
+`codex/comm/prompts/phase-1-005-extractor-implementation.md`
 
-### Architecture Decision
+### Architecture Direction
 
-`list.json` / registry summaries are **not** the single source of truth.
+Implement the deterministic Phase 1 source-occurrence extractor.
 
-The authoritative AS-IS configuration evidence is the actual artifact content present inside the relevant directories under `staging/`.
+Core rules:
+- actual artifacts under `staging/` are authoritative configuration evidence;
+- registry/list/collection records provide APIC identity/reference evidence;
+- Phase 1 extracts evidence only;
+- do not merge occurrences into canonical APIC objects;
+- do not resolve URLs/IDs/references;
+- do not build graph edges;
+- preserve raw references and provenance;
+- apply only the approved Product `$ref` `/staging/` mapping;
+- never emit credential secret/client ID values;
+- do not invent taxonomies/statuses/reasons/object types.
 
-Registry/list records provide supporting APIC identity, URL, ID, and cross-reference evidence.
+### Implementation Allowed
 
-### Approved `$ref` Mapping
+Codex may create/modify implementation code and focused Phase 1 tests required by the task.
 
-```text
-raw absolute path
-→ exact /staging/ suffix
-→ repository-relative staging/... path
-```
-
-Preserve both raw and mapped values. Do not perform any other path normalization or heuristic rewriting.
-
-### Task Focus
-
-Close the remaining deterministic identity bridges for Product YAML ↔ Product registry, API catalog definition ↔ API registry, Product-location API copies ↔ authoritative API-catalog definitions, and registry-only/artifact-only evidence.
-
-Key rules:
-- actual configuration artifact takes precedence for AS-IS configuration content;
-- registry/list evidence enriches identity/reference metadata;
-- do not merge by name alone;
-- do not invent taxonomies;
-- Product → API remains independent of Subscription;
-- unresolved counterpart gaps remain explicit.
+Do not modify raw `staging/`, frozen Phase 0 behavior, `.gitignore`, `CURRENT_TASKS.md`, or prompt files.
 
 ### Mandatory Reporting Rule
 
-The only reporting artifact is `codex/comm/HANSOFF.md`.
+The only reporting artifact is:
 
-Do not create any additional report or Markdown artifact.
+`codex/comm/HANSOFF.md`
+
+Do not create additional design/report/summary Markdown files.
 
 ### Required Stop
 
-Do not implement Python.
+Stop after Phase 1 extraction implementation, validation, HANSOFF update, commit, and push.
 
-Do not modify Phase 0, tests, indexes, outputs, or staging.
-
-Stop after updating `codex/comm/HANSOFF.md` and wait for architecture review.
+Do not begin Phase 2 resolution.
