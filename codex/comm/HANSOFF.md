@@ -2,198 +2,186 @@
 
 ## Task executed
 
-Phase 1 — Task 002: Canonical Model Contract Alignment. Architecture/design alignment only; no implementation.
+Phase 1 / Phase 2 Boundary — Task 003: Deterministic Resolution Contract. Evidence validation and resolution design only; no implementation.
 
 ## Prompt file used
 
-`codex/comm/prompts/phase-1-002-canonical-model-contract-alignment.md`
+`codex/comm/prompts/phase-1-003-resolution-contract.md`
 
 ## Summary of what was done
 
-- Reviewed the Task 001 extracted-record design against the established canonical ontology, canonical object types, extraction statuses/reasons, phase boundaries, and structural relationship taxonomy supplied by Task 002.
-- Identified the parts of the prior design that remain valid and the proposed vocabulary that conflicts with the taxonomy freeze.
-- Defined the minimum Phase 1 evidence needed for later APIC identity/reference resolution and construction of the existing Canonical API Record without replacing that record.
-- Aligned treatment of every requested evidence shape using only approved canonical object types, extraction statuses, and reasons.
-- Confirmed that Phase 1 reports source/extraction occurrences rather than unique enterprise objects.
-- Confirmed that Product-to-API membership evidence is independent of Subscription evidence.
-- Assessed the missing test fixtures as a repository/fixture packaging issue rather than evidence of a Phase 0 implementation defect.
+- Inspected registry, collection, detailed-resource, Product YAML, API YAML, and existing Phase 0 provenance evidence without modifying it.
+- Measured registry/list coverage and required-field presence for each in-scope canonical object type.
+- Tested exact self-URL joins for Consumer Organization, Application, Credential, Subscription, Product, Plan-summary, and API-summary evidence.
+- Tested Application reverse credential references without creating a reverse relationship type.
+- Validated Product summary API URLs and Plan API URLs against API registry self URLs.
+- Validated Product YAML `$ref` paths, Product API keys, embedded Plan keys, and Plan API keys.
+- Compared registry and full YAML representations to identify deterministic joins, corroborating-only evidence, missing representations, and resolution gaps.
+- Defined a minimal resolver order using only exact URLs, scoped IDs, source paths, Product-scoped Plan keys, and Product API keys.
+- Confirmed that Product membership is independent of Subscription and that Subscription evidence does not prove runtime usage.
 
-## Canonical contract alignment result
+## Validation boundary
 
-### 1. Conflicts in the previous design
+This task used deterministic aggregate inspection. Names, versions, and file hashes were measured only to characterize corroborating evidence and gaps; they were not used to merge occurrences or assert canonical identity. No URL normalization, semantic matching, backend resolution, graph construction, or runtime inference was performed.
 
-The Task 001 design has vocabulary conflicts with the canonical contract in Task 002. Its occurrence-first architecture is valid, but the following parts are not approved contract terms and must not be implemented:
+Credential inspection was restricted to counts, IDs/self URLs, Application and Consumer Organization reference URLs, reverse credential URLs, and secret-field presence. No client ID, secret, or hashed-secret value was copied into this handoff.
 
-- extraction statuses `EXTRACTED_WITH_MISSING_FIELDS`, `PRESERVED_EVIDENCE`, and `UNSUPPORTED_OBJECT_TYPE`;
-- source-result statuses `SUCCESS`, `SUCCESS_ZERO_RECORDS`, `PARTIAL`, `FAILED`, and `UNSUPPORTED_SOURCE`;
-- Phase 2 outcomes `RESOLVED_URI`, `RESOLVED_ID`, `PROPOSED_FALLBACK_MATCH`, `UNRESOLVED_NO_IDENTITY`, and `IDENTITY_CONFLICT`;
-- newly proposed reason values such as `BROKEN_REFERENCE`, `TARGET_NOT_EXTRACTED`, and `TARGET_TYPE_MISMATCH`;
-- controlled `source_object_type` values such as `openapi_document`, `api_summary`, `product_document`, and `wsdl_definitions` where they would create a new source-representation taxonomy;
-- the `source_pointer_format` enumeration and any `reference_kind` enumeration not already present in the established contract.
+## 1. Registry/list coverage by canonical object type
 
-The approved Phase 1 extraction statuses are only:
+| Canonical object type | Observed registry/configuration representation | Coverage finding |
+|---|---|---|
+| `api_artifact` | `staging/apis/_catalog/_list.json` plus full API definitions in `staging/apis/_catalog`; additional API source copies under `staging/products/_catalog` | API registry has 2,036 records. There are 2,000 full API definitions under the API catalog and 2,357 API source copies under the Product catalog. |
+| `product` | `staging/products/_catalog/_list.json` plus Product YAML | Product registry has 511 records. There are 499 Product YAML documents. |
+| `plan` | Embedded in Product registry records and Product YAML | No independent Plan registry/self URL was observed. Product registry has 596 Plan occurrences; Product YAML has 584 Plan occurrences. Plan identity is Product-contextual. |
+| `consumer_org` | Global `_list.json` plus one detailed resource per organization | 28 registry records and 28 detailed resources; all pair exactly by self URL. |
+| `application` | Per-Consumer-Organization collection files under `staging/apps` | 256 collection records. No separate global registry file or second detailed representation was observed. |
+| `credential` | Per-Application collection files under `staging/credentials` | 270 collection records. No separate global registry file or second detailed representation was observed. |
+| `subscription` | Per-Application collection files under `staging/subscriptions` | 1,019 collection records. No separate global registry file or second detailed representation was observed. |
+| `catalog_config` | Detailed catalog and catalog-setting YAML roots | The catalog root has direct ID/self URL evidence. The catalog-setting root has its own URL and configuration evidence but no independent list representation was observed. |
+| `catalog_property` | Ten supported configuration JSON collections | All ten observed collections are empty; zero property items are available to validate identity or references. Backend and catalog-property resolution remain outside Task 003. |
 
-- `EXTRACTED`
-- `EXTRACTION_PARTIAL`
-- `EXTRACTION_FAILED`
+The working hypothesis is only partly correct. API, Product, and Consumer Organization have explicit registry/list views. Application, Credential, and Subscription have APIC collection records with full identity/reference fields but no separate global list/detail pair. Plan is embedded. Catalog configuration is detailed-only, and no Catalog Property item is present.
 
-The approved Phase 1 reasons are only:
+## 2. Exact identity fields available
 
-- `required_field_missing`
-- `unsupported_object_shape`
-- `source_artifact_malformed`
-- `field_type_mismatch`
-
-The prior report remains historical Task 001 output. This handoff supersedes its conflicting vocabulary; the prior report was not modified because Task 002 permits only `codex/comm/HANSOFF.md` as its reporting artifact.
-
-### 2. Parts of the previous design that remain valid
-
-- A Phase 1 extracted record represents source occurrence evidence, not final canonical enterprise identity.
-- The same APIC object may have multiple occurrences, including full definitions and `_list.json` summaries.
-- `extracted_record_id` may be a deterministic provenance key derived from approved object-type candidate, source path, and source pointer. It must never be called or treated as a canonical object ID.
-- Only the approved canonical object types may be used: `api_artifact`, `product`, `plan`, `consumer_org`, `application`, `credential`, `subscription`, `catalog_config`, and `catalog_property`.
-- APIC URI/URL/object ID is primary identity and correlation evidence; name and version are secondary evidence.
-- Phase 1 preserves raw IDs, URIs, references, and provenance without resolving or merging them.
-- Exact file-hash equality is provenance and duplicate-file evidence; it does not establish canonical object identity.
-- Credential extraction uses an explicit allowlist and never emits client IDs, client secrets, hashed-secret values, or unknown credential payload fields.
-- Empty supported collections are successful source processing with zero extracted occurrences, not unique objects and not parse failures.
-- WSDL source path, source hash, definitions name, and target namespace remain useful evidence, but WSDL alone does not establish an independent API identity.
-- Phase 1 counts remain occurrence/extraction counts. Unique APIC AS-IS object counts require Phase 2 identity resolution.
-- Phase 1 performs no Domain, Exposure Channel, Logical API, Logical Capability, backend, runtime, functional-duplicate, rationalization, or Kong classification.
-
-### 3. Fields and concepts to rename, remove, or defer
-
-| Prior proposal | Aligned disposition |
+| Canonical object type | Exact identity evidence observed |
 |---|---|
-| Unapproved extraction and source-result statuses | Remove. Use only `EXTRACTED`, `EXTRACTION_PARTIAL`, and `EXTRACTION_FAILED`. |
-| Unapproved failure/reference reason codes | Remove. Use only the four approved extraction reasons in Phase 1. |
-| Custom Phase 2 resolution outcomes and ambiguity/broken-reference reason values | Defer to Phase 2 and its already-established global resolution taxonomy. That taxonomy is not reproduced in this repository, so this task does not recreate it. |
-| `canonical_object_type_candidate` | Retain only as an occurrence-level classification using the nine approved canonical object types or null when no approved type can be asserted. It is not canonical identity. |
-| Controlled `source_object_type` vocabulary | Remove as a new taxonomy. Distinguish representations through existing schema-family evidence, source path, source pointer, and observed source fields. |
-| `source_pointer_format` enum | Remove unless the established Canonical API Record contract already contains it. A stable source pointer is still required; its contract representation needs architecture confirmation. |
-| `reference_kind` enum | Remove unless already approved. Preserve the exact source field, source pointer, and raw reference value without inventing a relationship type in Phase 1. |
-| Derived `resolution_scope` structure | Defer to the existing canonical contract. Preserve directly observed organization/catalog IDs and URIs as raw evidence. |
-| Generic `attributes` extension container | Defer. Use only fields defined by the existing Canonical API Record/extraction contract and explicit credential allowlist. |
-| Detailed identity merging, broken-reference classification, and ambiguity algorithms | Defer to Phase 2. Phase 1 only makes the source evidence available. |
-| Relationship edge construction | Defer to Phase 3 and use only the approved relationship taxonomy. |
+| `api_artifact` registry | All 2,036 records contain `id`, self `url`, `name`, `version`, `org_url`, and `catalog_url`. IDs and self URLs are unique; every self URL terminates in its stated ID. |
+| Full API definition under API catalog | All 2,000 expose API name and version in API metadata. Zero have a top-level APIC object `id` or self `url`. |
+| API copy under Product catalog | 2,357 full API-shaped documents expose name/version metadata but not registry identity. |
+| `product` registry | All 511 records contain `id`, self `url`, `name`, `version`, `org_url`, and `catalog_url`. IDs and self URLs are unique; every self URL terminates in its stated ID. |
+| Product YAML | All 499 expose `info.name` and `info.version`. Zero have a top-level APIC object `id` or self `url`. |
+| `plan` | Product-scoped Plan key/name. No independent Plan ID/self URL was observed. Plan name is not globally unique. |
+| `consumer_org` | All 28 registry and 28 detailed records contain `id`, self `url`, `name`, `org_url`, and `catalog_url`. Registry and detail values match on all these fields after exact self-URL pairing. |
+| `application` | All 256 contain `id`, self `url`, `name`, `consumer_org_url`, `org_url`, and `catalog_url`. IDs and URLs are unique. |
+| `credential` | All 270 contain `id`, self `url`, `name`, `app_url`, `consumer_org_url`, `org_url`, and `catalog_url`. IDs and URLs are unique. |
+| `subscription` | All 1,019 contain `id`, self `url`, `name`, `app_url`, `consumer_org_url`, `product_url`, Plan value, `org_url`, and `catalog_url`. IDs and URLs are unique. |
+| `catalog_config` | Catalog root ID/self URL; catalog-setting URL plus observed organization/catalog scope fields. |
+| `catalog_property` | No item-level evidence because all observed collections are empty. |
 
-### 4. Minimum Phase 1 extracted evidence
+Within each API, Product, Consumer Organization, Application, Credential, and Subscription registry/collection, no duplicate self URLs or IDs were observed and no ID disagreed with the terminal segment of its self URL.
 
-The minimum evidence is intentionally smaller than a replacement canonical schema.
+## 3. Exact reference fields available
 
-#### Occurrence and extraction control
-
-- `extracted_record_id`, used only as deterministic source-occurrence provenance;
-- one approved `canonical_object_type_candidate`, or null when the evidence does not justify one;
-- `extraction_status`, using only the three approved values;
-- `failure_reasons`, using only the four approved values and empty when extraction is complete.
-
-`EXTRACTION_PARTIAL` is used only when a field required by the established contract is missing or has the wrong type. An APIC ID or URI that is legitimately absent from a source representation must remain null; its absence must not automatically be called a failure.
-
-#### Provenance
-
-- source-relative path;
-- Phase 0 source schema family;
-- stable source object pointer for root, collection item, or embedded item;
-- source SHA-256;
-- the exact observed source field locations for retained references.
-
-#### APIC identity and reference evidence
-
-- directly observed APIC object ID;
-- directly observed self URI/URL;
-- directly observed name and version;
-- directly observed organization and catalog IDs/URIs where present;
-- exact, unmodified source reference values and their source fields/pointers, including Product API references, Plan API references, `consumer_org_url`, `app_url`, `product_url`, and an observed Subscription plan value.
-
-No relationship edge is emitted in Phase 1. Retaining a reference does not prove that its target exists, that two occurrences are identical, or that runtime usage occurred.
-
-#### Credential redaction
-
-- credential type, when directly observed and allowed by the established contract;
-- client ID present boolean;
-- client secret present boolean;
-- hashed secret present boolean;
-- the credential object's own APIC ID/URI when present;
-- referenced Application and Consumer Organization URIs;
-- occurrence provenance.
-
-The credential value, client ID value, client secret value, hashed-secret value, and unknown payload fields are excluded.
-
-#### Later Canonical API Record construction
-
-- approved `api_artifact` candidate classification for full API documents and API summaries;
-- directly observed API name/title and declared version;
-- source schema family and source location/pointer/hash;
-- directly observed APIC API ID and self URI when present;
-- raw Product/Plan API reference evidence retained on the Product/Plan occurrences.
-
-This evidence allows Phase 2 to resolve APIC identity and lets later phases construct the existing Canonical API Record from immutable source evidence. It does not create a Logical API, Logical Capability, Deployment, Endpoint, Backend Service, relationship edge, or runtime fact in Phase 1.
-
-The exact established Canonical API Record field contract is not present in the current repository. Field-for-field mapping beyond the minimum evidence above therefore requires the architecture-owned contract before implementation. This is a documentation dependency, not permission to invent a replacement schema.
-
-### 5. Aligned treatment of evidence shapes
-
-| Evidence | Phase 1 representation |
+| Source object | Exact reference evidence |
 |---|---|
-| Full API document | One occurrence with candidate `api_artifact`, approved extraction status/reasons, declared name/version, directly observed ID/URI if present, and provenance. No identity resolution or semantic grouping. |
-| API summary | One occurrence with candidate `api_artifact`, direct summary ID/URI/name/version/reference evidence, and provenance. It may represent the same APIC object as a full document, but Phase 1 does not decide that. |
-| Product root | One occurrence with candidate `product`; retain name/version, any direct ID/URI, Product API references, embedded Plan locations, and provenance. |
-| Product summary | One occurrence with candidate `product`; retain direct ID/URI/name/version, API URLs, Plan source evidence, and provenance. |
-| Embedded Plan | One occurrence with candidate `plan`; retain its source key/name, parent Product occurrence provenance, and API references. Do not assert globally unique Plan identity. |
-| Consumer Organization resource or summary | One occurrence with candidate `consumer_org`; retain direct ID/URI/name and scope/provenance evidence. Repeated representations remain separate occurrences. |
-| Application item | One occurrence with candidate `application`; retain direct ID/URI/name, raw `consumer_org_url`, and provenance. |
-| Credential item | One occurrence with candidate `credential`; emit only the credential allowlist, raw Application/Consumer Organization URI references, and provenance. |
-| Subscription item | One occurrence with candidate `subscription`; retain direct ID/URI/name, raw `app_url`, `consumer_org_url`, `product_url`, observed Plan value, and provenance. This is configured entitlement/association evidence only. |
-| Catalog root/setting | One occurrence with candidate `catalog_config`; preserve direct identifiers/URIs and provenance without merging the source representations. |
-| Supported catalog configuration item | One occurrence with candidate `catalog_property`; retain direct identifiers/URIs, source fields, and provenance. |
-| WSDL evidence | Extract path/hash, definitions name, and target namespace with `EXTRACTED`; leave canonical object type candidate null unless separate APIC identity evidence establishes an approved type in a later phase. Do not create a WSDL object type or independent API identity. |
-| Unsupported addressable evidence, including `member` | Preserve provenance with null canonical object type, `EXTRACTION_FAILED`, and `unsupported_object_shape`. Do not rename it into an approved type. |
-| Unsupported non-structured source such as Markdown or `.DS_Store` | Preserve source provenance with `EXTRACTION_FAILED` and `unsupported_object_shape`; emit no canonical object occurrence. |
-| Malformed supported source | Preserve source provenance with `EXTRACTION_FAILED` and `source_artifact_malformed`; do not invent partial object content. |
-| Supported source with a field of the wrong type | Use `EXTRACTION_PARTIAL` or `EXTRACTION_FAILED`, as required by the established contract, with `field_type_mismatch`; preserve valid evidence only. |
-| Empty supported collection | Record successful source processing with zero extracted occurrences. If a source-level extraction status is required, use `EXTRACTED`; do not invent a zero-record status or an object record. |
+| Application | `consumer_org_url`; `app_credential_urls` as reverse/corroborating references. |
+| Credential | `app_url`; `consumer_org_url`. |
+| Subscription | `app_url`; `consumer_org_url`; `product_url`; Product-contextual Plan value. |
+| Product registry | `api_urls`; embedded `plans[].name`; embedded `plans[].apis[].id` and `.url`. |
+| Product YAML | `apis.<api-key>.$ref`; `plans.<plan-key>`; `plans.<plan-key>.apis.<api-key>`. |
+| API registry | API self `url` and scoped object `id`; no source-file path field was observed. |
+| Consumer Organization | Self `url`, referenced exactly by Applications, Credentials, and Subscriptions. |
 
-### 6. Count interpretation
+Reference strings were compared exactly. The only path translation examined was the explicit `/staging/` suffix carried by every Product `$ref`; the required handling of that export-root difference is recorded as a resolver gap below.
 
-Confirmed: Phase 1 counts are source/extraction occurrence counts and must never be presented as unique enterprise object counts before Phase 2.
+## 4. Relationship resolution assessment
 
-The previously projected 6,397 API-related occurrences, 1,010 Product occurrences, and 56 Consumer Organization occurrences include repeated source representations. WSDL evidence must remain distinguishable from `api_artifact` candidates even if included in an API-related source count. Exact file duplicates remain occurrences in Phase 1. Phase 2 determines canonical APIC AS-IS object counts through URI/identifier resolution.
+The wording in the assessment column is descriptive for this handoff and does not define a new status vocabulary.
 
-### 7. Product membership and Subscription independence
+| Approved relationship | Assessment from observed evidence | Exact deterministic join | Aggregate result |
+|---|---|---|---|
+| `application_belongs_to_consumer_org` | Supported by observed evidence | `application.consumer_org_url = consumer_org.url` | 256 of 256 matched exactly one Consumer Organization; none unmatched or multiple. |
+| `credential_belongs_to_application` | Supported by observed evidence | `credential.app_url = application.url` | 270 of 270 matched exactly one Application. All 270 Application `app_credential_urls` matched one Credential self URL, and every Credential self URL appeared in the owning Application's reverse list. |
+| `subscription_belongs_to_application` | Supported by observed evidence | `subscription.app_url = application.url` | 1,019 of 1,019 matched exactly one Application; none unmatched or multiple. |
+| `subscription_targets_product` | Supported by observed evidence | `subscription.product_url = product.url` | 1,019 of 1,019 matched exactly one Product registry record; none unmatched or multiple. |
+| `subscription_uses_plan` | Supported by observed evidence | Exact `subscription.product_url` first, then exact Subscription Plan value to `product.plans[].name` inside that Product | 1,019 of 1,019 matched exactly one Plan in the resolved Product; none unmatched or multiple. |
+| `product_contains_api` | Partially supported across both representations | Registry path: `product.api_urls[] = api.url`. YAML path: Product API key to its `$ref`, then explicit export-root path mapping to a source occurrence. | All 2,611 Product registry API URLs matched exactly one API registry record. All 2,244 Product YAML API entries have `$ref` values whose `/staging/` suffix reaches one local source file. The unresolved gap is identity correlation between Product YAML and Product registry, and between API YAML/source copies and API registry records. |
+| `product_contains_plan` | Supported by observed evidence within each Product occurrence | Product occurrence plus exact embedded Plan key/name | Product YAML contains 584 Plans; Product registry contains 596. No Product registry record has duplicate Plan names. Global Plan names are not unique and are never used without Product context. |
+| `plan_entitles_api` | Supported by observed evidence within each Product occurrence | YAML: `plans.<plan-key>.apis.<api-key>` to the same Product's `apis.<api-key>`. Registry: embedded Plan API URL to the same Product's `api_urls` and API registry `url`. | All 2,432 YAML Plan API entries reference an existing Product API key. All 2,799 registry Plan API URLs occur in the parent Product's API URL list and match exactly one API registry record. No mismatches were observed. |
 
-Confirmed: Product-to-API membership is resolved independently of Subscription.
+Subscription Consumer Organization URLs also matched exactly one Consumer Organization for all 1,019 records, and Credential Consumer Organization URLs matched for all 270 records. These corroborate scope but do not create additional relationship types in this task.
 
-Phase 1 preserves three distinct evidence sets without building edges:
+## 5. Multiple possible targets
 
-- Product API references, later supporting `product_contains_api`;
-- Product embedded Plan evidence, later supporting `product_contains_plan`, and Plan API references, later supporting `plan_entitles_api`;
-- Subscription references to Application, Product, and Plan, later supporting `subscription_belongs_to_application`, `subscription_targets_product`, and `subscription_uses_plan`.
+- No exact self-URL reference resolved to multiple Consumer Organizations, Applications, Credentials, Products, or APIs.
+- No Product registry record contains duplicate API URLs or duplicate Plan names.
+- Plan names are not globally unique: 596 Plan occurrences use only 40 distinct names; 14 names are reused, and the most reused name occurs 489 times. A Plan value therefore has multiple possible targets if Product context is omitted. Exact Product resolution must precede Plan lookup.
+- Exact name/version comparisons happened to be unique for the observed Product and API full documents, but names remain secondary evidence and were not accepted as identity joins.
 
-A Product can contain an API with no Subscription. A Subscription is configured entitlement/association evidence; it does not prove Product membership, runtime consumption, or API invocation. `api_invokes_target` remains a separate structural relationship for a later phase and cannot be inferred from Subscription.
+## 6. Broken or unmatched reference evidence
 
-### 8. Evidence gaps against the canonical model
+- No unmatched exact management-URL reference was observed for the assessed Consumer Organization, Application, Credential, Subscription, Product, Plan-summary, or API-summary joins.
+- No Product YAML Plan API key was absent from the same Product's `apis` map.
+- Five Product YAML API keys are not referenced by any Plan in their Product. This is valid Product membership evidence, not a broken relationship: `product_contains_api` is independent of `plan_entitles_api` and Subscription.
+- All 2,244 Product API `$ref` values are absolute paths from the source export host, so zero raw absolute paths exist on this workstation. Every value contains an exact `/staging/` suffix, and all 2,244 suffix-derived repository paths exist. A resolver must not silently rewrite paths; architecture must approve and record the export-root-to-repository-root mapping.
 
-No inspected source evidence requires a new canonical object type or relationship type.
+## 7. Registry/detail and representation mismatches
 
-- WSDL can be preserved as source evidence with no asserted canonical object type until it is correlated to an APIC API artifact.
-- `member` and other unsupported shapes can be preserved as failed extraction evidence without renaming them.
-- Empty collections require no object type.
-- Repeated full/summary forms are source occurrences handled by later APIC identity resolution.
+### Consumer Organization
 
-The material contract gap is documentary: the architecture-owned Canonical API Record field schema and the approved global Phase 2 resolution states are referenced by the task but are not stored in this repository. Implementation must not begin until those existing contracts are made available or explicitly mapped by architecture review.
+The list and detail representations are complete and consistent for the inspected identity/scope fields: 28 exact URL pairs, no missing counterpart, no multiple match, and no ID/name/organization/catalog mismatch.
+
+### Product
+
+- Product registry: 511 records; Product YAML: 499 documents.
+- Product YAML contains no APIC ID/self URL. There is therefore no primary deterministic identity key to join a Product YAML document to a Product registry record.
+- Exact name plus version produces one registry candidate for each of the 499 Product YAML documents, and 12 registry Products have no Product YAML counterpart. This is corroborating evidence only and must not trigger a merge.
+- When the 499 unique name/version candidate pairs are compared for validation only, Product API membership sets, Plan-name sets, and all 584 Plan API entitlement sets agree exactly. The agreement strengthens the case for a missing export manifest/identity field but does not replace one.
+
+### API
+
+- API registry: 2,036 records; full definitions under `staging/apis/_catalog`: 2,000.
+- Full API definitions contain no top-level APIC ID/self URL. There is no primary deterministic key joining a full definition to its registry record.
+- Exact API name plus version produces one registry candidate for each of the 2,000 full definitions, while 36 registry APIs have no full definition under the API catalog. This remains corroborating evidence only.
+- There are 2,357 API-shaped source copies under `staging/products/_catalog`. All have one exact name/version registry candidate. Of these, 2,355 have a byte-identical API-catalog file and two do not. File hash alone is not canonical identity, so neither case authorizes an identity merge.
+- The 2,244 files reached by Product YAML `$ref` occurrences all have one name/version registry candidate; 2,242 have a byte-identical API-catalog file and two do not. These are source occurrences requiring Phase 2 identity resolution, not automatically distinct or merged API artifacts.
+
+## 8. Product YAML to Product registry correlation
+
+Product YAML cannot currently be correlated to Product registry records by an approved primary deterministic key. The YAML lacks APIC object ID and self URL, and the Product registry provides no source-file path. Name/version, membership equality, and matching Plan structures are strong corroboration, but Task 003 prohibits name-based merging and fallback algorithms.
+
+Required disposition: preserve both occurrences and leave their common APIC identity unresolved until an export manifest, embedded APIC identity field, or architecture-approved existing identity mapping is available.
+
+## 9. API definition to API registry correlation
+
+Full API definitions likewise cannot currently be correlated to API registry records by APIC self URL, object ID, or registry-provided source path. Unique name/version correspondence and identical file hashes are secondary evidence only. The same applies to API copies stored under Product locations.
+
+Required disposition: the API registry records, API-catalog definitions, and Product-location copies remain separate source occurrences until Phase 2 receives an approved deterministic identity bridge.
+
+## 10. Product `$ref` and Plan API key convergence
+
+Within each Product YAML occurrence, convergence is deterministic:
+
+1. `Product.apis.<api-key>.$ref` identifies the referenced API source path after an explicit export-root mapping.
+2. `Product.plans.<plan-key>.apis.<api-key>` uses the same Product-local API key.
+3. All 2,432 observed Plan API entries find that key in the parent Product's `apis` map.
+
+Within each Product registry occurrence, convergence is also deterministic:
+
+1. Every embedded Plan API URL is present in the same Product's `api_urls`.
+2. Every one of the 2,799 Plan API URL occurrences resolves to exactly one API registry self URL.
+
+The unresolved step is joining the YAML-side Product/API occurrences to the registry-side Product/API occurrences. The two representations cannot yet be declared the same canonical objects solely from name/version or file hash.
+
+## 11. Minimal resolver order
+
+1. Index every directly observed APIC self URL without normalization and retain all source occurrences for each key.
+2. Index APIC object ID together with directly observed organization/catalog scope. Use it only when type and scope are compatible; do not override conflicting self-URL evidence.
+3. Resolve `application.consumer_org_url`, `credential.app_url`, `credential.consumer_org_url`, `subscription.app_url`, `subscription.consumer_org_url`, and `subscription.product_url` by exact self URL.
+4. Validate Application `app_credential_urls` against Credential self URLs as reverse/corroborating evidence for `credential_belongs_to_application`; emit no new relationship type.
+5. Resolve Subscription Plan only after Product URL resolution, using the exact Plan value within that Product.
+6. Resolve Product registry `api_urls` and embedded Plan API URLs against exact API registry self URLs. Resolve Plan names only within their parent Product.
+7. For Product YAML, resolve the exact Product API key and Plan key in the same document. Resolve each Plan API key through the same Product's `apis` map.
+8. Resolve Product `$ref` to a source occurrence only after architecture supplies an explicit source-export-root to repository-`staging/` mapping. Preserve both the raw `$ref` and mapped source path.
+9. Leave Product YAML-to-registry and API YAML-to-registry identity unresolved until a primary deterministic bridge is supplied. Do not use name, name/version, or hash as an automatic merge key.
+10. After Phase 2 identity resolution, Phase 3 may emit only the approved structural relationships. Subscription remains entitlement/association evidence and never runtime usage evidence.
+
+## 12. Evidence gaps before implementation
+
+- No deterministic primary identity bridge is present between Product YAML and Product registry records.
+- No deterministic primary identity bridge is present between full/copy API definitions and API registry records.
+- The source export's absolute root is absent locally. The observed `/staging/` suffix maps all Product references, but that mapping requires an explicit contract rather than silent path rewriting.
+- Twelve Product registry records lack Product YAML counterparts, and 36 API registry records lack full definitions under the API catalog.
+- Two Product-location API copies differ by hash from all API-catalog files despite having a unique name/version registry candidate. This is a review point, not duplicate or identity evidence.
+- No non-empty Catalog Property collection is available to validate item identity or `api_uses_catalog_property`; that relationship is outside this task in any event.
+- The architecture-owned Canonical API Record field contract and approved global Phase 2 resolution states remain absent from the repository. Task 003 does not recreate them.
+
+These gaps do not invalidate the exact URL joins. They prevent a complete end-to-end canonical resolution contract from being implemented without architecture decisions or additional identity evidence.
 
 ## Existing test finding
 
-The five setup errors are a repository/fixture packaging issue, not evidence of a reproducible Phase 0 defect:
-
-- `tests/test_profiler.py` requires `tests/fixtures/repository_profile/staging`.
-- Git tracks only `tests/test_profiler.py`; it does not track the required fixture tree.
-- `.gitignore` contains `staging/`, which also ignores a nested fixture path named `staging`.
-- The failing tests stop because the source directory does not exist; they do not reach profiling behavior with a valid fixture.
-- The two tests that construct temporary source trees pass, which provides no reproduction of a Phase 0 implementation defect.
-
-Per the active prompt, the fixtures, `.gitignore`, tests, and frozen Phase 0 profiler were not modified.
+The known Phase 0 test fixture packaging issue remains outside scope. `tests/test_profiler.py` references `tests/fixtures/repository_profile/staging`, but that fixture tree is absent and the broad `staging/` ignore rule would ignore it. The task explicitly forbids modifying tests or fixing this issue.
 
 ## Files created
 
@@ -211,7 +199,7 @@ None.
 
 - 7 tests collected: 2 passed and 5 errored during fixture setup.
 - All five errors are caused by the absent `tests/fixtures/repository_profile/staging` source directory.
-- The result reproduces the repository/fixture packaging issue described above; it does not reproduce a Phase 0 profiling defect with a valid source tree.
+- The result reproduces the known repository/fixture packaging issue; it does not reproduce a Phase 0 profiling defect with a valid source tree.
 
 ## Generated artifacts
 
@@ -220,24 +208,28 @@ None.
 
 ## Important findings
 
-- Task 001's occurrence-first phase architecture remains valid, but its invented statuses, reasons, representation vocabulary, and resolution outcomes conflict with the taxonomy freeze.
-- The existing canonical object and relationship types can represent the inspected APIC evidence without extension.
-- The exact Canonical API Record schema and approved global Phase 2 resolution states are not repository-local and are required before implementation.
-- The missing test fixture is a packaging issue caused by an untracked required fixture tree and a broad ignore rule; it is not a demonstrated profiler defect.
+- Every assessed management-URL reference resolves uniquely with no unmatched target in the observed registry/collection evidence.
+- Product registry API membership and embedded Plan entitlements resolve exactly to API registry URLs.
+- Product YAML Plan API keys resolve exactly through the Product-local API map.
+- Product/API full YAML occurrences cannot be joined to registry identities using primary APIC identity evidence because they lack APIC self IDs/URLs and registry records lack source paths.
+- Name/version and hash evidence is corroborating only and must not be used for automatic identity merging.
+- Product membership exists independently of Plan entitlement and Subscription; five Product API keys are not referenced by a Plan in the observed YAML evidence, which is not by itself a broken relationship.
 
 ## Unresolved issues
 
-- Architecture review must supply or point to the existing Canonical API Record field contract before Phase 1 implementation.
-- Architecture review must supply or point to the existing global Phase 2 resolution taxonomy before URI/identifier resolution is designed or implemented.
-- The repository fixture packaging issue remains unresolved by instruction.
-- Task 001's separate design report still contains superseded vocabulary and must not be treated as the implementation contract; Task 002 did not permit modifying that file.
+- Architecture must provide an approved deterministic bridge for Product YAML-to-registry identity.
+- Architecture must provide an approved deterministic bridge for API YAML/copy-to-registry identity.
+- Architecture must approve and specify the export-root-to-repository-`staging/` path mapping before Product `$ref` resolution is implemented.
+- The Canonical API Record contract and approved Phase 2 resolution states must be made available before implementation.
+- The known test fixture packaging issue remains unresolved by instruction.
 
 ## Assumptions
 
-- `canonical_object_type_candidate` is retained as occurrence classification because Task 001 explicitly established it and its values are restricted to the nine approved canonical object types.
-- Null candidate type is allowed for evidence such as WSDL and unsupported shapes because assigning an approved type without evidence would violate project guardrails.
-- Approved extraction statuses can apply to source-level processing when no object occurrence is emitted, including an empty collection.
-- Raw APIC URL fields are preserved exactly; no URI normalization or resolution occurs in Phase 1.
+- APIC collection records under Applications, Credentials, and Subscriptions are registry-quality identity occurrences even though no separate global `_list.json` exists for those types.
+- Direct string equality is required for URL joins; no case, slash, scheme, host, or encoding normalization was applied.
+- Product Plan identity is the resolved parent Product plus exact Plan key/name because no direct Plan ID/self URL was observed.
+- The observed `/staging/` path suffix is evidence of an export-root boundary, but it is not an authorized mapping until architecture approves the contract.
+- Existing Phase 0 file hashes are used only to describe exact source-copy equality and never as canonical identity.
 
 ## Deviations from the prompt
 
@@ -245,7 +237,7 @@ None.
 
 ## Recommended next step
 
-Integration Architect and Enterprise Architect review this alignment, provide the existing Canonical API Record field contract and approved Phase 2 resolution taxonomy, and decide how the superseded Task 001 report should be marked or retired in a future explicitly scoped task. Do not begin implementation or fix the test fixture until a new active task authorizes it.
+Integration Architect and Enterprise Architect review the three blocking contract decisions: Product YAML identity mapping, API definition/copy identity mapping, and export-root path mapping. Supply the existing Canonical API Record and Phase 2 resolution contracts before authorizing implementation. Do not begin implementation or the next task until `CURRENT_TASKS.md` is updated.
 
 ## Final status
 
