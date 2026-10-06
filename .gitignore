@@ -1,10 +1,21 @@
+# Python
 __pycache__/
 .pytest_cache/
 *.py[cod]
-staging/
+
+# Virtual environment
 .venv/
-*.pyc
+
+# Raw enterprise evidence - never push
+staging/
+
+# Generated artifacts
 outputs/
 indexes/
+
+# Secrets / local config
 .env
 *.log
+
+# OS files
+.DS_Store
