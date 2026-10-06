@@ -1,3 +1,10 @@
 __pycache__/
 .pytest_cache/
 *.py[cod]
+staging/
+.venv/
+*.pyc
+outputs/
+indexes/
+.env
+*.log
