@@ -3,47 +3,49 @@
 ## Active Task
 
 **Phase:** Phase 1 / Phase 2 Boundary  
-**Task:** 003 — Deterministic Resolution Contract  
+**Task:** 004 — Source Precedence and Identity Bridge Closure  
 **Status:** READY_FOR_CODEX  
-**Task Type:** Evidence validation and resolution-design only — no implementation
+**Task Type:** Architecture/evidence validation only — no implementation
 
 ### Prompt
 
 Read and execute:
 
-`codex/comm/prompts/phase-1-003-resolution-contract.md`
+`codex/comm/prompts/phase-1-004-source-precedence-and-identity-bridge.md`
 
-### Architecture Direction
+### Architecture Decision
 
-Establish exactly how the APIC staging evidence connects structurally before implementation.
+`list.json` / registry summaries are **not** the single source of truth.
 
-Validate the deterministic joins across:
+The authoritative AS-IS configuration evidence is the actual artifact content present inside the relevant directories under `staging/`.
 
-- list/catalog registry records;
-- detailed JSON objects;
-- APIC self URLs and IDs;
-- Consumer Org → Application references;
-- Credential → Application references;
-- Subscription → Application/Product/Plan references;
-- Product → API `$ref` membership;
-- Product → Plan membership;
-- Plan → API entitlement;
-- API registry/list records and full API definitions under `staging/apis/_catalog`.
+Registry/list records provide supporting APIC identity, URL, ID, and cross-reference evidence.
+
+### Approved `$ref` Mapping
+
+```text
+raw absolute path
+→ exact /staging/ suffix
+→ repository-relative staging/... path
+```
+
+Preserve both raw and mapped values. Do not perform any other path normalization or heuristic rewriting.
+
+### Task Focus
+
+Close the remaining deterministic identity bridges for Product YAML ↔ Product registry, API catalog definition ↔ API registry, Product-location API copies ↔ authoritative API-catalog definitions, and registry-only/artifact-only evidence.
 
 Key rules:
-
-- Do not invent taxonomies or statuses.
-- Do not merge by name.
-- Exact APIC URL/ID/path/key evidence first.
-- Product → API membership is independent of Subscription.
-- Subscription is entitlement/association evidence, not runtime usage.
-- Unresolved deterministic references remain unresolved.
+- actual configuration artifact takes precedence for AS-IS configuration content;
+- registry/list evidence enriches identity/reference metadata;
+- do not merge by name alone;
+- do not invent taxonomies;
+- Product → API remains independent of Subscription;
+- unresolved counterpart gaps remain explicit.
 
 ### Mandatory Reporting Rule
 
-The only reporting artifact is:
-
-`codex/comm/HANSOFF.md`
+The only reporting artifact is `codex/comm/HANSOFF.md`.
 
 Do not create any additional report or Markdown artifact.
 
