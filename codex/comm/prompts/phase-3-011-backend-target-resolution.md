@@ -94,6 +94,47 @@ Do not assume a policy mechanism exists merely because APIC supports it.
 
 The corpus is authoritative.
 
+## Symbolic Backend Reference Rule
+
+A recurring APIC pattern in this estate is an invoke target such as:
+
+```yaml
+- invoke:
+    version: 2.2.0
+    title: LoggingBE
+    backend-type: detect
+    verb: POST
+    target-url: $(ace-tip-internal)/external/logwrapperapidata
+```
+
+For Task 011, `$(ace-tip-internal)` is NOT a resolved backend host.
+
+There is currently no accepted Catalog Property evidence proving its runtime value.
+
+Therefore:
+
+- preserve `ace-tip-internal` as the exact symbolic backend reference/token;
+- preserve the full safe target expression `$(ace-tip-internal)/external/logwrapperapidata`;
+- preserve the explicit path `/external/logwrapperapidata`;
+- preserve the invoke metadata such as title, verb, configured `backend-type`, timeout, and source pointer where useful for evidence;
+- classify the host/reference form as symbolic/parameterized rather than static;
+- do not invent a hostname, IP, protocol, environment value, or physical backend;
+- do not claim that the symbol resolves to IBM ACE merely because its token contains `ace`;
+- if a semantic backend-family hint is ever produced, it must be explicitly marked as inferred / validation-required and must not be used as canonical truth.
+
+The symbolic token itself is an approved deterministic indexing/grouping dimension.
+
+Task 011 should therefore make it possible to answer questions such as:
+
+- how many APIs reference `$(ace-tip-internal)`;
+- which APIs reference the same symbolic backend token;
+- which paths are called under that symbolic token;
+- which HTTP verbs are used;
+- which invoke titles/policies are associated with it;
+- which APIs use static hosts versus symbolic/parameterized backend references.
+
+This is evidence-based backend-reference filtering, not backend identity resolution.
+
 ## Required Extraction Granularity
 
 Resolve target evidence at the narrowest supported scope.
