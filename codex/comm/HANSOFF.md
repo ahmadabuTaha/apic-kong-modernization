@@ -2,172 +2,171 @@
 
 ## Task executed
 
-Phase 2 — Task 006: Deterministic APIC Identity Resolver.
+Phase 2 — Task 007: Targeted Investigation of 113 Unresolved Product-Location API Occurrences.
 
 ## Prompt file used
 
-`codex/comm/prompts/phase-2-006-deterministic-apic-identity-resolver.md`
+`codex/comm/prompts/phase-2-007-targeted-investigation-unresolved-product-location-apis.md`
 
 ## Summary of what was done
 
-- Implemented a deterministic Phase 2 resolver that consumes the frozen Phase 1 `indexes/extracted_records.jsonl` occurrence index.
-- Added deterministic lookups for exact APIC self URL, APIC ID with compatible organization/catalog scope, source path, mapped Product `$ref` path, Product-context Plan key, and Product-local API key.
-- Implemented strict Product and API identity bridges. Product bridging validates exact name/version uniqueness, API membership, Plan names, and Plan-to-API entitlements. API bridging requires unique authoritative and registry candidates and retains Product convergence evidence where available.
-- Preserved authoritative artifacts, registry occurrences, Product-location copies, contributing Phase 1 record IDs, source paths/pointers, raw Product `$ref` values, and mapped paths in canonical identity provenance.
-- Resolved Application → Consumer Organization, Credential → Application, Subscription → Application/Product/Plan, Product `$ref`, and Plan API-key references without emitting Phase 3 graph edges.
-- Preserved registry-only Products/APIs and unassociated Product-location API copies without synthesizing configuration or identities.
-- Kept authoritative artifact values ahead of registry enrichment for configured name/title/version fields.
-- Added focused tests for the required resolution, rejection, preservation, redaction, determinism, and source-immutability behavior.
-- Did not modify Phase 0, Phase 1, raw `staging/`, `.gitignore`, `CURRENT_TASKS.md`, or any prompt file.
+- Reproduced the Task 006 unresolved population from the Phase 2 identity index and frozen Phase 1 occurrence index.
+- Enumerated every unresolved Product-location API occurrence with source provenance, directly observed identity fields, exact Product `$ref` evidence, diagnostic API candidates, registry Product membership, canonical identity candidates, failed attachment checks, and the current resolution outcome.
+- Proved that the 113 records are exactly the Product-location occurrences not attached by Task 006: 2,357 total minus 2,244 attached equals 113, with 113 unique enumerated IDs, no omissions, and zero attached/unresolved overlap.
+- Compared admissible identity/reference evidence separately from name/version/hash diagnostics.
+- Determined that all 113 are correctly `UNRESOLVED` under the approved Phase 2 contract and that no Task 006 resolver defect is reproducible.
+- Left `identity_resolver/`, Phase 0, Phase 1, `staging/`, `CURRENT_TASKS.md`, and all prompt files unchanged.
+- Added deterministic generation and focused validation for the committed Task 007 evidence.
 
-## Resolver implementation structure
+## Exact reason the population is 113
 
-- `identity_resolver/resolver.py`: deterministic lookups, strict bridges, canonical identity construction, contextual Plan resolution, exact reference resolution, compact index serialization, and CLI.
-- `identity_resolver/__init__.py`: public resolver API.
-- `identity_resolver/__main__.py`: `python -m identity_resolver` entry point.
-- `tests/test_identity_resolver.py`: focused Phase 2 coverage.
+The Phase 1 index contains 2,357 API-shaped documents under `staging/products/_catalog`. Task 006 attached 2,244 exact source occurrences through a resolved Product context where the Product YAML `$ref` mapped to that exact source path and registry API evidence agreed.
+
+The remaining set is exactly:
+
+```text
+2,357 Product-location API occurrences
+- 2,244 occurrences attached through approved convergence
+=   113 unresolved occurrences
+```
+
+The arithmetic fully accounts for the population, and the independent record-set checks prove more than the arithmetic:
+
+- 113 JSONL evidence rows;
+- 113 unique Phase 1 `extracted_record_id` values;
+- enumerated IDs exactly equal the Task 006 unresolved IDs;
+- zero overlap with the 2,244 attached occurrence IDs;
+- attached and unresolved IDs together cover all 2,357 Product-location API occurrence IDs.
+
+## Aggregate evidence across the 113
+
+All 113 share the same concrete attachment-evidence pattern:
+
+- Product `$ref` mapping to the exact source path: 0 / 113;
+- directly observed APIC self URL: 0 / 113;
+- directly observed APIC ID with compatible scope: 0 / 113;
+- source-path Product context: 0 / 113 because `staging/products/_catalog` is a flat location;
+- unique authoritative API-catalog diagnostic candidate by exact name/version: 113 / 113;
+- unique registry API diagnostic candidate by exact name/version: 113 / 113;
+- existing authoritative-to-registry API bridge for the candidate identity: 113 / 113;
+- hash-equal authoritative API-catalog diagnostic candidate: 113 / 113;
+- approved Product `$ref` plus registry attachment convergence: 0 / 113;
+- multiple authoritative or registry API candidates: 0 / 113;
+- registry Product membership observed through the diagnostic registry API candidate but no YAML `$ref`: 113 / 113;
+- membership in at least one registry-only Product: 113 / 113;
+- no admissible occurrence-attachment key: 113 / 113;
+- no diagnostic candidate evidence at all: 0 / 113;
+- correctly unresolved: 113 / 113;
+- demonstrated resolver defects: 0 / 113.
+
+Registry Product membership counts are not unique Product contexts: 63 occurrences have one candidate membership, 37 have two, 10 have three, one has four, and two have five. Fifty occurrences therefore have multiple registry Product memberships. Registry membership identifies that an API identity is listed by a Product, but it does not reference a particular file occurrence in the flat Product-location directory.
+
+The 113 occurrences point diagnostically to 110 candidate canonical API identities. Three identities each have two unresolved Product-location copies. Thirty-eight unresolved occurrences have another same-name/version Product-location sibling that is referenced by a Product YAML. The exact-path rule intentionally does not transfer the sibling's `$ref` to the unreferenced file by name or hash.
+
+These categories overlap as recorded in the evidence. In particular, all 113 have both exact name/version and hash-equal diagnostics, so neither diagnostic count is presented as a mutually exclusive cause.
+
+## Required investigation answers
+
+1. All 113 are truly unreferenced by Product YAML `$ref`: **yes**. Exact mapped-path reference count is zero for every record.
+2. Registry/Product membership without YAML `$ref`: **yes, all 113** have one or more registry Product memberships through their diagnostic registry API candidate.
+3. Exact APIC self URL evidence on the Product-location occurrence: **none**.
+4. APIC ID plus compatible scope evidence on the Product-location occurrence: **none**.
+5. Unique authoritative API-catalog candidate through the existing API bridge: **113**, but this identifies a candidate API identity and does not attach the file occurrence without Product `$ref` convergence.
+6. Exact name/version diagnostic matches with no admissible attachment key: **113**.
+7. Hash-equal authoritative artifacts with no admissible attachment key: **113**.
+8. Multiple authoritative or registry API candidates: **0**. Multiple registry Product memberships occur for 50 records, which further prevents deriving a unique Product context from membership.
+9. No diagnostic candidate evidence beyond the API-shaped document: **0**. No admissible attachment evidence: **113**.
+10. Task 006 implementation defects demonstrated: **0**.
+11. Smallest failing example for a resolver defect: not applicable because no defect was reproduced.
+12. Why the population remains unresolved: attaching any record would require using name/version, hash equality, a sibling file's `$ref`, or registry membership as a substitute for the required exact occurrence-level Product `$ref` convergence. Each substitute is prohibited by the approved contract.
+
+## Representative evidence
+
+- `staging/products/_catalog/addestablishmentlocationusingml_1.0.0.yaml` — `extracted-record:sha256:9058e211cc493e372880c8204058fdaeebb9f223a62616d62af7a25cecab94b5`. It has no Product `$ref`, self URL, ID, or source-path Product context. It has one bridged candidate API identity and two registry-only Product membership candidates. A second unresolved copy with an `_1` suffix exists, so hash/name evidence cannot select a Product context.
+- `staging/products/_catalog/addupdateservices_1.0.0.yaml` — `extracted-record:sha256:d98ea34dbfab60a9f08af9fd5e89129ce3e1338b439c9ee1699e0dca61b6cfbe`. It has one registry-only and one authoritative-backed registry Product membership candidate. A same-name/version/hash sibling is referenced, but the selected file is not; copying the sibling's relationship would violate exact mapped-path resolution.
+- `staging/products/_catalog/addlaborerslocationLO_1.0.0.yaml` — `extracted-record:sha256:f0cf8bb4603a114f3818d3fec7aa7d1a8f2eea58bb9b354ea84188ae3276be1d`. It has one unique diagnostic API identity and one registry-only Product membership, but no occurrence-level `$ref` or direct APIC identity evidence.
+
+Every other occurrence and its complete candidate evidence is in the committed JSONL artifact.
+
+## Evidence artifacts created
+
+- `tests/evidence/task-007/unresolved_product_location_apis.jsonl`
+  - 113 records, one per unresolved occurrence;
+  - 581,447 bytes;
+  - SHA-256 `3e95b6e0073646e494a268e44efa751f9c273df68784813fd92e9be22d56ba0d`.
+- `tests/evidence/task-007/investigation_summary.json`
+  - aggregate counts, set proof, evidence-pattern counts, and overlap disclosure;
+  - 2,157 bytes;
+  - SHA-256 `9644e9c4f1c15c000f3cc5e1a430b83a4f6597ce6cb6b15f52a207005241e2a4`.
+- `tests/evidence/task-007/commands_and_results.txt`
+  - commands executed and meaningful deterministic/test results;
+  - 3,679 bytes;
+  - SHA-256 `4c147e4f9e17b074b07d038c0afb450c9c7ff9c6f08d15242f0bd673f4653d37`.
+- `tests/evidence/task-007/investigate_unresolved.py`
+  - deterministic evidence generator.
 
 ## Files created
 
-- `identity_resolver/__init__.py`
-- `identity_resolver/__main__.py`
-- `identity_resolver/resolver.py`
-- `tests/test_identity_resolver.py`
+- `tests/evidence/task-007/investigate_unresolved.py`
+- `tests/evidence/task-007/unresolved_product_location_apis.jsonl`
+- `tests/evidence/task-007/investigation_summary.json`
+- `tests/evidence/task-007/commands_and_results.txt`
+- `tests/test_task_007_evidence.py`
 
 ## Files modified
 
 - `codex/comm/HANSOFF.md`
 
-## Tests executed
+No resolver, Phase 0, Phase 1, source-evidence, task-control, or prompt file was modified.
 
-- `.venv/bin/pytest tests/test_identity_resolver.py -q`
+## Tests and commands executed
+
+- `.venv/bin/python tests/evidence/task-007/investigate_unresolved.py --phase2 indexes/apic_identity_resolution.json --phase1 indexes/extracted_records.jsonl --output-directory tests/evidence/task-007`
+- `wc -l tests/evidence/task-007/unresolved_product_location_apis.jsonl`
+- Two full evidence-generation runs with SHA-256 comparison
+- `.venv/bin/pytest tests/test_task_007_evidence.py -q`
 - `.venv/bin/pytest -q`
-- `.venv/bin/python -m compileall -q identity_resolver`
+- `.venv/bin/python -m py_compile tests/evidence/task-007/investigate_unresolved.py tests/test_task_007_evidence.py`
 - `git diff --check`
-- Two independent full-corpus resolver runs with byte and SHA-256 comparison
-- Full `staging/` SHA-256 snapshot comparison before and after resolution
-- Full-corpus Credential source-value comparison against the generated index
+- `git diff -- identity_resolver`
 
 ## Test results
 
-- Focused Phase 2 tests: **5 passed**.
+- Focused Task 007 tests: **3 passed**.
+- Repeated generation: **passed**; both committed evidence artifacts were byte-identical across runs.
+- Exact unresolved-ID set reproduction: **passed**.
+- No omission/no overlap/full Product-location coverage: **passed**.
+- Name/version/hash-only non-promotion: **passed**.
+- `staging/` hash snapshot before/after investigation: **unchanged**.
+- Credential redaction: **passed**; all observed credential values remain absent from the Task 007 evidence and Phase 2 identity index.
 - Python compilation: **passed**.
-- Patch whitespace validation: **passed**.
-- Full-corpus determinism: **passed**; both runs were byte-identical with SHA-256 `73c3b6481cfbfd1c7574d11cf40cbe4f2c8b99f57cd64f76f0124557e8d19185`.
-- `staging/` immutability check: **passed**.
-- Credential redaction check: **passed**; 540 observed credential source values were checked and zero appeared in the Phase 2 index. Credential payload key names were also absent.
-- Repository-wide suite: **12 passed, 5 setup errors**. All five errors remain in frozen Phase 0 tests because `tests/fixtures/repository_profile/staging` is absent. This is the known pre-existing fixture-packaging issue and was not modified.
+- Resolver-change check: **passed**; `identity_resolver/` has no changes.
+- Repository-wide suite: **15 passed, 5 setup errors**. The five errors are the known frozen Phase 0 fixture-packaging issue because `tests/fixtures/repository_profile/staging` is absent. No Task 007 test failed.
 
 ## Generated artifacts
 
-- Local ignored artifact: `indexes/apic_identity_resolution.json`
-- Size: 12,003,823 bytes
-- Canonical identity records: 4,718
-- Explicit unresolved Product-location API occurrences: 113
-- The generated index is ignored by `.gitignore` and was not staged or committed.
-
-## Full-corpus canonical identity counts
-
-| Approved object type | Canonical identities |
-|---|---:|
-| `api_artifact` | 2,036 |
-| `product` | 511 |
-| `plan` | 596 |
-| `consumer_org` | 28 |
-| `application` | 256 |
-| `credential` | 270 |
-| `subscription` | 1,019 |
-| `catalog_config` | 2 |
-| `catalog_property` | 0 |
-| **Total** | **4,718** |
-
-## Source occurrence to canonical identity coverage
-
-- Total Phase 1 occurrences: 10,221.
-- Occurrences with an approved object-type candidate: 10,186.
-- Typed occurrences attached to canonical identities: 10,073.
-- The remaining 113 typed occurrences are unreferenced Product-location API copies. They are retained explicitly as `UNRESOLVED` occurrence evidence and are not promoted to independent canonical API identities.
-- The 35 unclassified Phase 1 evidence records remain in the frozen Phase 1 index and are not converted into an unapproved Phase 2 object type.
-
-## Exact URL and ID/scope findings
-
-- Exact self-URL lookup keys: 4,122.
-- APIC ID plus organization/catalog scope lookup keys: 4,121.
-- The 56 Consumer Organization occurrences converged to 28 identities through exact APIC identity evidence; no display-name merge was used.
-- ID/scope compatibility is used only when observed scope values do not conflict. Conflicting scope is not merged.
-
-## Product bridge results
-
-- Authoritative Product YAML occurrences: 499.
-- Uniquely bridged to registry identities: 499.
-- Unmapped authoritative Products: 0.
-- Multiply mapped authoritative Products: 0.
-- Registry-only Products: 12.
-- Artifact-only authoritative Products: 0.
-- Every accepted Product bridge passed API-membership, Plan-name, and Plan-to-API entitlement agreement checks.
-
-## API bridge results
-
-- Authoritative API-catalog definitions: 2,000.
-- Uniquely bridged to registry identities: 2,000.
-- Unmapped authoritative APIs: 0.
-- Multiply mapped authoritative APIs: 0.
-- Registry-only APIs: 36.
-- Artifact-only authoritative APIs: 0.
-- Attached Product-location API copies: 2,244.
-- The two known hash-different Product-location copies were attached through the approved Product `$ref`/registry convergence, not through hash equality.
-
-## Contextual Plan and local-key results
-
-- Canonical Product-context Plan identities: 596.
-- Subscription Plan references resolved inside the resolved Product: 1,019 / 1,019.
-- Product-local Plan API-key references resolved through the same Product API map: 2,432 / 2,432.
-- No global Plan-name or Product-local API-key identity rule was created.
-
-## Management reference results
-
-- Application → Consumer Organization: 256 / 256 `RESOLVED` by exact URL.
-- Credential → Application: 270 / 270 `RESOLVED` by exact URL.
-- Subscription → Application: 1,019 / 1,019 `RESOLVED` by exact URL.
-- Subscription → Product: 1,019 / 1,019 `RESOLVED` by exact URL.
-- Subscription → contextual Plan: 1,019 / 1,019 `RESOLVED`.
-- Subscription evidence remains structural entitlement evidence only; no runtime use was inferred.
-
-## Product `$ref` results
-
-- Raw/mapped Product API `$ref` occurrences: 2,244.
-- Exact mapped-path resolutions to one Product-location source occurrence: 2,244 / 2,244 `RESOLVED`.
-- Both raw `$ref` and mapped `staging/...` path are retained in provenance.
-- No additional path normalization was introduced.
-
-## Registry-only, artifact-only, and unresolved evidence
-
-- Registry-only configured-artifact gaps remain explicit for 12 Products and 36 APIs.
-- There are no artifact-only authoritative Product or API identities in the current corpus.
-- 113 unreferenced Product-location API occurrences remain `UNRESOLVED`; they were not treated as independent APIs and were not matched by name or hash alone.
-- Current full-corpus managed references contain zero ambiguous or broken references and zero unresolved mapped Product `$ref` values.
-- Focused tests verify `AMBIGUOUS`, `BROKEN_REFERENCE`, and `UNRESOLVED` preservation without guessing when those evidence shapes are supplied.
+The three required committed review artifacts are under `tests/evidence/task-007/` and listed above. The investigation consumed the existing ignored Phase 1 and Phase 2 indexes; it did not create or stage a new artifact under `indexes/` or `outputs/`.
 
 ## Important findings
 
-- The full corpus matches every validated Task 006 resolution expectation.
-- Exact identity resolution reduces duplicate Consumer Organization source occurrences without using display names.
-- All authoritative Product and API artifacts have registry identity enrichment, while registry-only objects remain identity records with empty authoritative-artifact provenance.
-- File/hash equality is never a primary merge rule.
-- No Domain, Exposure Channel, Logical API/Capability, backend/runtime, duplicate, retirement, rationalization, migration, or Kong design work was performed.
+- The unresolved count is complete and deterministic; it is not a summary-calculation artifact.
+- The candidate API identities are not themselves ambiguous: all 113 have a unique existing API bridge. What is missing is admissible evidence attaching each specific source occurrence.
+- All 113 participate in registry Product membership, but every one also participates in at least one registry-only Product. The registry records do not identify which flat source-file copy belongs to which Product.
+- Hash equality is universal across this population but remains corroboration only. Using it would directly violate the no-hash-only rule.
+- Thirty-eight records demonstrate why `$ref` evidence cannot be inherited from a sibling path: the sibling may be referenced while the selected occurrence is not.
+- Task 006 correctly preserved rather than guessed these occurrence associations.
 
 ## Unresolved issues
 
-- The frozen Phase 0 test fixture tree at `tests/fixtures/repository_profile/staging` is still absent, causing the five known repository-wide setup errors.
-- The 113 unreferenced Product-location API copies require additional evidence before they can be associated; Task 006 correctly leaves them unresolved.
-- Architecture review is required before any Phase 3 work begins.
+- The 113 source occurrences remain `UNRESOLVED` because the corpus lacks an approved occurrence-level attachment key. Architecture may decide whether future evidence or an explicitly revised identity contract should address them; Task 007 does not authorize that change.
+- The known frozen Phase 0 fixture-packaging issue continues to cause five repository-wide setup errors.
 
 ## Assumptions
 
-- `staging/apis/_catalog` is the authoritative API-catalog artifact location and `staging/products/_catalog` contains authoritative Product YAML plus Product-location API copies, consistent with the prompt and frozen Phase 1 schema evidence.
-- Registry records sharing an exact APIC self URL represent the same AS-IS identity; records with conflicting URL or scope evidence are not merged through names.
-- A missing approved mapped Product `$ref` path is `UNRESOLVED`; an observed mapped path with no target is `BROKEN_REFERENCE`; multiple exact mapped-path occurrences are `AMBIGUOUS`.
-- Registry-only objects may have structurally confirmed APIC identity while authoritative configuration remains absent.
+- The existing Task 006 Phase 2 index and frozen Phase 1 extracted index are the deterministic starting evidence required by the prompt.
+- Registry Product `api_urls` are direct membership evidence for API identities, but they are not direct references to Product-location source paths.
+- A same-name/version or hash-equal sibling is a separate source occurrence unless the approved exact mapped Product `$ref` evidence attaches it.
+- Evidence categories intentionally overlap and are reported independently.
 
 ## Deviations from the prompt
 
@@ -175,8 +174,8 @@ None.
 
 ## Recommended next step
 
-Have the Integration Architect and Enterprise Architect review the Task 006 resolver, canonical index contract, strict bridge evidence, registry-only gaps, and 113 unresolved Product-location copies. Do not start Phase 3 until that review is complete and `CURRENT_TASKS.md` is updated externally.
+Accept Phase 2 Task 007 as PASS. The Integration Architect and Enterprise Architect should review the committed per-occurrence evidence and decide whether the 113 correctly unresolved copies require any future contract change. Do not begin Phase 3 until `CURRENT_TASKS.md` is updated externally.
 
 ## Final status
 
-REVIEW_REQUIRED
+PASS

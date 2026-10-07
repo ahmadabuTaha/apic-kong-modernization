@@ -1,0 +1,91 @@
+Phase 2 Task 007 - Commands and Results
+=======================================
+
+1. Enumerate the unresolved set and generate per-occurrence/aggregate evidence
+
+Command:
+.venv/bin/python tests/evidence/task-007/investigate_unresolved.py --phase2 indexes/apic_identity_resolution.json --phase1 indexes/extracted_records.jsonl --output-directory tests/evidence/task-007
+
+Meaningful result:
+- total_product_location_api_occurrences: 2357
+- attached_product_location_api_occurrences: 2244
+- unresolved_product_location_api_occurrences: 113
+- total_minus_attached: 113
+- enumerated_unresolved_record_count: 113
+- enumerated_unique_extracted_record_id_count: 113
+- enumerated_ids_equal_phase2_unresolved_ids: true
+- attached_and_unresolved_id_overlap_count: 0
+- count_with_any_product_ref: 0
+- count_with_exact_self_url: 0
+- count_with_apic_id_and_compatible_scope: 0
+- count_with_unique_approved_authoritative_registry_api_bridge: 113
+- count_with_approved_product_ref_registry_attachment_convergence: 0
+- count_with_exact_name_version_diagnostic_match_but_no_admissible_attachment_key: 113
+- count_with_hash_equal_diagnostic_match_but_no_admissible_attachment_key: 113
+- count_with_registry_product_membership_but_no_yaml_product_ref: 113
+- count_with_multiple_authoritative_or_registry_candidates: 0
+- count_with_no_admissible_candidate: 113
+- count_demonstrated_to_be_resolver_defects: 0
+- count_correctly_unresolved_under_approved_contract: 113
+
+2. Verify the committed JSONL row count
+
+Command:
+wc -l tests/evidence/task-007/unresolved_product_location_apis.jsonl
+
+Result:
+113 tests/evidence/task-007/unresolved_product_location_apis.jsonl
+
+3. Verify deterministic repeated evidence generation
+
+Command:
+shasum -a 256 tests/evidence/task-007/unresolved_product_location_apis.jsonl tests/evidence/task-007/investigation_summary.json
+.venv/bin/python tests/evidence/task-007/investigate_unresolved.py --phase2 indexes/apic_identity_resolution.json --phase1 indexes/extracted_records.jsonl --output-directory tests/evidence/task-007
+shasum -a 256 tests/evidence/task-007/unresolved_product_location_apis.jsonl tests/evidence/task-007/investigation_summary.json
+
+Result:
+- unresolved_product_location_apis.jsonl first SHA-256: 3e95b6e0073646e494a268e44efa751f9c273df68784813fd92e9be22d56ba0d
+- unresolved_product_location_apis.jsonl second SHA-256: 3e95b6e0073646e494a268e44efa751f9c273df68784813fd92e9be22d56ba0d
+- investigation_summary.json first SHA-256: 9644e9c4f1c15c000f3cc5e1a430b83a4f6597ce6cb6b15f52a207005241e2a4
+- investigation_summary.json second SHA-256: 9644e9c4f1c15c000f3cc5e1a430b83a4f6597ce6cb6b15f52a207005241e2a4
+- byte_stable: true
+
+4. Run focused Task 007 validation
+
+Command:
+.venv/bin/pytest tests/test_task_007_evidence.py -q
+
+Result:
+3 passed in 3.20s
+
+The passing full-corpus focused test verifies repeated record-ID equality, no omission,
+no attached/unresolved overlap, no name/version/hash-only promotion, unchanged staging
+hashes, and absence of all observed credential values from the Task 007 evidence and
+Phase 2 identity index.
+
+5. Run the repository-wide test suite
+
+Command:
+.venv/bin/pytest -q
+
+Result:
+15 passed, 5 setup errors in 2.96s
+
+All five setup errors are the pre-existing frozen Phase 0 fixture-packaging issue:
+tests/fixtures/repository_profile/staging does not exist. No Task 007 test failed.
+
+6. Compile the investigation helper and focused test
+
+Command:
+.venv/bin/python -m py_compile tests/evidence/task-007/investigate_unresolved.py tests/test_task_007_evidence.py
+
+Result:
+passed (no output)
+
+7. Confirm Task 006 resolver remained unchanged
+
+Command:
+git diff -- identity_resolver
+
+Result:
+no output; no resolver files changed

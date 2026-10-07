@@ -1,0 +1,51 @@
+{
+  "arithmetic_proof": {
+    "equals_enumerated_unresolved_count": true,
+    "total_minus_attached": 113
+  },
+  "attached_and_unresolved_id_overlap_count": 0,
+  "attached_product_location_api_occurrences": 2244,
+  "categories_may_overlap": true,
+  "count_correctly_unresolved_under_approved_contract": 113,
+  "count_demonstrated_to_be_resolver_defects": 0,
+  "count_with_any_product_ref": 0,
+  "count_with_apic_id_and_compatible_scope": 0,
+  "count_with_approved_product_ref_registry_attachment_convergence": 0,
+  "count_with_exact_name_version_diagnostic_match_but_no_admissible_attachment_key": 113,
+  "count_with_exact_self_url": 0,
+  "count_with_hash_equal_diagnostic_match_but_no_admissible_attachment_key": 113,
+  "count_with_multiple_authoritative_or_registry_candidates": 0,
+  "count_with_multiple_registry_product_memberships": 50,
+  "count_with_no_admissible_candidate": 113,
+  "count_with_no_diagnostic_candidate_evidence_beyond_api_document": 0,
+  "count_with_referenced_same_name_version_product_location_sibling": 38,
+  "count_with_registry_only_product_membership": 113,
+  "count_with_registry_product_membership_but_no_yaml_product_ref": 113,
+  "count_with_unique_approved_authoritative_registry_api_bridge": 113,
+  "counts_grouped_by_concrete_evidence_pattern": [
+    {
+      "apic_id_present": false,
+      "approved_api_bridge_exists": true,
+      "approved_product_ref_and_registry_convergence_exists": false,
+      "exact_name_version_authoritative_candidate_count": 1,
+      "exact_name_version_registry_candidate_count": 1,
+      "exact_self_url_present": false,
+      "hash_equal_authoritative_candidate_count": 1,
+      "occurrence_count": 113,
+      "product_ref_occurrence_count": 0
+    }
+  ],
+  "enumerated_ids_equal_phase2_unresolved_ids": true,
+  "enumerated_unique_extracted_record_id_count": 113,
+  "enumerated_unresolved_record_count": 113,
+  "registry_product_membership_count_distribution": {
+    "1": 63,
+    "2": 37,
+    "3": 10,
+    "4": 1,
+    "5": 2
+  },
+  "total_product_location_api_occurrences": 2357,
+  "unique_candidate_canonical_api_identity_count": 110,
+  "unresolved_product_location_api_occurrences": 113
+}
