@@ -1,0 +1,36 @@
+{
+  "connected_node_count": 4697,
+  "deterministic_graph_build_sha256": {
+    "adjacency": "33306d177bd6c78fc337b15783e1203e02dc02abc853c54da599d12f2fa5ba7e",
+    "edges": "9b03746b939362825012ca0c2f9239ff97f1ce2c6c5bf2550c1cbe0876b39ce1",
+    "nodes": "bd420dc2c24474a02ac6efa03de51ce2d73d9b52480a780cf2abc9fb2838be3f"
+  },
+  "edges_by_approved_relationship_type": {
+    "api_invokes_target": 0,
+    "api_uses_catalog_property": 0,
+    "application_belongs_to_consumer_org": 256,
+    "credential_belongs_to_application": 270,
+    "plan_entitles_api": 2799,
+    "product_contains_api": 2611,
+    "product_contains_plan": 596,
+    "subscription_belongs_to_application": 1019,
+    "subscription_targets_product": 1019,
+    "subscription_uses_plan": 1019
+  },
+  "isolated_node_count": 21,
+  "nodes_by_approved_object_type": {
+    "api_artifact": 2036,
+    "application": 256,
+    "catalog_config": 2,
+    "catalog_property": 0,
+    "consumer_org": 28,
+    "credential": 270,
+    "plan": 596,
+    "product": 511,
+    "subscription": 1019
+  },
+  "total_graph_edges": 9589,
+  "total_graph_nodes": 4718,
+  "total_incoming_adjacency_references": 9589,
+  "total_outgoing_adjacency_references": 9589
+}

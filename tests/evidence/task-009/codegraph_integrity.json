@@ -1,0 +1,21 @@
+{
+  "accepted_relationships_missing_from_graph_count": 0,
+  "actual_graph_edge_count": 9589,
+  "actual_graph_node_count": 4718,
+  "connected_node_count": 4697,
+  "duplicate_edge_ids": [],
+  "duplicate_node_ids": [],
+  "expected_accepted_relationship_count": 9589,
+  "expected_canonical_node_count": 4718,
+  "graph_only_inferred_edge_count": 0,
+  "isolated_node_count": 21,
+  "missing_relationship_endpoints": [],
+  "orphan_edge_count": 0,
+  "overall_integrity_passed": true,
+  "task_007_unresolved_occurrence_count": 113,
+  "task_007_unresolved_occurrence_promotion_count": 0,
+  "unique_canonical_node_id_count": 4718,
+  "unique_relationship_id_count": 9589,
+  "unsupported_node_types": [],
+  "unsupported_relationship_types": []
+}

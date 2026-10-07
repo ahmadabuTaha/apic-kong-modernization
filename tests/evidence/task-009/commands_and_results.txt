@@ -1,0 +1,61 @@
+Phase 3 Task 009 — CodeGraph Core Construction
+
+Build command:
+  .venv/bin/python -m codegraph build --phase2 indexes/apic_identity_resolution.json --relationships indexes/relationship_index.jsonl --output-root .
+
+Build result:
+  Nodes: 4,718 (4,718 unique canonical identity IDs)
+  Edges: 9,589 (9,589 unique accepted relationship IDs)
+  Incoming adjacency references: 9,589
+  Outgoing adjacency references: 9,589
+  Connected nodes: 4,697
+  Isolated nodes: 21
+  Missing endpoints, orphan edges, duplicate nodes/edges, unsupported types: 0
+
+Evidence command:
+  .venv/bin/python tests/evidence/task-009/generate_codegraph_evidence.py --phase2 indexes/apic_identity_resolution.json --relationships indexes/relationship_index.jsonl --graph-root . --output-directory tests/evidence/task-009
+
+Determinism result (two complete build/evidence runs):
+  codegraph_nodes.jsonl       bd420dc2c24474a02ac6efa03de51ce2d73d9b52480a780cf2abc9fb2838be3f
+  codegraph_edges.jsonl       9b03746b939362825012ca0c2f9239ff97f1ce2c6c5bf2550c1cbe0876b39ce1
+  codegraph_adjacency.jsonl   33306d177bd6c78fc337b15783e1203e02dc02abc853c54da599d12f2fa5ba7e
+  codegraph_integrity.json    c4fd482298f38a4a5b4811422e22f241507bf848377b3a24b59b078e78b22e43
+  codegraph_counts.json       5e3771914b8edc74d40e9e3033eb20f3b541864fa699de67c143276b3c5046a4
+  traversal_samples.jsonl     46f0196c952c2477c0f2d014af28f54a2e63f7a813834bf28479a12b0fdc0816
+  Result: byte-identical.
+
+Representative CLI queries:
+  .venv/bin/python -m codegraph node --graph-root . --node-id apic-identity:sha256:0009ee4eeece2430096ec9be843777a8e4258c260de73c9f9fb702bc865a55ce
+  Result: exact api_artifact node returned.
+
+  .venv/bin/python -m codegraph neighbors --graph-root . --node-id apic-identity:sha256:0009ee4eeece2430096ec9be843777a8e4258c260de73c9f9fb702bc865a55ce --direction incoming --relationship-type product_contains_api
+  Result: one Product neighbor and exact accepted relationship ID returned.
+
+  .venv/bin/python -m codegraph traverse --graph-root . --node-id apic-identity:sha256:0206b436e7ceda8c411d6c213c735ffd84269dcedb7185054952dae274aaff6e --direction both --max-depth 3
+  Result: 281 deterministic paths; 14 depth-three paths ended at api_artifact nodes; not truncated. These are structural reachability paths, not runtime-use claims.
+
+Focused tests:
+  .venv/bin/pytest tests/test_codegraph.py -q
+  Result: 4 passed in 5.26s.
+
+Repository-wide tests:
+  .venv/bin/pytest -q
+  Result: 22 passed, 5 setup errors. All five errors are the known frozen Phase 0 fixture-packaging issue: tests/fixtures/repository_profile/staging is absent. No Task 009 test failed.
+
+Additional checks:
+  .venv/bin/python -m compileall -q codegraph
+  .venv/bin/python -m py_compile tests/evidence/task-009/generate_codegraph_evidence.py tests/test_codegraph.py
+  git diff --check
+  Result: passed.
+
+  Frozen implementation/evidence diff check for repository_profiler, source_extractor, identity_resolver, relationship_builder, task-007, and task-008
+  Result: no changes.
+
+  Full staging SHA-256 snapshot comparison before and after graph construction
+  Result: unchanged.
+
+  Full-corpus credential source-value scan against CodeGraph indexes and Task 009 evidence
+  Result: 540 observed credential values checked; zero emitted.
+
+  Task 007 unresolved Product-location occurrence cross-check
+  Result: all 113 remain excluded; zero promoted to a node, edge, or edge provenance item.
