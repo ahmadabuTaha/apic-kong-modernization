@@ -3,67 +3,58 @@
 ## Active Task
 
 **Phase:** Phase 2 — URI / Identifier Resolution  
-**Task:** 006 — Deterministic APIC Identity Resolver  
+**Task:** 007 — Targeted Investigation of 113 Unresolved Product-Location API Occurrences  
 **Status:** READY_FOR_CODEX  
-**Task Type:** Implementation
+**Task Type:** Targeted Investigation
 
 ### Prompt
 
 Read and execute:
 
-`codex/comm/prompts/phase-2-006-deterministic-apic-identity-resolver.md`
+`codex/comm/prompts/phase-2-007-targeted-investigation-unresolved-product-location-apis.md`
 
 ### Architecture Direction
 
-Implement the first deterministic Phase 2 resolver over the frozen Phase 1 extracted-occurrence index.
+Do not begin Phase 3.
 
-Core rules:
-- Phase 1 source occurrences remain immutable evidence/provenance;
-- actual artifacts under `staging/` remain authoritative configuration evidence;
-- registry/list records provide APIC identity/reference enrichment;
-- resolve identity by exact self URL, APIC ID + compatible scope, and the approved scoped Product/API bridges;
-- Plan identity is contextual to Product;
-- resolve only the approved Product `$ref` mapped path;
-- preserve registry-only, artifact-only, unresolved, ambiguous, and broken-reference evidence explicitly;
-- never merge by name alone or hash alone;
-- never emit credential secret/client ID values;
-- do not invent taxonomies/statuses/reasons/object types.
+Investigate and explain exactly why Task 006 left 113 Product-location API occurrences unresolved.
 
-### Phase Boundary
+The task must:
+- enumerate all 113 records;
+- prove how the 113 population is derived;
+- inspect the admissible identity/reference evidence for each record;
+- distinguish correctly unresolved evidence from any reproducible resolver defect;
+- preserve the existing no-name-only/no-hash-only merge rules;
+- leave Phase 0 and Phase 1 frozen;
+- avoid changing the resolver unless a concrete Task 006 defect is first proven.
 
-Task 006 performs APIC identity/reference resolution only.
+### Required Evidence Artifacts
 
-Do not:
-- build Phase 3 CodeGraph edges;
-- classify Domain or Exposure Channel;
-- create Logical API/Capability identities;
-- infer backend/runtime usage;
-- perform duplicate, retirement, rationalization, or Kong mapping/design work.
+This task explicitly requires committed investigation evidence under:
 
-### Frozen Components
+`tests/evidence/task-007/`
 
-Phase 0 remains frozen.
+At minimum:
+- `unresolved_product_location_apis.jsonl`
+- `investigation_summary.json`
+- `commands_and_results.txt`
 
-Phase 1 is accepted for Phase 2 entry and remains frozen unless a reproducible Phase 1 defect directly blocks this task.
+Codex must reference these artifacts in `codex/comm/HANSOFF.md`.
 
-The known Phase 0 fixture-packaging issue remains outside scope.
+### Reporting
 
-### Implementation Allowed
-
-Codex may create/modify resolver implementation code and focused Phase 2 tests required by the task.
-
-Do not modify raw `staging/`, frozen Phase 0 behavior, `.gitignore`, `CURRENT_TASKS.md`, or prompt files.
-
-### Mandatory Reporting Rule
-
-The only reporting artifact is:
+The prose reporting artifact remains:
 
 `codex/comm/HANSOFF.md`
 
-Do not create additional design/report/summary Markdown files.
+HANSOFF must explain the 113 with representative evidence and state whether Phase 2 is:
+
+- PASS;
+- FIX_REQUIRED; or
+- HOLD_FOR_ARCHITECTURE_REVIEW.
 
 ### Required Stop
 
-Stop after Task 006 implementation, validation, HANSOFF update, commit, and push.
+Stop after Task 007 investigation, evidence generation, focused validation, HANSOFF update, commit, and push.
 
 Do not begin Phase 3 relationship reconstruction.
