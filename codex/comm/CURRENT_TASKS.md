@@ -2,7 +2,7 @@
 
 ## Active Task
 
-**Phase:** Phase 3 — Relationship Reconstruction / CodeGraph  
+**Phase:** Phase 3 — Relationship Reconstruction  
 **Task:** 008 — Deterministic Relationship Reconstruction  
 **Status:** READY_FOR_CODEX  
 **Task Type:** Implementation + Evidence Validation
@@ -17,7 +17,7 @@ Read and execute:
 
 Phase 2 is accepted as PASS.
 
-Task 008 builds only deterministic structural relationships between resolved canonical APIC AS-IS identities.
+Task 008 builds only the deterministic structural relationship index between resolved canonical APIC AS-IS identities. It does NOT build the CodeGraph yet.
 
 Use only the approved relationship taxonomy and only explicit accepted evidence.
 
@@ -26,7 +26,7 @@ Do not:
 - create Logical API/Capability identities;
 - infer backend/runtime usage;
 - perform duplicate, retirement, rationalization, migration, or Kong design work;
-- promote the 113 unresolved Product-location occurrences into graph relationships.
+- promote the 113 unresolved Product-location occurrences into relationship records.
 
 ### Required Evidence Artifacts
 
@@ -63,4 +63,4 @@ HANSOFF must state whether Task 008 is:
 
 Stop after Task 008 implementation, evidence generation, validation, HANSOFF update, commit, and push.
 
-Do not begin semantic enrichment, backend resolution, duplicate analysis, rationalization, or Kong design.
+Do not begin CodeGraph construction, semantic enrichment, backend resolution, duplicate analysis, rationalization, or Kong design.
