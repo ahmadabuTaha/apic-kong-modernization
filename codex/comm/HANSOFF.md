@@ -2,171 +2,216 @@
 
 ## Task executed
 
-Phase 2 — Task 007: Targeted Investigation of 113 Unresolved Product-Location API Occurrences.
+Phase 3 — Task 008: Deterministic Relationship Reconstruction.
 
 ## Prompt file used
 
-`codex/comm/prompts/phase-2-007-targeted-investigation-unresolved-product-location-apis.md`
+`codex/comm/prompts/phase-3-008-deterministic-relationship-reconstruction.md`
 
 ## Summary of what was done
 
-- Reproduced the Task 006 unresolved population from the Phase 2 identity index and frozen Phase 1 occurrence index.
-- Enumerated every unresolved Product-location API occurrence with source provenance, directly observed identity fields, exact Product `$ref` evidence, diagnostic API candidates, registry Product membership, canonical identity candidates, failed attachment checks, and the current resolution outcome.
-- Proved that the 113 records are exactly the Product-location occurrences not attached by Task 006: 2,357 total minus 2,244 attached equals 113, with 113 unique enumerated IDs, no omissions, and zero attached/unresolved overlap.
-- Compared admissible identity/reference evidence separately from name/version/hash diagnostics.
-- Determined that all 113 are correctly `UNRESOLVED` under the approved Phase 2 contract and that no Task 006 resolver defect is reproducible.
-- Left `identity_resolver/`, Phase 0, Phase 1, `staging/`, `CURRENT_TASKS.md`, and all prompt files unchanged.
-- Added deterministic generation and focused validation for the committed Task 007 evidence.
+- Implemented a deterministic Phase 3 relationship builder over the frozen Phase 1 occurrence index and accepted Phase 2 canonical identity index.
+- Emitted only approved structural relationship types with resolved canonical endpoints and `STRUCTURALLY_CONFIRMED` evidence.
+- Deduplicated edges by canonical source identity, approved relationship type, and canonical target identity while retaining all contributing authoritative and registry provenance.
+- Reconstructed Product/API, Product/Plan, contextual Plan/API, Application/Consumer Organization, Credential/Application, and Subscription/Application/Product/Plan relationships.
+- Preserved raw reference values, mapped Product `$ref` paths where applicable, Phase 2 resolution outcomes, source paths/pointers, and contributing Phase 1 IDs.
+- Emitted zero `api_uses_catalog_property` and `api_invokes_target` edges because the accepted evidence does not support them.
+- Verified that all 113 Task 007 unresolved Product-location API occurrences remain excluded from graph nodes/edges and provenance.
+- Added deterministic architecture-review evidence and focused Phase 3 tests.
+- Did not modify Phase 0, Phase 1, Phase 2, Task 007 evidence, raw `staging/`, `.gitignore`, `CURRENT_TASKS.md`, or prompt files.
 
-## Exact reason the population is 113
+## Relationship builder implementation structure
 
-The Phase 1 index contains 2,357 API-shaped documents under `staging/products/_catalog`. Task 006 attached 2,244 exact source occurrences through a resolved Product context where the Product YAML `$ref` mapped to that exact source path and registry API evidence agreed.
+- `relationship_builder/builder.py`: canonical endpoint lookup, explicit-reference reconstruction, edge validation, deterministic edge IDs, provenance aggregation, deduplication, coverage metrics, and JSONL serialization.
+- `relationship_builder/__init__.py`: public builder API and approved relationship constants.
+- `relationship_builder/__main__.py`: `python -m relationship_builder` entry point.
+- `tests/evidence/task-008/generate_relationship_evidence.py`: deterministic review-evidence generator.
+- `tests/test_relationship_builder.py`: focused synthetic and full-corpus validation.
 
-The remaining set is exactly:
+## Exact relationship index path
 
-```text
-2,357 Product-location API occurrences
-- 2,244 occurrences attached through approved convergence
-=   113 unresolved occurrences
-```
+`indexes/relationship_index.jsonl`
 
-The arithmetic fully accounts for the population, and the independent record-set checks prove more than the arithmetic:
+The index is a local ignored generated artifact. It contains 9,589 JSONL records, is 14,850,576 bytes, and has SHA-256 `d9fdc2e5cd61510335af572e03c21b27128d39cb9007104be774e24e3d3a8a0a`.
 
-- 113 JSONL evidence rows;
-- 113 unique Phase 1 `extracted_record_id` values;
-- enumerated IDs exactly equal the Task 006 unresolved IDs;
-- zero overlap with the 2,244 attached occurrence IDs;
-- attached and unresolved IDs together cover all 2,357 Product-location API occurrence IDs.
+## Total canonical edges
 
-## Aggregate evidence across the 113
+9,589.
 
-All 113 share the same concrete attachment-evidence pattern:
+## Counts by approved relationship type
 
-- Product `$ref` mapping to the exact source path: 0 / 113;
-- directly observed APIC self URL: 0 / 113;
-- directly observed APIC ID with compatible scope: 0 / 113;
-- source-path Product context: 0 / 113 because `staging/products/_catalog` is a flat location;
-- unique authoritative API-catalog diagnostic candidate by exact name/version: 113 / 113;
-- unique registry API diagnostic candidate by exact name/version: 113 / 113;
-- existing authoritative-to-registry API bridge for the candidate identity: 113 / 113;
-- hash-equal authoritative API-catalog diagnostic candidate: 113 / 113;
-- approved Product `$ref` plus registry attachment convergence: 0 / 113;
-- multiple authoritative or registry API candidates: 0 / 113;
-- registry Product membership observed through the diagnostic registry API candidate but no YAML `$ref`: 113 / 113;
-- membership in at least one registry-only Product: 113 / 113;
-- no admissible occurrence-attachment key: 113 / 113;
-- no diagnostic candidate evidence at all: 0 / 113;
-- correctly unresolved: 113 / 113;
-- demonstrated resolver defects: 0 / 113.
+| Relationship type | Canonical edges |
+|---|---:|
+| `product_contains_api` | 2,611 |
+| `product_contains_plan` | 596 |
+| `plan_entitles_api` | 2,799 |
+| `application_belongs_to_consumer_org` | 256 |
+| `credential_belongs_to_application` | 270 |
+| `subscription_belongs_to_application` | 1,019 |
+| `subscription_targets_product` | 1,019 |
+| `subscription_uses_plan` | 1,019 |
+| `api_uses_catalog_property` | 0 |
+| `api_invokes_target` | 0 |
+| **Total** | **9,589** |
 
-Registry Product membership counts are not unique Product contexts: 63 occurrences have one candidate membership, 37 have two, 10 have three, one has four, and two have five. Fifty occurrences therefore have multiple registry Product memberships. Registry membership identifies that an API identity is listed by a Product, but it does not reference a particular file occurrence in the flat Product-location directory.
+## Evidence-source findings
 
-The 113 occurrences point diagnostically to 110 candidate canonical API identities. Three identities each have two unresolved Product-location copies. Thirty-eight unresolved occurrences have another same-name/version Product-location sibling that is referenced by a Product YAML. The exact-path rule intentionally does not transfer the sibling's `$ref` to the unreferenced file by name or hash.
+- Edges backed by registry identity/reference evidence: 9,589.
+- Edges also backed by authoritative artifact/configuration evidence: 5,260.
+- Dual authoritative-plus-registry provenance: 5,260 edges.
+- Registry-only provenance: 4,329 edges.
+- Evidence-source category counts overlap by design when one canonical edge has both kinds of provenance.
 
-These categories overlap as recorded in the evidence. In particular, all 113 have both exact name/version and hash-equal diagnostics, so neither diagnostic count is presented as a mutually exclusive cause.
+Breakdown of the dual-provenance population:
 
-## Required investigation answers
+- `product_contains_api`: 2,244 dual-provenance; 367 registry-only.
+- `product_contains_plan`: 584 dual-provenance; 12 registry-only.
+- `plan_entitles_api`: 2,432 dual-provenance; 367 registry-only.
+- Application, Credential, and Subscription edges are registry-reference-backed structural evidence.
 
-1. All 113 are truly unreferenced by Product YAML `$ref`: **yes**. Exact mapped-path reference count is zero for every record.
-2. Registry/Product membership without YAML `$ref`: **yes, all 113** have one or more registry Product memberships through their diagnostic registry API candidate.
-3. Exact APIC self URL evidence on the Product-location occurrence: **none**.
-4. APIC ID plus compatible scope evidence on the Product-location occurrence: **none**.
-5. Unique authoritative API-catalog candidate through the existing API bridge: **113**, but this identifies a candidate API identity and does not attach the file occurrence without Product `$ref` convergence.
-6. Exact name/version diagnostic matches with no admissible attachment key: **113**.
-7. Hash-equal authoritative artifacts with no admissible attachment key: **113**.
-8. Multiple authoritative or registry API candidates: **0**. Multiple registry Product memberships occur for 50 records, which further prevents deriving a unique Product context from membership.
-9. No diagnostic candidate evidence beyond the API-shaped document: **0**. No admissible attachment evidence: **113**.
-10. Task 006 implementation defects demonstrated: **0**.
-11. Smallest failing example for a resolver defect: not applicable because no defect was reproduced.
-12. Why the population remains unresolved: attaching any record would require using name/version, hash equality, a sibling file's `$ref`, or registry membership as a substitute for the required exact occurrence-level Product `$ref` convergence. Each substitute is prohibited by the approved contract.
+Registry-only membership is represented only from direct registry references between resolved canonical identities. It does not fabricate missing authoritative configuration.
 
-## Representative evidence
+## Canonical-edge deduplication findings
 
-- `staging/products/_catalog/addestablishmentlocationusingml_1.0.0.yaml` — `extracted-record:sha256:9058e211cc493e372880c8204058fdaeebb9f223a62616d62af7a25cecab94b5`. It has no Product `$ref`, self URL, ID, or source-path Product context. It has one bridged candidate API identity and two registry-only Product membership candidates. A second unresolved copy with an `_1` suffix exists, so hash/name evidence cannot select a Product context.
-- `staging/products/_catalog/addupdateservices_1.0.0.yaml` — `extracted-record:sha256:d98ea34dbfab60a9f08af9fd5e89129ce3e1338b439c9ee1699e0dca61b6cfbe`. It has one registry-only and one authoritative-backed registry Product membership candidate. A same-name/version/hash sibling is referenced, but the selected file is not; copying the sibling's relationship would violate exact mapped-path resolution.
-- `staging/products/_catalog/addlaborerslocationLO_1.0.0.yaml` — `extracted-record:sha256:f0cf8bb4603a114f3818d3fec7aa7d1a8f2eea58bb9b354ea84188ae3276be1d`. It has one unique diagnostic API identity and one registry-only Product membership, but no occurrence-level `$ref` or direct APIC identity evidence.
+- Canonical edge identity is based only on canonical source ID, approved relationship type, and canonical target ID.
+- 5,260 edges have multiple contributing source occurrences and were emitted once with combined provenance.
+- The authoritative Product/API population of 2,244 and registry Product/API membership population of 2,611 collapse to 2,611 distinct canonical edges.
+- The authoritative Plan/API population of 2,432 and registry Plan/API population of 2,799 collapse to 2,799 distinct canonical edges.
+- The 584 authoritative-backed Plans plus 12 registry-only Plans produce 596 contextual Product/Plan edges.
+- All 9,589 relationship IDs are unique and deterministic.
 
-Every other occurrence and its complete candidate evidence is in the committed JSONL artifact.
+## Product and Plan structural coverage
+
+### Product → API
+
+- Authoritative Product `$ref` references represented: 2,244 / 2,244.
+- Direct registry Product API memberships represented: 2,611 / 2,611.
+- Canonical `product_contains_api` edges after deduplication: 2,611.
+
+### Product → Plan
+
+- Resolved contextual Plan identities linked to their Product: 596 / 596.
+- Canonical `product_contains_plan` edges: 596.
+
+### Plan → API
+
+- Authoritative Product-local Plan API-key references represented: 2,432 / 2,432.
+- Direct registry Plan API references represented: 2,799 / 2,799.
+- Canonical `plan_entitles_api` edges after deduplication: 2,799.
+- No Plan name or API key was resolved outside its Product context.
+
+## Application, Credential, and Subscription coverage
+
+- Application → Consumer Organization: 256 / 256 represented.
+- Credential → Application: 270 / 270 represented.
+- Subscription → Application: 1,019 / 1,019 represented.
+- Subscription → Product: 1,019 / 1,019 represented.
+- Subscription → contextual Plan: 1,019 / 1,019 represented.
+- Subscription relationships express structural entitlement/reference only; no runtime use was inferred.
+
+## Zero-count approved relationship types
+
+- `api_uses_catalog_property`: 0. The accepted canonical identity index contains zero `catalog_property` identities, so there is no resolved structural target.
+- `api_invokes_target`: 0. Backend resolution has not been performed and the accepted model contains no explicit resolved target identities for this relationship.
+
+These zero counts are expected evidence absence, not parser failures. No policy text, URL, name, or guessed target was used to infer an edge.
+
+## Excluded unresolved evidence
+
+- `UNRESOLVED`: 113 Task 007 Product-location source occurrences excluded.
+- `AMBIGUOUS`: 0 in the current accepted full-corpus Phase 2 reference population.
+- `BROKEN_REFERENCE`: 0 in the current accepted full-corpus Phase 2 reference population.
+- Focused tests verify that unresolved, ambiguous, and broken references emit no edge.
+- Focused tests also verify that name-only and hash-only evidence emit no edge.
+
+None of the 113 Task 007 extracted record IDs appears as relationship provenance, and none was promoted to a standalone graph node or edge endpoint.
 
 ## Evidence artifacts created
 
-- `tests/evidence/task-007/unresolved_product_location_apis.jsonl`
-  - 113 records, one per unresolved occurrence;
-  - 581,447 bytes;
-  - SHA-256 `3e95b6e0073646e494a268e44efa751f9c273df68784813fd92e9be22d56ba0d`.
-- `tests/evidence/task-007/investigation_summary.json`
-  - aggregate counts, set proof, evidence-pattern counts, and overlap disclosure;
-  - 2,157 bytes;
-  - SHA-256 `9644e9c4f1c15c000f3cc5e1a430b83a4f6597ce6cb6b15f52a207005241e2a4`.
-- `tests/evidence/task-007/commands_and_results.txt`
-  - commands executed and meaningful deterministic/test results;
-  - 3,679 bytes;
-  - SHA-256 `4c147e4f9e17b074b07d038c0afb450c9c7ff9c6f08d15242f0bd673f4653d37`.
-- `tests/evidence/task-007/investigate_unresolved.py`
-  - deterministic evidence generator.
+- `tests/evidence/task-008/relationship_counts.json`
+  - total/counts by approved relationship type and evidence source category;
+  - multi-provenance edge count and excluded evidence outcomes;
+  - SHA-256 `05eca23fd721d28c5f3b685243bb149d81b50deb97c0b9873684f9c1a0d34840`.
+- `tests/evidence/task-008/relationship_samples.jsonl`
+  - 11 deterministic samples covering every non-zero relationship type plus dual-provenance and registry-only Product/Plan patterns;
+  - SHA-256 `eb6f5f729992f377aceed50060526cae44b018d9ee0880ab907a64124e8f8a92`.
+- `tests/evidence/task-008/relationship_coverage.json`
+  - accepted-population numerator/denominator coverage and Task 007 exclusion verification;
+  - SHA-256 `a8fdc7e42a74ccc6df4a5720fdfdeae103c5ed89f22f972b1fb770a8206845ee`.
+- `tests/evidence/task-008/commands_and_results.txt`
+  - commands executed and meaningful build, determinism, test, immutability, and redaction results.
+- `tests/evidence/task-008/generate_relationship_evidence.py`
+  - deterministic evidence-generation helper.
 
 ## Files created
 
-- `tests/evidence/task-007/investigate_unresolved.py`
-- `tests/evidence/task-007/unresolved_product_location_apis.jsonl`
-- `tests/evidence/task-007/investigation_summary.json`
-- `tests/evidence/task-007/commands_and_results.txt`
-- `tests/test_task_007_evidence.py`
+- `relationship_builder/__init__.py`
+- `relationship_builder/__main__.py`
+- `relationship_builder/builder.py`
+- `tests/test_relationship_builder.py`
+- `tests/evidence/task-008/generate_relationship_evidence.py`
+- `tests/evidence/task-008/relationship_counts.json`
+- `tests/evidence/task-008/relationship_samples.jsonl`
+- `tests/evidence/task-008/relationship_coverage.json`
+- `tests/evidence/task-008/commands_and_results.txt`
 
 ## Files modified
 
 - `codex/comm/HANSOFF.md`
 
-No resolver, Phase 0, Phase 1, source-evidence, task-control, or prompt file was modified.
-
 ## Tests and commands executed
 
-- `.venv/bin/python tests/evidence/task-007/investigate_unresolved.py --phase2 indexes/apic_identity_resolution.json --phase1 indexes/extracted_records.jsonl --output-directory tests/evidence/task-007`
-- `wc -l tests/evidence/task-007/unresolved_product_location_apis.jsonl`
-- Two full evidence-generation runs with SHA-256 comparison
-- `.venv/bin/pytest tests/test_task_007_evidence.py -q`
+- `.venv/bin/python -m relationship_builder --phase2 indexes/apic_identity_resolution.json --phase1 indexes/extracted_records.jsonl --output-root .`
+- `.venv/bin/python tests/evidence/task-008/generate_relationship_evidence.py --phase2 indexes/apic_identity_resolution.json --phase1 indexes/extracted_records.jsonl --output-directory tests/evidence/task-008`
+- Two full relationship/evidence generation runs with SHA-256 comparison
+- `.venv/bin/pytest tests/test_relationship_builder.py -q`
 - `.venv/bin/pytest -q`
-- `.venv/bin/python -m py_compile tests/evidence/task-007/investigate_unresolved.py tests/test_task_007_evidence.py`
+- `.venv/bin/python -m compileall -q relationship_builder`
+- `.venv/bin/python -m py_compile tests/evidence/task-008/generate_relationship_evidence.py tests/test_relationship_builder.py`
 - `git diff --check`
-- `git diff -- identity_resolver`
+- Frozen implementation diff check
+- Full `staging/` SHA-256 snapshot comparison before and after reconstruction
+- Full-corpus credential source-value comparison against relationship/evidence outputs
 
 ## Test results
 
-- Focused Task 007 tests: **3 passed**.
-- Repeated generation: **passed**; both committed evidence artifacts were byte-identical across runs.
-- Exact unresolved-ID set reproduction: **passed**.
-- No omission/no overlap/full Product-location coverage: **passed**.
-- Name/version/hash-only non-promotion: **passed**.
-- `staging/` hash snapshot before/after investigation: **unchanged**.
-- Credential redaction: **passed**; all observed credential values remain absent from the Task 007 evidence and Phase 2 identity index.
-- Python compilation: **passed**.
-- Resolver-change check: **passed**; `identity_resolver/` has no changes.
-- Repository-wide suite: **15 passed, 5 setup errors**. The five errors are the known frozen Phase 0 fixture-packaging issue because `tests/fixtures/repository_profile/staging` is absent. No Task 007 test failed.
+- Focused Phase 3 tests: **3 passed**.
+- Repeated full-corpus relationship index: **byte-identical** with SHA-256 `d9fdc2e5cd61510335af572e03c21b27128d39cb9007104be774e24e3d3a8a0a` on both runs.
+- Repeated Task 008 count/sample/coverage artifacts: **byte-identical** on both runs.
+- Relationship ID uniqueness: **9,589 / 9,589 unique**.
+- Accepted-reference coverage: **passed** for all required Product, Plan, Application, Credential, and Subscription populations.
+- Task 007 non-promotion: **passed**, 0 / 113 promoted.
+- Source immutability: **passed**, `staging/` unchanged.
+- Credential redaction: **passed**; 540 observed source credential values checked, zero emitted.
+- Python compilation and whitespace checks: **passed**.
+- Repository-wide suite: **18 passed, 5 setup errors**. The five errors remain the known frozen Phase 0 fixture-packaging issue because `tests/fixtures/repository_profile/staging` is absent. No Task 008 test failed.
 
 ## Generated artifacts
 
-The three required committed review artifacts are under `tests/evidence/task-007/` and listed above. The investigation consumed the existing ignored Phase 1 and Phase 2 indexes; it did not create or stage a new artifact under `indexes/` or `outputs/`.
+- Local ignored index: `indexes/relationship_index.jsonl`.
+- Committed review artifacts: `tests/evidence/task-008/relationship_counts.json`, `relationship_samples.jsonl`, `relationship_coverage.json`, and `commands_and_results.txt`.
+- No generated file under `indexes/` or `outputs/` is staged for version control.
 
 ## Important findings
 
-- The unresolved count is complete and deterministic; it is not a summary-calculation artifact.
-- The candidate API identities are not themselves ambiguous: all 113 have a unique existing API bridge. What is missing is admissible evidence attaching each specific source occurrence.
-- All 113 participate in registry Product membership, but every one also participates in at least one registry-only Product. The registry records do not identify which flat source-file copy belongs to which Product.
-- Hash equality is universal across this population but remains corroboration only. Using it would directly violate the no-hash-only rule.
-- Thirty-eight records demonstrate why `$ref` evidence cannot be inherited from a sibling path: the sibling may be referenced while the selected occurrence is not.
-- Task 006 correctly preserved rather than guessed these occurrence associations.
+- Direct registry Product/API and Plan/API evidence extends beyond authoritative Product YAML references by 367 canonical edges in each relationship population; those edges remain visibly registry-only.
+- Twelve Product/Plan edges are registry-only, matching the 12 registry-only Products retained by Phase 2.
+- All authoritative structural relationships agree with and deduplicate against registry relationships at the canonical endpoint level.
+- The accepted Phase 2 resolution is sufficient for every required Task 008 structural edge; no earlier-phase defect was found.
+- The graph contains structural configuration and entitlement evidence only. It makes no semantic, runtime, backend, retirement, duplicate, rationalization, migration, or Kong assertions.
 
 ## Unresolved issues
 
-- The 113 source occurrences remain `UNRESOLVED` because the corpus lacks an approved occurrence-level attachment key. Architecture may decide whether future evidence or an explicitly revised identity contract should address them; Task 007 does not authorize that change.
+- The 113 Product-location source occurrences remain correctly unresolved and excluded pending future evidence or an explicit architecture-contract change.
+- Catalog Property and backend/target relationships remain absent because their prerequisite accepted evidence does not exist in the current phase.
 - The known frozen Phase 0 fixture-packaging issue continues to cause five repository-wide setup errors.
 
 ## Assumptions
 
-- The existing Task 006 Phase 2 index and frozen Phase 1 extracted index are the deterministic starting evidence required by the prompt.
-- Registry Product `api_urls` are direct membership evidence for API identities, but they are not direct references to Product-location source paths.
-- A same-name/version or hash-equal sibling is a separate source occurrence unless the approved exact mapped Product `$ref` evidence attaches it.
-- Evidence categories intentionally overlap and are reported independently.
+- Accepted Phase 2 canonical IDs and resolved-reference outcomes are authoritative inputs for Phase 3 endpoint selection.
+- Direct registry `api_urls` and registry Plan API URLs are admissible registry relationship evidence when both canonical endpoints resolve.
+- Evidence-source categories describe provenance and may overlap on one canonical edge.
+- A canonical edge with multiple source occurrences is one enterprise relationship with multiple provenance items, not multiple relationships.
 
 ## Deviations from the prompt
 
@@ -174,7 +219,7 @@ None.
 
 ## Recommended next step
 
-Accept Phase 2 Task 007 as PASS. The Integration Architect and Enterprise Architect should review the committed per-occurrence evidence and decide whether the 113 correctly unresolved copies require any future contract change. Do not begin Phase 3 until `CURRENT_TASKS.md` is updated externally.
+Accept Phase 3 Task 008 as PASS and have the Integration Architect and Enterprise Architect review the committed counts, coverage, and representative edge provenance. Do not begin semantic enrichment, backend resolution, duplicate analysis, rationalization, migration, or Kong design until `CURRENT_TASKS.md` is updated externally.
 
 ## Final status
 

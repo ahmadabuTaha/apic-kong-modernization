@@ -1,0 +1,27 @@
+{
+  "counts_by_evidence_source_category": {
+    "authoritative_artifact": 5260,
+    "registry_reference": 9589
+  },
+  "counts_by_relationship_type": {
+    "api_invokes_target": 0,
+    "api_uses_catalog_property": 0,
+    "application_belongs_to_consumer_org": 256,
+    "credential_belongs_to_application": 270,
+    "plan_entitles_api": 2799,
+    "product_contains_api": 2611,
+    "product_contains_plan": 596,
+    "subscription_belongs_to_application": 1019,
+    "subscription_targets_product": 1019,
+    "subscription_uses_plan": 1019
+  },
+  "edges_with_multiple_contributing_source_occurrences": 5260,
+  "evidence_source_category_counts_may_overlap": true,
+  "excluded_evidence_by_resolution_outcome": {
+    "AMBIGUOUS": 0,
+    "BROKEN_REFERENCE": 0,
+    "UNRESOLVED": 113
+  },
+  "task_007_unresolved_product_location_occurrences_excluded": 113,
+  "total_canonical_edges": 9589
+}

@@ -1,0 +1,118 @@
+Phase 3 Task 008 - Commands and Results
+=======================================
+
+1. Build the deterministic canonical relationship index
+
+Command:
+.venv/bin/python -m relationship_builder --phase2 indexes/apic_identity_resolution.json --phase1 indexes/extracted_records.jsonl --output-root .
+
+Meaningful result:
+- output: indexes/relationship_index.jsonl
+- total canonical edges: 9589
+- product_contains_api: 2611
+- product_contains_plan: 596
+- plan_entitles_api: 2799
+- application_belongs_to_consumer_org: 256
+- credential_belongs_to_application: 270
+- subscription_belongs_to_application: 1019
+- subscription_targets_product: 1019
+- subscription_uses_plan: 1019
+- api_uses_catalog_property: 0
+- api_invokes_target: 0
+- authoritative_artifact-backed edges: 5260
+- registry_reference-backed edges: 9589
+- edges with multiple contributing source occurrences: 5260
+- excluded UNRESOLVED evidence: 113
+- excluded AMBIGUOUS evidence: 0
+- excluded BROKEN_REFERENCE evidence: 0
+- Task 007 unresolved occurrences promoted to edge provenance: 0
+
+Evidence-source category counts overlap where an edge has both authoritative and
+registry provenance; they are not intended to sum to the total edge count.
+
+2. Generate architecture-review evidence
+
+Command:
+.venv/bin/python tests/evidence/task-008/generate_relationship_evidence.py --phase2 indexes/apic_identity_resolution.json --phase1 indexes/extracted_records.jsonl --output-directory tests/evidence/task-008
+
+Meaningful result:
+- relationship_counts.json created
+- relationship_coverage.json created
+- relationship_samples.jsonl created with 11 deterministic samples
+- every non-zero approved relationship type has at least one sample
+- Product/API, Product/Plan, and Plan/API samples include both dual-provenance and registry-only patterns
+
+3. Verify relationship-index and review-evidence determinism
+
+Commands:
+shasum -a 256 indexes/relationship_index.jsonl tests/evidence/task-008/relationship_counts.json tests/evidence/task-008/relationship_samples.jsonl tests/evidence/task-008/relationship_coverage.json
+.venv/bin/python -m relationship_builder --phase2 indexes/apic_identity_resolution.json --phase1 indexes/extracted_records.jsonl --output-root .
+.venv/bin/python tests/evidence/task-008/generate_relationship_evidence.py --phase2 indexes/apic_identity_resolution.json --phase1 indexes/extracted_records.jsonl --output-directory tests/evidence/task-008
+shasum -a 256 indexes/relationship_index.jsonl tests/evidence/task-008/relationship_counts.json tests/evidence/task-008/relationship_samples.jsonl tests/evidence/task-008/relationship_coverage.json
+
+Result before and after the repeated runs:
+- relationship_index.jsonl: d9fdc2e5cd61510335af572e03c21b27128d39cb9007104be774e24e3d3a8a0a
+- relationship_counts.json: 05eca23fd721d28c5f3b685243bb149d81b50deb97c0b9873684f9c1a0d34840
+- relationship_samples.jsonl: eb6f5f729992f377aceed50060526cae44b018d9ee0880ab907a64124e8f8a92
+- relationship_coverage.json: a8fdc7e42a74ccc6df4a5720fdfdeae103c5ed89f22f972b1fb770a8206845ee
+- all hashes were identical across both runs
+
+4. Verify output line counts
+
+Command:
+wc -l indexes/relationship_index.jsonl tests/evidence/task-008/relationship_samples.jsonl
+
+Result:
+- 9589 indexes/relationship_index.jsonl
+- 11 tests/evidence/task-008/relationship_samples.jsonl
+
+5. Run focused Phase 3 tests
+
+Command:
+.venv/bin/pytest tests/test_relationship_builder.py -q
+
+Result:
+3 passed in 4.49s
+
+The focused tests cover deterministic IDs/output, canonical edge deduplication,
+all required non-zero structural relationship types, contextual Plan edges,
+unresolved/ambiguous/broken exclusion, name/hash-only non-promotion, Task 007
+non-promotion, staging immutability, and credential redaction.
+
+6. Run the repository-wide test suite
+
+Command:
+.venv/bin/pytest -q
+
+Result:
+18 passed, 5 setup errors in 6.67s
+
+All five setup errors are the pre-existing frozen Phase 0 fixture-packaging issue:
+tests/fixtures/repository_profile/staging does not exist. No Task 008 test failed.
+
+7. Compile implementation and evidence/test helpers
+
+Commands:
+.venv/bin/python -m compileall -q relationship_builder
+.venv/bin/python -m py_compile tests/evidence/task-008/generate_relationship_evidence.py tests/test_relationship_builder.py
+
+Result:
+passed (no output)
+
+8. Verify credential redaction
+
+Command:
+Compare all observed client ID, client secret, and hashed-secret source values under
+staging/credentials with the relationship index and Task 008 JSON/JSONL evidence.
+
+Result:
+- observed sensitive source values checked: 540
+- sensitive values present in generated outputs: 0
+
+9. Confirm frozen Phase 0/1/2 and Task 007 implementations remained unchanged
+
+Command:
+git diff -- repository_profiler source_extractor identity_resolver tests/evidence/task-007
+
+Result:
+no output; frozen implementations/evidence were not modified

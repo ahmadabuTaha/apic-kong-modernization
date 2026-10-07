@@ -1,0 +1,58 @@
+{
+  "api_invokes_target": {
+    "accepted_explicit_target_references": 0,
+    "canonical_edges": 0
+  },
+  "api_uses_catalog_property": {
+    "canonical_catalog_property_identities": 0,
+    "canonical_edges": 0
+  },
+  "application_belongs_to_consumer_org": {
+    "canonical_edges": 256,
+    "references_observed": 256,
+    "references_represented": 256
+  },
+  "credential_belongs_to_application": {
+    "canonical_edges": 270,
+    "references_observed": 270,
+    "references_represented": 270
+  },
+  "plan_entitles_api": {
+    "authoritative_references_observed": 2432,
+    "authoritative_references_represented": 2432,
+    "canonical_edges": 2799,
+    "registry_references_observed": 2799,
+    "registry_references_represented": 2799
+  },
+  "product_contains_api": {
+    "authoritative_references_observed": 2244,
+    "authoritative_references_represented": 2244,
+    "canonical_edges": 2611,
+    "registry_memberships_observed": 2611,
+    "registry_memberships_represented": 2611
+  },
+  "product_contains_plan": {
+    "canonical_edges": 596,
+    "canonical_plan_identities_observed": 596,
+    "canonical_plan_identities_represented": 596
+  },
+  "subscription_belongs_to_application": {
+    "canonical_edges": 1019,
+    "references_observed": 1019,
+    "references_represented": 1019
+  },
+  "subscription_targets_product": {
+    "canonical_edges": 1019,
+    "references_observed": 1019,
+    "references_represented": 1019
+  },
+  "subscription_uses_plan": {
+    "canonical_edges": 1019,
+    "references_observed": 1019,
+    "references_represented": 1019
+  },
+  "task_007_unresolved_occurrences": {
+    "observed": 113,
+    "promoted_to_edge_provenance": 0
+  }
+}
