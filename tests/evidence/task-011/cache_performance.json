@@ -1,0 +1,27 @@
+{
+  "cache_schema_version": "phase4-resolution-cache-v1",
+  "cold": {
+    "files_parsed": 2000,
+    "parsed_source_cache_hits": 0,
+    "property_file_parse_seconds": 0.004731,
+    "resolution_cache_hits": 0,
+    "resolution_cache_misses": 2000,
+    "target_resolution_build_seconds": 4.840511
+  },
+  "cold_property_index_sha256": "7b6ee3889260e9f26552f7a59c613326387a81df44742eadedd699306763b429",
+  "cold_target_index_sha256": "6b21000cd1df943214bd96eccbb9b9a5ed3d3d2c8b55acf576237ac5e2ebee33",
+  "parser_version": "phase4-target-parser-v2",
+  "property_output_identical": true,
+  "target_output_identical": true,
+  "warm": {
+    "cached_build_seconds": 0.373126,
+    "files_reparsed": 0,
+    "parsed_source_cache_hits": 0,
+    "property_file_parse_seconds": 0.004615,
+    "resolution_cache_hits": 2000,
+    "resolution_cache_misses": 0
+  },
+  "warm_avoided_all_yaml_reparsing": true,
+  "warm_property_index_sha256": "7b6ee3889260e9f26552f7a59c613326387a81df44742eadedd699306763b429",
+  "warm_target_index_sha256": "6b21000cd1df943214bd96eccbb9b9a5ed3d3d2c8b55acf576237ac5e2ebee33"
+}

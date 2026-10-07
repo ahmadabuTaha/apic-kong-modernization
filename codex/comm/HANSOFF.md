@@ -2,94 +2,123 @@
 
 ## Task executed
 
-Phase 3 — Task 010: CodeGraph Explorer / Visualization.
+Phase 4 — Task 011: Catalog Properties Indexing & Target Resolution Foundation.
 
 ## Prompt file used
 
-`codex/comm/prompts/phase-3-010-codegraph-explorer-visualization.md`
+`codex/comm/prompts/phase-4-011-catalog-properties-and-target-resolution.md`
 
 ## Summary of what was done
 
-- Built a lightweight, read-only local explorer over the accepted Task 009 CodeGraph indexes.
-- Added canonical-ID, exact-name, and case-insensitive name/title substring search with approved object-type filtering.
-- Added incoming, outgoing, and both-direction targeted neighborhoods at depths 1–3 with approved relationship filters.
-- Added a self-contained directed SVG view with node types/labels, relationship labels, selected node/edge state, active controls, one-node expansion, reset, and clear.
-- Added allowlisted node and edge detail projections with accepted Task 008 provenance drill-down and registry-only/dual evidence labels.
-- Enforced deterministic limits of 80 nodes and 120 edges with a visible warning and no silent truncation.
-- Preserved isolated nodes and all accepted graph semantics; no node, edge, direction, identity, relationship, or provenance was inferred or mutated.
+- Deterministically indexed the supplied APIC Catalog Properties evidence.
+- Extracted explicit `invoke.target-url` observations from accepted canonical API YAML sources.
+- Resolved only exact `$(property-name)` matches supported by safe Catalog Property evidence.
+- Preserved missing, protected/redacted, runtime-parameterized, mixed, static, and operation-scoped cases explicitly.
+- Added a disposable SQLite cache separating source parsing from property-dependent resolution.
+- Accounted for every canonical API without creating backend identities, Catalog Property identities, or graph edges.
+- Added focused tests and architecture-review evidence.
+- Did not modify Phase 0–3 implementations, Task 007–010 evidence, Task 008 relationships, Task 009 CodeGraph, Task 010 Explorer, `.gitignore`, or raw `staging/` evidence.
 
-## Explorer implementation structure
+## Implementation structure
 
-- `codegraph_explorer/explorer.py`: read-only query layer, safe projections, deterministic visualization cap, JSON endpoints, and standard-library local HTTP server.
-- `codegraph_explorer/static/index.html`: self-contained HTML/CSS/JavaScript SVG review interface; no CDN or hosted dependency.
-- `codegraph_explorer/__init__.py`: public explorer API.
-- `codegraph_explorer/__main__.py`: local module entry point.
-- `tests/test_codegraph_explorer.py`: focused synthetic, HTTP smoke, and full-corpus acceptance tests.
-- `tests/evidence/task-010/generate_explorer_evidence.py`: deterministic review-evidence generator.
+- `backend_target_resolver/resolver.py`: property indexing, conservative redaction, target extraction/resolution, normalization, coverage, deterministic JSONL output, and SQLite cache.
+- `backend_target_resolver/__init__.py`: public Phase 4 API.
+- `backend_target_resolver/__main__.py`: `python -m backend_target_resolver` entry point.
+- `tests/test_backend_target_resolver.py`: focused synthetic, cache, full-corpus, immutability, and redaction tests.
+- `tests/evidence/task-011/generate_phase4_evidence.py`: deterministic structural evidence and cold/warm cache measurement generator.
 
-## Exact run command
+## Catalog Properties evidence
 
-```text
-.venv/bin/python -m codegraph_explorer
-```
+- Exact source: `staging/config/catalog-properties.json`.
+- SHA-256: `03da19af1d4de302d66ad77e60bffe6c3b6e5ae166593796f9ef818caef66191`.
+- Observed schema: JSON object with one `catalogProperties` array; all 326 observed entries are objects with `name`, `value`, and `protected` fields.
+- Records/names: 326 records and 326 distinct exact property names.
+- Unique safe exact values: 325 names.
+- Repeated same values: 0 names.
+- Conflicting multiple values: 0 names.
+- Explicit protected flags: 0 records.
+- Conservatively redacted secret-like non-protected values: 1 record.
+- Malformed records: 0.
+- No catalog/environment scope was invented because the file supplies none.
 
-Open `http://127.0.0.1:8765`. The explorer binds only to loopback by default.
+## Generated indexes and cache
 
-## Dependencies introduced
+- Property index: `indexes/catalog_properties.jsonl` — 326 records — SHA-256 `7b6ee3889260e9f26552f7a59c613326387a81df44742eadedd699306763b429`.
+- Target-resolution index: `indexes/backend_target_resolution.jsonl` — 2,334 records — SHA-256 `6b21000cd1df943214bd96eccbb9b9a5ed3d3d2c8b55acf576237ac5e2ebee33`.
+- Cache: `indexes/cache/phase4_resolution_cache.sqlite3`.
+- Cache schema: `phase4-resolution-cache-v1`.
+- Parser/schema version: `phase4-target-parser-v2`.
 
-None. The server uses the Python standard library, and the visual explorer is self-contained.
+All three artifacts are local and ignored. The SQLite cache stores safe parsed observations and resolved records keyed by source SHA-256, parser version, and Catalog Properties SHA-256. It does not persist raw protected/secret-like property values or raw unsafe URL credentials.
 
-## Graph indexes consumed
+## Canonical API coverage
 
-- `indexes/codegraph_nodes.jsonl`: 4,718 nodes.
-- `indexes/codegraph_edges.jsonl`: 9,589 edges.
-- `indexes/codegraph_adjacency.jsonl`: accepted incoming/outgoing adjacency.
-- `indexes/relationship_index.jsonl`: provenance drill-down only.
+- Total canonical APIs: 2,036.
+- APIs accounted for/inspected through accepted identity evidence: 2,036.
+- APIs with an accepted API YAML source: 2,000.
+- Registry-only APIs without an accepted YAML source: 36.
+- APIs with explicit invoke target observations: 1,978.
+- APIs with no explicit target observation: 58, comprising the 36 without accepted YAML plus 22 sourced APIs with no supported explicit invoke target.
+- “No explicit target observation” does not mean no backend exists.
 
-Normal explorer operation does not scan raw `staging/`.
+## Target observations and resolution
 
-## Search, traversal, and filter capabilities
+- Total explicit invoke target observations: 2,334.
+- Property-referenced observations: 2,256.
+- Fully exact property-resolved observations: 1,431.
+- Observations containing at least one missing property: 324.
+- Observations containing conflicting properties: 0.
+- Observations containing a protected/redacted property: 1.
+- Observations containing explicit runtime parameterization: 626.
+- Static literal observations: 78.
+- Mixed parameterized observations: 719.
+- Resolution status totals: 1,509 `RESOLVED`; 825 `UNRESOLVED`; 0 `AMBIGUOUS` in the observed corpus.
+- APIs with multiple target observations: 133.
+- API/shared observations: 2,267.
+- Explicit operation-scoped observations: 67.
 
-- Search: canonical ID, exact name, case-insensitive name/title substring, and approved object type.
-- Traversal: incoming, outgoing, or both; depth 1, 2, or 3 only.
-- Relationship filters: the ten accepted Task 008 relationship types only.
-- View controls: select start node, select node/edge, expand one selected node, reset to start node, and clear.
-- Ordering: canonical IDs and relationship IDs are returned deterministically.
-- Every Application-centered view is labeled **Structural reachability, not runtime consumption.**
+The missing-property count includes mixed expressions; therefore it is larger than the 102 observations whose sole final reason is `unresolved_due_to_missing_catalog_property`.
 
-## Visualization size limit
+## Observed target pattern inventory
 
-The default cap is 80 nodes and 120 edges. When the complete candidate neighborhood exceeds either cap, the explorer returns a deterministic subset and displays an explicit warning telling the reviewer to reduce depth or filter scope. Candidate and returned counts are exposed separately.
+- Supported observed corpus shape: 2,334 `invoke.target-url` scalar observations.
+- Symbolic token counts per observation: 78 with zero, 1,531 with one, 623 with two, 98 with three, 3 with five, and 1 with eight.
+- HTTP verb present: 2,322; absent: 12.
+- Configured `backend-type` present: 762; absent: 1,572.
+- Classification counts: 1,431 `CATALOG_PROPERTY_RESOLVED`, 103 `CATALOG_PROPERTY_UNRESOLVED`, 719 `MIXED_PARAMETERIZED`, 3 `RUNTIME_PARAMETERIZED`, and 78 `STATIC_LITERAL`.
 
-## Node and edge details
+These are configuration observations only. No technology, ownership, capability, runtime use, or backend identity was inferred from property names or targets.
 
-Node details expose only canonical object ID, approved object type, label/name/title/version, APIC object ID/self URL where accepted, incoming/outgoing counts, and the Phase 2 canonical record reference.
+## Representative examples
 
-Edge details expose relationship ID/type, canonical source/target IDs and types, evidence state, evidence-source category, Task 008 relationship pointer, contributing occurrence IDs, and accepted source paths/pointers. Raw references and arbitrary source payload fields are not exposed.
+- Property-resolved: observation `backend-target-observation:sha256:000acc05c92eb0abb0626f5a795650e07752f0fe843d2bc9dfc9ba4521da48d6` uses one exact property token and resolves deterministically. The infrastructure value is intentionally omitted from committed evidence.
+- Missing property: observation `backend-target-observation:sha256:014856f199cbbd45fa00bd4f09281a72e4a219f304d68a629cc1de35ca9cab23` remains `UNRESOLVED` because its exact token has no Catalog Property record.
+- Protected/redacted: observation `backend-target-observation:sha256:40d81a31c0efd229c39a4ad097fcb1786c1c284d986268338b8aa209f633e6a4` remains unresolved without exposing the secret-like property value.
+- Operation-specific: observation `backend-target-observation:sha256:099900ed62b2aca36f522b387fd7b964a3eb8418b0b52587deb80364492adaf6` preserves explicit operation scope `POST /swap/normal`; its unresolved portion remains explicit.
 
-## Provenance drill-down
+## Cache performance
 
-The explorer loads the accepted Task 008 relationship record by exact relationship ID and projects only allowlisted provenance. It distinguishes `registry_only`, `dual`, and `authoritative_only` only when the accepted evidence-source categories support that label. No provenance category is invented.
-
-## Review examples
-
-- API-centered: API `apic-identity:sha256:0009ee4eeece2430096ec9be843777a8e4258c260de73c9f9fb702bc865a55ce` shows three nodes and two incoming Product/Plan edges with Task 008 provenance.
-- Product-centered: Product `apic-identity:sha256:00a9ee8fd6539fb17d371dc3f561e3cf84b2cf2532437282f2232686f858c2a0` shows contained API, contained Plan, and Plan-entitled API across three accepted edges.
-- Application-centered: Application `apic-identity:sha256:0206b436e7ceda8c411d6c213c735ffd84269dcedb7185054952dae274aaff6e` reaches its Consumer Org, Subscriptions, Products, contextual Plans, and APIs. Its broad depth-3 review produces a deterministic 80-node/79-edge subset and a visible size warning. This is structural reachability, not runtime consumption.
-- Registry-only: Relationship `apic-relationship:sha256:000cc1a3eccda006c3df18fc1303405334f58cc15f1ad243d8b1c7bd68332a32` is shown as `registry_only` from accepted provenance.
-- Isolated node: Consumer Org `apic-identity:sha256:144297969f8be24c16542f4ccfc516d77025ecb282f147252a13217beec1b2f7` displays alone with zero edges; no relationship is inferred.
+- Cold property parse: 0.004731 seconds.
+- Cold target-resolution build: 4.840511 seconds; 2,000 YAML files parsed; 0 resolution hits; 2,000 misses.
+- Warm cached build: 0.373126 seconds; 0 YAML files reparsed; 2,000 resolution hits; 0 misses.
+- Cold and warm property indexes are byte-identical.
+- Cold and warm target-resolution indexes are byte-identical.
+- A one-source hash change reparses/re-resolves only that source.
+- A Catalog Properties hash change reuses unchanged parsed YAML observations while rebuilding property-dependent resolution results.
 
 ## Files created
 
-- `codegraph_explorer/__init__.py`
-- `codegraph_explorer/__main__.py`
-- `codegraph_explorer/explorer.py`
-- `codegraph_explorer/static/index.html`
-- `tests/test_codegraph_explorer.py`
-- `tests/evidence/task-010/generate_explorer_evidence.py`
-- `tests/evidence/task-010/explorer_acceptance.json`
-- `tests/evidence/task-010/visual_review_samples.jsonl`
-- `tests/evidence/task-010/commands_and_results.txt`
+- `backend_target_resolver/__init__.py`
+- `backend_target_resolver/__main__.py`
+- `backend_target_resolver/resolver.py`
+- `tests/test_backend_target_resolver.py`
+- `tests/evidence/task-011/generate_phase4_evidence.py`
+- `tests/evidence/task-011/catalog_property_summary.json`
+- `tests/evidence/task-011/target_resolution_summary.json`
+- `tests/evidence/task-011/target_resolution_samples.jsonl`
+- `tests/evidence/task-011/target_pattern_inventory.json`
+- `tests/evidence/task-011/cache_performance.json`
+- `tests/evidence/task-011/commands_and_results.txt`
 
 ## Files modified
 
@@ -97,55 +126,54 @@ The explorer loads the accepted Task 008 relationship record by exact relationsh
 
 ## Tests executed
 
-- Exact local startup command and loopback `/health` request.
-- Two deterministic evidence-generation runs with SHA-256 comparison.
-- `.venv/bin/pytest tests/test_codegraph_explorer.py -q`
-- `.venv/bin/pytest -q`
+- Cold and warm full-corpus builds.
+- `.venv/bin/pytest tests/test_backend_target_resolver.py -q`.
+- `.venv/bin/pytest -q`.
 - Python compilation checks.
 - `git diff --check`.
-- Frozen-component and graph-index checks.
-- Full `staging/` hash snapshot comparison.
-- Full-corpus credential source-value comparison against all explorer projections.
+- Frozen-component and index-hash comparisons.
+- Full `staging/` tree hash comparison.
+- Credential and secret-like property value comparisons against generated indexes/cache.
 
 ## Test results
 
-- Explorer startup and UI load: **passed**.
-- Focused Task 010 tests: **5 passed**.
-- Acceptance evidence: **PASS**.
-- Repeated evidence outputs: **byte-identical**.
-- Graph counts observed: **4,718 nodes / 9,589 edges**.
-- Credential redaction: **passed**; 540 source credential values checked, zero exposed.
-- Task 007 exclusion: **passed**; all 113 unresolved occurrence IDs remain absent from graph IDs.
-- Frozen Task 009 graph hashes and `staging/`: **unchanged**.
-- Repository-wide suite: **27 passed, 5 setup errors**. The five errors remain the known frozen Phase 0 fixture-packaging issue because `tests/fixtures/repository_profile/staging` is absent. No Task 010 test failed.
+- Focused Task 011 tests: **5 passed**.
+- Cold/warm cache and deterministic output checks: **passed**.
+- Selective source/property invalidation: **passed**.
+- Canonical API coverage: **2,036 / 2,036 accounted for**.
+- Credential/secret redaction: **passed**; 540 credential values plus secret-like Catalog Property values checked, zero exposed.
+- Frozen Task 008/009 indexes and raw `staging/`: **unchanged**.
+- Repository-wide suite: **32 passed, 5 setup errors**. The errors remain the known frozen Phase 0 fixture-packaging issue because `tests/fixtures/repository_profile/staging` is absent. No Task 011 test failed.
 
 ## Generated artifacts
 
-- `tests/evidence/task-010/explorer_acceptance.json` — SHA-256 `cfcaead1fe5e2d20c15ca67f4e48ca309970337525179d88301ff19b53179a96`.
-- `tests/evidence/task-010/visual_review_samples.jsonl` — five deterministic scenarios; SHA-256 `4242e13d902120fe401401845d6948b23970f035424a1ec87e84bae26a1f2917`.
-- `tests/evidence/task-010/commands_and_results.txt` — startup, tests, immutability, and redaction results.
-- No artifact under `staging/`, `indexes/`, or `outputs/` was created or modified.
+- Local ignored: `indexes/catalog_properties.jsonl`, `indexes/backend_target_resolution.jsonl`, and `indexes/cache/phase4_resolution_cache.sqlite3`.
+- Committed: `tests/evidence/task-011/catalog_property_summary.json`, `target_resolution_summary.json`, `target_resolution_samples.jsonl`, `target_pattern_inventory.json`, `cache_performance.json`, and `commands_and_results.txt`.
+- The raw properties file and SQLite cache are not committed.
 
 ## Important findings
 
-- The accepted graph can be reviewed locally without a graph database, framework, external service, or new dependency.
-- Accepted registry-only and dual provenance can be distinguished without exposing raw source payloads.
-- Broad Application-centered depth-3 views can exceed the visual cap; the explorer makes this explicit and supports narrowing by depth and relationship type.
-- All 21 accepted isolated nodes remain reviewable without inferred repair edges.
-- No reproducible defect was found in a frozen component.
+- Exact Catalog Property evidence resolves 1,431 observations without name-based technology inference.
+- Parameterization is material: 626 observations retain explicit runtime tokens, while 324 contain at least one missing Catalog Property token.
+- The 67 operation-scoped observations prove that later dependency modeling must preserve operation context rather than flatten every target to API scope.
+- One non-protected property was secret-like and required conservative redaction; protection flags alone are not sufficient for safe publication.
+- Thirty-six canonical APIs are registry-only with no accepted YAML source, so target absence for them is evidence absence rather than proof of no backend.
+- No frozen-component defect was found.
 
 ## Unresolved issues
 
-- The 113 Task 007 Product-location occurrences remain unresolved and correctly excluded.
-- The five repository-wide Phase 0 setup errors remain unresolved because the frozen fixture directory is absent.
-- `api_uses_catalog_property` and `api_invokes_target` have no accepted edges to display in the current graph.
+- 825 observations remain unresolved due to missing, protected/redacted, runtime, or mixed parameterization evidence.
+- No conflicting Catalog Property values were observed, but conflict behavior is implemented and tested.
+- OAuth2/OIDC, third-party taxonomy, canonical backend identities, and graph enrichment remain explicit future non-goals for this task.
+- Five frozen Phase 0 tests still cannot start because their fixture directory is absent.
 
 ## Assumptions
 
-- Task 009 CodeGraph indexes and Task 008 relationship provenance are the authoritative read-only inputs.
-- Evidence labels are derived only from accepted `evidence_source_categories`.
-- A deterministic capped neighborhood is preferable to full-graph rendering, provided truncation is visible and reviewer controls can narrow the view.
-- APIC object IDs/self URLs already present in accepted graph nodes are approved structural metadata; credential payload values are not.
+- The accepted Phase 2 canonical identity source pointers identify authoritative API YAML for target inspection.
+- Only exact case-sensitive Catalog Property names are valid lookup keys.
+- Tokens with explicit runtime namespaces such as `request.*` remain runtime parameters; other unmatched tokens remain missing Catalog Properties.
+- Safe literal infrastructure values may exist only in ignored local indexes; committed samples omit unnecessary infrastructure values.
+- The 36 APIs without accepted YAML remain accounted for but cannot yield YAML target observations.
 
 ## Deviations from the prompt
 
@@ -153,7 +181,7 @@ None.
 
 ## Recommended next step
 
-Accept Phase 3 Task 010 as PASS and use the local explorer for Integration Architect and Enterprise Architect review. Do not begin another task until `CURRENT_TASKS.md` is updated externally.
+Accept Phase 4 Task 011 as PASS and have the Integration Architect and Enterprise Architect review the committed coverage, unresolved-pattern, operation-scope, and cache evidence before authorizing any canonical dependency nodes or CodeGraph enrichment. Do not begin another task until `CURRENT_TASKS.md` is updated externally.
 
 ## Final status
 

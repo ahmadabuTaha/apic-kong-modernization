@@ -1,0 +1,75 @@
+Phase 4 Task 011 — Catalog Properties Indexing & Target Resolution Foundation
+
+Primary build command:
+  .venv/bin/python -m backend_target_resolver
+
+Detected supplemental evidence:
+  staging/config/catalog-properties.json
+  SHA-256: 03da19af1d4de302d66ad77e60bffe6c3b6e5ae166593796f9ef818caef66191
+  Schema: object with catalogProperties array
+  Records: 326
+
+Generated local ignored artifacts:
+  indexes/catalog_properties.jsonl — 326 records — SHA-256 7b6ee3889260e9f26552f7a59c613326387a81df44742eadedd699306763b429
+  indexes/backend_target_resolution.jsonl — 2,334 records — SHA-256 6b21000cd1df943214bd96eccbb9b9a5ed3d3d2c8b55acf576237ac5e2ebee33
+  indexes/cache/phase4_resolution_cache.sqlite3 — local disposable SQLite cache; not committed
+
+Coverage result:
+  2,036 / 2,036 canonical APIs accounted for.
+  2,000 accepted API YAML files parsed on a cold run.
+  36 canonical APIs have no accepted YAML source; 22 sourced APIs have no explicit target observation.
+  1,978 APIs contain 2,334 explicit invoke target observations.
+
+Target result:
+  Property-referenced observations: 2,256
+  Fully property-resolved: 1,431
+  Observations with at least one missing catalog property: 324
+  Observations with conflicting catalog properties: 0
+  Observations with a protected/redacted catalog property: 1
+  Observations with explicit runtime parameter tokens: 626
+  Static literals: 78
+  APIs with multiple target observations: 133
+  API/shared observations: 2,267
+  Operation-scoped observations: 67
+
+Cache evidence generation:
+  .venv/bin/python tests/evidence/task-011/generate_phase4_evidence.py
+  Cold: 2,000 files parsed; 0 resolution hits; 2,000 resolution misses; 4.840511 seconds.
+  Warm: 0 files reparsed; 2,000 resolution hits; 0 misses; 0.373126 seconds.
+  Cold/warm property and target indexes: byte-identical.
+
+Focused tests:
+  .venv/bin/pytest tests/test_backend_target_resolver.py -q
+  Result: 5 passed in 8.47s.
+
+Repository-wide tests:
+  .venv/bin/pytest -q
+  Result: 32 passed, 5 setup errors in 24.43s.
+  The five errors are the known frozen Phase 0 fixture-packaging issue: tests/fixtures/repository_profile/staging is absent. No Task 011 test failed.
+
+Compilation and whitespace checks:
+  .venv/bin/python -m compileall -q backend_target_resolver
+  .venv/bin/python -m py_compile tests/evidence/task-011/generate_phase4_evidence.py tests/test_backend_target_resolver.py
+  git diff --check
+  Result: PASS.
+
+Selective cache invalidation tests:
+  One source hash changed: exactly one YAML reparse/resolution miss; unchanged source remained a cache hit.
+  Property-file hash changed: zero YAML reparses; parsed observations reused; property-dependent resolutions rebuilt.
+  Cached and uncached logical outputs: identical SHA-256.
+
+Frozen-component check:
+  Phase 0 through Phase 3 Task 010 diff check: no changes.
+  Task 008 relationship index SHA-256 remained d9fdc2e5cd61510335af572e03c21b27128d39cb9007104be774e24e3d3a8a0a.
+  Task 009 nodes SHA-256 remained bd420dc2c24474a02ac6efa03de51ce2d73d9b52480a780cf2abc9fb2838be3f.
+  Task 009 edges SHA-256 remained 9b03746b939362825012ca0c2f9239ff97f1ce2c6c5bf2550c1cbe0876b39ce1.
+  Task 009 adjacency SHA-256 remained 33306d177bd6c78fc337b15783e1203e02dc02abc853c54da599d12f2fa5ba7e.
+
+Staging immutability:
+  Full staging tree SHA-256 snapshot before and after resolution/tests: unchanged.
+
+Credential and secret redaction:
+  540 credential source values plus secret-like Catalog Property values compared against generated indexes/cache.
+  Result: PASS — zero values exposed. One non-protected secret-like Catalog Property was conservatively redacted.
+
+No backend identities, Catalog Property identities, CodeGraph nodes, or CodeGraph edges were created.

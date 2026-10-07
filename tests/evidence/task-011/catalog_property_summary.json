@@ -1,0 +1,18 @@
+{
+  "catalog_property_record_count": 326,
+  "conflicting_multiple_values_name_count": 0,
+  "distinct_exact_property_name_count": 326,
+  "indexed_record_count": 326,
+  "malformed_record_count": 0,
+  "observed_top_level_keys": [
+    "catalogProperties"
+  ],
+  "protected_or_unavailable_name_count": 1,
+  "protected_record_count": 0,
+  "repeated_same_value_name_count": 0,
+  "safe_value_record_count": 325,
+  "secret_like_redacted_record_count": 1,
+  "source_file": "staging/config/catalog-properties.json",
+  "source_file_sha256": "03da19af1d4de302d66ad77e60bffe6c3b6e5ae166593796f9ef818caef66191",
+  "unique_exact_value_name_count": 325
+}

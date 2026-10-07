@@ -1,0 +1,32 @@
+{
+  "backend_type_presence": {
+    "absent": 1572,
+    "present": 762
+  },
+  "http_verb_presence": {
+    "absent": 12,
+    "present": 2322
+  },
+  "invoke_shape_counts": {
+    "invoke.target-url": 2334
+  },
+  "scope_counts": {
+    "API_SHARED": 2267,
+    "OPERATION_SCOPED": 67
+  },
+  "symbolic_token_count_per_observation": {
+    "0": 78,
+    "1": 1531,
+    "2": 623,
+    "3": 98,
+    "5": 3,
+    "8": 1
+  },
+  "target_value_shape_counts": {
+    "CATALOG_PROPERTY_RESOLVED": 1431,
+    "CATALOG_PROPERTY_UNRESOLVED": 103,
+    "MIXED_PARAMETERIZED": 719,
+    "RUNTIME_PARAMETERIZED": 3,
+    "STATIC_LITERAL": 78
+  }
+}

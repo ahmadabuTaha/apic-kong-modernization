@@ -1,0 +1,39 @@
+{
+  "ambiguous_property_observations": 0,
+  "api_shared_observations": 2267,
+  "apis_inspected": 2036,
+  "apis_requiring_resolution": 2000,
+  "apis_served_entirely_from_resolution_cache": 0,
+  "apis_with_multiple_target_observations": 133,
+  "apis_with_no_explicit_target_observation": 58,
+  "apis_with_target_observations": 1978,
+  "apis_without_accepted_yaml_source": 36,
+  "fully_property_resolved_observations": 1431,
+  "missing_property_observations": 324,
+  "operation_scoped_observations": 67,
+  "property_referenced_observations": 2256,
+  "protected_property_observations": 1,
+  "resolution_reason_counts": {
+    "all_catalog_properties_resolved_exactly": 1431,
+    "partially_resolved_target_expression": 719,
+    "static_literal_target": 78,
+    "unresolved_due_to_missing_catalog_property": 102,
+    "unresolved_due_to_protected_catalog_property_value": 1,
+    "unresolved_due_to_runtime_parameterization": 3
+  },
+  "resolution_status_counts": {
+    "RESOLVED": 1509,
+    "UNRESOLVED": 825
+  },
+  "runtime_parameterized_observations": 626,
+  "static_literal_observations": 78,
+  "target_classification_counts": {
+    "CATALOG_PROPERTY_RESOLVED": 1431,
+    "CATALOG_PROPERTY_UNRESOLVED": 103,
+    "MIXED_PARAMETERIZED": 719,
+    "RUNTIME_PARAMETERIZED": 3,
+    "STATIC_LITERAL": 78
+  },
+  "total_canonical_apis": 2036,
+  "total_target_observations": 2334
+}
