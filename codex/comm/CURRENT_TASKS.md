@@ -2,8 +2,8 @@
 
 ## Active Task
 
-**Phase:** Phase 3 — Relationship Reconstruction  
-**Task:** 008 — Deterministic Relationship Reconstruction  
+**Phase:** Phase 3 — CodeGraph Core  
+**Task:** 009 — CodeGraph Core Construction  
 **Status:** READY_FOR_CODEX  
 **Task Type:** Implementation + Evidence Validation
 
@@ -11,42 +11,54 @@
 
 Read and execute:
 
-`codex/comm/prompts/phase-3-008-deterministic-relationship-reconstruction.md`
+`codex/comm/prompts/phase-3-009-codegraph-core-construction.md`
 
 ### Architecture Direction
 
-Phase 2 is accepted as PASS.
+Task 008 relationship reconstruction is accepted as PASS.
 
-Task 008 builds only the deterministic structural relationship index between resolved canonical APIC AS-IS identities. It does NOT build the CodeGraph yet.
+Task 009 builds the first deterministic CodeGraph over the accepted canonical identity and relationship indexes.
 
-Use only the approved relationship taxonomy and only explicit accepted evidence.
-
-Do not:
-- infer Domain or Exposure Channel;
-- create Logical API/Capability identities;
-- infer backend/runtime usage;
-- perform duplicate, retirement, rationalization, migration, or Kong design work;
-- promote the 113 unresolved Product-location occurrences into relationship records.
+Core rules:
+- represent every accepted canonical APIC identity exactly once as a graph node;
+- represent every accepted canonical relationship exactly once as a graph edge;
+- preserve canonical relationship direction;
+- support deterministic incoming/outgoing adjacency and bounded multi-hop traversal;
+- preserve provenance through pointers back to accepted Phase 2 / Task 008 records;
+- do not materialize inferred or transitive relationships;
+- routine graph queries must not rescan raw `staging/`;
+- the 113 Task 007 unresolved Product-location occurrences remain excluded.
 
 ### Required Evidence Artifacts
 
 Commit review evidence under:
 
-`tests/evidence/task-008/`
+`tests/evidence/task-009/`
 
 At minimum:
-- `relationship_counts.json`
-- `relationship_samples.jsonl`
-- `relationship_coverage.json`
+- `codegraph_integrity.json`
+- `codegraph_counts.json`
+- `traversal_samples.jsonl`
 - `commands_and_results.txt`
 
 Codex must reference these files in `codex/comm/HANSOFF.md`.
 
 ### Frozen Components
 
-Phase 0, Phase 1, and accepted Phase 2 identity resolution are frozen.
+Phase 0, Phase 1, Phase 2, Task 007, and Task 008 are frozen.
 
-Do not modify them unless Task 008 proves a concrete reproducible defect that blocks relationship reconstruction.
+Do not modify them unless Task 009 proves a concrete reproducible defect or broken downstream requirement.
+
+### Explicit Non-Goals
+
+Do not:
+- classify Domain or Exposure Channel;
+- create Logical API/Capability identities;
+- perform backend discovery;
+- infer runtime usage;
+- perform duplicate/retirement/rationalization analysis;
+- map or design Kong;
+- add a graph database, UI, or semantic/inferred edges.
 
 ### Mandatory Reporting Rule
 
@@ -54,13 +66,13 @@ The prose reporting artifact remains:
 
 `codex/comm/HANSOFF.md`
 
-HANSOFF must state whether Task 008 is:
+HANSOFF must state whether Task 009 is:
 - PASS;
 - FIX_REQUIRED; or
 - HOLD_FOR_ARCHITECTURE_REVIEW.
 
 ### Required Stop
 
-Stop after Task 008 implementation, evidence generation, validation, HANSOFF update, commit, and push.
+Stop after Task 009 implementation, evidence generation, validation, HANSOFF update, commit, and push.
 
-Do not begin CodeGraph construction, semantic enrichment, backend resolution, duplicate analysis, rationalization, or Kong design.
+Do not begin semantic enrichment, backend resolution, duplicate analysis, runtime enrichment, rationalization, migration planning, or Kong design.
