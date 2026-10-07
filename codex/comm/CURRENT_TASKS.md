@@ -2,8 +2,8 @@
 
 ## Active Task
 
-**Phase:** Phase 3 — Backend / Target Resolution  
-**Task:** 011 — Deterministic Backend / Target Resolution  
+**Phase:** Phase 4 — Dependency & Runtime-Configuration Resolution  
+**Task:** 011 — Catalog Properties Indexing & Target Resolution Foundation  
 **Status:** READY_FOR_CODEX  
 **Task Type:** Implementation + Evidence Validation
 
@@ -11,65 +11,92 @@
 
 Read and execute:
 
-`codex/comm/prompts/phase-3-011-backend-target-resolution.md`
+`codex/comm/prompts/phase-4-011-catalog-properties-and-target-resolution.md`
 
 ### Architecture Direction
 
-Task 010 CodeGraph Explorer is accepted as PASS.
+Phase 3 is accepted as structurally complete through Task 010:
+canonical identities → structural relationships → CodeGraph → visual explorer.
 
-Task 011 addresses the known structural gap:
+Task 011 begins Phase 4 using the newly supplied local configuration evidence:
 
-`api_invokes_target = 0`
+`staging/config/catalog-properties.json`
 
-The task must deterministically extract backend/target invocation evidence from explicit APIC source configuration and produce a target-resolution index for architecture review.
+Expected structure:
 
-Critical rule: the approved canonical object taxonomy currently has no backend/target object type.
+```json
+{
+  "catalogProperties": [
+    {"name": "ace-tip-internal", "value": "ip:port", "protected": ""}
+  ]
+}
+```
 
-Therefore Task 011 must:
-- resolve target evidence without inventing backend/target canonical nodes;
-- preserve static, dynamic, parameterized, unresolved, ambiguous, and broken-reference cases explicitly;
-- preserve operation-level scope when proven;
-- preserve source expression and provenance;
+Core rules:
+- index the properties file deterministically;
+- resolve exact symbolic references such as `$(ace-tip-internal)` only from exact property evidence;
+- do not infer backend technology from property names;
+- preserve missing, conflicting, protected, and runtime-parameterized cases explicitly;
 - account for all 2,036 canonical APIs;
-- keep Task 008 relationships and Task 009 CodeGraph unchanged;
-- not emit `api_invokes_target` edges yet.
+- build a lightweight local reusable cache to avoid repeated YAML parsing;
+- keep Task 008 relationships, Task 009 CodeGraph, and Task 010 Explorer unchanged;
+- do not emit dependency graph nodes/edges yet.
 
-### Required Generated Index
+### Lightweight Cache Requirement
 
-Recommended local ignored index:
+Preferred implementation: Python standard library SQLite.
 
-`indexes/backend_target_resolution.jsonl`
+Recommended local ignored cache:
+
+`indexes/cache/phase4_resolution_cache.sqlite3`
+
+Cache invalidation must use:
+- source file SHA-256;
+- parser/schema version;
+- relevant catalog-properties file SHA-256.
+
+Warm runs should reuse cached parsed observations and avoid unnecessary raw YAML reads.
+
+Do not modify `.gitignore` and do not commit the cache.
+
+### Required Generated Indexes
+
+Local ignored:
+- `indexes/catalog_properties.jsonl`
+- `indexes/backend_target_resolution.jsonl`
+- `indexes/cache/phase4_resolution_cache.sqlite3`
 
 ### Required Evidence Artifacts
 
-Commit review evidence under:
+Commit under:
 
 `tests/evidence/task-011/`
 
 At minimum:
+- `catalog_property_summary.json`
 - `target_resolution_summary.json`
 - `target_resolution_samples.jsonl`
-- `invocation_mechanism_inventory.json`
+- `target_pattern_inventory.json`
+- `cache_performance.json`
 - `commands_and_results.txt`
-
-Codex must reference these files in `codex/comm/HANSOFF.md`.
 
 ### Frozen Components
 
-Phase 0, Phase 1, Phase 2, Task 007, Task 008, Task 009, and Task 010 are frozen.
+Phase 0 through Phase 3 Task 010 are frozen.
 
-Do not modify them unless Task 011 proves a concrete reproducible defect that blocks target resolution.
+Do not modify them unless Task 011 proves a concrete reproducible defect that blocks Phase 4 resolution.
 
 ### Explicit Non-Goals
 
 Do not:
-- invent a backend/target canonical object type;
-- add backend nodes to CodeGraph;
-- emit `api_invokes_target` relationships;
-- add catalog-property nodes/relationships;
+- create canonical backend nodes;
+- emit `api_invokes_target` edges;
+- create canonical Catalog Property nodes yet;
+- emit `api_uses_catalog_property` edges yet;
+- fully model OAuth2/OIDC dependencies;
+- fully model third-party dependencies;
 - infer runtime usage;
 - perform duplicate/retirement/rationalization analysis;
-- classify Domain or Exposure Channel;
 - map or design Kong;
 - design migration waves.
 
@@ -86,6 +113,6 @@ HANSOFF must state whether Task 011 is:
 
 ### Required Stop
 
-Stop after Task 011 implementation, evidence generation, validation, HANSOFF update, commit, and push.
+Stop after Phase 4 Task 011 implementation, evidence generation, validation, HANSOFF update, commit, and push.
 
-Do not begin backend canonical modeling, CodeGraph enrichment, semantic duplicate analysis, runtime enrichment, rationalization, migration planning, or Kong design.
+Do not begin later dependency modeling or CodeGraph enrichment.
