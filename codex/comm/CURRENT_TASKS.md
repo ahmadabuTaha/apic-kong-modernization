@@ -2,59 +2,65 @@
 
 ## Active Task
 
-**Phase:** Phase 2 — URI / Identifier Resolution  
-**Task:** 007 — Targeted Investigation of 113 Unresolved Product-Location API Occurrences  
+**Phase:** Phase 3 — Relationship Reconstruction / CodeGraph  
+**Task:** 008 — Deterministic Relationship Reconstruction  
 **Status:** READY_FOR_CODEX  
-**Task Type:** Targeted Investigation
+**Task Type:** Implementation + Evidence Validation
 
 ### Prompt
 
 Read and execute:
 
-`codex/comm/prompts/phase-2-007-targeted-investigation-unresolved-product-location-apis.md`
+`codex/comm/prompts/phase-3-008-deterministic-relationship-reconstruction.md`
 
 ### Architecture Direction
 
-Do not begin Phase 3.
+Phase 2 is accepted as PASS.
 
-Investigate and explain exactly why Task 006 left 113 Product-location API occurrences unresolved.
+Task 008 builds only deterministic structural relationships between resolved canonical APIC AS-IS identities.
 
-The task must:
-- enumerate all 113 records;
-- prove how the 113 population is derived;
-- inspect the admissible identity/reference evidence for each record;
-- distinguish correctly unresolved evidence from any reproducible resolver defect;
-- preserve the existing no-name-only/no-hash-only merge rules;
-- leave Phase 0 and Phase 1 frozen;
-- avoid changing the resolver unless a concrete Task 006 defect is first proven.
+Use only the approved relationship taxonomy and only explicit accepted evidence.
+
+Do not:
+- infer Domain or Exposure Channel;
+- create Logical API/Capability identities;
+- infer backend/runtime usage;
+- perform duplicate, retirement, rationalization, migration, or Kong design work;
+- promote the 113 unresolved Product-location occurrences into graph relationships.
 
 ### Required Evidence Artifacts
 
-This task explicitly requires committed investigation evidence under:
+Commit review evidence under:
 
-`tests/evidence/task-007/`
+`tests/evidence/task-008/`
 
 At minimum:
-- `unresolved_product_location_apis.jsonl`
-- `investigation_summary.json`
+- `relationship_counts.json`
+- `relationship_samples.jsonl`
+- `relationship_coverage.json`
 - `commands_and_results.txt`
 
-Codex must reference these artifacts in `codex/comm/HANSOFF.md`.
+Codex must reference these files in `codex/comm/HANSOFF.md`.
 
-### Reporting
+### Frozen Components
+
+Phase 0, Phase 1, and accepted Phase 2 identity resolution are frozen.
+
+Do not modify them unless Task 008 proves a concrete reproducible defect that blocks relationship reconstruction.
+
+### Mandatory Reporting Rule
 
 The prose reporting artifact remains:
 
 `codex/comm/HANSOFF.md`
 
-HANSOFF must explain the 113 with representative evidence and state whether Phase 2 is:
-
+HANSOFF must state whether Task 008 is:
 - PASS;
 - FIX_REQUIRED; or
 - HOLD_FOR_ARCHITECTURE_REVIEW.
 
 ### Required Stop
 
-Stop after Task 007 investigation, evidence generation, focused validation, HANSOFF update, commit, and push.
+Stop after Task 008 implementation, evidence generation, validation, HANSOFF update, commit, and push.
 
-Do not begin Phase 3 relationship reconstruction.
+Do not begin semantic enrichment, backend resolution, duplicate analysis, rationalization, or Kong design.
