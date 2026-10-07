@@ -2,7 +2,7 @@
 
 ## Phase
 
-Phase 3 — Relationship Reconstruction / CodeGraph
+Phase 3 — Relationship Reconstruction
 
 ## Task Type
 
@@ -12,9 +12,9 @@ Implementation + evidence validation.
 
 Implement the first deterministic Phase 3 relationship layer over the frozen Phase 1 occurrence index and accepted Phase 2 APIC identity-resolution output.
 
-The goal is to convert already-resolved structural references into explicit, provenance-preserving canonical relationships between canonical APIC AS-IS identities.
+The goal is to convert already-resolved structural references into explicit, provenance-preserving canonical structural relationships between canonical APIC AS-IS identities.
 
-This task must build structural graph edges only.
+This task must build a deterministic structural relationship index only. It must NOT build a CodeGraph model, graph database, graph traversal layer, node model, graph query layer, or semantic graph.
 
 It must NOT perform semantic classification, backend inference, runtime reasoning, duplicate analysis, rationalization, or Kong target-state design.
 
@@ -70,18 +70,18 @@ Use only the already approved relationship taxonomy:
 
 For Task 008, emit only relationships that are directly supported by current accepted Phase 1 / Phase 2 structural evidence.
 
-Do not emit `api_uses_catalog_property` or `api_invokes_target` merely because those relationship types are approved. If current evidence does not support them, report zero edges and preserve the gap.
+Do not emit `api_uses_catalog_property` or `api_invokes_target` merely because those relationship types are approved. If current evidence does not support them, report zero relationships and preserve the gap.
 
 Do not add a new relationship type.
 
 ## Structural Truth Rules
 
-Every emitted edge must satisfy all of the following:
+Every emitted relationship must satisfy all of the following:
 
 1. both source and target canonical identities are resolved;
 2. the relationship is supported by explicit source/reference evidence already preserved by Phase 1/Phase 2;
-3. the edge retains provenance back to the contributing occurrence/reference evidence;
-4. unresolved/ambiguous evidence is not converted into an edge;
+3. the relationship retains provenance back to the contributing occurrence/reference evidence;
+4. unresolved/ambiguous evidence is not converted into an relationship;
 5. registry evidence may prove a registry relationship but must not fabricate missing authoritative configuration;
 6. Subscription proves entitlement/reference structure only, not runtime usage;
 7. no relationship may be inferred from names, hashes, semantic similarity, or runtime assumptions.
@@ -211,7 +211,7 @@ Prefer:
 
 unless an existing repository convention requires a different implementation-owned name.
 
-Each edge must contain at minimum:
+Each relationship must contain at minimum:
 
 - deterministic relationship ID;
 - approved `relationship_type`;
@@ -220,7 +220,7 @@ Each edge must contain at minimum:
 - target canonical object ID;
 - target canonical object type;
 - evidence state using the already-approved evidence vocabulary;
-- source/reference provenance sufficient to trace the edge;
+- source/reference provenance sufficient to trace the relationship;
 - contributing Phase 1 extracted record IDs where applicable;
 - raw reference value(s) where applicable;
 - Phase 2 resolution reference/status where applicable;
@@ -239,18 +239,18 @@ The graph must distinguish:
 - duplicate source occurrences that prove the same canonical relationship;
 - genuinely distinct canonical relationships.
 
-If multiple source occurrences prove the same canonical source → relationship type → canonical target edge:
+If multiple source occurrences prove the same canonical source → relationship type → canonical target relationship:
 
-- emit one canonical edge;
-- retain all contributing provenance/evidence references on that edge.
+- emit one canonical relationship;
+- retain all contributing provenance/evidence references on that relationship.
 
 Do not count repeated registry/artifact occurrences as multiple enterprise relationships when they resolve to the same canonical endpoints and relationship type.
 
-The canonical edge key must be deterministic and based on canonical endpoints + approved relationship type, not source filename order.
+The canonical relationship key must be deterministic and based on canonical endpoints + approved relationship type, not source filename order.
 
 ## Unresolved Evidence Rules
 
-Do not create graph edges when:
+Do not create relationship records when:
 
 - source identity is unresolved;
 - target identity is unresolved;
@@ -258,7 +258,7 @@ Do not create graph edges when:
 - the reference is `BROKEN_REFERENCE`;
 - attachment would require name-only, hash-only, sibling inheritance, or semantic inference.
 
-The 113 Task 007 Product-location occurrences remain source evidence only and must not become standalone graph nodes or edges unless future architecture explicitly changes the identity contract.
+The 113 Task 007 Product-location occurrences remain source evidence only and must not become standalone graph nodes or relationships unless future architecture explicitly changes the identity contract.
 
 ## Required Evidence Artifact Directory
 
@@ -285,16 +285,16 @@ The evidence directory is required so architecture review can inspect what the c
 
 Include:
 
-- total canonical edges;
+- total canonical relationships;
 - count by approved relationship type;
 - count by evidence source category;
-- count of edges with multiple contributing source occurrences;
+- count of relationships with multiple contributing source occurrences;
 - zero-count approved relationship types explicitly listed;
-- unresolved/ambiguous/broken references that were not emitted as edges, grouped by existing approved resolution outcome where applicable.
+- unresolved/ambiguous/broken references that were not emitted as relationships, grouped by existing approved resolution outcome where applicable.
 
 ### relationship_samples.jsonl
 
-Provide deterministic representative edge samples for every relationship type with a non-zero count.
+Provide deterministic representative relationship samples for every relationship type with a non-zero count.
 
 Each sample should show:
 
@@ -334,7 +334,7 @@ Capture meaningful commands and results used to:
 
 - build the relationship index;
 - verify deterministic output;
-- verify edge counts;
+- verify relationship counts;
 - run focused tests;
 - run repository-wide tests;
 - verify source immutability;
@@ -348,17 +348,17 @@ Do not include secrets.
 Add focused Phase 3 tests covering at minimum:
 
 - deterministic relationship IDs;
-- canonical edge deduplication with multiple provenance sources;
+- canonical relationship deduplication with multiple provenance sources;
 - Product → API reconstruction;
 - Product → Plan reconstruction;
 - contextual Plan → API reconstruction;
 - Application → Consumer Org reconstruction;
 - Credential → Application reconstruction;
 - Subscription → Application/Product/Plan reconstruction;
-- unresolved target does not emit an edge;
-- ambiguous/broken reference does not emit an edge;
-- name-only/hash-only evidence does not emit an edge;
-- the 113 Task 007 unresolved Product-location occurrences are not promoted into graph relationships;
+- unresolved target does not emit an relationship;
+- ambiguous/broken reference does not emit an relationship;
+- name-only/hash-only evidence does not emit an relationship;
+- the 113 Task 007 unresolved Product-location occurrences are not promoted into relationship records;
 - no credential secret/client-ID values are emitted;
 - repeated full-corpus runs produce byte-identical relationship output;
 - raw `staging/` remains unchanged.
@@ -369,7 +369,7 @@ Use:
 
 ```text
 Phase 2 canonical identity-resolution output
-→ Phase 1 extracted records only where edge provenance/reference detail is needed
+→ Phase 1 extracted records only where relationship provenance/reference detail is needed
 → Task 007 evidence where the 113 unresolved copies need validation
 → targeted raw staging evidence only for verification
 ```
@@ -421,14 +421,14 @@ HANSOFF must reference the committed Task 008 evidence directory and report:
 1. files created/modified;
 2. relationship builder implementation structure;
 3. exact relationship-index path;
-4. total canonical edges;
+4. total canonical relationships;
 5. counts by approved relationship type;
 6. authoritative-artifact-backed vs registry-backed relationship evidence;
-7. canonical-edge deduplication findings;
+7. canonical-relationship deduplication findings;
 8. Product → API / Product → Plan / Plan → API coverage;
 9. Application/Credential/Subscription relationship coverage;
 10. zero-count approved relationship types and why;
-11. unresolved/ambiguous/broken evidence excluded from edges;
+11. unresolved/ambiguous/broken evidence excluded from relationships;
 12. confirmation that the 113 Task 007 occurrences were not improperly promoted;
 13. deterministic repeated-run SHA-256;
 14. credential-redaction result;
@@ -442,10 +442,10 @@ HANSOFF must reference the committed Task 008 evidence directory and report:
 Task 008 is complete only when:
 
 - the canonical relationship index is deterministic;
-- all emitted edges use only approved relationship types;
-- every edge has canonical endpoints and provenance;
-- repeated source evidence is deduplicated into one canonical edge while preserving all evidence;
-- unresolved/ambiguous/broken references do not become edges;
+- all emitted relationships use only approved relationship types;
+- every relationship has canonical endpoints and provenance;
+- repeated source evidence is deduplicated into one canonical relationship while preserving all evidence;
+- unresolved/ambiguous/broken references do not become relationships;
 - the 113 unresolved Product-location occurrences remain unresolved source evidence;
 - required review evidence is committed under `tests/evidence/task-008/`;
 - focused tests pass;
