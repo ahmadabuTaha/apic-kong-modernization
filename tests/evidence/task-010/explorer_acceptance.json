@@ -1,0 +1,62 @@
+{
+  "credential_redaction_result": {
+    "observed_source_values_checked": 540,
+    "passed": true,
+    "values_exposed": 0
+  },
+  "depth_1_2_3_checks": {
+    "1": 3,
+    "2": 3,
+    "3": 3
+  },
+  "dual_relationship_result": {
+    "category": "dual",
+    "relationship_id": "apic-relationship:sha256:000092a7a155c4e5d2842cc1209332fb21f8f4f87399bb74cd256b861d03f9a8"
+  },
+  "exact_local_run_command": ".venv/bin/python -m codegraph_explorer",
+  "frozen_component_modification_check": {
+    "codegraph_index_sha256": {
+      "indexes/codegraph_adjacency.jsonl": "33306d177bd6c78fc337b15783e1203e02dc02abc853c54da599d12f2fa5ba7e",
+      "indexes/codegraph_edges.jsonl": "9b03746b939362825012ca0c2f9239ff97f1ce2c6c5bf2550c1cbe0876b39ce1",
+      "indexes/codegraph_nodes.jsonl": "bd420dc2c24474a02ac6efa03de51ce2d73d9b52480a780cf2abc9fb2838be3f"
+    },
+    "explorer_is_read_only": true
+  },
+  "graph_edge_count_seen": 9589,
+  "graph_node_count_seen": 4718,
+  "isolated_node_result": {
+    "node_id": "apic-identity:sha256:144297969f8be24c16542f4ccfc516d77025ecb282f147252a13217beec1b2f7",
+    "returned_edge_count": 0,
+    "returned_node_count": 1
+  },
+  "node_search_checks": {
+    "canonical_id": true,
+    "name_title_substring": true
+  },
+  "object_type_filter_check": true,
+  "overall_pass": true,
+  "provenance_drill_down_result": {
+    "occurrence_ids_present": true,
+    "relationship_reference_present": true,
+    "source_paths_present": true
+  },
+  "registry_only_relationship_result": {
+    "category": "registry_only",
+    "relationship_id": "apic-relationship:sha256:000cc1a3eccda006c3df18fc1303405334f58cc15f1ad243d8b1c7bd68332a32"
+  },
+  "startup_result": {
+    "health_status": "ready",
+    "ui_loaded": true
+  },
+  "traversal_direction_checks": {
+    "both": true,
+    "incoming": true,
+    "outgoing": true
+  },
+  "visualization_limit_guardrail_result": {
+    "limit_exceeded": true,
+    "returned_edge_count": 1,
+    "returned_node_count": 2,
+    "visible_message": "Visualization limit reached (2 nodes / 1 edges). Showing a deterministic subset; reduce depth or relationship filters."
+  }
+}

@@ -2,99 +2,94 @@
 
 ## Task executed
 
-Phase 3 — Task 009: CodeGraph Core Construction.
+Phase 3 — Task 010: CodeGraph Explorer / Visualization.
 
 ## Prompt file used
 
-`codex/comm/prompts/phase-3-009-codegraph-core-construction.md`
+`codex/comm/prompts/phase-3-010-codegraph-explorer-visualization.md`
 
 ## Summary of what was done
 
-- Implemented a deterministic CodeGraph over the accepted Phase 2 canonical identity index and Task 008 relationship index.
-- Materialized each of the 4,718 canonical identities exactly once as a graph node and each of the 9,589 accepted relationships exactly once as a directed edge.
-- Added validated incoming/outgoing adjacency, exact lookup, filtered neighbor queries, and bounded cycle-safe traversal.
-- Preserved canonical IDs, relationship IDs, direction, evidence state, and source-index provenance pointers without inventing relationships.
-- Kept all 113 Task 007 unresolved Product-location occurrences excluded.
-- Added deterministic review evidence, representative traversal samples, a CLI, and focused tests.
-- Did not modify frozen Phase 0, Phase 1, Phase 2, Task 007, Task 008, raw `staging/`, `CURRENT_TASKS.md`, or prompt files.
+- Built a lightweight, read-only local explorer over the accepted Task 009 CodeGraph indexes.
+- Added canonical-ID, exact-name, and case-insensitive name/title substring search with approved object-type filtering.
+- Added incoming, outgoing, and both-direction targeted neighborhoods at depths 1–3 with approved relationship filters.
+- Added a self-contained directed SVG view with node types/labels, relationship labels, selected node/edge state, active controls, one-node expansion, reset, and clear.
+- Added allowlisted node and edge detail projections with accepted Task 008 provenance drill-down and registry-only/dual evidence labels.
+- Enforced deterministic limits of 80 nodes and 120 edges with a visible warning and no silent truncation.
+- Preserved isolated nodes and all accepted graph semantics; no node, edge, direction, identity, relationship, or provenance was inferred or mutated.
 
-## Implementation structure
+## Explorer implementation structure
 
-- `codegraph/graph.py`: graph construction, validation, JSONL serialization/loading, adjacency, lookups, neighbors, and bounded traversal.
-- `codegraph/__init__.py`: public CodeGraph API and graph constants.
-- `codegraph/__main__.py`: `build`, `node`, `neighbors`, and `traverse` commands.
-- `tests/evidence/task-009/generate_codegraph_evidence.py`: deterministic evidence generator.
-- `tests/test_codegraph.py`: synthetic and full-corpus integrity, traversal, immutability, and credential-redaction tests.
+- `codegraph_explorer/explorer.py`: read-only query layer, safe projections, deterministic visualization cap, JSON endpoints, and standard-library local HTTP server.
+- `codegraph_explorer/static/index.html`: self-contained HTML/CSS/JavaScript SVG review interface; no CDN or hosted dependency.
+- `codegraph_explorer/__init__.py`: public explorer API.
+- `codegraph_explorer/__main__.py`: local module entry point.
+- `tests/test_codegraph_explorer.py`: focused synthetic, HTTP smoke, and full-corpus acceptance tests.
+- `tests/evidence/task-010/generate_explorer_evidence.py`: deterministic review-evidence generator.
 
-## Generated CodeGraph indexes
+## Exact run command
 
-- `indexes/codegraph_nodes.jsonl`: 4,718 records; SHA-256 `bd420dc2c24474a02ac6efa03de51ce2d73d9b52480a780cf2abc9fb2838be3f`.
-- `indexes/codegraph_edges.jsonl`: 9,589 records; SHA-256 `9b03746b939362825012ca0c2f9239ff97f1ce2c6c5bf2550c1cbe0876b39ce1`.
-- `indexes/codegraph_adjacency.jsonl`: 4,718 records; SHA-256 `33306d177bd6c78fc337b15783e1203e02dc02abc853c54da599d12f2fa5ba7e`.
+```text
+.venv/bin/python -m codegraph_explorer
+```
 
-These are local ignored derived artifacts and are not version-controlled.
+Open `http://127.0.0.1:8765`. The explorer binds only to loopback by default.
 
-## Node counts
+## Dependencies introduced
 
-| Canonical identity type | Nodes |
-|---|---:|
-| `api_artifact` | 2,036 |
-| `application` | 256 |
-| `catalog_config` | 2 |
-| `catalog_property` | 0 |
-| `consumer_org` | 28 |
-| `credential` | 270 |
-| `plan` | 596 |
-| `product` | 511 |
-| `subscription` | 1,019 |
-| **Total** | **4,718** |
+None. The server uses the Python standard library, and the visual explorer is self-contained.
 
-## Edge counts
+## Graph indexes consumed
 
-| Accepted relationship type | Edges |
-|---|---:|
-| `product_contains_api` | 2,611 |
-| `product_contains_plan` | 596 |
-| `plan_entitles_api` | 2,799 |
-| `application_belongs_to_consumer_org` | 256 |
-| `credential_belongs_to_application` | 270 |
-| `subscription_belongs_to_application` | 1,019 |
-| `subscription_targets_product` | 1,019 |
-| `subscription_uses_plan` | 1,019 |
-| `api_uses_catalog_property` | 0 |
-| `api_invokes_target` | 0 |
-| **Total** | **9,589** |
+- `indexes/codegraph_nodes.jsonl`: 4,718 nodes.
+- `indexes/codegraph_edges.jsonl`: 9,589 edges.
+- `indexes/codegraph_adjacency.jsonl`: accepted incoming/outgoing adjacency.
+- `indexes/relationship_index.jsonl`: provenance drill-down only.
 
-## Integrity and traversal findings
+Normal explorer operation does not scan raw `staging/`.
 
-- Node IDs exactly match the 4,718 accepted canonical identity IDs; edge IDs exactly match the 9,589 accepted Task 008 relationship IDs.
-- All endpoints exist. Orphan edges, missing endpoints, unsupported types, duplicate nodes, and duplicate edges are zero.
-- Incoming and outgoing adjacency each contain all 9,589 edges exactly once.
-- Graph-only inferred edges and accepted relationships missing from the graph are zero.
-- 4,697 nodes are connected; 21 are isolated (19 `consumer_org`, 2 `catalog_config`). Isolation remains explicit rather than being repaired by inference.
-- Representative queries cover Product→API, Product→Plan→API, Application→Consumer Organization, and Application→Subscription→Product/Plan→API navigation.
-- Application-to-API traversal expresses structural entitlement/reference reachability only, not runtime consumption.
-- Missing-node lookups return explicit empty results. Traversal is deterministic, bounded, and prevents revisiting a node within a path.
+## Search, traversal, and filter capabilities
 
-## Evidence artifacts created
+- Search: canonical ID, exact name, case-insensitive name/title substring, and approved object type.
+- Traversal: incoming, outgoing, or both; depth 1, 2, or 3 only.
+- Relationship filters: the ten accepted Task 008 relationship types only.
+- View controls: select start node, select node/edge, expand one selected node, reset to start node, and clear.
+- Ordering: canonical IDs and relationship IDs are returned deterministically.
+- Every Application-centered view is labeled **Structural reachability, not runtime consumption.**
 
-- `tests/evidence/task-009/codegraph_integrity.json`: exact reconciliation, adjacency checks, unresolved-evidence exclusion, and overall PASS; SHA-256 `c4fd482298f38a4a5b4811422e22f241507bf848377b3a24b59b078e78b22e43`.
-- `tests/evidence/task-009/codegraph_counts.json`: node, edge, and connectivity counts; SHA-256 `5e3771914b8edc74d40e9e3033eb20f3b541864fa699de67c143276b3c5046a4`.
-- `tests/evidence/task-009/traversal_samples.jsonl`: eight deterministic query/traversal samples; SHA-256 `46f0196c952c2477c0f2d014af28f54a2e63f7a813834bf28479a12b0fdc0816`.
-- `tests/evidence/task-009/commands_and_results.txt`: build, query, determinism, test, immutability, and redaction results.
-- `tests/evidence/task-009/generate_codegraph_evidence.py`: deterministic evidence-generation helper.
+## Visualization size limit
+
+The default cap is 80 nodes and 120 edges. When the complete candidate neighborhood exceeds either cap, the explorer returns a deterministic subset and displays an explicit warning telling the reviewer to reduce depth or filter scope. Candidate and returned counts are exposed separately.
+
+## Node and edge details
+
+Node details expose only canonical object ID, approved object type, label/name/title/version, APIC object ID/self URL where accepted, incoming/outgoing counts, and the Phase 2 canonical record reference.
+
+Edge details expose relationship ID/type, canonical source/target IDs and types, evidence state, evidence-source category, Task 008 relationship pointer, contributing occurrence IDs, and accepted source paths/pointers. Raw references and arbitrary source payload fields are not exposed.
+
+## Provenance drill-down
+
+The explorer loads the accepted Task 008 relationship record by exact relationship ID and projects only allowlisted provenance. It distinguishes `registry_only`, `dual`, and `authoritative_only` only when the accepted evidence-source categories support that label. No provenance category is invented.
+
+## Review examples
+
+- API-centered: API `apic-identity:sha256:0009ee4eeece2430096ec9be843777a8e4258c260de73c9f9fb702bc865a55ce` shows three nodes and two incoming Product/Plan edges with Task 008 provenance.
+- Product-centered: Product `apic-identity:sha256:00a9ee8fd6539fb17d371dc3f561e3cf84b2cf2532437282f2232686f858c2a0` shows contained API, contained Plan, and Plan-entitled API across three accepted edges.
+- Application-centered: Application `apic-identity:sha256:0206b436e7ceda8c411d6c213c735ffd84269dcedb7185054952dae274aaff6e` reaches its Consumer Org, Subscriptions, Products, contextual Plans, and APIs. Its broad depth-3 review produces a deterministic 80-node/79-edge subset and a visible size warning. This is structural reachability, not runtime consumption.
+- Registry-only: Relationship `apic-relationship:sha256:000cc1a3eccda006c3df18fc1303405334f58cc15f1ad243d8b1c7bd68332a32` is shown as `registry_only` from accepted provenance.
+- Isolated node: Consumer Org `apic-identity:sha256:144297969f8be24c16542f4ccfc516d77025ecb282f147252a13217beec1b2f7` displays alone with zero edges; no relationship is inferred.
 
 ## Files created
 
-- `codegraph/__init__.py`
-- `codegraph/__main__.py`
-- `codegraph/graph.py`
-- `tests/test_codegraph.py`
-- `tests/evidence/task-009/generate_codegraph_evidence.py`
-- `tests/evidence/task-009/codegraph_integrity.json`
-- `tests/evidence/task-009/codegraph_counts.json`
-- `tests/evidence/task-009/traversal_samples.jsonl`
-- `tests/evidence/task-009/commands_and_results.txt`
+- `codegraph_explorer/__init__.py`
+- `codegraph_explorer/__main__.py`
+- `codegraph_explorer/explorer.py`
+- `codegraph_explorer/static/index.html`
+- `tests/test_codegraph_explorer.py`
+- `tests/evidence/task-010/generate_explorer_evidence.py`
+- `tests/evidence/task-010/explorer_acceptance.json`
+- `tests/evidence/task-010/visual_review_samples.jsonl`
+- `tests/evidence/task-010/commands_and_results.txt`
 
 ## Files modified
 
@@ -102,53 +97,55 @@ These are local ignored derived artifacts and are not version-controlled.
 
 ## Tests executed
 
-- Two complete CodeGraph index/evidence generation runs with SHA-256 comparison.
-- Representative CLI node, neighbor, and traversal queries.
-- `.venv/bin/pytest tests/test_codegraph.py -q`
+- Exact local startup command and loopback `/health` request.
+- Two deterministic evidence-generation runs with SHA-256 comparison.
+- `.venv/bin/pytest tests/test_codegraph_explorer.py -q`
 - `.venv/bin/pytest -q`
-- `.venv/bin/python -m compileall -q codegraph`
-- `.venv/bin/python -m py_compile tests/evidence/task-009/generate_codegraph_evidence.py tests/test_codegraph.py`
-- `git diff --check`
-- Frozen-component diff check.
+- Python compilation checks.
+- `git diff --check`.
+- Frozen-component and graph-index checks.
 - Full `staging/` hash snapshot comparison.
-- Full-corpus credential source-value comparison against graph indexes and Task 009 evidence.
+- Full-corpus credential source-value comparison against all explorer projections.
 
 ## Test results
 
-- Focused Task 009 tests: **4 passed**.
-- Repeated full-corpus graph and evidence outputs: **byte-identical**.
-- Graph integrity and exact input reconciliation: **passed**.
-- Source immutability: **passed**, `staging/` unchanged.
-- Credential redaction: **passed**; 540 observed credential values checked, zero emitted.
-- Compilation and whitespace checks: **passed**.
-- Repository-wide suite: **22 passed, 5 setup errors**. The five errors are the known frozen Phase 0 fixture-packaging issue because `tests/fixtures/repository_profile/staging` is absent. No Task 009 test failed.
+- Explorer startup and UI load: **passed**.
+- Focused Task 010 tests: **5 passed**.
+- Acceptance evidence: **PASS**.
+- Repeated evidence outputs: **byte-identical**.
+- Graph counts observed: **4,718 nodes / 9,589 edges**.
+- Credential redaction: **passed**; 540 source credential values checked, zero exposed.
+- Task 007 exclusion: **passed**; all 113 unresolved occurrence IDs remain absent from graph IDs.
+- Frozen Task 009 graph hashes and `staging/`: **unchanged**.
+- Repository-wide suite: **27 passed, 5 setup errors**. The five errors remain the known frozen Phase 0 fixture-packaging issue because `tests/fixtures/repository_profile/staging` is absent. No Task 010 test failed.
 
 ## Generated artifacts
 
-- Local ignored indexes: `indexes/codegraph_nodes.jsonl`, `indexes/codegraph_edges.jsonl`, and `indexes/codegraph_adjacency.jsonl`.
-- Committed review artifacts: `tests/evidence/task-009/codegraph_integrity.json`, `codegraph_counts.json`, `traversal_samples.jsonl`, and `commands_and_results.txt`.
-- No file under `staging/`, `indexes/`, or `outputs/` is included in the Task 009 commit.
+- `tests/evidence/task-010/explorer_acceptance.json` — SHA-256 `cfcaead1fe5e2d20c15ca67f4e48ca309970337525179d88301ff19b53179a96`.
+- `tests/evidence/task-010/visual_review_samples.jsonl` — five deterministic scenarios; SHA-256 `4242e13d902120fe401401845d6948b23970f035424a1ec87e84bae26a1f2917`.
+- `tests/evidence/task-010/commands_and_results.txt` — startup, tests, immutability, and redaction results.
+- No artifact under `staging/`, `indexes/`, or `outputs/` was created or modified.
 
 ## Important findings
 
-- The accepted Phase 2/Task 008 evidence forms a complete graph with no missing accepted node or relationship and no invented graph-only edge.
-- Twenty-one accepted identities have no accepted Task 008 relationship; the graph preserves them as isolated nodes.
-- All 113 unresolved Product-location occurrences remain outside the CodeGraph.
-- The graph is structural only. It makes no semantic, runtime, backend, retirement, duplicate, rationalization, migration, or Kong-design assertion.
+- The accepted graph can be reviewed locally without a graph database, framework, external service, or new dependency.
+- Accepted registry-only and dual provenance can be distinguished without exposing raw source payloads.
+- Broad Application-centered depth-3 views can exceed the visual cap; the explorer makes this explicit and supports narrowing by depth and relationship type.
+- All 21 accepted isolated nodes remain reviewable without inferred repair edges.
 - No reproducible defect was found in a frozen component.
 
 ## Unresolved issues
 
-- The 113 Product-location occurrences remain unresolved and excluded pending future evidence or an explicit architecture-contract change.
-- `api_uses_catalog_property` and `api_invokes_target` remain absent because Task 008 contains no accepted relationships of those types.
-- The known frozen Phase 0 fixture-packaging issue continues to cause five repository-wide setup errors.
+- The 113 Task 007 Product-location occurrences remain unresolved and correctly excluded.
+- The five repository-wide Phase 0 setup errors remain unresolved because the frozen fixture directory is absent.
+- `api_uses_catalog_property` and `api_invokes_target` have no accepted edges to display in the current graph.
 
 ## Assumptions
 
-- The accepted Phase 2 identity index and Task 008 relationship index are authoritative graph inputs.
-- Canonical direction is the source/target direction recorded in each accepted Task 008 relationship.
-- Isolated accepted identities remain nodes even when no accepted relationship references them.
-- Traversal results express graph reachability only, never observed runtime use.
+- Task 009 CodeGraph indexes and Task 008 relationship provenance are the authoritative read-only inputs.
+- Evidence labels are derived only from accepted `evidence_source_categories`.
+- A deterministic capped neighborhood is preferable to full-graph rendering, provided truncation is visible and reviewer controls can narrow the view.
+- APIC object IDs/self URLs already present in accepted graph nodes are approved structural metadata; credential payload values are not.
 
 ## Deviations from the prompt
 
@@ -156,7 +153,7 @@ None.
 
 ## Recommended next step
 
-Accept Phase 3 Task 009 as PASS and have the Integration Architect and Enterprise Architect review the committed integrity, count, and traversal evidence. Do not start another task until `CURRENT_TASKS.md` is updated externally.
+Accept Phase 3 Task 010 as PASS and use the local explorer for Integration Architect and Enterprise Architect review. Do not begin another task until `CURRENT_TASKS.md` is updated externally.
 
 ## Final status
 

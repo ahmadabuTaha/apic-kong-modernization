@@ -1,0 +1,62 @@
+Phase 3 Task 010 — CodeGraph Explorer / Visualization
+
+Exact local startup command:
+  .venv/bin/python -m codegraph_explorer
+  Default URL: http://127.0.0.1:8765
+
+Startup smoke test:
+  .venv/bin/python -m codegraph_explorer --host 127.0.0.1 --port 8765
+  curl --fail --silent http://127.0.0.1:8765/health
+  Result: PASS — server reported ready with 4,718 nodes, 9,589 edges, an 80-node cap, and a 120-edge cap.
+
+Evidence generation:
+  .venv/bin/python tests/evidence/task-010/generate_explorer_evidence.py
+  Result: PASS — overall_pass=true.
+  explorer_acceptance.json SHA-256: cfcaead1fe5e2d20c15ca67f4e48ca309970337525179d88301ff19b53179a96
+  visual_review_samples.jsonl SHA-256: 4242e13d902120fe401401845d6948b23970f035424a1ec87e84bae26a1f2917
+  Repeated generation produced byte-identical artifacts.
+
+Focused tests:
+  .venv/bin/pytest tests/test_codegraph_explorer.py -q
+  Result: 5 passed in 4.13s.
+
+Repository-wide tests:
+  .venv/bin/pytest -q
+  Result: 27 passed, 5 setup errors in 10.71s.
+  The five errors are the known frozen Phase 0 fixture-packaging issue: tests/fixtures/repository_profile/staging is absent. No Task 010 test failed.
+
+Compilation and formatting checks:
+  .venv/bin/python -m compileall -q codegraph_explorer
+  .venv/bin/python -m py_compile tests/evidence/task-010/generate_explorer_evidence.py tests/test_codegraph_explorer.py
+  git diff --check
+  Result: PASS.
+
+Representative review scenarios:
+  API-centered: 3 nodes / 2 incoming Product and Plan edges, with provenance.
+  Product-centered: 3 nodes / 3 Product, Plan, and entitled-API edges, with provenance categories.
+  Application-centered: deterministic capped subset of 80 nodes / 79 edges; visible size warning; structural reachability only.
+  Registry-only: 2 nodes / 1 explicitly registry-only accepted edge.
+  Isolated node: 1 node / 0 edges; no relationship inferred.
+
+Visualization guardrail:
+  Forced 2-node / 1-edge limits on a depth-3 Product query.
+  Result: PASS — deterministic subset returned and visible reduce-depth/filter warning emitted.
+
+Frozen-component and graph-index check:
+  git diff --name-only -- repository_profiler source_extractor identity_resolver relationship_builder codegraph tests/evidence/task-007 tests/evidence/task-008 tests/evidence/task-009
+  Result: no changes.
+  Task 009 graph index SHA-256 values remained:
+    nodes:     bd420dc2c24474a02ac6efa03de51ce2d73d9b52480a780cf2abc9fb2838be3f
+    edges:     9b03746b939362825012ca0c2f9239ff97f1ce2c6c5bf2550c1cbe0876b39ce1
+    adjacency: 33306d177bd6c78fc337b15783e1203e02dc02abc853c54da599d12f2fa5ba7e
+
+Staging immutability check:
+  Full staging tree SHA-256 snapshot before and after explorer queries/tests.
+  Result: PASS — unchanged.
+
+Credential-redaction check:
+  Compared all allowlisted explorer node/edge/detail output against client_id, client_secret, and client_secret_hashed values in credential evidence.
+  Result: PASS — 540 source values checked; zero exposed.
+
+Task 007 unresolved-evidence check:
+  Result: PASS — all 113 unresolved occurrence IDs remain absent from graph node and edge IDs.
