@@ -1,0 +1,339 @@
+[
+  {
+    "api_count": 4,
+    "exact_path_pattern": "/components/securitySchemes/*",
+    "mechanism_name": "apikey",
+    "observation_class": "UNCLASSIFIED_DEPENDENCY_PATTERN",
+    "observation_count": 4,
+    "parser_origin": "TASK_012_PARSED",
+    "parser_support_status": "NON_DEPENDENCY_SECURITY_SCHEME",
+    "representative_source_pointers": [
+      "/components/securitySchemes/clientID",
+      "/components/securitySchemes/clientId"
+    ],
+    "resolution_state_counts": {
+      "NOT_APPLICABLE": 4
+    }
+  },
+  {
+    "api_count": 3,
+    "exact_path_pattern": "/components/securitySchemes/*",
+    "mechanism_name": "oauth2",
+    "observation_class": "SECURITY_PROVIDER",
+    "observation_count": 3,
+    "parser_origin": "TASK_012_PARSED",
+    "parser_support_status": "SUPPORTED",
+    "representative_source_pointers": [
+      "/components/securitySchemes/OAuth2.0",
+      "/components/securitySchemes/Oauth2"
+    ],
+    "resolution_state_counts": {
+      "RESOLVED": 3
+    }
+  },
+  {
+    "api_count": 3,
+    "exact_path_pattern": "/components/securitySchemes/*/flows/clientCredentials/tokenUrl",
+    "mechanism_name": "oauth2",
+    "observation_class": "SECURITY_PROVIDER",
+    "observation_count": 3,
+    "parser_origin": "TASK_012_PARSED",
+    "parser_support_status": "SUPPORTED",
+    "representative_source_pointers": [
+      "/components/securitySchemes/OAuth2.0/flows/clientCredentials/tokenUrl",
+      "/components/securitySchemes/Oauth2/flows/clientCredentials/tokenUrl"
+    ],
+    "resolution_state_counts": {
+      "UNRESOLVED": 3
+    }
+  },
+  {
+    "api_count": 1959,
+    "exact_path_pattern": "/securityDefinitions/*",
+    "mechanism_name": "apikey",
+    "observation_class": "UNCLASSIFIED_DEPENDENCY_PATTERN",
+    "observation_count": 2871,
+    "parser_origin": "TASK_012_PARSED",
+    "parser_support_status": "NON_DEPENDENCY_SECURITY_SCHEME",
+    "representative_source_pointers": [
+      "/securityDefinitions/API Secret",
+      "/securityDefinitions/Client Secret",
+      "/securityDefinitions/Client-Secret"
+    ],
+    "resolution_state_counts": {
+      "NOT_APPLICABLE": 2871
+    }
+  },
+  {
+    "api_count": 1161,
+    "exact_path_pattern": "/securityDefinitions/*",
+    "mechanism_name": "oauth2",
+    "observation_class": "SECURITY_PROVIDER",
+    "observation_count": 1161,
+    "parser_origin": "TASK_012_PARSED",
+    "parser_support_status": "SUPPORTED",
+    "representative_source_pointers": [
+      "/securityDefinitions/OAuth",
+      "/securityDefinitions/OAuth2",
+      "/securityDefinitions/OAuth2 Security"
+    ],
+    "resolution_state_counts": {
+      "RESOLVED": 1161
+    }
+  },
+  {
+    "api_count": 1,
+    "exact_path_pattern": "/securityDefinitions/*/authorizationUrl",
+    "mechanism_name": "oauth2",
+    "observation_class": "SECURITY_PROVIDER",
+    "observation_count": 1,
+    "parser_origin": "TASK_012_PARSED",
+    "parser_support_status": "SUPPORTED",
+    "representative_source_pointers": [
+      "/securityDefinitions/tipAccesCodeOauth2/authorizationUrl"
+    ],
+    "resolution_state_counts": {
+      "UNRESOLVED": 1
+    }
+  },
+  {
+    "api_count": 1161,
+    "exact_path_pattern": "/securityDefinitions/*/tokenUrl",
+    "mechanism_name": "oauth2",
+    "observation_class": "SECURITY_PROVIDER",
+    "observation_count": 1161,
+    "parser_origin": "TASK_012_PARSED",
+    "parser_support_status": "SUPPORTED",
+    "representative_source_pointers": [
+      "/securityDefinitions/OAuth/tokenUrl",
+      "/securityDefinitions/OAuth2 Security/tokenUrl",
+      "/securityDefinitions/OAuth2.0/tokenUrl"
+    ],
+    "resolution_state_counts": {
+      "RESOLVED": 112,
+      "UNRESOLVED": 1049
+    }
+  },
+  {
+    "api_count": 1,
+    "exact_path_pattern": "/x-ibm-configuration/assembly/catch/*/execute/*/invoke/target-url",
+    "mechanism_name": "invoke",
+    "observation_class": "BACKEND_INVOCATION",
+    "observation_count": 1,
+    "parser_origin": "TASK_011_REUSE",
+    "parser_support_status": "REUSED_TASK_011",
+    "representative_source_pointers": [
+      "/x-ibm-configuration/assembly/catch/0/execute/0/invoke/target-url"
+    ],
+    "resolution_state_counts": {
+      "UNRESOLVED": 1
+    }
+  },
+  {
+    "api_count": 1950,
+    "exact_path_pattern": "/x-ibm-configuration/assembly/execute/*/invoke/target-url",
+    "mechanism_name": "invoke",
+    "observation_class": "BACKEND_INVOCATION",
+    "observation_count": 2061,
+    "parser_origin": "TASK_011_REUSE",
+    "parser_support_status": "REUSED_TASK_011",
+    "representative_source_pointers": [
+      "/x-ibm-configuration/assembly/execute/0/invoke/target-url",
+      "/x-ibm-configuration/assembly/execute/1/invoke/target-url",
+      "/x-ibm-configuration/assembly/execute/2/invoke/target-url"
+    ],
+    "resolution_state_counts": {
+      "RESOLVED": 1359,
+      "UNRESOLVED": 702
+    }
+  },
+  {
+    "api_count": 3,
+    "exact_path_pattern": "/x-ibm-configuration/assembly/execute/*/jwt-validate/jws-jwk",
+    "mechanism_name": "jwt-validate",
+    "observation_class": "UNCLASSIFIED_DEPENDENCY_PATTERN",
+    "observation_count": 3,
+    "parser_origin": "TASK_012_PARSED",
+    "parser_support_status": "SUPPORTED",
+    "representative_source_pointers": [
+      "/x-ibm-configuration/assembly/execute/2/jwt-validate/jws-jwk"
+    ],
+    "resolution_state_counts": {
+      "UNRESOLVED": 3
+    }
+  },
+  {
+    "api_count": 7,
+    "exact_path_pattern": "/x-ibm-configuration/assembly/execute/*/operation-switch/case/*/execute/*/invoke/target-url",
+    "mechanism_name": "invoke",
+    "observation_class": "BACKEND_INVOCATION",
+    "observation_count": 67,
+    "parser_origin": "TASK_011_REUSE",
+    "parser_support_status": "REUSED_TASK_011",
+    "representative_source_pointers": [
+      "/x-ibm-configuration/assembly/execute/0/operation-switch/case/0/execute/0/invoke/target-url",
+      "/x-ibm-configuration/assembly/execute/0/operation-switch/case/0/execute/1/invoke/target-url",
+      "/x-ibm-configuration/assembly/execute/0/operation-switch/case/1/execute/0/invoke/target-url"
+    ],
+    "resolution_state_counts": {
+      "RESOLVED": 3,
+      "UNRESOLVED": 64
+    }
+  },
+  {
+    "api_count": 28,
+    "exact_path_pattern": "/x-ibm-configuration/assembly/execute/*/switch/case/*/execute/*/invoke/target-url",
+    "mechanism_name": "invoke",
+    "observation_class": "BACKEND_INVOCATION",
+    "observation_count": 181,
+    "parser_origin": "TASK_011_REUSE",
+    "parser_support_status": "REUSED_TASK_011",
+    "representative_source_pointers": [
+      "/x-ibm-configuration/assembly/execute/0/switch/case/0/execute/0/invoke/target-url",
+      "/x-ibm-configuration/assembly/execute/0/switch/case/0/execute/1/invoke/target-url",
+      "/x-ibm-configuration/assembly/execute/0/switch/case/0/execute/11/invoke/target-url"
+    ],
+    "resolution_state_counts": {
+      "RESOLVED": 124,
+      "UNRESOLVED": 57
+    }
+  },
+  {
+    "api_count": 1,
+    "exact_path_pattern": "/x-ibm-configuration/assembly/execute/*/switch/case/*/execute/*/websocket-upgrade/target-url",
+    "mechanism_name": "websocket-upgrade",
+    "observation_class": "EXTERNAL_HTTP_DEPENDENCY",
+    "observation_count": 1,
+    "parser_origin": "TASK_012_PARSED",
+    "parser_support_status": "SUPPORTED",
+    "representative_source_pointers": [
+      "/x-ibm-configuration/assembly/execute/0/switch/case/0/execute/2/websocket-upgrade/target-url"
+    ],
+    "resolution_state_counts": {
+      "RESOLVED": 1
+    }
+  },
+  {
+    "api_count": 8,
+    "exact_path_pattern": "/x-ibm-configuration/assembly/execute/*/switch/case/*/otherwise/*/invoke/target-url",
+    "mechanism_name": "invoke",
+    "observation_class": "BACKEND_INVOCATION",
+    "observation_count": 11,
+    "parser_origin": "TASK_011_REUSE",
+    "parser_support_status": "REUSED_TASK_011",
+    "representative_source_pointers": [
+      "/x-ibm-configuration/assembly/execute/0/switch/case/1/otherwise/0/invoke/target-url",
+      "/x-ibm-configuration/assembly/execute/0/switch/case/1/otherwise/4/invoke/target-url",
+      "/x-ibm-configuration/assembly/execute/1/switch/case/1/otherwise/0/invoke/target-url"
+    ],
+    "resolution_state_counts": {
+      "RESOLVED": 10,
+      "UNRESOLVED": 1
+    }
+  },
+  {
+    "api_count": 1,
+    "exact_path_pattern": "/x-ibm-configuration/assembly/execute/*/switch/case/*/otherwise/*/switch/case/*/execute/*/graphql-execute/targets/*/execute/*/invoke/target-url",
+    "mechanism_name": "invoke",
+    "observation_class": "BACKEND_INVOCATION",
+    "observation_count": 1,
+    "parser_origin": "TASK_011_REUSE",
+    "parser_support_status": "REUSED_TASK_011",
+    "representative_source_pointers": [
+      "/x-ibm-configuration/assembly/execute/0/switch/case/1/otherwise/1/switch/case/0/execute/0/graphql-execute/targets/0/execute/2/invoke/target-url"
+    ],
+    "resolution_state_counts": {
+      "RESOLVED": 1
+    }
+  },
+  {
+    "api_count": 1,
+    "exact_path_pattern": "/x-ibm-configuration/targets/AjeerELServices/securityDefinitions/*",
+    "mechanism_name": "apikey",
+    "observation_class": "UNCLASSIFIED_DEPENDENCY_PATTERN",
+    "observation_count": 1,
+    "parser_origin": "TASK_012_PARSED",
+    "parser_support_status": "NON_DEPENDENCY_SECURITY_SCHEME",
+    "representative_source_pointers": [
+      "/x-ibm-configuration/targets/AjeerELServices/securityDefinitions/clientID"
+    ],
+    "resolution_state_counts": {
+      "NOT_APPLICABLE": 1
+    }
+  },
+  {
+    "api_count": 1,
+    "exact_path_pattern": "/x-ibm-configuration/targets/AjeerELServices/x-ibm-configuration/assembly/execute/*/invoke/target-url",
+    "mechanism_name": "invoke",
+    "observation_class": "BACKEND_INVOCATION",
+    "observation_count": 1,
+    "parser_origin": "TASK_011_REUSE",
+    "parser_support_status": "REUSED_TASK_011",
+    "representative_source_pointers": [
+      "/x-ibm-configuration/targets/AjeerELServices/x-ibm-configuration/assembly/execute/0/invoke/target-url"
+    ],
+    "resolution_state_counts": {
+      "RESOLVED": 1
+    }
+  },
+  {
+    "api_count": 1,
+    "exact_path_pattern": "/x-ibm-configuration/targets/AjeerVisaService/securityDefinitions/*",
+    "mechanism_name": "apikey",
+    "observation_class": "UNCLASSIFIED_DEPENDENCY_PATTERN",
+    "observation_count": 1,
+    "parser_origin": "TASK_012_PARSED",
+    "parser_support_status": "NON_DEPENDENCY_SECURITY_SCHEME",
+    "representative_source_pointers": [
+      "/x-ibm-configuration/targets/AjeerVisaService/securityDefinitions/clientID"
+    ],
+    "resolution_state_counts": {
+      "NOT_APPLICABLE": 1
+    }
+  },
+  {
+    "api_count": 1,
+    "exact_path_pattern": "/x-ibm-configuration/targets/AjeerVisaService/x-ibm-configuration/assembly/execute/*/invoke/target-url",
+    "mechanism_name": "invoke",
+    "observation_class": "BACKEND_INVOCATION",
+    "observation_count": 1,
+    "parser_origin": "TASK_011_REUSE",
+    "parser_support_status": "REUSED_TASK_011",
+    "representative_source_pointers": [
+      "/x-ibm-configuration/targets/AjeerVisaService/x-ibm-configuration/assembly/execute/0/invoke/target-url"
+    ],
+    "resolution_state_counts": {
+      "RESOLVED": 1
+    }
+  },
+  {
+    "api_count": 10,
+    "exact_path_pattern": "/x-ibm-configuration/targets/MusanedService/securityDefinitions/*",
+    "mechanism_name": "apikey",
+    "observation_class": "UNCLASSIFIED_DEPENDENCY_PATTERN",
+    "observation_count": 10,
+    "parser_origin": "TASK_012_PARSED",
+    "parser_support_status": "NON_DEPENDENCY_SECURITY_SCHEME",
+    "representative_source_pointers": [
+      "/x-ibm-configuration/targets/MusanedService/securityDefinitions/clientID"
+    ],
+    "resolution_state_counts": {
+      "NOT_APPLICABLE": 10
+    }
+  },
+  {
+    "api_count": 10,
+    "exact_path_pattern": "/x-ibm-configuration/targets/MusanedService/x-ibm-configuration/assembly/execute/*/invoke/target-url",
+    "mechanism_name": "invoke",
+    "observation_class": "BACKEND_INVOCATION",
+    "observation_count": 10,
+    "parser_origin": "TASK_011_REUSE",
+    "parser_support_status": "REUSED_TASK_011",
+    "representative_source_pointers": [
+      "/x-ibm-configuration/targets/MusanedService/x-ibm-configuration/assembly/execute/0/invoke/target-url"
+    ],
+    "resolution_state_counts": {
+      "RESOLVED": 10
+    }
+  }
+]

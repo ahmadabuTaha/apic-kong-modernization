@@ -1,0 +1,39 @@
+Phase 4 Task 012 commands and results
+=====================================
+
+Command: .venv/bin/python -m dependency_discovery
+Result: PASS
+- Loaded 2,334 Task 011 backend observations from indexes/backend_target_resolution.jsonl.
+- Reparsed 0 Task 011 backend targets from YAML.
+- Accounted for 2,036 canonical APIs.
+- Wrote 8,814 observations to indexes/api_dependency_observations.jsonl.
+- Dependency index SHA-256: 0bdd8e1930fc3ef6756c2ec4515d8dcb23dcc7d26be747faf9620240b0bfe4f0
+- Pattern index SHA-256: c6ed5fa72c949c0dc03b10b5f53e6bae9695f32ee602ff455280999e6f3cdaee
+
+Command: .venv/bin/python tests/evidence/task-012/generate_dependency_evidence.py
+Result: PASS
+- Generated all required committed evidence files and 9 representative samples.
+- Cold build: 2,000 files parsed, 0 cache hits, 2,000 cache misses, 5.178551 seconds.
+- Warm build: 0 files reparsed, 2,000 cache hits, 0 cache misses, 0.644148 seconds.
+- Cold and warm dependency indexes were byte-identical.
+- Cold and warm pattern indexes were byte-identical.
+
+Command: .venv/bin/pytest tests/test_dependency_discovery.py -q
+Result: PASS — 3 passed in 8.75s.
+
+Command: .venv/bin/pytest -q
+Result: PARTIAL — 35 passed, 5 setup errors in 31.80s.
+- All Task 012 tests passed.
+- The five setup errors are the existing frozen Phase 0 fixture-packaging issue: tests/fixtures/repository_profile/staging is absent.
+
+Final validation results
+------------------------
+- Python compilation: PASS.
+- git diff --check: PASS.
+- Task 011 backend/property indexes: unchanged.
+- Task 008 relationship index: unchanged.
+- Task 009 CodeGraph node/edge/adjacency indexes: unchanged.
+- Task 010 Explorer: unchanged.
+- Raw staging tree: unchanged.
+- Credential, secret-like Catalog Property, and JWK/private-key material comparison: PASS; zero source values exposed in generated indexes, cache, committed evidence, or handoff.
+- No canonical dependency nodes or CodeGraph edges were created.

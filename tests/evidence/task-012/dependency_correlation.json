@@ -1,0 +1,14 @@
+{
+  "apis_with_backend_and_security_dependencies": 1158,
+  "apis_with_multiple_backend_targets": 133,
+  "apis_with_operation_scoped_dependencies": 7,
+  "configuration_tokens_shared_by_multiple_apis": 262,
+  "distinct_configuration_tokens": 442,
+  "distinct_resolved_endpoint_keys": 1151,
+  "distinct_security_provider_references": 3,
+  "maximum_apis_sharing_one_configuration_token": 1032,
+  "maximum_apis_sharing_one_resolved_endpoint_key": 1141,
+  "maximum_apis_sharing_one_security_provider_reference": 1141,
+  "resolved_endpoint_keys_shared_by_multiple_apis": 159,
+  "security_provider_references_shared_by_multiple_apis": 2
+}

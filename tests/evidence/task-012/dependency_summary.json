@@ -1,0 +1,32 @@
+{
+  "api_shared_dependency_observations": 8616,
+  "apis_accounted_for": 2036,
+  "apis_represented_by_task011_backend_observations": 1978,
+  "apis_with_configuration_reference_observations": 1960,
+  "apis_with_external_http_dependency_observations": 1,
+  "apis_with_multiple_dependency_classes": 1966,
+  "apis_with_no_supported_dependency_observation": 52,
+  "apis_with_security_provider_observations": 1164,
+  "apis_without_accepted_yaml_source": 36,
+  "observation_counts_by_class": {
+    "BACKEND_INVOCATION": 2334,
+    "CONFIGURATION_REFERENCE": 4147,
+    "EXTERNAL_HTTP_DEPENDENCY": 1,
+    "SECURITY_PROVIDER": 2329,
+    "UNCLASSIFIED_DEPENDENCY_PATTERN": 3
+  },
+  "operation_scoped_dependency_observations": 198,
+  "task011_backend_observations_loaded": 2334,
+  "task011_backend_yaml_reparse_count": 0,
+  "total_canonical_apis": 2036,
+  "total_dependency_observations": 8814,
+  "unresolved_observation_counts_by_exact_reason": {
+    "partially_resolved_target_expression": 719,
+    "runtime_context_reference": 653,
+    "unclassified_due_to_unsupported_security_scheme_shape": 3,
+    "unresolved_due_to_missing_catalog_property": 1460,
+    "unresolved_due_to_protected_catalog_property_value": 22,
+    "unresolved_due_to_runtime_parameterization": 3,
+    "unresolved_or_parameterized_dependency_reference": 1053
+  }
+}
