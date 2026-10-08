@@ -1,0 +1,42 @@
+Phase 4 Task 013 commands and results
+=====================================
+
+Command: git pull --ff-only origin main
+Result: PASS — fast-forwarded main from c508ca0 to f628612 before task execution.
+
+Command: .venv/bin/python -m backend_target_graph
+Result: PASS
+- Consumed 2,334 accepted Task 011 observations.
+- Admitted 2,332 observations with explicit safe target expressions.
+- Excluded 2 null target values under the explicit-evidence admission rule.
+- Generated 1,480 canonical backend_target nodes and 2,307 canonical api_invokes_target edges.
+- Graph integrity passed with zero missing/orphan endpoints.
+- Nodes SHA-256: ab5e43da1e4eff3457e2660c835d36ce1250042c9af9a13d9b883cf28c4b8482
+- Edges SHA-256: 95cb2d9446b89b703d65d85a7e387e46614997903b39fbb822ee0347fc988867
+- Adjacency SHA-256: 6e7a9f65c9237a765b7ffb8f08442c8dfc36e2d9ca686d65257cf7dfb281143f
+
+Command: .venv/bin/python tests/evidence/task-013/generate_task013_evidence.py
+Result: PASS
+- Repeated builds were byte-identical for nodes, edges, and adjacency.
+- Same-host/different-path separation passed across 137 observed host groups.
+- Explorer dependency acceptance passed.
+- Frozen structural graph and relationship hashes remained unchanged.
+
+Command: .venv/bin/pytest tests/test_backend_target_graph.py tests/test_codegraph_explorer.py -q
+Result: PASS — 8 passed in 18.88s.
+
+Command: .venv/bin/pytest -q
+Result: PARTIAL — 38 passed, 5 setup errors in 45.73s.
+- All Task 013 and Explorer tests passed.
+- The five setup errors are the known frozen Phase 0 fixture-packaging issue: tests/fixtures/repository_profile/staging is absent.
+
+Final validation results
+------------------------
+- Python compilation: PASS.
+- git diff --check: PASS.
+- Credential/secret comparison: PASS; zero sensitive source values exposed.
+- Frozen Phase 3 structural node, edge, adjacency, and Task 008 relationship indexes: byte-unchanged.
+- Task 011 and Task 012 accepted input indexes: byte-unchanged.
+- Raw staging tree: unchanged.
+- No Operation, Security Provider, Catalog Property, Configuration Reference, JWT, or JWK dependency nodes were created.
+- No files under staging/, indexes/, or outputs/ are committed by Task 013.

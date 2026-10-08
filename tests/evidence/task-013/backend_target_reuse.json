@@ -1,0 +1,174 @@
+{
+  "same_host_different_path_group_count": 137,
+  "same_host_different_path_representative": [
+    {
+      "distinct_backend_target_count": 63,
+      "distinct_path_count": 61,
+      "safe_host_key": "host-key:sha256:c14f3b725fdce8a71309412479e6d1073d8b96669772c6e447f03a141a9700ae",
+      "safe_path_samples": [
+        "/EstablishmentNoteService.svc",
+        "/EstablishmentSubscriptions_Check",
+        "/GetEstablishmentAllData"
+      ]
+    },
+    {
+      "distinct_backend_target_count": 12,
+      "distinct_path_count": 12,
+      "safe_host_key": "host-key:sha256:ccd82af4ca9e842f6b59c6d0cf38408f788dc52da70b3347134f960fce12cdda",
+      "safe_path_samples": [
+        "/estabmanagement/OpenUniEstBySBC",
+        "/estabmanagement/addestexistingcr",
+        "/estabmanagement/addestforextun"
+      ]
+    },
+    {
+      "distinct_backend_target_count": 21,
+      "distinct_path_count": 21,
+      "safe_host_key": "host-key:sha256:e709529fe2d18020cd01b05baa192d75687ab0052bfd44cf5b6c1721ac46a84a",
+      "safe_path_samples": [
+        "/kiosk/getSystemStatus",
+        "/qks_agent_management/v1/UserLogin",
+        "/qks_agent_management/v1/createAgent"
+      ]
+    }
+  ],
+  "same_host_different_path_separation_passed": true,
+  "sharing_is_not_duplicate_capability_evidence": true,
+  "symbolic_target_convergence_count": 118,
+  "symbolic_target_convergence_evidence": [
+    {
+      "api_count": 2,
+      "backend_target_id": "backend-target:sha256:004306da7fc2564006bea714d0bd1b6b289c43db3e5980549fc6554fba1c1f97",
+      "safe_target_representation": [
+        "$(target-url)/performanceCardRequestById"
+      ],
+      "source_observation_count": 2
+    },
+    {
+      "api_count": 2,
+      "backend_target_id": "backend-target:sha256:01e64b295126da443628ba1361c0704756a34a265d46a6f788d3636fa629cf8e",
+      "safe_target_representation": [
+        "$(cat-target-hostname)$(cat-target-url-momra)$(request.path)"
+      ],
+      "source_observation_count": 2
+    },
+    {
+      "api_count": 2,
+      "backend_target_id": "backend-target:sha256:0390f3d6c498958d1f5346ce8b0ae629cf863d4bea516056606c436ba85e029f",
+      "safe_target_representation": [
+        "$(ace-pay-makeandrefpay)$(request.path)"
+      ],
+      "source_observation_count": 2
+    },
+    {
+      "api_count": 5,
+      "backend_target_id": "backend-target:sha256:05154103cb3a8eb1eb8100d567688d41809e72536084a574707822235b30501b",
+      "safe_target_representation": [
+        "$(ace-vstv-vvutilities)$(request.path)"
+      ],
+      "source_observation_count": 5
+    },
+    {
+      "api_count": 2,
+      "backend_target_id": "backend-target:sha256:088af90db92d3181d216d0c3bd7f2bbbcbf52d26816c23116f2a6b5a4f3b6beb",
+      "safe_target_representation": [
+        "$(ace-tc-tcvalidates)$(request.path)"
+      ],
+      "source_observation_count": 2
+    },
+    {
+      "api_count": 7,
+      "backend_target_id": "backend-target:sha256:0ab039e810d8f75a06e9d945c9b05de2721fd397ba308412f109711cfcad4a88",
+      "safe_target_representation": [
+        "$(ace-utl-commonapps)$(request.path)"
+      ],
+      "source_observation_count": 7
+    },
+    {
+      "api_count": 7,
+      "backend_target_id": "backend-target:sha256:0b9013ca31c44c42b85aa8cc6d7ca23aec819841988581d9415aea59468b439b",
+      "safe_target_representation": [
+        "$(ace-ei-externals)$(request.path)"
+      ],
+      "source_observation_count": 7
+    },
+    {
+      "api_count": 8,
+      "backend_target_id": "backend-target:sha256:0c023c551348eba4951263c0fb95f77627c03a30fe20cb1bbfca457bbc0139ae",
+      "safe_target_representation": [
+        "$(ace-vstv-vvutilities2)$(request.path)"
+      ],
+      "source_observation_count": 8
+    },
+    {
+      "api_count": 2,
+      "backend_target_id": "backend-target:sha256:0cb514b8e660a5aef7279dd78547c96f175e4a8a3390c615f525291a1925f932",
+      "safe_target_representation": [
+        "$(ace-ntc-nitaqat)$(request.path)"
+      ],
+      "source_observation_count": 2
+    },
+    {
+      "api_count": 2,
+      "backend_target_id": "backend-target:sha256:0ed4780a4465de8f8a4b01e8564a4f2ae71e5dfaa677c5fc6c0a8fc21b9af8cb",
+      "safe_target_representation": [
+        "$(ace-qw-q-walletutilities)$(request.path)"
+      ],
+      "source_observation_count": 2
+    }
+  ],
+  "target_nodes_referenced_by_multiple_apis": 271,
+  "target_nodes_referenced_by_one_api": 1209,
+  "top_shared_target_counts": [
+    {
+      "api_count": 96,
+      "backend_target_id": "backend-target:sha256:4249d158eb07dea3a49f3b61e6e429848e0f2fde0556fc5152fb6b58fd73fe0d",
+      "edge_count": 96
+    },
+    {
+      "api_count": 31,
+      "backend_target_id": "backend-target:sha256:8b2cf2826c3d0fedddf875eb1b013e57691ea32f4feae1102d7ed96ffbe36028",
+      "edge_count": 31
+    },
+    {
+      "api_count": 20,
+      "backend_target_id": "backend-target:sha256:36c1b4aab91c8556edd6a80df65a47ab85eb7b1ae120186fad2f20f75ea77aa9",
+      "edge_count": 20
+    },
+    {
+      "api_count": 20,
+      "backend_target_id": "backend-target:sha256:9f6293abe4cc39e67540a1a0a2e398df6e1beb561d04c388825311fd4e71decd",
+      "edge_count": 20
+    },
+    {
+      "api_count": 17,
+      "backend_target_id": "backend-target:sha256:38dcd2e09358b702459436f1e3d54ea97db0a7c0d95176615bdeece1d3cde564",
+      "edge_count": 17
+    },
+    {
+      "api_count": 14,
+      "backend_target_id": "backend-target:sha256:351ce3164888155ff87d9e8119096d41d8a87d21a1428cd14f98178feab8dc59",
+      "edge_count": 14
+    },
+    {
+      "api_count": 13,
+      "backend_target_id": "backend-target:sha256:e09e18a5b86ca999962b8f16eb55612148d75c1e43d38d76972084b447879aba",
+      "edge_count": 13
+    },
+    {
+      "api_count": 12,
+      "backend_target_id": "backend-target:sha256:44fb40ea994246bf5282d781d5cac7f2fa93eda8c076f4832f511796ec2e8e5d",
+      "edge_count": 12
+    },
+    {
+      "api_count": 12,
+      "backend_target_id": "backend-target:sha256:4c693811a489cd9b793135d6307f11cbba424d705182606e68a936c7d061b3b5",
+      "edge_count": 12
+    },
+    {
+      "api_count": 12,
+      "backend_target_id": "backend-target:sha256:9edc5ce72c9462bb2af910f2d193140014601a8422e60c623ebdf43c842a107f",
+      "edge_count": 12
+    }
+  ]
+}

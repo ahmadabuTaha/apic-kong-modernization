@@ -1,0 +1,29 @@
+{
+  "automatic_classification_evidence_rules": [],
+  "classification_coverage": {
+    "automatic_classification_percent": 0.0,
+    "automatically_classified_node_count": 0,
+    "validation_required_node_count": 1480
+  },
+  "counts": {
+    "ACE": 0,
+    "BACKEND": 0,
+    "EXTERNAL_VIA_DATAPOWER": 0,
+    "VALIDATION_REQUIRED": 1480
+  },
+  "evidence_supported_classification_families_present": [],
+  "fallback_rule": "validation_required_no_accepted_explicit_backend_family_evidence",
+  "finding": "Accepted Task 011/012 evidence contains no explicit authoritative backend-family assertion; host, token, API, and invoke-title names remain insufficient for automatic family assignment.",
+  "name_only_inference_used": false,
+  "no_name_only_inference_confirmation": true,
+  "representative_evidence": {
+    "accepted_explicit_family_assertion_count": 0,
+    "validation_required_backend_target_ids": [
+      "backend-target:sha256:0036c6e7054298527c5e1ed2c340672c2664c0da8ed2d24f31ad64db58c0c730",
+      "backend-target:sha256:003e89132024bbe608512b835b8223d23539ea30814c586d87f821676f14a5f3",
+      "backend-target:sha256:004306da7fc2564006bea714d0bd1b6b289c43db3e5980549fc6554fba1c1f97",
+      "backend-target:sha256:007eaa56e66075690b8efe46c922bb2c59cde9d8a0131e464c3c3823c9219843",
+      "backend-target:sha256:009d086111e92e7bce42c5a92ac28343c002605e5cfad2c91117ddabb3abf907"
+    ]
+  }
+}

@@ -2,234 +2,220 @@
 
 ## Task executed
 
-Phase 4 — Task 012: API Dependency Discovery & Model Proposal.
+Phase 4 — Task 013: Additive Backend Target CodeGraph Enrichment.
 
 ## Prompt file used
 
-`codex/comm/prompts/phase-4-012-api-dependency-discovery-and-model-proposal.md`
+`codex/comm/prompts/phase-4-013-additive-backend-target-codegraph-enrichment.md`
 
 ## Summary of what was done
 
-- Built a deterministic dependency-observation index from accepted evidence while keeping observed evidence separate from proposed and approved architecture.
-- Reused all Task 011 backend observations from the compact index without reparsing raw invoke targets or changing Task 011 outcomes.
-- Target-read accepted API YAML only for security-provider, explicit security-endpoint, non-invoke HTTP-policy, and unsupported JWT/JWK patterns.
-- Indexed exact Catalog Property and runtime-context references from dependency-bearing expressions.
-- Added a separate disposable SQLite cache for Task 012 parsing and proved cold/warm output identity.
-- Produced corpus-derived architecture-review evidence without creating dependency nodes, graph edges, or an approved taxonomy.
-- Preserved explicit unresolved states, operation scope, provenance, and credential redaction.
+- Built a deterministic additive dependency graph from accepted Task 011/012 compact evidence without reparsing raw YAML.
+- Created canonical `backend_target` nodes for explicit resolved, static, symbolic, and partially resolved invocation targets.
+- Created deduplicated `api_invokes_target` edges with combined Task 011/012 provenance, configuration evidence, and exact operation qualifiers.
+- Preserved same-host/different-path identity separation and converged only normalized equal target identities.
+- Integrated the additive layer into the local Explorer while leaving the frozen Phase 3 graph files unchanged.
+- Added API→backend and backend→API traversal, backend search, classification/resolution/scope filters, provenance drill-down, and safe API security metadata.
+- Generated all required Task 013 evidence and focused tests.
 
-## Implementation structure
+## Implementation files created
 
-- `dependency_discovery/discovery.py`: Task 011 reuse, targeted pattern parsing, safe reference resolution, redaction, deterministic observation/pattern indexes, correlation, coverage, and SQLite caching.
-- `dependency_discovery/__init__.py`: public Task 012 API.
-- `dependency_discovery/__main__.py`: `python -m dependency_discovery` entry point.
-- `tests/test_dependency_discovery.py`: focused extraction, reuse, scope, provenance, redaction, cache, determinism, full-corpus coverage, and frozen-integrity tests.
-- `tests/evidence/task-012/generate_dependency_evidence.py`: deterministic architecture-review evidence and cold/warm performance generator.
+- `backend_target_graph/__init__.py`
+- `backend_target_graph/__main__.py`
+- `backend_target_graph/graph.py`
+- `tests/test_backend_target_graph.py`
+- `tests/evidence/task-013/generate_task013_evidence.py`
+- `tests/evidence/task-013/backend_target_graph_summary.json`
+- `tests/evidence/task-013/backend_target_classification_summary.json`
+- `tests/evidence/task-013/api_invokes_target_samples.jsonl`
+- `tests/evidence/task-013/backend_target_reuse.json`
+- `tests/evidence/task-013/explorer_dependency_acceptance.json`
+- `tests/evidence/task-013/commands_and_results.txt`
 
-## Generated dependency indexes and cache
+## Implementation files modified
 
-- `indexes/api_dependency_observations.jsonl`: 8,814 records; SHA-256 `0bdd8e1930fc3ef6756c2ec4515d8dcb23dcc7d26be747faf9620240b0bfe4f0`.
-- `indexes/dependency_pattern_inventory.json`: SHA-256 `c6ed5fa72c949c0dc03b10b5f53e6bae9695f32ee602ff455280999e6f3cdaee`.
-- `indexes/cache/phase4_dependency_discovery_cache.sqlite3`: disposable SQLite cache using schema `phase4-dependency-cache-v1` and parser version `phase4-dependency-parser-v2`.
-
-These generated artifacts are local and ignored. The cache contains sanitized parsed candidates and never stores observed JWK/private-key material.
-
-## Canonical API coverage
-
-- Total canonical APIs accounted for: 2,036 / 2,036.
-- APIs represented by Task 011 backend observations: 1,978.
-- APIs with security-provider observations: 1,164.
-- APIs with external HTTP dependency observations: 1.
-- APIs with configuration-reference observations: 1,960.
-- APIs with multiple dependency classes: 1,966.
-- APIs with no observation in supported dependency patterns: 52.
-- APIs without an accepted YAML source: 36.
-
-Absence of a supported observation is evidence absence, not proof that an API has no dependency.
-
-## Observation counts by class
-
-- `BACKEND_INVOCATION`: 2,334.
-- `SECURITY_PROVIDER`: 2,329.
-- `CONFIGURATION_REFERENCE`: 4,147.
-- `EXTERNAL_HTTP_DEPENDENCY`: 1.
-- `UNCLASSIFIED_DEPENDENCY_PATTERN`: 3.
-- Total: 8,814.
-
-These are reporting classes only, not canonical object types.
-
-## Observed security/OAuth/OIDC patterns
-
-- Swagger 2 OAuth2 security definitions: 1,161 named/provider-reference observations.
-- Swagger 2 OAuth2 `tokenUrl`: 1,161 observations; 112 resolved and 1,049 unresolved/parameterized.
-- Swagger 2 OAuth2 `authorizationUrl`: 1 unresolved/parameterized observation.
-- OpenAPI 3 OAuth2 security schemes: 3 provider-reference observations.
-- OpenAPI 3 client-credentials `tokenUrl`: 3 unresolved/parameterized observations.
-- No supported issuer, introspection, OpenID discovery, or JWKS URL endpoint pattern was observed.
-- Three `jwt-validate.jws-jwk` configurations were retained as `UNCLASSIFIED_DEPENDENCY_PATTERN` with reason `unclassified_due_to_unsupported_security_scheme_shape`; their raw values were not persisted.
-- API-key schemes were inventoried as non-dependency security schemes and did not become dependency observations.
-
-## External HTTP dependency findings
-
-- One explicit non-`invoke` `websocket-upgrade.target-url` observation was classified from policy context as `EXTERNAL_HTTP_DEPENDENCY`.
-- Ownership was not inferred from hostname and remains `ownership_validation_required`.
-- General server URLs were not classified as third-party dependencies.
-
-## Configuration-reference findings
-
-- Total configuration-reference observations: 4,147 across 1,960 APIs.
-- Distinct exact configuration tokens: 442.
-- Tokens shared by multiple APIs: 262.
-- Maximum APIs sharing one token: 1,032.
-- Catalog Property and runtime-context tokens remain observations only; no canonical property nodes were created.
-
-## Scope findings
-
-- API/shared observations: 8,616.
-- Operation-scoped observations: 198 across 7 APIs.
-- Operation-scoped method/path evidence was preserved from Task 011 rather than flattened to API scope.
-
-## Unresolved and unclassified observations
-
-- `partially_resolved_target_expression`: 719.
-- `runtime_context_reference`: 653.
-- `unclassified_due_to_unsupported_security_scheme_shape`: 3.
-- `unresolved_due_to_missing_catalog_property`: 1,460.
-- `unresolved_due_to_protected_catalog_property_value`: 22.
-- `unresolved_due_to_runtime_parameterization`: 3.
-- `unresolved_or_parameterized_dependency_reference`: 1,053.
-
-Counts include separate configuration-reference roles derived from the same dependency-bearing context where those roles are explicitly modeled.
-
-## Correlation metrics
-
-- APIs with both backend and security dependencies: 1,158.
-- APIs with multiple backend targets: 133.
-- APIs with operation-scoped dependencies: 7.
-- Distinct security-provider references: 3; 2 are shared by multiple APIs; maximum sharing is 1,141 APIs.
-- Distinct configuration tokens: 442; 262 are shared by multiple APIs; maximum sharing is 1,032 APIs.
-- Distinct safe normalized endpoint keys: 1,151; 159 are shared by multiple APIs; maximum sharing is 1,141 APIs.
-
-Shared dependencies are structural correlation only and do not establish duplicate business capability or runtime use.
-
-## Cache performance and Task 011 reuse
-
-- Cold build: 5.178551 seconds; 2,000 YAML files parsed; 0 hits; 2,000 misses.
-- Warm build: 0.644148 seconds; 0 unchanged files reparsed; 2,000 hits; 0 misses.
-- Cold and warm dependency indexes were byte-identical.
-- Cold and warm pattern inventories were byte-identical.
-- Task 011 backend records loaded from compact index: 2,334.
-- Task 011 backend target YAML reparses: 0.
-- Selective one-source invalidation reparsed only the changed source in focused tests.
-
-## Credential and secret redaction
-
-- Generated local indexes, the SQLite cache, committed evidence, and this handoff were compared with source credential values, secret-like Catalog Property values, and observed JWK/private-key material.
-- Zero sensitive source values were exposed.
-- URL user-info and secret query components are sanitized; protected/redacted values remain unresolved.
-
-## Frozen-component integrity
-
-- Phase 0 through Task 011 implementations were not modified.
-- Task 011 backend/property indexes were unchanged.
-- Task 008 relationship index was unchanged.
-- Task 009 CodeGraph node, edge, and adjacency indexes were unchanged.
-- Task 010 Explorer was unchanged.
-- Raw `staging/` evidence was unchanged.
-- No canonical dependency nodes, relationship types, or graph edges were created.
-
-## Files created
-
-- `dependency_discovery/__init__.py`
-- `dependency_discovery/__main__.py`
-- `dependency_discovery/discovery.py`
-- `tests/test_dependency_discovery.py`
-- `tests/evidence/task-012/generate_dependency_evidence.py`
-- `tests/evidence/task-012/dependency_summary.json`
-- `tests/evidence/task-012/dependency_pattern_inventory.json`
-- `tests/evidence/task-012/dependency_samples.jsonl`
-- `tests/evidence/task-012/dependency_correlation.json`
-- `tests/evidence/task-012/dependency_model_proposal.md`
-- `tests/evidence/task-012/cache_performance.json`
-- `tests/evidence/task-012/commands_and_results.txt`
-
-## Files modified
-
+- `codegraph_explorer/explorer.py`
+- `codegraph_explorer/static/index.html`
 - `codex/comm/HANSOFF.md`
+
+## Exact additive graph indexes
+
+- `indexes/codegraph_dependency_nodes.jsonl`: 1,480 records; SHA-256 `ab5e43da1e4eff3457e2660c835d36ce1250042c9af9a13d9b883cf28c4b8482`.
+- `indexes/codegraph_dependency_edges.jsonl`: 2,307 records; SHA-256 `95cb2d9446b89b703d65d85a7e387e46614997903b39fbb822ee0347fc988867`.
+- `indexes/codegraph_dependency_adjacency.jsonl`: 3,457 records; SHA-256 `6e7a9f65c9237a765b7ffb8f08442c8dfc36e2d9ca686d65257cf7dfb281143f`.
+
+These generated indexes are local and ignored. No frozen structural graph index was overwritten.
+
+## Backend target node counts
+
+- Canonical `backend_target` nodes: 1,480.
+- `RESOLVED_TARGET`: 1,091.
+- `STATIC_LITERAL_TARGET`: 57.
+- `SYMBOLIC_TARGET`: 68.
+- `PARTIALLY_RESOLVED_TARGET`: 264.
+- Explicit unresolved symbolic nodes: 68.
+
+Task 013 consumed all 2,334 Task 011 observations. It admitted 2,332 observations with explicit safe target expressions and excluded two accepted records whose target value is null; null is not an admissible explicit target identity.
+
+## api_invokes_target edges and API coverage
+
+- Canonical `api_invokes_target` edges: 2,307.
+- APIs with at least one backend edge: 1,977.
+- APIs with multiple backend targets: 132.
+- Observation-to-edge deduplication: 27 observations converged into existing API→target edges.
+- Observation-to-node convergence: 854 observations converged into existing backend target identities.
+- Missing/orphan endpoint count: 0.
+- Additive graph integrity: PASS.
+
+## Shared backend target findings
+
+- Backend targets referenced by one API: 1,209.
+- Backend targets referenced by multiple APIs: 271.
+- The most-shared target is referenced by 96 APIs.
+- Sharing is structural correlation only and was not interpreted as duplicate capability or runtime use.
+- 118 symbolic/partially resolved targets have more than one source observation, demonstrating deterministic symbolic identity convergence.
+
+## Operation-scope findings
+
+- Edges carrying `API_SHARED`: 2,246.
+- Edges carrying `OPERATION_SCOPED`: 61.
+- Edges carrying both scope classes: 0 in the observed corpus.
+- Multiple operation observations converging on one API→target edge retain all exact methods, paths, source pointers, and observation IDs.
+- No Operation nodes were created.
+
+## Backend classification counts
+
+- `ACE`: 0.
+- `BACKEND`: 0.
+- `EXTERNAL_VIA_DATAPOWER`: 0.
+- `VALIDATION_REQUIRED`: 1,480.
+- Automatic classification coverage: 0%.
+
+## Exact classification evidence rules
+
+- Automatic rules applied: none, because accepted Task 011/012 evidence contains no explicit authoritative backend-family assertion.
+- Fallback rule: `validation_required_no_accepted_explicit_backend_family_evidence`.
+- Hostnames, property tokens, API names, and invoke titles containing terms such as `ace`, `backend`, `external`, `dp`, or `datapower` were explicitly rejected as sufficient classification evidence.
+- Task 011 `backend_type` values describe transport/parser handling (`detect`, `json`, `xml`, or `graphql`) and were not reinterpreted as architecture families.
+- No name-only inference was used.
+
+## Same-host/different-path validation
+
+- 137 accepted host groups contain multiple distinct target paths represented by distinct backend target identities.
+- Representative evidence uses hashed host keys and safe path samples only.
+- Focused tests prove that the same host with `/one` and `/two` remains two nodes, while equivalent normalized targets converge.
+
+## Explorer changes
+
+- Exact run command: `.venv/bin/python -m codegraph_explorer`.
+- The Explorer loads the frozen structural graph plus the additive dependency layer in memory.
+- Search supports safe target path/template, symbolic property token, backend target ID, and display label.
+- Filters support `backend_target`, `api_invokes_target`, backend classification, resolution status, and API/shared versus operation scope.
+- Existing deterministic visual caps remain 80 nodes and 120 edges, with explicit limit warnings and no silent truncation.
+- Backend node/edge details expose only safe target representations, token names, resolution/classification state, operation qualifiers, and provenance.
+
+## API→backend visual example
+
+- API `apic-identity:sha256:0009ee4eeece2430096ec9be843777a8e4258c260de73c9f9fb702bc865a55ce` visibly traverses via `api_invokes_target` to backend target `backend-target:sha256:047e69685f2cdb372d3a07f7956e2ffe070b791d3ef4284dc1653e154f3e6281`.
+
+## Backend→API reverse example
+
+- Selecting backend target `backend-target:sha256:047e69685f2cdb372d3a07f7956e2ffe070b791d3ef4284dc1653e154f3e6281` visibly returns invoking API `apic-identity:sha256:0009ee4eeece2430096ec9be843777a8e4258c260de73c9f9fb702bc865a55ce`.
+
+## Security and configuration behavior
+
+- Security-provider evidence is exposed only as compact safe API metadata: observation count, mechanism, provider/scheme name, endpoint resolution states, and `API_ATTRIBUTE_ONLY` graph representation.
+- Security Provider nodes created: 0.
+- Catalog Property/Configuration Reference dependency nodes created: 0.
+- JWT/JWK dependency nodes or edges created: 0.
+- Configuration token names and safe lookup statuses remain provenance/attributes on backend nodes and edges.
+- Security metadata does not participate in backend target identity.
+
+## Credential redaction
+
+- Additive indexes, committed evidence, Explorer projections, and this handoff were compared with source credential values, secret-like Catalog Property values, and observed JWK/private-key material.
+- Zero sensitive source values were exposed.
+- Committed samples omit raw resolved infrastructure and retain only safe path/template and symbolic-token representations.
+
+## Deterministic build result
+
+- Two independent builds produced byte-identical node indexes.
+- Two independent builds produced byte-identical edge indexes.
+- Two independent builds produced byte-identical adjacency indexes.
+- Canonical target and edge IDs are content-derived and stable.
 
 ## Tests executed
 
-- Cold and warm full-corpus dependency discovery builds.
-- `.venv/bin/pytest tests/test_dependency_discovery.py -q`.
+- `.venv/bin/python -m backend_target_graph`.
+- `.venv/bin/python tests/evidence/task-013/generate_task013_evidence.py`.
+- `.venv/bin/pytest tests/test_backend_target_graph.py tests/test_codegraph_explorer.py -q`.
 - `.venv/bin/pytest -q`.
 - Python compilation checks.
 - `git diff --check`.
-- Frozen index and raw `staging/` integrity checks.
+- Repeated-build byte comparison.
+- Frozen-index and raw `staging/` integrity checks.
 - Credential, secret-like Catalog Property, and JWK/private-key material comparisons.
 
 ## Test results
 
-- Focused Task 012 tests: **3 passed in 8.75s**.
-- Evidence generation: **PASS**; 9 required representative samples produced.
-- Canonical API coverage: **2,036 / 2,036 accounted for**.
-- Cache reuse and deterministic output: **PASS**.
+- Focused Task 013 and Explorer tests: **8 passed in 18.88s**.
+- Additive graph integrity: **PASS**.
+- Explorer dependency acceptance: **PASS**.
+- Deterministic repeated build: **PASS**.
+- Frozen structural graph and relationship integrity: **PASS**.
 - Secret redaction: **PASS**, zero sensitive source values exposed.
-- Frozen components and raw evidence: **unchanged**.
-- Repository-wide suite: **35 passed, 5 setup errors in 31.80s**. The five setup errors remain the known frozen Phase 0 fixture-packaging issue because `tests/fixtures/repository_profile/staging` is absent. No Task 012 test failed.
+- Repository-wide suite: **38 passed, 5 setup errors in 45.73s**. The five setup errors remain the known frozen Phase 0 fixture-packaging issue because `tests/fixtures/repository_profile/staging` is absent. No Task 013 test failed.
 
 ## Generated artifacts
 
-- Local ignored: `indexes/api_dependency_observations.jsonl`, `indexes/dependency_pattern_inventory.json`, and `indexes/cache/phase4_dependency_discovery_cache.sqlite3`.
-- Committed: the seven required evidence files under `tests/evidence/task-012/`, plus the deterministic evidence generator.
+- Local ignored: the three additive graph indexes under `indexes/`.
+- Committed: six required evidence artifacts and the deterministic evidence generator under `tests/evidence/task-013/`.
 
-## Proposed dependency object candidates
+## Frozen-component integrity
 
-Pending explicit architecture approval, the evidence supports considering: Dependency Endpoint, Security Provider, Configuration Reference, and Backend Target. These are proposal candidates only and were not implemented as canonical types.
-
-## Proposed relationship candidates
-
-Pending explicit approval, the evidence supports considering: API/operation invokes target, API/operation uses security provider, security provider exposes a role-qualified endpoint, and dependency observation uses configuration reference. No relationship was emitted in Task 012.
+- `indexes/codegraph_nodes.jsonl` remains at 4,718 records and is byte-unchanged.
+- `indexes/codegraph_edges.jsonl` remains at 9,589 records and is byte-unchanged.
+- `indexes/codegraph_adjacency.jsonl` is byte-unchanged.
+- `indexes/relationship_index.jsonl` is byte-unchanged.
+- Task 011 and Task 012 accepted input indexes are byte-unchanged.
+- Raw `staging/` evidence is unchanged.
+- No Phase 0–12 implementation was modified except the Task 010 Explorer files explicitly authorized for additive integration.
 
 ## Important findings
 
-- Security-definition context produces material provider/endpoint evidence across 1,164 APIs, but endpoint presence and resolution vary substantially.
-- Operation scope is material and requires an explicit canonical modeling decision before graph enrichment.
-- Symbolic references and resolved environment values must remain distinct when evidence is missing, protected, or runtime-parameterized.
-- The same endpoint/provider/token can be shared by many APIs; sharing is not evidence of duplicate capability.
-- No frozen-component defect was found.
+- Backend target identity is materially path-sensitive: 137 host groups prove that host-only canonicalization would incorrectly collapse distinct dependencies.
+- Explicit symbolic evidence supports 68 unresolved symbolic nodes without inventing concrete infrastructure.
+- Two Task 011 observations carry null target values despite being labeled static/resolved; Task 013 correctly excludes them because the approved admission rule requires an explicit target expression. Task 011 remains frozen and unchanged.
+- Current accepted evidence does not safely support automatic architecture-family classification, so every target remains visible and filterable as `VALIDATION_REQUIRED`.
+- No reproducible defect requiring modification of frozen graph or dependency components was found.
 
-## Unresolved architecture decisions and issues
+## Unresolved issues
 
-- Decide whether operation scope is modeled as nodes, edge qualifiers, or provenance-only data.
-- Approve or reject each proposed dependency object and relationship candidate.
-- Define environment/catalog identity requirements for providers and endpoints.
-- Decide whether unresolved symbolic targets may become graph nodes.
-- Define provider-to-multiple-endpoint-role modeling.
-- Decide whether configuration references are nodes or relationship provenance.
-- Define the admission threshold for external dependency candidates whose ownership is unvalidated.
-- Define safe representation rules for protected references.
+- Architects or source owners must supply an accepted explicit classification mapping/assertion before targets can safely move from `VALIDATION_REQUIRED` to `ACE`, `BACKEND`, or `EXTERNAL_VIA_DATAPOWER`.
+- The two null Task 011 target observations remain in the frozen source index and are documented rather than altered.
 - Five frozen Phase 0 tests still cannot start because their fixture directory is absent.
 
 ## Assumptions
 
-- Phase 2 accepted source pointers identify the authoritative API YAML eligible for targeted Task 012 parsing.
-- Task 011 target classifications and resolution states are authoritative and must be preserved.
-- Exact context, not hostname text, determines observation class.
-- Safe normalized endpoint keys are correlation keys only, not approved canonical identities.
-- The 36 canonical APIs without accepted YAML remain accounted for but cannot yield newly parsed dependency patterns.
+- Task 011 observations are authoritative for invocation evidence and resolution outcomes.
+- Task 012 `BACKEND_INVOCATION` records are provenance links, not an independent source for target reinterpretation.
+- Exact normalized concrete target structure or exact unresolved expression structure is the canonical convergence key.
+- Safe target path/template and symbolic token names are appropriate for local Explorer display; raw infrastructure is unnecessary in committed evidence.
+- Future accepted classification evidence can enrich the additive nodes without rebuilding the frozen structural graph.
 
 ## Deviations from the prompt
 
 None.
 
-## Evidence sufficiency for later CodeGraph enrichment
+## Architecture findings requiring future validation
 
-The evidence is sufficient for Integration and Enterprise Architects to decide the dependency taxonomy, identity, scope, and admission rules. It is **not sufficient by itself to authorize a later CodeGraph dependency-enrichment implementation**; explicit architecture approval is required first.
+- Define and provide the authoritative evidence source that maps target identities or environment endpoints to `ACE`, `BACKEND`, and `EXTERNAL_VIA_DATAPOWER`.
+- Decide whether the two null target observations should be corrected in a separately authorized Task 011 maintenance task; they were not promoted here.
 
 ## Recommended next step
 
-Review and decide the proposed dependency objects, relationships, identity rules, operation-scope representation, protected-reference policy, and evidence thresholds. Do not start graph enrichment until those decisions are approved and `CURRENT_TASKS.md` is updated externally.
+Accept Task 013 as PASS, review the 1,480 `VALIDATION_REQUIRED` target groups, and provide an explicit evidence-backed backend-family mapping before any classification enrichment. Do not begin another task until `CURRENT_TASKS.md` is updated externally.
 
 ## Final status
 
-HOLD_FOR_ARCHITECTURE_REVIEW
+PASS

@@ -1,0 +1,53 @@
+{
+  "accepted_task011_backend_observations_consumed": 2334,
+  "additive_output_sha256": {
+    "adjacency": "6e7a9f65c9237a765b7ffb8f08442c8dfc36e2d9ca686d65257cf7dfb281143f",
+    "edges": "95cb2d9446b89b703d65d85a7e387e46614997903b39fbb822ee0347fc988867",
+    "nodes": "ab5e43da1e4eff3457e2660c835d36ce1250042c9af9a13d9b883cf28c4b8482"
+  },
+  "api_shared_edge_count": 2246,
+  "apis_with_at_least_one_backend_edge": 1977,
+  "apis_with_multiple_backend_targets": 132,
+  "backend_targets_shared_by_multiple_apis": 271,
+  "canonical_api_invokes_target_edge_count": 2307,
+  "canonical_backend_target_node_count": 1480,
+  "deterministic_files": {
+    "adjacency.jsonl": true,
+    "edges.jsonl": true,
+    "nodes.jsonl": true
+  },
+  "deterministic_repeated_build": true,
+  "edges_with_both_scope_classes": 0,
+  "frozen_structural_graph_counts": {
+    "edges": 9589,
+    "nodes": 4718
+  },
+  "frozen_structural_hashes_unchanged": true,
+  "graph_integrity_result": "PASS",
+  "integrity": {
+    "accepted_task011_observations_consumed": 2334,
+    "adjacency_incoming_complete": true,
+    "adjacency_outgoing_complete": true,
+    "admitted_task011_observations": 2332,
+    "duplicate_edge_ids": 0,
+    "duplicate_node_ids": 0,
+    "excluded_without_explicit_target_expression": 2,
+    "forbidden_node_type_count": 0,
+    "forbidden_relationship_type_count": 0,
+    "missing_api_endpoints": [],
+    "missing_target_endpoints": [],
+    "overall_integrity_passed": true
+  },
+  "missing_orphan_endpoint_count": 0,
+  "observation_to_edge_deduplication_count": 27,
+  "observation_to_node_convergence_count": 854,
+  "observations_excluded_without_explicit_target_expression": 2,
+  "operation_scoped_edge_count": 61,
+  "target_counts_by_identity_kind": {
+    "PARTIALLY_RESOLVED_TARGET": 264,
+    "RESOLVED_TARGET": 1091,
+    "STATIC_LITERAL_TARGET": 57,
+    "SYMBOLIC_TARGET": 68
+  },
+  "unresolved_symbolic_node_count": 68
+}

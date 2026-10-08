@@ -1,0 +1,37 @@
+{
+  "api_can_visually_show_backend_target": true,
+  "api_to_backend_example": {
+    "api_id": "apic-identity:sha256:0009ee4eeece2430096ec9be843777a8e4258c260de73c9f9fb702bc865a55ce",
+    "backend_target_ids": [
+      "backend-target:sha256:047e69685f2cdb372d3a07f7956e2ffe070b791d3ef4284dc1653e154f3e6281"
+    ],
+    "relationship_type": "api_invokes_target"
+  },
+  "backend_target_can_show_invoking_apis": true,
+  "backend_to_api_reverse_example": {
+    "api_ids": [
+      "apic-identity:sha256:0009ee4eeece2430096ec9be843777a8e4258c260de73c9f9fb702bc865a55ce"
+    ],
+    "backend_target_id": "backend-target:sha256:047e69685f2cdb372d3a07f7956e2ffe070b791d3ef4284dc1653e154f3e6281"
+  },
+  "classification_filter_works": true,
+  "configuration_property_dependency_node_count": 0,
+  "exact_local_run_command": ".venv/bin/python -m codegraph_explorer",
+  "frozen_structural_graph_counts_unchanged": {
+    "edges": true,
+    "nodes": true
+  },
+  "jwt_jwk_dependency_node_count": 0,
+  "operation_scope_visible": true,
+  "overall_pass": true,
+  "provenance_drill_down_works": true,
+  "resolution_filter_works": true,
+  "security_provider_node_count": 0,
+  "security_provider_remains_attribute_only": true,
+  "symbolic_target_search_works": true,
+  "ui_contains_dependency_controls": true,
+  "visual_caps_preserved": {
+    "edge_limit": 120,
+    "node_limit": 80
+  }
+}
