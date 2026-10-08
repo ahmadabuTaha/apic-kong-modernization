@@ -1,51 +1,41 @@
 # CURRENT TASKS
 
 ## Active Task
-
 **Phase:** Phase 5 — Semantic & Business Mapping
-**Task:** 014 — Semantic Inventory & Operation Extraction (Architecture Preflight / Full Extraction Continuation)
-**Status:** READY_FOR_CODEX_ARCHITECTURE_PREFLIGHT
-**Task Type:** Architecture Options + Targeted Evidence Mock + Explicit Approval Gate
+**Task:** 014 — Semantic Inventory & Operation Extraction — Gate B Full Extraction
+**Status:** READY_FOR_CODEX_FULL_EXTRACTION
+**Task Type:** Additive deterministic implementation + persistent incremental cache + full canonical inventory + evidence validation
 
-### Prompt
-
+### Active prompt
 Read and execute:
-
 `codex/comm/prompts/phase-5-014-architecture-preflight-and-full-extraction.md`
 
-The original sample prompt and Task 014 contract remain historical baseline; this continuation supersedes the original **sample-only stop** without authorizing estate-wide rollout yet.
+Gate A Architecture Preflight is COMPLETE (latest `codex/comm/HANSOFF.md`: HOLD awaiting EA decisions); **the Enterprise Architect has now approved Option A + Option A**. Do not repeat Gate A or wait for the same decisions.
 
-### EA decisions (2026-10-08)
+### Approved EA decisions — 2026-10-08
 
-- **APPROVED:** Factual Semantic Inventory Contract: canonical API IDs, traceable operation inventory records (not CodeGraph nodes), missing states, provenance.
-- **REVISION_REQUIRED:** Backend Evidence representation. Do not treat previous API_SHARED/OPERATION_SCOPED record attribution contract as fully approved. Produce actual examples and alternatives; preserve frozen Task 011 facts and never infer proven operation egress from API_SHARED context.
-- **REVISION_REQUIRED:** Multiple YAML representations / same-canonical-ID variants. Do not assume selecting the lexically first YAML fully resolves conflicting semantics. Produce deterministic conflict/variant assessment and alternatives; do not redefine frozen canonical identity.
-- **APPROVED:** Persistent Incremental Semantic Cache, versioned and source/dependency fingerprint-based, including explicit invalidation, cold/warm parity and deterministic outputs.
+1. **APPROVED — Semantic Inventory Contract:** canonical API join IDs, factual API and operation inventory records (operations are NOT CodeGraph nodes), full provenance, explicit missing/review states.
+2. **APPROVED — Backend Attribution Option A:** two distinct layers: factual configured backend evidence and separate, clearly labeled possible per-operation inherited context. Keep Task 011 API_SHARED/OPERATION_SCOPED facts and exact method/path anchors; preserve conditional routing. Candidate context is NEVER proven operation egress or runtime use, even for one-operation APIs.
+3. **APPROVED — YAML Source Variants Option A:** one canonical API envelope with all source variant provenance; deduplicate byte-identical payload storage, retain different-hash equivalent variants; preserve conflicting variants separately for architecture review and do not union semantics or alter frozen canonical identity.
+4. **APPROVED — Persistent Incremental Semantic Cache:** source fingerprint + extractor schema/version + accepted relationship/backend dependency fingerprints as applicable. Deterministic cold/warm equivalence, selective invalidation, atomic writes.
 
-### Current authorized work — Gate A only
+### Explicit architect instruction: v2 comparison
 
-1. Inspect latest `HANSOFF.md` and Task 014 mock evidence (6 APIs / 35 operations).
-2. Test representative real examples for backend evidence attribution and YAML representation variants, using compact graph/indexes first.
-3. Assess structural overlap candidates among DIFFERENT canonical API IDs / names as a separate, evidence-only feasibility study, without claiming confirmed duplication.
-4. Produce options, tradeoffs, recommendation, proof samples, and two specific questions requiring Enterprise Architect decision under `tests/evidence/task-014/architecture-preflight/`.
-5. Run focused validations and redaction/frozen-integrity checks.
-6. Update `codex/comm/HANSOFF.md`, commit/push preflight evidence, report `HOLD_FOR_ARCHITECTURE_REVIEW` and **STOP**.
+For cross-canonical API pairs, particularly `searchseasonalvisarequests` vs `searchseasonalvisarequests-v2`, do not stop at method/path or name. Include a **separate evidenced comparison of request AND response structures/contracts AND backend targets** with version/exposure/policy distinctions when available. Preserve matching and differing fields, resolution/missing states, source pointers, and whether backend evidence is shared configuration versus operation-scoped. Use exact request/response schema signatures when deterministically available, not schema-ref names alone. Different canonical IDs remain distinct. Report **POSSIBLE_STRUCTURAL_OVERLAP_REQUIRES_SEMANTIC_VALIDATION** only; do not claim actual functional duplication.
 
-### Planned work — Gate B NOT YET AUTHORIZED
+### Gate B Authorized Scope
 
-The continuation prompt fully specifies the proposed full extraction and cache plan, but **do not run estate-wide extraction until both revision-required decisions are explicitly approved** and this task status is changed to `READY_FOR_CODEX_FULL_EXTRACTION`.
+- Reuse frozen CodeGraph and compact indexes, then cache, then targeted source parses on cache misses. No new Blackboard or Multi-Agent architecture; no broad LLM corpus analysis.
+- Reconcile all accepted canonical APIs: baseline 2,036 (2,000 source-backed and 36 registry-only); preserve explicit unsupported/missing states and 113 unresolved Product-location occurrences.
+- Generate complete additive semantic API and operation inventory, approved backend attribution, source variant provenance, cache manifest, coverage/gap evidence and separate structural-overlap CANDIDATES based on multiple evidence signals.
+- Build safe, bounded, operation-level comparisons for v2 example including request/response/backend and report structural evidence differences. Future business functional duplicate validation belongs to Tasks 015–016 or later decisions.
+- Run focused and repository tests, cold/warm/invalidation tests, redaction and byte-integrity tests, deterministic replay; commit compact artifacts under `tests/evidence/task-014/full-extraction/`. Keep generated full indices/cache under ignored `indexes/` or `outputs/`.
+- Update `codex/comm/HANSOFF.md` with counts, coverage, cache metrics, exceptions, PASS / FIX_REQUIRED / HOLD_FOR_ARCHITECTURE_REVIEW and explicit findings.
 
-Once approved: graph-first/canonical index-first, cache-first, targeted source parsing; reconcile all accepted 2,036 baseline canonical APIs (2,000 source-backed, 36 registry-only), retain unsupported/missing cases and unresolved 113 Product-location occurrences; run cold/warm and invalidation tests; emit compact committed evidence and full local ignored indexes; freeze Task 014 only after successful final validation.
+### Hard constraints
 
-### Hard guardrails
+Do not mutate frozen Phase 0–4 indices/graph/evidence or `staging/`. Do not invent runtime or operation egress, Functional Duplication, Domains, Capabilities, Logical APIs or Kong configuration. Do not implement Tasks 015–019. Task 018 retains its independent mandatory Domain mock. Codex discovers → Integration Architect validates → Enterprise Architect decides.
 
-- Do not change frozen Phase 0–4 graph/indexes/identity/evidence or raw `staging/`.
-- No Operation graph nodes, no invented backend route/runtime assertion, no fabricated functional/domain/capability meaning.
-- Use the existing graph + indexes as the conceptual Blackboard, with incremental fingerprinted caching and compact evidence; NO new Multi-Agent framework or orchestrator.
-- No Task 015–019 implementation, no Domain/Capability mapping, no rationalization, no Kong design.
-- Task 018 retains its **separate mandatory domain mock review gate**.
-- Codex discovers → Integration Architect validates → Enterprise Architect decides.
+### Required STOP
 
-### Required stop
-
-Stop after Gate A preflight report and architect-review handoff. Do not treat an approved cache/contract as approval of the two pending revisions, and do not auto-run Gate B.
+Complete **Task 014 Gate B only**, generate evidence, test, update HANSOFF, commit/push and **STOP** for architecture review. Do not automatically freeze Task 014 or begin Task 015.
