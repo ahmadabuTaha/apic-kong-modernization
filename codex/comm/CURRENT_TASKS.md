@@ -3,42 +3,47 @@
 ## Active Task
 
 **Phase:** Phase 5 — Semantic & Business Mapping
-**Task:** 014 — Semantic Inventory & Operation Extraction
-**Status:** READY_FOR_CODEX
-**Task Type:** Deterministic Semantic Contract + Representative Sample Implementation + Evidence Validation
+**Task:** 014 — Semantic Inventory & Operation Extraction (Architecture Preflight / Full Extraction Continuation)
+**Status:** READY_FOR_CODEX_ARCHITECTURE_PREFLIGHT
+**Task Type:** Architecture Options + Targeted Evidence Mock + Explicit Approval Gate
 
 ### Prompt
 
 Read and execute:
 
-`codex/comm/prompts/phase-5-014-semantic-inventory-operation-extraction.md`
+`codex/comm/prompts/phase-5-014-architecture-preflight-and-full-extraction.md`
 
-### Accepted Architecture Decisions
+The original sample prompt and Task 014 contract remain historical baseline; this continuation supersedes the original **sample-only stop** without authorizing estate-wide rollout yet.
 
-- Phase 4 Task 013 handoff is PASS; do not reopen or overwrite frozen Phase 0–4 assets.
-- Phase 5 order: 014 Semantic Inventory & Operation Extraction → 015 Observed Function Discovery → 016 Logical Function Normalization → 017 Logical API Formation → 018 Business Domain Classification → 019 Business Capability Mapping.
-- Business Domain classification precedes Business Capability Mapping. Do not deduce capabilities from API labels or domain alone.
-- Task 018 must start with a dedicated architect-reviewed **mock test** before estate-wide domain mapping.
-- Future domain mapping will be reviewable JSON keyed to canonical API IDs, permitting multiple domain candidates and explicit evidence/uncertainty; Task 014 does not implement that mapping.
+### EA decisions (2026-10-08)
+
+- **APPROVED:** Factual Semantic Inventory Contract: canonical API IDs, traceable operation inventory records (not CodeGraph nodes), missing states, provenance.
+- **REVISION_REQUIRED:** Backend Evidence representation. Do not treat previous API_SHARED/OPERATION_SCOPED record attribution contract as fully approved. Produce actual examples and alternatives; preserve frozen Task 011 facts and never infer proven operation egress from API_SHARED context.
+- **REVISION_REQUIRED:** Multiple YAML representations / same-canonical-ID variants. Do not assume selecting the lexically first YAML fully resolves conflicting semantics. Produce deterministic conflict/variant assessment and alternatives; do not redefine frozen canonical identity.
+- **APPROVED:** Persistent Incremental Semantic Cache, versioned and source/dependency fingerprint-based, including explicit invalidation, cold/warm parity and deterministic outputs.
+
+### Current authorized work — Gate A only
+
+1. Inspect latest `HANSOFF.md` and Task 014 mock evidence (6 APIs / 35 operations).
+2. Test representative real examples for backend evidence attribution and YAML representation variants, using compact graph/indexes first.
+3. Produce options, tradeoffs, recommendation, proof samples, and two specific questions requiring Enterprise Architect decision under `tests/evidence/task-014/architecture-preflight/`.
+4. Run focused validations and redaction/frozen-integrity checks.
+5. Update `codex/comm/HANSOFF.md`, commit/push preflight evidence, report `HOLD_FOR_ARCHITECTURE_REVIEW` and **STOP**.
+
+### Planned work — Gate B NOT YET AUTHORIZED
+
+The continuation prompt fully specifies the proposed full extraction and cache plan, but **do not run estate-wide extraction until both revision-required decisions are explicitly approved** and this task status is changed to `READY_FOR_CODEX_FULL_EXTRACTION`.
+
+Once approved: graph-first/canonical index-first, cache-first, targeted source parsing; reconcile all accepted 2,036 baseline canonical APIs (2,000 source-backed, 36 registry-only), retain unsupported/missing cases and unresolved 113 Product-location occurrences; run cold/warm and invalidation tests; emit compact committed evidence and full local ignored indexes; freeze Task 014 only after successful final validation.
+
+### Hard guardrails
+
+- Do not change frozen Phase 0–4 graph/indexes/identity/evidence or raw `staging/`.
+- No Operation graph nodes, no invented backend route/runtime assertion, no fabricated functional/domain/capability meaning.
+- No Task 015–019 implementation, no Domain/Capability mapping, no rationalization, no Kong design.
+- Task 018 retains its **separate mandatory domain mock review gate**.
 - Codex discovers → Integration Architect validates → Enterprise Architect decides.
 
-### Task 014 Work Scope
+### Required stop
 
-1. Examine accepted compact indexes and define a semantic inventory contract preserving canonical API identity and per-operation evidence.
-2. Implement deterministic **representative sample only** for API and operation inventory.
-3. Capture exact evidence pointers, missing information, accepted backend observation qualifiers and AS-IS product/plan connections without inventing operation-level routing.
-4. Add focused tests and concise committed evidence under `tests/evidence/task-014/`.
-5. Update `codex/comm/HANSOFF.md` with results and architecture review questions.
-
-### Key Guardrails
-
-- Read `AGENTS.md`, this file, the latest `HANSOFF.md`, and Task 014 prompt.
-- `staging/` is immutable. Frozen graph, canonical identities, backend indexes and accepted reports remain unchanged.
-- Operation is an inventory record in this task, **not a CodeGraph node**.
-- No semantic function inference, no logical API formation, no domain or business capability tagging in Task 014.
-- Preserve unresolved Product-location occurrences, backend uncertainties and provenance. Do not infer runtime consumption.
-- Avoid full corpus reprocessing and generic bulk LLM classification.
-
-### Required Stop
-
-**STOP after representative Task 014 mock extraction and validation**. Report PASS / FIX_REQUIRED / HOLD_FOR_ARCHITECTURE_REVIEW in `codex/comm/HANSOFF.md`, commit and push permitted Codex implementation/evidence changes, and request architectural review before scaling the inventory or starting Task 015. Task 018 has its own separate mock-test gate.
+Stop after Gate A preflight report and architect-review handoff. Do not treat an approved cache/contract as approval of the two pending revisions, and do not auto-run Gate B.
