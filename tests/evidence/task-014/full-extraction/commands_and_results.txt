@@ -1,0 +1,38 @@
+Task 014 Gate B full-extraction commands and results
+Date: 2026-10-08
+
+Command: git pull origin main
+Result: PASS; fast-forwarded main from cdc2c08 to ce3d6ad.
+
+Command: full inventory build with empty validation cache, followed by identical warm build
+Result: PASS.
+- Cold events: MISS 2,000; REGISTRY_ONLY 36.
+- Warm events: HIT 2,000; REGISTRY_ONLY 36.
+- API inventory: 2,036 records; SHA-256 c06810d9079abdd382b48b4f49617431f57d390395b81a4cd07aa0244dafed1a.
+- Operation inventory: 2,414 records; SHA-256 1c603cd6867f3a2d12f950c319e7ab29b2d2111604ff8bcfe6c0ad4dda2bf3bc.
+- Structural-overlap candidates: 60 records; SHA-256 b0f5d8ea4b86bb45f4224820696eee63897278fe98e186fd4c97b1baa2405d97.
+- Cold and warm record counts/hashes: identical.
+
+Command: .venv/bin/python tests/evidence/task-014/full-extraction/generate_full_evidence.py
+Result: PASS; compact full-extraction review evidence generated deterministically.
+
+Command: .venv/bin/python -m compileall -q semantic_inventory semantic_preflight tests/test_semantic_inventory.py tests/test_semantic_preflight.py tests/test_semantic_full_inventory.py tests/evidence/task-014/full-extraction/generate_full_evidence.py
+Result: PASS.
+
+Command: .venv/bin/pytest tests/test_semantic_inventory.py tests/test_semantic_preflight.py tests/test_semantic_full_inventory.py -q
+Result: PASS; 12 passed in 11.84s.
+
+Command: .venv/bin/pytest -q (outside network sandbox restrictions for loopback-server test)
+Result: PARTIAL; 50 passed and 5 setup errors in 36.67s. All five errors are the known frozen Phase 0 fixture-packaging issue: tests/fixtures/repository_profile/staging does not exist. No Task 014 test failed.
+
+Command: one-file source-change cache fixture
+Result: PASS; INVALIDATED_SOURCE_CHANGE, followed by recomputation. Extractor, dependency and partial-cache invalidation states also passed focused tests.
+
+Command: frozen Phase 0-4 index hash comparison and staging immutability validation
+Result: PASS; no frozen index or source evidence mutation.
+
+Command: source credential value, URI-host and committed-evidence redaction checks
+Result: PASS; no credential value or URI host found in full inventory/review artifacts.
+
+Command: git diff --check
+Result: PASS.

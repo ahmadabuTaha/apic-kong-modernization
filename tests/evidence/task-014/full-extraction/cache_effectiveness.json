@@ -1,0 +1,20 @@
+{
+  "cache_schema_version": 1,
+  "cold_run": {
+    "MISS": 2000,
+    "REGISTRY_ONLY": 36
+  },
+  "cold_warm_output_hashes_equal": true,
+  "dependency_change_covered_by_focused_test": "INVALIDATED_DEPENDENCY_CHANGE",
+  "extractor_change_observed": {
+    "INVALIDATED_EXTRACTOR_CHANGE": 2000,
+    "REGISTRY_ONLY": 36
+  },
+  "extractor_version": "task014-full-inventory-v3",
+  "one_file_change_fixture": "INVALIDATED_SOURCE_CHANGE",
+  "partial_cache_covered_by_focused_test": "INVALIDATED_PARTIAL_CACHE",
+  "warm_run": {
+    "HIT": 2000,
+    "REGISTRY_ONLY": 36
+  }
+}

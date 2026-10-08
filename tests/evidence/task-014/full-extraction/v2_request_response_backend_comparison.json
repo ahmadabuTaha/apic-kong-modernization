@@ -1,0 +1,265 @@
+{
+  "left": {
+    "canonical_api_id": "apic-identity:sha256:3165d30141993d77200c2630b10c29760e0e1c8f6520eb3368a12d6dd484657e",
+    "name": "searchseasonalvisarequests",
+    "source_variants": [
+      {
+        "occurrence_id": "extracted-record:sha256:1c0d995fc44111a4bb83dfeba41e410214cc481d3f9efcf63e65b6b957deba7f",
+        "source_path": "staging/apis/_catalog/searchseasonalvisarequests_1.0.1.yaml",
+        "source_role": "AUTHORITATIVE_API_ARTIFACT",
+        "source_sha256": "2d2885f9010c11de14f5e7517e0b8beb027352878626c7108d4d72b5d054a809",
+        "structural_fingerprint_sha256": "59d064a23ba8a17010781e0861c0c96f95d287d59edcb4ddfd07b5f6a5ab0843"
+      },
+      {
+        "occurrence_id": "extracted-record:sha256:1ff51943b83a577c1e0d2263243ab24b99bc2e1d23f328dd596c50de7dc77725",
+        "source_path": "staging/products/_catalog/searchseasonalvisarequests_1.0.1.yaml",
+        "source_role": "PRODUCT_LOCATION_REPRESENTATION",
+        "source_sha256": "2d2885f9010c11de14f5e7517e0b8beb027352878626c7108d4d72b5d054a809",
+        "structural_fingerprint_sha256": "59d064a23ba8a17010781e0861c0c96f95d287d59edcb4ddfd07b5f6a5ab0843"
+      }
+    ],
+    "version": "1.0.1"
+  },
+  "limitations": [
+    "Configuration evidence does not prove runtime egress.",
+    "Structural equality does not prove functional duplication.",
+    "Different canonical APIs remain distinct."
+  ],
+  "operation_comparisons": [
+    {
+      "auth": {
+        "left": {
+          "security_requirement_present": true,
+          "security_scheme_types": [
+            "apiKey"
+          ]
+        },
+        "right": {
+          "security_requirement_present": true,
+          "security_scheme_types": [
+            "apiKey"
+          ]
+        },
+        "state": "EQUAL"
+      },
+      "backend_configuration": {
+        "left": {
+          "candidates": [
+            {
+              "candidate_taxonomy": "CANDIDATE_INHERITED_CONTEXT",
+              "certainty": "CANDIDATE_ONLY",
+              "configuration_scope": "API_SHARED",
+              "operation_anchor": {
+                "method": "POST",
+                "path": "/searchseasvisareq"
+              },
+              "policy_context": "ASSEMBLY_SEQUENCE",
+              "proven_operation_egress": false,
+              "resolution_status": "UNRESOLVED",
+              "runtime_usage_proven": false,
+              "safe_target_path_or_template": null,
+              "source_path": "staging/apis/_catalog/searchseasonalvisarequests_1.0.1.yaml",
+              "source_pointer": "/x-ibm-configuration/assembly/execute/0/invoke/target-url",
+              "target_observation_id": "backend-target-observation:sha256:8ac5016fc8be43647ffc0794c9d1a010d7dbadd2e5c602590d7d8b54326ad36e"
+            }
+          ],
+          "facts": []
+        },
+        "right": {
+          "candidates": [
+            {
+              "candidate_taxonomy": "CANDIDATE_INHERITED_CONTEXT",
+              "certainty": "CANDIDATE_ONLY",
+              "configuration_scope": "API_SHARED",
+              "operation_anchor": {
+                "method": "POST",
+                "path": "/searchseasvisareq"
+              },
+              "policy_context": "ASSEMBLY_SEQUENCE",
+              "proven_operation_egress": false,
+              "resolution_status": "UNRESOLVED",
+              "runtime_usage_proven": false,
+              "safe_target_path_or_template": null,
+              "source_path": "staging/apis/_catalog/searchseasonalvisarequests-v2_1.0.0.yaml",
+              "source_pointer": "/x-ibm-configuration/assembly/execute/0/invoke/target-url",
+              "target_observation_id": "backend-target-observation:sha256:070e6188c1b6d7f9bf878c401e82b244b40115e3d6d3535a1ec5404fe47c4d3a"
+            }
+          ],
+          "facts": []
+        },
+        "state": "DIFFERENT"
+      },
+      "backend_target_ids": {
+        "left": [
+          "backend-target:sha256:9edc5ce72c9462bb2af910f2d193140014601a8422e60c623ebdf43c842a107f"
+        ],
+        "right": [
+          "backend-target:sha256:9edc5ce72c9462bb2af910f2d193140014601a8422e60c623ebdf43c842a107f"
+        ],
+        "state": "EQUAL"
+      },
+      "backend_target_paths": {
+        "left": [],
+        "right": [],
+        "state": "MISSING_EVIDENCE"
+      },
+      "exposure": {
+        "left": {
+          "base_path_present": true,
+          "schemes": [
+            "https"
+          ],
+          "servers_present": false
+        },
+        "right": {
+          "base_path_present": true,
+          "schemes": [
+            "https"
+          ],
+          "servers_present": false
+        },
+        "state": "EQUAL"
+      },
+      "method_path": {
+        "left": {
+          "method": "POST",
+          "normalized_shape": "/searchseasvisareq",
+          "path": "/searchseasvisareq"
+        },
+        "right": {
+          "method": "POST",
+          "normalized_shape": "/searchseasvisareq",
+          "path": "/searchseasvisareq"
+        },
+        "state": "EQUAL"
+      },
+      "operation_anchor": {
+        "left_path": "/searchseasvisareq",
+        "method": "POST",
+        "right_path": "/searchseasvisareq"
+      },
+      "parameters": {
+        "left": [
+          {
+            "location": "body",
+            "name": "body",
+            "required": true,
+            "schema_refs": [
+              "#/definitions/SearchSeasonalVisaRequestsRq_MessageType"
+            ],
+            "schema_shape_sha256": "ea26b7f17dc9182c7b8bffe86b9c3572899e84125222f74bc2a5ac365b8524bc",
+            "scope": "OPERATION",
+            "type": null
+          }
+        ],
+        "right": [
+          {
+            "location": "body",
+            "name": "body",
+            "required": true,
+            "schema_refs": [
+              "#/definitions/SearchSeasonalVisaRequestsRq_MessageType"
+            ],
+            "schema_shape_sha256": "bf653443c106ac043d03f81371bd5122919836b3542c04a68478127842daf10e",
+            "scope": "OPERATION",
+            "type": null
+          }
+        ],
+        "state": "DIFFERENT"
+      },
+      "request_contract": {
+        "left": {
+          "body_present": true,
+          "content": [
+            {
+              "content_type": "application/json",
+              "schema_refs": [
+                "#/definitions/SearchSeasonalVisaRequestsRq_MessageType"
+              ],
+              "schema_shape_sha256": "ea26b7f17dc9182c7b8bffe86b9c3572899e84125222f74bc2a5ac365b8524bc"
+            }
+          ]
+        },
+        "right": {
+          "body_present": true,
+          "content": [
+            {
+              "content_type": "application/json",
+              "schema_refs": [
+                "#/definitions/SearchSeasonalVisaRequestsRq_MessageType"
+              ],
+              "schema_shape_sha256": "bf653443c106ac043d03f81371bd5122919836b3542c04a68478127842daf10e"
+            }
+          ]
+        },
+        "state": "DIFFERENT"
+      },
+      "response_contract": {
+        "left": [
+          {
+            "content": [
+              {
+                "content_type": "application/json",
+                "schema_refs": [
+                  "#/definitions/SearchSeasonalVisaRequestsRs_MessageType"
+                ],
+                "schema_shape_sha256": "01481532be58e839620181b819ef4c9cd77aafd9d5441bec16fd98a9d20f060d"
+              }
+            ],
+            "schema_refs": [
+              "#/definitions/SearchSeasonalVisaRequestsRs_MessageType"
+            ],
+            "schema_shape_sha256": "01481532be58e839620181b819ef4c9cd77aafd9d5441bec16fd98a9d20f060d",
+            "status": "200"
+          }
+        ],
+        "right": [
+          {
+            "content": [
+              {
+                "content_type": "application/json",
+                "schema_refs": [
+                  "#/definitions/SearchSeasonalVisaRequestsRs_MessageType"
+                ],
+                "schema_shape_sha256": "86041b2a38c35814cb131a994010222b9fc6ea4fc913c18d73452e360ae2dfbd"
+              }
+            ],
+            "schema_refs": [
+              "#/definitions/SearchSeasonalVisaRequestsRs_MessageType"
+            ],
+            "schema_shape_sha256": "86041b2a38c35814cb131a994010222b9fc6ea4fc913c18d73452e360ae2dfbd",
+            "status": "200"
+          }
+        ],
+        "state": "DIFFERENT"
+      }
+    }
+  ],
+  "right": {
+    "canonical_api_id": "apic-identity:sha256:6fa70f88ad990dcda279d38753d1e83806dc591c09b74619e945129c553f2aeb",
+    "name": "searchseasonalvisarequests-v2",
+    "source_variants": [
+      {
+        "occurrence_id": "extracted-record:sha256:3e3829e59f5a2ab7878d4401c52b2a11d0f27392a49b5edad2c9565b4a4258b5",
+        "source_path": "staging/apis/_catalog/searchseasonalvisarequests-v2_1.0.0.yaml",
+        "source_role": "AUTHORITATIVE_API_ARTIFACT",
+        "source_sha256": "1d1c3edc6c49e7f44f40d317aa019da25050ab2297e2985c127c79a162f8d281",
+        "structural_fingerprint_sha256": "3b9f9b50be0af479c3df05517cbf4195a2bf2dcc79ca48caef50625c0a5b730e"
+      },
+      {
+        "occurrence_id": "extracted-record:sha256:4a2900599d58d82e7d40d3fb297c5d822e2293f187ec93b3a81cfe229f1718bc",
+        "source_path": "staging/products/_catalog/searchseasonalvisarequests-v2_1.0.0.yaml",
+        "source_role": "PRODUCT_LOCATION_REPRESENTATION",
+        "source_sha256": "1d1c3edc6c49e7f44f40d317aa019da25050ab2297e2985c127c79a162f8d281",
+        "structural_fingerprint_sha256": "3b9f9b50be0af479c3df05517cbf4195a2bf2dcc79ca48caef50625c0a5b730e"
+      }
+    ],
+    "version": "1.0.0"
+  },
+  "status": "POSSIBLE_STRUCTURAL_OVERLAP_REQUIRES_SEMANTIC_VALIDATION",
+  "version": {
+    "left": "1.0.1",
+    "right": "1.0.0",
+    "state": "DIFFERENT"
+  }
+}

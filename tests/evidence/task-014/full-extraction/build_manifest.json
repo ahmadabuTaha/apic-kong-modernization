@@ -1,0 +1,57 @@
+{
+  "cache_events": {
+    "HIT": 2000,
+    "REGISTRY_ONLY": 36
+  },
+  "cache_schema_version": 1,
+  "coverage": {
+    "accepted_canonical_api_count": 2036,
+    "api_inventory_record_count": 2036,
+    "document_format_counts": {
+      "NO_DOCUMENT": 36,
+      "OPENAPI_3": 4,
+      "SWAGGER_2": 1996
+    },
+    "operation_inventory_record_count": 2414,
+    "parser_coverage_status_counts": {
+      "REGISTRY_ONLY_NO_ACCEPTED_API_YAML": 36,
+      "SUPPORTED_PATH_OPERATIONS": 2000
+    },
+    "protocol_counts": {
+      "NO_PROTOCOL_OR_REGISTRY_ONLY": 36,
+      "graphql": 1,
+      "rest": 1997,
+      "wsdl-to-rest": 2
+    },
+    "registry_only_api_count": 36,
+    "source_backed_api_count": 2000,
+    "source_variant_classification_counts": {
+      "BYTE_IDENTICAL_REPRESENTATIONS": 1776,
+      "REGISTRY_ONLY": 36,
+      "SEMANTICALLY_EQUIVALENT_STRUCTURAL_VARIANTS": 2,
+      "SINGLE_REPRESENTATION": 222
+    },
+    "structural_overlap_candidate_count": 60,
+    "unique_operation_id_count": 2414,
+    "unresolved_attached_as_relationship_count": 0,
+    "unresolved_product_location_occurrence_count": 113
+  },
+  "extractor_version": "task014-full-inventory-v3",
+  "outputs": {
+    "api_inventory": {
+      "path": "indexes/semantic_api_inventory.jsonl",
+      "record_count": 2036,
+      "sha256": "c06810d9079abdd382b48b4f49617431f57d390395b81a4cd07aa0244dafed1a"
+    },
+    "operation_inventory": {
+      "path": "indexes/semantic_operation_inventory.jsonl",
+      "record_count": 2414,
+      "sha256": "1c603cd6867f3a2d12f950c319e7ab29b2d2111604ff8bcfe6c0ad4dda2bf3bc"
+    },
+    "structural_overlap_candidates": {
+      "path": "indexes/semantic_structural_overlap_candidates.jsonl",
+      "record_count": 60,
+      "sha256": "b0f5d8ea4b86bb45f4224820696eee63897278fe98e186fd4c97b1baa2405d97"
+    }
+  }
+}
