@@ -2,220 +2,245 @@
 
 ## Task executed
 
-Phase 4 — Task 013: Additive Backend Target CodeGraph Enrichment.
+Phase 5 — Task 014: Semantic Inventory & Operation Extraction.
 
 ## Prompt file used
 
-`codex/comm/prompts/phase-4-013-additive-backend-target-codegraph-enrichment.md`
+`codex/comm/prompts/phase-5-014-semantic-inventory-operation-extraction.md`
 
 ## Summary of what was done
 
-- Built a deterministic additive dependency graph from accepted Task 011/012 compact evidence without reparsing raw YAML.
-- Created canonical `backend_target` nodes for explicit resolved, static, symbolic, and partially resolved invocation targets.
-- Created deduplicated `api_invokes_target` edges with combined Task 011/012 provenance, configuration evidence, and exact operation qualifiers.
-- Preserved same-host/different-path identity separation and converged only normalized equal target identities.
-- Integrated the additive layer into the local Explorer while leaving the frozen Phase 3 graph files unchanged.
-- Added API→backend and backend→API traversal, backend search, classification/resolution/scope filters, provenance drill-down, and safe API security metadata.
-- Generated all required Task 013 evidence and focused tests.
+- Defined an additive semantic API/operation inventory contract for architecture review.
+- Implemented deterministic representative-sample extraction only; no estate-wide rollout was performed.
+- Selected canonical APIs from compact accepted identity, relationship, backend, dependency-edge, and unresolved-occurrence evidence.
+- Parsed only compact-index-selected authoritative API YAML for source semantics.
+- Created factual API inventory records and explicit Swagger/OpenAPI operation records with stable deterministic IDs.
+- Preserved exact source pointers, missing-field reasons, compact parameter/request/response/schema references, backend scope, AS-IS Product/Plan links, and unresolved Product-location occurrences.
+- Kept API-shared backend evidence from becoming falsely proven operation egress.
+- Added focused tests and safe committed review evidence.
+- Did not implement Task 015–019, operation graph nodes, semantic functions, logical APIs, domain/capability mapping, runtime inference, or Kong design.
 
-## Implementation files created
+## Implementation structure
 
-- `backend_target_graph/__init__.py`
-- `backend_target_graph/__main__.py`
-- `backend_target_graph/graph.py`
-- `tests/test_backend_target_graph.py`
-- `tests/evidence/task-013/generate_task013_evidence.py`
-- `tests/evidence/task-013/backend_target_graph_summary.json`
-- `tests/evidence/task-013/backend_target_classification_summary.json`
-- `tests/evidence/task-013/api_invokes_target_samples.jsonl`
-- `tests/evidence/task-013/backend_target_reuse.json`
-- `tests/evidence/task-013/explorer_dependency_acceptance.json`
-- `tests/evidence/task-013/commands_and_results.txt`
+- `semantic_inventory/inventory.py`: deterministic selection, targeted YAML parsing, API/operation extraction, missing-state handling, compact reference summaries, backend qualifiers, AS-IS relationships, unresolved-occurrence preservation, safe text redaction, and JSONL output.
+- `semantic_inventory/__init__.py`: public Task 014 API.
+- `semantic_inventory/__main__.py`: `python -m semantic_inventory` entry point.
+- `tests/test_semantic_inventory.py`: duplicate occurrence, multi-operation identity, missing metadata, registry-only, backend-scope, determinism, redaction, and frozen-integrity tests.
+- `tests/evidence/task-014/generate_task014_evidence.py`: deterministic architecture-review evidence generator.
 
-## Implementation files modified
+## Semantic inventory contract
 
-- `codegraph_explorer/explorer.py`
-- `codegraph_explorer/static/index.html`
+The review draft is `tests/evidence/task-014/semantic_inventory_contract.md`.
+
+Key contract rules:
+
+- `canonical_api_id` is the primary join key.
+- API inventory IDs are content-derived from canonical API identity.
+- Operation inventory IDs include canonical API ID, accepted source path, exact source pointer, HTTP method, and exact path.
+- Operation records are inventory records, not CodeGraph nodes.
+- Only explicit Swagger 2/OpenAPI 3 Path Item methods are supported in this mock.
+- Parameters, requests, responses, and schemas remain compact facts/references; schemas are not expanded.
+- Task 011 is authoritative for backend scope and resolution state.
+- `OPERATION_SCOPED` backend evidence matches only exact method/path evidence.
+- `API_SHARED` backend evidence remains API-level context labeled `API_LEVEL_ONLY_NOT_PROVEN_OPERATION_EGRESS`.
+- AS-IS Product/Plan data comes only from accepted frozen relationships.
+- Future hypotheses and architectural judgments are separate fields and remain empty.
+
+## Representative selection
+
+- Selection algorithm: lowest stable canonical API ID satisfying each compact-index-derived criterion.
+- Selected canonical APIs: 6.
+- Required categories represented: 9 / 9.
+- Source-backed samples: 5.
+- Registry-only samples: 1.
+- Targeted sources read for selection: 3.
+- Targeted sources parsed for inventory: 5.
+- Estate-wide source scan: no.
+
+The sample includes:
+
+- explicit multi-operation REST API;
+- single-operation API;
+- missing/unresolved operation metadata via a registry-only API;
+- API-shared backend scope;
+- operation-scoped backend evidence;
+- accepted AS-IS Product and Plan connections;
+- registry-only canonical identity;
+- API with multiple backend targets;
+- API linked diagnostically to an unresolved Product-location occurrence, retained as unresolved.
+
+## Sample inventory results
+
+- API inventory records: 6.
+- Operation inventory records: 35.
+- Unique operation IDs: 35 / 35.
+- Sampled Swagger 2 APIs: 5.
+- Registry-only/no-document APIs: 1.
+- APIs with API-shared backend evidence: 3.
+- APIs with operation-scoped backend evidence: 2.
+- Operations with exact operation-scoped backend evidence: 9.
+- Operations missing descriptions: 34.
+- Sampled unresolved Product-location occurrences: 1.
+- Estate unresolved Product-location occurrences preserved: 113.
+- Unresolved occurrences attached as relationships: 0.
+
+## Local generated indexes
+
+- `indexes/semantic_api_inventory_sample.jsonl`: 6 records; SHA-256 `6c1c034a2042f153f3b8882990413d47b1bab531ec24528489b46381e8664c25`.
+- `indexes/semantic_operation_inventory_sample.jsonl`: 35 records; SHA-256 `ad7320bd1a1182128cdf7904280e26479d1a80a5db7c3fcd4c08ac2892576452`.
+
+Both are local ignored representative-sample outputs.
+
+## Extraction gap taxonomy
+
+API-level missing fields in the sample:
+
+- `api_description`: 5.
+- `api_title`: 1, caused by the registry-only representation.
+- `api_version`: 1, caused by the registry-only representation.
+- `protocol`: 1, caused by the registry-only representation.
+- `operations`: 1, caused by the registry-only representation.
+
+Operation-level missing fields:
+
+- `description`: 34.
+- `operationId`: 34.
+- `summary`: 35.
+
+Additional explicit gaps:
+
+- Registry-only APIs cannot yield source-evidenced operations or descriptions.
+- The sample contains no unsupported document format, but unsupported syntax remains explicitly defined in the contract.
+- No source-representation conflict was observed in the representative sample.
+
+## Parser coverage and unsupported syntax
+
+Supported:
+
+- Swagger 2.0 and OpenAPI 3.x Path Item operations;
+- standard HTTP operation methods;
+- path-shared and operation parameters;
+- Swagger body parameters and OpenAPI request bodies;
+- response status/content summaries;
+- `$ref` capture without dereferencing.
+
+Not extracted:
+
+- GraphQL fields, SOAP/WSDL operations, AsyncAPI channels;
+- OpenAPI callbacks, links, and webhooks;
+- APIC assembly policy labels as semantic operations;
+- expanded schemas or inferred routes.
+
+## Duplicate, mixed, and multiple representation handling
+
+- Phase 2 canonical identity is the deduplication boundary.
+- Exact duplicate source occurrences remain provenance on one API record and do not duplicate operations.
+- Accepted source precedence remains authoritative; one accepted root API YAML is parsed once.
+- All contributing and authoritative occurrence IDs remain recorded.
+- Conflicting accepted representations require an explicit conflict state and architecture review before rollout; none was observed in this sample.
+- Registry-only identities remain inventory records with explicit missing states and zero fabricated operations.
+
+## Backend and routing behavior
+
+- API-shared backend observations are present on API records only.
+- Operation records retain API-shared observation IDs as context but explicitly deny proven operation egress.
+- Operation-scoped observations require exact method and path equality.
+- Backend resolution statuses, reasons, token names, source pointers, and Task 011 observation IDs are preserved.
+- Raw endpoint hosts and resolved infrastructure values are omitted from committed evidence.
+
+## AS-IS Product/Plan and unresolved evidence
+
+- Product and Plan connections use only accepted `product_contains_api`, `plan_entitles_api`, and `product_contains_plan` relationships.
+- These are AS-IS APIC relationships, not Kong Product design.
+- The 113 Task 007 unresolved Product-location occurrences remain unresolved and are never silently attached from diagnostic candidates.
+- The representative sample includes one such occurrence with status `PRESERVED_UNRESOLVED_NOT_ATTACHED`.
+
+## Files created
+
+- `semantic_inventory/__init__.py`
+- `semantic_inventory/__main__.py`
+- `semantic_inventory/inventory.py`
+- `tests/test_semantic_inventory.py`
+- `tests/evidence/task-014/generate_task014_evidence.py`
+- `tests/evidence/task-014/semantic_inventory_contract.md`
+- `tests/evidence/task-014/sample_selection.json`
+- `tests/evidence/task-014/api_sample_review.jsonl`
+- `tests/evidence/task-014/operation_sample_review.jsonl`
+- `tests/evidence/task-014/coverage_and_gaps.json`
+- `tests/evidence/task-014/commands_and_results.txt`
+
+## Files modified
+
 - `codex/comm/HANSOFF.md`
-
-## Exact additive graph indexes
-
-- `indexes/codegraph_dependency_nodes.jsonl`: 1,480 records; SHA-256 `ab5e43da1e4eff3457e2660c835d36ce1250042c9af9a13d9b883cf28c4b8482`.
-- `indexes/codegraph_dependency_edges.jsonl`: 2,307 records; SHA-256 `95cb2d9446b89b703d65d85a7e387e46614997903b39fbb822ee0347fc988867`.
-- `indexes/codegraph_dependency_adjacency.jsonl`: 3,457 records; SHA-256 `6e7a9f65c9237a765b7ffb8f08442c8dfc36e2d9ca686d65257cf7dfb281143f`.
-
-These generated indexes are local and ignored. No frozen structural graph index was overwritten.
-
-## Backend target node counts
-
-- Canonical `backend_target` nodes: 1,480.
-- `RESOLVED_TARGET`: 1,091.
-- `STATIC_LITERAL_TARGET`: 57.
-- `SYMBOLIC_TARGET`: 68.
-- `PARTIALLY_RESOLVED_TARGET`: 264.
-- Explicit unresolved symbolic nodes: 68.
-
-Task 013 consumed all 2,334 Task 011 observations. It admitted 2,332 observations with explicit safe target expressions and excluded two accepted records whose target value is null; null is not an admissible explicit target identity.
-
-## api_invokes_target edges and API coverage
-
-- Canonical `api_invokes_target` edges: 2,307.
-- APIs with at least one backend edge: 1,977.
-- APIs with multiple backend targets: 132.
-- Observation-to-edge deduplication: 27 observations converged into existing API→target edges.
-- Observation-to-node convergence: 854 observations converged into existing backend target identities.
-- Missing/orphan endpoint count: 0.
-- Additive graph integrity: PASS.
-
-## Shared backend target findings
-
-- Backend targets referenced by one API: 1,209.
-- Backend targets referenced by multiple APIs: 271.
-- The most-shared target is referenced by 96 APIs.
-- Sharing is structural correlation only and was not interpreted as duplicate capability or runtime use.
-- 118 symbolic/partially resolved targets have more than one source observation, demonstrating deterministic symbolic identity convergence.
-
-## Operation-scope findings
-
-- Edges carrying `API_SHARED`: 2,246.
-- Edges carrying `OPERATION_SCOPED`: 61.
-- Edges carrying both scope classes: 0 in the observed corpus.
-- Multiple operation observations converging on one API→target edge retain all exact methods, paths, source pointers, and observation IDs.
-- No Operation nodes were created.
-
-## Backend classification counts
-
-- `ACE`: 0.
-- `BACKEND`: 0.
-- `EXTERNAL_VIA_DATAPOWER`: 0.
-- `VALIDATION_REQUIRED`: 1,480.
-- Automatic classification coverage: 0%.
-
-## Exact classification evidence rules
-
-- Automatic rules applied: none, because accepted Task 011/012 evidence contains no explicit authoritative backend-family assertion.
-- Fallback rule: `validation_required_no_accepted_explicit_backend_family_evidence`.
-- Hostnames, property tokens, API names, and invoke titles containing terms such as `ace`, `backend`, `external`, `dp`, or `datapower` were explicitly rejected as sufficient classification evidence.
-- Task 011 `backend_type` values describe transport/parser handling (`detect`, `json`, `xml`, or `graphql`) and were not reinterpreted as architecture families.
-- No name-only inference was used.
-
-## Same-host/different-path validation
-
-- 137 accepted host groups contain multiple distinct target paths represented by distinct backend target identities.
-- Representative evidence uses hashed host keys and safe path samples only.
-- Focused tests prove that the same host with `/one` and `/two` remains two nodes, while equivalent normalized targets converge.
-
-## Explorer changes
-
-- Exact run command: `.venv/bin/python -m codegraph_explorer`.
-- The Explorer loads the frozen structural graph plus the additive dependency layer in memory.
-- Search supports safe target path/template, symbolic property token, backend target ID, and display label.
-- Filters support `backend_target`, `api_invokes_target`, backend classification, resolution status, and API/shared versus operation scope.
-- Existing deterministic visual caps remain 80 nodes and 120 edges, with explicit limit warnings and no silent truncation.
-- Backend node/edge details expose only safe target representations, token names, resolution/classification state, operation qualifiers, and provenance.
-
-## API→backend visual example
-
-- API `apic-identity:sha256:0009ee4eeece2430096ec9be843777a8e4258c260de73c9f9fb702bc865a55ce` visibly traverses via `api_invokes_target` to backend target `backend-target:sha256:047e69685f2cdb372d3a07f7956e2ffe070b791d3ef4284dc1653e154f3e6281`.
-
-## Backend→API reverse example
-
-- Selecting backend target `backend-target:sha256:047e69685f2cdb372d3a07f7956e2ffe070b791d3ef4284dc1653e154f3e6281` visibly returns invoking API `apic-identity:sha256:0009ee4eeece2430096ec9be843777a8e4258c260de73c9f9fb702bc865a55ce`.
-
-## Security and configuration behavior
-
-- Security-provider evidence is exposed only as compact safe API metadata: observation count, mechanism, provider/scheme name, endpoint resolution states, and `API_ATTRIBUTE_ONLY` graph representation.
-- Security Provider nodes created: 0.
-- Catalog Property/Configuration Reference dependency nodes created: 0.
-- JWT/JWK dependency nodes or edges created: 0.
-- Configuration token names and safe lookup statuses remain provenance/attributes on backend nodes and edges.
-- Security metadata does not participate in backend target identity.
-
-## Credential redaction
-
-- Additive indexes, committed evidence, Explorer projections, and this handoff were compared with source credential values, secret-like Catalog Property values, and observed JWK/private-key material.
-- Zero sensitive source values were exposed.
-- Committed samples omit raw resolved infrastructure and retain only safe path/template and symbolic-token representations.
-
-## Deterministic build result
-
-- Two independent builds produced byte-identical node indexes.
-- Two independent builds produced byte-identical edge indexes.
-- Two independent builds produced byte-identical adjacency indexes.
-- Canonical target and edge IDs are content-derived and stable.
 
 ## Tests executed
 
-- `.venv/bin/python -m backend_target_graph`.
-- `.venv/bin/python tests/evidence/task-013/generate_task013_evidence.py`.
-- `.venv/bin/pytest tests/test_backend_target_graph.py tests/test_codegraph_explorer.py -q`.
+- `.venv/bin/python -m semantic_inventory`.
+- `.venv/bin/python tests/evidence/task-014/generate_task014_evidence.py`.
+- `.venv/bin/pytest tests/test_semantic_inventory.py -q`.
 - `.venv/bin/pytest -q`.
 - Python compilation checks.
 - `git diff --check`.
-- Repeated-build byte comparison.
-- Frozen-index and raw `staging/` integrity checks.
-- Credential, secret-like Catalog Property, and JWK/private-key material comparisons.
+- Independent repeated-build byte comparison.
+- Frozen Phase 0–4 index and raw `staging/` integrity comparisons.
+- Credential, secret-like Catalog Property, JWK/private-key, and URI-host redaction comparisons.
 
 ## Test results
 
-- Focused Task 013 and Explorer tests: **8 passed in 18.88s**.
-- Additive graph integrity: **PASS**.
-- Explorer dependency acceptance: **PASS**.
-- Deterministic repeated build: **PASS**.
-- Frozen structural graph and relationship integrity: **PASS**.
-- Secret redaction: **PASS**, zero sensitive source values exposed.
-- Repository-wide suite: **38 passed, 5 setup errors in 45.73s**. The five setup errors remain the known frozen Phase 0 fixture-packaging issue because `tests/fixtures/repository_profile/staging` is absent. No Task 013 test failed.
+- Focused Task 014 tests: **3 passed in 3.06s**.
+- Deterministic API and operation output: **PASS**.
+- Required sample category coverage: **9 / 9**.
+- Operation ID uniqueness: **35 / 35**.
+- Backend scope preservation: **PASS**.
+- Unresolved Product-location preservation: **PASS**.
+- Frozen Phase 0–4 and raw evidence integrity: **PASS**.
+- Secret/URI redaction: **PASS**, zero sensitive source values exposed.
+- Repository-wide suite: **41 passed, 5 setup errors in 47.87s**. The five setup errors remain the known frozen Phase 0 fixture-packaging issue because `tests/fixtures/repository_profile/staging` is absent. No Task 014 test failed.
 
 ## Generated artifacts
 
-- Local ignored: the three additive graph indexes under `indexes/`.
-- Committed: six required evidence artifacts and the deterministic evidence generator under `tests/evidence/task-013/`.
+- Local ignored: `indexes/semantic_api_inventory_sample.jsonl` and `indexes/semantic_operation_inventory_sample.jsonl`.
+- Committed: contract, selection, API review, operation review, coverage/gaps, commands/results, and evidence generator under `tests/evidence/task-014/`.
 
 ## Frozen-component integrity
 
-- `indexes/codegraph_nodes.jsonl` remains at 4,718 records and is byte-unchanged.
-- `indexes/codegraph_edges.jsonl` remains at 9,589 records and is byte-unchanged.
-- `indexes/codegraph_adjacency.jsonl` is byte-unchanged.
-- `indexes/relationship_index.jsonl` is byte-unchanged.
-- Task 011 and Task 012 accepted input indexes are byte-unchanged.
+- Phase 0–4 canonical identity, relationship, structural graph, backend, dependency observation, and additive dependency graph indexes are byte-unchanged.
 - Raw `staging/` evidence is unchanged.
-- No Phase 0–12 implementation was modified except the Task 010 Explorer files explicitly authorized for additive integration.
+- No CodeGraph node, edge, relationship taxonomy, backend resolution, or dependency implementation was modified.
 
 ## Important findings
 
-- Backend target identity is materially path-sensitive: 137 host groups prove that host-only canonicalization would incorrectly collapse distinct dependencies.
-- Explicit symbolic evidence supports 68 unresolved symbolic nodes without inventing concrete infrastructure.
-- Two Task 011 observations carry null target values despite being labeled static/resolved; Task 013 correctly excludes them because the approved admission rule requires an explicit target expression. Task 011 remains frozen and unchanged.
-- Current accepted evidence does not safely support automatic architecture-family classification, so every target remains visible and filterable as `VALIDATION_REQUIRED`.
-- No reproducible defect requiring modification of frozen graph or dependency components was found.
+- The compact indexes can drive a representative semantic mock with only five targeted source parses.
+- Most sampled operations lack operationId, summary, and description; later semantic work must treat source absence explicitly rather than infer meaning from API labels.
+- Exact operation-scoped backend evidence is available for 9 sample operations, while API-shared evidence cannot safely establish per-operation egress.
+- Registry-only canonical identities require a first-class no-source state.
+- Unresolved Product-location evidence can coexist with accepted registry Product/Plan relationships without being silently promoted.
 
-## Unresolved issues
+## Unresolved issues and architecture review questions
 
-- Architects or source owners must supply an accepted explicit classification mapping/assertion before targets can safely move from `VALIDATION_REQUIRED` to `ACE`, `BACKEND`, or `EXTERNAL_VIA_DATAPOWER`.
-- The two null Task 011 target observations remain in the frozen source index and are documented rather than altered.
+- Approve or revise the API and operation field contract before estate-wide rollout.
+- Decide whether duplicate accepted YAML representations require a separate conflict-comparison report.
+- Decide whether callbacks/webhooks and GraphQL/SOAP/AsyncAPI require protocol-specific inventory records.
+- Confirm that API-shared backend evidence remains API-only context in later semantic tasks.
+- Confirm the missing-description review threshold for later observed-function work.
 - Five frozen Phase 0 tests still cannot start because their fixture directory is absent.
 
 ## Assumptions
 
-- Task 011 observations are authoritative for invocation evidence and resolution outcomes.
-- Task 012 `BACKEND_INVOCATION` records are provenance links, not an independent source for target reinterpretation.
-- Exact normalized concrete target structure or exact unresolved expression structure is the canonical convergence key.
-- Safe target path/template and symbolic token names are appropriate for local Explorer display; raw infrastructure is unnecessary in committed evidence.
-- Future accepted classification evidence can enrich the additive nodes without rebuilding the frozen structural graph.
+- Phase 2 accepted canonical API identities and source precedence remain authoritative.
+- Task 011 scope and resolution outcomes remain authoritative backend evidence.
+- Task 008 relationships remain authoritative AS-IS Product/Plan connections.
+- Task 007 candidate canonical IDs are diagnostic bridges only and do not authorize occurrence attachment.
+- Exact source method/path is sufficient for a factual operation inventory record but not for semantic function inference.
 
 ## Deviations from the prompt
 
 None.
 
-## Architecture findings requiring future validation
-
-- Define and provide the authoritative evidence source that maps target identities or environment endpoints to `ACE`, `BACKEND`, and `EXTERNAL_VIA_DATAPOWER`.
-- Decide whether the two null target observations should be corrected in a separately authorized Task 011 maintenance task; they were not promoted here.
-
 ## Recommended next step
 
-Accept Task 013 as PASS, review the 1,480 `VALIDATION_REQUIRED` target groups, and provide an explicit evidence-backed backend-family mapping before any classification enrichment. Do not begin another task until `CURRENT_TASKS.md` is updated externally.
+Integration Architect and Enterprise Architect should review and approve or revise the Task 014 contract, parser coverage, missing-state taxonomy, and representative evidence before any estate-wide semantic extraction or Task 015 work. Task 018 retains its separate mock-test approval gate.
 
 ## Final status
 
-PASS
+HOLD_FOR_ARCHITECTURE_REVIEW

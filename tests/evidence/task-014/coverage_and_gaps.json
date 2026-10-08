@@ -1,0 +1,65 @@
+{
+  "api_shared_backend_not_promoted_to_operation_egress": true,
+  "apis_with_api_shared_backend_evidence": 3,
+  "apis_with_operation_scoped_backend_evidence": 2,
+  "architecture_review_questions": [
+    "Approve or revise the API and operation field contract before estate-wide rollout.",
+    "Decide whether duplicate accepted YAML representations require a separate conflict-comparison report.",
+    "Decide whether callbacks/webhooks and GraphQL/SOAP/AsyncAPI need protocol-specific inventory records.",
+    "Confirm that API_SHARED backend evidence remains API-only context rather than proven operation egress.",
+    "Confirm the missing-description review threshold for later semantic work."
+  ],
+  "deterministic_output_sha256": {
+    "api_sample_sha256": "6c1c034a2042f153f3b8882990413d47b1bab531ec24528489b46381e8664c25",
+    "operation_sample_sha256": "ad7320bd1a1182128cdf7904280e26479d1a80a5db7c3fcd4c08ac2892576452"
+  },
+  "deterministic_repeated_build": true,
+  "domain_or_capability_tagging_performed": false,
+  "estate_unresolved_product_location_occurrences_preserved": 113,
+  "extraction_gap_taxonomy": {
+    "api_missing_field_counts": {
+      "api_description": 5,
+      "api_title": 1,
+      "api_version": 1,
+      "operations": 1,
+      "protocol": 1
+    },
+    "operation_missing_field_counts": {
+      "description": 34,
+      "operationId": 34,
+      "summary": 35
+    },
+    "registry_only_without_source_count": 1,
+    "source_representation_conflict_count": 0,
+    "unresolved_product_location_occurrence_count_in_sample": 1,
+    "unsupported_document_format_count": 0
+  },
+  "frozen_phase_0_through_4_hashes_unchanged": true,
+  "local_generated_output_sha256": {
+    "api": "6c1c034a2042f153f3b8882990413d47b1bab531ec24528489b46381e8664c25",
+    "operation": "ad7320bd1a1182128cdf7904280e26479d1a80a5db7c3fcd4c08ac2892576452"
+  },
+  "logical_api_formation_performed": false,
+  "operation_record_ids_unique": true,
+  "operation_records_are_not_graph_nodes": true,
+  "operations_with_missing_description": 34,
+  "operations_with_operation_scoped_backend_evidence": 9,
+  "overall_acceptance_pass": true,
+  "parser_coverage_status_counts": {
+    "REGISTRY_ONLY_NO_ACCEPTED_API_YAML": 1,
+    "SUPPORTED_PATH_OPERATIONS": 5
+  },
+  "parser_format_counts": {
+    "NO_DOCUMENT": 1,
+    "SWAGGER_2": 5
+  },
+  "registry_only_sample_count": 1,
+  "sample_api_count": 6,
+  "sample_operation_count": 35,
+  "sampled_unresolved_product_location_occurrences": 1,
+  "semantic_function_inference_performed": false,
+  "source_backed_sample_count": 5,
+  "task_018_domain_mock_authorized_by_this_task": false,
+  "unresolved_product_location_occurrences_attached_as_relationships": 0,
+  "unresolved_product_occurrences_preserved_not_attached": true
+}

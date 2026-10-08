@@ -1,0 +1,74 @@
+{
+  "categories": {
+    "api_shared_backend_scope": [
+      "apic-identity:sha256:0009ee4eeece2430096ec9be843777a8e4258c260de73c9f9fb702bc865a55ce"
+    ],
+    "as_is_product_and_plan_relationship": [
+      "apic-identity:sha256:0009ee4eeece2430096ec9be843777a8e4258c260de73c9f9fb702bc865a55ce"
+    ],
+    "explicit_multi_operation_rest_api": [
+      "apic-identity:sha256:3d4ca17f0a9ef1fd790fa0f40e2b0969d7508f74f095d31ca2fefa7f899fe629"
+    ],
+    "missing_or_unresolved_operation_metadata": [
+      "apic-identity:sha256:04f4b16ef367adef6140193d54c2f60e7397844cfaa76f42fea3cdfa70a486cd"
+    ],
+    "multiple_backend_targets": [
+      "apic-identity:sha256:0187d497510d1bf2bd0681b8cd6d0efba73232ad9af4bb4a72efbbf2dd9d69ca"
+    ],
+    "operation_scoped_backend_evidence": [
+      "apic-identity:sha256:3b86d823b059c406a32787df5cfad04009ee90c7da92f8f8d93c6161b6b9cb0c"
+    ],
+    "registry_only_canonical_api": [
+      "apic-identity:sha256:04f4b16ef367adef6140193d54c2f60e7397844cfaa76f42fea3cdfa70a486cd"
+    ],
+    "single_operation_api": [
+      "apic-identity:sha256:0009ee4eeece2430096ec9be843777a8e4258c260de73c9f9fb702bc865a55ce"
+    ],
+    "unresolved_product_location_occurrence": [
+      "apic-identity:sha256:006be60add27d860be925c58edee7f246c49396fbca49f42932a7ea0f9bf6ba9"
+    ]
+  },
+  "estate_wide_source_scan_performed": false,
+  "required_categories_impossible_to_sample": [],
+  "required_categories_satisfied": [
+    "api_shared_backend_scope",
+    "as_is_product_and_plan_relationship",
+    "explicit_multi_operation_rest_api",
+    "missing_or_unresolved_operation_metadata",
+    "multiple_backend_targets",
+    "operation_scoped_backend_evidence",
+    "registry_only_canonical_api",
+    "single_operation_api",
+    "unresolved_product_location_occurrence"
+  ],
+  "required_category_count": 9,
+  "selected_api_count": 6,
+  "selected_canonical_api_ids": [
+    "apic-identity:sha256:0009ee4eeece2430096ec9be843777a8e4258c260de73c9f9fb702bc865a55ce",
+    "apic-identity:sha256:006be60add27d860be925c58edee7f246c49396fbca49f42932a7ea0f9bf6ba9",
+    "apic-identity:sha256:0187d497510d1bf2bd0681b8cd6d0efba73232ad9af4bb4a72efbbf2dd9d69ca",
+    "apic-identity:sha256:04f4b16ef367adef6140193d54c2f60e7397844cfaa76f42fea3cdfa70a486cd",
+    "apic-identity:sha256:3b86d823b059c406a32787df5cfad04009ee90c7da92f8f8d93c6161b6b9cb0c",
+    "apic-identity:sha256:3d4ca17f0a9ef1fd790fa0f40e2b0969d7508f74f095d31ca2fefa7f899fe629"
+  ],
+  "selection_algorithm_version": "task-014-representative-selection-v1",
+  "selection_basis": "lowest stable canonical API ID satisfying each compact-index-derived criterion",
+  "selection_is_success_only": false,
+  "selection_notes": [
+    "Registry-only and unresolved Product-location cases are deliberately included.",
+    "The first operation-scoped candidate is retained even though it is single-operation; the first later operation-scoped candidate with more than one operation supplies the multi-operation case.",
+    "One sampled API may satisfy multiple required categories."
+  ],
+  "targeted_sources_parsed_for_inventory": [
+    "staging/apis/_catalog/adminmanagement-supportcentre_1.0.0.yaml",
+    "staging/apis/_catalog/noteservice_1.0.0.yaml",
+    "staging/apis/_catalog/osh-getallusers_1.0.0.yaml",
+    "staging/apis/_catalog/osh_1.0.0.yaml",
+    "staging/apis/_catalog/searchetrequests_1.0.1.yaml"
+  ],
+  "targeted_sources_read_for_selection": [
+    "staging/apis/_catalog/adminmanagement-supportcentre_1.0.0.yaml",
+    "staging/apis/_catalog/noteservice_1.0.0.yaml",
+    "staging/apis/_catalog/osh-getallusers_1.0.0.yaml"
+  ]
+}

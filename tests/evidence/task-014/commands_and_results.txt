@@ -1,0 +1,42 @@
+Phase 5 Task 014 commands and results
+=====================================
+
+Command: git pull --ff-only origin main
+Result: PASS — fast-forwarded main from 6083f8b to 83b67be before task execution.
+
+Command: .venv/bin/python -m semantic_inventory
+Result: PASS
+- Selected 6 canonical APIs satisfying all 9 required representative categories.
+- Parsed 5 accepted API YAML sources and retained 1 registry-only identity.
+- Produced 35 explicit operation inventory records.
+- No estate-wide source scan was performed.
+- API sample SHA-256: 6c1c034a2042f153f3b8882990413d47b1bab531ec24528489b46381e8664c25
+- Operation sample SHA-256: ad7320bd1a1182128cdf7904280e26479d1a80a5db7c3fcd4c08ac2892576452
+
+Command: .venv/bin/python tests/evidence/task-014/generate_task014_evidence.py
+Result: PASS
+- Independent API sample builds were byte-identical.
+- Independent operation sample builds were byte-identical.
+- All required selection classes were represented.
+- API_SHARED backend evidence remained API-only context.
+- All 113 unresolved Product-location occurrences remained explicitly unresolved; none became a relationship.
+- Frozen Phase 0–4 hashes remained unchanged.
+
+Command: .venv/bin/pytest tests/test_semantic_inventory.py -q
+Result: PASS — 3 passed in 3.06s.
+
+Command: .venv/bin/pytest -q
+Result: PARTIAL — 41 passed, 5 setup errors in 47.87s.
+- All Task 014 tests passed.
+- The five setup errors are the known frozen Phase 0 fixture-packaging issue: tests/fixtures/repository_profile/staging is absent.
+
+Final validation results
+------------------------
+- Python compilation: PASS.
+- git diff --check: PASS.
+- Credential, secret-like Catalog Property, JWK/private-key and URI-host redaction: PASS; zero sensitive source values exposed.
+- Frozen Phase 0–4 structural, dependency, identity, relationship, and backend indexes: byte-unchanged.
+- Raw staging tree: unchanged.
+- No Operation graph nodes or graph edges were created.
+- No Task 015–019 semantic inference or mapping was performed.
+- No files under staging/, indexes/, or outputs/ are committed by Task 014.
