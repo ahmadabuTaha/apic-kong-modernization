@@ -19,6 +19,7 @@ Carry out a focused evidence-backed evaluation for BOTH pending revisions, produ
 ### A1 Backend evidence: assess with actual operation and assembly examples
 - Inspect compact Task 011/012/013 evidence and selected, relevant APIC assembly YAML; distinguish **API_SHARED configuration context**, **operation-scoped explicit invocation evidence**, action/policy scope where demonstrable, and conditional routing where supported.
 - Evaluate whether an API_SHARED invocation may be inherited by several operations as *potential context* without being misrepresented as observed or proven egress. Present alternative record representations and exact provenance, certainty, scope, and limits for each.
+- Explicitly compare APIs with one operation versus multiple operations. Operation count does not prove that a shared backend is actual egress. Show possible inherited context separately from exact evidenced per-operation invocation.
 - Test cases: simple shared invocation; explicitly operation-specific invocation; mixed/shared and operation-specific patterns if found; conditional/branching or absent/equivocal policy evidence if found; APIs with multiple backend targets. If a pattern is not demonstrable, mark `NOT_EVIDENCED_IN_SAMPLE`.
 - Distinguish: `CONFIGURED_API_SHARED`, `EVIDENCED_OPERATION_SCOPED`, `CANDIDATE_INHERITED_CONTEXT`, `UNRESOLVED_ROUTING`, or recommend another explicit taxonomy **as a proposal only**, without unapproved semantic claims. Do not change accepted Task 011 facts.
 - Provide a compact side-by-side example showing what the old Task 014 contract loses or represents conservatively vs a revised contract, including risks of overclaiming.
@@ -36,6 +37,13 @@ Carry out a focused evidence-backed evaluation for BOTH pending revisions, produ
 - Present recommended policy for canonical output, source variant retention, per-variant operation provenance/identity, differing methods/paths, and `CONFLICT_REQUIRES_ARCHITECTURE_REVIEW`. Avoid silently picking lexically first YAML as semantic truth when accepted representations conflict.
 - **Approval required:** Enterprise Architect decides final representation/merge/conflict treatment. Do not redefine frozen Phase 2 canonical identities.
 
+### A3 Cross-canonical similarity feasibility (not confirmed duplicates)
+The architect wants to find APIs with **different names and canonical IDs** whose behavior may overlap. This is NOT equivalent to same-canonical YAML variant detection or Phase 0 exact file duplicates.
+- Test a few evidence-backed pairs for deterministic structural similarity from method/path shapes, parameter/request/response schema references, and backend target/path overlap. Names alone and shared backends alone never prove duplication.
+- Preserve two independent canonical API IDs, exact source provenance, matching and differing signals, confidence limitations and explicit status POSSIBLE_STRUCTURAL_OVERLAP_REQUIRES_SEMANTIC_VALIDATION.
+- Report false-positive and false-negative risks (generic CRUD, shared middleware, channels, version differences, dynamic routing).
+- Do not assert logical-functional duplication, merge APIs or implement Tasks 015–016; those tasks will validate observed and logical functions.
+
 ### Gate A deliverables (committed)
 Create under `tests/evidence/task-014/architecture-preflight/`:
 - `backend_evidence_options.md` (actual safe anonymized evidence, recommended choices and tradeoffs);
@@ -43,6 +51,7 @@ Create under `tests/evidence/task-014/architecture-preflight/`:
 - `yaml_variants_options.md` (exact vs equivalent vs conflicting examples);
 - `yaml_variants_samples.jsonl`;
 - `architecture_decisions_pending.md` (two *explicit* decisions with options, recommended path, risks and downstream implications);
+- `cross_canonical_similarity_feasibility.md` with safe candidate examples or precise NOT_EVIDENCED rationale;
 - `preflight_commands_and_results.txt`.
 Keep generated raw/cache indexes only under ignored `indexes/` or `outputs/`; commit only safe, compact review evidence.
 Run focused tests for preflight logic, deterministic replay, frozen asset integrity, and redaction. Update `codex/comm/HANSOFF.md` with gate findings and `HOLD_FOR_ARCHITECTURE_REVIEW`; commit/push and **STOP**. Await user approval via updated task instructions; do not resume autonomously.
@@ -56,10 +65,11 @@ After the EA explicitly resolves both revision-required decisions and the task i
 4. Enumerate **all 2,036 accepted canonical APIs** from frozen canonical identities: expected 2,000 source-backed and 36 registry-only as the last validated baseline; if live accepted indexes differ, report and reconcile rather than hardcoding. Never silently drop unsupported/registry-only identities. Inventory cardinality must reconcile to live accepted canonical count.
 5. Extract supported Swagger 2/OpenAPI 3 HTTP operations deterministically and per approved variant contract. Preserve exact methods/paths, safe descriptions, parameter/request/response/schema refs, provenance, missing reasons, AS-IS Product/Plan edges, unresolved 113 Product-location occurrences, and backend scope/certainty per approved model. Graph/index lookup first; targeted parse source on cache miss.
 6. Measure format distribution and parser coverage (Swagger 2, OpenAPI 3, registry-only, GraphQL, SOAP/WSDL, AsyncAPI, other specific parse states). Do not invent non-HTTP operations or treat unsupported protocol coverage as zero operations by business conclusion. Do not implement protocol-specific parsers without an explicit architecture instruction; report exact unsupported counts.
-7. Generate ignored local indexes in `indexes/` (full semantic API/operation inventories and cache manifest). Commit compact safe aggregation, gap taxonomy, conflict/variant cases, cache effectiveness, test evidence, build hashes and commands under `tests/evidence/task-014/full-extraction/`.
-8. Validation: canonical identity coverage 100% including missing-state records; unique deterministic operation IDs (respect approved source-variant contract); no fabricated methods, duplicate operations or inferred runtime route; backend relation certainty preserved; exact and unresolved Product/Plan evidence retained; stable repeated output hashes; no credentials or raw sensitive endpoints in committed artifacts; no staging/frozen index mutation. Verify cold/warm output identity and report cache hit/miss statistics.
-9. Run targeted tests and repository suite; report unrelated known fixture setup errors separately, without asserting entire suite PASS if any errors remain.
-10. Update `codex/comm/HANSOFF.md` with `PASS`, `FIX_REQUIRED`, or `HOLD_FOR_ARCHITECTURE_REVIEW`, explicit record counts, coverage, unresolved exceptions, and approval questions. **STOP after Task 014 full extraction, tests, evidence, and commit/push.** No Task 015, no domain/capability assignment, no functional similarity clustering, no rationalization, no Kong design.
+7. Build a separate, additive structural-overlap CANDIDATE index for pairs of **distinct canonical API IDs** when multiple independent evidence signals justify it. Include differences, provenance and status POSSIBLE_STRUCTURAL_OVERLAP_REQUIRES_SEMANTIC_VALIDATION. This is not a confirmed duplicate index and is not the same as same-ID source conflict reporting. Do not make name-only or backend-only duplicate claims.
+8. Generate ignored local indexes in `indexes/` (full semantic API/operation inventories and cache manifest). Commit compact safe aggregation, gap taxonomy, conflict/variant cases, cache effectiveness, test evidence, build hashes and commands under `tests/evidence/task-014/full-extraction/`.
+9. Validation: canonical identity coverage 100% including missing-state records; unique deterministic operation IDs (respect approved source-variant contract); no fabricated methods, duplicate operations or inferred runtime route; backend relation certainty preserved; exact and unresolved Product/Plan evidence retained; stable repeated output hashes; no credentials or raw sensitive endpoints in committed artifacts; no staging/frozen index mutation. Verify cold/warm output identity and report cache hit/miss statistics.
+10. Run targeted tests and repository suite; report unrelated known fixture setup errors separately, without asserting entire suite PASS if any errors remain.
+11. Update `codex/comm/HANSOFF.md` with `PASS`, `FIX_REQUIRED`, or `HOLD_FOR_ARCHITECTURE_REVIEW`, explicit record counts, coverage, unresolved exceptions, and approval questions. **STOP after Task 014 full extraction, tests, evidence, and commit/push.** No Task 015, no domain/capability assignment, no functional similarity clustering, no rationalization, no Kong design.
 
 ## Unchanged architectural constraints
 - Canonical API ID is the join anchor; operation remains an inventory record, not CodeGraph node.
@@ -69,3 +79,10 @@ After the EA explicitly resolves both revision-required decisions and the task i
 - Missing operation description / summary / operationId is a documented source gap, **not an automatic failure** or license to infer business functionality.
 - Task 018 Business Domain classification before Task 019 Capability Mapping, and Task 018 requires its own explicit mock acceptance. This prompt does not authorize either.
 - Codex discovers → Integration Architect validates → Enterprise Architect decides.
+
+## Token efficiency and conceptual blackboard model
+- Reuse existing CodeGraph, compact accepted indexes, Task 014 inventory and Codex handoffs as a shared evidence blackboard. Do NOT install a multi-agent framework, orchestrator, broker or new graph database for Task 014.
+- Deterministic resumable workflow: INDEX_LOOKUP -> CACHE_CHECK -> TARGETED_PARSE_IF_MISS -> VALIDATE -> MATERIALIZE -> REPORT. Produce compact pointer-based evidence projections, never bulk graph/YAML dumps into model context.
+- Implement versioned persistent cache with precise dependency invalidation, distinguishing source-derived facts from relationship/backend enrichments. Use atomic writes and prove cold/warm parity.
+- Task 014 extraction is programmatic, not an LLM semantic inference task; do not run full corpus through an LLM. Cache savings should be measured, not advertised as zero total future reasoning tokens.
+- Keep future semantic decision cache separate from factual extraction cache; do not implement unapproved Tasks 015–019.
