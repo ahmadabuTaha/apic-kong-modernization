@@ -26,9 +26,10 @@ The original sample prompt and Task 014 contract remain historical baseline; thi
 
 1. Inspect latest `HANSOFF.md` and Task 014 mock evidence (6 APIs / 35 operations).
 2. Test representative real examples for backend evidence attribution and YAML representation variants, using compact graph/indexes first.
-3. Produce options, tradeoffs, recommendation, proof samples, and two specific questions requiring Enterprise Architect decision under `tests/evidence/task-014/architecture-preflight/`.
-4. Run focused validations and redaction/frozen-integrity checks.
-5. Update `codex/comm/HANSOFF.md`, commit/push preflight evidence, report `HOLD_FOR_ARCHITECTURE_REVIEW` and **STOP**.
+3. Assess structural overlap candidates among DIFFERENT canonical API IDs / names as a separate, evidence-only feasibility study, without claiming confirmed duplication.
+4. Produce options, tradeoffs, recommendation, proof samples, and two specific questions requiring Enterprise Architect decision under `tests/evidence/task-014/architecture-preflight/`.
+5. Run focused validations and redaction/frozen-integrity checks.
+6. Update `codex/comm/HANSOFF.md`, commit/push preflight evidence, report `HOLD_FOR_ARCHITECTURE_REVIEW` and **STOP**.
 
 ### Planned work — Gate B NOT YET AUTHORIZED
 
@@ -40,6 +41,7 @@ Once approved: graph-first/canonical index-first, cache-first, targeted source p
 
 - Do not change frozen Phase 0–4 graph/indexes/identity/evidence or raw `staging/`.
 - No Operation graph nodes, no invented backend route/runtime assertion, no fabricated functional/domain/capability meaning.
+- Use the existing graph + indexes as the conceptual Blackboard, with incremental fingerprinted caching and compact evidence; NO new Multi-Agent framework or orchestrator.
 - No Task 015–019 implementation, no Domain/Capability mapping, no rationalization, no Kong design.
 - Task 018 retains its **separate mandatory domain mock review gate**.
 - Codex discovers → Integration Architect validates → Enterprise Architect decides.
