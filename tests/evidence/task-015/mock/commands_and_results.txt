@@ -1,0 +1,41 @@
+Task 015 representative Observed Function mock commands and results
+Date: 2026-10-08
+
+Command: git pull origin main
+Result: PASS; fast-forwarded main from 476cd00 to 8895b7c.
+
+Command: .venv/bin/python -m observed_function (empty Task 015 v3 cache)
+Result: PASS.
+- Cache events: MISS 15.
+- Observed Function sample: 15 records; SHA-256 836f40394b99d294443d30ec9645e1b373a80b11f71295b40105de54330e05cf.
+- Upstream gap impact register: 11 records; SHA-256 8b8acb36538607f041cda34da8c067b42fe843f08df7b62288d687a071e51051.
+- Ambiguity review queue: 5 records; SHA-256 05f019cc2d4e4a2cfe1c8a23afbcacdc0b54b9f3c1b87948409f663c52413fbc.
+
+Command: .venv/bin/python -m observed_function (warm Task 015 v3 cache)
+Result: PASS; HIT 15 and byte-identical output hashes.
+
+Command: .venv/bin/python tests/evidence/task-015/mock/generate_mock_evidence.py
+Result: PASS; all required compact mock evidence generated deterministically.
+
+Command: .venv/bin/python -m compileall -q observed_function tests/test_observed_function.py tests/evidence/task-015/mock/generate_mock_evidence.py
+Result: PASS.
+
+Command: .venv/bin/pytest tests/test_semantic_inventory.py tests/test_semantic_preflight.py tests/test_semantic_full_inventory.py tests/test_observed_function.py -q
+Result: PASS; 18 passed in 10.74s.
+
+Command: .venv/bin/pytest tests/test_observed_function.py -q
+Result: PASS; 6 passed in 0.58s.
+
+Command: .venv/bin/pytest -q (outside network sandbox restrictions for loopback-server test)
+Result: PARTIAL; 56 passed and 5 setup errors in 40.48s. All five errors are the known frozen Phase 0 fixture-packaging issue: tests/fixtures/repository_profile/staging does not exist. No Task 015 test failed.
+
+Command: frozen Task 014 hash validation during cold/warm mock test
+Result: PASS; Task 014 implementation, full indexes, candidate index, manifest and committed build manifest remained byte-unchanged.
+
+Command: credential-value, URI-host and committed-evidence redaction checks
+Result: PASS; no credential values or URI hosts found in local mock or committed evidence.
+
+Command: git diff --check
+Result: PASS.
+
+Model use: none. The mock used deterministic rules only; measured model token usage: 0.

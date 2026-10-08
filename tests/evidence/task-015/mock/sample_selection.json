@@ -1,0 +1,70 @@
+{
+  "api_level_gap_representatives": [
+    {
+      "canonical_api_id": "apic-identity:sha256:04f4b16ef367adef6140193d54c2f60e7397844cfaa76f42fea3cdfa70a486cd",
+      "category": "registry_only_no_operations",
+      "identity_name": "openunifiedestablishmentbycr"
+    },
+    {
+      "canonical_api_id": "apic-identity:sha256:1154d4620a3e2da4b21ff241e5a2b60832403fda91d6d4d13e5dd7b45590cb93",
+      "category": "source_backed_no_supported_path_items",
+      "identity_name": "saudipost-getcommercialwaseladdress"
+    }
+  ],
+  "categories_by_operation": {
+    "semantic-operation-v2:sha256:00125fead8233f7a73f6e8cf9680d318a16a65e2f96791759d84ea8eea8bdcd1": [
+      "explicit_description_and_operation_id"
+    ],
+    "semantic-operation-v2:sha256:001dcdfc525f597525f04c003986cd5ead785faee0735222eee06ef5d61274d0": [
+      "missing_text_with_path_and_schema"
+    ],
+    "semantic-operation-v2:sha256:0301526150a6a38daefdc65e17078b65a50a73f5180e2dce15a3c64e5e262632": [
+      "exact_operation_scoped_multi_operation"
+    ],
+    "semantic-operation-v2:sha256:0497b1971796fa8a3a7243d9cd1346ea0897aa8eed7f5f5b52d44aa1ac7a6878": [
+      "ambiguous_generic_insufficient"
+    ],
+    "semantic-operation-v2:sha256:050d1f29a3293f70893af10cc67f137627b4648919b528a09ab7d3efd5e00125": [
+      "conditional_multi_target_candidate_context"
+    ],
+    "semantic-operation-v2:sha256:071c1844bdea0cc49c77a1074db77f1219d43c5e9f489cfd166c3e161528a796": [
+      "exact_operation_scoped_single_operation"
+    ],
+    "semantic-operation-v2:sha256:088205524e81575245aaf18ff417aeefffc6f40d4b7b6b330b38d4774be65819": [
+      "v2_pair"
+    ],
+    "semantic-operation-v2:sha256:1f8e5b18f9985d54df3b350a5de59405cc703c24326435b141dfd21b28604c73": [
+      "structural_overlap_pair:structural-overlap-candidate:sha256:1388feef6969bb2096016ec01a44e7bacb06f302bb1f6a770bdf75f9eb13ed52"
+    ],
+    "semantic-operation-v2:sha256:226ad613b27efe2d6f2396f7a8674b29d4a3d5bbda3d0e976fc4fa9513eb31eb": [
+      "conditional_multi_target_candidate_context"
+    ],
+    "semantic-operation-v2:sha256:373429785dd34ab61f0ab255c797e9d16c3142020e5124fa6103194fdf921ff8": [
+      "structural_overlap_pair:structural-overlap-candidate:sha256:1c7bb17546a7b3b2557ec9cc4123605b109227070ee6b8cb205e5ef4d15e15a9"
+    ],
+    "semantic-operation-v2:sha256:429d12b30f26f77aea8df420a7451e88ac4a1fce729ac9fafe36e97c1193c18f": [
+      "explicitly_technical_operation"
+    ],
+    "semantic-operation-v2:sha256:7d8f53ed3c35f190c656a73167c4fb3b94b72e6dc3f143455544fb74ac257751": [
+      "v2_pair"
+    ],
+    "semantic-operation-v2:sha256:7fa79955e144ba4b42b02a7c85540f8b4c2bf77bad87ea23b6ea0c72690342e4": [
+      "contradictory_source_semantics"
+    ],
+    "semantic-operation-v2:sha256:a3ce44e6a4cf9a0039eaa7a529d63f1a2e2d7fcb869f49fccc71e8e5930afcdf": [
+      "structural_overlap_pair:structural-overlap-candidate:sha256:1388feef6969bb2096016ec01a44e7bacb06f302bb1f6a770bdf75f9eb13ed52"
+    ],
+    "semantic-operation-v2:sha256:b66b7b82e8d90e80c017a02efe59f3893730eb7a5d4ae289656d032620cda584": [
+      "structural_overlap_pair:structural-overlap-candidate:sha256:1c7bb17546a7b3b2557ec9cc4123605b109227070ee6b8cb205e5ef4d15e15a9"
+    ]
+  },
+  "estate_wide_task015_inference_performed": false,
+  "selected_canonical_api_count": 14,
+  "selected_operation_count": 15,
+  "selected_structural_candidate_ids": [
+    "structural-overlap-candidate:sha256:1388feef6969bb2096016ec01a44e7bacb06f302bb1f6a770bdf75f9eb13ed52",
+    "structural-overlap-candidate:sha256:1c7bb17546a7b3b2557ec9cc4123605b109227070ee6b8cb205e5ef4d15e15a9"
+  ],
+  "selection_algorithm": "deterministic_stratified_task014_inventory_selection_v1",
+  "selection_is_success_only": false
+}

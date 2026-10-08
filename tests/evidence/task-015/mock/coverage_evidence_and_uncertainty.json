@@ -1,0 +1,70 @@
+{
+  "all_candidate_backend_context_remains_candidate_only": true,
+  "all_selected_records_have_source_provenance": true,
+  "candidate_inherited_backend_sample_count": 13,
+  "capability_assertions": 0,
+  "cold_cache_events": {
+    "MISS": 15
+  },
+  "cold_warm_output_identity": true,
+  "configured_operation_scoped_sample_count": 2,
+  "domain_assertions": 0,
+  "downstream_gap_impact_summary": {
+    "015": {
+      "gap_category_count": 11,
+      "sum_impacted_records_not_deduplicated": 6393
+    },
+    "016": {
+      "gap_category_count": 11,
+      "sum_impacted_records_not_deduplicated": 6393
+    },
+    "017": {
+      "gap_category_count": 11,
+      "sum_impacted_records_not_deduplicated": 6393
+    },
+    "018": {
+      "gap_category_count": 11,
+      "sum_impacted_records_not_deduplicated": 6393
+    },
+    "019": {
+      "gap_category_count": 11,
+      "sum_impacted_records_not_deduplicated": 6393
+    }
+  },
+  "estate_wide_task015_inference_performed": false,
+  "evidence_strength_counts": {
+    "HIGH": 7,
+    "LOW": 2,
+    "MEDIUM": 5,
+    "NONE": 1
+  },
+  "functional_duplication_assertions": 0,
+  "gap_register_count": 11,
+  "gap_register_output_sha256": "8b8acb36538607f041cda34da8c067b42fe843f08df7b62288d687a071e51051",
+  "gap_severity_counts": {
+    "DOWNSTREAM_BLOCKER": 4,
+    "LOCAL_REVIEW_REQUIRED": 4,
+    "NON_BLOCKING": 3
+  },
+  "interpretation_status_counts": {
+    "AMBIGUOUS_NEEDS_REVIEW": 2,
+    "EXPLICITLY_DESCRIBED": 7,
+    "INFERRED_FROM_MULTIPLE_STRUCTURAL_SIGNALS": 5,
+    "INSUFFICIENT_EVIDENCE": 1
+  },
+  "logical_api_assertions": 0,
+  "model_token_usage": 0,
+  "model_use": "NONE_DETERMINISTIC_RULES_ONLY",
+  "native_graphql_or_wsdl_operations_fabricated": 0,
+  "observed_function_output_sha256": "836f40394b99d294443d30ec9645e1b373a80b11f71295b40105de54330e05cf",
+  "registry_only_operations_fabricated": 0,
+  "review_queue_count": 5,
+  "review_queue_output_sha256": "05f019cc2d4e4a2cfe1c8a23afbcacdc0b54b9f3c1b87948409f663c52413fbc",
+  "selected_canonical_api_count": 14,
+  "selected_operation_count": 15,
+  "selected_operation_ids_unique": true,
+  "uncertainty_policy": "Ambiguous and insufficient records remain in the review queue; missing text is nonblocking only when independent evidence supports a bounded interpretation.",
+  "warm_cache_events": {
+    "HIT": 15
+  }
+}
