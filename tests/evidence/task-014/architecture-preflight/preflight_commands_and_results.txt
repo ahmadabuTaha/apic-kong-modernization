@@ -1,0 +1,29 @@
+Task 014 Gate A architecture-preflight commands and results
+Date: 2026-10-08
+
+Command: git pull origin main
+Result: PASS; fast-forwarded main from 30ab1d7 to 3456d2f.
+
+Command: .venv/bin/python tests/evidence/task-014/architecture-preflight/generate_preflight.py
+Result: PASS; generated the seven required compact review artifacts.
+
+Command: .venv/bin/python -m compileall -q semantic_preflight tests/test_semantic_preflight.py tests/evidence/task-014/architecture-preflight/generate_preflight.py
+Result: PASS.
+
+Command: .venv/bin/pytest tests/test_semantic_preflight.py -q
+Result: PASS; 3 passed in 6.46s.
+
+Command: .venv/bin/pytest -q
+Result: PARTIAL; 44 passed and 5 setup errors in 62.32s. All five errors are the pre-existing Phase 0 fixture-packaging issue: tests/fixtures/repository_profile/staging does not exist. The local HTTP server test passed when rerun outside network sandbox restrictions. No Task 014 test failed.
+
+Command: deterministic generator replay and byte comparison (performed by test_generator_is_deterministic_redacted_and_preserves_frozen_assets)
+Result: PASS; generated review artifacts were byte-identical on replay.
+
+Command: frozen staging/index tree hashes before and after generation (performed by test_generator_is_deterministic_redacted_and_preserves_frozen_assets)
+Result: PASS; raw staging and pre-existing indexes remained byte-unchanged.
+
+Command: committed-artifact endpoint/credential pattern checks (focused test plus rg review)
+Result: PASS; no URI hosts, credential assignments, or local absolute paths found in generated review evidence.
+
+Command: git diff --check
+Result: PASS.
