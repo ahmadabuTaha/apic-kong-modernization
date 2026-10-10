@@ -1,0 +1,15 @@
+{
+  "full_queue_local_artifact": "indexes/task015_full_review_queue.jsonl",
+  "interpretation_status_counts": {
+    "AMBIGUOUS_NEEDS_REVIEW": 54,
+    "INSUFFICIENT_EVIDENCE": 413,
+    "NOT_APPLICABLE": 104
+  },
+  "review_type_counts": {
+    "API_LEVEL_EVIDENCE_GAP": 44,
+    "OBSERVED_FUNCTION_INTERPRETATION": 467,
+    "STRUCTURAL_OVERLAP_SEMANTIC_VALIDATION": 60
+  },
+  "sample_count": 24,
+  "total_review_item_count": 571
+}

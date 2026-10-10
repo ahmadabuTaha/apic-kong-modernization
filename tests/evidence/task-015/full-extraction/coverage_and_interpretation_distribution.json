@@ -1,0 +1,58 @@
+{
+  "accepted_api_count": 2036,
+  "accepted_operation_count": 2414,
+  "all_operation_records_reconciled_exactly_once": true,
+  "all_records_pending_review": true,
+  "api_level_gap_status_counts": {
+    "NO_SUPPORTED_HTTP_PATHS": 5,
+    "REGISTRY_ONLY_NO_OPERATIONS": 36,
+    "UNSUPPORTED_PROTOCOL": 3
+  },
+  "candidate_inherited_backend_count": 2282,
+  "capability_assertions": 0,
+  "configured_operation_scoped_count": 67,
+  "confluence_facts_used": 0,
+  "confluence_retrieved": false,
+  "covered_canonical_api_count": 1995,
+  "domain_assertions": 0,
+  "evidence_strength_counts": {
+    "HIGH": 1662,
+    "LOW": 54,
+    "MEDIUM": 285,
+    "NONE": 413
+  },
+  "fabricated_operation_count": 0,
+  "functional_duplication_assertions": 0,
+  "gap_register_count": 11,
+  "gap_severity_counts": {
+    "DOWNSTREAM_BLOCKER": 4,
+    "LOCAL_REVIEW_REQUIRED": 4,
+    "NON_BLOCKING": 3
+  },
+  "interpretation_status_counts": {
+    "AMBIGUOUS_NEEDS_REVIEW": 54,
+    "EXPLICITLY_DESCRIBED": 1662,
+    "INFERRED_FROM_MULTIPLE_STRUCTURAL_SIGNALS": 285,
+    "INSUFFICIENT_EVIDENCE": 413
+  },
+  "logical_api_assertions": 0,
+  "model_token_usage": 0,
+  "model_use": "NONE_DETERMINISTIC_RULES_ONLY",
+  "observed_function_record_count": 2414,
+  "redacted_record_count": 0,
+  "review_queue_count": 571,
+  "review_queue_type_counts": {
+    "API_LEVEL_EVIDENCE_GAP": 44,
+    "OBSERVED_FUNCTION_INTERPRETATION": 467,
+    "STRUCTURAL_OVERLAP_SEMANTIC_VALIDATION": 60
+  },
+  "source_description_present_count": 1657,
+  "source_operation_id_present_count": 1647,
+  "source_request_body_present_count": 1314,
+  "source_response_contract_present_count": 2414,
+  "source_summary_present_count": 76,
+  "structural_overlap_pairs_remain_unconfirmed": 60,
+  "unique_observed_function_id_count": 2414,
+  "unique_task014_operation_id_count": 2414,
+  "unresolved_product_location_occurrences_carried": 113
+}

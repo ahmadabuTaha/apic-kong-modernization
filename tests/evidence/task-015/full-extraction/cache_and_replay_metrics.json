@@ -1,0 +1,16 @@
+{
+  "atomic_cache_writes": true,
+  "cache_schema_version": 1,
+  "cold_cache_events": {
+    "MISS": 2414
+  },
+  "cold_warm_and_selective_output_byte_parity": true,
+  "rules_version": "task015-observed-function-full-v2",
+  "selective_invalidation_cache_events": {
+    "HIT": 2413,
+    "INVALIDATED_OPERATION_CHANGE": 1
+  },
+  "warm_cache_events": {
+    "HIT": 2414
+  }
+}

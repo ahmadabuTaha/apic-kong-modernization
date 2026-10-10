@@ -1,0 +1,203 @@
+{
+  "api_level_gap_record_count": 44,
+  "blocker_scope_policy": "DOWNSTREAM_BLOCKER applies only to the listed entity and unsupported conclusion, never the whole phase.",
+  "categories": [
+    {
+      "affected_canonical_api_count": 1967,
+      "affected_operation_count": 2282,
+      "downstream_effects": {
+        "015": "Backend context may corroborate but never establish an operation's action or runtime egress.",
+        "016": "Shared backend is insufficient to merge observed functions.",
+        "017": "Configured connectivity remains distinct from observed runtime integration.",
+        "018": "Backend location must not become a domain label.",
+        "019": "Backend target must not become a capability label."
+      },
+      "gap_id": "task014-gap:api-shared-backend-candidate-context",
+      "mitigation_or_retrieval_action": "Use exact operation-scoped configuration or runtime evidence when required; retain candidate certainty meanwhile.",
+      "original_condition": "API_SHARED backend configuration appears as candidate-only inherited context on operations.",
+      "recheck_trigger": "Exact operation-scoped configuration or accepted runtime evidence",
+      "scope": "operation",
+      "severity": "LOCAL_REVIEW_REQUIRED"
+    },
+    {
+      "affected_canonical_api_count": 364,
+      "affected_operation_count": 757,
+      "downstream_effects": {
+        "015": "Reduces direct lexical evidence; use path/schema/backend only when multiple independent signals support a bounded interpretation.",
+        "016": "May lower confidence when comparing or grouping observed functions.",
+        "017": "May weaken technical-to-product/exposure explanations.",
+        "018": "Must not be replaced by inferred domain labels.",
+        "019": "Must not be replaced by inferred capability labels."
+      },
+      "gap_id": "task014-gap:missing-description",
+      "mitigation_or_retrieval_action": "Use exact path, operationId/description alternatives, parameter and local schema shape evidence; queue the operation when signals remain vague.",
+      "original_condition": "Task 014 source field description is absent or blank.",
+      "recheck_trigger": "Source metadata enrichment or Task 015 reviewer decision",
+      "scope": "operation",
+      "severity": "NON_BLOCKING"
+    },
+    {
+      "affected_canonical_api_count": 379,
+      "affected_operation_count": 767,
+      "downstream_effects": {
+        "015": "Reduces direct lexical evidence; use path/schema/backend only when multiple independent signals support a bounded interpretation.",
+        "016": "May lower confidence when comparing or grouping observed functions.",
+        "017": "May weaken technical-to-product/exposure explanations.",
+        "018": "Must not be replaced by inferred domain labels.",
+        "019": "Must not be replaced by inferred capability labels."
+      },
+      "gap_id": "task014-gap:missing-operationid",
+      "mitigation_or_retrieval_action": "Use exact path, operationId/description alternatives, parameter and local schema shape evidence; queue the operation when signals remain vague.",
+      "original_condition": "Task 014 source field operationId is absent or blank.",
+      "recheck_trigger": "Source metadata enrichment or Task 015 reviewer decision",
+      "scope": "operation",
+      "severity": "NON_BLOCKING"
+    },
+    {
+      "affected_canonical_api_count": 0,
+      "affected_operation_count": 0,
+      "downstream_effects": {
+        "015": "Object/target interpretation cannot rely on request shape.",
+        "016": "Request-contract similarity is not comparable.",
+        "017": "Payload transformation evidence is incomplete.",
+        "018": "No domain inference may fill the gap.",
+        "019": "No capability inference may fill the gap."
+      },
+      "gap_id": "task014-gap:missing-request-schema-shape",
+      "mitigation_or_retrieval_action": "Resolve safe local schema/reference or queue the operation for reviewer interpretation.",
+      "original_condition": "Request body is present but no deterministic local schema shape was available.",
+      "recheck_trigger": "Resolvable request schema or explicit source description",
+      "scope": "operation",
+      "severity": "LOCAL_REVIEW_REQUIRED"
+    },
+    {
+      "affected_canonical_api_count": 1950,
+      "affected_operation_count": 2338,
+      "downstream_effects": {
+        "015": "Reduces direct lexical evidence; use path/schema/backend only when multiple independent signals support a bounded interpretation.",
+        "016": "May lower confidence when comparing or grouping observed functions.",
+        "017": "May weaken technical-to-product/exposure explanations.",
+        "018": "Must not be replaced by inferred domain labels.",
+        "019": "Must not be replaced by inferred capability labels."
+      },
+      "gap_id": "task014-gap:missing-summary",
+      "mitigation_or_retrieval_action": "Use exact path, operationId/description alternatives, parameter and local schema shape evidence; queue the operation when signals remain vague.",
+      "original_condition": "Task 014 source field summary is absent or blank.",
+      "recheck_trigger": "Source metadata enrichment or Task 015 reviewer decision",
+      "scope": "operation",
+      "severity": "NON_BLOCKING"
+    },
+    {
+      "affected_canonical_api_count": 3,
+      "affected_operation_count": 7,
+      "downstream_effects": {
+        "015": "Observed Functions are limited to wrapper HTTP operations.",
+        "016": "Native-operation equivalence cannot be evaluated.",
+        "017": "Protocol transformation detail remains incomplete.",
+        "018": "Domain conclusions must not assume native-operation coverage.",
+        "019": "Capability mapping must disclose wrapper-only evidence."
+      },
+      "gap_id": "task014-gap:native-protocol-semantics-not-extracted",
+      "mitigation_or_retrieval_action": "Review wrapper semantics; separately authorize bounded native-protocol extraction if needed.",
+      "original_condition": "GraphQL and WSDL-to-REST documents have only wrapper HTTP Path Item inventory; native fields/WSDL operations were not parsed.",
+      "recheck_trigger": "Need for native GraphQL/WSDL semantic comparison",
+      "scope": "protocol",
+      "severity": "LOCAL_REVIEW_REQUIRED"
+    },
+    {
+      "affected_canonical_api_count": 5,
+      "affected_operation_count": 0,
+      "downstream_effects": {
+        "015": "HTTP-operation-derived semantics are unavailable for these APIs; do not treat zero extracted operations as no business behavior.",
+        "016": "HTTP-operation-derived semantics are unavailable for these APIs; do not treat zero extracted operations as no business behavior.",
+        "017": "HTTP-operation-derived semantics are unavailable for these APIs; do not treat zero extracted operations as no business behavior.",
+        "018": "HTTP-operation-derived semantics are unavailable for these APIs; do not treat zero extracted operations as no business behavior.",
+        "019": "HTTP-operation-derived semantics are unavailable for these APIs; do not treat zero extracted operations as no business behavior."
+      },
+      "gap_id": "task014-gap:no-supported-path-items",
+      "mitigation_or_retrieval_action": "Architect reviews source syntax/protocol and authorizes a protocol-specific parser or accepts the limitation.",
+      "original_condition": "Source-backed Swagger/OpenAPI document contains no supported explicit HTTP Path Item operation.",
+      "recheck_trigger": "Protocol/parser decision or corrected source document",
+      "scope": "api",
+      "severity": "DOWNSTREAM_BLOCKER"
+    },
+    {
+      "affected_canonical_api_count": 36,
+      "affected_operation_count": 0,
+      "downstream_effects": {
+        "015": "No operation/function evidence can be produced for these APIs until an authoritative source representation is recovered.",
+        "016": "No operation/function evidence can be produced for these APIs until an authoritative source representation is recovered.",
+        "017": "No operation/function evidence can be produced for these APIs until an authoritative source representation is recovered.",
+        "018": "No operation/function evidence can be produced for these APIs until an authoritative source representation is recovered.",
+        "019": "No operation/function evidence can be produced for these APIs until an authoritative source representation is recovered."
+      },
+      "gap_id": "task014-gap:registry-only-no-operations",
+      "mitigation_or_retrieval_action": "Retrieve and validate an authoritative API representation without changing the frozen canonical identity.",
+      "original_condition": "Accepted canonical identity has no accepted source API document and therefore no source-evidenced operation.",
+      "recheck_trigger": "Accepted authoritative API source becomes available",
+      "scope": "api",
+      "severity": "DOWNSTREAM_BLOCKER"
+    },
+    {
+      "affected_canonical_api_count": 89,
+      "affected_operation_count": 0,
+      "downstream_effects": {
+        "015": "Compare observed wording and contradictions without unifying records.",
+        "016": "Blocks confirmed Logical Function/API grouping for candidate pairs until semantic validation.",
+        "017": "Shared backends do not establish common integration behavior.",
+        "018": "No domain equality may be inferred.",
+        "019": "No capability equality may be inferred."
+      },
+      "gap_id": "task014-gap:structural-overlap-candidates",
+      "mitigation_or_retrieval_action": "Integration Architect validates observed functions and contract differences pair-by-pair.",
+      "original_condition": "60 cross-canonical pairs share multiple structural signals but are not confirmed duplicates.",
+      "recheck_trigger": "Task 015 observed-function approval for both sides and Task 016 review",
+      "scope": "relationship",
+      "severity": "DOWNSTREAM_BLOCKER"
+    },
+    {
+      "affected_canonical_api_count": 110,
+      "affected_operation_count": 0,
+      "downstream_effects": {
+        "015": "Does not directly change operation action evidence.",
+        "016": "May hide contextual evidence used to distinguish similar functions.",
+        "017": "Directly limits product/exposure reconstruction.",
+        "018": "May weaken contextual domain evidence.",
+        "019": "May weaken capability ownership/context evidence."
+      },
+      "gap_id": "task014-gap:unresolved-product-location",
+      "mitigation_or_retrieval_action": "Resolve using accepted URI/object identifiers and rerun dependent enrichment only after Phase 2 relationship approval.",
+      "original_condition": "113 Product-location occurrences remain unattached to accepted canonical APIs.",
+      "recheck_trigger": "New authoritative Product-location identity evidence",
+      "scope": "relationship",
+      "severity": "LOCAL_REVIEW_REQUIRED"
+    },
+    {
+      "affected_canonical_api_count": 2,
+      "affected_operation_count": 2,
+      "downstream_effects": {
+        "015": "Observed wording may overlap, but request/response distinctions and backend uncertainty must remain explicit.",
+        "016": "Blocks any same-function or version-replacement conclusion without semantic/schema review.",
+        "017": "Backend target ID overlap cannot prove equal runtime integration.",
+        "018": "No shared domain conclusion follows from version naming.",
+        "019": "No shared capability conclusion follows from structural overlap."
+      },
+      "gap_id": "task014-gap:v2-schema-shape-difference",
+      "mitigation_or_retrieval_action": "Review safe schema-shape differences and intended version semantics; obtain backend path/runtime evidence if required.",
+      "original_condition": "The v2 pair has equal method/path and schema-ref labels but different deterministic request and response schema shapes; backend target path evidence is missing.",
+      "recheck_trigger": "Architect validation of v2 contract intent",
+      "scope": "operation",
+      "severity": "DOWNSTREAM_BLOCKER"
+    }
+  ],
+  "gap_category_count": 11,
+  "overlapping_category_counts_must_not_be_summed_as_unique_entities": true,
+  "review_queue_count": 571,
+  "severity_distribution": {
+    "DOWNSTREAM_BLOCKER": 4,
+    "LOCAL_REVIEW_REQUIRED": 4,
+    "NON_BLOCKING": 3
+  },
+  "unique_affected_canonical_api_count_across_overlapping_categories": 2036,
+  "unique_affected_operation_count_across_overlapping_categories": 2414
+}

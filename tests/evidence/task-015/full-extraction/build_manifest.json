@@ -1,0 +1,65 @@
+{
+  "cache_schema_version": 1,
+  "committed_evidence_inputs": [
+    {
+      "bytes": 16711,
+      "path": "observed_function/full_inventory.py",
+      "sha256": "cb95849cf15f1b8bbca8ef3fe0d028459ddf858b6f3c8bdfcfa179a5edecc07a"
+    },
+    {
+      "bytes": 40375,
+      "path": "observed_function/mock.py",
+      "sha256": "eb1b7a405643d52e51ea69f2c7f2fe4822246c8978a7f945ebbf79a8885f1d71"
+    }
+  ],
+  "dependency_fingerprint": "54aca4f13d5b275092f27c64f4a5fb0432c5375409c21faa0d99006b418dc979",
+  "inputs": {
+    "api_inventory": {
+      "bytes": 10659709,
+      "path": "indexes/semantic_api_inventory.jsonl",
+      "sha256": "c06810d9079abdd382b48b4f49617431f57d390395b81a4cd07aa0244dafed1a"
+    },
+    "operation_inventory": {
+      "bytes": 12460714,
+      "path": "indexes/semantic_operation_inventory.jsonl",
+      "sha256": "1c603cd6867f3a2d12f950c319e7ab29b2d2111604ff8bcfe6c0ad4dda2bf3bc"
+    },
+    "structural_candidates": {
+      "bytes": 121134,
+      "path": "indexes/semantic_structural_overlap_candidates.jsonl",
+      "sha256": "b0f5d8ea4b86bb45f4224820696eee63897278fe98e186fd4c97b1baa2405d97"
+    },
+    "task014_manifest": {
+      "bytes": 1459,
+      "path": "indexes/semantic_cache_manifest.json",
+      "sha256": "4424f21f1934602ddee9296a545cdeacad5ccdb99f2b40c3083b516d5381a70a"
+    }
+  },
+  "local_outputs": {
+    "api_level_gaps": {
+      "bytes": 26169,
+      "path": "indexes/task015_api_level_gap_records.jsonl",
+      "record_count": 44,
+      "sha256": "834be83979ad4d67e3382799ff6b409636e6bfd3f7e8b90950b1627377d48eec"
+    },
+    "gap_register": {
+      "bytes": 1036880,
+      "path": "indexes/task015_full_gap_impact_register.jsonl",
+      "record_count": 11,
+      "sha256": "8b8acb36538607f041cda34da8c067b42fe843f08df7b62288d687a071e51051"
+    },
+    "observed_functions": {
+      "bytes": 16895146,
+      "path": "indexes/observed_function_inventory.jsonl",
+      "record_count": 2414,
+      "sha256": "36e1ccaed8fa9513dcbefeaea592d5b3dc478ae729840ec88f0ad2593c04990e"
+    },
+    "review_queue": {
+      "bytes": 437056,
+      "path": "indexes/task015_full_review_queue.jsonl",
+      "record_count": 571,
+      "sha256": "936d4d5c60e16862847f5443417cc5ba9f02081d30fe753eb995390db2965ba5"
+    }
+  },
+  "rules_version": "task015-observed-function-full-v2"
+}
