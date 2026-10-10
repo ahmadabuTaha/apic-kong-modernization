@@ -1,0 +1,189 @@
+{
+  "all_pairs_analysis_performed": false,
+  "category_distribution": {
+    "DIFFERENT_ACTION_OBJECT_CONTRACT": 1,
+    "DIFFERENT_NAMES": 2,
+    "FALSE_POSITIVE_PREVENTION": 2,
+    "IDENTICAL_PROVISIONAL_WORDING_SCHEMA_DIFFERENCE": 1,
+    "INFERRED_INTERPRETATION": 1,
+    "MISSING_SUMMARY_DESCRIPTION": 1,
+    "MULTI_OPERATION_APIS": 1,
+    "NEGATIVE_CONTROL": 2,
+    "ONE_TO_MANY_CONTEXT": 1,
+    "SAME_BACKEND_DIFFERING_ACTION_OR_PAYLOAD": 1,
+    "SAME_OBJECT_DIFFERENT_ACTION": 1,
+    "SAME_PATH_BACKEND_CONFLICTING_WORDING": 1,
+    "SANDBOX_TEST_CONTEXT": 1,
+    "SCHEMA_DIFFERENCE": 3,
+    "SHARED_BACKEND_AND_WORDING": 1,
+    "SIMILAR_ACTION_OBJECT": 1,
+    "TASK015_AMBIGUOUS": 1,
+    "TASK015_INSUFFICIENT": 1,
+    "TECHNICAL_SECURITY": 2,
+    "TECHNICAL_TEST_CONTEXT": 1,
+    "V2_REQUIRED": 1,
+    "VERSION_DIFFERENCE": 1
+  },
+  "full_estate_grouping_performed": false,
+  "indexed_negative_control_count": 2,
+  "rules_version": "task016-logical-function-mock-v2",
+  "sample_pair_count": 10,
+  "selection": [
+    {
+      "comparison_id": "logical-function-comparison:sha256:f2365da377f566af3913e806e3a39cc43b0bb2009c34b3fdcb37ea71c8fa285a",
+      "comparison_status": "REVIEW_REQUIRED_CONFLICTING_SIGNALS",
+      "left_canonical_api_id": "apic-identity:sha256:7cef0939879701e25b97c883c63831dc1d322e647499a3eb5846ae96264a407d",
+      "left_operation_id": "semantic-operation-v2:sha256:165cabd005ca0c5b62c7d7826896ae12a6881ad6d8b860accc7686f401bc68ea",
+      "right_canonical_api_id": "apic-identity:sha256:c6fee123bba19336fc4512d2e35f18563ffe084cf7b674f866064f2df926255c",
+      "right_operation_id": "semantic-operation-v2:sha256:70b3f87e0a142cbc8e83d3ae5ffae46ba53d27cdfe59764fb4b06ce29e94a1f6",
+      "sample_categories": [
+        "SANDBOX_TEST_CONTEXT",
+        "SCHEMA_DIFFERENCE",
+        "TASK015_AMBIGUOUS"
+      ],
+      "selection_basis": "STRUCTURAL_CANDIDATE",
+      "selection_key": "ambiguous_ticket_lookup"
+    },
+    {
+      "comparison_id": "logical-function-comparison:sha256:9bd27ebe8d9968fc1631cfdf875e99497edc1800ee646cbea2d16956207f7fda",
+      "comparison_status": "REVIEW_REQUIRED_CONFLICTING_SIGNALS",
+      "left_canonical_api_id": "apic-identity:sha256:2fd478ab6120d1e94590828fc11b5b98db4915d140c474569390aeea98763417",
+      "left_operation_id": "semantic-operation-v2:sha256:49dfc506f655de518072ce741f6e54a8201af2af8b341e4169b3c43a8d4e7c21",
+      "right_canonical_api_id": "apic-identity:sha256:dd99e2d795e4d4e35bfccb5a1e3cbeff351de0a3b8db3028364e6f301cecc282",
+      "right_operation_id": "semantic-operation-v2:sha256:87d63b55491ae0997a472bdb4ae2fdf4d6b8c737217e5cf620e26471298a01d0",
+      "sample_categories": [
+        "FALSE_POSITIVE_PREVENTION",
+        "SAME_BACKEND_DIFFERING_ACTION_OR_PAYLOAD"
+      ],
+      "selection_basis": "STRUCTURAL_CANDIDATE",
+      "selection_key": "appointment_action_conflict"
+    },
+    {
+      "comparison_id": "logical-function-comparison:sha256:87e6552a105fa20dbca20b66406124aa852d4eb834555cb317f5cfebaed8eea7",
+      "comparison_status": "POSSIBLE_SAME_LOGICAL_FUNCTION",
+      "left_canonical_api_id": "apic-identity:sha256:663dd176474aaa09c113a39538f110048550be958fab381bce3fb844f77d3b9a",
+      "left_operation_id": "semantic-operation-v2:sha256:af02a9a452e88a6fefd96b45a01bbffac7d1b61d1cbf5c7cad823f5041852567",
+      "right_canonical_api_id": "apic-identity:sha256:9690868b5df67a76bbbbe934e874ea1fc4d310ce8e6bfe880afbe44e29cb2ce8",
+      "right_operation_id": "semantic-operation-v2:sha256:12c8a67ca6bbb60401c8d965735ef457089e161ea717f889ba48befa7ae9aec1",
+      "sample_categories": [
+        "DIFFERENT_NAMES",
+        "SCHEMA_DIFFERENCE",
+        "SIMILAR_ACTION_OBJECT"
+      ],
+      "selection_basis": "STRUCTURAL_CANDIDATE",
+      "selection_key": "contributor_income_different_names"
+    },
+    {
+      "comparison_id": "logical-function-comparison:sha256:235ea8098db47436fea026cacb082662fb0b5ab37dd3e939eb62af191b662790",
+      "comparison_status": "POSSIBLE_SAME_LOGICAL_FUNCTION",
+      "left_canonical_api_id": "apic-identity:sha256:1cc91fa6de6063b76456bfa2758f4665116e15e26047be67533cc9732c029b23",
+      "left_operation_id": "semantic-operation-v2:sha256:3c40e83bd2fcd582b99a90914d6675139bee29fc5b046f72bdd431795217961f",
+      "right_canonical_api_id": "apic-identity:sha256:5ae81ba7c740e7fac99ab7972ecaeeaefdd7a81f6674623e58b1c62bd7da25eb",
+      "right_operation_id": "semantic-operation-v2:sha256:bab75ed9252469ed2933af8b75747d3fee74ed8be896c29ae78bcd44df6c2c69",
+      "sample_categories": [
+        "DIFFERENT_NAMES",
+        "SCHEMA_DIFFERENCE",
+        "SHARED_BACKEND_AND_WORDING"
+      ],
+      "selection_basis": "STRUCTURAL_CANDIDATE",
+      "selection_key": "employment_enquiry_different_names"
+    },
+    {
+      "comparison_id": "logical-function-comparison:sha256:b4009b1ea20ca82ee22fa61beea004d69f820fc98dc76c5779c7d34fe84f477e",
+      "comparison_status": "REVIEW_REQUIRED_CONFLICTING_SIGNALS",
+      "left_canonical_api_id": "apic-identity:sha256:78138f96a34f6875ebae4b398fdab428f859c164f36a2a8c0656e88ad7651868",
+      "left_operation_id": "semantic-operation-v2:sha256:8c7eff3a57f23a3883e7b1668c8db272ef231a68133422157260fe5125aa9e1f",
+      "right_canonical_api_id": "apic-identity:sha256:9dbf053a5c4108e9ec9281420ece472b46b06b2b5fe3fb0d5962019036746ae2",
+      "right_operation_id": "semantic-operation-v2:sha256:430d4f89a8a5bd7c5969f11d855909f318bf53652abf1ba8ac0019d3a77af78c",
+      "sample_categories": [
+        "FALSE_POSITIVE_PREVENTION",
+        "SAME_PATH_BACKEND_CONFLICTING_WORDING"
+      ],
+      "selection_basis": "STRUCTURAL_CANDIDATE",
+      "selection_key": "farming_establishment_action_conflict"
+    },
+    {
+      "comparison_id": "logical-function-comparison:sha256:92152040f1e8f5a440eb0acaa189939c6f4042eff40ee287968e071c2d5a6052",
+      "comparison_status": "CLEARLY_DIFFERENT_SUPPORTED",
+      "left_canonical_api_id": "apic-identity:sha256:04ef7f07f94e9e73323d3adcdcf32970ebdd431b1be9cd735bbc71c59f2dbc33",
+      "left_operation_id": "semantic-operation-v2:sha256:ed103b8d707dd95a9467a21939d55c6886c77cada1e1c7c82f3328fde8e915f4",
+      "right_canonical_api_id": "apic-identity:sha256:3956a16a6c906249d796683700a706264c714d2d6e204461c9da0c81b796cdfe",
+      "right_operation_id": "semantic-operation-v2:sha256:3520819fe34d8f73c5a4f207f23c14028f409f1dc750903386ce8ae8d2dc3f40",
+      "sample_categories": [
+        "NEGATIVE_CONTROL",
+        "SAME_OBJECT_DIFFERENT_ACTION",
+        "TECHNICAL_SECURITY"
+      ],
+      "selection_basis": "INDEXED_NEGATIVE_CONTROL",
+      "selection_key": "payment_token_generate_vs_delete"
+    },
+    {
+      "comparison_id": "logical-function-comparison:sha256:e2221fe980c16c7063e5321a7d31820e356dc5fdc441136cadd19f68e9d06d88",
+      "comparison_status": "POSSIBLE_SAME_LOGICAL_FUNCTION",
+      "left_canonical_api_id": "apic-identity:sha256:0f7a768abf0fdf88824ff5a4b3f1f03ad36592bb2f7c59bc2a2f771297fbfcf7",
+      "left_operation_id": "semantic-operation-v2:sha256:71b0a21e6f81a3e6281b05eb4b9386a01ff1ef8b846a37840cc0ff1fcb67f6ee",
+      "right_canonical_api_id": "apic-identity:sha256:c265a4fb25b5c37c1dbd76a0d96ad8357354e04c8403c3ddf15512f4d266a3c0",
+      "right_operation_id": "semantic-operation-v2:sha256:8e66a1ea329b7c2bc252aaebb4fca987d7b6f333de62b174d3a81953ade2ee4a",
+      "sample_categories": [
+        "INFERRED_INTERPRETATION",
+        "MULTI_OPERATION_APIS",
+        "ONE_TO_MANY_CONTEXT"
+      ],
+      "selection_basis": "STRUCTURAL_CANDIDATE",
+      "selection_key": "proposal_contract_multi_operation"
+    },
+    {
+      "comparison_id": "logical-function-comparison:sha256:91a36c3f75ef0f4e0d82ead0a608b87dee9b22add75e34dab4738759ae9494f4",
+      "comparison_status": "NOT_COMPARABLE_DUE_TO_MISSING_EVIDENCE",
+      "left_canonical_api_id": "apic-identity:sha256:32df7c00de1b64538d14f2ea4cfbab68b38683f015057d006e77a3969b532505",
+      "left_operation_id": "semantic-operation-v2:sha256:bb26295548a49738b96b7588ee1a4db9b7c994a05cd06139207984a50fe8af98",
+      "right_canonical_api_id": "apic-identity:sha256:e981b064fc1eaf2b33a78295967d1322e32231412e94d315a1f63d64820605f1",
+      "right_operation_id": "semantic-operation-v2:sha256:092f8724b08e102ec68744a4dc5e06c3a391ce232c909e6d8dab79dfe0049f3e",
+      "sample_categories": [
+        "MISSING_SUMMARY_DESCRIPTION",
+        "TASK015_INSUFFICIENT",
+        "TECHNICAL_TEST_CONTEXT"
+      ],
+      "selection_basis": "STRUCTURAL_CANDIDATE",
+      "selection_key": "root_get_missing_evidence"
+    },
+    {
+      "comparison_id": "logical-function-comparison:sha256:706e85d0d327316a9992b7cf5d221400f7ba9b84c2090a78341de519234fbf02",
+      "comparison_status": "POSSIBLE_SAME_LOGICAL_FUNCTION",
+      "left_canonical_api_id": "apic-identity:sha256:3165d30141993d77200c2630b10c29760e0e1c8f6520eb3368a12d6dd484657e",
+      "left_operation_id": "semantic-operation-v2:sha256:088205524e81575245aaf18ff417aeefffc6f40d4b7b6b330b38d4774be65819",
+      "right_canonical_api_id": "apic-identity:sha256:6fa70f88ad990dcda279d38753d1e83806dc591c09b74619e945129c553f2aeb",
+      "right_operation_id": "semantic-operation-v2:sha256:7d8f53ed3c35f190c656a73167c4fb3b94b72e6dc3f143455544fb74ac257751",
+      "sample_categories": [
+        "IDENTICAL_PROVISIONAL_WORDING_SCHEMA_DIFFERENCE",
+        "V2_REQUIRED",
+        "VERSION_DIFFERENCE"
+      ],
+      "selection_basis": "STRUCTURAL_CANDIDATE",
+      "selection_key": "seasonal_visa_v2_contract_change"
+    },
+    {
+      "comparison_id": "logical-function-comparison:sha256:65209a5c3d90970aa35bb3f1cae9ba2815e49d3eba751e2b971f5086fa182f7f",
+      "comparison_status": "CLEARLY_DIFFERENT_SUPPORTED",
+      "left_canonical_api_id": "apic-identity:sha256:d8d7134d6915c4a0318cd852f12a2192bad26b8a464c5bc78d29a4cbbbf4c2d8",
+      "left_operation_id": "semantic-operation-v2:sha256:b3ee501e32646389de05df839e4ee3414c9bda3a07c0fa217eedd82a2899e440",
+      "right_canonical_api_id": "apic-identity:sha256:7e4db4e3fe1fcc4629aa4ad5da88d21e1341df4353ff9565e826aeef1e64edd4",
+      "right_operation_id": "semantic-operation-v2:sha256:c70a1c57f37d1c71fcad1945b04df77ba4f449840201c43a051f8a53ab20b630",
+      "sample_categories": [
+        "DIFFERENT_ACTION_OBJECT_CONTRACT",
+        "NEGATIVE_CONTROL",
+        "TECHNICAL_SECURITY"
+      ],
+      "selection_basis": "INDEXED_NEGATIVE_CONTROL",
+      "selection_key": "technical_health_vs_token"
+    }
+  ],
+  "status_distribution": {
+    "CLEARLY_DIFFERENT_SUPPORTED": 2,
+    "NOT_COMPARABLE_DUE_TO_MISSING_EVIDENCE": 1,
+    "POSSIBLE_SAME_LOGICAL_FUNCTION": 4,
+    "REVIEW_REQUIRED_CONFLICTING_SIGNALS": 3
+  },
+  "structural_candidate_pair_count": 8,
+  "targeted_source_document_count": 20
+}

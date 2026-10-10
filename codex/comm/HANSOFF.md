@@ -2,114 +2,112 @@
 
 ## Task executed
 
-Phase 5 — Task 015: Observed Function Discovery, Full Inventory Continuation only.
+Phase 5 — Task 016: Logical Function Normalization — evidence-based representative mock only.
 
 ## Prompt file used
 
-`codex/comm/prompts/phase-5-015-full-observed-function-inventory.md`
+`codex/comm/prompts/phase-5-016-logical-function-normalization-mock.md`
 
 ## Summary of what was done
 
-- Extended the approved Task 015 mock contract additively into a deterministic estate-wide pipeline over every accepted frozen Task 014 HTTP operation.
-- Reconciled exactly 2,414 Observed Function records to 2,414 unique Task 014 operation IDs across 1,995 APIs with operations; the full accepted identity scope remains 2,036 APIs.
-- Preserved canonical API and operation IDs, exact method/path, source provenance and fingerprints, request/response structure, explicit evidence-signal IDs, contradictions, missing fields, configured operation-scoped backend facts and candidate-only inherited backend context.
-- Kept every interpretation provisional and `PENDING_REVIEW`; no Logical Function/API, duplicate, domain, capability, retirement, runtime-use or Kong conclusion was made.
-- Added 44 API-level gap records: 36 registry-only, 5 source-backed without supported HTTP Path operations, and 3 native GraphQL/WSDL semantic-limit records. No operation was fabricated.
-- Carried forward the complete 11-category Gap Impact Register and generated a 571-item review queue covering 467 ambiguous/insufficient operations, 44 API-level gaps and 60 unconfirmed structural-overlap pairs.
-- Added an atomic, versioned incremental cache keyed by operation content, frozen dependency fingerprint, cache schema and interpretation-rule version.
-- Verified deterministic cold/warm replay and one-record selective invalidation with byte-identical outputs.
-- Added safe URI/credential-pattern redaction with original-text fingerprints; the estate run required zero source-text redactions and emitted no known credential values or URI hosts.
-- Recorded `CONFLUENCE_POTENTIAL_UNVERIFIED` only as a candidate future targeted source for review items. No Confluence content was read or used.
-- Used no language model, Vector DB, Blackboard, multi-agent framework or all-pairs comparison; measured model-token use was zero.
-- Did not begin Task 016 or Tasks 017–019 and did not modify frozen Task 014 or earlier components.
+- Built a minimal deterministic Task 016 mock that compares operations across distinct canonical APIs without merging identities or performing estate-wide grouping.
+- Selected 10 stratified operation pairs: 8 from the 60 accepted Task 014 structural-overlap candidates and 2 indexed negative controls.
+- Linked every comparison side to its stable Task 014 operation ID, Task 015 Observed Function ID, canonical API ID, source provenance/fingerprint, provisional action/object wording and pending-review state.
+- Compared HTTP method/path, parameters, request/response contracts, auth/exposure, API version, configured operation-scoped versus API-shared candidate backend evidence, and safely detected assembly transformation-policy types/pointers.
+- Read only 20 targeted authoritative API documents and resolved their actual request/response schema shapes. Descriptions, examples, data values, endpoint hosts and raw transformation values were omitted.
+- Separated positive from negative evidence and assigned only proposal statuses: 4 `POSSIBLE_SAME_LOGICAL_FUNCTION`, 3 `REVIEW_REQUIRED_CONFLICTING_SIGNALS`, 2 `CLEARLY_DIFFERENT_SUPPORTED`, and 1 `NOT_COMPARABLE_DUE_TO_MISSING_EVIDENCE`.
+- Preserved all canonical APIs and operations as distinct. No duplicate, approved-same-function, safe replacement, retirement, runtime-equivalence, Logical API, domain, capability or Kong assertion was made.
+- Produced a 10-item pending review queue with specific evidence requests; Confluence is only `CONFLUENCE_POTENTIAL_UNVERIFIED` for the four conflicting/missing-evidence cases and was not accessed.
+- Reclassified consumption of all 11 inherited gap categories without changing frozen Task 014/015 evidence and explicitly bounded downstream blockers to affected comparisons/conclusions.
+- Used no LLM, vector database, Blackboard, multi-agent framework, bulk Confluence ingestion, all-pairs analysis or full-estate Task 016 grouping.
+- Did not start Task 016 full extraction or Tasks 017–019.
 
 ## Files created
 
-- `observed_function/full_inventory.py`
-- `tests/test_observed_function_full.py`
-- `tests/evidence/task-015/full-extraction/generate_full_evidence.py`
-- `tests/evidence/task-015/full-extraction/observed_function_contract_full.md`
-- `tests/evidence/task-015/full-extraction/coverage_and_interpretation_distribution.json`
-- `tests/evidence/task-015/full-extraction/gap_impact_and_downstream_gates.json`
-- `tests/evidence/task-015/full-extraction/representative_findings.jsonl`
-- `tests/evidence/task-015/full-extraction/review_queue_sample.jsonl`
-- `tests/evidence/task-015/full-extraction/review_queue_distribution.json`
-- `tests/evidence/task-015/full-extraction/cache_and_replay_metrics.json`
-- `tests/evidence/task-015/full-extraction/build_manifest.json`
-- `tests/evidence/task-015/full-extraction/commands_and_results.txt`
+- `logical_function/__init__.py`
+- `logical_function/__main__.py`
+- `logical_function/mock.py`
+- `tests/test_logical_function_mock.py`
+- `tests/evidence/task-016/mock/generate_mock_evidence.py`
+- `tests/evidence/task-016/mock/logical_function_normalization_contract.md`
+- `tests/evidence/task-016/mock/sample_pair_selection.json`
+- `tests/evidence/task-016/mock/candidate_pair_comparisons.jsonl`
+- `tests/evidence/task-016/mock/v2_contract_and_function_assessment.md`
+- `tests/evidence/task-016/mock/false_positive_negative_cases.md`
+- `tests/evidence/task-016/mock/inherited_gap_consumption_assessment.json`
+- `tests/evidence/task-016/mock/candidate_review_queue.jsonl`
+- `tests/evidence/task-016/mock/tests_and_replay_results.txt`
 
 ## Files modified
 
-- `observed_function/__init__.py`
-- `observed_function/__main__.py`
 - `codex/comm/HANSOFF.md`
 
 ## Tests executed
 
-- Python compilation checks for the Task 015 implementation, tests and evidence generator.
-- Task 015 mock-regression and full-extraction focused tests.
-- Task 014 regression tests together with Task 015 tests.
+- Python compilation checks for the Task 016 implementation, tests and evidence generator.
+- Task 016 selection, status-boundary, provenance, backend-certainty, v2 schema-difference, control-case, deterministic replay, redaction and frozen-integrity tests.
+- Frozen Task 014 and Task 015 regression tests together with Task 016 tests.
 - Repository-wide `pytest` with loopback-server permission.
-- Cold/warm whole-estate cache replay and forced one-entry selective invalidation.
-- Frozen Task 014 implementation/index/evidence hash checks.
+- Byte-deterministic evidence regeneration.
+- Frozen Task 014/015 implementation, indexes and committed manifest hash checks.
+- Hash checks for all 20 targeted immutable source documents.
 - Known credential-value, URI-host and committed-evidence redaction checks.
-- Deterministic evidence regeneration and `git diff --check`.
+- `git diff --check`.
 
 ## Test results
 
-- Task 015 focused tests: **13 passed in 17.95s**.
-- Focused Task 014 regression + Task 015 tests: **25 passed in 36.67s**.
-- Repository suite: **63 passed, 5 setup errors in 109.50s**.
-- The five setup errors are the known frozen Phase 0 fixture-packaging issue because `tests/fixtures/repository_profile/staging` is absent; no Task 015 test failed.
-- Exact 2,414-operation and 2,036-API-scope reconciliation: **PASS**.
-- Stable unique Observed Function IDs and source fidelity: **PASS**.
-- Candidate backend certainty and no fabricated protocol-native operations: **PASS**.
-- Cold/warm byte parity and selective cache invalidation: **PASS**.
-- Safe redaction and known credential exclusion: **PASS**.
-- Frozen Task 014 integrity: **PASS**.
+- Task 016 focused tests: **7 passed in 1.53s**.
+- Focused Task 014/015 regression + Task 016 tests: **32 passed in 36.31s**.
+- Repository suite: **70 passed, 5 setup errors in 85.57s**.
+- The five setup errors are the known frozen Phase 0 fixture-packaging issue because `tests/fixtures/repository_profile/staging` is absent; no Task 016 test failed.
+- Exact 10-pair selection and allowed status distribution: **PASS**.
+- Stable IDs, Task 014/015 links and source provenance: **PASS**.
+- Actual safe v2 field/type comparison: **PASS**.
+- No duplicate/merge/replacement/runtime claims: **PASS**.
+- Candidate backend certainty and negative/missing-evidence controls: **PASS**.
+- Deterministic replay, redaction and frozen source integrity: **PASS**.
 
 ## Generated artifacts
 
 Local ignored complete artifacts:
 
-- `indexes/observed_function_inventory.jsonl`: 2,414 records; SHA-256 `36e1ccaed8fa9513dcbefeaea592d5b3dc478ae729840ec88f0ad2593c04990e`.
-- `indexes/task015_api_level_gap_records.jsonl`: 44 records; SHA-256 `834be83979ad4d67e3382799ff6b409636e6bfd3f7e8b90950b1627377d48eec`.
-- `indexes/task015_full_gap_impact_register.jsonl`: 11 records; SHA-256 `8b8acb36538607f041cda34da8c067b42fe843f08df7b62288d687a071e51051`.
-- `indexes/task015_full_review_queue.jsonl`: 571 records; SHA-256 `936d4d5c60e16862847f5443417cc5ba9f02081d30fe753eb995390db2965ba5`.
-- `indexes/task015_full_manifest.json`.
-- `indexes/cache/task015-observed-full-v2/`: 2,414 versioned operation cache entries.
+- `indexes/task016_mock_candidate_comparisons.jsonl`: 10 records; SHA-256 `8ecde79621e028ced41938b4a1687eedc979a64458f045d2e5a34b5e141ffdfb`.
+- `indexes/task016_mock_review_queue.jsonl`: 10 records; SHA-256 `2778d9a07ff61ebc0b014b5505cb1d96acb29db4517c97dd5ad1c395053172be`.
+- `indexes/task016_mock_manifest.json`.
 
-Committed artifacts are the versioned contract, coverage/distribution, scoped gap impact, 17 representative findings, 24 review-queue samples plus full distribution, cache/replay metrics, build manifest, evidence generator and command/test record under `tests/evidence/task-015/full-extraction/`.
+Committed artifacts under `tests/evidence/task-016/mock/` contain the normalization contract, exact bounded selection, 10 safe comparisons, v2 assessment, false-positive/negative controls, consumption assessment for all 11 gaps, 10 review items, generator and test/replay results.
 
 ## Important findings
 
-- Interpretation distribution: 1,662 `EXPLICITLY_DESCRIBED`, 285 `INFERRED_FROM_MULTIPLE_STRUCTURAL_SIGNALS`, 54 `AMBIGUOUS_NEEDS_REVIEW`, and 413 `INSUFFICIENT_EVIDENCE`.
-- Evidence distribution: 1,662 HIGH, 285 MEDIUM, 54 LOW and 413 NONE. Coverage was not inflated by weakening evidence rules.
-- All 2,414 accepted operations received exactly one record. They cover 1,995 APIs; 36 registry-only and 5 source-backed APIs without supported HTTP operations account for the remaining 41 of 2,036 accepted API identities.
-- The 44 API-level gap records also include three native-protocol semantic limits; those three APIs retain their accepted Task 014 HTTP facade operations while native GraphQL/WSDL semantics remain unsupported.
-- Backend evidence remains bounded: 67 operations have configured operation-scoped facts and 2,282 carry API-shared candidate-only context. Neither proves runtime use.
-- Review queue: 467 operation interpretations, 44 API-level evidence gaps and all 60 unconfirmed structural-overlap pairs, for 571 items total.
-- The inherited register remains 11 categories: 3 NON_BLOCKING, 4 LOCAL_REVIEW_REQUIRED and 4 scope-specific DOWNSTREAM_BLOCKER. Overlapping category counts were not summed as unique entities.
-- The 36 registry-only APIs, 5 no-supported-operation documents, 113 unresolved Product-location occurrences, native protocol limits, 2,282 candidate backend contexts, 60 structural-overlap pairs and v2 schema differences remain explicit.
-- The v2 pair remains distinct with its actual request/response shape differences and candidate-only shared backend context; no equivalence, duplicate, replacement or precedence conclusion was made.
-- Cold replay produced 2,414 misses; warm replay produced 2,414 hits; forced selective replay produced 2,413 hits plus one operation invalidation without changing output bytes.
+- Mock distribution: 4 possible-same proposals, 3 conflicting-signal reviews, 2 clearly-different controls, and 1 not-comparable pair. All 10 remain `PENDING_REVIEW`.
+- Seasonal visa versus v2 has the same provisional `search seasonal visa requests` wording and `POST /searchseasvisareq`, but actual safe shapes differ. The left request contains `SortBy`; 30 response-shape differences include field presence, required-list changes and `InsertDate` number versus integer. Shared configured target identity remains candidate context only.
+- Employment-status enquiry/query-center has common provisional wording, method/path and shared candidate backend evidence, while request shapes differ. It remains possible-same, not approved.
+- Contributor salary APIs have similar but nonidentical provisional wording and equal method/path, with response-shape and version differences. They remain possible-same pending semantic review.
+- Proposals versus bulk contracts demonstrates multi-operation/one-to-many context: the compared dynamic-path GET operations are similar, but API-level membership and wording differences remain explicit.
+- Appointment status and farming-establishment pairs demonstrate false-positive prevention: shared backend/path signals conflict with action wording and payload/response differences, so both require review.
+- The ambiguous ticket lookup retains its Task 015 ambiguity despite equal selected safe shapes and provisional wording; automated interpretation strength is not business approval.
+- Root-path GET test APIs remain not comparable because both Task 015 interpretations are insufficient. Shared structural/backend evidence does not fill missing semantics.
+- Health-check versus access-token retrieval and payment-token generation versus deletion are clearly-different supported controls. Technical/security endpoints and common object wording were not forced into a common business function.
+- Eleven of the 20 compared sides contain safely detected assembly transformation-policy evidence. Policy presence informs limitations but does not prove runtime behavior.
+- The staging/sandbox-like source context is explicit: no production deployment, usage, inactivity, retirement or quality conclusion was made.
 
 ## Unresolved issues
 
-- Architecture review is required for the full interpretation distribution, especially the 467 ambiguous or insufficient operation records.
-- The 571 review items remain pending; targeted source validation should be prioritized by downstream decision need rather than treated as a blanket phase blocker.
-- Any future targeted Confluence lookup requires explicit authorization and verifiable page provenance; no coverage assumption may be made from unseen pages.
-- The 60 structural-overlap pairs remain unconfirmed and block only their specific Task 016 equivalence/grouping conclusions.
-- Upstream accepted limitations remain unresolved: 36 registry-only APIs, 5 source-backed APIs without supported operations, 113 Product-location occurrences, native semantics and API-shared candidate attribution.
+- All 10 candidate comparisons require Integration Architect / Enterprise Architect review; none is an approved Logical Function.
+- The four possible-same proposals need a decision on whether material contract/version differences are compatible with one logical intent or represent distinct functions.
+- The three conflicting cases need source-owner validation of action wording versus path/backend/schema signals.
+- The missing-evidence root GET pair cannot support a logical-function conclusion without named targeted evidence.
+- Task 015's 467 ambiguous/insufficient operations, 44 API-level gaps, 60 structural candidates, 113 unresolved Product-location occurrences and native-protocol limits remain traceable limitations.
 - Five frozen Phase 0 profiler tests still cannot start because their fixture source directory is absent.
 
 ## Assumptions
 
-- Frozen Task 014 API/operation inventories, source provenance, backend certainty, schema fingerprints and structural candidates remain the authoritative input baseline.
-- Accepted Task 014 Path Item operations on native-protocol APIs are retained as HTTP facade evidence; no native GraphQL field or WSDL operation is invented.
-- Method/path plus independent parameter/schema/response evidence can support a bounded provisional interpretation; HTTP verb alone cannot.
-- Source descriptions are evidence but not certified truth; contradictions remain queued rather than resolved by choosing a winner.
-- API-level gap records can overlap operation coverage when they represent unsupported native semantics, so record count is not a unique-API total.
+- Frozen Task 014 identities, operations, contracts, backend evidence and structural candidates remain authoritative inputs.
+- Frozen Task 015 records are provisional automated interpretations and may be used as evidence signals, never as certified business semantics.
+- Actual safely resolved schema-shape differences identify contract differences but do not by themselves prove different business intent.
+- Shared configured backend identity, method/path or wording can justify review but never equivalence; different contracts can coexist with a possible common apparent function.
+- Targeted source reads are limited to the 20 documents explicitly fingerprinted in the local manifest; their raw content is not copied into committed evidence.
+- Staging metadata absence and configured connectivity do not imply production defects, inactivity or runtime behavior.
 
 ## Deviations from the prompt
 
@@ -117,8 +115,8 @@ None.
 
 ## Recommended next step
 
-Integration Architect and Enterprise Architect should review the full coverage/evidence distribution, prioritize the 467 low/none operation interpretations and scope-specific blockers, and explicitly accept or revise the full Task 015 contract. Any targeted Confluence retrieval should be separately authorized for named disputed cases with page provenance. Record an architecture decision before authorizing Task 016; do not begin Task 016 yet.
+Integration Architect and Enterprise Architect should answer: (1) Is the candidate contract and four-status model acceptable? (2) Which, if any, of the four possible-same proposals may advance to a controlled full Task 016 model despite contract differences? (3) How should the three action/schema conflicts be resolved? (4) Is a named targeted Confluence/source lookup authorized for the four conflicting or missing-evidence cases? (5) Is the bounded candidate-generation strategy approved for an estate-wide Task 016 run? Do not start full Task 016 or Task 017 until that decision is recorded.
 
 ## Final status
 
-HOLD_FOR_ARCHITECTURE_REVIEW
+REVIEW_REQUIRED

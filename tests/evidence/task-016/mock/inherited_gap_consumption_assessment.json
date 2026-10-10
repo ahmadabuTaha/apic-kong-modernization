@@ -1,0 +1,146 @@
+{
+  "categories": [
+    {
+      "affected_canonical_api_count": 1967,
+      "affected_operation_count": 2282,
+      "consumption_classification": "RUNTIME_NOT_EVIDENCED",
+      "frozen_upstream_changed": false,
+      "gap_id": "task014-gap:api-shared-backend-candidate-context",
+      "inherited_severity": "LOCAL_REVIEW_REQUIRED",
+      "mock_handling": "Preserved as pair-specific uncertainty; never interpreted as a production quality, inactivity, or global phase-stop conclusion.",
+      "recovery_trigger": "Exact operation-scoped configuration or accepted runtime evidence",
+      "scope": "operation",
+      "task016_consumption": "Shared backend is insufficient to merge observed functions."
+    },
+    {
+      "affected_canonical_api_count": 364,
+      "affected_operation_count": 757,
+      "consumption_classification": "METADATA_ABSENT",
+      "frozen_upstream_changed": false,
+      "gap_id": "task014-gap:missing-description",
+      "inherited_severity": "NON_BLOCKING",
+      "mock_handling": "Preserved as pair-specific uncertainty; never interpreted as a production quality, inactivity, or global phase-stop conclusion.",
+      "recovery_trigger": "Source metadata enrichment or Task 015 reviewer decision",
+      "scope": "operation",
+      "task016_consumption": "May lower confidence when comparing or grouping observed functions."
+    },
+    {
+      "affected_canonical_api_count": 379,
+      "affected_operation_count": 767,
+      "consumption_classification": "METADATA_ABSENT",
+      "frozen_upstream_changed": false,
+      "gap_id": "task014-gap:missing-operationid",
+      "inherited_severity": "NON_BLOCKING",
+      "mock_handling": "Preserved as pair-specific uncertainty; never interpreted as a production quality, inactivity, or global phase-stop conclusion.",
+      "recovery_trigger": "Source metadata enrichment or Task 015 reviewer decision",
+      "scope": "operation",
+      "task016_consumption": "May lower confidence when comparing or grouping observed functions."
+    },
+    {
+      "affected_canonical_api_count": 0,
+      "affected_operation_count": 0,
+      "consumption_classification": "AUTOMATED_INTERPRETATION_LIMIT",
+      "frozen_upstream_changed": false,
+      "gap_id": "task014-gap:missing-request-schema-shape",
+      "inherited_severity": "LOCAL_REVIEW_REQUIRED",
+      "mock_handling": "Preserved as pair-specific uncertainty; never interpreted as a production quality, inactivity, or global phase-stop conclusion.",
+      "recovery_trigger": "Resolvable request schema or explicit source description",
+      "scope": "operation",
+      "task016_consumption": "Request-contract similarity is not comparable."
+    },
+    {
+      "affected_canonical_api_count": 1950,
+      "affected_operation_count": 2338,
+      "consumption_classification": "METADATA_ABSENT",
+      "frozen_upstream_changed": false,
+      "gap_id": "task014-gap:missing-summary",
+      "inherited_severity": "NON_BLOCKING",
+      "mock_handling": "Preserved as pair-specific uncertainty; never interpreted as a production quality, inactivity, or global phase-stop conclusion.",
+      "recovery_trigger": "Source metadata enrichment or Task 015 reviewer decision",
+      "scope": "operation",
+      "task016_consumption": "May lower confidence when comparing or grouping observed functions."
+    },
+    {
+      "affected_canonical_api_count": 3,
+      "affected_operation_count": 7,
+      "consumption_classification": "SOURCE_EVIDENCE_NOT_AVAILABLE",
+      "frozen_upstream_changed": false,
+      "gap_id": "task014-gap:native-protocol-semantics-not-extracted",
+      "inherited_severity": "LOCAL_REVIEW_REQUIRED",
+      "mock_handling": "Preserved as pair-specific uncertainty; never interpreted as a production quality, inactivity, or global phase-stop conclusion.",
+      "recovery_trigger": "Need for native GraphQL/WSDL semantic comparison",
+      "scope": "protocol",
+      "task016_consumption": "Native-operation equivalence cannot be evaluated."
+    },
+    {
+      "affected_canonical_api_count": 5,
+      "affected_operation_count": 0,
+      "consumption_classification": "SOURCE_EVIDENCE_NOT_AVAILABLE",
+      "frozen_upstream_changed": false,
+      "gap_id": "task014-gap:no-supported-path-items",
+      "inherited_severity": "DOWNSTREAM_BLOCKER",
+      "mock_handling": "Preserved as pair-specific uncertainty; never interpreted as a production quality, inactivity, or global phase-stop conclusion.",
+      "recovery_trigger": "Protocol/parser decision or corrected source document",
+      "scope": "api",
+      "task016_consumption": "HTTP-operation-derived semantics are unavailable for these APIs; do not treat zero extracted operations as no business behavior."
+    },
+    {
+      "affected_canonical_api_count": 36,
+      "affected_operation_count": 0,
+      "consumption_classification": "SOURCE_EVIDENCE_NOT_AVAILABLE",
+      "frozen_upstream_changed": false,
+      "gap_id": "task014-gap:registry-only-no-operations",
+      "inherited_severity": "DOWNSTREAM_BLOCKER",
+      "mock_handling": "Preserved as pair-specific uncertainty; never interpreted as a production quality, inactivity, or global phase-stop conclusion.",
+      "recovery_trigger": "Accepted authoritative API source becomes available",
+      "scope": "api",
+      "task016_consumption": "No operation/function evidence can be produced for these APIs until an authoritative source representation is recovered."
+    },
+    {
+      "affected_canonical_api_count": 89,
+      "affected_operation_count": 0,
+      "consumption_classification": "SEMANTIC_VALIDATION_PENDING",
+      "frozen_upstream_changed": false,
+      "gap_id": "task014-gap:structural-overlap-candidates",
+      "inherited_severity": "DOWNSTREAM_BLOCKER",
+      "mock_handling": "Preserved as pair-specific uncertainty; never interpreted as a production quality, inactivity, or global phase-stop conclusion.",
+      "recovery_trigger": "Task 015 observed-function approval for both sides and Task 016 review",
+      "scope": "relationship",
+      "task016_consumption": "Blocks confirmed Logical Function/API grouping for candidate pairs until semantic validation."
+    },
+    {
+      "affected_canonical_api_count": 110,
+      "affected_operation_count": 0,
+      "consumption_classification": "SOURCE_EVIDENCE_NOT_AVAILABLE",
+      "frozen_upstream_changed": false,
+      "gap_id": "task014-gap:unresolved-product-location",
+      "inherited_severity": "LOCAL_REVIEW_REQUIRED",
+      "mock_handling": "Preserved as pair-specific uncertainty; never interpreted as a production quality, inactivity, or global phase-stop conclusion.",
+      "recovery_trigger": "New authoritative Product-location identity evidence",
+      "scope": "relationship",
+      "task016_consumption": "May hide contextual evidence used to distinguish similar functions."
+    },
+    {
+      "affected_canonical_api_count": 2,
+      "affected_operation_count": 2,
+      "consumption_classification": "SEMANTIC_VALIDATION_PENDING",
+      "frozen_upstream_changed": false,
+      "gap_id": "task014-gap:v2-schema-shape-difference",
+      "inherited_severity": "DOWNSTREAM_BLOCKER",
+      "mock_handling": "Preserved as pair-specific uncertainty; never interpreted as a production quality, inactivity, or global phase-stop conclusion.",
+      "recovery_trigger": "Architect validation of v2 contract intent",
+      "scope": "operation",
+      "task016_consumption": "Blocks any same-function or version-replacement conclusion without semantic/schema review."
+    }
+  ],
+  "consumption_classification_distribution": {
+    "AUTOMATED_INTERPRETATION_LIMIT": 1,
+    "METADATA_ABSENT": 3,
+    "RUNTIME_NOT_EVIDENCED": 1,
+    "SEMANTIC_VALIDATION_PENDING": 2,
+    "SOURCE_EVIDENCE_NOT_AVAILABLE": 4
+  },
+  "downstream_blocker_scope": "Only the affected comparison or unsupported conclusion; never the whole Task 016 phase.",
+  "inherited_gap_category_count": 11,
+  "staging_source_qualification": "Missing metadata or runtime evidence in this staging/sandbox-like export is not evidence of a production API defect, inactivity, retirement, or business criticality."
+}
