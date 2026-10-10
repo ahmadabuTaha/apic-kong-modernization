@@ -1,31 +1,32 @@
 # CURRENT TASKS
 
-## Frozen checkpoints
-Phase 0–4: PASS / FROZEN. Task 014 Semantic Inventory: **PASS / FROZEN** (EA accepted 2026-10-08); 2,036 canonical APIs, 2,414 HTTP operations, 60 unconfirmed structural overlap candidate pairs. Do not modify frozen sources/identity/graph/Task 014 assets absent a specific reproduced defect.
+## Frozen Checkpoints
+- Phase 0–4: PASS / FROZEN.
+- Task 014 Semantic Inventory & Operation Extraction: PASS / FROZEN (2,036 canonical APIs; 2,414 accepted HTTP operations).
+- **Task 015 Observed Function Discovery: ACCEPTED / FROZEN by Enterprise Architect on 2026-10-10 AS PROVISIONAL AUTOMATED INTERPRETATION INVENTORY**, not a business-semantic accuracy certification. Full 2,414/2,414 operation coverage; 1,662 explicitly described, 285 inferred from structural signals, 54 ambiguous and 413 insufficient under deterministic extraction rules. All records retain PENDING_REVIEW status. HANSOFF's HOLD_FOR_ARCHITECTURE_REVIEW was the completed Task 015 stop, superseded by the architect's approval to progress.
+- Retain 571 Task 015 review items: 467 operation interpretations, 44 API-level gap records, and 60 structural-overlap pairs. None is silently dismissed or promoted to confirmed business truth. Known Phase 0 fixture test errors are still open.
+- The source estate was exported from a staging/sandbox-like environment. Do NOT interpret missing descriptions, unconfirmed runtime usage, or low automatic semantic evidence as quality problems in production APIs or evidence of inactivity.
+- Reopen a frozen component ONLY on a concrete reproducible defect, contradiction or broken downstream contract; use additive downstream evidence/exception handling by default.
 
 ## Active Task
-**Phase:** 5 — Semantic & Business Mapping
-**Task:** 015 — Observed Function Discovery, Full Inventory Continuation
-**Status:** READY_FOR_CODEX_FULL_EXTRACTION
+**Phase:** Phase 5 — Semantic & Business Mapping
+**Task:** 016 — Logical Function Normalization
+**Status:** READY_FOR_CODEX_MOCK
+**Prompt:** `codex/comm/prompts/phase-5-016-logical-function-normalization-mock.md`
 
-### Prompt
-Read and execute:
-`codex/comm/prompts/phase-5-015-full-observed-function-inventory.md`
+### Current authorization — MOCK only
+Test evidence-based candidate logical-function equivalence/non-equivalence across distinct canonical APIs and operation records, including different names, the seasonal visa v2 pair, actual request/response schema differences, action/object signals, configured backend scope and uncertainty. Use targeted, indexed, deterministic retrieval with carefully bounded raw source reads. Avoid all-pairs analysis or new vector database/Blackboard/multi-agent system.
 
-### Enterprise Architect decision (2026-10-08)
-Task 015 mock is **APPROVED as a bounded provisional discovery method** (15 operations, 14 APIs; HANSOFF HOLD_FOR_ARCHITECTURE_REVIEW was its required stop). Its 7 explicit, 5 multi-signal provisional, 2 ambiguous, 1 insufficient cases demonstrate evidence/uncertainty handling, not business-semantic accuracy certification. Now authorize Task 015 **full extraction only** across all accepted Task 014 operation records.
+Maintain separate:
+1. structural overlap candidate,
+2. provisional similar Observed Function wording,
+3. possible SAME LOGICAL FUNCTION requiring semantic validation,
+4. a confirmed business/function duplicate or safe replacement decision (NOT authorized now).
 
-Maintain Task 015 role strictly: answer what an operation appears to do, not prove business-function correctness, duplicates, logical functions/APIs, domains, capabilities, retirement or Kong configuration. Preserve PENDING_REVIEW interpretations, contradictions, source/evidence IDs, missing fields and configured-versus-candidate backend certainty.
+Treat Task 015 confidence as automated-interpretation evidence strength, NOT actual business-function accuracy. Preserve ambiguous, incomplete and contradictory cases; avoid interpreting missing Swagger summaries as API defects. Specific evidence gaps block only the affected claim/grouping, not all Task 016.
 
-### Gap controls
-Treat the 11-category inherited gap register as a baseline. NON_BLOCKING metadata gaps can be supported by other independent evidence; LOCAL_REVIEW_REQUIRED cases need focused follow-up; DOWNSTREAM_BLOCKER applies ONLY to the affected operation or specific downstream conclusion, never a blanket phase stop. Preserve 36 registry-only APIs, 5 HTTP-no-supported-path documents, 113 unresolved Product-location occurrences, native protocol limits and the 60 unconfirmed structural overlap pairs. Do not silently turn missing evidence into facts or merge function identities.
+Confluence may be a future targeted enrichment source but is not a dependency of the mock and must not be bulk ingested or assumed to contain evidence not reviewed.
 
-### Confluence note
-EA confirms enterprise Confluence contains extensive API explanations, but content is numerous. **Do not read or ingest Confluence in this task.** Treat it as a possible targeted future supplementary source for low-evidence or disputed functions, subject to explicit later authorization and verifiable page provenance. No assumptions based on unseen pages; do not block current discovery.
-
-### Implementation and stop
-Use accepted frozen CodeGraph/indexes + Task 014 inventory/cache, incremental deterministic observed-function cache, and targeted source reads only if necessary. No Vector DB, Blackboard or Multi-Agent initiative. Reconcile all 2,414 operations with one record per operation, include full Gap Impact Register and review queue. Test deterministic cold/warm outputs, selective invalidation, safe redaction, frozen integrity and record counts. Commit bounded evidence under `tests/evidence/task-015/full-extraction/`, with full local ignored indexes/cache.
-
-Update `codex/comm/HANSOFF.md`, commit/push and **STOP for architectural review of Task 015 full results**. Do not start Task 016 or Tasks 017–019. Task 018 remains a mandatory dedicated domain mock review before Task 019 business capability mapping.
-
+### Required STOP
+Implement and test Task 016 MOCK only; commit safe evidence under `tests/evidence/task-016/mock/`, update `codex/comm/HANSOFF.md`, and STOP for Integration Architect / Enterprise Architect review. Do not start Task 016 full estate or Tasks 017–019.
 Codex discovers -> Integration Architect validates -> Enterprise Architect decides.
