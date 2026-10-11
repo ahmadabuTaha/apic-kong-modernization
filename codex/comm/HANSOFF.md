@@ -1,6 +1,39 @@
 # Codex Handoff
 
-## Current execution — Phase 5, Task 017 FULL
+## Current execution — Phase 5, Task 017A
+
+### Execution summary
+
+- Pulled `origin/main` by fast-forward (`442a817` to `974aa99`), reread `AGENTS.md`, `CURRENT_TASKS.md`, and the Task 017A prompt, and executed only the authorized bounded architecture review.
+- Reused the frozen Task 017 full proposal/operation indexes, Task 014/015/016 references, accepted relationship/backend evidence, and the 46-case validation sample. Task 017 full was not regenerated, no all-pairs search was performed, and no `staging/` file was changed.
+- Reviewed every one of the **71** baseline proposals exactly once, retaining **363** member occurrences, the original proposal IDs, membership hashes, source pointers, prior evidence sufficiency, contracts/security, backend evidence scope, and AS-IS Product/Plan/Subscription context.
+- Added an evidence-specific recommendation, R1-R7 review, counterevidence, alternative, productization implication, and explicit evidence gaps for every proposal. Technical validation is `PASS`; every Enterprise Architect acceptance remains `PENDING`.
+
+### Results and evidence
+
+- Recommendation distribution: **5** `RETAIN_PROVISIONAL_COHESIVE_BOUNDARY`, **15** `SPLIT_INTO_EVIDENCED_SUB_BOUNDARIES`, **23** `KEEP_AS_IS_EXPOSURE_NO_LOGICAL_BOUNDARY_ASSERTION`, **9** `REQUIRES_TARGETED_EVIDENCE`, and **19** `TECHNICAL_OR_TEST_EXPOSURE_REVIEW`.
+- The five prior sufficient proposals remain provisional retains: `nic-prtissuespecialpermit`, `mhrsd-submitsaudicertificate`, `nic-submitrunawayrequest`, `mhrsd-raiseobjectionrequest`, and `nic-submitvisa`. No architecture approval is implied.
+- Evidence-backed split examples include `getlookups` (five exact lookup path families) and `s3-client` (three bucket operations versus two object operations). `getunifiednumberworkpermit` remains AS-IS/no-boundary because all six members lack supported action evidence; `ajeer-bulk-contracts` requires targeted lifecycle/resource evidence; `graphql_poc` is a directly named POC exposure review, not a retirement decision.
+- The five oversized source APIs remain an adjunct outside the 71: **5 reviews / 132 operations**. `osh` has four repeated subfamily candidates covering 11/24 operations and `osh-apis` has four covering 15/22; all remaining members stay explicit. `servicemanagement-supportcentre`, `user-management`, and `user-management-privilege` have no adequate repeated direct resource evidence, so all 86 operations remain unresolved. The cap was not relaxed and original primary dispositions were not changed.
+- Created **14** bounded cross-API links from the accepted 46-case sample only: five pending alternatives and nine negative controls. SC Request preserves exactly two source operations, approve/reject/cancel intents, `PARTIAL` sufficiency, and Unified Actions versus split Decision/Cancellation alternatives. No cross-API primary memberships, equivalence approvals, or transitive inference were created.
+- Created a **90-item** productization decision backlog: all 71 proposals, five oversized adjuncts, and 14 links. The mandatory readiness gate is `AFTER_TASK019_BEFORE_PRODUCTIZATION_DESIGN`. Tasks 018/019 may help resource taxonomy/common purpose, but cannot prove lifecycle owner, consumer intent, release boundary, active production usage, or safe substitution.
+- Full ledger reconciliation remains **2,414 / 2,414** unique operations and **1,481** Task 016-unpaired operations. No Product, Domain, Capability, Kong topology, retirement, production-use, or architect-approval assignment was made.
+
+### Outputs
+
+- Implementation: `logical_api/architecture_review.py`, `logical_api/architecture_review_main.py`, and `tests/test_logical_api_architecture_review.py`.
+- Ignored expandable indexes: `indexes/task017a_all_71_architecture_reviews.jsonl`, `task017a_five_oversized_adjunct.jsonl`, `task017a_cross_api_opportunity_links.jsonl`, `task017a_productization_decision_backlog.jsonl`, and `task017a_architecture_review_manifest.json`.
+- Required committed evidence is under `tests/evidence/task-017/architecture-review-71/`: review criteria, complete 71-item register, human-readable 71-item executive table, 16 diverse deep dives/controls, five oversized adjuncts, cross-API links, productization backlog, coverage summary, commands/results, deterministic generator, and build manifest.
+
+### Tests, unresolved issues, and final status
+
+- Focused Task 017A plus prior Task 017 regressions: **32 passed**.
+- Required repository suite with loopback permission: **116 passed, 5 setup errors, 0 new failures**. The five errors are the documented frozen Phase 0 issue: `tests/fixtures/repository_profile/staging` is absent. Task 017A did not reopen or repair that phase.
+- Deterministic rebuild, exact 71 IDs/memberships, R1-R7 at group/member levels, five/132 oversized separation, 2,414-ledger preservation, 46-case/SC controls, redaction, backlog completeness, and unauthorized-assignment guards passed.
+- Unresolved architecture evidence remains explicit: common lifecycle ownership, consumer/authorization intent, release boundaries, operation/runtime backend behavior, production activity, safe substitution, and unresolved oversized members.
+- Final status: **TASK 017A TECHNICAL PASS; ENTERPRISE ARCHITECT REVIEW REQUIRED**. Changes and evidence are committed/pushed, then STOP. Do not begin Task 018, Task 019, productization design, Kong architecture, rationalization, or retirement.
+
+## Previous execution — Phase 5, Task 017 FULL (historical baseline)
 
 ### Execution summary
 

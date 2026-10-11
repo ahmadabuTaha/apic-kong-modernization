@@ -1,0 +1,15 @@
+Task 017A architecture review of all 71 proposals
+
+Generation:
+  .venv/bin/python tests/evidence/task-017/architecture-review-71/generate_architecture_review_evidence.py --focused-result '<result>' --repository-result '<result>'
+  Result: PASS; 71 reviews, five/132 oversized adjunct, bounded links, and backlog generated without rebuilding Task 017.
+
+Focused validation:
+  .venv/bin/pytest -q tests/test_logical_api_architecture_review.py tests/test_logical_api_full_formation.py tests/test_logical_api_expanded_validation.py tests/test_logical_api_mock.py
+  Result: PASS — 32 passed in 9.31s
+
+Repository validation:
+  .venv/bin/pytest -q
+  Result: EXPECTED BASELINE ERRORS — 116 passed, 5 errors in 65.80s; all five are tests/test_profiler.py setup errors because tests/fixtures/repository_profile/staging is absent
+
+Known baseline: exactly five Phase 0 tests/test_profiler.py setup errors because tests/fixtures/repository_profile/staging is absent. This frozen-phase fixture defect is reported separately and was not repaired by Task 017A.

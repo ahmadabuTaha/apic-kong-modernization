@@ -1,0 +1,76 @@
+{
+  "architecture_recommendation_counts": {
+    "KEEP_AS_IS_EXPOSURE_NO_LOGICAL_BOUNDARY_ASSERTION": 23,
+    "REQUIRES_TARGETED_EVIDENCE": 9,
+    "RETAIN_PROVISIONAL_COHESIVE_BOUNDARY": 5,
+    "SPLIT_INTO_EVIDENCED_SUB_BOUNDARIES": 15,
+    "TECHNICAL_OR_TEST_EXPOSURE_REVIEW": 19
+  },
+  "backlog_components": {
+    "baseline_proposals": 71,
+    "cross_api_links": 14,
+    "oversized_adjuncts": 5
+  },
+  "backlog_count": 90,
+  "baseline_evidence_sufficiency_counts": {
+    "INSUFFICIENT": 35,
+    "PARTIAL": 31,
+    "SUFFICIENT_FOR_PROVISIONAL_BOUNDARY": 5
+  },
+  "baseline_proposal_coverage": {
+    "actual": 71,
+    "distinct_ids": 71,
+    "expected": 71,
+    "membership_changes": 0
+  },
+  "cross_api_links": {
+    "broad_all_pairs_performed": false,
+    "count": 14,
+    "primary_memberships_created": 0
+  },
+  "frozen_46_case_control_count": 46,
+  "full_primary_ledger": {
+    "actual": 2414,
+    "distinct_operation_ids": 2414,
+    "expected": 2414,
+    "unchanged": true
+  },
+  "oversized_adjunct": {
+    "operation_count": 132,
+    "outside_71": true,
+    "primary_dispositions_changed": 0,
+    "review_count": 5
+  },
+  "productization_readiness_gate": {
+    "design_authorized": false,
+    "position": "AFTER_TASK019_BEFORE_PRODUCTIZATION_DESIGN"
+  },
+  "result_axes": {
+    "architect_acceptance": "PENDING",
+    "technical_validation": "PASS"
+  },
+  "reviewed_proposal_member_occurrences": 363,
+  "sc_request_control": {
+    "alternatives_preserved": [
+      "Unified SC Request Actions",
+      "Split Decision and Cancellation boundaries"
+    ],
+    "distinct_action_intents": [
+      "approve",
+      "cancel",
+      "reject"
+    ],
+    "evidence_sufficiency": "PARTIAL",
+    "source_operation_count": 2
+  },
+  "task016_unpaired_preserved": 1481,
+  "unauthorized_assignments": {
+    "architect_approvals": 0,
+    "capability_assignments": 0,
+    "domain_assignments": 0,
+    "kong_topologies": 0,
+    "production_usage_inferences": 0,
+    "products_created": 0,
+    "retirement_decisions": 0
+  }
+}

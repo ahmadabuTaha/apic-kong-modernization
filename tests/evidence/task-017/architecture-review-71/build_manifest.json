@@ -1,0 +1,152 @@
+{
+  "allowed_recommendations": [
+    "KEEP_AS_IS_EXPOSURE_NO_LOGICAL_BOUNDARY_ASSERTION",
+    "REQUIRES_TARGETED_EVIDENCE",
+    "RETAIN_PROVISIONAL_COHESIVE_BOUNDARY",
+    "SPLIT_INTO_EVIDENCED_SUB_BOUNDARIES",
+    "TECHNICAL_OR_TEST_EXPOSURE_REVIEW"
+  ],
+  "architect_acceptance": "PENDING",
+  "artifacts": {
+    "all_71_decision_register.jsonl": {
+      "bytes": 2628105,
+      "sha256": "053732c7b07e82ea508d01267649440bca2470241b1f43b38572642b803fafe7"
+    },
+    "commands_and_results.txt": {
+      "bytes": 1048,
+      "sha256": "54f4e8a91b1d5f22740000490312f3f2763ecded6cd1e51883838b6f58765ed4"
+    },
+    "coverage_and_decision_summary.json": {
+      "bytes": 2010,
+      "sha256": "0b939a687f2fef04c1808048c2f27195b5fb07476df5bdef53e7b92e64d69219"
+    },
+    "cross_api_opportunity_links.jsonl": {
+      "bytes": 21885,
+      "sha256": "6b2604a6f14da6c69135833014c2e6bf333e2cc5c5ce2a49bbf16d0264fd8b97"
+    },
+    "deep_dive_cases.md": {
+      "bytes": 38107,
+      "sha256": "31b119c40e08e5c987f2c520ed2946cf3f6dd3a7c079e4002606089d45aaa78e"
+    },
+    "executive_all_71_review.md": {
+      "bytes": 33628,
+      "sha256": "069cba763cee044ba573b50f3cf1168715ddb1c4fc2401f050e3e21024c3b300"
+    },
+    "five_oversized_adjunct.jsonl": {
+      "bytes": 35063,
+      "sha256": "713d4e1172912cf9dc5518e34523a05690f38ce60194d23dd9cd27c0219e7c97"
+    },
+    "productization_decision_backlog.jsonl": {
+      "bytes": 83021,
+      "sha256": "32ffb5baf0a3ec8843c34be4ba5e367a480918bfd968cc0ba639018a1746a762"
+    },
+    "review_criteria_and_decisions.md": {
+      "bytes": 2887,
+      "sha256": "426980211a5ffe7937ade34de997141a2e6c2ad2d58e35486314007eafcbb3c0"
+    }
+  },
+  "generator": "generate_architecture_review_evidence.py",
+  "next_gate": "AFTER_TASK019_BEFORE_PRODUCTIZATION_DESIGN",
+  "rules_version": "task017a-all-71-architecture-review-v1",
+  "scope": "TASK017A_BOUNDED_ARCHITECTURE_REVIEW",
+  "source_manifest": {
+    "all_pairs_search_performed": false,
+    "architect_approval_count": 0,
+    "full_task017_regenerated": false,
+    "inputs": {
+      "diagnostics": {
+        "bytes": 15236,
+        "path": "indexes/task017_full_formation_diagnostics.jsonl",
+        "sha256": "292b006ad5c9c25d6b35ab965247dc1e2d33324923cda031c44c102ce3fe5d66"
+      },
+      "expanded_sample": {
+        "bytes": 692465,
+        "path": "tests/evidence/task-017/expanded-validation/expanded_sample_register.jsonl",
+        "sha256": "9db3ac73bfd88e0ff0ea0a8eb97115a5c2398384424a68083e36a99832591103"
+      },
+      "full_manifest": {
+        "bytes": 8153,
+        "path": "indexes/task017_full_manifest.json",
+        "sha256": "55fe2a0df0210fde339c1ddf623aa19c347daf7c3ad3c201bedd3e2238d3a949"
+      },
+      "implementation": {
+        "bytes": 29367,
+        "path": "logical_api/architecture_review.py",
+        "sha256": "fc669c56e8705b1f3f16f2b826a9eab762605d2ff4fcef36e4bd14ff61cccf5a"
+      },
+      "ledger": {
+        "bytes": 7148852,
+        "path": "indexes/task017_full_operation_disposition.jsonl",
+        "sha256": "e2fae7d9df81f5a520924a0d01c02c2bcb48c491d87f2575a069ebebf08272b8"
+      },
+      "observed": {
+        "bytes": 16895146,
+        "path": "indexes/observed_function_inventory.jsonl",
+        "sha256": "36e1ccaed8fa9513dcbefeaea592d5b3dc478ae729840ec88f0ad2593c04990e"
+      },
+      "proposals": {
+        "bytes": 2836304,
+        "path": "indexes/task017_full_logical_api_proposals.jsonl",
+        "sha256": "93dbef9137333a5e7ac818a9a133a795d4c76a74684a2a8a97cc7d23e174ee5b"
+      },
+      "relationships": {
+        "bytes": 14850576,
+        "path": "indexes/relationship_index.jsonl",
+        "sha256": "d9fdc2e5cd61510335af572e03c21b27128d39cb9007104be774e24e3d3a8a0a"
+      },
+      "task016_refinement": {
+        "bytes": 8086704,
+        "path": "indexes/task016_semantic_refinement_pairs.jsonl",
+        "sha256": "70108ef6eb3e395e1557870e62d1ff5738f2a14f378eec9946d0878c76607135"
+      }
+    },
+    "outputs": {
+      "backlog": {
+        "bytes": 83021,
+        "path": "indexes/task017a_productization_decision_backlog.jsonl",
+        "record_count": 90,
+        "sha256": "32ffb5baf0a3ec8843c34be4ba5e367a480918bfd968cc0ba639018a1746a762"
+      },
+      "cross_links": {
+        "bytes": 21885,
+        "path": "indexes/task017a_cross_api_opportunity_links.jsonl",
+        "record_count": 14,
+        "sha256": "6b2604a6f14da6c69135833014c2e6bf333e2cc5c5ce2a49bbf16d0264fd8b97"
+      },
+      "oversized": {
+        "bytes": 35063,
+        "path": "indexes/task017a_five_oversized_adjunct.jsonl",
+        "record_count": 5,
+        "sha256": "713d4e1172912cf9dc5518e34523a05690f38ce60194d23dd9cd27c0219e7c97"
+      },
+      "reviews": {
+        "bytes": 2839762,
+        "path": "indexes/task017a_all_71_architecture_reviews.jsonl",
+        "record_count": 71,
+        "sha256": "4dec09cf989b51419c6e032cb37cae4704c63fd8ad52cf6dde64d97bf4cfc850"
+      }
+    },
+    "primary_memberships_changed": 0,
+    "productization_readiness_gate": {
+      "design_authorized": false,
+      "position": "AFTER_TASK019_BEFORE_PRODUCTIZATION_DESIGN"
+    },
+    "rules_version": "task017a-all-71-architecture-review-v1",
+    "scope": "TASK017A_BOUNDED_ARCHITECTURE_REVIEW",
+    "summary": {
+      "backlog_count": 90,
+      "cross_api_link_count": 14,
+      "oversized_operation_count": 132,
+      "oversized_review_count": 5,
+      "proposal_review_count": 71,
+      "recommendation_counts": {
+        "KEEP_AS_IS_EXPOSURE_NO_LOGICAL_BOUNDARY_ASSERTION": 23,
+        "REQUIRES_TARGETED_EVIDENCE": 9,
+        "RETAIN_PROVISIONAL_COHESIVE_BOUNDARY": 5,
+        "SPLIT_INTO_EVIDENCED_SUB_BOUNDARIES": 15,
+        "TECHNICAL_OR_TEST_EXPOSURE_REVIEW": 19
+      },
+      "reviewed_member_occurrence_count": 363
+    }
+  }
+}
