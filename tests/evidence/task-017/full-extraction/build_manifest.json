@@ -1,0 +1,74 @@
+{
+  "architect_acceptance": "PENDING",
+  "evidence_files": {
+    "cache_and_tests.json": {
+      "bytes": 3844,
+      "path": "tests/evidence/task-017/full-extraction/cache_and_tests.json",
+      "sha256": "9d60c1b7d430038056a48289cd926277f45757d8e8f898139e53d942b224c131"
+    },
+    "case_regression_and_contradictions.md": {
+      "bytes": 7908,
+      "path": "tests/evidence/task-017/full-extraction/case_regression_and_contradictions.md",
+      "sha256": "a19eea683c154688d5401fea93dd1757e39088e7d0b5d937f808ed4de607dc60"
+    },
+    "case_regression_crosscheck.jsonl": {
+      "bytes": 36456,
+      "path": "tests/evidence/task-017/full-extraction/case_regression_crosscheck.jsonl",
+      "sha256": "3499003d2c28ad27ceea4ccc3279cff8dca49ebce57c4cbfa7e8784dcf74ad04"
+    },
+    "commands_and_results.txt": {
+      "bytes": 592,
+      "path": "tests/evidence/task-017/full-extraction/commands_and_results.txt",
+      "sha256": "c6620b98a94964cfff1fccb3fd2349dc3a5951f479675dca6d467d1b88d13838"
+    },
+    "estate_coverage_and_disposition.json": {
+      "bytes": 21481,
+      "path": "tests/evidence/task-017/full-extraction/estate_coverage_and_disposition.json",
+      "sha256": "c9832a8eab26c33380e37f8e357388158480969b44391b9da55988418b22c1a4"
+    },
+    "generate_full_extraction_evidence.py": {
+      "bytes": 16355,
+      "path": "tests/evidence/task-017/full-extraction/generate_full_extraction_evidence.py",
+      "sha256": "a615a2dda58d3a749ec4af999de37bc0610208f386906227da97e4486ed1876c"
+    },
+    "logical_api_formation_contract.md": {
+      "bytes": 3573,
+      "path": "tests/evidence/task-017/full-extraction/logical_api_formation_contract.md",
+      "sha256": "35cc38911e3863c30ab17e7340e7c6c7a86c85479382c662d064b9b55b01552c"
+    },
+    "review_queue_and_missing_evidence.json": {
+      "bytes": 20070,
+      "path": "tests/evidence/task-017/full-extraction/review_queue_and_missing_evidence.json",
+      "sha256": "1d3c03490eca826d6b683c2d888797ce9fe9724263290bc9043c36e7d5dc386b"
+    },
+    "reviewable_boundary_examples.jsonl": {
+      "bytes": 437968,
+      "path": "tests/evidence/task-017/full-extraction/reviewable_boundary_examples.jsonl",
+      "sha256": "94d66efba41509e5a9ef2e94fdc20198401c1efcf3a690b886aae280db63f283"
+    }
+  },
+  "generated_deterministically": true,
+  "scope": "TASK017_FULL_PROVISIONAL_LOGICAL_API_FORMATION",
+  "source_code": {
+    "logical_api/full_formation.py": {
+      "bytes": 57191,
+      "sha256": "fb8ee17349b3fd9085c2064ceec03ec8ee5fea321c4e972732a38c060688b504"
+    },
+    "logical_api/full_formation_main.py": {
+      "bytes": 277,
+      "sha256": "d0ac67f0026bbb1bef6498d3cbcbecd8f6cefcd0e9a175195beaf55fd0ba2bbf"
+    },
+    "tests/evidence/task-017/full-extraction/generate_full_extraction_evidence.py": {
+      "bytes": 16355,
+      "sha256": "a615a2dda58d3a749ec4af999de37bc0610208f386906227da97e4486ed1876c"
+    },
+    "tests/test_logical_api_full_formation.py": {
+      "bytes": 7972,
+      "sha256": "f4e75bfd4cbec0ba783d060ab4a5ea54a47658214bb824fda682633ea3369a08"
+    }
+  },
+  "technical_validation": {
+    "focused_result": "PENDING",
+    "repository_result": "PENDING"
+  }
+}

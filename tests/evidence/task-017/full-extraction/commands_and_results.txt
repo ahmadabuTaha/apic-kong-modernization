@@ -1,0 +1,17 @@
+Task 017 full logical API formation
+
+Generation:
+  .venv/bin/python -m logical_api.full_formation_main
+  Result: PASS; deterministic indexes/evidence generated from frozen Task 014-017 indexes.
+
+Focused validation:
+  .venv/bin/pytest -q tests/test_logical_api_full_formation.py tests/test_logical_api_expanded_validation.py tests/test_logical_api_mock.py
+  Result: PENDING
+
+Required repository validation:
+  .venv/bin/pytest
+  Result: PENDING
+
+Architecture decisions:
+  Evidence sufficiency is separate from technical validation.
+  Enterprise Architect acceptance: PENDING for all proposals.

@@ -1,0 +1,294 @@
+{
+  "architect_acceptance_count": 0,
+  "criterion_status_counts_across_proposals": {
+    "R1": {
+      "NOT_EVIDENCED": 66,
+      "SUPPORTED": 5
+    },
+    "R2": {
+      "CONTRADICTED": 16,
+      "NOT_EVIDENCED": 50,
+      "SUPPORTED": 5
+    },
+    "R3": {
+      "NOT_EVIDENCED": 71
+    },
+    "R4": {
+      "SUPPORTED": 71
+    },
+    "R5": {
+      "NOT_EVIDENCED": 67,
+      "SUPPORTED": 4
+    },
+    "R6": {
+      "SUPPORTED": 71
+    },
+    "R7": {
+      "SUPPORTED": 71
+    }
+  },
+  "manual_review_scope": "Prioritize bounded alternatives and failure reasons. Do not manually adjudicate all 2,414 operations or all 1,170 Task 016 pairs; unformed operations remain searchable in the full ledger.",
+  "missing_evidence": {
+    "consumer_owner_authorization_entitlement": "NOT_EVIDENCED in current accepted source evidence; Product/Plan/Subscription association is exposure context only.",
+    "domain_and_capability": "Out of scope; no assignment made.",
+    "operation_backend_semantics_and_runtime_egress": "Mostly API-shared configured candidate context; no runtime egress inference.",
+    "production_activity_release_lineage_and_feature_flags": "NOT_EVIDENCED; staging export is not production proof.",
+    "retirement_or_substitution": "Out of scope; no decision made."
+  },
+  "priority_counts": {
+    "HIGH": 36,
+    "LOW": 46,
+    "MEDIUM": 35
+  },
+  "reason_counts": {
+    "INSUFFICIENT_OR_CONTRADICTED_RESOURCE_ACTION_EVIDENCE": 35,
+    "NO_SUPPORTED_HTTP_PATHS": 5,
+    "OVERSIZED_GROUP_REQUIRES_BOUNDED_SUBFAMILY_REVIEW": 5,
+    "PARTIAL_DIRECT_COHESION_OR_CONSUMER_BACKEND_GAPS": 31,
+    "REGISTRY_ONLY_NO_OPERATIONS": 36,
+    "RESOURCE_ACTION_PATH_COHESION_SUPPORTED_BUT_ARCHITECTURE_PENDING": 5
+  },
+  "review_item_count": 117,
+  "top_prioritized_architecture_questions": [
+    {
+      "architect_acceptance": "PENDING",
+      "canonical_api_id": "apic-identity:sha256:0187d497510d1bf2bd0681b8cd6d0efba73232ad9af4bb4a72efbbf2dd9d69ca",
+      "current_api_name": "osh",
+      "evidence_sufficiency": "INSUFFICIENT",
+      "logical_api_proposal_id": null,
+      "member_count": 24,
+      "primary_failure_or_decision_reason": "OVERSIZED_GROUP_REQUIRES_BOUNDED_SUBFAMILY_REVIEW",
+      "priority": "HIGH",
+      "review_item_id": "task017-full-review-oversized:sha256:6d7905ef118c589e927e051161d0404a57519e13e594e47b52c6b3936196aeab",
+      "specific_question": "Which directly evidenced resource/workflow subfamilies, if any, should be assessed separately?"
+    },
+    {
+      "architect_acceptance": "PENDING",
+      "canonical_api_id": "apic-identity:sha256:18d3d1ad7248097e316af41cb58df16c12fc6618d86501d3b38187f516b13b34",
+      "current_api_name": "osh-apis",
+      "evidence_sufficiency": "INSUFFICIENT",
+      "logical_api_proposal_id": null,
+      "member_count": 22,
+      "primary_failure_or_decision_reason": "OVERSIZED_GROUP_REQUIRES_BOUNDED_SUBFAMILY_REVIEW",
+      "priority": "HIGH",
+      "review_item_id": "task017-full-review-oversized:sha256:7b25038ef7f06e44681ea19ec3e699a2f7cef1873848aa277633a200e1129d18",
+      "specific_question": "Which directly evidenced resource/workflow subfamilies, if any, should be assessed separately?"
+    },
+    {
+      "architect_acceptance": "PENDING",
+      "canonical_api_id": "apic-identity:sha256:b1b2c4c3addb28d26cb53998e87c2e483a191ae1fee456c676fcf82cbeb33241",
+      "current_api_name": "servicemanagement-supportcentre",
+      "evidence_sufficiency": "INSUFFICIENT",
+      "logical_api_proposal_id": null,
+      "member_count": 38,
+      "primary_failure_or_decision_reason": "OVERSIZED_GROUP_REQUIRES_BOUNDED_SUBFAMILY_REVIEW",
+      "priority": "HIGH",
+      "review_item_id": "task017-full-review-oversized:sha256:ca957f42d2afcf78b4c99998b9b017fd8f8ee765659a124d21c11903118a4a09",
+      "specific_question": "Which directly evidenced resource/workflow subfamilies, if any, should be assessed separately?"
+    },
+    {
+      "architect_acceptance": "PENDING",
+      "canonical_api_id": "apic-identity:sha256:c8c9d57f3969300f161206913431d6a98819ee4ff346e4a5c6e009fc6ab4671d",
+      "current_api_name": "user-management",
+      "evidence_sufficiency": "INSUFFICIENT",
+      "logical_api_proposal_id": null,
+      "member_count": 24,
+      "primary_failure_or_decision_reason": "OVERSIZED_GROUP_REQUIRES_BOUNDED_SUBFAMILY_REVIEW",
+      "priority": "HIGH",
+      "review_item_id": "task017-full-review-oversized:sha256:4d3e949a68ea63daeab0dbfbdbca039fe1496511029e4f504e1c909ddb1b05be",
+      "specific_question": "Which directly evidenced resource/workflow subfamilies, if any, should be assessed separately?"
+    },
+    {
+      "architect_acceptance": "PENDING",
+      "canonical_api_id": "apic-identity:sha256:95de85c66a2fe6a9cc05783ebcede97cece9f799ea3cbe3a9edf48c930eb622e",
+      "current_api_name": "user-management-privilege",
+      "evidence_sufficiency": "INSUFFICIENT",
+      "logical_api_proposal_id": null,
+      "member_count": 24,
+      "primary_failure_or_decision_reason": "OVERSIZED_GROUP_REQUIRES_BOUNDED_SUBFAMILY_REVIEW",
+      "priority": "HIGH",
+      "review_item_id": "task017-full-review-oversized:sha256:2874dbea14efbe4b56db74e68086b10efc170c79b937a97959c5bba250a53c32",
+      "specific_question": "Which directly evidenced resource/workflow subfamilies, if any, should be assessed separately?"
+    },
+    {
+      "architect_acceptance": "PENDING",
+      "canonical_api_id": "apic-identity:sha256:6c7783a04e81e3cb2b11e7986018af8a7dc804cd626a2cf2879a5af921aa6ddf",
+      "current_api_name": "accessmanagement-supportcenter",
+      "evidence_sufficiency": "PARTIAL",
+      "logical_api_proposal_id": "logical-api-boundary-proposal:sha256:9505ddd1602c0c3da001463876542fcba42d9bea56d9adb71184b37d0f771d07",
+      "member_count": 7,
+      "primary_failure_or_decision_reason": "PARTIAL_DIRECT_COHESION_OR_CONSUMER_BACKEND_GAPS",
+      "priority": "HIGH",
+      "review_item_id": "task017-full-review:sha256:69ba1bd74e3df804a7ef55cb9e3674980239dd81c47ac34f915184bf1354d8d5",
+      "specific_question": "The same canonical API is not proof of one business boundary; retain separate operation intents, contract variants, and exposure context. Alternative: Keep each source operation as a separate conceptual boundary until lifecycle, ownership, or consumer evidence supports a cohesive grouping."
+    },
+    {
+      "architect_acceptance": "PENDING",
+      "canonical_api_id": "apic-identity:sha256:3d4ca17f0a9ef1fd790fa0f40e2b0969d7508f74f095d31ca2fefa7f899fe629",
+      "current_api_name": "adminmanagement-supportcentre",
+      "evidence_sufficiency": "PARTIAL",
+      "logical_api_proposal_id": "logical-api-boundary-proposal:sha256:d7b1f2f44d227a7323055bad6578d2be08bc3c67c7ea93ff4cf40924ff768761",
+      "member_count": 8,
+      "primary_failure_or_decision_reason": "PARTIAL_DIRECT_COHESION_OR_CONSUMER_BACKEND_GAPS",
+      "priority": "HIGH",
+      "review_item_id": "task017-full-review:sha256:6f049943dbc90a7fea0577b3d50986a10afc451693d203312be960850a333ebc",
+      "specific_question": "The same canonical API is not proof of one business boundary; retain separate operation intents, contract variants, and exposure context. Alternative: Keep each source operation as a separate conceptual boundary until lifecycle, ownership, or consumer evidence supports a cohesive grouping."
+    },
+    {
+      "architect_acceptance": "PENDING",
+      "canonical_api_id": "apic-identity:sha256:c265a4fb25b5c37c1dbd76a0d96ad8357354e04c8403c3ddf15512f4d266a3c0",
+      "current_api_name": "ajeer-bulk-contracts",
+      "evidence_sufficiency": "PARTIAL",
+      "logical_api_proposal_id": "logical-api-boundary-proposal:sha256:4ec7e106c3f62fead62d407e74bad12fe6bef44252580a7def05c0dd7b32bbc8",
+      "member_count": 4,
+      "primary_failure_or_decision_reason": "PARTIAL_DIRECT_COHESION_OR_CONSUMER_BACKEND_GAPS",
+      "priority": "HIGH",
+      "review_item_id": "task017-full-review:sha256:ae5d8f50d27f5511b4fd796a637b8e144ce95c74800c4d819a30e481ce780f74",
+      "specific_question": "The same canonical API is not proof of one business boundary; retain separate operation intents, contract variants, and exposure context. Alternative: Keep each source operation as a separate conceptual boundary until lifecycle, ownership, or consumer evidence supports a cohesive grouping."
+    },
+    {
+      "architect_acceptance": "PENDING",
+      "canonical_api_id": "apic-identity:sha256:b3d31a9183e687cea94b6b165501b1135e442ed207a9edbf1573b4228d54044a",
+      "current_api_name": "ajeer-bulk-notices",
+      "evidence_sufficiency": "PARTIAL",
+      "logical_api_proposal_id": "logical-api-boundary-proposal:sha256:ca847e6f98b275ad6d3dee8a363eac3be74fb8d12d3e3f8f7c05eb38a8d63570",
+      "member_count": 2,
+      "primary_failure_or_decision_reason": "PARTIAL_DIRECT_COHESION_OR_CONSUMER_BACKEND_GAPS",
+      "priority": "HIGH",
+      "review_item_id": "task017-full-review:sha256:2221286d82d92fd4bdacb6d190bbc36afc1a4da922b008522b5df62eeb7d1734",
+      "specific_question": "The same canonical API is not proof of one business boundary; retain separate operation intents, contract variants, and exposure context. Alternative: Keep each source operation as a separate conceptual boundary until lifecycle, ownership, or consumer evidence supports a cohesive grouping."
+    },
+    {
+      "architect_acceptance": "PENDING",
+      "canonical_api_id": "apic-identity:sha256:017478fab81a82325beec890d7dd327137c508e8bad47d35a22403b9d7449c30",
+      "current_api_name": "ajeer-bulk-payments",
+      "evidence_sufficiency": "PARTIAL",
+      "logical_api_proposal_id": "logical-api-boundary-proposal:sha256:ae040119b8cf8c71567871f03f38e26542169a88ab9fb61affc38eaa44ff73a4",
+      "member_count": 5,
+      "primary_failure_or_decision_reason": "PARTIAL_DIRECT_COHESION_OR_CONSUMER_BACKEND_GAPS",
+      "priority": "HIGH",
+      "review_item_id": "task017-full-review:sha256:0670c05c99c154d0ab86a2e91ff1343d7ce7ddc9947a620313d28727c2b39416",
+      "specific_question": "The same canonical API is not proof of one business boundary; retain separate operation intents, contract variants, and exposure context. Alternative: Keep each source operation as a separate conceptual boundary until lifecycle, ownership, or consumer evidence supports a cohesive grouping."
+    },
+    {
+      "architect_acceptance": "PENDING",
+      "canonical_api_id": "apic-identity:sha256:d4df6b025dba7587a525904e2572b942dec577c2ae0cf5f9651d50f1b6639aea",
+      "current_api_name": "ajeervisaservice",
+      "evidence_sufficiency": "PARTIAL",
+      "logical_api_proposal_id": "logical-api-boundary-proposal:sha256:ebdfbfc2c873db4960ae6c4919ad781123b460deaa717ac133ee19f346f95879",
+      "member_count": 4,
+      "primary_failure_or_decision_reason": "PARTIAL_DIRECT_COHESION_OR_CONSUMER_BACKEND_GAPS",
+      "priority": "HIGH",
+      "review_item_id": "task017-full-review:sha256:f193298f305897e5f6e0793a6f8e66f572c761239fe2612b8d0b5851d9d32a26",
+      "specific_question": "The same canonical API is not proof of one business boundary; retain separate operation intents, contract variants, and exposure context. Alternative: Keep each source operation as a separate conceptual boundary until lifecycle, ownership, or consumer evidence supports a cohesive grouping."
+    },
+    {
+      "architect_acceptance": "PENDING",
+      "canonical_api_id": "apic-identity:sha256:dd4f6d0e939f2873d7462c01dd1e1c27230fee613246a76ffd04590bb4f2f21b",
+      "current_api_name": "async-data-history",
+      "evidence_sufficiency": "PARTIAL",
+      "logical_api_proposal_id": "logical-api-boundary-proposal:sha256:edac763ed8e83ca38b668ab619fcb9b1bbe74d51c09fbf33047e73799c78bbf0",
+      "member_count": 2,
+      "primary_failure_or_decision_reason": "PARTIAL_DIRECT_COHESION_OR_CONSUMER_BACKEND_GAPS",
+      "priority": "HIGH",
+      "review_item_id": "task017-full-review:sha256:b4d05b55b6b44e3d57bb42fc41a4cc5e1baae6f9eda265dcfb91a6a9fbd611df",
+      "specific_question": "The same canonical API is not proof of one business boundary; retain separate operation intents, contract variants, and exposure context. Alternative: Keep each source operation as a separate conceptual boundary until lifecycle, ownership, or consumer evidence supports a cohesive grouping."
+    },
+    {
+      "architect_acceptance": "PENDING",
+      "canonical_api_id": "apic-identity:sha256:bd50b04431b84e915304659a98df03b71e4058f36f688f0009975bd20f3463f8",
+      "current_api_name": "cachemanagement-supportcentre",
+      "evidence_sufficiency": "PARTIAL",
+      "logical_api_proposal_id": "logical-api-boundary-proposal:sha256:9aefeecce4d8209d97b1e44994dc038e2d8f78621cbead9320e7efdaf90362e1",
+      "member_count": 2,
+      "primary_failure_or_decision_reason": "PARTIAL_DIRECT_COHESION_OR_CONSUMER_BACKEND_GAPS",
+      "priority": "HIGH",
+      "review_item_id": "task017-full-review:sha256:b5a07aac37272cec51acb8e30ec0b18cbfc4b151d0d5c5833114c7a1d7bf04a2",
+      "specific_question": "The same canonical API is not proof of one business boundary; retain separate operation intents, contract variants, and exposure context. Alternative: Keep each source operation as a separate conceptual boundary until lifecycle, ownership, or consumer evidence supports a cohesive grouping."
+    },
+    {
+      "architect_acceptance": "PENDING",
+      "canonical_api_id": "apic-identity:sha256:cc4277f072b60ced937ba8d4fd6ce31c964e48c633526a83c4f8b57c8f1f7861",
+      "current_api_name": "donation-widget",
+      "evidence_sufficiency": "PARTIAL",
+      "logical_api_proposal_id": "logical-api-boundary-proposal:sha256:88ab8ca4f54edf8e7087c5525f297e8fa3895b77cd62b0c6902f998b9e4d7d94",
+      "member_count": 3,
+      "primary_failure_or_decision_reason": "PARTIAL_DIRECT_COHESION_OR_CONSUMER_BACKEND_GAPS",
+      "priority": "HIGH",
+      "review_item_id": "task017-full-review:sha256:fc33c67c3fc70727e1af639f5be26e235b83f61f236768ac1bfc58e261373794",
+      "specific_question": "The same canonical API is not proof of one business boundary; retain separate operation intents, contract variants, and exposure context. Alternative: Keep each source operation as a separate conceptual boundary until lifecycle, ownership, or consumer evidence supports a cohesive grouping."
+    },
+    {
+      "architect_acceptance": "PENDING",
+      "canonical_api_id": "apic-identity:sha256:8ed6ca6e414e73d8e9493a6225eab4df1c3d33f525ea7b1a620b951507c49ec8",
+      "current_api_name": "ethaq-employeecontractinformation",
+      "evidence_sufficiency": "PARTIAL",
+      "logical_api_proposal_id": "logical-api-boundary-proposal:sha256:ad397d8ba61ba100f0f2df366b1decd97de3e75c9ed8cdde4fad30489eb388d0",
+      "member_count": 2,
+      "primary_failure_or_decision_reason": "PARTIAL_DIRECT_COHESION_OR_CONSUMER_BACKEND_GAPS",
+      "priority": "HIGH",
+      "review_item_id": "task017-full-review:sha256:77f8138d328f154e372128e21101dfe47b0295ec387940672fd5f0fc6727a58f",
+      "specific_question": "The same canonical API is not proof of one business boundary; retain separate operation intents, contract variants, and exposure context. Alternative: Keep each source operation as a separate conceptual boundary until lifecycle, ownership, or consumer evidence supports a cohesive grouping."
+    },
+    {
+      "architect_acceptance": "PENDING",
+      "canonical_api_id": "apic-identity:sha256:0984d7bde400ddc7dc74ab8410eb9ea06dd90585ce4863b8ed0d462a840b6391",
+      "current_api_name": "getlookups",
+      "evidence_sufficiency": "PARTIAL",
+      "logical_api_proposal_id": "logical-api-boundary-proposal:sha256:0106e7c9e66e72c84c9578b38f2282a4e4f6f643f766e7ba57d3035454d9cf12",
+      "member_count": 10,
+      "primary_failure_or_decision_reason": "PARTIAL_DIRECT_COHESION_OR_CONSUMER_BACKEND_GAPS",
+      "priority": "HIGH",
+      "review_item_id": "task017-full-review:sha256:9d6ab91f822f924fc8608dce7630f56bb92efb843efa5a7b51297b41c47e4cc0",
+      "specific_question": "The same canonical API is not proof of one business boundary; retain separate operation intents, contract variants, and exposure context. Alternative: Keep each source operation as a separate conceptual boundary until lifecycle, ownership, or consumer evidence supports a cohesive grouping."
+    },
+    {
+      "architect_acceptance": "PENDING",
+      "canonical_api_id": "apic-identity:sha256:c814c67215c7fe58ef2dad148dad0e103164bfb44e2a91e64cbaaa2ac7af6048",
+      "current_api_name": "graphql_poc",
+      "evidence_sufficiency": "PARTIAL",
+      "logical_api_proposal_id": "logical-api-boundary-proposal:sha256:003cf2ee1300e6bc50c14e0680ed3c3e7cd5df5c08c7e569f4d46e01e5b11f18",
+      "member_count": 2,
+      "primary_failure_or_decision_reason": "PARTIAL_DIRECT_COHESION_OR_CONSUMER_BACKEND_GAPS",
+      "priority": "HIGH",
+      "review_item_id": "task017-full-review:sha256:39427327d8625261d8ef2f9c07500d53ebab050c795c2a23f8ba81e377732b28",
+      "specific_question": "The same canonical API is not proof of one business boundary; retain separate operation intents, contract variants, and exposure context. Alternative: Keep each source operation as a separate conceptual boundary until lifecycle, ownership, or consumer evidence supports a cohesive grouping."
+    },
+    {
+      "architect_acceptance": "PENDING",
+      "canonical_api_id": "apic-identity:sha256:ee820e0c12118ab9212b629204d94a01237e957368e25d0842ee5a6e8f294848",
+      "current_api_name": "kyan-user-validation",
+      "evidence_sufficiency": "PARTIAL",
+      "logical_api_proposal_id": "logical-api-boundary-proposal:sha256:4b49c7df6eed5b1ac5eb264f0266192a29b5d11d81f87ec1058a595a5d96d16b",
+      "member_count": 3,
+      "primary_failure_or_decision_reason": "PARTIAL_DIRECT_COHESION_OR_CONSUMER_BACKEND_GAPS",
+      "priority": "HIGH",
+      "review_item_id": "task017-full-review:sha256:1827ef4a99ea0c5275565dbe9f33a1669d6f077e4c32098b6e5995581f8a0205",
+      "specific_question": "The same canonical API is not proof of one business boundary; retain separate operation intents, contract variants, and exposure context. Alternative: Keep each source operation as a separate conceptual boundary until lifecycle, ownership, or consumer evidence supports a cohesive grouping."
+    },
+    {
+      "architect_acceptance": "PENDING",
+      "canonical_api_id": "apic-identity:sha256:da5e7e4828f9924c5a7af45cd8843892434ae33560e8d770e9371ec7a33a4c59",
+      "current_api_name": "mci-rest-services",
+      "evidence_sufficiency": "PARTIAL",
+      "logical_api_proposal_id": "logical-api-boundary-proposal:sha256:4276e14d57cdda140925347774a0d9ee08ed8075ae8671888ba69ddcaf403202",
+      "member_count": 2,
+      "primary_failure_or_decision_reason": "PARTIAL_DIRECT_COHESION_OR_CONSUMER_BACKEND_GAPS",
+      "priority": "HIGH",
+      "review_item_id": "task017-full-review:sha256:130f1e497fb129f090b0425592852c481d20c6694d95394e5954a13d488e0622",
+      "specific_question": "The same canonical API is not proof of one business boundary; retain separate operation intents, contract variants, and exposure context. Alternative: Keep each source operation as a separate conceptual boundary until lifecycle, ownership, or consumer evidence supports a cohesive grouping."
+    },
+    {
+      "architect_acceptance": "PENDING",
+      "canonical_api_id": "apic-identity:sha256:05bf23849ebe7b8074bcf0a72936a63c44b98f41f1bf211aea683a6cc8320694",
+      "current_api_name": "mcs-rest-services",
+      "evidence_sufficiency": "PARTIAL",
+      "logical_api_proposal_id": "logical-api-boundary-proposal:sha256:031efdf88d5d623541fcec8cc151ac4f6ef9dc0b3c6f08f4c904c225b29b0e18",
+      "member_count": 3,
+      "primary_failure_or_decision_reason": "PARTIAL_DIRECT_COHESION_OR_CONSUMER_BACKEND_GAPS",
+      "priority": "HIGH",
+      "review_item_id": "task017-full-review:sha256:c0a3cda1e8157bf13f3c6d00e0c909afa27f51931c32ba4ec2572be888306ca6",
+      "specific_question": "The same canonical API is not proof of one business boundary; retain separate operation intents, contract variants, and exposure context. Alternative: Keep each source operation as a separate conceptual boundary until lifecycle, ownership, or consumer evidence supports a cohesive grouping."
+    }
+  ]
+}

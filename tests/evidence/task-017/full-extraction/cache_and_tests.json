@@ -1,0 +1,92 @@
+{
+  "cache_validation": {
+    "all_pairs_search_performed": false,
+    "frozen_input_fingerprints": {
+      "apis": {
+        "bytes": 10659709,
+        "path": "indexes/semantic_api_inventory.jsonl",
+        "sha256": "c06810d9079abdd382b48b4f49617431f57d390395b81a4cd07aa0244dafed1a"
+      },
+      "backend_resolution": {
+        "bytes": 4842349,
+        "path": "indexes/backend_target_resolution.jsonl",
+        "sha256": "6b21000cd1df943214bd96eccbb9b9a5ed3d3d2c8b55acf576237ac5e2ebee33"
+      },
+      "codegraph_dependency_edges": {
+        "bytes": 5907436,
+        "path": "indexes/codegraph_dependency_edges.jsonl",
+        "sha256": "95cb2d9446b89b703d65d85a7e387e46614997903b39fbb822ee0347fc988867"
+      },
+      "implementation": {
+        "bytes": 57191,
+        "path": "logical_api/full_formation.py",
+        "sha256": "fb8ee17349b3fd9085c2064ceec03ec8ee5fea321c4e972732a38c060688b504"
+      },
+      "observed_functions": {
+        "bytes": 16895146,
+        "path": "indexes/observed_function_inventory.jsonl",
+        "sha256": "36e1ccaed8fa9513dcbefeaea592d5b3dc478ae729840ec88f0ad2593c04990e"
+      },
+      "operations": {
+        "bytes": 12460714,
+        "path": "indexes/semantic_operation_inventory.jsonl",
+        "sha256": "1c603cd6867f3a2d12f950c319e7ab29b2d2111604ff8bcfe6c0ad4dda2bf3bc"
+      },
+      "relationships": {
+        "bytes": 14850576,
+        "path": "indexes/relationship_index.jsonl",
+        "sha256": "d9fdc2e5cd61510335af572e03c21b27128d39cb9007104be774e24e3d3a8a0a"
+      },
+      "task015_api_gaps": {
+        "bytes": 26169,
+        "path": "indexes/task015_api_level_gap_records.jsonl",
+        "sha256": "834be83979ad4d67e3382799ff6b409636e6bfd3f7e8b90950b1627377d48eec"
+      },
+      "task016_comparisons": {
+        "bytes": 21927741,
+        "path": "indexes/task016_full_candidate_pairs.jsonl",
+        "sha256": "d753103622439597efc231adf85ee115870f0ca76d432213dd062bc5b6a2b00c"
+      },
+      "task016_manifest": {
+        "bytes": 3361,
+        "path": "indexes/task016_full_manifest.json",
+        "sha256": "0aabc77f898ad0d59b04cceb38280ceeb42b76afdc974af629cc26db17fbac61"
+      },
+      "task016_operation_catalog": {
+        "bytes": 2185373,
+        "path": "indexes/task016_full_operation_catalog.jsonl",
+        "sha256": "472b9e3ca65157d6cc28dc326ec9721fa5c23938da005df31f2161af3228759e"
+      },
+      "task016_refinements": {
+        "bytes": 8086704,
+        "path": "indexes/task016_semantic_refinement_pairs.jsonl",
+        "sha256": "70108ef6eb3e395e1557870e62d1ff5738f2a14f378eec9946d0878c76607135"
+      },
+      "task017_expanded_manifest": {
+        "bytes": 2844,
+        "path": "indexes/task017_expanded_validation_manifest.json",
+        "sha256": "d92e090c1bb9b0931456d6e77b7c9a18ebe892cddb024229772b52bdc93f9b8e"
+      },
+      "task017_expanded_register": {
+        "bytes": 692465,
+        "path": "indexes/task017_expanded_validation_register.jsonl",
+        "sha256": "9db3ac73bfd88e0ff0ea0a8eb97115a5c2398384424a68083e36a99832591103"
+      }
+    },
+    "frozen_inputs_modified": false,
+    "staging_read": false,
+    "task016_candidate_pair_sha256_verified_against_manifest": true,
+    "task017_expanded_register_sha256_verified_against_manifest": true
+  },
+  "result_axes": {
+    "architect_acceptance": "PENDING",
+    "technical_validation": "SEE_COMMAND_RESULTS"
+  },
+  "test_runs": {
+    "focused_command": ".venv/bin/pytest -q tests/test_logical_api_full_formation.py tests/test_logical_api_expanded_validation.py tests/test_logical_api_mock.py",
+    "focused_result": "PENDING",
+    "known_baseline": "Five Phase 0 fixture setup errors are documented historical failures caused by missing tests/fixtures/repository_profile/staging; do not reopen frozen Phase 0.",
+    "repository_command": "pytest",
+    "repository_result": "PENDING"
+  }
+}

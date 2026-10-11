@@ -1,6 +1,42 @@
 # Codex Handoff
 
-## Task executed
+## Current execution — Phase 5, Task 017 FULL
+
+### Execution summary
+
+- Pulled `origin/main` by fast-forward (`06c20f1` to `970710e`) before rereading the active-task index. Executed only the newly authorized Task 017 full-estate provisional formation.
+- Reused frozen Task 014–016 indexes, Task 017 mock/46-case expanded sample, accepted relationship index, backend resolution, and CodeGraph. No raw `staging/` artifacts were read or modified; frozen inputs matched their recorded hashes.
+- Added a deterministic index-first formation pass. It reconciles the full accepted operation inventory, emits one primary disposition per source operation, keeps cross-API Task 016 comparisons as alternatives, limits current-API proposal groups to 10 members, and records skipped oversized groups rather than clustering them.
+- Preserved source API/operation IDs, source fingerprints and pointers, Task 016 candidate/refinement references, contract/security/version details, and Product/Plan/Subscription exposure relations. Exposure does not imply ownership, consumers, entitlements, calls, or production deployment.
+- Created 71 within-canonical-API proposals. No cross-API logical boundary, functional duplicate, retirement, Domain, Capability, Kong design, or production-use assertion was made. Architect acceptance remains `PENDING` for every proposal.
+
+### Full coverage and outcome distribution
+
+- Task 014 operation coverage: **2,414 / 2,414**, unique IDs; Task 015: **2,414 / 2,414** one-to-one; Task 016 unpaired: **1,481 / 1,481 retained**.
+- Canonical API inventory: **2,036**.
+- Proposal groups: **5 sufficient for provisional formation** (13 operations), **31 partial** (145 operations), and **35 insufficient** (205 candidate operations). None is architect-approved.
+- Primary operation dispositions: **13 provisional boundary members**, **145 partial boundary members**, **205 operations in insufficient proposals**, **132 operations held unformed because five oversized API groups exceeded the cap**, and **1,919 singleton operations left visible/unformed**. Total: 2,414.
+- API-level gaps are separate from HTTP-operation coverage: **36 registry-only/no-operation**, **5 source-backed/no-supported-HTTP-path**, and **3 unsupported-protocol records** (which retain their 7 accepted HTTP operations in the operation ledger). No operations were fabricated.
+- Task 017 expanded sample: all **46 cases** cross-checked; **5 comparable cases unchanged** (including Visa, Special Permit, Runaway Request); **41 cross-API/no-proposal cases remain preserved but not reassessed as primary membership**; **0 silent status changes**.
+- SC Request remains `PARTIAL`: exactly two source operations and three action intents (approve/reject/cancel), with Unified Actions versus split Decision/Cancellation alternatives and no cross-API primary group.
+- Clear negative controls remain unformed, including generic URI wrappers and cases where shared schemas, backend candidates, Products, or names are the only overlap. Distinct actions, contracts, and versions remain separate.
+
+### Evidence and outputs
+
+- Ignored full indexes: `indexes/task017_full_operation_disposition.jsonl` (2,414 rows), `task017_full_logical_api_proposals.jsonl` (71), `task017_full_logical_operation_intents.jsonl` (2,667), `task017_full_review_queue.jsonl` (117), `task017_full_formation_diagnostics.jsonl` (7), and `task017_full_manifest.json`.
+- Committed reviewer evidence: `tests/evidence/task-017/full-extraction/` contains the formation contract, complete coverage/disposition JSON, 50 reviewable examples (all 46 sample cases plus four full-estate examples), 46-case regression cross-check and narrative, prioritized missing-evidence review queue, input/cache fingerprints, commands/test results, generator, and build manifest.
+- Five sufficient proposals: Visa Resource Lifecycle, Special Permit Resource Lifecycle, Runaway Request Workflow, Saudi certificate submission family, and objection-request family. These are provisional only; consumer/ownership and backend-runtime semantics remain unknown.
+- The catalog is **conditionally fit as provisional input to Task 018 only after Enterprise Architect review**. This is not authorization to start Task 018; STOP is in effect.
+
+### Tests, unresolved issues, and status
+
+- Focused Task 017 + prior mock/expanded regressions: **23 passed**.
+- Required repository `pytest`: **107 passed, 5 setup errors, 0 assertion failures**. All five are the known frozen Phase 0 fixture issue: missing `tests/fixtures/repository_profile/staging`. This task did not reopen or alter Phase 0.
+- Frozen Task 016 comparison, Task 017 expanded-register, and relationship-index hashes were verified; generated outputs are deterministic and redaction checks passed.
+- Remaining architecture evidence gaps: R3 consumer/owner/authorization/entitlement intent, R5 operation backend semantics/runtime egress, production/release/feature-flag evidence, and the five capped groups. These remain explicit, not inferred.
+- Final status: **TECHNICAL PASS FOR TASK 017; ARCHITECTURAL ACCEPTANCE PENDING**. Commit and push this execution, then STOP for Integration Architect / Enterprise Architect review. Do not start Tasks 018/019 or rationalization/Kong work.
+
+## Previous Task 017 expanded-sample handoff (historical baseline)
 
 Phase 5 — Task 017: Expanded Logical API Boundary Validation Sample.
 
