@@ -1,28 +1,26 @@
 # CURRENT TASKS
 
-## Frozen / completed baseline
-- Phases 0–4: PASS / FROZEN.
-- Task 014: PASS / FROZEN — 2,036 canonical APIs / 2,414 accepted HTTP operations.
-- Task 015: ACCEPTED / FROZEN as provisional Observed Function evidence.
-- Task 016: ACCEPTED / FROZEN as provisional functional candidate-discovery / false-positive controls (1,170 comparison pairs; 1,481 unpaired operations remain visible), NOT approved duplicates.
-- Task 017 Mock (10 cases) + Expanded Sample (46 total cases): methodology/evidence checkpoints preserved as produced; no architecture approvals.
-- Task 017 FULL: **TECHNICAL EXECUTION COMPLETE / ARCHITECTURAL ACCEPTANCE PENDING** (latest HANSOFF). Reconciled 2,414/2,414 operation ledger; 71 within-canonical-API proposals: 5 SUFFICIENT_FOR_PROVISIONAL (13 operations), 31 PARTIAL (145), 35 INSUFFICIENT (205). Five oversized current-API groups (132 operations) are separate, plus 1,919 singleton/unformed. 46-case cross-check maintained. No cross-API primary boundary formed. 107 tests passed with five known frozen Phase 0 fixture setup errors. No proposed Logical API or API Product approved.
-- Do NOT reopen or overwrite these baselines absent reproducible defect. STAGING/sandbox cannot establish production runtime usage, live subscribers, lifecycle/ownership, release lineage or retirement safety.
+## Accepted checkpoints and constraints
+- Phases 0–4 PASS/FROZEN; Task 014 2,036 canonical APIs and 2,414 accepted HTTP operations.
+- Task 015 accepted/frozen provisionally for observed-function signals; Task 016 accepted/frozen for 1,170 candidate comparisons / 1,481 unpaired operations, never approved duplicates.
+- Task 017 mock + 46-case expanded validation preserved. Task 017 FULL technically complete: full operation ledger, 71 within-canonical-API logical boundary proposals; no cross-API primary logical membership.
+- Task 017A **TECHNICALLY COMPLETE; EA ACCEPTED AS PROVISIONAL ASSESSMENT INPUT TO NEXT PHASE, NOT AS APPROVAL OF ANY BUSINESS BOUNDARY.** All 71 reviewed: 5 retain provisional, 15 split-candidate, 23 keep AS-IS exposure, 9 require evidence, 19 technical/test exposure review; plus five oversized reviews/132 ops, 14 bounded cross-API links, 90-item Productization Decision Backlog. All individual architecture approvals remain PENDING. Full operation coverage 2,414/2,414 intact.
+- Source is STAGING/sandbox, not proof of production activity, release lineage, consumer/owner intent, actual runtime egress, or retirement. Preserve frozen evidence, source provenance and original IDs.
 
 ## ACTIVE TASK
 **Phase:** 5 — Semantic & Business Mapping
-**Task:** 017A — Architecture Review of 71 Logical API Proposals / Productization Continuity Gate
-**Status:** READY_FOR_CODEX_ARCHITECTURE_REVIEW
-**Execute prompt:** `codex/comm/prompts/phase-5-017a-71-proposal-architecture-review.md`
+**Task:** 018A — Business Domain Discovery Validation (ENTERPRISE-aligned)
+**Status:** READY_FOR_CODEX_DOMAIN_VALIDATION_SAMPLE
+**Execute:** `codex/comm/prompts/phase-5-018a-business-domain-discovery-validation.md`
 
-## Enterprise Architect instruction and authorization
-Before Task 018, examine **ALL existing 71 proposals** as a bounded evidence-led review. Do NOT regenerate the full Task 017 estate or manually approve the proposals. Inspect concrete operations, positive/negative resource/action/workflow cohesion, alternative split/keep-unformed decisions, and implications for later API Productization using R1–R7. The goal is to avoid carrying an unexamined formation gap into the Productization stage without forcing unwarranted conclusions.
+## EA instruction
+Run a **40–60-case deterministic operation-centered discovery validation sample only**, not full Task 018 or Task 019. Reuse accepted indexes. Probe real enterprise domain/subdomain responsibility boundaries and umbrella-vs-domain ambiguity, with explicit Business Object / Process / State / Capability / Event evidence slots; do not fabricate unavailable dimensions. Candidate taxonomy is derived from the APIC evidence and is NOT an enterprise-approved taxonomy.
 
-Require exactly 71 source-stable proposal reviews, meaningful case-by-case human-readable evidence, 12–18 focused case deep dives, and a separate bounded review of the five oversized APIs covering 132 operations. Preserve 2,414 source operation coverage and original provisional verdicts. Review bounded relevant cross-API opportunity LINKS without automated cross-API group creation. Output Productization Decision Backlog and explicitly reserve a Productization Readiness Gate **after Task 019 and before any TO-BE Products / Plans / Subscriptions / Monetization design**. Domain/Capability work can enrich future grouping but cannot prove operational usage/ownership.
+Long-term architecture goal is one Domain-Centric vocabulary usable across Applications, Integration/APIs, Data and Events; broad umbrella categories must not force fine-grained domain decisions. **Enterprise Domain Alignment** must be independently reviewed by the EA at the Task018A decision gate. Keep cross-layer business model comparisons as open questions where evidence from other systems is not supplied; no fabricated enterprise approval.
 
-Technical PASS, evidence sufficiency and EA Architecture Acceptance are separate. All architect decisions remain PENDING. No Product mapped or created, no approved duplicates/retirements. Index-first, deterministic, low-token; reuse existing Task 014–017 evidence and provenance, no all-pairs, no new broad crawls. No domain/capability assignments, no Kong design, no ungrounded production claims.
+Sample includes 017A 71-proposal cases, 5 oversized groups, 14 links, SC Request, positive/negative controls, technical utilities and contradictory descriptions. Classify by Task 014 HTTP **operation**, never whole canonical API by inherited name; derive sample-only API Domain Footprint and preserve all unresolved alternatives. Enrich but DO NOT change the 90-item Productization Decision Backlog, Logical API member identities or older task findings. Domain similarity cannot prove functional equivalence or one Logical API Product.
 
-## STOP
-Generate committed compact artifacts under `tests/evidence/task-017/architecture-review-71/`, full ignored indexes as needed. Run tests, update `codex/comm/HANSOFF.md`, commit/push, STOP for Integration Architect / EA review **before Task 018**. Do not start Tasks 018–019 or Productization.
+## Deliverables and mandatory STOP
+Produce committed evidence under `tests/evidence/task-018/domain-validation/` as specified in prompt, run focused and repo tests, update `codex/comm/HANSOFF.md`, commit/push and STOP for EA review. **No Task018B full estate**, Task019, domain approvals, Kong topology or Productization decisions without explicit architect decision.
 
 Codex discovers -> Integration Architect validates -> Enterprise Architect decides.
