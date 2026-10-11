@@ -1,0 +1,160 @@
+{
+  "artifacts": {
+    "api_domain_footprint_sample.jsonl": {
+      "bytes": 56876,
+      "sha256": "a66c18b41697420ba54b64c0ba8ea81e029a120ca4a334ac7f3df025b365c61a"
+    },
+    "candidate_enterprise_domain_taxonomy.json": {
+      "bytes": 20477,
+      "sha256": "8df4313ec8ba9f2e1722dc386c3136d261488628cf1181e1330396bffc9a3508"
+    },
+    "commands_and_results.txt": {
+      "bytes": 1056,
+      "sha256": "69b625a9e83efef106dac13a167ec96b3288f60a225d73b6b34556bf98632b6c"
+    },
+    "domain_discovery_method_and_guardrails.md": {
+      "bytes": 3154,
+      "sha256": "1e4e627ae650bd06928ccfe094d4b49f770e35a80eb78f6f30fcfa81c5117f4c"
+    },
+    "enterprise_domain_alignment_decision_gate.md": {
+      "bytes": 2684,
+      "sha256": "a27e3d54f85366376dbda9579346221d1d0e6f88a53a01cd489d78bfa11dbe7c"
+    },
+    "executive_sample_review.md": {
+      "bytes": 57478,
+      "sha256": "89b8b1704dd9662b211909c87a5685b689f82097d9f4f2f6e246ecb026b033a5"
+    },
+    "sample_coverage_and_gaps.json": {
+      "bytes": 3946,
+      "sha256": "2c0d1ad5d7e280621d568c80dfa0d6e6e4505e673bf8cf82a567196054310173"
+    },
+    "sampled_operation_domain_cases.jsonl": {
+      "bytes": 439119,
+      "sha256": "e9a920dfb4d550b2ab5e0f9813e1c261a1f7298c239e57fde3f2521725f9fd30"
+    },
+    "task017a_domain_enrichment_links.jsonl": {
+      "bytes": 101825,
+      "sha256": "2f0ad5055abbfa3072ffe34c0530df746e2bf37f3c89e7447e040aa3330cdc57"
+    }
+  },
+  "enterprise_alignment_gate": "ENTERPRISE_DOMAIN_ALIGNMENT_REVIEW_BEFORE_TASK018B",
+  "enterprise_architect_acceptance": "PENDING",
+  "generator": "generate_domain_validation_evidence.py",
+  "rules_version": "task018a-operation-domain-validation-v1",
+  "scope": "TASK018A_BOUNDED_OPERATION_DOMAIN_VALIDATION",
+  "source_manifest": {
+    "all_pairs_search_performed": false,
+    "enterprise_alignment_gate": {
+      "architect_acceptance": "PENDING",
+      "position": "ENTERPRISE_DOMAIN_ALIGNMENT_REVIEW_BEFORE_TASK018B"
+    },
+    "full_task018_performed": false,
+    "inputs": {
+      "implementation": {
+        "bytes": 33410,
+        "path": "business_domain/domain_validation.py",
+        "sha256": "0942f50e748a79c1da4f78cad4c60f50d3b133602d155a94924daf56b5c78717"
+      },
+      "observed_functions": {
+        "bytes": 16895146,
+        "path": "indexes/observed_function_inventory.jsonl",
+        "sha256": "36e1ccaed8fa9513dcbefeaea592d5b3dc478ae729840ec88f0ad2593c04990e"
+      },
+      "semantic_operations": {
+        "bytes": 12460714,
+        "path": "indexes/semantic_operation_inventory.jsonl",
+        "sha256": "1c603cd6867f3a2d12f950c319e7ab29b2d2111604ff8bcfe6c0ad4dda2bf3bc"
+      },
+      "task017_expanded": {
+        "bytes": 692465,
+        "path": "tests/evidence/task-017/expanded-validation/expanded_sample_register.jsonl",
+        "sha256": "9db3ac73bfd88e0ff0ea0a8eb97115a5c2398384424a68083e36a99832591103"
+      },
+      "task017_ledger": {
+        "bytes": 7148852,
+        "path": "indexes/task017_full_operation_disposition.jsonl",
+        "sha256": "e2fae7d9df81f5a520924a0d01c02c2bcb48c491d87f2575a069ebebf08272b8"
+      },
+      "task017a_backlog": {
+        "bytes": 83021,
+        "path": "indexes/task017a_productization_decision_backlog.jsonl",
+        "sha256": "32ffb5baf0a3ec8843c34be4ba5e367a480918bfd968cc0ba639018a1746a762"
+      },
+      "task017a_links": {
+        "bytes": 21885,
+        "path": "indexes/task017a_cross_api_opportunity_links.jsonl",
+        "sha256": "6b2604a6f14da6c69135833014c2e6bf333e2cc5c5ce2a49bbf16d0264fd8b97"
+      },
+      "task017a_manifest": {
+        "bytes": 2985,
+        "path": "indexes/task017a_architecture_review_manifest.json",
+        "sha256": "cb0a7152c68fcb3d12cd68c0e0997882183e0bdab810f6714af1f598eb5ef1e0"
+      },
+      "task017a_oversized": {
+        "bytes": 35063,
+        "path": "indexes/task017a_five_oversized_adjunct.jsonl",
+        "sha256": "713d4e1172912cf9dc5518e34523a05690f38ce60194d23dd9cd27c0219e7c97"
+      },
+      "task017a_reviews": {
+        "bytes": 2839762,
+        "path": "indexes/task017a_all_71_architecture_reviews.jsonl",
+        "sha256": "4dec09cf989b51419c6e032cb37cae4704c63fd8ad52cf6dde64d97bf4cfc850"
+      }
+    },
+    "logical_api_memberships_changed": 0,
+    "outputs": {
+      "cases": {
+        "bytes": 439119,
+        "path": "indexes/task018a_sampled_operation_domain_cases.jsonl",
+        "record_count": 51,
+        "sha256": "e9a920dfb4d550b2ab5e0f9813e1c261a1f7298c239e57fde3f2521725f9fd30"
+      },
+      "enrichment": {
+        "bytes": 101825,
+        "path": "indexes/task018a_task017a_domain_enrichment_links.jsonl",
+        "record_count": 90,
+        "sha256": "2f0ad5055abbfa3072ffe34c0530df746e2bf37f3c89e7447e040aa3330cdc57"
+      },
+      "footprints": {
+        "bytes": 56876,
+        "path": "indexes/task018a_api_domain_footprint_sample.jsonl",
+        "record_count": 62,
+        "sha256": "a66c18b41697420ba54b64c0ba8ea81e029a120ca4a334ac7f3df025b365c61a"
+      },
+      "taxonomy": {
+        "bytes": 16520,
+        "path": "indexes/task018a_candidate_enterprise_domain_taxonomy.json",
+        "record_count": 21,
+        "sha256": "3537dbf68964c5f170c8e7688c51868797ee1e4cdf25512726c20250ddaa46b9"
+      }
+    },
+    "productization_decisions_changed": 0,
+    "rules_version": "task018a-operation-domain-validation-v1",
+    "scope": "TASK018A_BOUNDED_OPERATION_DOMAIN_VALIDATION",
+    "summary": {
+      "case_count": 51,
+      "case_origin_counts": {
+        "CROSS_API_LINK": 14,
+        "OVERSIZED_ADJUNCT": 5,
+        "TASK017A_PROPOSAL": 32
+      },
+      "challenging_boundary_case_count": 31,
+      "classification_status_counts": {
+        "CONFLICTING_EVIDENCE": 5,
+        "DIRECTLY_SUPPORTED": 24,
+        "INSUFFICIENT_BUSINESS_SEMANTICS": 18,
+        "MULTIPLE_DOMAIN_CANDIDATES": 11,
+        "PROVISIONAL_SUPPORTED": 23,
+        "TECHNICAL_UTILITY_EVIDENCED": 9,
+        "TEST_OR_POC_EVIDENCED": 2
+      },
+      "enterprise_domain_approval_count": 0,
+      "hard_negative_case_count": 21,
+      "sampled_api_count": 62,
+      "task017a_enrichment_count": 90,
+      "unique_operation_count": 92
+    },
+    "task017a_records_rewritten": 0,
+    "task019_performed": false
+  }
+}

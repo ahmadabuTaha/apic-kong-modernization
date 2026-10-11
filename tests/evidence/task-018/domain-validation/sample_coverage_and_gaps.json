@@ -1,0 +1,127 @@
+{
+  "case_origin_counts": {
+    "CROSS_API_LINK": 14,
+    "OVERSIZED_ADJUNCT": 5,
+    "TASK017A_PROPOSAL": 32
+  },
+  "challenging_boundary_case_count": 31,
+  "classification_status_contract": [
+    "CONFLICTING_EVIDENCE",
+    "DIRECTLY_SUPPORTED",
+    "INSUFFICIENT_BUSINESS_SEMANTICS",
+    "MULTIPLE_DOMAIN_CANDIDATES",
+    "PROVISIONAL_SUPPORTED",
+    "TECHNICAL_UTILITY_EVIDENCED",
+    "TEST_OR_POC_EVIDENCED"
+  ],
+  "classification_status_counts": {
+    "CONFLICTING_EVIDENCE": 5,
+    "DIRECTLY_SUPPORTED": 24,
+    "INSUFFICIENT_BUSINESS_SEMANTICS": 18,
+    "MULTIPLE_DOMAIN_CANDIDATES": 11,
+    "PROVISIONAL_SUPPORTED": 23,
+    "TECHNICAL_UTILITY_EVIDENCED": 9,
+    "TEST_OR_POC_EVIDENCED": 2
+  },
+  "frozen_baseline": {
+    "accepted_http_operations": 2414,
+    "canonical_apis": 2036,
+    "expanded_controls": 46,
+    "task016_candidate_comparisons": 1170,
+    "task016_unpaired_operations": 1481,
+    "task017_proposals": 71,
+    "task017a_backlog_entries": 90,
+    "task017a_oversized_operations": 132
+  },
+  "gaps": [
+    "ENTERPRISE_DOMAIN_MODEL_NOT_SUPPLIED",
+    "APPLICATION_DATA_EVENT_LAYER_COMPARISON_UNAVAILABLE",
+    "BUSINESS_OWNER_AND_LIFECYCLE_ACCOUNTABILITY_NOT_EVIDENCED",
+    "CONSUMER_AND_RELEASE_INTENT_NOT_EVIDENCED",
+    "PROCESS_STATE_CAPABILITY_EVENT_MODELS_NOT_EVIDENCED_FROM_APIC",
+    "PRODUCTION_USAGE_AND_ACTUAL_RUNTIME_EGRESS_NOT_PROVEN",
+    "BOUNDED_SAMPLE_DOES_NOT_CLASSIFY_FULL_ESTATE"
+  ],
+  "guardrail_results": {
+    "capability_assignments": 0,
+    "enterprise_domain_approvals": 0,
+    "functional_equivalence_approvals": 0,
+    "logical_api_membership_changes": 0,
+    "production_usage_inferences": 0,
+    "productization_decision_changes": 0,
+    "runtime_egress_inferences": 0,
+    "whole_api_domains_forced": 0
+  },
+  "hard_negative_control_count": 21,
+  "next_gate": "ENTERPRISE_DOMAIN_ALIGNMENT_REVIEW_BEFORE_TASK018B",
+  "product_context_contrast_case_count": 8,
+  "result_axes": {
+    "domain_evidence_sufficiency": "MIXED",
+    "enterprise_architect_acceptance": "PENDING",
+    "technical_validation": "PASS"
+  },
+  "sample_bounds": {
+    "actual_cases": 51,
+    "actual_unique_operations": 92,
+    "case_target": "40-60",
+    "duplicate_operation_occurrences": 0,
+    "operation_occurrences": 92,
+    "reversed_or_padded_cases": 0,
+    "unique_operation_target": "70-100"
+  },
+  "sampled_canonical_api_count": 62,
+  "semantic_dimension_status_counts": {
+    "business_object": {
+      "DIRECTLY_EVIDENCED": 42,
+      "NOT_EVIDENCED_FROM_APIC": 18,
+      "PROVISIONAL_SIGNAL": 32
+    },
+    "capability_signal": {
+      "NOT_EVIDENCED_FROM_APIC": 92
+    },
+    "documented_action": {
+      "DIRECTLY_EVIDENCED": 42,
+      "NOT_EVIDENCED_FROM_APIC": 18,
+      "PROVISIONAL_SIGNAL": 32
+    },
+    "event": {
+      "NOT_EVIDENCED_FROM_APIC": 92
+    },
+    "process": {
+      "NOT_EVIDENCED_FROM_APIC": 92
+    },
+    "state": {
+      "NOT_EVIDENCED_FROM_APIC": 92
+    }
+  },
+  "strata_counts": {
+    "API_NAME_MASKS_MULTIPLE_PURPOSES": 3,
+    "CHALLENGING_BOUNDARY": 31,
+    "CROSS_API_LINK": 14,
+    "CROSS_API_RESPONSIBILITY_COMPARISON": 14,
+    "DIVERGING_RESPONSIBILITY_WITHIN_ONE_API": 17,
+    "HARD_NEGATIVE_CONTROL": 21,
+    "KEEP_AS_IS_EXPOSURE_NO_LOGICAL_BOUNDARY_ASSERTION": 5,
+    "OVERSIZED_ADJUNCT": 5,
+    "REQUIRES_TARGETED_EVIDENCE": 5,
+    "RETAIN_PROVISIONAL_COHESIVE_BOUNDARY": 5,
+    "SC_REQUEST_ANCHOR": 1,
+    "SPLIT_INTO_EVIDENCED_SUB_BOUNDARIES": 12,
+    "TASK017A_PROPOSAL": 32,
+    "TECHNICAL_OR_TEST_EXPOSURE_REVIEW": 5,
+    "VERSION_OR_VARIANT": 3
+  },
+  "task017a_coverage": {
+    "baseline_records_rewritten": 0,
+    "cross_api_links_represented": 14,
+    "enrichment_rows": 90,
+    "enrichment_sample_status_counts": {
+      "NOT_SAMPLED_IN_BOUNDED_TASK018A": 38,
+      "SAMPLED": 52
+    },
+    "oversized_reviews_represented": 5,
+    "proposal_recommendation_categories_represented": 5,
+    "sc_request_represented": true
+  },
+  "versions_or_variants_count": 3
+}

@@ -1,6 +1,39 @@
 # Codex Handoff
 
-## Current execution — Phase 5, Task 017A
+## Current execution — Phase 5, Task 018A
+
+### Execution summary
+
+- Pulled `origin/main` by fast-forward (`f5d842a` to `828f96b`), reread `AGENTS.md`, `CURRENT_TASKS.md`, and the Task 018A prompt, and executed only the authorized bounded domain-discovery validation sample.
+- Reused the frozen Task 014/015 operation evidence, Task 017 full ledger, Task 017A reviews/oversized adjunct/links/backlog, and the accepted 46-case controls. No raw re-extraction, all-pairs search, Task 018B, or Task 019 work was performed; `staging/` was not changed.
+- Built **51 distinct architectural cases over 92 unique operations** from **62 canonical APIs**. No operation is repeated, no pair is reversed, and no padding is used. The sample includes all 14 Task 017A cross-API links, all five oversized groups, and 32 proposal cases spanning all five Task 017A recommendation categories.
+- Classification is source-operation centered. A canonical API never inherits one domain wholesale. Exact API/version/method/path, Task 014/015 IDs, provenance, documented object/action and certainty, contract/security, Product/Plan exposure, backend evidence scope, alternatives, counterevidence, and source limitations remain explicit.
+
+### Results and evidence
+
+- Operation evidence statuses: **24 `DIRECTLY_SUPPORTED`**, **23 `PROVISIONAL_SUPPORTED`**, **11 `MULTIPLE_DOMAIN_CANDIDATES`**, **5 `CONFLICTING_EVIDENCE`**, **18 `INSUFFICIENT_BUSINESS_SEMANTICS`**, **9 `TECHNICAL_UTILITY_EVIDENCED`**, and **2 `TEST_OR_POC_EVIDENCED`**.
+- The sample yields **21 APIC-derived candidate labels**: 9 Domain candidates, 7 Subdomain candidates, 2 Umbrella candidates, 1 Shared Service candidate, and 2 Technical Namespace candidates. All have sampled evidence; none is an enterprise-approved taxonomy element.
+- Boundary challenge coverage is deliberate: **31** challenging cases, **21** hard negative controls, **17** within-API responsibility-divergence cases, 3 version/variant cases, and 8 Product-context contrasts.
+- Examples: SC Request supports a provisional Support Request responsibility while preserving two source operations, approve/reject/cancel intents, `PARTIAL` prior sufficiency, and unified-versus-split alternatives. Visa cancellation and establishment-training cases expose overlapping responsibility candidates rather than forced umbrellas. `s3-client`, JWT, caching and health/token operations remain technical; generic user-management URI wrappers remain insufficient. Lookup paths support a shared Reference Data hypothesis but not a primary enterprise Domain. Occupational-safety evidence appears in both oversized `osh` sources without classifying either entire API.
+- Business object evidence is direct for 41 operations and provisional for 35; action evidence is direct for 41 and provisional for 36. Every process, state, capability and event slot remains `NOT_EVIDENCED_FROM_APIC` for all 92 operations—HTTP actions were not promoted into invented enterprise semantics.
+- Produced **62 sampled-only API Domain Footprints**; every footprint explicitly rejects whole-API classification. Produced **90 enrichment links**, covering all 71 proposals, five oversized reviews and 14 cross-API links. **52** backlog items have sample evidence and **38** are explicitly not sampled. No Task 017A record, membership, status, or Productization decision changed.
+- Domain similarity does not establish functional equivalence, one Logical API, or a Product boundary. No owner, consumer, runtime/production usage, backend actual egress, retirement, Kong topology, Domain approval, or Capability assignment was inferred.
+
+### Outputs
+
+- Implementation: `business_domain/domain_validation.py`, `business_domain/domain_validation_main.py`, package initializer, and `tests/test_business_domain_validation.py`.
+- Ignored expandable indexes: `indexes/task018a_candidate_enterprise_domain_taxonomy.json`, `task018a_sampled_operation_domain_cases.jsonl`, `task018a_api_domain_footprint_sample.jsonl`, `task018a_task017a_domain_enrichment_links.jsonl`, and `task018a_domain_validation_manifest.json`.
+- Required committed evidence is under `tests/evidence/task-018/domain-validation/`: method/guardrails, candidate taxonomy, 51-case register, every-case executive review with 15 deep contrasts, 62 API footprints, 90 Task 017A enrichment links, Enterprise Domain Alignment gate, coverage/gaps, commands/results, deterministic generator, and build manifest.
+
+### Tests, gaps, and final status
+
+- Focused Task 018A and relevant Task 017/017A regressions: **36 passed**.
+- Required repository suite with loopback permission: **126 passed, 5 setup errors, 0 new failures**. The five errors are the documented frozen Phase 0 issue: `tests/fixtures/repository_profile/staging` is absent. Task 018A did not reopen or repair that phase.
+- Deterministic rebuild, exact provenance/IDs, 51/92 sample bounds, unique operations, all required strata, SC control, 5/14/90 continuity, sampled-only footprints, absent semantic dimensions, redaction, and no unauthorized changes passed.
+- Remaining gaps: no approved enterprise domain model, cross-layer Applications/Data/Events comparison, business ownership/lifecycle accountability, consumer/release intent, authoritative process/state/capability/event model, production activity, actual runtime egress, or full-estate coverage.
+- Final status: **TASK 018A TECHNICAL PASS; DOMAIN EVIDENCE MIXED; ENTERPRISE DOMAIN ALIGNMENT PENDING**. Commit/push, then STOP at `ENTERPRISE_DOMAIN_ALIGNMENT_REVIEW_BEFORE_TASK018B`. Do not begin Task 018B, Task 019, Productization design, Kong architecture, rationalization, or retirement.
+
+## Previous execution — Phase 5, Task 017A (historical baseline)
 
 ### Execution summary
 

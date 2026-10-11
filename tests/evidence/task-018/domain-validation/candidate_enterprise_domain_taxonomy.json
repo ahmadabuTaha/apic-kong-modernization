@@ -1,0 +1,507 @@
+{
+  "candidate_count": 21,
+  "candidates": [
+    {
+      "candidate_domain_id": "task018a-domain-candidate:sha256:30d00a5dfe2d31867d155a2ccd41e2fef22b163ec9e071c81ee3c2c416ef90a4",
+      "candidate_label": "Visa Administration",
+      "candidate_type": "DOMAIN_CANDIDATE",
+      "capability_assignment": null,
+      "cross_layer_verification": "UNAVAILABLE",
+      "domain_approved": false,
+      "enterprise_alignment": "PENDING",
+      "exclusion_rule": "permits and generalized employment",
+      "inclusion_rule": "visa applications, transactions and cancellations",
+      "observed_aliases": [
+        "/SubmitVisaTransaction",
+        "/cancelvisa",
+        "/establishment/{establishmentId}/visa",
+        "/establishment/{establishmentId}/visa/{borderNumber}",
+        "/searchseasvisareq",
+        "/updatedworkerdata"
+      ],
+      "sampled_operation_count": 7,
+      "source_basis": "TASK014_015_OPERATION_EVIDENCE_IN_BOUNDED_SAMPLE",
+      "supported_objects": [
+        "seasonal visa requests",
+        "visa",
+        "visa transaction"
+      ]
+    },
+    {
+      "candidate_domain_id": "task018a-domain-candidate:sha256:29e12e3ecf87a394adb7a39b716cf99ea7e3df1841b93595ba171d33c25bd3b5",
+      "candidate_label": "Work Permit Administration",
+      "candidate_type": "SUBDOMAIN_CANDIDATE",
+      "capability_assignment": null,
+      "cross_layer_verification": "UNAVAILABLE",
+      "domain_approved": false,
+      "enterprise_alignment": "PENDING",
+      "exclusion_rule": "visas and generic authorization tokens",
+      "inclusion_rule": "work/special permit records and decisions",
+      "observed_aliases": [
+        "/special-permit",
+        "/special-permit/{permitNo}"
+      ],
+      "sampled_operation_count": 2,
+      "source_basis": "TASK014_015_OPERATION_EVIDENCE_IN_BOUNDED_SAMPLE",
+      "supported_objects": [
+        "special permit"
+      ]
+    },
+    {
+      "candidate_domain_id": "task018a-domain-candidate:sha256:b87f0a3e696629844a3439a8a1f567d4e4db85d40596fd6f82b7d491f82d173a",
+      "candidate_label": "Employment Contract Administration",
+      "candidate_type": "DOMAIN_CANDIDATE",
+      "capability_assignment": null,
+      "cross_layer_verification": "UNAVAILABLE",
+      "domain_approved": false,
+      "enterprise_alignment": "PENDING",
+      "exclusion_rule": "commercial registrations and technical contracts",
+      "inclusion_rule": "employment-contract records and lifecycle actions",
+      "observed_aliases": [
+        "/employee-contract/{contractId}"
+      ],
+      "sampled_operation_count": 1,
+      "source_basis": "TASK014_015_OPERATION_EVIDENCE_IN_BOUNDED_SAMPLE",
+      "supported_objects": [
+        "employee contract contract id"
+      ]
+    },
+    {
+      "candidate_domain_id": "task018a-domain-candidate:sha256:c3263519244b650518b40f7fa6b1e96acfc397d0881b93236a9ac87349c91115",
+      "candidate_label": "Establishment Registry and Profile",
+      "candidate_type": "DOMAIN_CANDIDATE",
+      "capability_assignment": null,
+      "cross_layer_verification": "UNAVAILABLE",
+      "domain_approved": false,
+      "enterprise_alignment": "PENDING",
+      "exclusion_rule": "workforce transactions merely carrying an establishment identifier",
+      "inclusion_rule": "establishment identity, registration and profile facts",
+      "observed_aliases": [
+        "/checkestabownership",
+        "/establishment/profile",
+        "/establishment/update-record",
+        "/establishment/{establishmentId}/visa",
+        "/establishment/{establishmentId}/visa/{borderNumber}",
+        "/get-cr-details2",
+        "/getestablishmentunifiednumber",
+        "/momra/verify-violated-establishment",
+        "/searchseasvisareq",
+        "/trainings/submit/disclosure",
+        "/trainings/update/disclosure"
+      ],
+      "sampled_operation_count": 12,
+      "source_basis": "TASK014_015_OPERATION_EVIDENCE_IN_BOUNDED_SAMPLE",
+      "supported_objects": [
+        "a checkestabownership",
+        "cr details",
+        "establishment trainings disclosure",
+        "momra verify violated establishment",
+        "record",
+        "seasonal visa requests",
+        "visa"
+      ]
+    },
+    {
+      "candidate_domain_id": "task018a-domain-candidate:sha256:fce366991926a004405eb1b11c15a6a261213d1967541941ad93590e065ab0ff",
+      "candidate_label": "Commercial Registration",
+      "candidate_type": "SUBDOMAIN_CANDIDATE",
+      "capability_assignment": null,
+      "cross_layer_verification": "UNAVAILABLE",
+      "domain_approved": false,
+      "enterprise_alignment": "PENDING",
+      "exclusion_rule": "generic establishment operations without registration evidence",
+      "inclusion_rule": "commercial-registration facts and history",
+      "observed_aliases": [
+        "/get-cr-details2",
+        "/getbasiccrinformation/yeFIMessageId/{yeFIMessageId}/customCRNationalNumber/{customCRNationalNumber}",
+        "/mcichangehistory/customFromDate/{customFromDate}/customToDate/{customToDate}/yeFIMessageId/{yeFIMessageId}"
+      ],
+      "sampled_operation_count": 3,
+      "source_basis": "TASK014_015_OPERATION_EVIDENCE_IN_BOUNDED_SAMPLE",
+      "supported_objects": [
+        "basic cr information mci",
+        "cr details"
+      ]
+    },
+    {
+      "candidate_domain_id": "task018a-domain-candidate:sha256:da3ea609df133873334ddf19995a137cde791f27c66ad8f9a8723d52401c1230",
+      "candidate_label": "Workforce Records",
+      "candidate_type": "UMBRELLA_CANDIDATE",
+      "capability_assignment": null,
+      "cross_layer_verification": "UNAVAILABLE",
+      "domain_approved": false,
+      "enterprise_alignment": "PENDING",
+      "exclusion_rule": "identity infrastructure and unrelated user accounts",
+      "inclusion_rule": "employee/laborer/person workforce records",
+      "observed_aliases": [
+        "/employee-contract/{contractId}",
+        "/get-citizen-info_REMOVED",
+        "/get-employee-historical-info2",
+        "/get-employee-qualifications2",
+        "/getlaborerprisonstatusnic",
+        "/gosi/send-labourer",
+        "/laborer/name/update",
+        "/updatedworkerdata"
+      ],
+      "sampled_operation_count": 8,
+      "source_basis": "TASK014_015_OPERATION_EVIDENCE_IN_BOUNDED_SAMPLE",
+      "supported_objects": [
+        "a getlaborerprisonstatusnic",
+        "citizen info",
+        "employee contract contract id",
+        "employee historical info",
+        "employee qualification",
+        "laborer name",
+        "labourer",
+        "visa"
+      ]
+    },
+    {
+      "candidate_domain_id": "task018a-domain-candidate:sha256:a02850562b7199a84f161605bebd10ef9929706fd479c01c5300da9919c16784",
+      "candidate_label": "Workforce Qualification and Training",
+      "candidate_type": "DOMAIN_CANDIDATE",
+      "capability_assignment": null,
+      "cross_layer_verification": "UNAVAILABLE",
+      "domain_approved": false,
+      "enterprise_alignment": "PENDING",
+      "exclusion_rule": "technical test endpoints and generic certificates",
+      "inclusion_rule": "workforce training, qualifications and professional accreditation",
+      "observed_aliases": [
+        "/get-employee-qualifications2",
+        "/get-graduate-student-qualifications",
+        "/graduate-student/{studentId}/qualifications",
+        "/saudi-certificate",
+        "/saudi-certificate/{certificateId}",
+        "/trainings/submit/disclosure",
+        "/trainings/update/disclosure"
+      ],
+      "sampled_operation_count": 7,
+      "source_basis": "TASK014_015_OPERATION_EVIDENCE_IN_BOUNDED_SAMPLE",
+      "supported_objects": [
+        "employee qualification",
+        "establishment trainings disclosure",
+        "graduate student qualifications",
+        "saudi certificate"
+      ]
+    },
+    {
+      "candidate_domain_id": "task018a-domain-candidate:sha256:d83a3169c27c743b92d877c3fc94ff6576396f013739b1a5a3cb7805408e4565",
+      "candidate_label": "Professional Testing Services",
+      "candidate_type": "SUBDOMAIN_CANDIDATE",
+      "capability_assignment": null,
+      "cross_layer_verification": "UNAVAILABLE",
+      "domain_approved": false,
+      "enterprise_alignment": "PENDING",
+      "exclusion_rule": "software tests, POCs and mocks",
+      "inclusion_rule": "professional test-center records and status requests",
+      "observed_aliases": [
+        "/web_service/test_center_status_requests"
+      ],
+      "sampled_operation_count": 1,
+      "source_basis": "TASK014_015_OPERATION_EVIDENCE_IN_BOUNDED_SAMPLE",
+      "supported_objects": [
+        "test center status"
+      ]
+    },
+    {
+      "candidate_domain_id": "task018a-domain-candidate:sha256:6feddcdbf57d02f6ff7d73dd1f2e963dc6d2105efb399570292c3fc7b1fefabd",
+      "candidate_label": "Occupational Safety Assessment",
+      "candidate_type": "DOMAIN_CANDIDATE",
+      "capability_assignment": null,
+      "cross_layer_verification": "UNAVAILABLE",
+      "domain_approved": false,
+      "enterprise_alignment": "PENDING",
+      "exclusion_rule": "generic health checks",
+      "inclusion_rule": "occupational-safety assessments and performance cards",
+      "observed_aliases": [
+        "/GetAllPerformanceCardRequestWithFilter",
+        "/UpdateSelfAssessmentQuestionStatus",
+        "/assessmentVisits",
+        "/createAssessmentVisits",
+        "/performanceCardById"
+      ],
+      "sampled_operation_count": 5,
+      "source_basis": "TASK014_015_OPERATION_EVIDENCE_IN_BOUNDED_SAMPLE",
+      "supported_objects": [
+        "all performance card with filter",
+        "assessment visits",
+        "self assessment question status"
+      ]
+    },
+    {
+      "candidate_domain_id": "task018a-domain-candidate:sha256:8277731296d550c8d91e6b06f1409c8f9226cae94e65114b8c233f19f3958f54",
+      "candidate_label": "Support Request Management",
+      "candidate_type": "DOMAIN_CANDIDATE",
+      "capability_assignment": null,
+      "cross_layer_verification": "UNAVAILABLE",
+      "domain_approved": false,
+      "enterprise_alignment": "PENDING",
+      "exclusion_rule": "support-centre technical administration",
+      "inclusion_rule": "support-request decisions and cancellation",
+      "observed_aliases": [
+        "/apprejscreq",
+        "/cancelscreq"
+      ],
+      "sampled_operation_count": 2,
+      "source_basis": "TASK014_015_OPERATION_EVIDENCE_IN_BOUNDED_SAMPLE",
+      "supported_objects": [
+        "apprejscreq",
+        "screquest"
+      ]
+    },
+    {
+      "candidate_domain_id": "task018a-domain-candidate:sha256:30040949cd714f5d56681d7f7db9ce3396356795d598712d47cde08205d74746",
+      "candidate_label": "Reference Data Management",
+      "candidate_type": "SHARED_SERVICE_CANDIDATE",
+      "capability_assignment": null,
+      "cross_layer_verification": "UNAVAILABLE",
+      "domain_approved": false,
+      "enterprise_alignment": "PENDING",
+      "exclusion_rule": "transactional business records",
+      "inclusion_rule": "explicit reusable reference lists",
+      "observed_aliases": [
+        "/categoryById",
+        "/getcountries",
+        "/getoccupations",
+        "/web_service/categories"
+      ],
+      "sampled_operation_count": 4,
+      "source_basis": "TASK014_015_OPERATION_EVIDENCE_IN_BOUNDED_SAMPLE",
+      "supported_objects": [
+        "categories"
+      ]
+    },
+    {
+      "candidate_domain_id": "task018a-domain-candidate:sha256:34d10ac18fd3b9f4b8dd73f49f6e4edf84530a11a532b37a7863dd81c29a5cce",
+      "candidate_label": "Payment and Billing",
+      "candidate_type": "DOMAIN_CANDIDATE",
+      "capability_assignment": null,
+      "cross_layer_verification": "UNAVAILABLE",
+      "domain_approved": false,
+      "enterprise_alignment": "PENDING",
+      "exclusion_rule": "non-financial status notifications",
+      "inclusion_rule": "payments, bills, credits and settlement notifications",
+      "observed_aliases": [
+        "/AddCredit",
+        "/BillCancel",
+        "/BillUpload",
+        "/qwalletcashoutrequest"
+      ],
+      "sampled_operation_count": 4,
+      "source_basis": "TASK014_015_OPERATION_EVIDENCE_IN_BOUNDED_SAMPLE",
+      "supported_objects": [
+        "bill",
+        "credit"
+      ]
+    },
+    {
+      "candidate_domain_id": "task018a-domain-candidate:sha256:f1ec5ed0552d04fd27d79b87ada379a4cffccd177f5128599abf1532b9afe601",
+      "candidate_label": "User Access Administration",
+      "candidate_type": "TECHNICAL_NAMESPACE_CANDIDATE",
+      "capability_assignment": null,
+      "cross_layer_verification": "UNAVAILABLE",
+      "domain_approved": false,
+      "enterprise_alignment": "PENDING",
+      "exclusion_rule": "business-party ownership unless directly documented",
+      "inclusion_rule": "access assignment and identity-verification operations",
+      "observed_aliases": [
+        "/authenticateuserbymobilenic",
+        "/checkestabownership",
+        "/keycloak/token",
+        "/revokeAccess",
+        "/verifydelegator"
+      ],
+      "sampled_operation_count": 5,
+      "source_basis": "TASK014_015_OPERATION_EVIDENCE_IN_BOUNDED_SAMPLE",
+      "supported_objects": [
+        "a authenticateuserbymobilenic",
+        "a checkestabownership",
+        "access token password grant",
+        "national id for user type 1 based on"
+      ]
+    },
+    {
+      "candidate_domain_id": "task018a-domain-candidate:sha256:6eb5d9954b833f091fec4f9a3508c50984abc1b14512b4b0b5bc063fc7f88163",
+      "candidate_label": "Conversation Management",
+      "candidate_type": "DOMAIN_CANDIDATE",
+      "capability_assignment": null,
+      "cross_layer_verification": "UNAVAILABLE",
+      "domain_approved": false,
+      "enterprise_alignment": "PENDING",
+      "exclusion_rule": "transport streaming technology",
+      "inclusion_rule": "conversation records and lifecycle actions",
+      "observed_aliases": [
+        "/{conversationId}"
+      ],
+      "sampled_operation_count": 3,
+      "source_basis": "TASK014_015_OPERATION_EVIDENCE_IN_BOUNDED_SAMPLE",
+      "supported_objects": [
+        "conversation id"
+      ]
+    },
+    {
+      "candidate_domain_id": "task018a-domain-candidate:sha256:219ade268d326949f03dfe2b38ac0f1319e64046e8eab30abc440c94db52a5ab",
+      "candidate_label": "Appointment Administration",
+      "candidate_type": "DOMAIN_CANDIDATE",
+      "capability_assignment": null,
+      "cross_layer_verification": "UNAVAILABLE",
+      "domain_approved": false,
+      "enterprise_alignment": "PENDING",
+      "exclusion_rule": "unrelated scheduling infrastructure",
+      "inclusion_rule": "appointment records and status changes",
+      "observed_aliases": [
+        "/updateappoinstatus",
+        "/updateappointment"
+      ],
+      "sampled_operation_count": 3,
+      "source_basis": "TASK014_015_OPERATION_EVIDENCE_IN_BOUNDED_SAMPLE",
+      "supported_objects": [
+        "appointment status",
+        "if user has attended his her appointment or"
+      ]
+    },
+    {
+      "candidate_domain_id": "task018a-domain-candidate:sha256:a3e43cb095d1fd373ab341a224bf434b3e736ef68657cf128c88100a92d6d600",
+      "candidate_label": "Wage Protection Compliance",
+      "candidate_type": "SUBDOMAIN_CANDIDATE",
+      "capability_assignment": null,
+      "cross_layer_verification": "UNAVAILABLE",
+      "domain_approved": false,
+      "enterprise_alignment": "PENDING",
+      "exclusion_rule": "generic certificate retrieval",
+      "inclusion_rule": "wage-protection certificates and compliance evidence",
+      "observed_aliases": [
+        "/ajeerfindwpscertificate",
+        "/findwpscertificate"
+      ],
+      "sampled_operation_count": 2,
+      "source_basis": "TASK014_015_OPERATION_EVIDENCE_IN_BOUNDED_SAMPLE",
+      "supported_objects": [
+        "wps certificate"
+      ]
+    },
+    {
+      "candidate_domain_id": "task018a-domain-candidate:sha256:717d23a3afdbdd8de039419144af6edc81041f56226941c888f5f2b0acbacef3",
+      "candidate_label": "Labor Compliance",
+      "candidate_type": "UMBRELLA_CANDIDATE",
+      "capability_assignment": null,
+      "cross_layer_verification": "UNAVAILABLE",
+      "domain_approved": false,
+      "enterprise_alignment": "PENDING",
+      "exclusion_rule": "general workforce master data",
+      "inclusion_rule": "labor compliance, localization and worker-status evidence",
+      "observed_aliases": [
+        "/gettawteeninfobymunicipalitylicensenum",
+        "/momra/verify-saudization-certificate-validity",
+        "/momra/verify-violated-establishment",
+        "/run-away/{runAwayId}/request"
+      ],
+      "sampled_operation_count": 5,
+      "source_basis": "TASK014_015_OPERATION_EVIDENCE_IN_BOUNDED_SAMPLE",
+      "supported_objects": [
+        "a gettawteeninfobymunicipalitylicensenum",
+        "momra verify saudization certificate validity",
+        "momra verify violated establishment",
+        "runaway"
+      ]
+    },
+    {
+      "candidate_domain_id": "task018a-domain-candidate:sha256:1df05d81d4b1e88fcd41b59bbb98f4fdb7840d65dbf2aa050b9a5f9e02f6a4aa",
+      "candidate_label": "Labor Objection Administration",
+      "candidate_type": "SUBDOMAIN_CANDIDATE",
+      "capability_assignment": null,
+      "cross_layer_verification": "UNAVAILABLE",
+      "domain_approved": false,
+      "enterprise_alignment": "PENDING",
+      "exclusion_rule": "generic support tickets",
+      "inclusion_rule": "labor objection requests and references",
+      "observed_aliases": [
+        "/objection-request",
+        "/objection-request/{referenceNumber}"
+      ],
+      "sampled_operation_count": 2,
+      "source_basis": "TASK014_015_OPERATION_EVIDENCE_IN_BOUNDED_SAMPLE",
+      "supported_objects": [
+        "objection"
+      ]
+    },
+    {
+      "candidate_domain_id": "task018a-domain-candidate:sha256:d6bbaa6f170f34de971d2903a687d44edf4f8afa62d9b0260c9a491f8f97280e",
+      "candidate_label": "Worker Absence Reporting",
+      "candidate_type": "SUBDOMAIN_CANDIDATE",
+      "capability_assignment": null,
+      "cross_layer_verification": "UNAVAILABLE",
+      "domain_approved": false,
+      "enterprise_alignment": "PENDING",
+      "exclusion_rule": "general worker profiles",
+      "inclusion_rule": "worker runaway/absence reports and validation",
+      "observed_aliases": [
+        "/run-away/{runAwayId}/request"
+      ],
+      "sampled_operation_count": 2,
+      "source_basis": "TASK014_015_OPERATION_EVIDENCE_IN_BOUNDED_SAMPLE",
+      "supported_objects": [
+        "runaway"
+      ]
+    },
+    {
+      "candidate_domain_id": "task018a-domain-candidate:sha256:7e9c6605cf7ac231ff251490479357eb8926f318b42f43a832dfdf32b3a55fae",
+      "candidate_label": "Employment Status Administration",
+      "candidate_type": "SUBDOMAIN_CANDIDATE",
+      "capability_assignment": null,
+      "cross_layer_verification": "UNAVAILABLE",
+      "domain_approved": false,
+      "enterprise_alignment": "PENDING",
+      "exclusion_rule": "broad employee master data",
+      "inclusion_rule": "employment-status enquiries and records",
+      "observed_aliases": [
+        "/employmentstatusenquiry"
+      ],
+      "sampled_operation_count": 2,
+      "source_basis": "TASK014_015_OPERATION_EVIDENCE_IN_BOUNDED_SAMPLE",
+      "supported_objects": [
+        "employment status"
+      ]
+    },
+    {
+      "candidate_domain_id": "task018a-domain-candidate:sha256:bd1e1a6e5cc1a03c348bc9a9c2102777a28f32ba996bcf3a76816bcb4c61cbc3",
+      "candidate_label": "Technical Integration Utilities",
+      "candidate_type": "TECHNICAL_NAMESPACE_CANDIDATE",
+      "capability_assignment": null,
+      "cross_layer_verification": "UNAVAILABLE",
+      "domain_approved": false,
+      "enterprise_alignment": "PENDING",
+      "exclusion_rule": "business responsibility domains",
+      "inclusion_rule": "protocol, token, storage, caching and transport utilities",
+      "observed_aliases": [
+        "/",
+        "/api/s3/",
+        "/api/s3/{bucket}/{name}",
+        "/cache/add",
+        "/graphql",
+        "/keycloak/token"
+      ],
+      "sampled_operation_count": 6,
+      "source_basis": "TASK014_015_OPERATION_EVIDENCE_IN_BOUNDED_SAMPLE",
+      "supported_objects": [
+        "access token password grant",
+        "buckets using get",
+        "cache",
+        "graphql",
+        "jwt",
+        "object using delete"
+      ]
+    }
+  ],
+  "cross_layer_verification": "UNAVAILABLE",
+  "enterprise_alignment": "PENDING",
+  "guardrails": {
+    "capability_mapping_performed": false,
+    "domain_similarity_proves_equivalence": false,
+    "domain_similarity_proves_product_boundary": false,
+    "whole_api_inheritance": false
+  },
+  "rules_version": "task018a-operation-domain-validation-v1",
+  "taxonomy_status": "APIC_DERIVED_CANDIDATE_NOT_ENTERPRISE_APPROVED",
+  "unit_of_classification": "SOURCE_HTTP_OPERATION"
+}

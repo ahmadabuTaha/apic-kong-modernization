@@ -1,0 +1,15 @@
+Task 018A bounded business-domain discovery validation
+
+Generation:
+  .venv/bin/python tests/evidence/task-018/domain-validation/generate_domain_validation_evidence.py --focused-result '<result>' --repository-result '<result>'
+  Result: PASS; 51 cases / 92 unique operations, 62 sampled API footprints and 90 enrichment links generated from frozen indexes.
+
+Focused validation:
+  .venv/bin/pytest -q tests/test_business_domain_validation.py tests/test_logical_api_architecture_review.py tests/test_logical_api_full_formation.py tests/test_logical_api_expanded_validation.py
+  Result: PASS — 36 passed in 6.63s
+
+Repository validation:
+  .venv/bin/pytest -q
+  Result: EXPECTED BASELINE ERRORS — 126 passed, 5 errors in 62.82s; all five are tests/test_profiler.py setup errors because tests/fixtures/repository_profile/staging is absent
+
+Known baseline: five Phase 0 tests/test_profiler.py setup errors because tests/fixtures/repository_profile/staging is absent. This frozen-phase fixture defect is reported separately and was not repaired by Task 018A.
