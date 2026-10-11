@@ -1,0 +1,21 @@
+.venv/bin/python -m py_compile logical_function/refinement.py logical_function/__init__.py logical_function/__main__.py
+PASS: compilation completed.
+
+.venv/bin/python -m logical_function
+PASS: additive refinement generated for all 1,170 baseline pairs; 1,481 unpaired operations remained visible; baseline candidate generation was not rerun.
+
+.venv/bin/pytest -q tests/test_logical_function_refinement.py
+PASS: 7 passed in 9.57s.
+
+.venv/bin/pytest -q tests/test_semantic_full_inventory.py tests/test_observed_function_full.py tests/test_logical_function_mock.py tests/test_logical_function_full.py tests/test_logical_function_refinement.py
+PASS: 34 passed in 48.50s.
+
+.venv/bin/pytest -q
+REPOSITORY RESULT WITH LOOPBACK PERMISSION: 84 passed, 5 setup errors in 95.70s.
+The five errors are the known frozen Phase 0 fixture-packaging issue: tests/fixtures/repository_profile/staging does not exist. No Task 016 test failed.
+
+.venv/bin/python tests/evidence/task-016/semantic-refinement/generate_refinement_evidence.py (twice)
+PASS: byte-deterministic evidence regeneration; frozen Task 014/015 and Task 016 full baseline hashes unchanged.
+
+git diff --check
+PASS: no whitespace errors.

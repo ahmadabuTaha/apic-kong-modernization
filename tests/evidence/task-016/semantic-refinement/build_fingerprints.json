@@ -1,0 +1,198 @@
+{
+  "evidence_files": [
+    {
+      "bytes": 1183,
+      "path": "commands_and_results.txt",
+      "sha256": "8a14368cf3fc1870eb54b5ee52358d23c6f41f7e76182f0197eb9b2c1f91ae5d"
+    },
+    {
+      "bytes": 2796,
+      "path": "false_positive_and_false_negative_audit.md",
+      "sha256": "949814b00e3b0485a9205a56e5863e7ee945868451f536b0ff9eec901044a6c5"
+    },
+    {
+      "bytes": 306845,
+      "path": "focused_cases.jsonl",
+      "sha256": "459dfe8e1a58f7ac71cbd7bde5e30f221f9511126b0304400b1acc3e872ee61c"
+    },
+    {
+      "bytes": 3125,
+      "path": "pair_refinement_distribution.json",
+      "sha256": "e0dbc9c0f8ac3fcea95de301fc7885ee2cfdf3d6a7d0a0930cc500c7f07060e4"
+    },
+    {
+      "bytes": 2240,
+      "path": "refinement_contract.md",
+      "sha256": "3b0295b22480edf2db860e73678ef07e4bab33714bbbd516fbf53e9481002290"
+    },
+    {
+      "bytes": 1496,
+      "path": "review_priorities.json",
+      "sha256": "e10338f631251192bf6b80e05580c7a6ef83a50aee2c5b5ebe628d080379ad8b"
+    }
+  ],
+  "frozen_components_modified": false,
+  "local_manifest": {
+    "all_pairs_performed": false,
+    "approved_duplicate_count": 0,
+    "baseline_candidate_generation_rerun": false,
+    "baseline_pair_count": 1170,
+    "divergent_form_suggestion_count": 0,
+    "focused_case_count": 15,
+    "inputs": {
+      "backend_resolution": {
+        "bytes": 4842349,
+        "path": "indexes/backend_target_resolution.jsonl",
+        "sha256": "6b21000cd1df943214bd96eccbb9b9a5ed3d3d2c8b55acf576237ac5e2ebee33"
+      },
+      "baseline_pairs": {
+        "bytes": 21927741,
+        "path": "indexes/task016_full_candidate_pairs.jsonl",
+        "sha256": "d753103622439597efc231adf85ee115870f0ca76d432213dd062bc5b6a2b00c"
+      },
+      "candidate_cache": {
+        "bytes": 1402275,
+        "path": "indexes/cache/task016_full_candidate_cache.json",
+        "sha256": "653ebe1719d50f1a3b909521712f8c0aaac7e6f9650e7ae25d045188cf7692ff"
+      },
+      "codegraph_dependency_edges": {
+        "bytes": 5907436,
+        "path": "indexes/codegraph_dependency_edges.jsonl",
+        "sha256": "95cb2d9446b89b703d65d85a7e387e46614997903b39fbb822ee0347fc988867"
+      },
+      "codegraph_edges": {
+        "bytes": 8107558,
+        "path": "indexes/codegraph_edges.jsonl",
+        "sha256": "9b03746b939362825012ca0c2f9239ff97f1ce2c6c5bf2550c1cbe0876b39ce1"
+      },
+      "codegraph_nodes": {
+        "bytes": 3857566,
+        "path": "indexes/codegraph_nodes.jsonl",
+        "sha256": "bd420dc2c24474a02ac6efa03de51ce2d73d9b52480a780cf2abc9fb2838be3f"
+      },
+      "implementation": {
+        "bytes": 29454,
+        "path": "logical_function/refinement.py",
+        "sha256": "8e72dec398e56bd7659e7628c225e705c62d70f450979e0b0b8cf8bddca944fe"
+      },
+      "observed": {
+        "bytes": 16895146,
+        "path": "indexes/observed_function_inventory.jsonl",
+        "sha256": "36e1ccaed8fa9513dcbefeaea592d5b3dc478ae729840ec88f0ad2593c04990e"
+      },
+      "operation_catalog": {
+        "bytes": 2185373,
+        "path": "indexes/task016_full_operation_catalog.jsonl",
+        "sha256": "472b9e3ca65157d6cc28dc326ec9721fa5c23938da005df31f2161af3228759e"
+      },
+      "operations": {
+        "bytes": 12460714,
+        "path": "indexes/semantic_operation_inventory.jsonl",
+        "sha256": "1c603cd6867f3a2d12f950c319e7ab29b2d2111604ff8bcfe6c0ad4dda2bf3bc"
+      },
+      "relationships": {
+        "bytes": 14850576,
+        "path": "indexes/relationship_index.jsonl",
+        "sha256": "d9fdc2e5cd61510335af572e03c21b27128d39cb9007104be774e24e3d3a8a0a"
+      }
+    },
+    "old_status_by_refinement": [
+      {
+        "count": 1,
+        "prior_status": "CLEARLY_DIFFERENT_SUPPORTED",
+        "refinement_verdict": "CONFLICTING_SEMANTICS_REVIEW"
+      },
+      {
+        "count": 2,
+        "prior_status": "CLEARLY_DIFFERENT_SUPPORTED",
+        "refinement_verdict": "SEMANTIC_EVIDENCE_INSUFFICIENT"
+      },
+      {
+        "count": 125,
+        "prior_status": "NOT_COMPARABLE_DUE_TO_MISSING_EVIDENCE",
+        "refinement_verdict": "SEMANTIC_EVIDENCE_INSUFFICIENT"
+      },
+      {
+        "count": 9,
+        "prior_status": "POSSIBLE_SAME_LOGICAL_FUNCTION",
+        "refinement_verdict": "CONFLICTING_SEMANTICS_REVIEW"
+      },
+      {
+        "count": 169,
+        "prior_status": "POSSIBLE_SAME_LOGICAL_FUNCTION",
+        "refinement_verdict": "POTENTIAL_SAME_BEHAVIOR_DIFFERENT_EXPOSURE"
+      },
+      {
+        "count": 223,
+        "prior_status": "POSSIBLE_SAME_LOGICAL_FUNCTION",
+        "refinement_verdict": "SEMANTIC_EVIDENCE_INSUFFICIENT"
+      },
+      {
+        "count": 4,
+        "prior_status": "POSSIBLE_SAME_LOGICAL_FUNCTION",
+        "refinement_verdict": "STRUCTURAL_SIMILARITY_ONLY"
+      },
+      {
+        "count": 110,
+        "prior_status": "REVIEW_REQUIRED_CONFLICTING_SIGNALS",
+        "refinement_verdict": "CONFLICTING_SEMANTICS_REVIEW"
+      },
+      {
+        "count": 1,
+        "prior_status": "REVIEW_REQUIRED_CONFLICTING_SIGNALS",
+        "refinement_verdict": "DIFFERENT_BUSINESS_ACTION_SUPPORTED"
+      },
+      {
+        "count": 301,
+        "prior_status": "REVIEW_REQUIRED_CONFLICTING_SIGNALS",
+        "refinement_verdict": "POTENTIAL_SAME_BEHAVIOR_DIFFERENT_EXPOSURE"
+      },
+      {
+        "count": 223,
+        "prior_status": "REVIEW_REQUIRED_CONFLICTING_SIGNALS",
+        "refinement_verdict": "SEMANTIC_EVIDENCE_INSUFFICIENT"
+      },
+      {
+        "count": 2,
+        "prior_status": "REVIEW_REQUIRED_CONFLICTING_SIGNALS",
+        "refinement_verdict": "STRUCTURAL_SIMILARITY_ONLY"
+      }
+    ],
+    "outputs": {
+      "focused_cases": {
+        "bytes": 306845,
+        "path": "indexes/task016_semantic_refinement_focused_cases.jsonl",
+        "record_count": 15,
+        "sha256": "459dfe8e1a58f7ac71cbd7bde5e30f221f9511126b0304400b1acc3e872ee61c"
+      },
+      "refined_pairs": {
+        "bytes": 8086704,
+        "path": "indexes/task016_semantic_refinement_pairs.jsonl",
+        "record_count": 1170,
+        "sha256": "70108ef6eb3e395e1557870e62d1ff5738f2a14f378eec9946d0878c76607135"
+      },
+      "suggestions": {
+        "bytes": 0,
+        "path": "indexes/task016_semantic_refinement_divergent_suggestions.jsonl",
+        "record_count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "refined_pair_count": 1170,
+    "refinement_distribution": {
+      "CONFLICTING_SEMANTICS_REVIEW": 120,
+      "DIFFERENT_BUSINESS_ACTION_SUPPORTED": 1,
+      "POTENTIAL_SAME_BEHAVIOR_DIFFERENT_EXPOSURE": 470,
+      "SEMANTIC_EVIDENCE_INSUFFICIENT": 573,
+      "STRUCTURAL_SIMILARITY_ONLY": 6
+    },
+    "rules_version": "task016-focused-semantic-refinement-v1",
+    "runtime_usage_inferred": false,
+    "staging_modified": false,
+    "structurally_equal_not_proven_same_function_count": 717,
+    "structurally_equal_pair_count": 717,
+    "unpaired_visible_operation_count": 1481
+  },
+  "rules_version": "task016-focused-semantic-refinement-v1",
+  "staging_modified": false
+}

@@ -2,108 +2,116 @@
 
 ## Task executed
 
-Phase 5 — Task 016: Full Logical Function Candidate Discovery and Normalization.
+Phase 5 — Task 016: Focused Semantic Refinement / Functional Duplication False-Positive Control.
 
 ## Prompt file used
 
-`codex/comm/prompts/phase-5-016-full-logical-function-normalization.md`
+`codex/comm/prompts/phase-5-016-focused-semantic-refinement.md`
 
 ## Execution summary
 
-- Implemented an additive deterministic full-estate Task 016 engine without changing frozen Task 014/015 code or evidence.
-- Reconciled all 2,414 accepted HTTP operations one-to-one with their Task 015 Observed Function records. Every operation remains visible: 933 have one or more bounded candidates and 1,481 remain explicit `NO_BOUNDED_CANDIDATE_FOUND_SINGLETON_VISIBLE` records.
-- Generated 1,170 operation-pair candidate proposals. All 60 inherited Task 014 structural candidate IDs are represented; 1,030 pairs are outside the original structural-overlap set.
-- Candidate generation uses bounded inverted blocks for provisional wording/action-object, method/path shape, request/response shape hashes, configured backend observations, object tokens and provisional version-family keys. It did not run 2,414×2,414 all-pairs analysis.
-- Recorded 12,455 block diagnostics. Seventeen oversized blocks were explicitly queued rather than expanded. The per-operation cap is 20 and dropped zero otherwise-eligible candidates in this run.
-- Read 762 targeted authoritative API documents for finalist endpoint, schema, assembly, branch and transformation context. Source evidence under `staging/` was not modified.
-- Kept consumer-facing endpoints separate from backend implementation evidence. Operation-scoped configured facts remain distinct from API-shared candidate context; all runtime egress states remain `NOT_PROVEN`.
-- Reconstructed subscription exposure only through accepted six-edge ID joins: Subscription→Product/Plan/Application, Product→Plan/API and Plan→API. Relationship IDs and safe counts are retained; subscriber/application identities are omitted. Subscription membership is never treated as an operation call, active consumer or production deployment.
-- Preserved all 113 unresolved Product-location occurrences without name cross-joins.
-- Built 166 provisional version/variant families. All report `FEATURE_FLAG_NOT_EVIDENCED`; no coexistence reason, replacement order, deployment order, activity or obsolescence was inferred.
-- Added dependency-fingerprinted, output-hash-verified exact replay caching and atomic deterministic output generation.
-- Produced all required compact, secret-safe evidence under `tests/evidence/task-016/full-extraction/` and full local indexes under `indexes/`.
-- Did not access Confluence, use an LLM/vector database/Blackboard/multi-agent framework, form Logical APIs, approve duplicates, retire/merge endpoints, assign domains/capabilities, or begin Task 017–019/Kong design.
+- Added a deterministic semantic-refinement layer over the existing Task 016 full indexes. The 1,170-pair baseline was consumed, not regenerated or rewritten.
+- Reconciled all 1,170 prior comparison IDs exactly once and preserved every prior status, candidate ID, Task 014 operation ID, Task 015 Observed Function ID and canonical API identity.
+- Applied the mandated identity hypothesis: Business Action + Business Object + Behavioral Semantics. Endpoint, schema, backend-system, version and subscription similarity remain candidate-retrieval/context signals only.
+- Required documented action evidence or two corroborating structural sources before supporting a business action. A name or single path signal cannot produce a hard different-action verdict.
+- Used stricter object alignment rather than a single shared generic token for potential-same or supported-different conclusions.
+- Retained all 1,481 unpaired-visible operations. A bounded check of the existing Task 016 cached exact action/object blocks found zero additional divergent-path suggestions; no all-pairs search or candidate-regeneration run occurred.
+- Reused Task 014/015, Task 016 full, backend resolution, CodeGraph dependency and accepted relationship indexes. CodeGraph context is limited to hashed relationship/target IDs and configuration scope.
+- Performed targeted raw-source verification for 15 focused cases covering 30 authoritative source documents. Source descriptions/summaries and direct pointers, operation selectors, invokes, branches, rewrites, transformations and GatewayScript pointers were handled safely; script bodies and dispatch values were omitted.
+- Added an audit-only documented approve/reject-versus-cancel SC-request control outside the 1,170 baseline. It demonstrates action disambiguation without modifying the candidate inventory.
+- Preserved Product/Plan/Subscription and version context without inferring calls, production adoption, active feature flags, replacement, retirement or interchangeability.
+- Modified no frozen Task 014/015 or Task 016 full source/index and no file under `staging/`.
+- Did not begin Task 017, Rationalization, Retirement or Kong design.
 
-## Exact results
+## Exact refinement distribution
 
-- Input/reconciled operations: **2,414 / 2,414**.
-- Candidate pairs/groups: **1,170 / 1,170**.
-- Paired operations: **933**.
-- Unpaired-visible operations: **1,481**.
-- Original Task 014 structural candidates represented: **60 / 60**.
-- Candidate pairs outside the original set: **1,030**.
-- Proposal statuses: **405** `POSSIBLE_SAME_LOGICAL_FUNCTION`, **637** `REVIEW_REQUIRED_CONFLICTING_SIGNALS`, **3** `CLEARLY_DIFFERENT_SUPPORTED`, **125** `NOT_COMPARABLE_DUE_TO_MISSING_EVIDENCE`.
-- Contract dimension: **717** structurally equal in compared safe shapes; **453** contain material structural differences requiring review. This is not a compatibility or substitution approval.
-- Candidate-side subscription states: **2,095** `AVAILABLE`; **245** `NOT_EVIDENCED_IN_ACCEPTED_SOURCE`. A total of **1,138** candidate pairs have at least one side with an accepted indirect subscription join. Absence does not mean zero enterprise consumers.
-- Version/variant families: **166**; all feature flags not evidenced.
-- Review queue: **1,170**, all pending Integration Architect review.
-- Inherited gap categories: **11 / 11** retained.
-- Targeted source documents: **762**.
+- Existing pairs refined: **1,170 / 1,170 exactly once**.
+- `POTENTIAL_SAME_BEHAVIOR_DIFFERENT_EXPOSURE`: **470**.
+- `DIFFERENT_BUSINESS_ACTION_SUPPORTED`: **1** existing pair.
+- `STRUCTURAL_SIMILARITY_ONLY`: **6**.
+- `CONFLICTING_SEMANTICS_REVIEW`: **120**.
+- `SEMANTIC_EVIDENCE_INSUFFICIENT`: **573**.
+- Structurally equal request/response pairs: **717**; structurally equal pairs proven same function: **0**.
+- Unpaired-visible operations retained: **1,481**.
+- New bounded divergent-form suggestions: **0**.
+- Approved duplicates, merges, replacements or retirements: **0**.
 
-## Important evidence findings
+## Evidence strength and backend scope
 
-- Seasonal visa and v2 remain a conflicting-signal review proposal: both expose `POST /searchseasvisareq` with the same provisional Task 015 wording, while the actual request differs on `SortBy` and the response contains field/requiredness/type contrasts. Their backend evidence is candidate context, feature flags are not evidenced, and coexistence/replacement/activity remain unverified.
-- The employment-status enquiry/query-center pair remains a conflicting-signal proposal: wording and endpoint signals overlap, while actual request structure differs. Shared configured context does not establish runtime egress or equivalent behavior.
-- Candidate discovery found pairs beyond name/path similarity, but those remain provisional because common schemas, backend observations, product exposure or wording can reflect reuse rather than shared business intent.
-- The three `CLEARLY_DIFFERENT_SUPPORTED` records are deterministic false-positive controls based on explicit conflicting actions/contracts. They do not make estate-wide negative-equivalence claims.
-- All candidate relationships preserve positive and negative evidence, source provenance/fingerprints, Task 015 uncertainty and distinct API/operation identities.
+Across the 2,340 candidate sides:
 
-## Evidence and generated outputs
+- Documented action: **1,065**.
+- Structurally corroborated provisional action: **70**.
+- Name/single-signal only: **229**.
+- Action not evidenced: **976**.
+- `CONFIGURED_API_SHARED_CANDIDATE`: **2,319** sides.
+- `CONFIGURED_OPERATION_SCOPED`: **3** sides.
+- `NOT_EVIDENCED`: **18** sides.
+- `RESOLVED_OPERATION_SEMANTICS`: **0** sides.
 
-Committed evidence:
+The absence of resolved operation semantics is explicit. API-shared targets were not promoted to operation behavior, and no configuration was treated as runtime egress.
 
-- `tests/evidence/task-016/full-extraction/logical_function_candidate_contract.md`
-- `tests/evidence/task-016/full-extraction/candidate_discovery_coverage.json`
-- `tests/evidence/task-016/full-extraction/endpoint_and_subscription_comparisons.jsonl`
-- `tests/evidence/task-016/full-extraction/version_variant_family_assessment.jsonl`
-- `tests/evidence/task-016/full-extraction/normalized_logical_function_candidates.jsonl`
-- `tests/evidence/task-016/full-extraction/review_queue_and_gap_impact.json`
-- `tests/evidence/task-016/full-extraction/cache_and_tests.json`
-- `tests/evidence/task-016/full-extraction/build_manifest.json`
-- `tests/evidence/task-016/full-extraction/commands_and_results.txt`
-- `tests/evidence/task-016/full-extraction/generate_full_evidence.py`
+## Grounded findings and contradictions
 
-Ignored full local indexes:
+- Seasonal visa v1/v2 is `POTENTIAL_SAME_BEHAVIOR_DIFFERENT_EXPOSURE`: apparent search action/object aligns, while the `SortBy` request difference and response structural differences remain material context. Backend scope remains API-shared candidate-only; coexistence, activity and replacement are unverified.
+- Employment-status enquiry/query-center is `SEMANTIC_EVIDENCE_INSUFFICIENT`. Matching endpoint/wording and backend context do not independently establish operation behavior.
+- Activate versus deactivate industrial-establishment endpoints have structurally equal compared shapes, but each action is supported only by a single path signal. The pair remains `SEMANTIC_EVIDENCE_INSUFFICIENT` rather than receiving a hard different-action verdict.
+- Submit versus update establishment-training disclosure is the one existing `DIFFERENT_BUSINESS_ACTION_SUPPORTED` pair: supported submit/update actions differ while the establishment/training/disclosure object evidence aligns.
+- The approve/reject SC-request versus cancel SC-request audit-only control has direct documented action evidence and demonstrates that common request objects or wrappers cannot make those behaviors duplicates.
+- The Qiwa versus WS cancel-external-contract pair remains `CONFLICTING_SEMANTICS_REVIEW`: cancel path/action signals conflict with copied source description evidence on one side. Structural/backend similarity cannot resolve that contradiction.
+- Of ambiguous/negative cohorts, 446 records lack supported action evidence, 212 lack business-object alignment, 63 contain conflicting source action signals, 127 include a Task 015 insufficient side, and 13 contain differing supported actions without all requirements for a hard different-action conclusion.
 
-- `indexes/task016_full_operation_catalog.jsonl`
-- `indexes/task016_full_candidate_pairs.jsonl`
-- `indexes/task016_full_candidate_groups.jsonl`
-- `indexes/task016_full_version_variant_families.jsonl`
-- `indexes/task016_full_review_queue.jsonl`
-- `indexes/task016_full_candidate_blocks.jsonl`
-- `indexes/cache/task016_full_candidate_cache.json`
-- `indexes/task016_full_manifest.json`
+## Outputs
 
-## Evidence limitations by dimension
+Full local ignored indexes:
 
-- **Business intent:** Task 015 action/object wording is automated and provisional; no candidate is architect-approved equivalence.
-- **Contract compatibility:** safe structure detects presence, requiredness, type, nesting and represented enum differences, but does not establish behavioral compatibility or safe substitution.
-- **Backend certainty:** operation-scoped configuration is a configured fact; API-shared context is candidate-only. Neither proves executed routing or runtime egress.
-- **Version/variant relation:** names and version labels do not prove age, precedence, replacement, activity or obsolescence.
-- **Product/Plan/Subscription:** accepted membership is indirect exposure context only. It does not prove calls, active consumers or production deployment; missing staging subscriptions do not prove no real consumers.
-- **Runtime usage:** not evidenced by this source set for any candidate.
-- **Recall:** bounded multi-signal blocks provide a measurable recall proxy, not complete business-equivalence recall. Relationships sharing no indexed signal can remain undiscovered.
-- **Staging:** this sandbox-like export cannot establish production deployment, adoption, criticality, inactivity or retirement.
+- `indexes/task016_semantic_refinement_pairs.jsonl`
+- `indexes/task016_semantic_refinement_divergent_suggestions.jsonl`
+- `indexes/task016_semantic_refinement_focused_cases.jsonl`
+- `indexes/task016_semantic_refinement_manifest.json`
+
+Committed compact evidence:
+
+- `tests/evidence/task-016/semantic-refinement/refinement_contract.md`
+- `tests/evidence/task-016/semantic-refinement/pair_refinement_distribution.json`
+- `tests/evidence/task-016/semantic-refinement/focused_cases.jsonl`
+- `tests/evidence/task-016/semantic-refinement/false_positive_and_false_negative_audit.md`
+- `tests/evidence/task-016/semantic-refinement/review_priorities.json`
+- `tests/evidence/task-016/semantic-refinement/commands_and_results.txt`
+- `tests/evidence/task-016/semantic-refinement/build_fingerprints.json`
+- `tests/evidence/task-016/semantic-refinement/generate_refinement_evidence.py`
 
 ## Tests and validation
 
 - Compilation: **PASS**.
-- Task 016 focused suite: **7 passed**.
-- Focused Task 014/015 regression plus Task 016 mock/full: **27 passed**.
-- Repository suite with loopback permission: **77 passed, 5 setup errors**.
+- Focused semantic-refinement tests: **7 passed**.
+- Task 014/015 plus Task 016 mock/full/refinement regression: **34 passed**.
+- Repository suite with loopback permission: **84 passed, 5 setup errors**.
 - The five errors are the known frozen Phase 0 fixture-packaging issue: `tests/fixtures/repository_profile/staging` is absent. No Task 016 test failed.
-- A first sandboxed repository run had the same five errors plus one loopback-bind permission failure; the permission-enabled rerun passed the HTTP server test.
-- Exact coverage, all 60 inherited candidates, new-candidate discovery, bounded block diagnostics, accepted subscription join types, negative controls, schema contradictions, version hierarchy/non-inference, endpoint/backend scope, frozen-input integrity, credential/hostname redaction and byte-deterministic replay: **PASS**.
+- Exact pair reconciliation, prior-status/ID preservation, 717 structural false-positive controls, hard-action evidence gates, approve/reject/cancel control, backend scope, CodeGraph safe context, seasonal/employment cases, continued unpaired visibility, absence of approval claims, redaction, frozen integrity and byte-deterministic regeneration: **PASS**.
 - `git diff --check`: **PASS**.
+
+## Evidence limitations
+
+- The refinement is deterministic triage, not certified business semantics. All verdicts remain pending Integration Architect/Enterprise Architect review.
+- The 470 potential-same records align on supported action/object evidence but do not prove identical business rules, backend behavior, contract compatibility or safe substitution.
+- Only three candidate sides contain operation-scoped configured backend facts, and none meet the evidence bar for resolved backend operation semantics in this refinement.
+- Assembly policy and GatewayScript presence do not reveal behavior without safe, authoritative dispatch evidence; scripts were not semantically interpreted.
+- The bounded unpaired check only covers reusable exact action/object cache blocks of size 2–10 with divergent paths. Zero suggestions is not a complete recall claim.
+- Subscription presence/absence and version numbering remain exposure context only. Staging cannot prove production deployment, traffic, adoption, feature-flag activity, inactivity or retirement.
+- The 11 inherited gap categories, 113 unresolved Product-location occurrences, Task 015 ambiguity and native-protocol limitations remain in force.
 
 ## Unresolved issues and architecture decisions
 
-- All 1,170 candidates require Integration Architect/Enterprise Architect disposition; none is an approved Logical Function or duplicate.
-- Architects must validate shared business intent separately from contract compatibility, backend similarity, version/variant purpose and consumer exposure.
-- The 637 conflicting cases and 125 missing-evidence cases are priority review items; targeted named design/runtime evidence may be needed only if explicitly authorized.
-- The 17 oversized candidate blocks remain transparent recall-limit queues. No candidates were dropped by the per-operation fan-out cap in this run.
-- The 467 Task 015 ambiguous/insufficient interpretations, 44 API-level gaps, all 11 inherited gap classes, 113 unresolved Product-location occurrences and native-protocol limits remain upstream constraints.
-- Five frozen Phase 0 tests cannot start until their missing fixture directory is restored; this task did not reopen that frozen phase.
+- Architects must adjudicate the 470 potential-same records separately from contract compatibility and exposure context; none is an approved duplicate.
+- The 120 conflicting and 573 insufficient records need targeted source-owner/design evidence only where architecture priority warrants it. Manual review of all 1,170 pairs is not requested.
+- Source description/path conflicts need an authoritative behavior source before classification can harden.
+- Backend-dependent conclusions need operation selector/dispatch/backend-operation evidence; a shared backend target or system is insufficient.
+- The five frozen Phase 0 fixture setup errors remain unresolved and were not reopened.
+
+## Task 017 readiness
+
+The refinement layer is adequate as a **false-positive-control and prioritized-review mechanism**, but it is **not adequate to authorize Task 017 without explicit architect acceptance**. No Logical Function equivalence set has been approved.
 
 ## Deviations from the prompt
 
@@ -111,8 +119,8 @@ None.
 
 ## Final status
 
-**REVIEW_REQUIRED** — Task 016 full extraction and validation are complete; Integration Architect/Enterprise Architect review is mandatory before Task 017.
+**REVIEW_REQUIRED** — focused Task 016 refinement is complete and awaits Integration Architect / Enterprise Architect review.
 
 ## Mandatory stop
 
-STOP. Do not begin Task 017, Task 018, Task 019, Rationalization or Kong design without explicit Enterprise Architect approval.
+STOP. Task 017 and all later modernization work remain unauthorized.

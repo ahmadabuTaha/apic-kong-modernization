@@ -1,0 +1,31 @@
+{
+  "manual_review_of_all_pairs_required": false,
+  "no_duplicate_merge_retirement_or_runtime_decision": true,
+  "priority_distribution": {
+    "P1_CONFLICTING_SOURCE_ACTION_OR_OBJECT": 120,
+    "P1_OPERATION_BEHAVIOR_NOT_EVIDENCED": 573,
+    "P2_NEGATIVE_ACTION_CONTROL": 1,
+    "P2_POTENTIAL_SAME_BEHAVIOR_VALIDATION": 470,
+    "P2_STRUCTURAL_ONLY_FALSE_POSITIVE_CONTROL": 6
+  },
+  "reason": "The refined layer prevents structural equivalence from becoming a duplicate verdict, but all potential-same behavior records remain pending and substantial behavior evidence is insufficient or conflicting.",
+  "targeted_requests": [
+    {
+      "cohort": "SEMANTIC_EVIDENCE_INSUFFICIENT",
+      "request": "Named operation design or source-owner evidence for action, object and dispatch behavior; do not infer from the API name."
+    },
+    {
+      "cohort": "CONFLICTING_SEMANTICS_REVIEW",
+      "request": "Resolve description/summary versus path/operationId conflicts and identify the authoritative operation behavior."
+    },
+    {
+      "cohort": "POTENTIAL_SAME_BEHAVIOR_DIFFERENT_EXPOSURE",
+      "request": "Architect validation of behavioral identity separately from contract compatibility and subscriber exposure."
+    },
+    {
+      "cohort": "CONFIGURED_API_SHARED_CANDIDATE",
+      "request": "Operation-level assembly/dispatch or backend-operation evidence where sameness depends on the configured target."
+    }
+  ],
+  "task017_readiness": "NOT_ADEQUATE_WITHOUT_ARCHITECT_ACCEPTANCE"
+}

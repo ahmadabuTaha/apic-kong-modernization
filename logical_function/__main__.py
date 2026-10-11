@@ -1,8 +1,8 @@
 import json
 from pathlib import Path
 
-from .full_inventory import build_full
+from .refinement import build_refinement
 
 
-result = build_full(Path("."))
+result = build_refinement(Path("."))
 print(json.dumps(result["manifest"], indent=2, sort_keys=True))

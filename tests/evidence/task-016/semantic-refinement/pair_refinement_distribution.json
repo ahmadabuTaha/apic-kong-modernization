@@ -1,0 +1,92 @@
+{
+  "all_pairs_performed": false,
+  "ambiguous_or_negative_evidence_reasons": {
+    "BUSINESS_OBJECT_ALIGNMENT_NOT_ESTABLISHED": 212,
+    "SOURCE_ACTION_SIGNALS_CONFLICT": 63,
+    "SUPPORTED_ACTION_NOT_EVIDENCED": 446,
+    "SUPPORTED_BUSINESS_ACTIONS_DIFFER": 13,
+    "TASK015_SIDE_INSUFFICIENT": 127
+  },
+  "approved_duplicate_count": 0,
+  "baseline_candidate_generation_rerun": false,
+  "baseline_pair_count": 1170,
+  "complete_recall_claimed": false,
+  "divergent_form_check_scope": "Existing Task 016 cached exact action/object blocks among the 1,481 unpaired-visible operations; groups of 2-10 only, divergent paths, maximum 25 suggestions.",
+  "divergent_form_suggestion_count": 0,
+  "divergent_form_suggestions": [],
+  "exact_once_reconciliation_pass": true,
+  "old_status_by_refinement": [
+    {
+      "count": 1,
+      "prior_status": "CLEARLY_DIFFERENT_SUPPORTED",
+      "refinement_verdict": "CONFLICTING_SEMANTICS_REVIEW"
+    },
+    {
+      "count": 2,
+      "prior_status": "CLEARLY_DIFFERENT_SUPPORTED",
+      "refinement_verdict": "SEMANTIC_EVIDENCE_INSUFFICIENT"
+    },
+    {
+      "count": 125,
+      "prior_status": "NOT_COMPARABLE_DUE_TO_MISSING_EVIDENCE",
+      "refinement_verdict": "SEMANTIC_EVIDENCE_INSUFFICIENT"
+    },
+    {
+      "count": 9,
+      "prior_status": "POSSIBLE_SAME_LOGICAL_FUNCTION",
+      "refinement_verdict": "CONFLICTING_SEMANTICS_REVIEW"
+    },
+    {
+      "count": 169,
+      "prior_status": "POSSIBLE_SAME_LOGICAL_FUNCTION",
+      "refinement_verdict": "POTENTIAL_SAME_BEHAVIOR_DIFFERENT_EXPOSURE"
+    },
+    {
+      "count": 223,
+      "prior_status": "POSSIBLE_SAME_LOGICAL_FUNCTION",
+      "refinement_verdict": "SEMANTIC_EVIDENCE_INSUFFICIENT"
+    },
+    {
+      "count": 4,
+      "prior_status": "POSSIBLE_SAME_LOGICAL_FUNCTION",
+      "refinement_verdict": "STRUCTURAL_SIMILARITY_ONLY"
+    },
+    {
+      "count": 110,
+      "prior_status": "REVIEW_REQUIRED_CONFLICTING_SIGNALS",
+      "refinement_verdict": "CONFLICTING_SEMANTICS_REVIEW"
+    },
+    {
+      "count": 1,
+      "prior_status": "REVIEW_REQUIRED_CONFLICTING_SIGNALS",
+      "refinement_verdict": "DIFFERENT_BUSINESS_ACTION_SUPPORTED"
+    },
+    {
+      "count": 301,
+      "prior_status": "REVIEW_REQUIRED_CONFLICTING_SIGNALS",
+      "refinement_verdict": "POTENTIAL_SAME_BEHAVIOR_DIFFERENT_EXPOSURE"
+    },
+    {
+      "count": 223,
+      "prior_status": "REVIEW_REQUIRED_CONFLICTING_SIGNALS",
+      "refinement_verdict": "SEMANTIC_EVIDENCE_INSUFFICIENT"
+    },
+    {
+      "count": 2,
+      "prior_status": "REVIEW_REQUIRED_CONFLICTING_SIGNALS",
+      "refinement_verdict": "STRUCTURAL_SIMILARITY_ONLY"
+    }
+  ],
+  "refined_pair_count": 1170,
+  "refinement_distribution": {
+    "CONFLICTING_SEMANTICS_REVIEW": 120,
+    "DIFFERENT_BUSINESS_ACTION_SUPPORTED": 1,
+    "POTENTIAL_SAME_BEHAVIOR_DIFFERENT_EXPOSURE": 470,
+    "SEMANTIC_EVIDENCE_INSUFFICIENT": 573,
+    "STRUCTURAL_SIMILARITY_ONLY": 6
+  },
+  "rules_version": "task016-focused-semantic-refinement-v1",
+  "structurally_equal_not_proven_same_function_count": 717,
+  "structurally_equal_pair_count": 717,
+  "unpaired_visible_operation_count": 1481
+}
