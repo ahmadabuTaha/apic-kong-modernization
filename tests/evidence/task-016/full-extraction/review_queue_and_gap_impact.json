@@ -1,0 +1,129 @@
+{
+  "architect_questions": [
+    "Which candidate pairs share business intent despite contract differences?",
+    "Which contract differences represent incompatible behavior, channel variants or version evolution?",
+    "Does accepted Product/Plan exposure explain distinct consumer tracks without implying actual calls?",
+    "Is named targeted design/runtime evidence authorized for unresolved high-priority candidates?"
+  ],
+  "candidate_review_queue_count": 1170,
+  "inherited_gap_categories": [
+    {
+      "affected_canonical_api_count": 1967,
+      "affected_operation_count": 2282,
+      "gap_id": "task014-gap:api-shared-backend-candidate-context",
+      "handling": "Preserved as scoped uncertainty; never promoted to a production quality, usage, retirement or whole-phase conclusion.",
+      "recheck_trigger": "Exact operation-scoped configuration or accepted runtime evidence",
+      "scope": "operation",
+      "severity": "LOCAL_REVIEW_REQUIRED",
+      "task016_impact": "Shared backend is insufficient to merge observed functions."
+    },
+    {
+      "affected_canonical_api_count": 364,
+      "affected_operation_count": 757,
+      "gap_id": "task014-gap:missing-description",
+      "handling": "Preserved as scoped uncertainty; never promoted to a production quality, usage, retirement or whole-phase conclusion.",
+      "recheck_trigger": "Source metadata enrichment or Task 015 reviewer decision",
+      "scope": "operation",
+      "severity": "NON_BLOCKING",
+      "task016_impact": "May lower confidence when comparing or grouping observed functions."
+    },
+    {
+      "affected_canonical_api_count": 379,
+      "affected_operation_count": 767,
+      "gap_id": "task014-gap:missing-operationid",
+      "handling": "Preserved as scoped uncertainty; never promoted to a production quality, usage, retirement or whole-phase conclusion.",
+      "recheck_trigger": "Source metadata enrichment or Task 015 reviewer decision",
+      "scope": "operation",
+      "severity": "NON_BLOCKING",
+      "task016_impact": "May lower confidence when comparing or grouping observed functions."
+    },
+    {
+      "affected_canonical_api_count": 0,
+      "affected_operation_count": 0,
+      "gap_id": "task014-gap:missing-request-schema-shape",
+      "handling": "Preserved as scoped uncertainty; never promoted to a production quality, usage, retirement or whole-phase conclusion.",
+      "recheck_trigger": "Resolvable request schema or explicit source description",
+      "scope": "operation",
+      "severity": "LOCAL_REVIEW_REQUIRED",
+      "task016_impact": "Request-contract similarity is not comparable."
+    },
+    {
+      "affected_canonical_api_count": 1950,
+      "affected_operation_count": 2338,
+      "gap_id": "task014-gap:missing-summary",
+      "handling": "Preserved as scoped uncertainty; never promoted to a production quality, usage, retirement or whole-phase conclusion.",
+      "recheck_trigger": "Source metadata enrichment or Task 015 reviewer decision",
+      "scope": "operation",
+      "severity": "NON_BLOCKING",
+      "task016_impact": "May lower confidence when comparing or grouping observed functions."
+    },
+    {
+      "affected_canonical_api_count": 3,
+      "affected_operation_count": 7,
+      "gap_id": "task014-gap:native-protocol-semantics-not-extracted",
+      "handling": "Preserved as scoped uncertainty; never promoted to a production quality, usage, retirement or whole-phase conclusion.",
+      "recheck_trigger": "Need for native GraphQL/WSDL semantic comparison",
+      "scope": "protocol",
+      "severity": "LOCAL_REVIEW_REQUIRED",
+      "task016_impact": "Native-operation equivalence cannot be evaluated."
+    },
+    {
+      "affected_canonical_api_count": 5,
+      "affected_operation_count": 0,
+      "gap_id": "task014-gap:no-supported-path-items",
+      "handling": "Preserved as scoped uncertainty; never promoted to a production quality, usage, retirement or whole-phase conclusion.",
+      "recheck_trigger": "Protocol/parser decision or corrected source document",
+      "scope": "api",
+      "severity": "DOWNSTREAM_BLOCKER",
+      "task016_impact": "HTTP-operation-derived semantics are unavailable for these APIs; do not treat zero extracted operations as no business behavior."
+    },
+    {
+      "affected_canonical_api_count": 36,
+      "affected_operation_count": 0,
+      "gap_id": "task014-gap:registry-only-no-operations",
+      "handling": "Preserved as scoped uncertainty; never promoted to a production quality, usage, retirement or whole-phase conclusion.",
+      "recheck_trigger": "Accepted authoritative API source becomes available",
+      "scope": "api",
+      "severity": "DOWNSTREAM_BLOCKER",
+      "task016_impact": "No operation/function evidence can be produced for these APIs until an authoritative source representation is recovered."
+    },
+    {
+      "affected_canonical_api_count": 89,
+      "affected_operation_count": 0,
+      "gap_id": "task014-gap:structural-overlap-candidates",
+      "handling": "Preserved as scoped uncertainty; never promoted to a production quality, usage, retirement or whole-phase conclusion.",
+      "recheck_trigger": "Task 015 observed-function approval for both sides and Task 016 review",
+      "scope": "relationship",
+      "severity": "DOWNSTREAM_BLOCKER",
+      "task016_impact": "Blocks confirmed Logical Function/API grouping for candidate pairs until semantic validation."
+    },
+    {
+      "affected_canonical_api_count": 110,
+      "affected_operation_count": 0,
+      "gap_id": "task014-gap:unresolved-product-location",
+      "handling": "Preserved as scoped uncertainty; never promoted to a production quality, usage, retirement or whole-phase conclusion.",
+      "recheck_trigger": "New authoritative Product-location identity evidence",
+      "scope": "relationship",
+      "severity": "LOCAL_REVIEW_REQUIRED",
+      "task016_impact": "May hide contextual evidence used to distinguish similar functions."
+    },
+    {
+      "affected_canonical_api_count": 2,
+      "affected_operation_count": 2,
+      "gap_id": "task014-gap:v2-schema-shape-difference",
+      "handling": "Preserved as scoped uncertainty; never promoted to a production quality, usage, retirement or whole-phase conclusion.",
+      "recheck_trigger": "Architect validation of v2 contract intent",
+      "scope": "operation",
+      "severity": "DOWNSTREAM_BLOCKER",
+      "task016_impact": "Blocks any same-function or version-replacement conclusion without semantic/schema review."
+    }
+  ],
+  "inherited_gap_category_count": 11,
+  "priority_distribution": {
+    "HIGH": 762,
+    "NORMAL": 408
+  },
+  "staging_limitation": "Absence in staging is not zero production consumers, inactivity, retirement or a production defect.",
+  "unresolved_product_location_occurrence_count": 113,
+  "unresolved_product_locations_cross_joined_by_name": false
+}

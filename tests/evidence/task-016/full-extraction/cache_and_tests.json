@@ -1,0 +1,16 @@
+{
+  "cache": {
+    "bytes": 1402275,
+    "path": "indexes/cache/task016_full_candidate_cache.json",
+    "record_count": 2414,
+    "sha256": "653ebe1719d50f1a3b909521712f8c0aaac7e6f9650e7ae25d045188cf7692ff"
+  },
+  "cache_dependency_guarded": true,
+  "cached_outputs_hash_verified_before_reuse": true,
+  "deterministic_atomic_outputs": true,
+  "incremental_exact_replay_supported": true,
+  "model_use": "NONE_DETERMINISTIC_RULES_ONLY",
+  "rules_version": "task016-logical-function-full-v1",
+  "targeted_source_document_count": 762,
+  "tests": "See commands_and_results.txt; repository failures, if any, are reported distinctly."
+}

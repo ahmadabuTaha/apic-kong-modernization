@@ -1,0 +1,32 @@
+{
+  "all_pairs_performed": false,
+  "block_member_cap": 40,
+  "candidate_group_count": 1170,
+  "candidate_pair_count": 1170,
+  "fanout_capped_candidate_count": 0,
+  "input_operation_count": 2414,
+  "new_candidate_pair_count": 1030,
+  "operation_catalog_count": 2414,
+  "operation_reconciliation_pass": true,
+  "original_structural_candidate_count": 60,
+  "original_structural_candidates_included": 60,
+  "oversized_block_count": 17,
+  "paired_operation_count": 933,
+  "per_operation_candidate_cap": 20,
+  "recall_proxy": {
+    "all_inherited_structural_candidates_represented": true,
+    "complete_business_equivalence_recall_claimed": false,
+    "limitation": "Bounded deterministic blocks cannot detect relationships whose wording, endpoints, contracts, backend configuration, version cues and accepted exposure context share no indexed signal.",
+    "negative_controls_present": 3,
+    "new_candidates_beyond_original_set": 1030
+  },
+  "rules_version": "task016-logical-function-full-v1",
+  "status_distribution": {
+    "CLEARLY_DIFFERENT_SUPPORTED": 3,
+    "NOT_COMPARABLE_DUE_TO_MISSING_EVIDENCE": 125,
+    "POSSIBLE_SAME_LOGICAL_FUNCTION": 405,
+    "REVIEW_REQUIRED_CONFLICTING_SIGNALS": 637
+  },
+  "unpaired_operation_count": 1481,
+  "unpaired_operations_remain_visible_in": "indexes/task016_full_operation_catalog.jsonl"
+}
