@@ -1,0 +1,88 @@
+{
+  "evidence_sufficiency": {
+    "INSUFFICIENT": 23,
+    "PARTIAL": 19,
+    "SUFFICIENT_FOR_PROVISIONAL_BOUNDARY": 3,
+    "SUPPORTED_SEPARATE": 1
+  },
+  "exclusions": [
+    "No all-pairs search or full-estate formation.",
+    "No raw staging reads for the expansion.",
+    "No production telemetry, CI/CD lineage, release sequence, ownership map, or consumer interviews."
+  ],
+  "full_estate_coverage_claimed": false,
+  "member_occurrence_count": 98,
+  "new_case_count": 36,
+  "original_anchor_count": 10,
+  "requirements": {
+    "different_names_paths_same_action_object_6_plus": {
+      "actual": 17,
+      "met": true
+    },
+    "disagreement_or_backend_uncertainty_4_plus": {
+      "actual": 11,
+      "met": true
+    },
+    "multi_operation_apis_4_plus": {
+      "actual": 5,
+      "met": true
+    },
+    "named_leads": {
+      "actual": 6,
+      "met": true
+    },
+    "negative_controls_5_plus": {
+      "actual": 13,
+      "met": true
+    },
+    "product_plan_context_4_plus": {
+      "actual": 11,
+      "met": true
+    },
+    "same_object_different_actions_6_plus": {
+      "actual": 13,
+      "met": true
+    },
+    "version_variants_5_plus": {
+      "actual": 12,
+      "met": true
+    }
+  },
+  "sampling_bias": [
+    "Purposeful adversarial review sample, not statistically representative.",
+    "Task 016 candidate generation limits which pair relationships are visible.",
+    "HTTP operations with richer descriptions are easier to assess than generic roots or copied metadata."
+  ],
+  "sampling_method": "Deterministic bounded selection of 32 existing Task 016 comparisons, four accepted multi-operation APIs, and the immutable ten-case Task 017 mock.",
+  "strata": {
+    "AMBIGUOUS_BOUNDARY": 2,
+    "BACKEND_UNCERTAINTY": 3,
+    "COPIED_SEMANTICS": 5,
+    "DIFFERENT_ACTIONS": 13,
+    "DISAGREEMENT": 10,
+    "DIVERGENT_EXPOSURE": 17,
+    "GENERIC_WRAPPER": 1,
+    "MULTI_OPERATION_API": 5,
+    "NAMED_LEAD": 6,
+    "NEGATIVE_CONTROL": 13,
+    "ORIGINAL_ANCHOR": 10,
+    "PRODUCT_CONTEXT": 11,
+    "SAME_ACTION_OBJECT": 12,
+    "SC_DEEP_DIVE": 1,
+    "SHARED_PATH": 2,
+    "SHARED_SCHEMA": 5,
+    "TECHNICAL_SECURITY": 1,
+    "VERSION_VARIANT": 12
+  },
+  "target_case_range": "40-50",
+  "target_unique_operation_range": "70-100 where feasible",
+  "total_case_count": 46,
+  "unaddressable_categories": [
+    "Actual production usage and runtime egress.",
+    "Enterprise ownership and release boundaries.",
+    "Consumer intent behind versions and Product/Plan subscriptions.",
+    "Safe consolidation or retirement."
+  ],
+  "unique_canonical_api_count": 86,
+  "unique_operation_count": 98
+}

@@ -1,0 +1,139 @@
+{
+  "architect_acceptance_count": 0,
+  "deterministic_generation": true,
+  "evidence_artifacts": {
+    "architecture_decision_rubric.md": {
+      "bytes": 2226,
+      "sha256": "b1b00fc132660add6134d46d955cbacd1612179b87799e48a3a852b7d37bf121"
+    },
+    "commands_and_results.txt": {
+      "bytes": 512,
+      "sha256": "92065d3ccf1e1982aaf5e9761d3746da9294e83127421e81d41185d9d549661f"
+    },
+    "executive_review_table.md": {
+      "bytes": 21241,
+      "sha256": "66c838a9c4417dc2eae146520b1648b1b798538b81708000d47df21077e38bcd"
+    },
+    "expanded_sample_register.jsonl": {
+      "bytes": 692465,
+      "sha256": "9db3ac73bfd88e0ff0ea0a8eb97115a5c2398384424a68083e36a99832591103"
+    },
+    "generate_expanded_evidence.py": {
+      "bytes": 14380,
+      "sha256": "8b31fa1354891a30d2e2076e6c9c43685cc426a2f44af56f74862fecaf064f9f"
+    },
+    "negative_controls_and_boundary_ambiguity.md": {
+      "bytes": 5533,
+      "sha256": "64798952807242b02b0b9d5f80e6ce3fd4cdd31a33f25218a2886b6d562e8b63"
+    },
+    "review_decision_sheet.md": {
+      "bytes": 1387,
+      "sha256": "e8534340c538eb8a159586ac2c7cf5c231fe7c8144a86f69122606c99adc2b9e"
+    },
+    "sample_coverage_and_gaps.json": {
+      "bytes": 2610,
+      "sha256": "b5aca3276351f9b7700f6da49d89489b49cc0a0acb4c5d1714893c5f76d1cf24"
+    },
+    "sc_request_deep_dive.md": {
+      "bytes": 3546,
+      "sha256": "cc55196f65b41ffa0e50dc27848260f591a19dddc40e1d3d9518200136984dfb"
+    }
+  },
+  "full_estate_formation_performed": false,
+  "input_fingerprints": {
+    "apis": {
+      "bytes": 10659709,
+      "path": "indexes/semantic_api_inventory.jsonl",
+      "sha256": "c06810d9079abdd382b48b4f49617431f57d390395b81a4cd07aa0244dafed1a"
+    },
+    "backend_resolution": {
+      "bytes": 4842349,
+      "path": "indexes/backend_target_resolution.jsonl",
+      "sha256": "6b21000cd1df943214bd96eccbb9b9a5ed3d3d2c8b55acf576237ac5e2ebee33"
+    },
+    "codegraph_dependency_edges": {
+      "bytes": 5907436,
+      "path": "indexes/codegraph_dependency_edges.jsonl",
+      "sha256": "95cb2d9446b89b703d65d85a7e387e46614997903b39fbb822ee0347fc988867"
+    },
+    "implementation": {
+      "bytes": 29122,
+      "path": "logical_api/expanded_validation.py",
+      "sha256": "8e54ad15bc1b2e30ac05ec0d05aaacd4c746f42196d0a8817a33083b9c8db019"
+    },
+    "observed": {
+      "bytes": 16895146,
+      "path": "indexes/observed_function_inventory.jsonl",
+      "sha256": "36e1ccaed8fa9513dcbefeaea592d5b3dc478ae729840ec88f0ad2593c04990e"
+    },
+    "operations": {
+      "bytes": 12460714,
+      "path": "indexes/semantic_operation_inventory.jsonl",
+      "sha256": "1c603cd6867f3a2d12f950c319e7ab29b2d2111604ff8bcfe6c0ad4dda2bf3bc"
+    },
+    "original_mock": {
+      "bytes": 170652,
+      "path": "tests/evidence/task-017/mock/representative_boundary_cases.jsonl",
+      "sha256": "e414dff2e00a119f82b5df6adec84f8378009e89e4e2f2e72966bfff1e75dbcc"
+    },
+    "task016_baseline": {
+      "bytes": 21927741,
+      "path": "indexes/task016_full_candidate_pairs.jsonl",
+      "sha256": "d753103622439597efc231adf85ee115870f0ca76d432213dd062bc5b6a2b00c"
+    },
+    "task016_refined": {
+      "bytes": 8086704,
+      "path": "indexes/task016_semantic_refinement_pairs.jsonl",
+      "sha256": "70108ef6eb3e395e1557870e62d1ff5738f2a14f378eec9946d0878c76607135"
+    }
+  },
+  "local_ignored_index_output": {
+    "bytes": 692465,
+    "path": "indexes/task017_expanded_validation_register.jsonl",
+    "record_count": 46,
+    "sha256": "9db3ac73bfd88e0ff0ea0a8eb97115a5c2398384424a68083e36a99832591103"
+  },
+  "original_mock_fingerprint": {
+    "bytes": 170652,
+    "path": "tests/evidence/task-017/mock/representative_boundary_cases.jsonl",
+    "record_count": 10,
+    "sha256": "e414dff2e00a119f82b5df6adec84f8378009e89e4e2f2e72966bfff1e75dbcc"
+  },
+  "rules_version": "task017-expanded-boundary-validation-v1",
+  "scope": "EXPANDED_VALIDATION_SAMPLE_NOT_FULL_ESTATE",
+  "staging_modified": false,
+  "summary": {
+    "evidence_sufficiency": {
+      "INSUFFICIENT": 23,
+      "PARTIAL": 19,
+      "SUFFICIENT_FOR_PROVISIONAL_BOUNDARY": 3,
+      "SUPPORTED_SEPARATE": 1
+    },
+    "member_occurrence_count": 98,
+    "new_case_count": 36,
+    "original_anchor_count": 10,
+    "strata": {
+      "AMBIGUOUS_BOUNDARY": 2,
+      "BACKEND_UNCERTAINTY": 3,
+      "COPIED_SEMANTICS": 5,
+      "DIFFERENT_ACTIONS": 13,
+      "DISAGREEMENT": 10,
+      "DIVERGENT_EXPOSURE": 17,
+      "GENERIC_WRAPPER": 1,
+      "MULTI_OPERATION_API": 5,
+      "NAMED_LEAD": 6,
+      "NEGATIVE_CONTROL": 13,
+      "ORIGINAL_ANCHOR": 10,
+      "PRODUCT_CONTEXT": 11,
+      "SAME_ACTION_OBJECT": 12,
+      "SC_DEEP_DIVE": 1,
+      "SHARED_PATH": 2,
+      "SHARED_SCHEMA": 5,
+      "TECHNICAL_SECURITY": 1,
+      "VERSION_VARIANT": 12
+    },
+    "total_case_count": 46,
+    "unique_canonical_api_count": 86,
+    "unique_operation_count": 98
+  }
+}

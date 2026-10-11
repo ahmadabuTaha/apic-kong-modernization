@@ -1,0 +1,10 @@
+Task 017 expanded validation deterministic build and validation
+
+.venv/bin/python tests/evidence/task-017/expanded-validation/generate_expanded_evidence.py
+RESULT: PASS - generated 46 cases (10 immutable anchors + 36 new), 98 unique operations, and 86 unique canonical APIs.
+
+.venv/bin/pytest tests/test_logical_api_expanded_validation.py
+RESULT: PASS - 9 passed.
+
+.venv/bin/pytest
+RESULT: 99 passed, 5 known Phase 0 fixture setup errors caused by the absent tests/fixtures/repository_profile/staging directory.
