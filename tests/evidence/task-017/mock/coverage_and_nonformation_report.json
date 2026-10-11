@@ -1,0 +1,36 @@
+{
+  "canonical_api_count": 19,
+  "case_count": 10,
+  "category_coverage": {
+    "ambiguity_control": "EVIDENCED",
+    "different_names_paths_possible_same_intent": "EVIDENCED",
+    "employment_status_insufficient_backend_semantics": "EVIDENCED",
+    "multiple_operations_one_canonical_api": "EVIDENCED",
+    "one_candidate_boundary_several_canonical_apis": "EVIDENCED",
+    "same_object_distinct_actions": "EVIDENCED",
+    "seasonal_visa_version_variants": "EVIDENCED",
+    "shared_backend_or_wrapper_negative_control": "EVIDENCED",
+    "shared_path_or_schema_false_positive": "EVIDENCED",
+    "technical_or_security_endpoint": "EVIDENCED"
+  },
+  "dispositions": {
+    "COHESIVE_LOGICAL_API_CANDIDATE": 2,
+    "INSUFFICIENT_EVIDENCE_TO_FORM": 4,
+    "PARTIAL_OR_VARIANT_BOUNDARY_REVIEW": 3,
+    "SEPARATE_LOGICAL_APIS_SUPPORTED": 1
+  },
+  "frozen_phases_reopened": false,
+  "full_estate_coverage_claimed": false,
+  "known_limitations": [
+    "Production usage and consumer intent are not proven by configuration.",
+    "CI/CD and release traceability remain unavailable for consolidation or retirement decisions.",
+    "Configured API-shared backends do not establish operation-level semantics.",
+    "The sample is not statistically representative and does not estimate full-estate group counts."
+  ],
+  "member_occurrence_count": 22,
+  "nonformation_case_count": 5,
+  "raw_staging_reads_for_task017": 0,
+  "scope": "REPRESENTATIVE_MOCK_ONLY",
+  "task016_pair_recall_reassessed": false,
+  "unique_task014_member_count": 22
+}

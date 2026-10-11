@@ -1,0 +1,91 @@
+{
+  "case_count": 10,
+  "deterministic_generation": true,
+  "evidence_artifacts": {
+    "commands_and_results.txt": {
+      "bytes": 518,
+      "sha256": "dbe725c47cf083623611937e937c27455af8c8191d91e9cdab391fc518da0a03"
+    },
+    "coverage_and_nonformation_report.json": {
+      "bytes": 1526,
+      "sha256": "834f5dc31646380d10f8b085dcb1dd80f51c87109896961315929cc72b1aa79c"
+    },
+    "grouping_false_positive_controls.md": {
+      "bytes": 1356,
+      "sha256": "10d97a6e2df47d10bcb425c47ab8de30d52427c76066139b4da4c234d07d97a7"
+    },
+    "logical_api_formation_contract.md": {
+      "bytes": 2248,
+      "sha256": "cc6c06ed6a0452721d87a2329b44dc854af0c02a969868658d5a26d218fa9502"
+    },
+    "representative_boundary_cases.jsonl": {
+      "bytes": 170652,
+      "sha256": "e414dff2e00a119f82b5df6adec84f8378009e89e4e2f2e72966bfff1e75dbcc"
+    },
+    "review_queue.jsonl": {
+      "bytes": 5798,
+      "sha256": "4c2088adac71e6960d3121aecbbb1d02aac5f611a5259068faeb7fbc0d9d8457"
+    }
+  },
+  "full_estate_formation_performed": false,
+  "input_fingerprints": {
+    "apis": {
+      "bytes": 10659709,
+      "path": "indexes/semantic_api_inventory.jsonl",
+      "sha256": "c06810d9079abdd382b48b4f49617431f57d390395b81a4cd07aa0244dafed1a"
+    },
+    "backend_resolution": {
+      "bytes": 4842349,
+      "path": "indexes/backend_target_resolution.jsonl",
+      "sha256": "6b21000cd1df943214bd96eccbb9b9a5ed3d3d2c8b55acf576237ac5e2ebee33"
+    },
+    "codegraph_dependency_edges": {
+      "bytes": 5907436,
+      "path": "indexes/codegraph_dependency_edges.jsonl",
+      "sha256": "95cb2d9446b89b703d65d85a7e387e46614997903b39fbb822ee0347fc988867"
+    },
+    "implementation": {
+      "bytes": 17740,
+      "path": "logical_api/mock.py",
+      "sha256": "6903bc031cd2b3f6e2dea0895a27f19849885b62dd9e93d97e2872267997d2f8"
+    },
+    "observed": {
+      "bytes": 16895146,
+      "path": "indexes/observed_function_inventory.jsonl",
+      "sha256": "36e1ccaed8fa9513dcbefeaea592d5b3dc478ae729840ec88f0ad2593c04990e"
+    },
+    "operations": {
+      "bytes": 12460714,
+      "path": "indexes/semantic_operation_inventory.jsonl",
+      "sha256": "1c603cd6867f3a2d12f950c319e7ab29b2d2111604ff8bcfe6c0ad4dda2bf3bc"
+    },
+    "task016_focused": {
+      "bytes": 306845,
+      "path": "indexes/task016_semantic_refinement_focused_cases.jsonl",
+      "sha256": "459dfe8e1a58f7ac71cbd7bde5e30f221f9511126b0304400b1acc3e872ee61c"
+    },
+    "task016_pairs": {
+      "bytes": 8086704,
+      "path": "indexes/task016_semantic_refinement_pairs.jsonl",
+      "sha256": "70108ef6eb3e395e1557870e62d1ff5738f2a14f378eec9946d0878c76607135"
+    }
+  },
+  "local_ignored_index_outputs": {
+    "cases": {
+      "bytes": 170652,
+      "path": "indexes/task017_mock_logical_api_candidates.jsonl",
+      "record_count": 10,
+      "sha256": "e414dff2e00a119f82b5df6adec84f8378009e89e4e2f2e72966bfff1e75dbcc"
+    },
+    "review_queue": {
+      "bytes": 5798,
+      "path": "indexes/task017_mock_review_queue.jsonl",
+      "record_count": 10,
+      "sha256": "4c2088adac71e6960d3121aecbbb1d02aac5f611a5259068faeb7fbc0d9d8457"
+    }
+  },
+  "review_item_count": 10,
+  "rules_version": "task017-representative-logical-api-mock-v1",
+  "scope": "REPRESENTATIVE_MOCK_ONLY",
+  "staging_modified": false
+}

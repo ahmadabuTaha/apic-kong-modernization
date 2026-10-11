@@ -1,0 +1,10 @@
+Task 017 representative mock deterministic build and validation
+
+.venv/bin/python tests/evidence/task-017/mock/generate_mock_evidence.py
+RESULT: PASS - generated 10 bounded cases and 10 review items from frozen indexes.
+
+.venv/bin/pytest tests/test_logical_api_mock.py
+RESULT: PASS - deterministic identity, frozen safety, relation separation, and guardrail controls.
+
+.venv/bin/pytest
+RESULT: 90 passed, 5 known Phase 0 fixture setup errors. The loopback explorer test passed when rerun with local socket permission.
