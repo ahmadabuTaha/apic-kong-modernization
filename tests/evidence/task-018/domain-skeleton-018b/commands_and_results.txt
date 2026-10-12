@@ -1,0 +1,26 @@
+Task 018B commands and results
+
+1. git pull --rebase origin main
+   PASS: local main rebased onto origin/main at authorization commit 631e86c.
+
+2. .venv/bin/python -m business_domain.skeleton_mapping_main
+   PASS: 2,414 operations; 2,036 APIs; 11 candidates; 188 targeted YAML operations; 0 source hash mismatches; 0 parse errors; 0 unresolved local schema references.
+
+3. .venv/bin/python tests/evidence/task-018/domain-skeleton-018b/generate_domain_skeleton_evidence.py
+   PASS: deterministic full ledgers and compact review artifacts generated.
+
+4. .venv/bin/pytest -q tests/test_business_domain_skeleton_mapping.py
+   PASS: 8 passed in 11.86s.
+
+5. .venv/bin/pytest -q
+   PARTIAL: 133 passed, 1 failed, 5 errors in 139.92s.
+   - The failure was tests/test_codegraph_explorer.py::test_local_http_server_starts_and_serves_ui_and_queries because the default sandbox denied an ephemeral loopback bind.
+   - Five profiler setup errors remain because tests/fixtures/repository_profile/staging is absent from the worktree and HEAD. This is the documented frozen Phase 0 fixture-packaging issue and is outside Task 018B.
+
+6. .venv/bin/pytest -q tests/test_codegraph_explorer.py::test_local_http_server_starts_and_serves_ui_and_queries
+   PASS with loopback permission: 1 passed in 0.60s.
+
+7. .venv/bin/pytest -q --ignore=tests/test_profiler.py
+   PASS with loopback permission: 132 passed in 118.56s.
+
+No available Task 018B or repository test failed. staging/ was not modified. The five missing-fixture profiler setup errors remain explicit and unresolved; no frozen phase was reopened.

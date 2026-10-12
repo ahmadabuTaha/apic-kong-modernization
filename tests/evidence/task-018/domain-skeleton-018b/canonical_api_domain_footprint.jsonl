@@ -1,0 +1,1 @@
+{"full_ledger_path":"indexes/task018b_canonical_api_domain_footprint.jsonl","rebuild_command":".venv/bin/python -m business_domain.skeleton_mapping_main","record_count":2036,"record_type":"DETERMINISTIC_FULL_LEDGER_POINTER","sha256":"cb16f79ba34f2eba830856a18ba738e31e84e616236b5a944b6bc4db74e85fad"}

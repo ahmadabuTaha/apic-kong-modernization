@@ -1,0 +1,1 @@
+{"full_ledger_path":"indexes/task018b_business_object_candidate_register.jsonl","rebuild_command":".venv/bin/python -m business_domain.skeleton_mapping_main","record_count":3879,"record_type":"DETERMINISTIC_FULL_LEDGER_POINTER","sha256":"2d0963f2dd114caaf185cbc72a0913f707cdd07ff49c7e25e700ddabb0ddaa8e"}
