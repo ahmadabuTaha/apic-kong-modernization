@@ -19,3 +19,5 @@ indexes/
 
 # OS files
 .DS_Store
+
+neo4j/
