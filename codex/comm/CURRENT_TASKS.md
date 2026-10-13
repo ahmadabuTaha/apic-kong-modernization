@@ -8,75 +8,27 @@
 - Source is STAGING/sandbox, not proof of production activity, release lineage, consumer/owner intent, actual runtime egress, or retirement. Preserve frozen evidence, source provenance and original IDs.
 
 ## ACTIVE TASK
-**Phase:** 5 — Semantic & Business Mapping
-**Task:** 018B — Enterprise Business Domain Skeleton & Initial Operation Mapping
-**Status:** AUTHORIZED_FOR_CODEX — CANDIDATE_MAPPING_ONLY
-**Scope:** Initial full-ledger inventory mapping against the EA-supplied skeleton; targeted YAML evidence enrichment; bounded review and STOP. This is NOT enterprise-domain approval.
+**Phase:** 5 — Enterprise Business Domain Reconciliation
+**Task:** 018C — Enterprise Business Domain — Deterministic QIWA Module Mapping
+**Status:** AUTHORIZED_FOR_CODEX — DETERMINISTIC_CANDIDATE_MAPPING_ONLY
+**Execute:** `codex/comm/prompts/phase-5-018c-deterministic-qiwa-module-domain-mapping.md`
 
-## EA decision after Task 018A
-Task 018A achieved **technical PASS** (51 cases / 92 operations), but its **21 APIC-derived domain/subdomain/umbrella/technical labels are REJECTED as a basis for Enterprise Business Domain hypotheses**. Do not repurpose, relabel, or silently seed Task 018B with that taxonomy. Preserve Task 018A source observations, IDs, tests and evidence as historical inputs only; do not reopen frozen work.
+## EA instruction — Task 018C
+Adopt `neo4j/csv/Qiwa_Modules_Services.csv` as the **AS-IS QIWA module/Parent→Child integration inventory single source of truth for this exercise**. Its actual distinct `Module_Name` values form the provisional QIWA-driven domain-bucket skeleton. Add the two EA-nominated candidate buckets **Occupations** and **TIP** (retain even with zero evidence). Do not automatically promote QIWA Modules or TIP exposure context to enterprise-ratified Business Domains; keep source module and candidate-domain fields separate.
 
-The Enterprise Architect supplies the **authoritative INITIAL SKELETON of 11 candidates**, not a ratified enterprise taxonomy:
-1. Visa
-2. Establishment
-3. Contracts
-4. Nitaqat
-5. Payment
-6. Common
-7. User Management
-8. Work Permit
-9. Work Force
-10. Notification
-11. Certificate
+Join **2,414 accepted canonical APIC HTTP operations** (and account for all **2,036 canonical APIs**) with CSV `API-HTTP` / `DP` components via canonical API/operation IDs, CodeGraph, configured invoke endpoint and catalog-property resolution. **Exact matching evidence is mandatory:** operationId/service name similarity produces a candidate, not a confirmed APIC→QIWA join. Preserve unresolved, ambiguous, contradictory and one-to-many matches; no arbitrary first-match selection. ACE entrypoint primary-module evidence is distinct from transitive cross-module supporting dependencies. For external-backed APIC operations, investigate DP correlation only when supported; never fabricate an ACE journey.
 
-Use these exact skeleton labels as stable candidates for first-pass mapping. Do **not** add, rename, merge, split or promote labels in this task. In particular, retain Common, User Management and Notification as **candidate classification buckets**, with an explicit future question about business-domain vs shared/technical capability status. Certificate is an independent candidate and must not be silently absorbed into Visa, Work Permit or Establishment.
+**Backend classification EA rule:** resolved configured invoke endpoint/host containing `ace` (case-insensitive) is `ACE_BACKEND`; known/resolved endpoint host without `ace` is `EXTERNAL_VIA_DATAPOWER`; truly unresolved host is `PLATFORM_UNRESOLVED`. Keep **full URL/path resolution independently**, including dynamic `$(request.path)`. This is configured APIC target interpretation, not proof of actual runtime egress or automatic APIC Wrapper linkage. Do not alter frozen canonical resolver.
 
-## Task 018B — Required approach
-**Fundamental direction:** BUSINESS-FIRST skeleton -> APIC operation inventory -> targeted business-object/action evidence -> candidate assignment -> ambiguity and reconsideration backlog. Do not generate domains bottom-up from API/module/backend naming or graph clusters.
+**Mandatory deterministic CSV outputs:** full `operation_domain_distribution.csv` (2,414 rows including unmatched), `domain_distribution_summary.csv` (all CSV source modules plus Occupations/TIP), `ambiguous_operations.csv` (all unresolved/candidate/contradictory cases), and `apic_qiwa_match_evidence.csv` (row-per-join evidence). Keep 018B results as independent side-by-side baseline; do not overwrite or force its 11 domain labels to equal CSV modules.
 
-**Unit of classification:** each of the **2,414 accepted Task 014 HTTP operations** exactly once, retaining the parent canonical API and full source identity/provenance. Derive a separate rollup for all **2,036 canonical APIs** including zero-operation/unsupported cases; never make API-level footprint a substitute for operation-by-operation classification.
+**Success:** honest join coverage and explicit source-specific provenance, not maximum domain assignment rate. Preserve frozen Phases 0–4 and Tasks 014–018B, including 018B's historical 11-candidate comparison. Do not reuse 018A's rejected 21-label taxonomy. Run focused and repository tests, report baseline fixture failures independently, commit Task 018C outputs/evidence, update `codex/comm/HANSOFF.md` and **STOP for EA review**. No Task 019, domain ratification, API retirement, rationalization, productization or Kong TO-BE without further approval.
 
-### Pass 1 — Initial candidate-domain inventory
-- Reuse frozen Task 014/015/017/017A indexes and accepted semantic operation evidence, with no broad raw reread, all-pairs clustering, or dependency exploration.
-- Map each operation to **zero or one provisional primary** from the 11 skeleton candidates when evidence supports it; retain multiple alternatives for cross-domain or ambiguous cases. Null primary plus a precise reason is a valid result, not an error. Explicitly mark technical/test/POC and insufficient semantics cases without inventing a twelfth domain.
-- For each operation store canonical API ID, operation ID, HTTP method/path, source evidence pointers, proposed primary/alternatives, certainty and precise reason, documented action/object clues, contradicted alternatives, and review requirements.
-- Do not treat exposure channel (LO/TIP/QAAS/KAYAN), QIWA Module, Product/Plan, ACE Parent/Child, invocation host, generic workflow verb or API name alone as ownership/domain proof. Do not equate a referenced object (e.g. establishmentId) with the primary business object being acted upon.
+**Operating model:** Codex discovers → Integration Architect validates → Enterprise Architect decides.
 
-### Pass 2 — Targeted YAML / Business Object evidence
-- For unresolved, conflicting and boundary-sensitive operations only, inspect relevant existing canonical/indexed schema evidence first and specific source YAML pointers only when necessary.
-- Resolve request/response schema references and fields sufficiently to separate: CORE_BUSINESS_OBJECT_CANDIDATE, OBJECT_REFERENCE, DTO_OR_TRANSPORT_MODEL, LOOKUP_OR_VALUE_SET, TECHNICAL_ENVELOPE, BUSINESS_ACTION, and STATE_VALUE_CANDIDATE. These are evidence-role categories, **not** new domains.
-- A YAML schema/definition is **not** automatically a business object; status enums are state candidates, **not** a proven state machine; HTTP method is not a business process; a shared schema is not a shared business owner.
-- Preserve source pointer/definition path, exact field or operation evidence, alternatives, contradictory/copy-pasted descriptions, and what remains not evidenced. Do not fabricate processes, lifecycles, events or business ownership.
-- The objective is better initial classification and an object candidate register, NOT reconstructing every ICD, object lifecycle or complete enterprise ontology.
+## Completed checkpoint — Task 018B
+Task 018B **TECHNICAL PASS** with 2,414/2,414 operations, 2,036/2,036 canonical APIs, 1,116 provisional primaries, 187 ambiguous, 988 insufficient semantics, 87 technical/test, 36 conflicting evidence, and 3,879 targeted schema-evidence records. Its 11 EA-supplied candidate domains (Visa, Establishment, Contracts, Nitaqat, Payment, Common, User Management, Work Permit, Work Force, Notification, Certificate) remain an **independent historical business-first baseline**, not an approved taxonomy. The user now authorizes the different CSV-first Task 018C assessment. Preserve all outputs and evidence.
 
-### Pass 3 — Review and reclassification candidates (do NOT apply EA decisions)
-- Provide domain-by-domain operation/API footprint counts (clearly differentiate primary, alternatives, unresolved, technical/test; no double-counting of primary).
-- Produce candidate reassignment/ambiguity cases with original candidate, proposed alternative, object/action evidence, counterevidence, missing business proof and proposed verification source.
-- Surface overlap and cross-domain dependencies without forcing one coherent API to belong to a single domain. Do not auto-create, split or merge any domain.
-- Only consult ICD/Atlassian or Neo4j for a **specific evidence question** when accessible and strictly needed; missing access stays unresolved. Neo4j is implementation dependency evidence, not domain-boundary authority. Do not exhaustively crawl ICDs or reconstruct backend journeys for every operation.
-- Preserve Task 017A's 71 reviews, five oversized adjuncts, 14 cross-API links and 90-item Productization Decision Backlog unchanged. Task 018A's rejected candidate taxonomy must not re-enter by indirect reuse.
+## Historical checkpoint — Task 018A
+Task 018A technically passed its bounded sample, but the 21 APIC-derived labels are **not accepted as proposed Enterprise Domain hypotheses**. Retain raw observations/provenance only.
 
-## Expected evidence / review outputs
-Commit compact, reproducible Task 018B evidence under a **new task-specific directory** such as `tests/evidence/task-018/domain-skeleton-018b/`; avoid overwriting Task 018A evidence. Keep expandable machine-readable ledgers under `indexes/` as permitted by repository conventions.
-1. `skeleton_contract.md` — exact 11 EA-supplied candidates; provisional status and inclusion/exclusion decision questions, with no invented business definitions.
-2. `operation_domain_initial_mapping.jsonl` — one entry per 2,414 operation (or documented evidence pointer plus complete deterministic export).
-3. `canonical_api_domain_footprint.jsonl` — 2,036-API coverage, operation-level multi-domain footprint, and zero-operation/unsupported visibility.
-4. `business_object_candidate_register.jsonl` — targeted YAML-derived objects/references/DTOs/actions/state candidates with pointers and evidence limitations.
-5. `domain_review_reclassification_backlog.md` — bounded priority reviews, ambiguity/counterevidence and decisions for Enterprise Architect.
-6. `coverage_quality_and_unresolved.md` — exact totals, primary/alternative/unmapped distribution, representative negative controls, absence of forced coverage, and tests/results.
-
-If outputs would be too large to commit, preserve the full ledger deterministically in indexes and commit a compact manifest, summary, source pointers, rebuild instructions and review sample; do not silently drop operations.
-
-## Acceptance criteria / STOP gate
-- Exact **2,414/2,414 operation** preservation, **2,036/2,036 canonical API** accounting, stable IDs and provenance; no silent forced or whole-API classification.
-- Exactly **11 skeleton candidate domains including Certificate**, with **zero new domains** invented.
-- Reclassification candidates are recommendations only. No EA-approved Domain, ownership, Product/Plan, retirement, functional duplicate, runtime usage or Kong TO-BE decision.
-- YAML Object/DTO/reference/enum distinctions evidenced and appropriately uncertain; no invented state transitions or processes.
-- Frozen pipelines and old findings remain unchanged. Validate determinism and tests; document gaps separately from errors.
-- Update `codex/comm/HANSOFF.md`, commit/push eligible Codex-generated evidence, and **STOP for EA review before domain changes, Task 019, rationalization, productization or Kong design**.
-
-Operating model: **Codex discovers -> Integration Architect validates -> Enterprise Architect decides.**
-
-## Historical task status
-- **018A:** Technical PASS; APIC-derived 21-label taxonomy architecturally rejected as enterprise-domain input. Retain evidence, not domain proposals.
-- **017A and Phases 0–4:** Preserve accepted checkpoints and approval gates as above.
