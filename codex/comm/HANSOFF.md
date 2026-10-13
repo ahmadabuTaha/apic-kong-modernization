@@ -1,5 +1,40 @@
 # Codex Handoff
 
+## Current execution — Phase 5, Task 018C
+
+### Execution summary
+
+- Fast-forwarded `main` from `23a28b2` to the authorized Task 018C checkpoint `166c124`, reread `AGENTS.md`, `CURRENT_TASKS.md`, this handoff, and the complete Task 018C prompt, and executed only deterministic QIWA candidate mapping.
+- Reused the frozen Task 014 canonical inventories, Task 011 catalog/backend resolver output, CodeGraph dependency indexes, and Task 018B mapping. No frozen component or `staging/` evidence was modified or regenerated.
+- Adopted `neo4j/csv/Qiwa_Modules_Services.csv` as the AS-IS QIWA inventory for this exercise: SHA-256 `85499b04989f0ea93214d277709ab265f718744ea21cbcd96f9a8b635a34d877`, 515,243 bytes, 4,437 rows/4,437 unique source IDs, 30 literal `Module_Name` values, and 15 duplicate rows when source ID is excluded. The source has no endpoint/URL column; therefore names alone cannot prove a J1/J2 join.
+- Preserved all literal module spellings. `TIP` is both an actual CSV module and an EA-nominated bucket, recorded as an overlap rather than duplicated. `Occupations` is retained as the additional zero-evidence candidate. No other domain label was synthesized.
+- Implemented exact configured-route parent matching for ACE targets, resolved-host plus dynamic `$(request.path)` J2 matching, external-target DP boundary correlation, non-promoted J3 normalized-name candidates, explicit ambiguous/contradictory/no-match outcomes, and bounded depth-two Parent→API-HTTP child-as-parent traversal. Other component types remain visible as CSV component context. No configured target was treated as runtime-egress proof.
+- Kept backend platform classification independent from full target resolution. Accepted catalog-property records recover a safe host for classification when only a dynamic path remains; the frozen resolver itself is unchanged. A resolved host containing `ace` is `ACE_BACKEND`; a resolved non-ACE host is `EXTERNAL_VIA_DATAPOWER`; missing/conflicting host evidence is `PLATFORM_UNRESOLVED`.
+
+### Results and evidence
+
+- Full coverage is preserved: **2,414/2,414 unique HTTP operations** and **2,036/2,036 canonical APIs**, with **41** zero-operation/unsupported APIs separately listed.
+- Join outcomes: **450 confirmed unique entrypoint candidates**, **5 ambiguous entrypoints**, **10 grounded DP boundary candidates**, **456 name-only J3 candidates**, **16 contradictory configurations**, and **1,477 no-match operations**. The 450 primaries are provisional QIWA-module candidates only; all are on `ACE_BACKEND` operations and all retain review-required status.
+- Tier distribution: J1 291; J2 169; J3 456; JX 5; JC 16; J0 1,477. Strong coverage was not optimized or inflated; 1,964 operations remain unassigned.
+- Backend platform distribution: **1,702 ACE_BACKEND**, **348 EXTERNAL_VIA_DATAPOWER**, and **364 PLATFORM_UNRESOLVED**. Independent target resolution: 1,400 fully resolved, 545 partially resolved dynamic path, 453 unresolved, and 16 configuration conflicts.
+- Produced **5,965** row-level evidence records: 479 entrypoint-parent records, 29 DP boundary correlations, 2,289 name-only candidates, 165 direct and 87 bounded-transitive child-as-parent candidates, plus 2,102 direct and 814 bounded-transitive component-context edges. Candidate calls remain labeled candidates unless separately corroborated.
+- Task 018B remains byte-unchanged and independent. Side-by-side operation status is: 52 exact-label agreements, 243 changed non-equivalent labels, 155 previously unmapped now evidenced, 821 Task 018C-unresolved with a prior 018B candidate, and 1,143 still unresolved. These are comparison statuses, not a forced taxonomy crosswalk.
+- Focused Neo4j read-only corroboration was available: graph schema exposed `Module`, `ParentService`, `Component`, `CALLS_PARENT_SERVICE`, and `USES_COMPONENT`; counts independently matched 4,437 QIWA rows and 30 modules. A sampled `SubmitVisitVisaRequest` parent returned explicit component and called-parent relations. Neo4j was corroborative only and is not a generator dependency.
+
+### Outputs
+
+- Implementation: `business_domain/qiwa_mapping.py`, `business_domain/qiwa_mapping_main.py`, and `tests/test_business_domain_qiwa_mapping.py`.
+- Required full-estate CSVs under `outputs/task018c/`: `operation_domain_distribution.csv` (2,414), `domain_distribution_summary.csv` (30 source modules + Occupations/TIP overlap + UNMAPPED), `ambiguous_operations.csv` (1,964), and `apic_qiwa_match_evidence.csv` (5,965).
+- Supporting required accounting/provenance: `zero_operation_apis.csv` (41), `manifest.json` (source/input/output hashes, counts, overlap and guardrails), and `reviewer_explanation.txt`. Outputs contain no resolved URLs, catalog values, credentials, or runtime-use assertions.
+
+### Tests, unresolved issues, and final status
+
+- Focused Task 018C suite: **5 passed**. It covers ACE/non-ACE/unresolved/conflicting targets, dynamic paths, name normalization collisions, non-promotion of J3 and multi-match cases, 0/1/2+ operation APIs, deterministic ordering/bytes, 2,414/2,036 coverage, source identity, redaction, and Task 018B immutability.
+- Full default-sandbox repository run: **138 passed, 1 failed, 5 setup errors**. The failure was loopback binding denied by the sandbox; its isolated permitted rerun passed. The five setup errors are the documented frozen Phase 0 packaging issue: ignored `tests/fixtures/repository_profile/staging` is absent from the worktree and `HEAD`.
+- Permitted repository suite excluding only the known missing-fixture module: **137 passed**. No available Task 018C or repository test failed.
+- Unresolved evidence remains explicit: the QIWA CSV has no route/endpoint field; J3 names cannot confirm cross-system identity; DP correlations do not prove wrappers; child-as-parent candidates need graph/architect review; module ownership is not enterprise-domain ratification; runtime egress, production use, business ownership, and environment-specific intent remain unproven.
+- Final status: **TASK 018C TECHNICAL PASS; DETERMINISTIC CANDIDATE MAPPING ONLY; STOP AT `EA_REVIEW_TASK018C`**. Do not start Task 019, domain ratification, rationalization, productization, retirement, or Kong TO-BE work without explicit Enterprise Architect approval.
+
 ## Current execution — Phase 5, Task 018B
 
 ### Execution summary

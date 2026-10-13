@@ -1,0 +1,5 @@
+Task 018C deterministic reviewer note
+
+QIWA Module_Name is an AS-IS module proxy, not a ratified enterprise Business Domain. Primary candidates require a unique exact configured-route-to-parent bridge. Exact normalized names alone remain J3 and unassigned. DP correlations are boundaries, not proof of an APIC wrapper or ACE journey. Supporting modules come only from bounded CSV Parent-to-Child traversal. Configured targets do not prove runtime egress. Task 018B remains an independent historical baseline.
+
+See manifest.json for source hashes, coverage, tier counts, limitations, and the EA_REVIEW_TASK018C stop gate.

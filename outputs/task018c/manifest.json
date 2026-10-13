@@ -1,0 +1,231 @@
+{
+  "candidate_buckets": [
+    "Absense Mgmt",
+    "Capptions",
+    "Change Occupation",
+    "Common",
+    "Contract Mgmt",
+    "Data Portal",
+    "Decease Mgmt",
+    "EFM",
+    "ET",
+    "End Of Service Reward",
+    "Establishment Loc",
+    "Establishment logo",
+    "LMH",
+    "LO",
+    "MOFA",
+    "Nitaqat",
+    "Notification",
+    "Occupation Mgmt",
+    "Occupations",
+    "Payment",
+    "Proactive Awareness",
+    "Salary Certificate",
+    "TIP",
+    "Training Contract",
+    "Training Indicators",
+    "User Mgmt",
+    "Visa Mgmt",
+    "Wage Protection",
+    "Work Permit",
+    "Work Policy",
+    "Work in Saudi"
+  ],
+  "guardrails": {
+    "dp_match_promoted_to_apic_wrapper": false,
+    "enterprise_domain_ratified": false,
+    "name_only_promoted_to_primary": false,
+    "neo4j_validation": "NOT_REQUIRED_FOR_DETERMINISTIC_CSV_APIC_MAPPING",
+    "runtime_egress_proven": false,
+    "task018b_modified": false,
+    "task019_performed": false
+  },
+  "inputs": {
+    "apis": {
+      "bytes": 10659709,
+      "path": "indexes/semantic_api_inventory.jsonl",
+      "sha256": "c06810d9079abdd382b48b4f49617431f57d390395b81a4cd07aa0244dafed1a"
+    },
+    "backends": {
+      "bytes": 4842349,
+      "path": "indexes/backend_target_resolution.jsonl",
+      "sha256": "6b21000cd1df943214bd96eccbb9b9a5ed3d3d2c8b55acf576237ac5e2ebee33"
+    },
+    "catalog_properties": {
+      "bytes": 222635,
+      "path": "indexes/catalog_properties.jsonl",
+      "sha256": "7b6ee3889260e9f26552f7a59c613326387a81df44742eadedd699306763b429"
+    },
+    "codegraph_edges": {
+      "bytes": 5907436,
+      "path": "indexes/codegraph_dependency_edges.jsonl",
+      "sha256": "95cb2d9446b89b703d65d85a7e387e46614997903b39fbb822ee0347fc988867"
+    },
+    "observed_functions": {
+      "bytes": 16895146,
+      "path": "indexes/observed_function_inventory.jsonl",
+      "sha256": "36e1ccaed8fa9513dcbefeaea592d5b3dc478ae729840ec88f0ad2593c04990e"
+    },
+    "operations": {
+      "bytes": 12460714,
+      "path": "indexes/semantic_operation_inventory.jsonl",
+      "sha256": "1c603cd6867f3a2d12f950c319e7ab29b2d2111604ff8bcfe6c0ad4dda2bf3bc"
+    },
+    "previous_018b": {
+      "bytes": 5061400,
+      "path": "indexes/task018b_operation_domain_initial_mapping.jsonl",
+      "sha256": "fdaa0adbb0005ecad0a4e000b82a2e8f572ed9486486d6158508ebecc8dd1cf3"
+    },
+    "qiwa_csv": {
+      "bytes": 515243,
+      "path": "neo4j/csv/Qiwa_Modules_Services.csv",
+      "sha256": "85499b04989f0ea93214d277709ab265f718744ea21cbcd96f9a8b635a34d877"
+    }
+  },
+  "nominated_bucket_overlap": {
+    "Occupations": "ABSENT_FROM_CSV_RETAINED_AT_ZERO_UNLESS_DIRECTLY_EVIDENCED",
+    "TIP": "ALREADY_PRESENT_AS_LITERAL_CSV_MODULE"
+  },
+  "outputs": {
+    "ambiguous": {
+      "bytes": 1403069,
+      "path": "outputs/task018c/ambiguous_operations.csv",
+      "record_count": 1964,
+      "sha256": "45bb9007a2cd591a2e85072ffc6ba65405523fbf272b8420528e653957f24c37"
+    },
+    "distribution": {
+      "bytes": 1803488,
+      "path": "outputs/task018c/operation_domain_distribution.csv",
+      "record_count": 2414,
+      "sha256": "8a84cb1e8ae66104c3437c71cd80f9d78cb3a89de855430b8541bf5c58af4bc5"
+    },
+    "evidence": {
+      "bytes": 4095112,
+      "path": "outputs/task018c/apic_qiwa_match_evidence.csv",
+      "record_count": 5965,
+      "sha256": "576a892ed4aa471d337ab33f9dc351f7c69f2f72a646e6c0888ef460e407aefa"
+    },
+    "summary": {
+      "bytes": 1534,
+      "path": "outputs/task018c/domain_distribution_summary.csv",
+      "record_count": 32,
+      "sha256": "fd96264bde279a280cf167b261f47c36b5cfc1c64c0d543648b3cc56f2962bc4"
+    },
+    "zero_apis": {
+      "bytes": 7774,
+      "path": "outputs/task018c/zero_operation_apis.csv",
+      "record_count": 41,
+      "sha256": "6ba73f11d8b9a7a6e79014132f11f1f0d1f1acffa44d152984f17d4cdfa7da6d"
+    }
+  },
+  "rules_version": "task018c-deterministic-qiwa-module-mapping-v1",
+  "scope": "TASK018C_DETERMINISTIC_CANDIDATE_MAPPING_ONLY",
+  "source_inventory": {
+    "bytes": 515243,
+    "distinct_modules": [
+      "Absense Mgmt",
+      "Capptions",
+      "Change Occupation",
+      "Common",
+      "Contract Mgmt",
+      "Data Portal",
+      "Decease Mgmt",
+      "EFM",
+      "ET",
+      "End Of Service Reward",
+      "Establishment Loc",
+      "Establishment logo",
+      "LMH",
+      "LO",
+      "MOFA",
+      "Nitaqat",
+      "Notification",
+      "Occupation Mgmt",
+      "Payment",
+      "Proactive Awareness",
+      "Salary Certificate",
+      "TIP",
+      "Training Contract",
+      "Training Indicators",
+      "User Mgmt",
+      "Visa Mgmt",
+      "Wage Protection",
+      "Work Permit",
+      "Work Policy",
+      "Work in Saudi"
+    ],
+    "distinct_types": {
+      "API-HTTP": 633,
+      "API-MQ": 381,
+      "DP": 647,
+      "ODM": 73,
+      "SP": 2702,
+      "api-mq": 1
+    },
+    "duplicate_rows_excluding_id_count": 15,
+    "encoding": "UTF-8-SIG",
+    "endpoint_or_url_columns_present": [],
+    "headers": [
+      "ID",
+      "Service_Name",
+      "Type",
+      "Database_Source",
+      "Parent_Service",
+      "Platform",
+      "Flag_1",
+      "Flag_2",
+      "Service_Normalized",
+      "Module_Name",
+      "Note"
+    ],
+    "path": "neo4j/csv/Qiwa_Modules_Services.csv",
+    "row_count": 4437,
+    "sha256": "85499b04989f0ea93214d277709ab265f718744ea21cbcd96f9a8b635a34d877",
+    "unique_id_count": 4437
+  },
+  "stop_gate": "EA_REVIEW_TASK018C",
+  "summary": {
+    "ambiguous_review_row_count": 1964,
+    "backend_platform_counts": {
+      "ACE_BACKEND": 1702,
+      "EXTERNAL_VIA_DATAPOWER": 348,
+      "PLATFORM_UNRESOLVED": 364
+    },
+    "canonical_api_count": 2036,
+    "comparison_to_018b_counts": {
+      "CHANGED_CANDIDATE_NON_EQUIVALENT_LABELS": 243,
+      "EXACT_LABEL_AGREEMENT": 52,
+      "PREVIOUSLY_UNMAPPED_NOW_EVIDENCED": 155,
+      "STILL_UNRESOLVED": 1143,
+      "TASK018C_UNRESOLVED_WITH_018B_BASELINE": 821
+    },
+    "full_target_resolution_counts": {
+      "CONFIGURATION_CONFLICT": 16,
+      "FULLY_RESOLVED": 1400,
+      "PARTIALLY_RESOLVED_DYNAMIC_PATH": 545,
+      "UNRESOLVED": 453
+    },
+    "join_status_counts": {
+      "AMBIGUOUS_ENTRYPOINT": 5,
+      "CONFIRMED_ENTRYPOINT": 450,
+      "CONTRADICTORY_CONFIGURATION": 16,
+      "DP_CORRELATION_CANDIDATE": 10,
+      "NAME_ONLY_CANDIDATE": 456,
+      "NO_MATCH": 1477
+    },
+    "join_tier_counts": {
+      "J0_NO_MATCH": 1477,
+      "J1_EXACT_ENDPOINT_OR_ROUTE": 291,
+      "J2_RESOLVED_BACKEND_AND_OPERATION": 169,
+      "J3_NAME_ONLY_CANDIDATE": 456,
+      "JC_CONTRADICTORY": 16,
+      "JX_AMBIGUOUS": 5
+    },
+    "match_evidence_row_count": 5965,
+    "operation_count": 2414,
+    "primary_assignment_count": 450,
+    "unique_operation_count": 2414,
+    "zero_operation_api_count": 41
+  }
+}

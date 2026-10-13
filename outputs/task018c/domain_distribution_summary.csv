@@ -1,0 +1,33 @@
+candidate_domain_bucket,bucket_origin,operation_primary_count,candidate_only_count,supporting_only_count,distinct_canonical_api_count,no_match_count,ambiguous_count
+Absense Mgmt,QIWA_CSV_MODULE,5,7,0,5,0,0
+Capptions,QIWA_CSV_MODULE,3,0,0,3,0,0
+Change Occupation,QIWA_CSV_MODULE,6,21,8,6,0,2
+Common,QIWA_CSV_MODULE,23,30,21,23,0,0
+Contract Mgmt,QIWA_CSV_MODULE,65,89,9,53,0,2
+Data Portal,QIWA_CSV_MODULE,2,1,0,2,0,0
+Decease Mgmt,QIWA_CSV_MODULE,9,4,0,9,0,0
+EFM,QIWA_CSV_MODULE,40,63,21,40,0,3
+ET,QIWA_CSV_MODULE,30,32,5,30,0,1
+End Of Service Reward,QIWA_CSV_MODULE,0,1,0,0,0,0
+Establishment Loc,QIWA_CSV_MODULE,7,12,2,7,0,1
+Establishment logo,QIWA_CSV_MODULE,0,4,0,0,0,0
+LMH,QIWA_CSV_MODULE,1,3,0,1,0,0
+LO,QIWA_CSV_MODULE,23,74,2,23,0,0
+MOFA,QIWA_CSV_MODULE,0,0,0,0,0,0
+Nitaqat,QIWA_CSV_MODULE,3,4,0,3,0,0
+Notification,QIWA_CSV_MODULE,1,2,0,1,0,0
+Occupation Mgmt,QIWA_CSV_MODULE,15,2,18,15,0,1
+Occupations,EA_NOMINATED_ADDITIONAL,0,0,0,0,0,0
+Payment,QIWA_CSV_MODULE,52,14,3,40,0,0
+Proactive Awareness,QIWA_CSV_MODULE,1,2,0,1,0,0
+Salary Certificate,QIWA_CSV_MODULE,2,2,0,2,0,0
+TIP,QIWA_CSV_AND_EA_NOMINATED_OVERLAP,40,79,43,40,0,0
+Training Contract,QIWA_CSV_MODULE,0,5,0,0,0,0
+Training Indicators,QIWA_CSV_MODULE,5,5,0,5,0,0
+User Mgmt,QIWA_CSV_MODULE,31,4,7,31,0,0
+Visa Mgmt,QIWA_CSV_MODULE,47,95,23,45,0,2
+Wage Protection,QIWA_CSV_MODULE,10,7,0,10,0,0
+Work Permit,QIWA_CSV_MODULE,24,29,0,19,0,1
+Work Policy,QIWA_CSV_MODULE,2,0,0,2,0,0
+Work in Saudi,QIWA_CSV_MODULE,3,1,0,3,0,0
+UNMAPPED,OVERALL_NON_DOMAIN_SUMMARY,1964,0,0,1576,1477,21
