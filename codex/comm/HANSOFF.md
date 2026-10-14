@@ -1,5 +1,36 @@
 # Codex Handoff
 
+## Current execution — Phase 5, Task 018E
+
+### Execution summary
+
+- Fast-forwarded `main` from `cb64070` to authorization checkpoint `842d6aa`, reread `AGENTS.md`, and executed only Task 018E from the full prompt embedded in `codex/comm/CURRENT_TASKS.md`. No separate prompt exists.
+- Implemented `business_domain/topdown_mapping.py` and its CLI as a new top-down pipeline: 14-area registry → complete literal QIWA module crosswalk → module-scoped Parent identities → all canonical artifacts → all accepted HTTP operations → independent backend/branch corroboration → bottom-up exceptions only.
+- Read no Task 018B/018C/018D candidate output or classifier as an input. Reused the frozen Task 014 operation/API inventories and accepted backend, catalog-property, identity and relationship indexes. `staging/` and all historical outputs remain unchanged.
+- Indexed the QIWA CSV once: SHA-256 `85499b04989f0ea93214d277709ab265f718744ea21cbcd96f9a8b635a34d877`, 4,437 rows/unique IDs, 30 literal modules and 15 formatting duplicates excluding ID. Its absence of endpoint/URL columns remains explicit.
+- Added deterministic caches under `indexes/task018e_cache/` with content/rule/schema/parser keys, row-count/ID validation and stage-local invalidation. The final warm run recorded 8 hits, zero misses/rebuilds, 45 source files hashed, and zero YAML parses; the cold validation read only the 38 targeted conditional assembly files.
+
+### Results and evidence
+
+- Preserved exact closure: **2,414/2,414 unique accepted HTTP operations**, **2,036/2,036 canonical APIs**, **41** zero/unsupported-operation APIs, all **30** source module labels, and exactly **14** EA areas.
+- Built **993** module-scoped QIWA Parent identities; **638** have a deterministic artifact or operation name edge. **642/2,036** artifacts have Parent candidates. Name tiers across the operation ledger are N1 558, N2 62, N3 121, N4 27, N5 1, and no name match 1,645.
+- Assigned **618** provisional functional-domain primaries without requiring an ACE invoke: Certificate 17; Common 40; Contracts 132; Establishment 93; Nitaqat 6; Notification 2; Occupation 32; Payment 36; User Management 34; Visa 114; Work Permit 34; WorkForce 78. These are candidates, not ratification.
+- Kept **1,796** operations review-required: 1,645 no Parent name match, 137 unresolved/parallel-only Parent origins, 12 inherited multi-operation artifact candidates requiring operation review, and two competing-origin cases. No primary was forced for these cases.
+- Preserved the explicit ownership anchors: `SubmitOccupationCorrectionRequest → Occupation` despite multiple consumer modules and `GetGosiContractsList → Contracts` despite Work Permit consumption. `SubmitWorkPermitRequest → Work Permit`, `ValidateIssueEstablishingVisas → Visa`, and documented alias `UpdateEstablishmentContactAddress → UpdateEstablishmentAddress → Establishment` are provisional name candidates with technical verification separate.
+- Reconstructed **3,743** configured operation/invocation branches. `sendQIWAReports` retains all 63 branches, with six functional-domain alternatives across its route-confirmed selectors and no operation primary. Ledger technical states are 28 route-confirmed, 739 backend-corroborated and 1,647 backend-not-verified; none proves runtime execution.
+- Backend branch classifications remain independent: 2,024 ACE, 501 external-via-DataPower and 1,218 unresolved. Host values are omitted; only safe paths, classifications and source pointers are emitted.
+- Common reuse remains additional to origin: 1,694 module-local component identities, 241 shared by 2–4 distinct modules, and 23 meeting the 5+ threshold. Same-module repeats count once.
+- TIP is a parallel exposure dimension: 140 confirmed by connected Product/Plan/subscription configuration, 127 candidates, and 2,147 not evidenced. LO is a parallel AS-IS dimension: 63 confirmed from LO Parent inventory, nine label-only candidates, and 2,342 not evidenced; underlying functional domain and validation-name evidence stay separate.
+
+### Outputs, tests, unresolved issues, and final status
+
+- Required full deliverables are under `outputs/task018e/`: 14 CSV inventories/ledgers plus `coverage_report.md` and `manifest.json`. The manifest records every input/output hash, exact denominators, independence/guardrail flags, cache telemetry and test outcomes. No additional standalone Markdown report was created.
+- Focused Task 018E tests: **7 passed**. They cover registry/module closure, all required named examples, operation/API/zero-API coverage, TIP/LO/Common separation, generic-name negatives, multi-function inheritance, cold/warm byte equality, equivalent manifests, changed-CSV and changed-EA-rule invalidation, single-YAML cache keys, independence and secret redaction.
+- Full default-sandbox suite: **154 passed, 1 failed, 5 setup errors**. The one failure is the known localhost socket bind restriction; its isolated permitted rerun passed. The five setup errors are the frozen Phase 0 packaging issue: `tests/fixtures/repository_profile/staging` is absent from the worktree and `HEAD`.
+- Clean available regression subset excluding the absent-fixture module and sandbox socket test: **152 passed, 1 deselected**; isolated socket test: **1 passed**. Generated output row counts, manifest hashes and secret/URL redaction were validated independently.
+- Unresolved evidence is intentional: 1,796 operations lack a single provisional functional owner; exact/normalized names do not prove APIC→ACE calls; configured branches do not prove runtime selection, production use or egress; TIP/LO/Common do not replace functional ownership; source modules `Capptions`, `Data Portal` and `MOFA` remain review-required/unmapped as documented.
+- Final status: **TASK 018E TECHNICAL PASS; CANDIDATE DOMAIN ATTRIBUTION ONLY; STOP AT `EA_REVIEW_TASK018E`**. Do not ratify domains or begin Task 019, rationalization, Productization, retirement or Kong TO-BE without explicit Enterprise Architect approval.
+
 ## Current execution — Phase 5, Task 018D
 
 ### Execution summary

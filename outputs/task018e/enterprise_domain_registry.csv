@@ -1,0 +1,15 @@
+area_role,ea_area_code,ea_area_name,ea_definition,exclusive_functional_owner,ratified
+FUNCTIONAL,D01,Establishment,"EFM, logo, location and proactive-awareness ownership",true,false
+FUNCTIONAL,D02,Contracts,"Contract, training-contract and external-contract ownership",true,false
+FUNCTIONAL,D03,Visa,Evidenced Visa family ownership,true,false
+FUNCTIONAL,D04,WorkForce,"Worker, employee-transfer and workforce lifecycle ownership",true,false
+FUNCTIONAL,D05,Work Permit,Work Permit lifecycle ownership,true,false
+FUNCTIONAL,D06,Payment,"Reusable payment, billing and reconciliation capability",true,false
+FUNCTIONAL,D07,Occupation,Occupation management and change-occupation ownership,true,false
+FUNCTIONAL,D08,Nitaqat,Evidenced Nitaqat family ownership,true,false
+FUNCTIONAL,D09,Certificate,"Salary, Saudization, Work Policy and Wage Protection certificates",true,false
+PARALLEL_REUSE,D10,Common,Shared platform utility; 5+ distinct consuming modules threshold,false,false
+PARALLEL_EXPOSURE,D11,TIP,Takamol Integration Portal enterprise exposure,false,false
+FUNCTIONAL,D12,User Management,User Management and SSO ownership,true,false
+FUNCTIONAL,D13,Notification,"Email, SMS and notification capability",true,false
+PARALLEL_CHANNEL,D14,Labor Office Portal (LO),LO AS-IS channel with LO-specific validations,false,false
