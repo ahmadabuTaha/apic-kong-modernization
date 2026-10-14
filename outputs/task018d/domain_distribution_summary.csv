@@ -1,0 +1,16 @@
+classification_area,area_role,business_domain_primary_operation_count,supporting_operation_count,common_component_operation_count,tip_exposure_confirmed_operation_count,tip_exposure_candidate_operation_count,distinct_primary_canonical_api_count,unmapped_operation_count,ambiguous_operation_count
+Establishment,BUSINESS_DOMAIN_CANDIDATE,1,100,0,0,0,1,0,0
+Contracts,BUSINESS_DOMAIN_CANDIDATE,0,152,0,0,0,0,0,0
+Visa,BUSINESS_DOMAIN_CANDIDATE,0,119,0,0,0,0,0,0
+WorkForce,BUSINESS_DOMAIN_CANDIDATE,1,74,0,0,0,1,0,0
+Work Permit,BUSINESS_DOMAIN_CANDIDATE,1,47,0,0,0,1,0,0
+Payment,BUSINESS_DOMAIN_CANDIDATE,0,65,0,0,0,0,0,0
+Occupation,BUSINESS_DOMAIN_CANDIDATE,0,35,0,0,0,0,0,0
+Nitaqat,BUSINESS_DOMAIN_CANDIDATE,0,6,0,0,0,0,0,0
+Certificate,BUSINESS_DOMAIN_CANDIDATE,0,3,0,0,0,0,0,0
+Common,BUSINESS_DOMAIN_CANDIDATE,0,48,321,0,0,0,0,0
+TIP,TIP_EXPOSURE_DIMENSION,0,0,0,140,59,0,0,0
+User Management,BUSINESS_DOMAIN_CANDIDATE,0,36,0,0,0,0,0,0
+Notification,BUSINESS_DOMAIN_CANDIDATE,0,2,0,0,0,0,0,0
+UNMAPPED,NON_DOMAIN_TOTAL,2411,0,0,0,0,0,2410,0
+AMBIGUOUS,NON_DOMAIN_TOTAL,0,0,0,0,0,0,0,0

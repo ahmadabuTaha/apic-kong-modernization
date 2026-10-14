@@ -1,0 +1,240 @@
+{
+  "domain_vocabulary": [
+    "Establishment",
+    "Contracts",
+    "Visa",
+    "WorkForce",
+    "Work Permit",
+    "Payment",
+    "Occupation",
+    "Nitaqat",
+    "Certificate",
+    "Common",
+    "TIP",
+    "User Management",
+    "Notification"
+  ],
+  "guardrails": {
+    "common_overwrites_origin_owner": false,
+    "enterprise_domain_ratified": false,
+    "runtime_egress_inferred": false,
+    "task019_performed": false,
+    "tip_overwrites_business_owner": false
+  },
+  "independence": {
+    "historical_outcomes_used_as_labels": false,
+    "task018b_inputs_used": false,
+    "task018c_inputs_used": false
+  },
+  "inputs": {
+    "apis": {
+      "bytes": 10659709,
+      "path": "indexes/semantic_api_inventory.jsonl",
+      "sha256": "c06810d9079abdd382b48b4f49617431f57d390395b81a4cd07aa0244dafed1a"
+    },
+    "backends": {
+      "bytes": 4842349,
+      "path": "indexes/backend_target_resolution.jsonl",
+      "sha256": "6b21000cd1df943214bd96eccbb9b9a5ed3d3d2c8b55acf576237ac5e2ebee33"
+    },
+    "catalog_properties": {
+      "bytes": 222635,
+      "path": "indexes/catalog_properties.jsonl",
+      "sha256": "7b6ee3889260e9f26552f7a59c613326387a81df44742eadedd699306763b429"
+    },
+    "codegraph_edges": {
+      "bytes": 5907436,
+      "path": "indexes/codegraph_dependency_edges.jsonl",
+      "sha256": "95cb2d9446b89b703d65d85a7e387e46614997903b39fbb822ee0347fc988867"
+    },
+    "identity": {
+      "bytes": 12003823,
+      "path": "indexes/apic_identity_resolution.json",
+      "sha256": "73c3b6481cfbfd1c7574d11cf40cbe4f2c8b99f57cd64f76f0124557e8d19185"
+    },
+    "observed_functions": {
+      "bytes": 16895146,
+      "path": "indexes/observed_function_inventory.jsonl",
+      "sha256": "36e1ccaed8fa9513dcbefeaea592d5b3dc478ae729840ec88f0ad2593c04990e"
+    },
+    "operations": {
+      "bytes": 12460714,
+      "path": "indexes/semantic_operation_inventory.jsonl",
+      "sha256": "1c603cd6867f3a2d12f950c319e7ab29b2d2111604ff8bcfe6c0ad4dda2bf3bc"
+    },
+    "qiwa_csv": {
+      "bytes": 515243,
+      "path": "neo4j/csv/Qiwa_Modules_Services.csv",
+      "sha256": "85499b04989f0ea93214d277709ab265f718744ea21cbcd96f9a8b635a34d877"
+    },
+    "relationships": {
+      "bytes": 14850576,
+      "path": "indexes/relationship_index.jsonl",
+      "sha256": "d9fdc2e5cd61510335af572e03c21b27128d39cb9007104be774e24e3d3a8a0a"
+    }
+  },
+  "matching_limits": [
+    "QIWA CSV contains no endpoint or route columns",
+    "generic URL segments and names are candidates only",
+    "configured branches do not prove runtime execution",
+    "DP child type does not prove APIC wrapper"
+  ],
+  "outputs": {
+    "ambiguous": {
+      "bytes": 528,
+      "path": "outputs/task018d/ambiguous_operations.csv",
+      "record_count": 0,
+      "sha256": "c22a0138909ee6c1f6dac9716edcd07ce644c5bd3d5de4ec76c5429f1214a605"
+    },
+    "branches": {
+      "bytes": 2761478,
+      "path": "outputs/task018d/operation_invocation_branches.csv",
+      "record_count": 3743,
+      "sha256": "884ca92b28059b73f962d18bddbe35bbfe9003a77006356d18339b21bb7c71ae"
+    },
+    "crosswalk": {
+      "bytes": 7154,
+      "path": "outputs/task018d/qiwa_module_domain_crosswalk.csv",
+      "record_count": 30,
+      "sha256": "fbbb8c9ff0c9cc685a4f2d239de9975dfba591e34a78d45fd29b5884d1bfd1d4"
+    },
+    "matches": {
+      "bytes": 5060479,
+      "path": "outputs/task018d/apic_qiwa_match_evidence.csv",
+      "record_count": 4748,
+      "sha256": "fe8ee5dd489282eeb8021a108b426bfb0c20e350178438c47c3c98d09fafa0b7"
+    },
+    "operations": {
+      "bytes": 1241620,
+      "path": "outputs/task018d/operation_domain_distribution.csv",
+      "record_count": 2414,
+      "sha256": "c0bf0709c836761963246c0f90cbbe3ea106f53c6dacf46aa0ee4b95ca4a9f2e"
+    },
+    "reuse": {
+      "bytes": 474733,
+      "path": "outputs/task018d/shared_component_reuse.csv",
+      "record_count": 1958,
+      "sha256": "8efdca79a7ef4183a9b4c6e58520a2a643ec695ec14b69b2701b8900c777ed3c"
+    },
+    "reviewer": {
+      "bytes": 2167,
+      "path": "outputs/task018d/reviewer_explanation.md",
+      "sha256": "474160c516e3f5cfe19164c6623f22d25f3af5a4b66497bb30815a3faa272464"
+    },
+    "summary": {
+      "bytes": 1077,
+      "path": "outputs/task018d/domain_distribution_summary.csv",
+      "record_count": 15,
+      "sha256": "89e437f11b4293b83a928a28f981430c1abf3a4ef06de7c7948bdd0340fe4fa5"
+    },
+    "tip": {
+      "bytes": 160506,
+      "path": "outputs/task018d/tip_exposure_inventory.csv",
+      "record_count": 199,
+      "sha256": "8180be1b5b601d3ced8868941b48c821d32c96c91a0db81ec0fdbd092a87ec90"
+    },
+    "unmatched": {
+      "bytes": 1239604,
+      "path": "outputs/task018d/unmatched_operations.csv",
+      "record_count": 2410,
+      "sha256": "ebd4338277ee101bbb97a8b71b2b7310116aa627e2ffda789cb0361d4431ddde"
+    },
+    "zero_apis": {
+      "bytes": 7774,
+      "path": "outputs/task018d/zero_operation_apis.csv",
+      "record_count": 41,
+      "sha256": "6ba73f11d8b9a7a6e79014132f11f1f0d1f1acffa44d152984f17d4cdfa7da6d"
+    }
+  },
+  "rules_version": "task018d-independent-source-driven-mapping-v1",
+  "scope": "TASK018D_INDEPENDENT_SOURCE_DRIVEN_CANDIDATE_MAPPING",
+  "source_inventory": {
+    "bytes": 515243,
+    "duplicates_excluding_id": 15,
+    "endpoint_or_url_columns": [],
+    "modules": [
+      "Absense Mgmt",
+      "Capptions",
+      "Change Occupation",
+      "Common",
+      "Contract Mgmt",
+      "Data Portal",
+      "Decease Mgmt",
+      "EFM",
+      "ET",
+      "End Of Service Reward",
+      "Establishment Loc",
+      "Establishment logo",
+      "LMH",
+      "LO",
+      "MOFA",
+      "Nitaqat",
+      "Notification",
+      "Occupation Mgmt",
+      "Payment",
+      "Proactive Awareness",
+      "Salary Certificate",
+      "TIP",
+      "Training Contract",
+      "Training Indicators",
+      "User Mgmt",
+      "Visa Mgmt",
+      "Wage Protection",
+      "Work Permit",
+      "Work Policy",
+      "Work in Saudi"
+    ],
+    "path": "neo4j/csv/Qiwa_Modules_Services.csv",
+    "row_count": 4437,
+    "sha256": "85499b04989f0ea93214d277709ab265f718744ea21cbcd96f9a8b635a34d877",
+    "types": {
+      "API-HTTP": 633,
+      "API-MQ": 381,
+      "DP": 647,
+      "ODM": 73,
+      "SP": 2702,
+      "api-mq": 1
+    },
+    "unique_id_count": 4437
+  },
+  "stop_gate": "EA_REVIEW_TASK018D",
+  "summary": {
+    "ambiguous_operation_count": 0,
+    "branch_platform_counts": {
+      "ACE_BACKEND": 2024,
+      "EXTERNAL_VIA_DATAPOWER": 501,
+      "PLATFORM_UNRESOLVED": 1218
+    },
+    "branch_resolution_counts": {
+      "FULLY_RESOLVED": 1779,
+      "PARTIALLY_RESOLVED_DYNAMIC_PATH": 545,
+      "UNRESOLVED": 1419
+    },
+    "canonical_api_count": 2036,
+    "invocation_branch_count": 3743,
+    "match_evidence_count": 4748,
+    "match_status_counts": {
+      "CANDIDATE_DYNAMIC_ROUTE": 348,
+      "CANDIDATE_NAME_MATCH": 508,
+      "MULTI_BRANCH_CONFIRMED": 4,
+      "NO_MATCH_EVIDENCED": 1554
+    },
+    "operation_count": 2414,
+    "primary_assignment_count": 3,
+    "targeted_yaml_file_count": 38,
+    "targeted_yaml_hash_mismatches": 0,
+    "tip_status_counts": {
+      "TIP_EXPOSURE_CANDIDATE": 59,
+      "TIP_EXPOSURE_CONFIRMED": 140,
+      "TIP_EXPOSURE_NOT_EVIDENCED": 2215
+    },
+    "unique_operation_count": 2414,
+    "unmatched_operation_count": 2410,
+    "zero_operation_api_count": 41
+  },
+  "test_outcomes": {
+    "focused": "9 passed",
+    "known_baseline": "tests/fixtures/repository_profile/staging is absent from worktree/HEAD; five Phase 0 setup errors remain frozen and separate",
+    "repository": "147 passed, 1 sandbox loopback failure, 5 known missing-fixture setup errors; isolated loopback rerun 1 passed; permitted suite excluding only tests/test_profiler.py 146 passed"
+  }
+}

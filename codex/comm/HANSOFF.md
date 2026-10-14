@@ -1,5 +1,43 @@
 # Codex Handoff
 
+## Current execution — Phase 5, Task 018D
+
+### Execution summary
+
+- Fast-forwarded `main` from `73986b3` to the authorized Task 018D checkpoint `7d0bf90`, reread `AGENTS.md`, `CURRENT_TASKS.md`, and this handoff, and executed only the standalone Task 018D authorization embedded in `CURRENT_TASKS.md`. There is no separate Task 018D prompt file.
+- Built a new independent classifier in `business_domain/independent_mapping.py`. It does not import Task 018C code and does not read any Task 018B/018C output, join, tier or label. Historical artifacts remain unchanged.
+- Reused frozen Task 014 canonical API/operation indexes, accepted backend/catalog/CodeGraph evidence, APIC identity/relationship indexes, and the original `neo4j/csv/Qiwa_Modules_Services.csv`. Targeted raw YAML was limited to 38 index-selected files containing switch/case/default branch structure; all 38 source hashes matched.
+- Preserved the QIWA source inventory: SHA-256 `85499b04989f0ea93214d277709ab265f718744ea21cbcd96f9a8b635a34d877`, 515,243 bytes, 4,437 rows/unique IDs, 30 literal modules, 15 duplicates excluding ID, and no endpoint/URL column.
+- Constructed the mandatory module crosswalk first against exactly the 13 EA areas. Statuses are 10 `EA_EXPLICIT_MODULE_MAPPING`, 10 `MODULE_ALIAS_SUPPORTED`, one `EA_FAMILY_RULE_SUPPORTED`, six `MODULE_MAPPING_REVIEW_REQUIRED`, and three `MODULE_MAPPING_UNRESOLVED`. Literal source spellings remain unchanged; WorkForce is normalized only as the EA domain label.
+- Reconstructed Canonical API → Operation → configured/reachable branch → invoke records independently. Operation-switch scopes, API-shared direct actions, conditional/default cases, referenced-target contexts and error paths remain distinct. Conditions are reduced to safe selectors plus predicate hashes; raw target expressions, resolved URLs, catalog values and credentials are omitted.
+- Only an exact switch message-root identifier, after the documented `Rq`/`Rs` suffix removal, can confirm a branch-to-QIWA Parent in current evidence. Generic URL tails, names, shared hosts and dynamic paths remain candidates because the QIWA CSV has no route evidence. Configured branches are never treated as proof of runtime execution.
+
+### Results and evidence
+
+- Full accepted coverage remains **2,414/2,414 unique HTTP operations** and **2,036/2,036 canonical APIs**, with **41** zero-operation/unsupported APIs separately accounted for.
+- Produced **3,743** operation/invocation branch records: 2,342 API-shared direct, 1,309 conditional/default candidates, 67 operation-scoped explicit, 24 referenced-target candidates and one error-path candidate. Branch kinds are 2,367 direct, 1,298 conditional, 67 operation-switch and 11 default.
+- Per-branch platform classification: **2,024 ACE_BACKEND**, **501 EXTERNAL_VIA_DATAPOWER**, and **1,218 PLATFORM_UNRESOLVED**. Independent target resolution: 1,779 fully resolved, 545 partially resolved dynamic path, and 1,419 unresolved. Dynamic `$(request.path)` does not erase an accepted resolved ACE host.
+- Operation matching outcomes: **4 MULTI_BRANCH_CONFIRMED**, **348 CANDIDATE_DYNAMIC_ROUTE**, **508 CANDIDATE_NAME_MATCH**, and **1,554 NO_MATCH_EVIDENCED**. The four confirmed operations are switch-driven report orchestrations; `sendqiwareports` spans multiple ownership domains and has no forced primary.
+- Only **3** operation-level primary candidates are defensible from the confirmed branches: one WorkForce (`employeetransferreports`), one Establishment (`saudicertificatereports`), and one Work Permit (`workpermitreports`). These are provisional candidates, not ratification. **2,410** operations remain in `unmatched_operations.csv`; `ambiguous_operations.csv` contains **0** because no incompatible confirmed identity was observed. Candidate/missing evidence is not mislabeled as ambiguity.
+- Produced **4,748** row-level APIC↔QIWA evidence records: 477 confirmed explicit branch/source rows, 1,564 dynamic-route candidates and 2,707 name/route candidates. EA anchors retain `SubmitOccupationCorrectionRequest` origin Occupation and `GetGosiContractsList` origin Contracts without upgrading their candidate APIC joins.
+- `sendQIWAReports` retains all 63 configured branches and exact flags separately; `UpdateEstablishmentContactAddress`, `ValidateIssueEstablishingVisas` and `SubmitWorkPermitRequest` remain candidate-only. Submit Work Permit evidence preserves API-HTTP and DP child context without asserting a DP wrapper.
+- Shared-component analysis covers **1,958** normalized identities: 1,694 module-local, 241 shared across 2–4 distinct modules with origin retained, and 23 `COMMON_BY_REUSE_RULE` at five or more distinct modules. Repeated rows in one module count once; origin remains separate from additional Common classification.
+- TIP exposure is independent of business ownership: **140 TIP_EXPOSURE_CONFIRMED** operations have explicit connected Product/Plan/subscription TIP markers; **59 TIP_EXPOSURE_CANDIDATE** operations retain label/external-offering limitations; 2,215 have no TIP exposure evidence. Multi-channel context is preserved.
+
+### Outputs
+
+- Implementation: `business_domain/independent_mapping.py`, `business_domain/independent_mapping_main.py`, and `tests/test_business_domain_independent_mapping.py`.
+- Full deterministic outputs under `outputs/task018d/`: `qiwa_module_domain_crosswalk.csv` (30), `operation_domain_distribution.csv` (2,414), `operation_invocation_branches.csv` (3,743), `apic_qiwa_match_evidence.csv` (4,748), `domain_distribution_summary.csv` (13 EA areas plus UNMAPPED/AMBIGUOUS), `shared_component_reuse.csv` (1,958), `tip_exposure_inventory.csv` (199), `ambiguous_operations.csv` (0), `unmatched_operations.csv` (2,410), and `zero_operation_apis.csv` (41).
+- `manifest.json` records all input/output hashes, independence controls, counts, rules and test results. The explicitly required `reviewer_explanation.md` contains reproducible commands, representative anchors, limitations, outcomes and the STOP gate; no additional standalone report was created.
+
+### Tests, unresolved issues, and final status
+
+- Focused Task 018D suite: **9 passed**. It validates crosswalk closure/exact vocabulary, independent inputs, 2,414/2,036/41 coverage, deterministic bytes/order, ACE/external/unresolved and dynamic targets, true ambiguity versus no-match, 1/4/5-module reuse plus repeated-row deduplication, all six named service anchors, multi-invoke switch reconstruction, generic-route false positives, DP-wrapper non-inference, TIP separation and redaction.
+- Full default-sandbox repository run: **147 passed, 1 failed, 5 setup errors**. The one failure was loopback binding denied by the sandbox; its isolated permitted rerun passed. The five setup errors remain the frozen Phase 0 packaging issue: ignored `tests/fixtures/repository_profile/staging` is absent from the worktree and `HEAD`.
+- Permitted repository suite excluding only the known missing-fixture module: **146 passed**. No available Task 018D or repository test failed.
+- Unresolved evidence is intentional: the CSV lacks routes/endpoints; most cross-system identities remain name/dynamic candidates; module mappings for Decease Mgmt, LO and MOFA are unresolved; six additional modules require ownership review; branch configuration does not prove runtime selection, production use or egress; TIP and Common do not replace business ownership.
+- Final status: **TASK 018D TECHNICAL PASS; INDEPENDENT SOURCE-DRIVEN CANDIDATE MAPPING ONLY; STOP AT `EA_REVIEW_TASK018D`**. Do not start Task 019, domain ratification, retirement, rationalization, productization or Kong TO-BE work without explicit Enterprise Architect approval.
+
 ## Current execution — Phase 5, Task 018C
 
 ### Execution summary
