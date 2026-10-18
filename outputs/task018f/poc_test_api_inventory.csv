@@ -1,0 +1,16 @@
+api_lifecycle_purpose,artifact_name,canonical_api_id,lifecycle_evidence,operation_count,primary_as_is_domain_candidate,retirement_approved,source_reference
+POC,test-sarat,apic-identity:sha256:18e6fe14659e9d84b67aec70abe3220e97b5f16242bd9ef592c9c1343bb8db57,explicit POC marker; no retirement inference,2,,false,staging/apis/_catalog/test-sarat_2.0.0.yaml
+TEST,test-pocupdated,apic-identity:sha256:1caf62eb582e58a353ca8db7f236f05643f836aacb389decc50a3c1756329094,explicit TEST marker; no retirement inference,1,,false,staging/apis/_catalog/test-pocupdated_1.0.1.yaml
+TEST,aouth2test,apic-identity:sha256:1d7e3fb8f1d5ed5053ea87e1b80ca0f7acc8fe66493632a2f8931142d05a5262,explicit TEST marker; no retirement inference,7,,false,staging/apis/_catalog/aouth2test_1.0.0.yaml
+TEST,test-java,apic-identity:sha256:3ca38211c5fb0efc81e806bd5544f72ae984c7cec7a9f112b8f851206a443b78,explicit TEST marker; no retirement inference,1,,false,staging/apis/_catalog/test-java_1.0.0.yaml
+TEST,seven-hundred-test,apic-identity:sha256:48716c5158ddd4d1ffd22dddaf3a4842787b4530071b1d8780fd684e4889838b,explicit TEST marker; no retirement inference,1,,false,staging/apis/_catalog/seven-hundred-test_1.0.0.yaml
+POC,test-poc,apic-identity:sha256:7c1180e5dcc92dfa245c35a3f8d7aa134241f6439c627b5a8cadc145e324426e,explicit POC marker; no retirement inference,2,,false,staging/apis/_catalog/test-poc_1.0.0.yaml
+POC,testanvesh,apic-identity:sha256:92c2f6866931bdbf819f0293d8512ea4829603d0b770e21d1c665e1f8b3bd83d,explicit POC marker; no retirement inference,1,,false,staging/apis/_catalog/testanvesh_1.0.0.yaml
+TEST,test-api,apic-identity:sha256:9b0a52d66e7f47d9c4ea64e70e8e90ace33fd0a4d3a87acfd8afcc771137eb8c,explicit TEST marker; no retirement inference,7,,false,staging/apis/_catalog/test-api_1.0.0.yaml
+TEST,test,apic-identity:sha256:9be337d804327539404dcf7b258438ae4fbbc975f1e1f8c9ed5178d8122f6686,explicit TEST marker; no retirement inference,1,,false,staging/apis/_catalog/test_1.0.0.yaml
+TEST,rate_test,apic-identity:sha256:9bf6aa83dd4f47f8cd608f31f458b12ebd01b57e6cac9e6a22cddf6b8f3b84ee,explicit TEST marker; no retirement inference,7,,false,staging/apis/_catalog/rate_test_1.0.0.yaml
+TEST,anil-test,apic-identity:sha256:c12e06718cda71132e102be1af3af01d46467d120085df1b78547931fb3fb289,explicit TEST marker; no retirement inference,7,,false,staging/apis/_catalog/anil-test_1.0.0.yaml
+POC,graphql_poc,apic-identity:sha256:c814c67215c7fe58ef2dad148dad0e103164bfb44e2a91e64cbaaa2ac7af6048,explicit POC marker; no retirement inference,2,,false,staging/apis/_catalog/graphql_poc_1.0.0.yaml
+TEST,test-runaway,apic-identity:sha256:d0dd0f05c353a340f0bcb6b65a9400c2fa0173ebd6ae8b1e91cfdeee959cb857,explicit TEST marker; no retirement inference,1,,false,staging/apis/_catalog/test-runaway_1.0.0.yaml
+TEST,svptestcenters,apic-identity:sha256:ef7139c1a103eaa9d05b7ead14818f0a7c34ae68b9fbd1de95be431fca7cfb74,explicit TEST marker; no retirement inference,2,,false,staging/apis/_catalog/svptestcenters_1.0.0.yaml
+SAMPLE,insertnewadaasurveryapi,apic-identity:sha256:fc50cf21b591b9bc8d6562f6a8b2d4ba6c7fc8acbbd63d10c44d78a07cc1c44b,explicit SAMPLE marker; no retirement inference,6,Utilities,false,staging/apis/_catalog/insertnewadaasurveryapi_1.0.0.yaml

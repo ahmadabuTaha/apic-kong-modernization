@@ -1,5 +1,34 @@
 # Codex Handoff
 
+## Current execution — Phase 5, Task 018F
+
+### Execution summary
+
+- Fast-forwarded `main` from `efda4d8` to authorization checkpoint `1b84ac9`, reread `AGENTS.md`, and executed only the complete Task 018F authorization embedded in `codex/comm/CURRENT_TASKS.md`.
+- Implemented a separate deterministic artifact-first pipeline in `business_domain/artifact_mapping.py`. It builds all canonical API records before operation attribution and does not import Task 018B–018E domain labels. It reuses only frozen canonical identities/operations, factual Task 018B schema extraction, accepted Product/Plan relationships, QIWA source rows, backend observations, and safe cache mechanics.
+- Kept `staging/` and all historical outputs unchanged. Raw YAML access was bounded to 38 conditional-assembly source files on a cold build and zero on the final warm build. No unbounded scan, semantic all-pairs comparison, Task 019 work, retirement, duplication, runtime-use, productization, or Kong TO-BE decision was performed.
+- Added the exact `indexes/task018f_cache/` namespace with 12 independently keyed/validated stages, including artifact identity, all 15 domain anchors, QIWA parents/edges, factual request/response schema clues, Product/channel context, API/operation evidence vectors, and backend branches. Final warm telemetry is 12 hits, zero misses/rebuilds, zero YAML reads, and 46 hashed source files.
+
+### Results and evidence
+
+- Exact closure is preserved: **2,036/2,036 canonical APIs**, **2,414/2,414 accepted HTTP operations**, **41/41 zero/unsupported-operation artifacts**, **30** literal QIWA modules, **993** module-scoped Parent identities, and exactly **15** EA domains. Of the 41 zero-operation artifacts, 29 have source-supported artifact-level primary candidates; the remainder stay explicit.
+- API artifacts have **1,470** provisional primaries and **566** null/review-required primaries. Distribution: Certificate 19; Common 86; Contracts 171; Establishment 313; LO 64; Nitaqat 21; Notification 15; Occupation 69; Payment 78; TIP 235; User Management 20; Utilities 125; Visa 84; Work Permit 57; WorkForce 113.
+- Operations have **1,666** provisional primaries and **748** null/review-required primaries. Distribution: Certificate 16; Common 78; Contracts 173; Establishment 317; LO 62; Nitaqat 18; Notification 21; Occupation 75; Payment 90; TIP 283; User Management 68; Utilities 218; Visa 87; Work Permit 45; WorkForce 115. Artifact inheritance, operation-specific evidence, conflicts and null reasons remain distinguishable.
+- Required scenarios pass: `user-management` and `user-management-privilege` are User Management without a Parent prerequisite; `getpaymentdetails-v2`/`GetPaymentDetails`/`/getpaymentdetailshypp` are Payment without a QIWA match; source artifact `gosi-generateaccesstoken` is Utilities and retains GOSI/laborer context without being reassigned; `SubmitOccupationCorrectionRequest` is Occupation; `GetGosiContractsList` is Contracts.
+- TIP and LO are first-class primary candidates, not side flags. The combined inventory has **340** API rows, including independently retained Product/Plan/channel context and underlying functional candidates; QAAS contract APIs remain primary TIP with underlying Contracts. Utilities/Common has **211** review rows and retains the 5+ distinct-QIWA-module Common rule without treating every technical API as either domain.
+- Lifecycle purpose is independent: BUSINESS 1,345; UTILITY 124; POC 4; TEST 10; SAMPLE 1; REVIEW_REQUIRED 552. The separate 15-artifact POC/Test/Mock/Sample inventory explicitly records that retirement is not approved.
+- Emitted **12,876** compact schema-evidence rows with explicit request/response direction, object/reference roles, source pointers and ownership limitations. Schema evidence enriches review context but makes no ownership assertion by itself. QIWA name edges total 1,185 artifact and 686 operation candidate edges; missing Parent matches never erase other evidence.
+- Reconciled **3,743** configured backend/branch rows: 2,024 ACE, 501 external-via-DataPower and 1,218 unresolved. `sendQIWAReports` retains all **63** applicable configured branches and no forced primary owner. Host values are omitted and configured evidence never implies runtime egress.
+
+### Outputs, validation, unresolved issues and final status
+
+- All required deliverables are under `outputs/task018f/`: 17 deterministic CSV ledgers/inventories plus `coverage_report.md` and `manifest.json`. Independent validation passed for every manifest hash, CSV record count, exact denominator, and forbidden URL/secret/header scan. No extra standalone Markdown report was created.
+- Focused Task 018F suite: **8 passed**. It covers closure, acceptance anchors, TIP/LO dual dimensions, Utilities/Common, request/response schemas, lifecycle separation, 63 branches, cold/warm byte equality, and stage-local invalidation for EA rules, QIWA CSV, schema index and a single YAML hash.
+- Full default-sandbox suite: **162 passed, 1 failed, 5 setup errors**. The failure is the known localhost-bind sandbox restriction; its isolated permitted rerun passed. The five setup errors are the frozen Phase 0 packaging issue: `tests/fixtures/repository_profile/staging` is absent from the worktree and `HEAD`.
+- Available regression subset excluding only those inherited environmental cases: **160 passed, 1 deselected**; isolated socket test: **1 passed**. No Task 018F or available repository assertion remains failing.
+- Remaining nulls and conflicts are evidence outcomes, not implementation failures. They require EA/owner/ICD/runtime evidence; candidate assignments are not ratified ownership, actual use, release lineage, duplicate status, retirement, or approved business boundaries.
+- Final status: **TASK 018F TECHNICAL PASS; EVIDENCE-DRIVEN CANDIDATE MAPPING ONLY; STOP AT `EA_REVIEW_TASK018F`.** Do not begin Task 019 or any productization, rationalization, retirement or Kong TO-BE work without explicit Enterprise Architect approval.
+
 ## Current execution — Phase 5, Task 018E
 
 ### Execution summary

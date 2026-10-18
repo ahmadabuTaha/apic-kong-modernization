@@ -1,0 +1,297 @@
+{
+  "cache_schema_version": "task018f-cache-v3",
+  "cache_telemetry": {
+    "cache_hit_count": 12,
+    "cache_miss_count": 0,
+    "elapsed_seconds": 1.283,
+    "source_files_hashed": 46,
+    "stages_rebuilt": [],
+    "targeted_yaml_files_read": 0,
+    "unchanged_source_skips": 12,
+    "unresolved_schema_refs": 0
+  },
+  "coverage": {
+    "artifact_primary_counts": {
+      "Certificate": 19,
+      "Common": 86,
+      "Contracts": 171,
+      "Establishment": 313,
+      "LO": 64,
+      "NULL": 566,
+      "Nitaqat": 21,
+      "Notification": 15,
+      "Occupation": 69,
+      "Payment": 78,
+      "TIP": 235,
+      "User Management": 20,
+      "Utilities": 125,
+      "Visa": 84,
+      "Work Permit": 57,
+      "WorkForce": 113
+    },
+    "canonical_api_count": 2036,
+    "domain_count": 15,
+    "lifecycle_purpose_counts": {
+      "BUSINESS": 1345,
+      "POC": 4,
+      "REVIEW_REQUIRED": 552,
+      "SAMPLE": 1,
+      "TEST": 10,
+      "UTILITY": 124
+    },
+    "operation_count": 2414,
+    "operation_primary_counts": {
+      "Certificate": 16,
+      "Common": 78,
+      "Contracts": 173,
+      "Establishment": 317,
+      "LO": 62,
+      "NULL": 748,
+      "Nitaqat": 18,
+      "Notification": 21,
+      "Occupation": 75,
+      "Payment": 90,
+      "TIP": 283,
+      "User Management": 68,
+      "Utilities": 218,
+      "Visa": 87,
+      "Work Permit": 45,
+      "WorkForce": 115
+    },
+    "schema_evidence_count": 12876,
+    "send_qiwa_reports_configured_branch_count": 63,
+    "source_module_count": 30,
+    "tip_lo_inventory_count": 340,
+    "unique_canonical_api_count": 2036,
+    "unique_operation_count": 2414,
+    "unmatched_artifact_count": 566,
+    "unmatched_operation_count": 748,
+    "utilities_common_inventory_count": 211,
+    "zero_operation_api_count": 41
+  },
+  "guardrails": {
+    "domain_ratified": false,
+    "duplicates_declared": false,
+    "retirement_inferred": false,
+    "runtime_egress_inferred": false,
+    "runtime_usage_inferred": false,
+    "secrets_written": false,
+    "staging_modified": false,
+    "task019_performed": false
+  },
+  "independence": {
+    "artifact_first": true,
+    "prior_task_domain_labels_used": false,
+    "task018b_factual_schema_extraction_used": true,
+    "task018b_schema_labels_used": false
+  },
+  "inputs": {
+    "apis": {
+      "bytes": 10659709,
+      "path": "indexes/semantic_api_inventory.jsonl",
+      "sha256": "c06810d9079abdd382b48b4f49617431f57d390395b81a4cd07aa0244dafed1a"
+    },
+    "backends": {
+      "bytes": 4842349,
+      "path": "indexes/backend_target_resolution.jsonl",
+      "sha256": "6b21000cd1df943214bd96eccbb9b9a5ed3d3d2c8b55acf576237ac5e2ebee33"
+    },
+    "catalog_properties": {
+      "bytes": 222635,
+      "path": "indexes/catalog_properties.jsonl",
+      "sha256": "7b6ee3889260e9f26552f7a59c613326387a81df44742eadedd699306763b429"
+    },
+    "identity": {
+      "bytes": 12003823,
+      "path": "indexes/apic_identity_resolution.json",
+      "sha256": "73c3b6481cfbfd1c7574d11cf40cbe4f2c8b99f57cd64f76f0124557e8d19185"
+    },
+    "operations": {
+      "bytes": 12460714,
+      "path": "indexes/semantic_operation_inventory.jsonl",
+      "sha256": "1c603cd6867f3a2d12f950c319e7ab29b2d2111604ff8bcfe6c0ad4dda2bf3bc"
+    },
+    "qiwa_csv": {
+      "bytes": 515243,
+      "path": "neo4j/csv/Qiwa_Modules_Services.csv",
+      "sha256": "85499b04989f0ea93214d277709ab265f718744ea21cbcd96f9a8b635a34d877"
+    },
+    "relationships": {
+      "bytes": 14850576,
+      "path": "indexes/relationship_index.jsonl",
+      "sha256": "d9fdc2e5cd61510335af572e03c21b27128d39cb9007104be774e24e3d3a8a0a"
+    },
+    "schema_clues": {
+      "bytes": 4148865,
+      "path": "indexes/task018b_business_object_candidate_register.jsonl",
+      "sha256": "2d0963f2dd114caaf185cbc72a0913f707cdd07ff49c7e25e700ddabb0ddaa8e"
+    },
+    "targeted_assembly_sources": {
+      "staging/apis/_catalog/accessmanagement-supportcenter_1.0.0.yaml": "75e43cf416607e018cf1ba9de98bcbb7b56ad5e2d890769f47ee061af651d1e2",
+      "staging/apis/_catalog/adminmanagement-supportcentre_1.0.0.yaml": "0f8f1bc29e96f993ecb92106ec1970f51721c3e199818375a33c8a45108eb2b6",
+      "staging/apis/_catalog/ajeerelservices_1.0.1.yaml": "87df4a11361a543e8155b3a45633282ab8099a52da7ed7f604d20f9c015bd447",
+      "staging/apis/_catalog/ajeervisaservice_1.0.1.yaml": "a1c0f6f68146b6e9a8fba85dd319164a95af7b12df33792f584c441efbf960bf",
+      "staging/apis/_catalog/async-data-history_1.0.0.yaml": "ce0cea3901d64bd4de117c0fe115d8c2e6edaed2e4e750cb4cee9f68c4d4ec4c",
+      "staging/apis/_catalog/cachemanagement-supportcentre_1.0.0.yaml": "9771fd4bc98ec19144e0be56ab3efd7d8dd70ce495285b97ca645bbc3c0567fc",
+      "staging/apis/_catalog/employeetransferreports_1.0.0.yaml": "2e52fd4bf8abe860c4fc5346715333aad34b7e7a790d7ca9df83b8e2bb7316f5",
+      "staging/apis/_catalog/ethaq-employeecontractinformation_1.0.0.yaml": "21ab40b26578776db65cbb3eeaf792e4d0aff12d486a0f831c29bcf981802114",
+      "staging/apis/_catalog/fullnationaladdressbygeocode_1.0.0.yaml": "83db0ab96825c03418feaa688fd0d7030069f8a6974eb4317c649547bfe02675",
+      "staging/apis/_catalog/getlookups_1.0.0.yaml": "4e208fe21e05cfc86e1c62f0976c4946982b1c26c38dd20fbe4905b761bb6738",
+      "staging/apis/_catalog/getsernowticketdetails_1.0.0.yaml": "89aee3d29304ff820c219be30bd4f9ff49bf9db4dff999a0cf0da58c10eaad7c",
+      "staging/apis/_catalog/getsernowticketdetails_test.yaml": "75739bcfd410900a2a18f129c012a46c7ee67bd065d4fc38c741f49655f0d970",
+      "staging/apis/_catalog/graphql_poc_1.0.0.yaml": "b48387adaff797d320b3fb930dd55ac4401dc9fee47ea753003fb38b7acf261d",
+      "staging/apis/_catalog/kyan-user-validation_3.0.0.yaml": "4765ea6be532666ad33cc23b51bfbb2e770b91de9e648264d092162ebd1220b1",
+      "staging/apis/_catalog/mhrsd-activatedeactivateindustrialestablishmentv1_1.0.0.yaml": "3a5a0db2e95b067700424c2f86b3a4e9478bdac06884a1a22186680ba332599d",
+      "staging/apis/_catalog/nic-prtissuespecialpermit_1.0.0.yaml": "b59b1deeb30d8b7d3f81f1980c8856f5ff68b39cfb17c36013f746a9374497d4",
+      "staging/apis/_catalog/nic-submitrunawayrequest_2.0.0.yaml": "511ec170f7c7dbf67364ee183f367d11f7b46690fd91714277e1003163fd6c65",
+      "staging/apis/_catalog/nic-submitvisa_2.0.0.yaml": "372a0ed41c8b25aec792c964b9c24a705f06caa789733f1a79e0f828f7207e6e",
+      "staging/apis/_catalog/noteservice_1.0.0.yaml": "250cb1da30dd5b3336f23af403ca34f6ecf3777ceffaa2cae281334dd28ba61d",
+      "staging/apis/_catalog/osh-apis_1.0.0.yaml": "5301281d50612a998d59dc151445743451dfe68f4d03e957ceacbdcaf2c1cb59",
+      "staging/apis/_catalog/osh_1.0.0.yaml": "73a2fe6e1f164d5a3d3fb20e0586111a0b2fbfabd782866b84ff37cf8a13ce2f",
+      "staging/apis/_catalog/p2htip_testapi2_1.0.0.yaml": "9b2f137d2ba51a1aaf871c4912b34688fbdf244f2ed5bf7c40ee83fb3b8182dd",
+      "staging/apis/_catalog/p2htip_testapi_ratelimit_dynamicvalue_1.0.0.yaml": "e1ba0eaa2e3d265d46dc88d1467f87dd9ef78b9db48a38f5f1e3cd770b7a04bc",
+      "staging/apis/_catalog/qaas-terminateemploymentcontractv2_1.0.0.yaml": "e456808dc892ea038b107ee45a71350554c5a3c8c6f4772df3100e90769879dd",
+      "staging/apis/_catalog/qaas_createemploymentcontractv2_1.0.0.yaml": "ff91be01ea01ba98d3c45ec59eb76a0e7b5880a933c8f1aee9159c7302f6c190",
+      "staging/apis/_catalog/qaas_getemploymentcontractdetailsv2_1.0.0.yaml": "308bc490339307792014616a7db8bd898d8706ecee75d4501335db07dbb4b675",
+      "staging/apis/_catalog/qaas_getemploymentcontractslistv2_1.0.0.yaml": "0916bdff1b7cf0aafe4ea90f2be163c76a0222f62c10c1e746c8baa4255a149c",
+      "staging/apis/_catalog/qaas_translegacyempcontractv2_1.0.0.yaml": "6e68a60dbee6215f790f01d1ba24b20a388eec6230458dcdf017ce119490398e",
+      "staging/apis/_catalog/qaas_updateemploymentcontractv2_1.0.0.yaml": "382197125c0c80692e93202da46ae6245b2a2da71d56100a0c8c866ba38d812f",
+      "staging/apis/_catalog/queryqanagement-supportcentre_1.0.0.yaml": "8feaeddcaced0bab2a57fdd5c454b9113e59e0fb4bb6d5bb11fb5859e45355ff",
+      "staging/apis/_catalog/saudicertificatereports_1.0.0.yaml": "571485ff5f7bbb37448d61525efb86681a5345fa5f5f1182974f8605407599ed",
+      "staging/apis/_catalog/sendqiwareports_3.0.0.yaml": "bfd79f974d325b32a5dc5ff2511b64cd7093441f6bd3c0ba05625c970272aaf8",
+      "staging/apis/_catalog/servicemanagement-supportcentre_1.0.0.yaml": "8658dc8b9b258ed6dd5adc754d84d8ff1082f42a086414c14b9f091bf6996898",
+      "staging/apis/_catalog/tipmockservice_1.0.0.yaml": "9733e1d44e3768c0f1f2c33a4ccf4adf8548a01de7a70d21279f3b16f2fd575c",
+      "staging/apis/_catalog/updatevisastatus_1.0.0.yaml": "9dd331c435730d3ee43d036bf7b2948dd6bdcaa2eed045540e4316ca59cc9b52",
+      "staging/apis/_catalog/updatevisastatus_TEST.yaml": "735dbbfb614aa00e0b9f46a839f5360d28b059fd2d90934fdf0103c6fb1148a3",
+      "staging/apis/_catalog/verifymemberbynationalnumber-coc_1.0.0.yaml": "fa8cdc40f1860677ac95440c63e498e625e8690ac8adadaef3435ce1b1592933",
+      "staging/apis/_catalog/workpermitreports_1.0.0.yaml": "2f058b030ef33292e6388c1054b86b05833d36a7f67e1b2681830c3c3c48952b"
+    }
+  },
+  "outputs": {
+    "apis": {
+      "bytes": 3381352,
+      "path": "outputs/task018f/canonical_api_domain_ledger.csv",
+      "record_count": 2036,
+      "sha256": "0dfe7c6927f27de0f608bc518ee58432639a30660769481551ca91b25ff9a33f"
+    },
+    "artifact_matches": {
+      "bytes": 469842,
+      "path": "outputs/task018f/artifact_parent_matches.csv",
+      "record_count": 1211,
+      "sha256": "11afb8bd5b7bd583c7a7cdf33e4403f9542e16b550fcad767bf2f8b0713aaf0e"
+    },
+    "backend": {
+      "bytes": 1899192,
+      "path": "outputs/task018f/backend_corrob_and_branches.csv",
+      "record_count": 3743,
+      "sha256": "bbbca4e7822aab7fd636623e1ec8d8072115c2e1f046ef033ad5188a6b78d5b2"
+    },
+    "coverage": {
+      "bytes": 3009,
+      "path": "outputs/task018f/coverage_report.md",
+      "sha256": "96ab30d3d405ee1584ef7119f7dfee6ac8ef648e3849da49156b91b126687afe"
+    },
+    "crosswalk": {
+      "bytes": 24084,
+      "path": "outputs/task018f/domain_module_crosswalk.csv",
+      "record_count": 30,
+      "sha256": "b9e77187b9ff95cf2df323f14dc642790ca82f9fb6232b5d099c335bb46956c3"
+    },
+    "distribution": {
+      "bytes": 3318,
+      "path": "outputs/task018f/domain_distribution_summary.csv",
+      "record_count": 30,
+      "sha256": "523a71d9261984b8d0c3728a6af4a98aa32981542d102bc59d0a3a4d6b090858"
+    },
+    "exceptions": {
+      "bytes": 624510,
+      "path": "outputs/task018f/domain_mapping_exceptions.csv",
+      "record_count": 1314,
+      "sha256": "7942799798edd34183f08401a9ad240cffc02fb250ecad27047713f4be330c7b"
+    },
+    "operation_matches": {
+      "bytes": 339582,
+      "path": "outputs/task018f/operation_parent_matches.csv",
+      "record_count": 686,
+      "sha256": "9ed0c71056b7e8dcf092af40f3c837c14114725c9c27e5a7658242e2849a508f"
+    },
+    "operations": {
+      "bytes": 4510931,
+      "path": "outputs/task018f/operation_domain_ledger.csv",
+      "record_count": 2414,
+      "sha256": "43b159f8e94c423e02b2f16b08a4c1da3fb9959eb359932b19097e18f094fcde"
+    },
+    "parents": {
+      "bytes": 457214,
+      "path": "outputs/task018f/domain_parent_services.csv",
+      "record_count": 993,
+      "sha256": "aca5f9d3d314b13f141ed259e6996d7092dfca51afeef991d3b4233ae0cd9890"
+    },
+    "poc_test": {
+      "bytes": 3216,
+      "path": "outputs/task018f/poc_test_api_inventory.csv",
+      "record_count": 15,
+      "sha256": "d066c7fb6f1b51c6424442239c234e47697e0ae6ae4ba560ba17ee7483089874"
+    },
+    "registry": {
+      "bytes": 1920,
+      "path": "outputs/task018f/enterprise_domain_registry.csv",
+      "record_count": 15,
+      "sha256": "fb203c9e041835f775f6b8e8875c81d112ec540221aacb16c4b0b8e782fef38e"
+    },
+    "schema": {
+      "bytes": 7292473,
+      "path": "outputs/task018f/schema_business_object_evidence.csv",
+      "record_count": 12876,
+      "sha256": "e8e70379e52af1c1936156e16fa01d8b175285b4afa681bd77acd190a02817c9"
+    },
+    "tip_lo": {
+      "bytes": 383807,
+      "path": "outputs/task018f/tip_lo_domain_inventory.csv",
+      "record_count": 340,
+      "sha256": "ca69f6a8e185648ac0465a9757645d89e21b4f44ca57ac715e73c56b08738dcf"
+    },
+    "unmatched_apis": {
+      "bytes": 835017,
+      "path": "outputs/task018f/unmatched_artifacts.csv",
+      "record_count": 566,
+      "sha256": "74dccb7661c7b0de562ee182c44d31259deabf9cdc3e880d3a962dd993a04193"
+    },
+    "unmatched_operations": {
+      "bytes": 1239648,
+      "path": "outputs/task018f/unmatched_operations.csv",
+      "record_count": 748,
+      "sha256": "b48f1bf5db9f8ef818a1d0e3e72bcacf831c970175e2d174737bd46a08a271df"
+    },
+    "utilities_common": {
+      "bytes": 50801,
+      "path": "outputs/task018f/utilities_common_inventory.csv",
+      "record_count": 211,
+      "sha256": "99fa11fead4e527096ca33e1bdcaacd8dc8f03245975073d3a4cee9786a76b4c"
+    },
+    "zero": {
+      "bytes": 7836,
+      "path": "outputs/task018f/zero_operation_apis.csv",
+      "record_count": 41,
+      "sha256": "50cd6fb6d78265c571d3c165c00d267b8ca1b9b624912c13ae30964d093fc99c"
+    }
+  },
+  "parser_version": "task018f-safe-schema-summary-v1",
+  "rules_version": "task018f-artifact-first-domain-mapping-v2",
+  "scope": "TASK018F_ARTIFACT_FIRST_MULTI_EVIDENCE_DOMAIN_ATTRIBUTION",
+  "source_inventory": {
+    "duplicates_excluding_id": 15,
+    "endpoint_or_url_columns": [],
+    "literal_modules": 30,
+    "parent_identities": 993,
+    "qiwa_rows": 4437,
+    "unique_qiwa_ids": 4437
+  },
+  "stop_gate": "EA_REVIEW_TASK018F",
+  "test_outcomes": {
+    "available_regression": "160 passed, 1 socket test deselected",
+    "default_sandbox": "162 passed, 1 localhost-bind sandbox failure, 5 known missing-fixture setup errors",
+    "focused": "8 passed",
+    "isolated_socket": "1 passed with localhost permission"
+  }
+}

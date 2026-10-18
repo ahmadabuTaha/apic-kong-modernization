@@ -1,0 +1,31 @@
+classification_level,counting_note,domain_name,exclusive_primary_count,population_count,supporting_count,underlying_count
+API_ARTIFACT,one row per canonical_api_id; dimensions are not mutually collapsed,Establishment,313,2036,100,69
+API_ARTIFACT,one row per canonical_api_id; dimensions are not mutually collapsed,Contracts,171,2036,17,49
+API_ARTIFACT,one row per canonical_api_id; dimensions are not mutually collapsed,Visa,84,2036,58,2
+API_ARTIFACT,one row per canonical_api_id; dimensions are not mutually collapsed,WorkForce,113,2036,165,37
+API_ARTIFACT,one row per canonical_api_id; dimensions are not mutually collapsed,Work Permit,57,2036,11,0
+API_ARTIFACT,one row per canonical_api_id; dimensions are not mutually collapsed,Payment,78,2036,15,2
+API_ARTIFACT,one row per canonical_api_id; dimensions are not mutually collapsed,Occupation,69,2036,0,10
+API_ARTIFACT,one row per canonical_api_id; dimensions are not mutually collapsed,Nitaqat,21,2036,0,0
+API_ARTIFACT,one row per canonical_api_id; dimensions are not mutually collapsed,Certificate,19,2036,11,2
+API_ARTIFACT,one row per canonical_api_id; dimensions are not mutually collapsed,Common,86,2036,246,0
+API_ARTIFACT,one row per canonical_api_id; dimensions are not mutually collapsed,TIP,235,2036,0,0
+API_ARTIFACT,one row per canonical_api_id; dimensions are not mutually collapsed,User Management,20,2036,18,0
+API_ARTIFACT,one row per canonical_api_id; dimensions are not mutually collapsed,Notification,15,2036,0,4
+API_ARTIFACT,one row per canonical_api_id; dimensions are not mutually collapsed,LO,64,2036,0,0
+API_ARTIFACT,one row per canonical_api_id; dimensions are not mutually collapsed,Utilities,125,2036,3,0
+HTTP_OPERATION,one row per operation_record_id; dimensions are not mutually collapsed,Establishment,317,2414,136,77
+HTTP_OPERATION,one row per operation_record_id; dimensions are not mutually collapsed,Contracts,173,2414,42,69
+HTTP_OPERATION,one row per operation_record_id; dimensions are not mutually collapsed,Visa,87,2414,76,7
+HTTP_OPERATION,one row per operation_record_id; dimensions are not mutually collapsed,WorkForce,115,2414,230,48
+HTTP_OPERATION,one row per operation_record_id; dimensions are not mutually collapsed,Work Permit,45,2414,24,0
+HTTP_OPERATION,one row per operation_record_id; dimensions are not mutually collapsed,Payment,90,2414,35,5
+HTTP_OPERATION,one row per operation_record_id; dimensions are not mutually collapsed,Occupation,75,2414,11,14
+HTTP_OPERATION,one row per operation_record_id; dimensions are not mutually collapsed,Nitaqat,18,2414,1,6
+HTTP_OPERATION,one row per operation_record_id; dimensions are not mutually collapsed,Certificate,16,2414,19,7
+HTTP_OPERATION,one row per operation_record_id; dimensions are not mutually collapsed,Common,78,2414,256,0
+HTTP_OPERATION,one row per operation_record_id; dimensions are not mutually collapsed,TIP,283,2414,7,0
+HTTP_OPERATION,one row per operation_record_id; dimensions are not mutually collapsed,User Management,68,2414,28,1
+HTTP_OPERATION,one row per operation_record_id; dimensions are not mutually collapsed,Notification,21,2414,0,16
+HTTP_OPERATION,one row per operation_record_id; dimensions are not mutually collapsed,LO,62,2414,1,0
+HTTP_OPERATION,one row per operation_record_id; dimensions are not mutually collapsed,Utilities,218,2414,17,0

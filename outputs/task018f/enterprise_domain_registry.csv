@@ -1,0 +1,16 @@
+as_is_domain,contextual_evidence_rule,domain_code,domain_name,ea_definition,primary_candidate_allowed,ratified
+true,see domain_anchor_registry cache,D01,Establishment,"EFM, establishment logo/location and proactive awareness",true,false
+true,see domain_anchor_registry cache,D02,Contracts,"Contract management, training contracts and external contracts",true,false
+true,see domain_anchor_registry cache,D03,Visa,"Visit, seasonal, temporary, establishing and expansion visas",true,false
+true,see domain_anchor_registry cache,D04,WorkForce,"Employee/laborer lifecycle, transfer, absence, training, decease and LMH",true,false
+true,see domain_anchor_registry cache,D05,Work Permit,"Work Permit lifecycle, payments, debts and late Work Permit",true,false
+true,see domain_anchor_registry cache,D06,Payment,"Payment gateways, SADAD, wallet, reconciliation, invoices and billing",true,false
+true,see domain_anchor_registry cache,D07,Occupation,Occupation management and change/correction occupation,true,false
+true,see domain_anchor_registry cache,D08,Nitaqat,Nitaqat services,true,false
+true,see domain_anchor_registry cache,D09,Certificate,"Salary, Saudization, Work Policy and Wage Protection certificates",true,false
+true,see domain_anchor_registry cache,D10,Common,Shared enterprise/platform components and 5+ module reuse,true,false
+true,see domain_anchor_registry cache,D11,TIP,Takamol Integration Portal AS-IS ownership/exposure,true,false
+true,see domain_anchor_registry cache,D12,User Management,"User, SSO, identity and privilege operations",true,false
+true,see domain_anchor_registry cache,D13,Notification,"Email, SMS and notification orchestration",true,false
+true,see domain_anchor_registry cache,D14,LO,Labor Office Portal AS-IS ownership and LO-specific validations,true,false
+true,see domain_anchor_registry cache,D15,Utilities,"Named utility, support, tooling and technical integration offerings",true,false
