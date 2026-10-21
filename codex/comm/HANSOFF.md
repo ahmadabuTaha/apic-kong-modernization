@@ -1,5 +1,40 @@
 # Codex Handoff
 
+## Current execution — Phase 6 / Task 019-C
+
+### Execution summary
+
+- Fast-forwarded `main` to the Task 019-C authorization checkpoint, reread `AGENTS.md`, `CURRENT_TASKS.md`, the complete Task 019-C prompt, and the prior handoff, and executed only ICD/ISD document acquisition.
+- Validated and reused the accepted Task 019-B manifest/indexes without rerunning normalization or scanning `staging/`. The acquisition plan closes exactly over 32 modules, 952 services, 988 ICD occurrences, and 953 ISD occurrences; no guessed URL was constructed.
+- Added `business_capability_kg.document_acquisition`: durable prepare/worklist/ingest/finalize commands, bounded retry/resume, explicit status/error handling, exact HTML-body persistence, content-hash deduplication, checksum/size verification, source-version metadata, version-change detection, module/service occurrence pointers, and deterministic indexes/reports.
+- Retrieved documents through existing authorized Atlassian access. A reproducible HTTP 429 defect was corrected so tenant throttling remains pending without consuming page retry budgets; a second authorized Atlassian read envelope was supported when the primary endpoint remained throttled.
+- Raw source bodies and all acquisition indexes/reports remain local under ignored `outputs/phase6/task019/019c/` and `indexes/phase6/task019/019c/`. No document content, private source URL, or generated acquisition index was committed. No semantic extraction, endpoint analysis, capability mapping, canonical matching, graph, productization, CI/CD, retirement, runtime, or Kong work was performed.
+
+### Results, evidence, and unresolved issues
+
+- Final occurrence closure is **1,940 fetched + 1 failed + 0 blocked + 0 pending = 1,941** (**99.948480%**). The sole failure is Confluence page ID `4939350056`, which returned explicit **404 Not Found**; it remains recorded in `failures.csv` and its module pointer.
+- All 32 modules and 952 services remain represented. Exactly 1,941 module/type occurrence pointers preserve source row, reference ordinal, service, document type, physical identity, status, and fetched-blob metadata. `module_document_coverage.csv` contains per-module unique-file and logical-byte totals for targeted next-task retrieval.
+- Task 019-B provenance validated with baseline manifest SHA-256 `03e33b7032ae7bfdd09c2299da3b0bd882d584c422272427fadb4fdbdc46f77f`; acquisition plan SHA-256 is `b708d1bd0db2e6097784776c4280fd02b77a5e43c0aa40f84cdb8104c80186f7`.
+- Generated index SHA-256 values: `document_acquisition.csv` `28f9726b4d04c6681afeb5d349e042a3f3fefa93dca41eab9e3a2d992566d161`; `module_document_coverage.csv` `8789658f8ef27ddda8c4b346b3ed69de240cb058569fe3910d06a195fb0274c5`; `failures.csv` `28bb876a9bbaa40037c7c88e875d5b83119b56167686da3d4673d4182dee4e8a`. Acquisition-summary SHA-256 is `4156e795be94928a7bdb0ef5e7ab04d75ad7565a529be1731c0dbf716ef59d45`.
+- Filesystem validation matched the manifest for every fetched hash/length, unique blob count/bytes, and pointer count/bytes. A second finalization was byte-stable. No HTTP(S) URL appears in acquisition indexes, manifest, summary, or pointers; source URLs inside immutable fetched document bodies were not treated as derived metadata.
+- Implementation commit: **`febeaf9`** (`Implement Task 019-C document acquisition`).
+
+### Tests and final status
+
+- Focused Task 019-C plus compatibility suite: **25 passed**. Coverage includes frozen-plan closure, URL-free planning, every pending pointer, physical/content deduplication, ICD/ISD overlap, per-module logical sizes, resume/refresh, version changes, access/error states, 429 retry budgets, both authorized Atlassian response envelopes, stable reruns, and filesystem-derived storage totals. Python compilation passed.
+- Full default-sandbox suite: **186 passed, 1 failed, 5 setup errors**. The inherited failure is localhost binding denied by the sandbox; its isolated permission-enabled rerun passed (**1 passed**). The five inherited setup errors remain the absent frozen Phase 0 fixture directory `tests/fixtures/repository_profile/staging`.
+- No Task 019-C assertion remains failing. The one unavailable source page is a recorded source condition, not hidden or converted into a fetched document.
+- Final status: **TASK 019-C TECHNICAL PASS; DOCUMENT ACQUISITION/ORGANIZATION ONLY; STOP AT `EA_REVIEW_TASK019C`.** Do not begin the next task or perform document semantics without explicit Enterprise Architect approval.
+
+### Storage & File Size Totals
+
+- Unique successfully downloaded and validated physical content files: **1,932**.
+- Exact deduplicated physical storage: **193,802,986 bytes = 184.824930 MiB = 0.180493096 GiB** (base 1024), measured from local files and counted once per persisted content hash.
+- ICD-specific distinct files: **981**, **105,877,631 bytes**. ISD-specific distinct files: **952**, **88,256,156 bytes**. ICD/ISD overlap: **1 file**, **330,801 bytes**; therefore category bytes/counts reconcile to the global deduplicated total after subtracting overlap.
+- Expected occurrence reconciliation: **988 ICD + 953 ISD = 1,941**; fetched **1,940**, failed **1**, blocked **0**, pending **0**; completion **99.948480%**. Unavailable remote size for the 404 page is unmeasured, not treated as a zero-byte document.
+- Per-module unique file counts and logical bytes are in `indexes/phase6/task019/019c/module_document_coverage.csv`; shared documents can make summed module logical totals differ from global deduplicated bytes.
+- Overhead excluded from physical totals: **1,941 pointer files / 1,635,942 bytes** and **3 index files / 891,647 bytes**.
+
 ## Current execution — Phase 6 / Task 019-B
 
 ### Execution summary
