@@ -1,0 +1,21 @@
+source_row_number,exception_type,reason,reference_type,reference_ordinal,original_reference_pointer
+2,blank_reference,blank cell or empty semicolon-delimited reference token,ISD,1,source_row:2:ISD:1:sha256:blank
+12,blank_reference,blank cell or empty semicolon-delimited reference token,ICD,1,source_row:12:ICD:1:sha256:blank
+14,blank_reference,blank cell or empty semicolon-delimited reference token,ICD,1,source_row:14:ICD:1:sha256:blank
+21,blank_reference,blank cell or empty semicolon-delimited reference token,ISD,1,source_row:21:ISD:1:sha256:blank
+31,blank_reference,blank cell or empty semicolon-delimited reference token,ISD,1,source_row:31:ISD:1:sha256:blank
+32,blank_reference,blank cell or empty semicolon-delimited reference token,ISD,1,source_row:32:ISD:1:sha256:blank
+40,blank_reference,blank cell or empty semicolon-delimited reference token,ISD,1,source_row:40:ISD:1:sha256:blank
+42,blank_reference,blank cell or empty semicolon-delimited reference token,ISD,1,source_row:42:ISD:1:sha256:blank
+43,blank_reference,blank cell or empty semicolon-delimited reference token,ISD,1,source_row:43:ISD:1:sha256:blank
+44,blank_reference,blank cell or empty semicolon-delimited reference token,ISD,1,source_row:44:ISD:1:sha256:blank
+45,blank_reference,blank cell or empty semicolon-delimited reference token,ICD,1,source_row:45:ICD:1:sha256:blank
+47,blank_reference,blank cell or empty semicolon-delimited reference token,ICD,1,source_row:47:ICD:1:sha256:blank
+48,blank_reference,blank cell or empty semicolon-delimited reference token,ICD,1,source_row:48:ICD:1:sha256:blank
+55,blank_reference,blank cell or empty semicolon-delimited reference token,ISD,1,source_row:55:ISD:1:sha256:blank
+79,blank_reference,blank cell or empty semicolon-delimited reference token,ICD,1,source_row:79:ICD:1:sha256:blank
+85,blank_reference,blank cell or empty semicolon-delimited reference token,ICD,1,source_row:85:ICD:1:sha256:blank
+298,blank_reference,blank cell or empty semicolon-delimited reference token,ICD,1,source_row:298:ICD:1:sha256:blank
+311,blank_reference,blank cell or empty semicolon-delimited reference token,ICD,1,source_row:311:ICD:1:sha256:blank
+312,blank_reference,blank cell or empty semicolon-delimited reference token,ICD,1,source_row:312:ICD:1:sha256:blank
+316,blank_reference,blank cell or empty semicolon-delimited reference token,ISD,1,source_row:316:ISD:1:sha256:blank

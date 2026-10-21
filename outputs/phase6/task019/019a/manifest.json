@@ -1,0 +1,107 @@
+{
+  "counts": {
+    "accepted_reference_occurrences": 225,
+    "blank_reference": 20,
+    "documents": 225,
+    "duplicate_reference_occurrence": 0,
+    "exceptions": 20,
+    "identity_collision": 0,
+    "invalid_reference_format": 0,
+    "modules": 1,
+    "pilot_source_rows": 116,
+    "reference_occurrences_before_normalization": 225,
+    "rejected_reference_occurrences": 0,
+    "services": 116
+  },
+  "files": {
+    "documents.csv": {
+      "byte_equal": true,
+      "new_path": "indexes/phase6/task019/019a/documents.csv",
+      "old_path": "indexes/capability_kg/015a/documents.csv",
+      "row_count": 225,
+      "semantic_equal": true,
+      "sha256": "9601f84a11380d650a7355de1ccfc015ff9435a2aa3de3d37dec04ca9970d506"
+    },
+    "exceptions.csv": {
+      "byte_equal": true,
+      "new_path": "indexes/phase6/task019/019a/exceptions.csv",
+      "old_path": "indexes/capability_kg/015a/exceptions.csv",
+      "row_count": 20,
+      "semantic_equal": true,
+      "sha256": "6ee630a67d693cb86376ecf92e53dcf54b4541a6eb06b5ff6f155763888a330b"
+    },
+    "modules.csv": {
+      "byte_equal": true,
+      "new_path": "indexes/phase6/task019/019a/modules.csv",
+      "old_path": "indexes/capability_kg/015a/modules.csv",
+      "row_count": 1,
+      "semantic_equal": true,
+      "sha256": "9c3b0fa9ed08db464892008b86cf9152186aa44961089b4ab16b683f8f3bb9fe"
+    },
+    "service_document_edges.csv": {
+      "byte_equal": true,
+      "new_path": "indexes/phase6/task019/019a/service_document_edges.csv",
+      "old_path": "indexes/capability_kg/015a/service_document_edges.csv",
+      "row_count": 225,
+      "semantic_equal": true,
+      "sha256": "007b1917a28b4db7527451710263a0444273a07beb33eb4203ae0173b252769f"
+    },
+    "services.csv": {
+      "byte_equal": true,
+      "new_path": "indexes/phase6/task019/019a/services.csv",
+      "old_path": "indexes/capability_kg/015a/services.csv",
+      "row_count": 116,
+      "semantic_equal": true,
+      "sha256": "94b50b242ab2e84e11ef38eebe4e237cd69a54d3b1ea945f0d4a6e1a04a767bc"
+    },
+    "source_rows.csv": {
+      "byte_equal": true,
+      "new_path": "indexes/phase6/task019/019a/source_rows.csv",
+      "old_path": "indexes/capability_kg/015a/source_rows.csv",
+      "row_count": 116,
+      "semantic_equal": true,
+      "sha256": "e7bdc1ada43632838d9978d4ad34f737a4bafe34a5edaf8fbabc850bc5c2dfa8"
+    }
+  },
+  "outputs": {
+    "indexes/phase6/task019/019a/documents.csv": "9601f84a11380d650a7355de1ccfc015ff9435a2aa3de3d37dec04ca9970d506",
+    "indexes/phase6/task019/019a/exceptions.csv": "6ee630a67d693cb86376ecf92e53dcf54b4541a6eb06b5ff6f155763888a330b",
+    "indexes/phase6/task019/019a/modules.csv": "9c3b0fa9ed08db464892008b86cf9152186aa44961089b4ab16b683f8f3bb9fe",
+    "indexes/phase6/task019/019a/service_document_edges.csv": "007b1917a28b4db7527451710263a0444273a07beb33eb4203ae0173b252769f",
+    "indexes/phase6/task019/019a/services.csv": "94b50b242ab2e84e11ef38eebe4e237cd69a54d3b1ea945f0d4a6e1a04a767bc",
+    "indexes/phase6/task019/019a/source_rows.csv": "e7bdc1ada43632838d9978d4ad34f737a4bafe34a5edaf8fbabc850bc5c2dfa8",
+    "outputs/phase6/task019/019a/validation_summary.md": "1c7242f4a1849a0d1b15c912f504a888fbdc1b1e9d4ec47a90c6622856f2c254"
+  },
+  "path_mapping": {
+    "code_new": "business_capability_kg/inventory_normalization.py",
+    "code_old": "capability_kg/inventory_normalization.py",
+    "indexes_new": "indexes/phase6/task019/019a",
+    "indexes_old": "indexes/capability_kg/015a",
+    "outputs_new": "outputs/phase6/task019/019a",
+    "outputs_old": "outputs/capability_kg/015a"
+  },
+  "schema_version": "phase6-task019a-consolidation-v1",
+  "source": {
+    "baseline_manifest_path": "outputs/capability_kg/015a/manifest.json",
+    "baseline_manifest_sha256": "bb8804e5979c6d2a297d735432b4acaa4fef3fd19de3c344cdaacf0411b3df3f",
+    "private_input_committed": false,
+    "private_input_path": "outputs/services_icd_isd_inventory.csv",
+    "private_input_sha256": "5b1ea781534fbe595892263c69479b8ba01765a12486339be01b15d76b97cc9f"
+  },
+  "source_baseline": "Capability-KG/015-A",
+  "status": "EA_REVIEW_TASK019A",
+  "task": "Phase 6 / Task 019-A",
+  "validations": {
+    "accepted_counts_unchanged": true,
+    "all_file_hashes_match_accepted_baseline": true,
+    "all_files_byte_equal": true,
+    "all_files_semantic_equal": true,
+    "documents_fetched": false,
+    "historical_manifest_outputs_verified": true,
+    "network_required": false,
+    "normalizer_rerun": false,
+    "private_input_hash_matches": true,
+    "semantic_work_performed": false,
+    "staging_scanned": false
+  }
+}
