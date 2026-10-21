@@ -1,20 +1,20 @@
 # CURRENT TASKS
 
-## ACTIVE TASK — Phase 6 / Task 019-B
-**Phase:** 6 — Business Capability Knowledge Graph (inventory foundation only)
-**Task:** 019-B — Normalize **ALL MODULES**, not Common-only
-**Status:** AUTHORIZED_FOR_CODEX — FULL_FILE_INVENTORY_ONLY
-**Instructions:** `codex/comm/prompt/phase6-task019b-all-modules-inventory.md` is the complete authorization. Execute ONLY Task 019-B.
-**Input:** local gitignored `outputs/services_icd_isd_inventory.csv` (exact original source, do not commit).
-**Required scope:** Every row and every distinct Module in the CSV. No Common-only filter. Common 116 rows/225 refs serves **regression verification only**, not output scope.
-**Hierarchy:** Module → Service → ICD/ISD (0..N each), split semicolons and preserve original row references. Ignore Sub Module for identity/grouping.
-**Code owner:** `business_capability_kg/`; **indexes:** `indexes/phase6/task019/019b/`; **reports:** `outputs/phase6/task019/019b/`.
-**Non-goals:** No downloading/reading ICD/ISD, no Semantic Discovery, no Capability extraction, no Canonical API matching, no graph, Productization, CI/CD or Kong.
-**STOP gate:** `EA_REVIEW_TASK019B`. Do not start 019-C.
-**EA decision:** Task 019-A technical PASS accepted as sufficient organizational prerequisite. Explicitly expand pilot to all modules now.
+## ACTIVE TASK — Phase 6 / Task 019-C
+**Title:** All-Modules ICD/ISD Document Acquisition
+**Status:** AUTHORIZED_FOR_CODEX — ACQUISITION_ONLY
+**Instructions:** `codex/comm/prompt/phase6-task019c-document-acquisition.md` is the complete execution scope. Execute ONLY Task 019-C.
+**Baseline accepted:** Task 019-B TECHNICAL PASS according to latest HANSOFF — 32 Modules, 952 Services, 988 ICD and 953 ISD reference occurrences (1,941 total), zero rejected.
+**Scope:** Retrieve actual ICD/ISD documents for all modules using Task 019-B indexed references. Preserve Module → Service → ICD/ISD. No Sub Module hierarchy.
+**Code ownership:** `business_capability_kg/`. **Indexes:** `indexes/phase6/task019/019c/`. **Document storage/reports:** `outputs/phase6/task019/019c/`.
+**Mandatory final summary:** Last section must reconcile document acquisition and report total unique downloaded **physical-file size in bytes plus MiB/GiB**, measured from persisted blobs, with per-module sizes and clear fetched/blocked/failed/pending status. No estimates or double-counted shared files.
+**Exclusions:** No semantic discovery, ICD capability extraction, ISD endpoints/operations analysis, Canonical API mapping, graph, Productization, CI/CD or Kong.
+**STOP gate:** `EA_REVIEW_TASK019C`. No Task 019-D.
 
-## PREVIOUS TASK — Phase 6 / Task 019-A (TECHNICAL PASS)
-**Source:** latest `codex/comm/HANSOFF.md`. Consolidated accepted 015-A Common baseline with code/CSV equivalence, 11 focused tests passed, commit `266450d`. Preserve historical 015-A and 019-A artifacts unchanged.
+## PREVIOUS TASK — Phase 6 / Task 019-B (TECHNICAL PASS)
+**Source:** `codex/comm/HANSOFF.md`, commit `c740c9c`.
+**Disposition:** Accepted as deterministic full-module inventory baseline, not document acquisition. Preserve previous results and files.
+**Inventory:** 32 Modules, 952 Services, 1,941 ICD/ISD reference occurrences. Common was only the pilot regression test.
 
 ## Accepted checkpoints and constraints
 - Phases 0–4 PASS/FROZEN; Task 014 2,036 canonical APIs and 2,414 accepted HTTP operations.
