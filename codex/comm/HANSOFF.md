@@ -1,5 +1,31 @@
 # Codex Handoff
 
+## Current execution — Phase 6 / Task 019-D
+
+### Execution summary
+
+- Fast-forwarded `main` from `e2d80e0` to authorization checkpoint `8a6929a`, reread `AGENTS.md`, `CURRENT_TASKS.md`, the complete Task 019-D prompt and the accepted 019-C handoff, and executed only the persistent local document cache/retrieval task.
+- Added `business_capability_kg.document_cache`, a standard-library SQLite catalog and CLI supporting `build`, `list-modules`, `list-services`, `list-documents`, `document-info` and explicit `read-document --id --out`. Metadata queries are index-only; selected reads verify path containment, existence, expected length and SHA-256, refuse repository-local output paths, and never print HTML.
+- Reused and hash-validated only the accepted 019-B/019-C manifests/indexes and existing 019-C blobs. No acquisition/re-download, Confluence/network request, staging scan, semantic parsing, HTML stripping, text extraction, endpoint inference, classification, body duplication, or frozen-artifact change occurred.
+
+### Results and evidence
+
+- Full catalog closure is **32 modules, 952 module-scoped services, 1,941 occurrences (988 ICD + 953 ISD), 1,940 fetched + 1 failed, 1,940 physical identities and 1,932 distinct blobs**. Existing content remains **193,802,986 bytes** under 019-C and is referenced in place.
+- Persistent catalog: `indexes/phase6/task019/019d/retrieval_catalog.sqlite3`; SHA-256 `c6a7bb7ba5ff7e314e2e41482394db6e1d75ba6319db3e43c02894daf1171e76`; **2,043,904 bytes (1.949219 MiB)**; contains no source bodies. Manifest/source signature and compact evidence are under `outputs/phase6/task019/019d/`: `manifest.json`, `lookup_examples.json`, and the explicitly required `validation_summary.md`.
+- Cold build was **MISS**, rebuilt the catalog and performed exactly **1,932** blob hash/size integrity reads. Immediate and subsequent warm builds were **HIT** with **0** blob-body reads. Two independent real cold builds produced byte-identical catalog, manifest, example and summary hashes.
+- Metadata-only scoped lookup example: `Capptions` → `Check And Update Capptions References` → ICD `document-icd-f356fed30fe0af532fe5`; metadata lookup read zero bodies. An explicit selected read returned `ok`, verified **54,633 bytes**, and performed one body read.
+- The known Confluence page `4939350056` remains queryable as `document-isd-6381f8006e8607eb5cf5`; content retrieval returns exact status `acquisition_failed_404`, and no empty/success blob represents it. Missing and corrupt blobs return `missing_blob` and `corrupt_blob` without remote fallback.
+- New generated overhead is separate from existing document bytes: SQLite catalog **2,043,904 bytes**; support manifest/examples/summary **6,418 bytes**; total Task 019-D generated catalog/support footprint **2,050,322 bytes (1.955339 MiB)**. Generated indexes/evidence remain ignored and uncommitted.
+- Implementation commit: **`c81bd93`** (`Implement Task 019-D document retrieval cache`).
+
+### Tests, unresolved issues, and final status
+
+- Task 019-D focused suite: **6 passed**. It covers cold/warm reuse, exact module separation, stable ordering, shared physical content, semicolon/multi-reference ordinals, metadata-only reads, selected reads, known 404, missing/corrupt blobs, source-signature invalidation, byte-identical cold rebuilds, and safe output restrictions.
+- Full Task 019 compatibility suite: **31 passed**. Python compilation and diff checks passed; independent SQL closure, URL exclusion, filesystem overhead and deterministic real-rebuild validation passed.
+- Full default-sandbox repository suite: **193 passed, 1 failed, 5 setup errors**. The inherited failure is sandbox-denied localhost binding; its isolated permission-enabled rerun passed (**1 passed**). The five inherited setup errors remain the absent frozen Phase 0 fixture directory `tests/fixtures/repository_profile/staging`.
+- No Task 019-D assertion or cache/retrieval blocker remains. The sole source 404 is preserved as an explicit retrieval outcome, not an implementation failure.
+- Final status: **TASK 019-D TECHNICAL PASS; CACHE_AND_RETRIEVAL_ONLY; STOP AT `EA_REVIEW_TASK019D`.** Do not begin Task 019-E or any ICD/ISD semantic/endpoint extraction, capability taxonomy, canonical matching, graph, Productization, CI/CD or Kong work without explicit Enterprise Architect approval.
+
 ## Current execution — Phase 6 / Task 019-C
 
 ### Execution summary
