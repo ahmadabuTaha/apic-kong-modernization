@@ -1,5 +1,30 @@
 # Codex Handoff
 
+## Current execution — Capability-KG/015-A
+
+### Execution summary
+
+- Fast-forwarded `main` from `7b50582` to authorization checkpoint `47c5f40`, reread `AGENTS.md`, `CURRENT_TASKS.md`, and the complete Task 015-A prompt, and executed only the Common-module pilot.
+- Preflight found the exact EA-supplied `outputs/services_icd_isd_inventory.csv` with all five literal columns and SHA-256 `5b1ea781534fbe595892263c69479b8ba01765a12486339be01b15d76b97cc9f`. The similarly named older inventories and frozen indexes were not substituted.
+- Implemented a deterministic, network-free parser/CLI in `capability_kg/inventory_normalization.py`. It ignores Sub Module for identity and classification, retains it only in the lossless source-row audit ledger, splits ICD/ISD cells in occurrence order, uses collision-safe module/service keys, and uses stable Confluence page IDs when available.
+- No document was fetched; no non-Common production row was normalized; and no semantic capability, API alignment, graph, scheduler, ownership, runtime-use, productization, or Kong inference was performed. `staging/`, Task 015, and Task 018F remain unchanged.
+
+### Results and evidence
+
+- Normalized **116/116 Common source rows** into one module and **116 module-scoped services**, preserving every original row number and raw ICD/ISD cell.
+- Reconciled **225 nonempty reference occurrences**: **225 accepted edges + 0 rejected = 225 source occurrences**. They resolve to **225 document identities**; no occurrence was dropped.
+- Exceptions are explicit: **20 blank-reference** records, **0 invalid-reference-format**, **0 duplicate-reference-occurrence**, and **0 identity-collision** records. Blank ICD/ISD cells remain valid 0-reference cases and do not remove their services.
+- Required controlled indexes are under `indexes/capability_kg/015a/`; URL-bearing raw audit cells exist only in `source_rows.csv`. `documents.csv` and all other non-audit derived indexes expose stable page IDs or hashes and sanitized host metadata, not full protected URLs.
+- `outputs/capability_kg/015a/manifest.json` records all input/output hashes, schemas, counts, scope controls, and validation results. `validation_summary.md` is the sole new standalone report and contains a sanitized sample lookup. All recorded hashes and row counts independently validated.
+- Implementation/evidence commit: **`366e937`** (`Implement Capability-KG 015-A Common inventory normalization`).
+
+### Tests, unresolved issues, and final status
+
+- Focused Task 015-A suite: **5 passed**. Coverage includes all required cardinality fixtures, BOM/header handling, semicolon blanks, trimming, ICD-only/ISD-only/neither, repeated references within/across rows, duplicate service labels, module/service normalization collisions, sanitization, occurrence closure, and byte-identical reruns.
+- Full default-sandbox suite: **167 passed, 1 failed, 5 setup errors**. The one failure is the inherited localhost-bind sandbox restriction; its isolated permission-enabled rerun passed (**1 passed**). The five setup errors are the pre-existing frozen Phase 0 packaging defect: `tests/fixtures/repository_profile/staging` is absent from the worktree and `HEAD`.
+- No Task 015-A assertion or available repository regression remains failing. The 20 blank references are source conditions, not parser failures; reference reachability and document existence remain deliberately untested.
+- Final status: **CAPABILITY-KG/015-A TECHNICAL PASS; COMMON PILOT ONLY; STOP AT `EA_REVIEW_CAPKG_015A`.** Do not begin Tasks 015-B through J or expand to other modules without explicit Enterprise Architect approval.
+
 ## Current execution — Phase 5, Task 018F
 
 ### Execution summary
