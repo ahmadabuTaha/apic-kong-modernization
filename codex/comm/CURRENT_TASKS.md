@@ -1,14 +1,20 @@
 # CURRENT TASKS
 
-## ACTIVE TASK — Capability-KG/015-A ONLY
-**Title:** Module → Service → ICD/ISD Reference Normalization
-**Prompt:** `codex/comm/prompt/capability-kg-015-a-inventory-normalization.md`
-**Status:** AUTHORIZED_FOR_CODEX; INPUT PREFLIGHT REQUIRED
-**Scope:** Common module pilot only. Ignore Sub Module for entity identity/classification. No document fetching, semantics, graph, API alignment, or downstream work.
-**Input:** exact EA-supplied `services_icd_isd_inventory.csv`; do not substitute the older QIWA source. If file is absent from Codex workspace, report `BLOCKED_INPUT_NOT_AVAILABLE` and stop.
-**STOP gate:** `EA_REVIEW_CAPKG_015A`.
-**Naming note:** `Capability-KG/015-A` is a separate workstream identifier; legacy Task 015 remains accepted/frozen.
-**Previous work:** Task 018F technical PASS; its outputs remain unchanged. Do not resume Task 018F or begin Task 019 in this authorization.
+## ACTIVE TASK — Phase 6 / Task 019-A
+**Phase:** 6 — Business Capability Knowledge Graph
+**Task:** 019-A — Workspace Consolidation and Accepted 015-A Baseline
+**Status:** AUTHORIZED_FOR_CODEX — ORGANIZATION_AND_EQUIVALENCE_ONLY
+**Instructions:** `codex/comm/prompt/phase6-task019a-capability-kg-workspace.md` is the complete authorization. Execute ONLY 019-A.
+**Local input:** `outputs/services_icd_isd_inventory.csv` (gitignored; never commit).
+**Identity:** `Module → Service → ICD/ISD`; Sub Module excluded from working model.
+**Dedicated workstream:** versioned code `business_capability_kg/`; indexes `indexes/phase6/task019/`; outputs `outputs/phase6/task019/`. Keep prior `capability_kg/` API compatibility and prior 015-A generated baselines unchanged.
+**Already accepted:** 015-A Common pilot TECHNICAL PASS (116 rows/services, 225 references); do not repeat analysis.
+**STOP gate:** `EA_REVIEW_TASK019A`. No subsequent 019-B..J authorization, no document fetch, semantics, graph, Productization, CI/CD or Kong.
+
+## PRIOR TASK — Capability-KG/015-A (TECHNICAL PASS)
+**Source:** latest `codex/comm/HANSOFF.md` (Common-only pilot, implementation commit `366e937`).
+**Artifacts:** `capability_kg/inventory_normalization.py`, `indexes/capability_kg/015a/`, `outputs/capability_kg/015a/`.
+**Disposition:** Preserve as immutable historical reference and validated baseline; Task 019-A only organizes the new dedicated workstream.
 
 ## Accepted checkpoints and constraints
 - Phases 0–4 PASS/FROZEN; Task 014 2,036 canonical APIs and 2,414 accepted HTTP operations.
