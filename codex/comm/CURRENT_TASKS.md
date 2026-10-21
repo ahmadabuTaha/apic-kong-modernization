@@ -1,19 +1,18 @@
 # CURRENT TASKS
 
-## ACTIVE TASK — Phase 6 / Task 019-D
-**Title:** Persistent Document Cache & Retrieval Index
-**Status:** AUTHORIZED_FOR_CODEX — CACHE_AND_RETRIEVAL_ONLY
-**Instructions:** `codex/comm/prompt/phase6-task019d-document-cache-retrieval.md`. Execute only 019-D.
-**Accepted prior baseline:** 019-C TECHNICAL PASS in latest HANSOFF — 32 Modules, 952 Services, 1,941 ICD/ISD occurrences (1,940 fetched, one 404), 1,932 unique persisted blobs = 193,802,986 bytes.
-**Source:** Reuse only accepted 019-B and 019-C indexes/manifests and locally stored 019-C blobs. No source-document acquisition/re-download, no semantic document parsing or summarization.
-**Retrieval contract:** Module → Service → ICD/ISD → metadata/status first → selected validated cached bytes on demand. Include the 404 failure in index lookups.
-**Ownership:** versioned code `business_capability_kg/`; indexes `indexes/phase6/task019/019d/`; reports `outputs/phase6/task019/019d/`; physical source bytes remain in 019-C unchanged.
-**Validation:** full reference closure, provenance, hash+size, safe read-on-demand, cold/warm cache, local-only, bounded retrieval. Measure new catalog overhead independently of existing document content bytes.
-**Non-goals:** No Semantic Discovery, Business Capability classification, ISD contract/endpoint extraction, Canonical API matching, scheduler inference, Knowledge Graph, Productization, CI/CD or Kong.
-**STOP gate:** `EA_REVIEW_TASK019D`. No 019-E without explicit EA authorization.
+## ACTIVE TASK — Phase 6 / Task 019-E
+**Title:** ICD Main/Sub Business Capability Discovery — ALL MODULES
+**Status:** AUTHORIZED_FOR_CODEX — EVIDENCE_BACKED_CANDIDATES_ONLY
+**Instructions:** `codex/comm/prompt/phase6-task019e-icd-capability-extraction.md` is the complete authorization. Execute ONLY 019-E.
+**Accepted prerequisite:** Task 019-D TECHNICAL PASS in latest HANSOFF; 32 Modules, 952 Services, 1,941 references, 1,932 stored blobs, one missing ISD 404. Reuse the accepted 019-D SQLite retrieval catalog and previously fetched ICD bodies without network calls.
+**Required coverage:** ALL 32 Modules; ICD evidence only, track services without ICD; bounded module/document batches and low-token caches. No Common-only restriction.
+**Business model:** Module → Main Business Capability → Sub Business Capability, each candidate supported by explicit ICD evidence linked to source Service(s) and ICD document(s). Sub Module excluded. Candidate does NOT mean approved.
+**Code owner:** `business_capability_kg/`. **Indexes:** `indexes/phase6/task019/019e/`. **Outputs:** `outputs/phase6/task019/019e/`.
+**Non-goals:** no ISD endpoint/request-response extraction, Canonical API or Operation matching, Knowledge Graph, scheduler inference, Productization, CI/CD or Kong.
+**STOP gate:** `EA_REVIEW_TASK019E`. No 019-F without explicit authorization.
 
-## PREVIOUS TASK — Phase 6 / Task 019-C (TECHNICAL PASS)
-**Evidence:** latest `codex/comm/HANSOFF.md`; implementation commit `febeaf9`. Acquisition complete for 1,940/1,941 occurrences, one 404 `4939350056`, and measured content size 193,802,986 bytes. Preserve acquisition evidence unchanged.
+## PREVIOUS TASK — Phase 6 / Task 019-D (TECHNICAL PASS)
+**Evidence:** latest `codex/comm/HANSOFF.md`; commit `c81bd93`, 31 compatibility tests PASS. 019-D documented inherited repository test setup/environment issues separately; preserve and report them transparently. Retrieval catalog is locally indexed and fetched documents unchanged.
 
 ## Accepted checkpoints and constraints
 - Phases 0–4 PASS/FROZEN; Task 014 2,036 canonical APIs and 2,414 accepted HTTP operations.
