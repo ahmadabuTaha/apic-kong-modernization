@@ -1,20 +1,19 @@
 # CURRENT TASKS
 
-## ACTIVE TASK — Phase 6 / Task 019-C
-**Title:** All-Modules ICD/ISD Document Acquisition
-**Status:** AUTHORIZED_FOR_CODEX — ACQUISITION_ONLY
-**Instructions:** `codex/comm/prompt/phase6-task019c-document-acquisition.md` is the complete execution scope. Execute ONLY Task 019-C.
-**Baseline accepted:** Task 019-B TECHNICAL PASS according to latest HANSOFF — 32 Modules, 952 Services, 988 ICD and 953 ISD reference occurrences (1,941 total), zero rejected.
-**Scope:** Retrieve actual ICD/ISD documents for all modules using Task 019-B indexed references. Preserve Module → Service → ICD/ISD. No Sub Module hierarchy.
-**Code ownership:** `business_capability_kg/`. **Indexes:** `indexes/phase6/task019/019c/`. **Document storage/reports:** `outputs/phase6/task019/019c/`.
-**Mandatory final summary:** Last section must reconcile document acquisition and report total unique downloaded **physical-file size in bytes plus MiB/GiB**, measured from persisted blobs, with per-module sizes and clear fetched/blocked/failed/pending status. No estimates or double-counted shared files.
-**Exclusions:** No semantic discovery, ICD capability extraction, ISD endpoints/operations analysis, Canonical API mapping, graph, Productization, CI/CD or Kong.
-**STOP gate:** `EA_REVIEW_TASK019C`. No Task 019-D.
+## ACTIVE TASK — Phase 6 / Task 019-D
+**Title:** Persistent Document Cache & Retrieval Index
+**Status:** AUTHORIZED_FOR_CODEX — CACHE_AND_RETRIEVAL_ONLY
+**Instructions:** `codex/comm/prompt/phase6-task019d-document-cache-retrieval.md`. Execute only 019-D.
+**Accepted prior baseline:** 019-C TECHNICAL PASS in latest HANSOFF — 32 Modules, 952 Services, 1,941 ICD/ISD occurrences (1,940 fetched, one 404), 1,932 unique persisted blobs = 193,802,986 bytes.
+**Source:** Reuse only accepted 019-B and 019-C indexes/manifests and locally stored 019-C blobs. No source-document acquisition/re-download, no semantic document parsing or summarization.
+**Retrieval contract:** Module → Service → ICD/ISD → metadata/status first → selected validated cached bytes on demand. Include the 404 failure in index lookups.
+**Ownership:** versioned code `business_capability_kg/`; indexes `indexes/phase6/task019/019d/`; reports `outputs/phase6/task019/019d/`; physical source bytes remain in 019-C unchanged.
+**Validation:** full reference closure, provenance, hash+size, safe read-on-demand, cold/warm cache, local-only, bounded retrieval. Measure new catalog overhead independently of existing document content bytes.
+**Non-goals:** No Semantic Discovery, Business Capability classification, ISD contract/endpoint extraction, Canonical API matching, scheduler inference, Knowledge Graph, Productization, CI/CD or Kong.
+**STOP gate:** `EA_REVIEW_TASK019D`. No 019-E without explicit EA authorization.
 
-## PREVIOUS TASK — Phase 6 / Task 019-B (TECHNICAL PASS)
-**Source:** `codex/comm/HANSOFF.md`, commit `c740c9c`.
-**Disposition:** Accepted as deterministic full-module inventory baseline, not document acquisition. Preserve previous results and files.
-**Inventory:** 32 Modules, 952 Services, 1,941 ICD/ISD reference occurrences. Common was only the pilot regression test.
+## PREVIOUS TASK — Phase 6 / Task 019-C (TECHNICAL PASS)
+**Evidence:** latest `codex/comm/HANSOFF.md`; implementation commit `febeaf9`. Acquisition complete for 1,940/1,941 occurrences, one 404 `4939350056`, and measured content size 193,802,986 bytes. Preserve acquisition evidence unchanged.
 
 ## Accepted checkpoints and constraints
 - Phases 0–4 PASS/FROZEN; Task 014 2,036 canonical APIs and 2,414 accepted HTTP operations.
