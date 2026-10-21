@@ -1,5 +1,30 @@
 # Codex Handoff
 
+## Current execution — Phase 6 / Task 019-A
+
+### Execution summary
+
+- Fast-forwarded `main` from `5cd70fe` to authorization checkpoint `e50a119`, reread `AGENTS.md`, `CURRENT_TASKS.md`, the complete Task 019-A prompt, and the latest handoff, and executed only workspace consolidation/equivalence verification.
+- Established the owned, versioned `business_capability_kg/` package and moved the accepted normalizer implementation without redesign. `capability_kg/inventory_normalization.py` is now a compatibility forwarder; prior imports, `build_common_inventory`, internal fixture helpers, and the legacy CLI remain source-equivalent.
+- Added a new Task 019-A CLI that validates the accepted 015-A manifest, all historical output hashes, exact accepted counts, and the private input hash, then byte-copies the six accepted CSV indexes. It does not invoke the normalizer, access the network, fetch documents, or perform semantic analysis.
+- Historical `indexes/capability_kg/015a/` and `outputs/capability_kg/015a/` remain byte-unchanged. The private `outputs/services_icd_isd_inventory.csv` remains intact, gitignored, and uncommitted. No `staging/`, Phase 0–5, Task 018F, or later Task 019 work was changed.
+
+### Results and evidence
+
+- Canonical Phase 6 indexes are under `indexes/phase6/task019/019a/`; the manifest and sole new report are under `outputs/phase6/task019/019a/`. All six CSVs are byte-identical to their accepted 015-A counterparts, so row provenance, order, document multiplicity, raw audit fields, and semantic content are unchanged.
+- Accepted closure remains **116 source rows**, **116 module-scoped services**, and **225 accepted reference occurrences/documents**. The exception distribution remains 20 blank references and zero invalid references, duplicate occurrences, identity collisions, or rejected occurrences.
+- Input SHA-256 remains `5b1ea781534fbe595892263c69479b8ba01765a12486339be01b15d76b97cc9f`; accepted baseline-manifest SHA-256 remains `bb8804e5979c6d2a297d735432b4acaa4fef3fd19de3c344cdaacf0411b3df3f`.
+- `manifest.json` records the old/new code, index, and output paths; per-file hashes and row counts; byte/semantic equality; private-input non-commit status; and explicit no-normalizer/no-network/no-fetch/no-semantics controls. `validation_summary.md` contains only the required 019-A..J ownership roadmap and makes clear that later tasks are not authorized.
+- Implementation/evidence commit: **`266450d`** (`Consolidate Capability KG Task 019-A workspace`).
+
+### Tests, unresolved issues, and final status
+
+- Focused 015-A compatibility plus 019-A suite: **11 passed**. It covers old/new imports, both CLI entry points, no-reparse enforcement, deterministic copies/manifests, all six byte-equality checks, accepted counts, path ownership, roadmap bounds, historical baseline immutability, and private-input immutability. Python compilation also passed.
+- Independent output validation passed for every new manifest hash, CSV row count, six-of-six old/new byte comparisons, sanitized non-audit indexes, and the unchanged private input hash.
+- Full default-sandbox suite: **173 passed, 1 failed, 5 setup errors**. The one failure is the inherited localhost-bind sandbox restriction; its isolated permission-enabled rerun passed (**1 passed**). The five setup errors remain the frozen Phase 0 packaging defect: `tests/fixtures/repository_profile/staging` is absent from the worktree and `HEAD`.
+- No Task 019-A or available repository assertion remains failing. No migration mismatch or task blocker was found.
+- Final status: **TASK 019-A TECHNICAL PASS; ORGANIZATION_AND_EQUIVALENCE_ONLY; STOP AT `EA_REVIEW_TASK019A`.** Do not begin Task 019-B or any document acquisition, cache, semantic, resolution, mapping, graph, Productization, CI/CD, retirement, or Kong work without explicit Enterprise Architect approval.
+
 ## Current execution — Capability-KG/015-A
 
 ### Execution summary
