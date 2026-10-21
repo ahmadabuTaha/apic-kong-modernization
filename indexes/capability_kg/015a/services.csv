@@ -1,0 +1,117 @@
+module_key,service_key,service_name,source_row_references,source_row_count
+module-common,module-common::service-add-establishment-ims-evaluation,Add Establishment IMS Evaluation,304,1
+module-common,module-common::service-add-update-establishment-address,Add Update Establishment Address,19,1
+module-common,module-common::service-add-update-service,Add Update Service,29,1
+module-common,module-common::service-apply-penalties-violated-establishment,Apply Penalties Violated Establishment,299,1
+module-common,module-common::service-calculate-establishment-visas-balance,Calculate Establishment Visas Balance,297,1
+module-common,module-common::service-calculate-qiwa-service-fees,Calculate Qiwa Service Fees,50,1
+module-common,module-common::service-cancel-issued-visa,Cancel Issued Visa,283,1
+module-common,module-common::service-check-and-validate-employee-svp,Check and Validate Employee SVP,34,1
+module-common,module-common::service-check-border-number-to-be-cancelled,Check Border Number To Be Cancelled,31,1
+module-common,module-common::service-check-employee-qvp-result,Check Employee QVP Result,308,1
+module-common,module-common::service-check-employee-svp-result,Check Employee SVP Result,309,1
+module-common,module-common::service-check-establishing-visa-preconditions,Check Establishing Visa Preconditions,49,1
+module-common,module-common::service-check-establishment-occupations,Check Establishment Occupations,33,1
+module-common,module-common::service-check-establishment-unified-owner-age,Check Establishment Unified Owner Age,45,1
+module-common,module-common::service-check-nat-gen-occ-eligibility,Check Nat Gen Occ Eligibility,53,1
+module-common,module-common::service-check-nitaqat-entities-unified-number,Check Nitaqat Entities Unified Number,295,1
+module-common,module-common::service-check-qvp-and-svp-countries-and-occupations,Check QVP and SVP Countries And Occupations,47,1
+module-common,module-common::service-check-visas-about-to-expiry,Check Visas About To Expiry,280,1
+module-common,module-common::service-check-visas-nic-status,Check Visas NIC Status,310,1
+module-common,module-common::service-common-interface-specification-document,Common - Interface Specification Document,85,1
+module-common,module-common::service-common-services,Common Services,2,1
+module-common,module-common::service-common-visas-schedulers,Common Visas - Schedulers,316,1
+module-common,module-common::service-company-with-branches,Company With Branches,37,1
+module-common,module-common::service-create-notification-scheduler-renewal-notification,Create Notification (Scheduler) (renewal notification),42,1
+module-common,module-common::service-deactivate-establishment-ims-evaluation,Deactivate Establishment IMS Evaluation,305,1
+module-common,module-common::service-delete-draft,Delete Draft,25,1
+module-common,module-common::service-generate-certificate-number,Generate Certificate Number,38,1
+module-common,module-common::service-generate-wp-debit-sadad-number,Generate WP Debit Sadad Number,75,1
+module-common,module-common::service-get-closed-establishments-visas-list,Get Closed Establishments Visas List,289,1
+module-common,module-common::service-get-eligible-services,Get Eligible Services,58,1
+module-common,module-common::service-get-employee-list-hrsd,Get Employee List HRSD,35,1
+module-common,module-common::service-get-entity-information,Get Entity Information,7,1
+module-common,module-common::service-get-est-lab-nationalities-count,Get Est Lab Nationalities Count,59,1
+module-common,module-common::service-get-establishment-current-data,Get Establishment Current Data,56,1
+module-common,module-common::service-get-establishment-current-data-by-date-icd,Get Establishment Current Data By Date - ICD,79,1
+module-common,module-common::service-get-establishment-data,Get Establishment Data,70,1
+module-common,module-common::service-get-establishment-ims-evaluation,Get Establishment IMS Evaluation,306,1
+module-common,module-common::service-get-establishment-information,Get Establishment Information,3,1
+module-common,module-common::service-get-establishment-laborers,Get Establishment Laborers,71,1
+module-common,module-common::service-get-establishment-nic-account,Get Establishment NIC Account,63,1
+module-common,module-common::service-get-establishment-notes,Get Establishment Notes,78,1
+module-common,module-common::service-get-establishment-professional-skills-balance,Get Establishment Professional Skills Balance,301,1
+module-common,module-common::service-get-establishment-professional-skills-details,Get Establishment Professional Skills Details,40,1
+module-common,module-common::service-get-establishment-quota-factors,Get Establishment Quota Factors,61,1
+module-common,module-common::service-get-establishment-related-unrelated-compliance,Get Establishment-Related Unrelated Compliance,46,1
+module-common,module-common::service-get-establishment-size-configuration,Get Establishment Size Configuration,4,1
+module-common,module-common::service-get-establishment-unified-punishment,Get Establishment Unified Punishment,307,1
+module-common,module-common::service-get-establishment-visa-details-mlsd,Get Establishment Visa Details MLSD,57,1
+module-common,module-common::service-get-establishment-wp-debit-info,Get Establishment WP Debit Info,13,1
+module-common,module-common::service-get-establishments-unified-number,Get Establishments Unified Number,64,1
+module-common,module-common::service-get-historical-sustainability-information,Get Historical Sustainability Information,286,1
+module-common,module-common::service-get-hrsd-and-closed-establishment-visas-list,Get HRSD And Closed Establishment Visas List,290,1
+module-common,module-common::service-get-hrsd-old-visas,Get HRSD Old Visas,288,1
+module-common,module-common::service-get-ims-establishment-durations,Get IMS Establishment Durations,73,1
+module-common,module-common::service-get-industrial-establishments,Get Industrial Establishments,65,1
+module-common,module-common::service-get-invoices-details,Get Invoices Details,8,1
+module-common,module-common::service-get-istiqdam-quota,Get Istiqdam Quota,16,1
+module-common,module-common::service-get-laborers-nationality-percentage,Get Laborers Nationality Percentage,6,1
+module-common,module-common::service-get-lookup,Get Lookup,5,1
+module-common,module-common::service-get-main-branch-under-entity,Get Main Branch Under Entity,18,1
+module-common,module-common::service-get-nationalities,Get Nationalities,17,1
+module-common,module-common::service-get-nitaq-sustainability-weeks,Get Nitaq Sustainability Weeks,62,1
+module-common,module-common::service-get-origin-list,Get Origin List,9,1
+module-common,module-common::service-get-related-unrelated-entity-labors,Get Related Unrelated Entity Labors,14,1
+module-common,module-common::service-get-restricted-occupations-by-activity,Get Restricted Occupations By Activity,314,1
+module-common,module-common::service-get-sadad-number-status,Get Sadad Number Status,11,1
+module-common,module-common::service-get-sadad-numbers,Get Sadad Numbers,10,1
+module-common,module-common::service-get-saudization-percentage,Get Saudization Percentage,54,1
+module-common,module-common::service-get-service-sustainability-configuration,Get Service Sustainability Configuration,51,1
+module-common,module-common::service-get-services-list,Get Services list,12,1
+module-common,module-common::service-get-sustainability-information-hrsd,Get Sustainability Information HRSD,287,1
+module-common,module-common::service-get-unified-number-establishments,Get Unified Number Establishments,67,1
+module-common,module-common::service-get-unified-number-total-laborers,Get Unified Number Total Laborers,72,1
+module-common,module-common::service-get-unrelated-occupations-details,Get Unrelated Occupations Details,15,1
+module-common,module-common::service-get-visa-status-count,Get Visa Status Count,291,1
+module-common,module-common::service-get-visas-embassies-list,Get Visas Embassies List,303,1
+module-common,module-common::service-get-visas-occupations-list,Get Visas Occupations List,302,1
+module-common,module-common::service-get-work-permit-details,Get Work Permit Details,66,1
+module-common,module-common::service-insert-missing-laborer-info,Insert Missing Laborer Info,76,1
+module-common,module-common::service-lmi-quality-of-nationalization-index,LMI Quality of Nationalization Index,30,1
+module-common,module-common::service-mlsd-common-services,MLSD - Common Services,55,1
+module-common,module-common::service-mlsd-get-establishment-information,MLSD_Get Establishment Information,60,1
+module-common,module-common::service-search-establishing-expansion-visas,Search Establishing/Expansion Visas,285,1
+module-common,module-common::service-search-establishment-issued-visas,Search Establishment Issued Visas,282,1
+module-common,module-common::service-search-issued-visas,Search Issued Visas,293,1
+module-common,module-common::service-search-visa-transaction,Search Visa Transaction,77,1
+module-common,module-common::service-send-e-mail-notification-mandrill,Send E-mail Notification Mandrill,26,1
+module-common,module-common::service-send-email-notifications,Send Email Notifications,41,1
+module-common,module-common::service-send-email-sms-notification-scheduler,Send Email/SMS Notification Scheduler,44,1
+module-common,module-common::service-send-invoices-by-email-scheduler,Send Invoices By Email Scheduler,43,1
+module-common,module-common::service-send-sms,Send SMS,20,1
+module-common,module-common::service-submit-issued-visa-request,Submit Issued Visa Request,68,1
+module-common,module-common::service-submit-issued-visas,Submit Issued Visas,69,1
+module-common,module-common::service-submit-workforce-details,Submit Workforce Details,292,1
+module-common,module-common::service-terminate-establishment-balance,Terminate Establishment Balance,294,1
+module-common,module-common::service-update-approved-inspection-visits,Update Approved Inspection Visits,300,1
+module-common,module-common::service-update-check-location-details,Update CHECK Location Details,312,1
+module-common,module-common::service-update-establishment-address,Update Establishment Address,21,1
+module-common,module-common::service-update-establishment-cr-data-hrsd,Update Establishment CR Data HRSD,36,1
+module-common,module-common::service-update-establishment-information,Update Establishment Information,27,1
+module-common,module-common::service-update-establishments-punishments,Update Establishments Punishments,298,1
+module-common,module-common::service-update-issued-visa-status,Update Issued Visa Status,74,1
+module-common,module-common::service-validate-est-nat-percentage,Validate Est Nat Percentage,23,1
+module-common,module-common::service-validate-establishing-and-exceptional-balance-request,Validate Establishing and Exceptional Balance Request,311,1
+module-common,module-common::service-validate-establishing-expansion-request,Validate Establishing Expansion Request,281,1
+module-common,module-common::service-validate-establishing-visa-emb-and-nat,Validate Establishing Visa Emb And Nat,22,1
+module-common,module-common::service-validate-establishment-cr-expiry,Validate Establishment CR Expiry,39,1
+module-common,module-common::service-validate-location-occupation-nationality-activity,Validate Location Occupation Nationality Activity,28,1
+module-common,module-common::service-validate-occupation-correction-percentage-icd,Validate Occupation Correction Percentage - ICD,48,1
+module-common,module-common::service-validate-profession-eligibility,Validate Profession Eligibility,52,1
+module-common,module-common::service-validate-service-activity-eligibility,Validate Service Activity Eligibility,24,1
+module-common,module-common::service-validate-visa-cancellation,Validate Visa Cancellation,284,1
+module-common,module-common::service-validate-visas-details,Validate Visas Details,315,1
+module-common,module-common::service-validate-visas-establishment-eligibility,Validate Visas Establishment Eligibility,296,1
+module-common,module-common::service-validate-work-visa-issuance,Validate Work Visa Issuance,313,1
+module-common,module-common::service-work-permits-calculator,Work Permits Calculator,32,1

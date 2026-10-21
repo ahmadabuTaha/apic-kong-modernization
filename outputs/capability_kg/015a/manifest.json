@@ -1,0 +1,50 @@
+{
+  "counts": {
+    "accepted_reference_occurrences": 225,
+    "blank_reference": 20,
+    "documents": 225,
+    "duplicate_reference_occurrence": 0,
+    "exceptions": 20,
+    "identity_collision": 0,
+    "invalid_reference_format": 0,
+    "modules": 1,
+    "pilot_source_rows": 116,
+    "reference_occurrences_before_normalization": 225,
+    "rejected_reference_occurrences": 0,
+    "services": 116
+  },
+  "input": {
+    "path": "outputs/services_icd_isd_inventory.csv",
+    "required_columns": [
+      "Module",
+      "Module Codex(Sub Module)",
+      "Service",
+      "ICD",
+      "ISD"
+    ],
+    "sha256": "5b1ea781534fbe595892263c69479b8ba01765a12486339be01b15d76b97cc9f"
+  },
+  "outputs": {
+    "indexes/capability_kg/015a/documents.csv": "9601f84a11380d650a7355de1ccfc015ff9435a2aa3de3d37dec04ca9970d506",
+    "indexes/capability_kg/015a/exceptions.csv": "6ee630a67d693cb86376ecf92e53dcf54b4541a6eb06b5ff6f155763888a330b",
+    "indexes/capability_kg/015a/modules.csv": "9c3b0fa9ed08db464892008b86cf9152186aa44961089b4ab16b683f8f3bb9fe",
+    "indexes/capability_kg/015a/service_document_edges.csv": "007b1917a28b4db7527451710263a0444273a07beb33eb4203ae0173b252769f",
+    "indexes/capability_kg/015a/services.csv": "94b50b242ab2e84e11ef38eebe4e237cd69a54d3b1ea945f0d4a6e1a04a767bc",
+    "indexes/capability_kg/015a/source_rows.csv": "e7bdc1ada43632838d9978d4ad34f737a4bafe34a5edaf8fbabc850bc5c2dfa8",
+    "outputs/capability_kg/015a/validation_summary.md": "095530f4465ae39aba8a177b2f0b98fcb57dc2fbd0beef2b2c7ad08ed56e263b"
+  },
+  "schema_version": "capability-kg-015a-v1",
+  "scope": {
+    "pilot_module": "Common",
+    "sub_module_used_for_identity_or_classification": false
+  },
+  "status": "EA_REVIEW_CAPKG_015A",
+  "task": "Capability-KG/015-A",
+  "validations": {
+    "deterministic_rerun": true,
+    "documents_fetched": false,
+    "network_required": false,
+    "reference_reconciliation": true,
+    "staging_scanned": false
+  }
+}
