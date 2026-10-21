@@ -1,5 +1,31 @@
 # Codex Handoff
 
+## Current execution — Phase 6 / Task 019-B
+
+### Execution summary
+
+- Fast-forwarded `main` from `fc0e957` to authorization checkpoint `62eef2d`, reread `AGENTS.md`, `CURRENT_TASKS.md`, the complete Task 019-B prompt, and the latest handoff, and executed only deterministic all-module inventory normalization.
+- Reused the Task 019-A-owned `business_capability_kg/` package and the accepted normalizer. Added the dedicated `business_capability_kg.all_modules_inventory` CLI, processed the exact private CSV once without a Common filter, and retained Sub Module only in the controlled row-audit ledger.
+- Preserved literal Module labels, module-scoped service identities, original CSV row numbers/cells/source hash, separate ICD/ISD occurrence order, collision-safe keys, and all usage edges. Stable document identities are deduplicated without erasing occurrences.
+- No documents were downloaded or read; no Confluence reachability check, semantic discovery, capability extraction, scheduler/API identity, canonical API matching, graph, Productization, CI/CD, retirement, runtime, or Kong work was performed. `staging/`, the 015-A baseline, Task 019-A, and all Phase 0–5 artifacts remain unchanged.
+
+### Results and evidence
+
+- Input SHA-256 remains `5b1ea781534fbe595892263c69479b8ba01765a12486339be01b15d76b97cc9f`; the private `outputs/services_icd_isd_inventory.csv` remains byte-unchanged, gitignored, and uncommitted.
+- Full closure is **952/952 source rows**, **32/32 measured literal Modules**, and **952 module-scoped services**. Reference closure is **988 ICD + 953 ISD = 1,941 source occurrences = 1,941 accepted + 0 rejected**. There are **1,941 unique typed document identities** and zero zero-document services.
+- Exceptions are explicit: **182 blank-reference** records, **0 invalid-reference-format**, **0 duplicate-reference-occurrence**, and **0 identity-collision** records. Blank ICD/ISD cells remain valid 0-reference dimensions; every service has at least one reference on the other dimension in this source.
+- Common regression is **PASS**: exactly 116 source rows, 116 services and 225 occurrences; each of the six Common normalized CSV projections byte-matches the frozen 015-A/019-A baseline, including stable IDs, row provenance, order, document mappings, and exceptions.
+- Derived indexes are under `indexes/phase6/task019/019b/`; `module_coverage.csv` provides the required per-module row/service/ICD/ISD/document/zero-document/exception coverage for later module-targeted use. The only reports are `outputs/phase6/task019/019b/manifest.json` and `validation_summary.md`.
+- Manifest hashes, all artifact row counts, per-module rollups, reference closure, Common six-file equality, deterministic two-run equality, and public-ledger/report sanitization validated independently. Protected full references occur only in the controlled `source_rows.csv` audit ledger.
+- Implementation/evidence commit: **`c740c9c`** (`Normalize all modules for Phase 6 Task 019-B`).
+
+### Tests, unresolved issues, and final status
+
+- Focused Task 019/legacy compatibility suite: **17 passed**. It covers 0/1/N ICD/ISD cardinality, semicolon blanks, invalid references, repeated references, zero-document services, cross-module same-name services, literal/normalized module and service collisions, full row/module closure, Common artifact regression, CLI behavior, deterministic bytes, hashes, sanitization, and private/frozen evidence immutability. Python compilation passed.
+- Full default-sandbox suite on the committed implementation: **179 passed, 1 failed, 5 setup errors**. The failure is the inherited localhost-bind sandbox restriction; its isolated permission-enabled rerun passed (**1 passed**). The five setup errors remain the frozen Phase 0 packaging defect: `tests/fixtures/repository_profile/staging` is absent from the worktree and `HEAD`.
+- No Task 019-B or available repository assertion remains failing. There are no normalization blockers; document existence/reachability and contents remain deliberately unknown.
+- Final status: **TASK 019-B TECHNICAL PASS; FULL_FILE_INVENTORY_ONLY; STOP AT `EA_REVIEW_TASK019B`.** Do not begin Task 019-C or any document acquisition/cache, ICD/ISD semantics, canonical resolution, API/scheduler mapping, knowledge graph, Productization, CI/CD, retirement, or Kong work without explicit Enterprise Architect approval.
+
 ## Current execution — Phase 6 / Task 019-A
 
 ### Execution summary
