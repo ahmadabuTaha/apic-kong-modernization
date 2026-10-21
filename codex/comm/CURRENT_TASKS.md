@@ -1,20 +1,20 @@
 # CURRENT TASKS
 
-## ACTIVE TASK — Phase 6 / Task 019-A
-**Phase:** 6 — Business Capability Knowledge Graph
-**Task:** 019-A — Workspace Consolidation and Accepted 015-A Baseline
-**Status:** AUTHORIZED_FOR_CODEX — ORGANIZATION_AND_EQUIVALENCE_ONLY
-**Instructions:** `codex/comm/prompt/phase6-task019a-capability-kg-workspace.md` is the complete authorization. Execute ONLY 019-A.
-**Local input:** `outputs/services_icd_isd_inventory.csv` (gitignored; never commit).
-**Identity:** `Module → Service → ICD/ISD`; Sub Module excluded from working model.
-**Dedicated workstream:** versioned code `business_capability_kg/`; indexes `indexes/phase6/task019/`; outputs `outputs/phase6/task019/`. Keep prior `capability_kg/` API compatibility and prior 015-A generated baselines unchanged.
-**Already accepted:** 015-A Common pilot TECHNICAL PASS (116 rows/services, 225 references); do not repeat analysis.
-**STOP gate:** `EA_REVIEW_TASK019A`. No subsequent 019-B..J authorization, no document fetch, semantics, graph, Productization, CI/CD or Kong.
+## ACTIVE TASK — Phase 6 / Task 019-B
+**Phase:** 6 — Business Capability Knowledge Graph (inventory foundation only)
+**Task:** 019-B — Normalize **ALL MODULES**, not Common-only
+**Status:** AUTHORIZED_FOR_CODEX — FULL_FILE_INVENTORY_ONLY
+**Instructions:** `codex/comm/prompt/phase6-task019b-all-modules-inventory.md` is the complete authorization. Execute ONLY Task 019-B.
+**Input:** local gitignored `outputs/services_icd_isd_inventory.csv` (exact original source, do not commit).
+**Required scope:** Every row and every distinct Module in the CSV. No Common-only filter. Common 116 rows/225 refs serves **regression verification only**, not output scope.
+**Hierarchy:** Module → Service → ICD/ISD (0..N each), split semicolons and preserve original row references. Ignore Sub Module for identity/grouping.
+**Code owner:** `business_capability_kg/`; **indexes:** `indexes/phase6/task019/019b/`; **reports:** `outputs/phase6/task019/019b/`.
+**Non-goals:** No downloading/reading ICD/ISD, no Semantic Discovery, no Capability extraction, no Canonical API matching, no graph, Productization, CI/CD or Kong.
+**STOP gate:** `EA_REVIEW_TASK019B`. Do not start 019-C.
+**EA decision:** Task 019-A technical PASS accepted as sufficient organizational prerequisite. Explicitly expand pilot to all modules now.
 
-## PRIOR TASK — Capability-KG/015-A (TECHNICAL PASS)
-**Source:** latest `codex/comm/HANSOFF.md` (Common-only pilot, implementation commit `366e937`).
-**Artifacts:** `capability_kg/inventory_normalization.py`, `indexes/capability_kg/015a/`, `outputs/capability_kg/015a/`.
-**Disposition:** Preserve as immutable historical reference and validated baseline; Task 019-A only organizes the new dedicated workstream.
+## PREVIOUS TASK — Phase 6 / Task 019-A (TECHNICAL PASS)
+**Source:** latest `codex/comm/HANSOFF.md`. Consolidated accepted 015-A Common baseline with code/CSV equivalence, 11 focused tests passed, commit `266450d`. Preserve historical 015-A and 019-A artifacts unchanged.
 
 ## Accepted checkpoints and constraints
 - Phases 0–4 PASS/FROZEN; Task 014 2,036 canonical APIs and 2,414 accepted HTTP operations.
