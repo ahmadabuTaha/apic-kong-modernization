@@ -1,5 +1,15 @@
 # CURRENT TASKS
 
+## ACTIVE TASK — Capability-KG/015-A ONLY
+**Title:** Module → Service → ICD/ISD Reference Normalization
+**Prompt:** `codex/comm/prompt/capability-kg-015-a-inventory-normalization.md`
+**Status:** AUTHORIZED_FOR_CODEX; INPUT PREFLIGHT REQUIRED
+**Scope:** Common module pilot only. Ignore Sub Module for entity identity/classification. No document fetching, semantics, graph, API alignment, or downstream work.
+**Input:** exact EA-supplied `services_icd_isd_inventory.csv`; do not substitute the older QIWA source. If file is absent from Codex workspace, report `BLOCKED_INPUT_NOT_AVAILABLE` and stop.
+**STOP gate:** `EA_REVIEW_CAPKG_015A`.
+**Naming note:** `Capability-KG/015-A` is a separate workstream identifier; legacy Task 015 remains accepted/frozen.
+**Previous work:** Task 018F technical PASS; its outputs remain unchanged. Do not resume Task 018F or begin Task 019 in this authorization.
+
 ## Accepted checkpoints and constraints
 - Phases 0–4 PASS/FROZEN; Task 014 2,036 canonical APIs and 2,414 accepted HTTP operations.
 - Task 015 accepted/frozen provisionally for observed-function signals; Task 016 accepted/frozen for 1,170 candidate comparisons / 1,481 unpaired operations, never approved duplicates.
@@ -7,7 +17,7 @@
 - Task 017A **TECHNICALLY COMPLETE; EA ACCEPTED AS PROVISIONAL ASSESSMENT INPUT TO NEXT PHASE, NOT AS APPROVAL OF ANY BUSINESS BOUNDARY.** All 71 reviewed: 5 retain provisional, 15 split-candidate, 23 keep AS-IS exposure, 9 require evidence, 19 technical/test exposure review; plus five oversized reviews/132 ops, 14 bounded cross-API links, 90-item Productization Decision Backlog. All individual architecture approvals remain PENDING. Full operation coverage 2,414/2,414 intact.
 - Source is STAGING/sandbox, not proof of production activity, release lineage, consumer/owner intent, actual runtime egress, or retirement. Preserve frozen evidence, source provenance and original IDs.
 
-## ACTIVE TASK
+## PREVIOUS TASK (Task 018F; technical PASS, EA review checkpoint)
 **Phase:** 5 — Enterprise Business Domain Mapping
 **Task:** 018F — Enterprise Business Domain: Deterministic Artifact-First, Multi-Evidence Attribution
 **Status:** AUTHORIZED_FOR_CODEX — EVIDENCE_DRIVEN_CANDIDATE_MAPPING
