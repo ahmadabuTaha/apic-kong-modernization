@@ -5,7 +5,7 @@
 **Scope:** 015-A only; stop at EA_REVIEW_CAPKG_015A.
 
 ## Objective
-Build a deterministic, lossless, query-friendly index from the exact input **services_icd_isd_inventory.csv** using this authoritative hierarchy only:
+Build a deterministic, lossless, query-friendly index from the exact input **/outputs/services_icd_isd_inventory.csv** using this authoritative hierarchy only:
 
 **Module → Service → ICD references (0..N) / ISD references (0..N)**
 
@@ -14,7 +14,7 @@ The input field `Module Codex(Sub Module)` is **NOT** an identity, relationship,
 This is reference normalization, **not** ICD/ISD retrieval, semantic extraction, capability classification, API matching, graph build, productization, CI/CD, or Kong design.
 
 ## Source/preflight
-- Required exact source filename: `services_icd_isd_inventory.csv`, provided by EA as a ChatGPT attachment. Locate an explicitly supplied copy in the Codex workspace/repository or request the user/team to place it into an approved input location. **The attached file is NOT automatically available to GitHub Codex; do not assume that it is.**
+- Required exact source filename: `/outputs/services_icd_isd_inventory.csv`, provided by EA as a ChatGPT attachment. Locate an explicitly supplied copy in the Codex workspace/repository or request the user/team to place it into an approved input location. **The attached file is NOT automatically available to GitHub Codex; do not assume that it is.**
 - Do NOT silently substitute `neo4j/csv/Qiwa_Modules_Services.csv` or the 018F QIWA indexes: different source and purpose.
 - If exact source is unavailable, report `BLOCKED_INPUT_NOT_AVAILABLE` with expected filename/location and stop before claiming populated inventory coverage. Parser and fixture-based tests may be prepared, but no real-data counts claimed.
 - Source columns (literal): `Module`, `Module Codex(Sub Module)`, `Service`, `ICD`, `ISD`. Read UTF-8 with optional BOM using a CSV parser; keep original row number (data row numbering starting 2 to match CSV header).
