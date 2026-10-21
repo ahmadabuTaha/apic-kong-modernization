@@ -1,0 +1,953 @@
+module_key,service_key,service_name,source_row_references,source_row_count
+module-capptions,module-capptions::service-check-and-update-capptions-references,Check And Update Capptions References,84,1
+module-capptions,module-capptions::service-check-update-capptions-expansion-balance,Check Update Capptions Expansion Balance,81,1
+module-capptions,module-capptions::service-get-capptions-request-details,Get Capptions Request Details,80,1
+module-capptions,module-capptions::service-submit-request-to-capptions,Submit Request To Capptions,82,1
+module-capptions,module-capptions::service-update-capptions-request,Update Capptions Request,83,1
+module-certifcates,module-certifcates::service-check-saudization-certificate-eligibility-odm,Check Saudization Certificate Eligibility ODM,162,1
+module-certifcates,module-certifcates::service-check-saudization-certificate-expiry-scheduler,Check Saudization Certificate Expiry Scheduler,166,1
+module-certifcates,module-certifcates::service-create-saudization-certificate,Create Saudization Certificate,164,1
+module-certifcates,module-certifcates::service-generate-establishment-debt-certificate,Generate Establishment Debt Certificate,168,1
+module-certifcates,module-certifcates::service-get-saudization-certificate-details,Get Saudization Certificate Details,165,1
+module-certifcates,module-certifcates::service-not-needed-deactivate-saudization-certificate,Not Needed - Deactivate Saudization Certificate,167,1
+module-certifcates,module-certifcates::service-validate-certificate,Validate Certificate,169,1
+module-certifcates,module-certifcates::service-validate-establishments-for-saudization-certificates,Validate Establishments for Saudization Certificates,163,1
+module-certificates,module-certificates::service-create-wps-certificate,Create WPS Certificate,938,1
+module-certificates,module-certificates::service-get-and-generate-saudization-certificate,Get and Generate Saudization Certificate,937,1
+module-certificates,module-certificates::service-get-wps-certificate,Get WPS Certificate,939,1
+module-certificates,module-certificates::service-gosi,GOSI,668,1
+module-certificates,module-certificates::service-lo-create-compliance-integration-specification-document-isd,LO - Create Compliance - Integration Specification Document (ISD),841,1
+module-certificates,module-certificates::service-lo-createcompliancecertificate-integration-control-document-icd,LO - CreateComplianceCertificate - Integration Control Document (ICD),840,1
+module-certificates,module-certificates::service-salary-certificate-integration-control-documents,Salary Certificate - Integration Control Documents,664,1
+module-certificates,module-certificates::service-salary-certificate-interface-specification-documents,Salary Certificate - Interface Specification Documents,665,1
+module-certificates,module-certificates::service-salary-certificate-v2-icds,Salary Certificate v2 - ICDs,666,1
+module-certificates,module-certificates::service-salary-certificate-v2-isds,Salary Certificate v2 - ISDs,667,1
+module-commmon,module-commmon::service-add-economic-activity,Add Economic Activity,810,1
+module-commmon,module-commmon::service-add-nationality-service,Add Nationality Service,807,1
+module-commmon,module-commmon::service-get-economic-activities,Get Economic Activities,812,1
+module-commmon,module-commmon::service-get-nationalities-service,Get Nationalities Service,808,1
+module-commmon,module-commmon::service-update-economic-activity,Update Economic Activity,811,1
+module-commmon,module-commmon::service-update-nationality-service,Update Nationality Service,809,1
+module-common,module-common::service-add-establishment-ims-evaluation,Add Establishment IMS Evaluation,304,1
+module-common,module-common::service-add-update-establishment-address,Add Update Establishment Address,19,1
+module-common,module-common::service-add-update-service,Add Update Service,29,1
+module-common,module-common::service-apply-penalties-violated-establishment,Apply Penalties Violated Establishment,299,1
+module-common,module-common::service-calculate-establishment-visas-balance,Calculate Establishment Visas Balance,297,1
+module-common,module-common::service-calculate-qiwa-service-fees,Calculate Qiwa Service Fees,50,1
+module-common,module-common::service-cancel-issued-visa,Cancel Issued Visa,283,1
+module-common,module-common::service-check-and-validate-employee-svp,Check and Validate Employee SVP,34,1
+module-common,module-common::service-check-border-number-to-be-cancelled,Check Border Number To Be Cancelled,31,1
+module-common,module-common::service-check-employee-qvp-result,Check Employee QVP Result,308,1
+module-common,module-common::service-check-employee-svp-result,Check Employee SVP Result,309,1
+module-common,module-common::service-check-establishing-visa-preconditions,Check Establishing Visa Preconditions,49,1
+module-common,module-common::service-check-establishment-occupations,Check Establishment Occupations,33,1
+module-common,module-common::service-check-establishment-unified-owner-age,Check Establishment Unified Owner Age,45,1
+module-common,module-common::service-check-nat-gen-occ-eligibility,Check Nat Gen Occ Eligibility,53,1
+module-common,module-common::service-check-nitaqat-entities-unified-number,Check Nitaqat Entities Unified Number,295,1
+module-common,module-common::service-check-qvp-and-svp-countries-and-occupations,Check QVP and SVP Countries And Occupations,47,1
+module-common,module-common::service-check-visas-about-to-expiry,Check Visas About To Expiry,280,1
+module-common,module-common::service-check-visas-nic-status,Check Visas NIC Status,310,1
+module-common,module-common::service-common-interface-specification-document,Common - Interface Specification Document,85,1
+module-common,module-common::service-common-services,Common Services,2,1
+module-common,module-common::service-common-visas-schedulers,Common Visas - Schedulers,316,1
+module-common,module-common::service-company-with-branches,Company With Branches,37,1
+module-common,module-common::service-create-notification-scheduler-renewal-notification,Create Notification (Scheduler) (renewal notification),42,1
+module-common,module-common::service-deactivate-establishment-ims-evaluation,Deactivate Establishment IMS Evaluation,305,1
+module-common,module-common::service-delete-draft,Delete Draft,25,1
+module-common,module-common::service-generate-certificate-number,Generate Certificate Number,38,1
+module-common,module-common::service-generate-wp-debit-sadad-number,Generate WP Debit Sadad Number,75,1
+module-common,module-common::service-get-closed-establishments-visas-list,Get Closed Establishments Visas List,289,1
+module-common,module-common::service-get-eligible-services,Get Eligible Services,58,1
+module-common,module-common::service-get-employee-list-hrsd,Get Employee List HRSD,35,1
+module-common,module-common::service-get-entity-information,Get Entity Information,7,1
+module-common,module-common::service-get-est-lab-nationalities-count,Get Est Lab Nationalities Count,59,1
+module-common,module-common::service-get-establishment-current-data,Get Establishment Current Data,56,1
+module-common,module-common::service-get-establishment-current-data-by-date-icd,Get Establishment Current Data By Date - ICD,79,1
+module-common,module-common::service-get-establishment-data,Get Establishment Data,70,1
+module-common,module-common::service-get-establishment-ims-evaluation,Get Establishment IMS Evaluation,306,1
+module-common,module-common::service-get-establishment-information,Get Establishment Information,3,1
+module-common,module-common::service-get-establishment-laborers,Get Establishment Laborers,71,1
+module-common,module-common::service-get-establishment-nic-account,Get Establishment NIC Account,63,1
+module-common,module-common::service-get-establishment-notes,Get Establishment Notes,78,1
+module-common,module-common::service-get-establishment-professional-skills-balance,Get Establishment Professional Skills Balance,301,1
+module-common,module-common::service-get-establishment-professional-skills-details,Get Establishment Professional Skills Details,40,1
+module-common,module-common::service-get-establishment-quota-factors,Get Establishment Quota Factors,61,1
+module-common,module-common::service-get-establishment-related-unrelated-compliance,Get Establishment-Related Unrelated Compliance,46,1
+module-common,module-common::service-get-establishment-size-configuration,Get Establishment Size Configuration,4,1
+module-common,module-common::service-get-establishment-unified-punishment,Get Establishment Unified Punishment,307,1
+module-common,module-common::service-get-establishment-visa-details-mlsd,Get Establishment Visa Details MLSD,57,1
+module-common,module-common::service-get-establishment-wp-debit-info,Get Establishment WP Debit Info,13,1
+module-common,module-common::service-get-establishments-unified-number,Get Establishments Unified Number,64,1
+module-common,module-common::service-get-historical-sustainability-information,Get Historical Sustainability Information,286,1
+module-common,module-common::service-get-hrsd-and-closed-establishment-visas-list,Get HRSD And Closed Establishment Visas List,290,1
+module-common,module-common::service-get-hrsd-old-visas,Get HRSD Old Visas,288,1
+module-common,module-common::service-get-ims-establishment-durations,Get IMS Establishment Durations,73,1
+module-common,module-common::service-get-industrial-establishments,Get Industrial Establishments,65,1
+module-common,module-common::service-get-invoices-details,Get Invoices Details,8,1
+module-common,module-common::service-get-istiqdam-quota,Get Istiqdam Quota,16,1
+module-common,module-common::service-get-laborers-nationality-percentage,Get Laborers Nationality Percentage,6,1
+module-common,module-common::service-get-lookup,Get Lookup,5,1
+module-common,module-common::service-get-main-branch-under-entity,Get Main Branch Under Entity,18,1
+module-common,module-common::service-get-nationalities,Get Nationalities,17,1
+module-common,module-common::service-get-nitaq-sustainability-weeks,Get Nitaq Sustainability Weeks,62,1
+module-common,module-common::service-get-origin-list,Get Origin List,9,1
+module-common,module-common::service-get-related-unrelated-entity-labors,Get Related Unrelated Entity Labors,14,1
+module-common,module-common::service-get-restricted-occupations-by-activity,Get Restricted Occupations By Activity,314,1
+module-common,module-common::service-get-sadad-number-status,Get Sadad Number Status,11,1
+module-common,module-common::service-get-sadad-numbers,Get Sadad Numbers,10,1
+module-common,module-common::service-get-saudization-percentage,Get Saudization Percentage,54,1
+module-common,module-common::service-get-service-sustainability-configuration,Get Service Sustainability Configuration,51,1
+module-common,module-common::service-get-services-list,Get Services list,12,1
+module-common,module-common::service-get-sustainability-information-hrsd,Get Sustainability Information HRSD,287,1
+module-common,module-common::service-get-unified-number-establishments,Get Unified Number Establishments,67,1
+module-common,module-common::service-get-unified-number-total-laborers,Get Unified Number Total Laborers,72,1
+module-common,module-common::service-get-unrelated-occupations-details,Get Unrelated Occupations Details,15,1
+module-common,module-common::service-get-visa-status-count,Get Visa Status Count,291,1
+module-common,module-common::service-get-visas-embassies-list,Get Visas Embassies List,303,1
+module-common,module-common::service-get-visas-occupations-list,Get Visas Occupations List,302,1
+module-common,module-common::service-get-work-permit-details,Get Work Permit Details,66,1
+module-common,module-common::service-insert-missing-laborer-info,Insert Missing Laborer Info,76,1
+module-common,module-common::service-lmi-quality-of-nationalization-index,LMI Quality of Nationalization Index,30,1
+module-common,module-common::service-mlsd-common-services,MLSD - Common Services,55,1
+module-common,module-common::service-mlsd-get-establishment-information,MLSD_Get Establishment Information,60,1
+module-common,module-common::service-search-establishing-expansion-visas,Search Establishing/Expansion Visas,285,1
+module-common,module-common::service-search-establishment-issued-visas,Search Establishment Issued Visas,282,1
+module-common,module-common::service-search-issued-visas,Search Issued Visas,293,1
+module-common,module-common::service-search-visa-transaction,Search Visa Transaction,77,1
+module-common,module-common::service-send-e-mail-notification-mandrill,Send E-mail Notification Mandrill,26,1
+module-common,module-common::service-send-email-notifications,Send Email Notifications,41,1
+module-common,module-common::service-send-email-sms-notification-scheduler,Send Email/SMS Notification Scheduler,44,1
+module-common,module-common::service-send-invoices-by-email-scheduler,Send Invoices By Email Scheduler,43,1
+module-common,module-common::service-send-sms,Send SMS,20,1
+module-common,module-common::service-submit-issued-visa-request,Submit Issued Visa Request,68,1
+module-common,module-common::service-submit-issued-visas,Submit Issued Visas,69,1
+module-common,module-common::service-submit-workforce-details,Submit Workforce Details,292,1
+module-common,module-common::service-terminate-establishment-balance,Terminate Establishment Balance,294,1
+module-common,module-common::service-update-approved-inspection-visits,Update Approved Inspection Visits,300,1
+module-common,module-common::service-update-check-location-details,Update CHECK Location Details,312,1
+module-common,module-common::service-update-establishment-address,Update Establishment Address,21,1
+module-common,module-common::service-update-establishment-cr-data-hrsd,Update Establishment CR Data HRSD,36,1
+module-common,module-common::service-update-establishment-information,Update Establishment Information,27,1
+module-common,module-common::service-update-establishments-punishments,Update Establishments Punishments,298,1
+module-common,module-common::service-update-issued-visa-status,Update Issued Visa Status,74,1
+module-common,module-common::service-validate-est-nat-percentage,Validate Est Nat Percentage,23,1
+module-common,module-common::service-validate-establishing-and-exceptional-balance-request,Validate Establishing and Exceptional Balance Request,311,1
+module-common,module-common::service-validate-establishing-expansion-request,Validate Establishing Expansion Request,281,1
+module-common,module-common::service-validate-establishing-visa-emb-and-nat,Validate Establishing Visa Emb And Nat,22,1
+module-common,module-common::service-validate-establishment-cr-expiry,Validate Establishment CR Expiry,39,1
+module-common,module-common::service-validate-location-occupation-nationality-activity,Validate Location Occupation Nationality Activity,28,1
+module-common,module-common::service-validate-occupation-correction-percentage-icd,Validate Occupation Correction Percentage - ICD,48,1
+module-common,module-common::service-validate-profession-eligibility,Validate Profession Eligibility,52,1
+module-common,module-common::service-validate-service-activity-eligibility,Validate Service Activity Eligibility,24,1
+module-common,module-common::service-validate-visa-cancellation,Validate Visa Cancellation,284,1
+module-common,module-common::service-validate-visas-details,Validate Visas Details,315,1
+module-common,module-common::service-validate-visas-establishment-eligibility,Validate Visas Establishment Eligibility,296,1
+module-common,module-common::service-validate-work-visa-issuance,Validate Work Visa Issuance,313,1
+module-common,module-common::service-work-permits-calculator,Work Permits Calculator,32,1
+module-contracts,module-contracts::service-approve-reject-contract-by-laborer,Approve Reject Contract By Laborer,517,1
+module-contracts,module-contracts::service-approve-reject-contract-missing-information,Approve Reject Contract Missing Information,951,1
+module-contracts,module-contracts::service-approve-reject-external-contract,Approve Reject External Contract,941,1
+module-contracts,module-contracts::service-approve-reject-tc-by-employer,Approve Reject TC By Employer,605,1
+module-contracts,module-contracts::service-approve-reject-tc-by-laborer,Approve Reject TC By Laborer,607,1
+module-contracts,module-contracts::service-approve-reject-tc-cancelation-by-employer,Approve Reject TC Cancelation By Employer,610,1
+module-contracts,module-contracts::service-approve-reject-tc-cancelation-by-laborer,Approve Reject TC Cancelation By Laborer,612,1
+module-contracts,module-contracts::service-approve-reject-training-contract,Approve Reject Training Contract,459,1
+module-contracts,module-contracts::service-approve-reject-training-contract-release-date-update-by-employer,Approve Reject Training Contract Release Date Update By Employer,483,1
+module-contracts,module-contracts::service-approve-reject-training-contract-termination-cancelation-by-employer,Approve Reject Training  Contract Termination Cancelation By Employer,481,1
+module-contracts,module-contracts::service-approve-reject-training-contract-termination-cancelation-by-trainee,Approve Reject Training  Contract Termination Cancelation By Trainee,479,1
+module-contracts,module-contracts::service-approve-reject-update-release-date-by-employer,Approve Reject Update Release Date By Employer,614,1
+module-contracts,module-contracts::service-auto-renew-and-close-contracts,Auto Renew And Close Contracts,592,1
+module-contracts,module-contracts::service-calculate-contract-financial-details,Calculate Contract Financial Details,556,1
+module-contracts,module-contracts::service-cancel-contract-request-new-design,Cancel Contract Request (New Design),513,1
+module-contracts,module-contracts::service-cancel-contract-request-old-design,Cancel Contract Request (Old Design),512,1
+module-contracts,module-contracts::service-cancel-external-contract,Cancel External Contract,948,1
+module-contracts,module-contracts::service-cancel-training-contract,Cancel Training Contract,463,1
+module-contracts,module-contracts::service-change-wage-file-status,Change Wage File Status,575,1
+module-contracts,module-contracts::service-check-and-update-employees-wages,Check and Update Employees Wages,572,1
+module-contracts,module-contracts::service-check-and-update-moj-pending-contracts,Check and Update MOJ Pending Contracts,597,1
+module-contracts,module-contracts::service-check-contract-relatedtoid-type,Check Contract RelatedToId Type,505,1
+module-contracts,module-contracts::service-check-gosi-wage-update-status,Check GOSI Wage Update Status,573,1
+module-contracts,module-contracts::service-check-hrsd-moj-contracts-update,Check HRSD MOJ Contracts Update,596,1
+module-contracts,module-contracts::service-check-tc-laborer-eligibility-odm,Check TC Laborer Eligibility ODM,601,1
+module-contracts,module-contracts::service-contract-authentication-indicator,Contract Authentication Indicator,518,1
+module-contracts,module-contracts::service-contract-management-schedulers,Contract Management - Schedulers,589,1
+module-contracts,module-contracts::service-create-contract-template-new-design,Create Contract Template (New Design),492,1
+module-contracts,module-contracts::service-create-contract-template-old-design,Create Contract Template (Old Design),491,1
+module-contracts,module-contracts::service-create-contract-template-unified-design,Create Contract Template (Unified Design),493,1
+module-contracts,module-contracts::service-create-employment-contract,Create Employment Contract,580,1
+module-contracts,module-contracts::service-create-external-contract,Create External Contract,940,1
+module-contracts,module-contracts::service-create-new-contract-new-design,Create New Contract (New Design),509,1
+module-contracts,module-contracts::service-create-new-contract-old-design,Create New Contract (Old Design),508,1
+module-contracts,module-contracts::service-create-new-contract-unified-version,Create New Contract (Unified Version),510,1
+module-contracts,module-contracts::service-create-training-contract,Create Training Contract,458,1
+module-contracts,module-contracts::service-deactivate-contract-by-tamam,Deactivate Contract By Tamam,587,1
+module-contracts,module-contracts::service-delete-deactivate-contract-template-new-design,Delete Deactivate Contract Template (New Design),504,1
+module-contracts,module-contracts::service-delete-deactivate-contract-template-old-design,Delete Deactivate Contract Template (Old Design),503,1
+module-contracts,module-contracts::service-employee-authentication-indicator,Employee Authentication Indicator,520,1
+module-contracts,module-contracts::service-get-700-contracts-counts,Get 700 Contracts Counts,563,1
+module-contracts,module-contracts::service-get-bulk-wages-update-details,Get Bulk Wages Update Details,569,1
+module-contracts,module-contracts::service-get-contract-details-new-design,Get Contract Details (New Design),530,1
+module-contracts,module-contracts::service-get-contract-details-old-design,Get Contract Details (Old Design),529,1
+module-contracts,module-contracts::service-get-contract-details-unified-design,Get Contract Details (Unified Design),531,1
+module-contracts,module-contracts::service-get-contract-establishments-list,Get Contract Establishments List,560,1
+module-contracts,module-contracts::service-get-contract-execution-locations,Get Contract Execution Locations,538,1
+module-contracts,module-contracts::service-get-contract-files-list,Get Contract Files List,539,1
+module-contracts,module-contracts::service-get-contract-laborers-list-new-design,Get Contract Laborers List (New Design),522,1
+module-contracts,module-contracts::service-get-contract-laborers-list-old-design,Get Contract Laborers List (Old Design),521,1
+module-contracts,module-contracts::service-get-contract-occupations-list,Get Contract Occupations List,551,1
+module-contracts,module-contracts::service-get-contract-specialties,Get Contract Specialties,536,1
+module-contracts,module-contracts::service-get-contract-statuses,Get Contract Statuses,540,1
+module-contracts,module-contracts::service-get-contract-template-details-new-design,Get Contract Template Details (New Design),498,1
+module-contracts,module-contracts::service-get-contract-template-details-old-design,Get Contract Template Details (Old Design),497,1
+module-contracts,module-contracts::service-get-contract-template-details-unified-design,Get Contract Template Details (Unified Design),499,1
+module-contracts,module-contracts::service-get-contract-termination-reasons,Get Contract Termination Reasons,598,1
+module-contracts,module-contracts::service-get-contract-terms-new-design,Get Contract Terms (New Design),544,1
+module-contracts,module-contracts::service-get-contract-terms-unified-design,Get Contract Terms (Unified Design),545,1
+module-contracts,module-contracts::service-get-contract-worklocations,Get Contract WorkLocations,537,1
+module-contracts,module-contracts::service-get-contracts-counts-new-design,Get Contracts Counts (New Design),546,1
+module-contracts,module-contracts::service-get-contracts-counts-unified-design,Get Contracts Counts (Unified Design),547,1
+module-contracts,module-contracts::service-get-contracts-list-new-design,Get Contracts List (New Design),524,1
+module-contracts,module-contracts::service-get-contracts-list-old-design,Get Contracts List (Old Design),523,1
+module-contracts,module-contracts::service-get-contracts-list-unified-design,Get Contracts List (Unified Design),525,1
+module-contracts,module-contracts::service-get-contracts-status-list,Get Contracts Status List,550,1
+module-contracts,module-contracts::service-get-educational-institution-list,Get Educational Institution List,466,1
+module-contracts,module-contracts::service-get-employee-active-contract,Get Employee Active Contract,559,1
+module-contracts,module-contracts::service-get-employment-contracts-details,Get Employment Contracts Details,585,1
+module-contracts,module-contracts::service-get-employment-contracts-list,Get Employment Contracts List,584,1
+module-contracts,module-contracts::service-get-establishment-contract-templates-list-new-design,Get Establishment Contract Templates List (New Design),495,1
+module-contracts,module-contracts::service-get-establishment-contract-templates-list-old-design,Get Establishment Contract Templates List (Old Design),494,1
+module-contracts,module-contracts::service-get-establishment-contract-templates-list-unified-design,Get Establishment Contract Templates List (Unified Design),496,1
+module-contracts,module-contracts::service-get-establishment-contracts,Get Establishment Contracts,548,1
+module-contracts,module-contracts::service-get-external-contract-by-border-number,Get External Contract By Border Number,946,1
+module-contracts,module-contracts::service-get-external-contract-details,Get External Contract Details,943,1
+module-contracts,module-contracts::service-get-external-contract-html,Get External Contract HTML,945,1
+module-contracts,module-contracts::service-get-external-contracts-list,Get External Contracts List,942,1
+module-contracts,module-contracts::service-get-gosi-contracts-list,Get Gosi Contracts List,532,1
+module-contracts,module-contracts::service-get-individual-contracts-list-new-design,Get Individual Contracts List (New Design),528,1
+module-contracts,module-contracts::service-get-individual-contracts-list-old-design,Get Individual Contracts List (Old Design),527,1
+module-contracts,module-contracts::service-get-individual-contracts-list-unified-design,Get Individual Contracts List (Unified Design),526,1
+module-contracts,module-contracts::service-get-individual-training-contracts-list,Get Individual Training Contracts List,460,1
+module-contracts,module-contracts::service-get-laborer-contracts-statuses,Get Laborer Contracts Statuses,541,1
+module-contracts,module-contracts::service-get-new-engagement-end-date,Get New Engagement End Date,564,1
+module-contracts,module-contracts::service-get-resend-contracts-list,Get Resend Contracts List,552,1
+module-contracts,module-contracts::service-get-sc-contract-details-new-design,Get SC Contract Details (New Design),534,1
+module-contracts,module-contracts::service-get-sc-contract-details-old-design,Get SC Contract Details (Old Design),533,1
+module-contracts,module-contracts::service-get-sc-contract-details-unified-design,Get SC Contract Details (Unified Design),535,1
+module-contracts,module-contracts::service-get-tc-laborers-list,Get TC Laborers List,600,1
+module-contracts,module-contracts::service-get-tct-statuses-list,Get TCT Statuses List,489,1
+module-contracts,module-contracts::service-get-terminate-contract-counts,Get Terminate Contract Counts,615,1
+module-contracts,module-contracts::service-get-termination-disclaimers,Get Termination Disclaimers,599,1
+module-contracts,module-contracts::service-get-terms-list-new-design,Get Terms List (New Design),542,1
+module-contracts,module-contracts::service-get-terms-list-unified-design,Get Terms List (Unified Design),543,1
+module-contracts,module-contracts::service-get-training-contract-details,Get Training Contract Details,462,1
+module-contracts,module-contracts::service-get-training-contract-occupations-list,Get Training Contract Occupations List,467,1
+module-contracts,module-contracts::service-get-training-contract-release-date-update-requests-list,Get Training Contract Release Date Update Requests List,488,1
+module-contracts,module-contracts::service-get-training-contract-sections,Get Training Contract Sections,469,1
+module-contracts,module-contracts::service-get-training-contract-status-list,Get Training Contract Status List,473,1
+module-contracts,module-contracts::service-get-training-contract-termination-cancelation-requests-list,Get Training Contract Termination Cancelation Requests List,487,1
+module-contracts,module-contracts::service-get-training-contract-termination-reasons,Get Training  Contract Termination Reasons,474,1
+module-contracts,module-contracts::service-get-training-contract-termination-requests-list,Get Training  Contract Termination Requests List,486,1
+module-contracts,module-contracts::service-get-training-contract-termination-trainee-list,Get Training Contract Termination Trainee List,485,1
+module-contracts,module-contracts::service-get-training-contract-terms,Get Training Contract Terms,471,1
+module-contracts,module-contracts::service-get-training-contract-terms-list,Get Training Contract Terms List,470,1
+module-contracts,module-contracts::service-get-training-contracts-count,Get Training Contracts Count,472,1
+module-contracts,module-contracts::service-get-training-contracts-list,Get Training Contracts List,461,1
+module-contracts,module-contracts::service-get-training-contracts-termination-counts,Get Training  Contracts Termination Counts,484,1
+module-contracts,module-contracts::service-get-training-skills-list,Get Training Skills List,468,1
+module-contracts,module-contracts::service-get-unified-contract-sections,Get Unified Contract Sections,549,1
+module-contracts,module-contracts::service-get-wage-update-employees-list,Get Wage Update Employees List,565,1
+module-contracts,module-contracts::service-handle-wage-file-details,Handle Wage File Details,570,1
+module-contracts,module-contracts::service-new-design-v2,New Design V2,554,1
+module-contracts,module-contracts::service-old-design-v1,Old Design V1,553,1
+module-contracts,module-contracts::service-pull-wage-update-data,Pull Wage Update Data,571,1
+module-contracts,module-contracts::service-push-laborer-wage-data,Push laborer Wage Data,578,1
+module-contracts,module-contracts::service-push-saudi-workers-data,Push Saudi Workers Data,576,1
+module-contracts,module-contracts::service-push-special-workers-data,Push Special Workers Data,577,1
+module-contracts,module-contracts::service-re-assign-employee-establishment,Re-Assign Employee Establishment,562,1
+module-contracts,module-contracts::service-request-training-contract-update,Request Training Contract Update,464,1
+module-contracts,module-contracts::service-request-update-contract,Request Update Contract,511,1
+module-contracts,module-contracts::service-request-update-external-contract,Request Update External Contract,949,1
+module-contracts,module-contracts::service-resend-contract-to-gosi,Resend Contract To GOSI,555,1
+module-contracts,module-contracts::service-resend-contracts-to-hrsd,Resend Contracts To HRSD,593,1
+module-contracts,module-contracts::service-search-terminate-contract-requests,Search Terminate Contract Requests,608,1
+module-contracts,module-contracts::service-send-contracts-to-hrsd,Send Contracts To HRSD,594,1
+module-contracts,module-contracts::service-send-contracts-update-to-hrsd,Send Contracts Update To HRSD,595,1
+module-contracts,module-contracts::service-send-unhandled-wage-file-details,Send Unhandled Wage File Details,574,1
+module-contracts,module-contracts::service-submit-bulk-wage-update-file,Submit Bulk Wage Update File,566,1
+module-contracts,module-contracts::service-submit-contracts-to-gosi,Submit Contracts to GOSI,590,1
+module-contracts,module-contracts::service-submit-tc-cancelation-by-employer,Submit TC Cancelation By Employer,611,1
+module-contracts,module-contracts::service-submit-tc-cancelation-by-laborer,Submit TC Cancelation By Laborer,609,1
+module-contracts,module-contracts::service-submit-tc-request-by-employer,Submit TC Request By Employer,606,1
+module-contracts,module-contracts::service-submit-tc-request-by-laborer,Submit TC Request By Laborer,604,1
+module-contracts,module-contracts::service-submit-training-contract-release-date-update-by-trainee,Submit Training Contract Release Date Update By Trainee,482,1
+module-contracts,module-contracts::service-submit-training-contract-termination-by-employer,Submit Training Contract Termination By Employer,476,1
+module-contracts,module-contracts::service-submit-training-contract-termination-by-trainee,Submit Training Contract Termination By Trainee,477,1
+module-contracts,module-contracts::service-submit-training-contract-termination-cancelation-by-employer,Submit Training  Contract Termination Cancelation By Employer,478,1
+module-contracts,module-contracts::service-submit-training-contract-termination-cancelation-by-trainee,Submit Training  Contract Termination Cancelation By Trainee,480,1
+module-contracts,module-contracts::service-submit-update-release-date-request-by-laborer,Submit Update Release Date Request By Laborer,613,1
+module-contracts,module-contracts::service-terminate-employment-contract,Terminate Employment Contract,583,1
+module-contracts,module-contracts::service-training-contracts-schedulers,Training Contracts - Schedulers,490,1
+module-contracts,module-contracts::service-transform-legacy-employment-contract,Transform Legacy Employment Contract,586,1
+module-contracts,module-contracts::service-update-contract-details-new-design,Update Contract Details (New Design),515,1
+module-contracts,module-contracts::service-update-contract-details-old-design,Update Contract Details (Old Design),514,1
+module-contracts,module-contracts::service-update-contract-details-unified-design,Update Contract Details (Unified Design),516,1
+module-contracts,module-contracts::service-update-contract-files-to-gosi,Update contract files to GOSI,591,1
+module-contracts,module-contracts::service-update-contract-gosi-status,Update Contract GOSI Status,557,1
+module-contracts,module-contracts::service-update-contract-missing-information,Update Contract Missing Information,950,1
+module-contracts,module-contracts::service-update-contract-template-details-new-design,Update Contract Template Details (New Design),501,1
+module-contracts,module-contracts::service-update-contract-template-details-old-design,Update Contract Template Details (Old Design),500,1
+module-contracts,module-contracts::service-update-contract-template-details-unified-design,Update Contract Template Details (Unified Design),502,1
+module-contracts,module-contracts::service-update-employee-wage,Update Employee Wage,568,1
+module-contracts,module-contracts::service-update-employment-contract,Update Employment Contract,581,1
+module-contracts,module-contracts::service-update-employment-contract-unified-version,Update Employment Contract (Unified Version),582,1
+module-contracts,module-contracts::service-update-external-contract-details,Update External Contract Details,944,1
+module-contracts,module-contracts::service-update-training-contract,Update Training Contract,465,1
+module-contracts,module-contracts::service-validate-contract,Validate Contract,579,1
+module-contracts,module-contracts::service-validate-contract-establishment-eligibility,Validate Contract Establishment Eligibility,561,1
+module-contracts,module-contracts::service-validate-eligibility-admission-journey,Validate Eligibility Admission Journey,947,1
+module-contracts,module-contracts::service-validate-employee-wage,Validate Employee Wage,567,1
+module-contracts,module-contracts::service-validate-employment-contract-new-design,Validate Employment Contract (New Design),507,1
+module-contracts,module-contracts::service-validate-employment-contract-old-design,Validate Employment Contract (Old Design),506,1
+module-contracts,module-contracts::service-validate-establishment-contracts-authentication,Validate Establishment Contracts Authentication,519,1
+module-contracts,module-contracts::service-validate-fake-saudization-contracts-scheduler,Validate Fake Saudization Contracts (Scheduler),588,1
+module-contracts,module-contracts::service-validate-laborer-in-tc,Validate Laborer In TC,602,1
+module-contracts,module-contracts::service-validate-tc-request,Validate TC Request,603,1
+module-contracts,module-contracts::service-validate-tct-request,Validate TCT Request,475,1
+module-contracts,module-contracts::service-validate-training-contract,Validate Training Contract,457,1
+module-contracts,module-contracts::service-validate-update-contract,Validate Update Contract,558,1
+module-data-portal,module-data-portal::service-data-portal-integration-specific-document,Data Portal - Integration Specific Document,842,1
+module-data-portal,module-data-portal::service-statistics,Statistics,813,1
+module-deceased-employee-entitlement,module-deceased-employee-entitlement::service-deceased-icds,Deceased - ICDs,935,1
+module-deceased-employee-entitlement,module-deceased-employee-entitlement::service-deceased-isds,Deceased - ISDs,936,1
+module-employee-transfer,module-employee-transfer::service-ajeer-approve-reject-change-sponsor-by-current-employer,AJEER - Approve Reject Change Sponsor By Current Employer,263,1
+module-employee-transfer,module-employee-transfer::service-ajeer-search-change-sponsor-requests,AJEER- Search Change Sponsor Requests,265,1
+module-employee-transfer,module-employee-transfer::service-ajeer-update-release-date-by-current-employer,AJEER- Update Release Date By Current Employer,264,1
+module-employee-transfer,module-employee-transfer::service-approve-reject-change-sponsor-by-current-employer,Approve Reject Change Sponsor by Current Employer,240,1
+module-employee-transfer,module-employee-transfer::service-approve-reject-change-sponsor-by-laborer,Approve Reject Change Sponsor by Laborer,239,1
+module-employee-transfer,module-employee-transfer::service-approve-reject-dependent-individual-transfer-request,Approve Reject Dependent Individual Transfer Request,260,1
+module-employee-transfer,module-employee-transfer::service-approve-reject-home-worker-et-request,Approve Reject Home Worker ET Request,261,1
+module-employee-transfer,module-employee-transfer::service-calculate-change-sponsor-balance,Calculate Change Sponsor Balance,234,1
+module-employee-transfer,module-employee-transfer::service-cancel-change-sponsor-request,Cancel Change Sponsor Request,238,1
+module-employee-transfer,module-employee-transfer::service-cancel-et-request-by-employee,Cancel ET Request by Employee,252,1
+module-employee-transfer,module-employee-transfer::service-change-sponsor-auto-rejection,Change Sponsor Auto Rejection,269,1
+module-employee-transfer,module-employee-transfer::service-check-and-update-approved-et-requests,Check and Update Approved ET Requests,272,1
+module-employee-transfer,module-employee-transfer::service-check-and-validate-transferred-employee,Check and Validate Transferred Employee,232,1
+module-employee-transfer,module-employee-transfer::service-check-change-sponsor-current-est-approval-odm,Check Change Sponsor Current Est Approval ODM,250,1
+module-employee-transfer,module-employee-transfer::service-check-change-sponsor-laborer-eligibility-odm,Check Change Sponsor Laborer Eligibility ODM,249,1
+module-employee-transfer,module-employee-transfer::service-check-change-sponsor-requests,Check Change Sponsor Requests,271,1
+module-employee-transfer,module-employee-transfer::service-check-current-employer-approval,Check Current Employer Approval,242,1
+module-employee-transfer,module-employee-transfer::service-check-dependent-individual-eligibility,Check Dependent Individual Eligibility,258,1
+module-employee-transfer,module-employee-transfer::service-check-employee-transfer-type,Check Employee Transfer Type,233,1
+module-employee-transfer,module-employee-transfer::service-check-establishment-conditions-type,Check Establishment Conditions Type,243,1
+module-employee-transfer,module-employee-transfer::service-check-et-request-status,Check ET Request Status.,256,1
+module-employee-transfer,module-employee-transfer::service-check-et-same-national-un,Check ET Same National UN,279,1
+module-employee-transfer,module-employee-transfer::service-check-national-un-active-establishments,Check National UN Active Establishments,253,1
+module-employee-transfer,module-employee-transfer::service-check-nic-employee-transfer-requests-scheduler,Check NIC Employee Transfer Requests Scheduler,274,1
+module-employee-transfer,module-employee-transfer::service-check-transfer-laborer-eligibility-odm,Check Transfer Laborer Eligibility ODM,246,1
+module-employee-transfer,module-employee-transfer::service-employee-transfer-schedulers,Employee Transfer - Schedulers,268,1
+module-employee-transfer,module-employee-transfer::service-get-change-sponsor-auto-rejection-days-odm,Get Change Sponsor Auto Rejection Days ODM,248,1
+module-employee-transfer,module-employee-transfer::service-get-change-sponsor-establishment-list,Get Change Sponsor Establishment List,230,1
+module-employee-transfer,module-employee-transfer::service-get-et-requests-status-count,Get ET Requests Status Count,255,1
+module-employee-transfer,module-employee-transfer::service-get-et-status-and-transfer-types,Get ET Status And Transfer Types,257,1
+module-employee-transfer,module-employee-transfer::service-get-laborer-transfer-laborers-list,Get Laborer Transfer Laborers List,231,1
+module-employee-transfer,module-employee-transfer::service-masar-approve-reject-et-by-owner,Masar - Approve Reject ET By Owner,266,1
+module-employee-transfer,module-employee-transfer::service-masar-search-employee-transfer-requests,Masar - Search Employee Transfer Requests,267,1
+module-employee-transfer,module-employee-transfer::service-musaned-search-individual-transfer-requests,Musaned - Search Individual Transfer Requests,262,1
+module-employee-transfer,module-employee-transfer::service-nic-check-change-sponsor-fix,NIC Check Change Sponsor Fix,276,1
+module-employee-transfer,module-employee-transfer::service-re-submit-dt-requests-to-nic,Re-Submit DT Requests to NIC,275,1
+module-employee-transfer,module-employee-transfer::service-re-submit-et-requests-to-nic,Re-Submit ET Requests to NIC,278,1
+module-employee-transfer,module-employee-transfer::service-re-submit-run-away-to-nic,Re-Submit Run Away To NIC,273,1
+module-employee-transfer,module-employee-transfer::service-search-employee-transfer-requests,Search Employee Transfer Requests,237,1
+module-employee-transfer,module-employee-transfer::service-send-employee-transfer-notifications,Send Employee Transfer Notifications,245,1
+module-employee-transfer,module-employee-transfer::service-submit-change-sponsor-request,Submit Change Sponsor Request,235,1
+module-employee-transfer,module-employee-transfer::service-submit-change-sponsor-requests-to-nic,Submit Change Sponsor Requests to NIC,270,1
+module-employee-transfer,module-employee-transfer::service-submit-cs-requests,Submit CS Requests,236,1
+module-employee-transfer,module-employee-transfer::service-update-release-date-by-current-employer,Update Release Date By Current Employer,241,1
+module-employee-transfer,module-employee-transfer::service-validate-change-sponsor-request,Validate Change Sponsor Request,254,1
+module-employee-transfer,module-employee-transfer::service-validate-establishment-eligibility,Validate Establishment Eligibility,251,1
+module-employee-transfer,module-employee-transfer::service-validate-labor-office-nationality-percentage-odm,Validate Labor Office Nationality Percentage ODM,247,1
+module-employee-transfer,module-employee-transfer::service-validate-laborer-in-change-sponsor,Validate Laborer In Change Sponsor,244,1
+module-employee-transfer,module-employee-transfer::service-validate-transferred-individual-dependent,Validate Transferred Individual Dependent,259,1
+module-employee-transfer,module-employee-transfer::service-verify-et-nic-pending-requests,Verify ET NIC Pending Requests,277,1
+module-end-of-service-reward,module-end-of-service-reward::service-icd,ICD,928,1
+module-end-of-service-reward,module-end-of-service-reward::service-isd,ISD,929,1
+module-establishment,module-establishment::service-activate-deactivate-location-status,Activate / Deactivate Location Status,143,1
+module-establishment,module-establishment::service-add-establishment-for-existing-cr,Add Establishment for Existing CR,226,1
+module-establishment,module-establishment::service-add-establishment-location,Add Establishment Location,141,1
+module-establishment,module-establishment::service-add-establishment-location-using-ml,Add Establishment Location Using ML,142,1
+module-establishment,module-establishment::service-add-laborers-location,Add Laborers Location,147,1
+module-establishment,module-establishment::service-add-manager-for-foreign-investor-cr,Add Manager for Foreign Investor CR,120,1
+module-establishment,module-establishment::service-approve-reject-government-agent-request-by-owner,Approve / Reject Government Agent Request by Owner,108,1
+module-establishment,module-establishment::service-cancel-gsb-license,Cancel GSB License,111,1
+module-establishment,module-establishment::service-change-establishment-activity,Change Establishment Activity,126,1
+module-establishment,module-establishment::service-change-establishment-activity-without-cr,Change Establishment Activity Without CR,130,1
+module-establishment,module-establishment::service-check-activity-license-configuration,Check Activity License Configuration,129,1
+module-establishment,module-establishment::service-check-isic4-activity-eligibility,Check Isic4 Activity Eligibility,117,1
+module-establishment,module-establishment::service-close-establishment-activity,Close Establishment Activity,121,1
+module-establishment,module-establishment::service-close-establishment-activity-hrsd,Close Establishment Activity HRSD,90,1
+module-establishment,module-establishment::service-create-establishment-locations-scheduler,Create Establishment Locations Scheduler,149,1
+module-establishment,module-establishment::service-create-license-subsequentsupervision-punishment-scheduler,Create License_SubsequentSupervision Punishment Scheduler,211,1
+module-establishment,module-establishment::service-create-location-punishment-scheduler,Create Location Punishment Scheduler,152,1
+module-establishment,module-establishment::service-create-request-change-establishment-activity-hrsd,Create Request Change Establishment Activity HRSD,95,1
+module-establishment,module-establishment::service-establishment-closure-operational-scheduler,Establishment Closure Operational Scheduler,123,1
+module-establishment,module-establishment::service-establishment-logo-icds,Establishment Logo - ICDs,883,1
+module-establishment,module-establishment::service-establishment-logo-isds,Establishment Logo - ISDs,884,1
+module-establishment,module-establishment::service-establishment-punishment-scheduler,Establishment Punishment Scheduler,229,1
+module-establishment,module-establishment::service-excluded-establishments-expiry-date-scheduler,Excluded Establishments Expiry Date Scheduler,218,1
+module-establishment,module-establishment::service-get-activity-license-matrix,Get Activity License Matrix,225,1
+module-establishment,module-establishment::service-get-change-activity-reasons,Get Change Activity Reasons,136,1
+module-establishment,module-establishment::service-get-change-activity-rejection-reasons,Get Change Activity Rejection Reasons,128,1
+module-establishment,module-establishment::service-get-cities-lookup,Get Cities Lookup,139,1
+module-establishment,module-establishment::service-get-crnationalnumber-activities,Get CRNationalNumber Activities,224,1
+module-establishment,module-establishment::service-get-current-establishment-activity,Get Current Establishment Activity,125,1
+module-establishment,module-establishment::service-get-establishment-isic-activities,Get Establishment Isic Activities,156,1
+module-establishment,module-establishment::service-get-establishment-licenses,Get Establishment Licenses,216,1
+module-establishment,module-establishment::service-get-establishment-locations-details,Get Establishment Locations Details,140,1
+module-establishment,module-establishment::service-get-establishment-locations-laborers-list,Get Establishment Locations Laborers List,148,1
+module-establishment,module-establishment::service-get-establishment-locations-statistics,Get Establishment Locations Statistics,153,1
+module-establishment,module-establishment::service-get-establishment-profile-information,Get Establishment Profile Information,131,1
+module-establishment,module-establishment::service-get-establishments-requests-list,Get Establishments Requests List,132,1
+module-establishment,module-establishment::service-get-establishments-requests-list-by-sector-agent,Get Establishments Requests List By Sector/Agent,135,1
+module-establishment,module-establishment::service-get-establishments-under-crnationalnumber,Get Establishments under CRNationalNumber,227,1
+module-establishment,module-establishment::service-get-farming-establishments-by-owner,Get Farming Establishments By Owner,104,1
+module-establishment,module-establishment::service-get-government-agent-and-owner-requests-details,Get Government Agent and Owner Requests Details,109,1
+module-establishment,module-establishment::service-get-highest-nitaqat-activity,Get Highest Nitaqat Activity,98,1
+module-establishment,module-establishment::service-get-isic4-activities-without-cr,Get Isic4 Activities without CR,112,1
+module-establishment,module-establishment::service-get-licenses-information-tga-transportation,Get Licenses Information - TGA Transportation,105,1
+module-establishment,module-establishment::service-get-national-unified-number-violations-debts,Get National Unified Number Violations & Debts,221,1
+module-establishment,module-establishment::service-get-new-establishment-activity,Get New Establishment Activity,124,1
+module-establishment,module-establishment::service-get-nitaqat-and-saudization-level-by-isic4-activity-hrsd,Get Nitaqat and Saudization Level by Isic4 Activity HRSD,106,1
+module-establishment,module-establishment::service-get-owner-and-main-establishment-details,Get Owner and Main Establishment Details,137,1
+module-establishment,module-establishment::service-get-owner-of-investor-cr,Get Owner of Investor CR,119,1
+module-establishment,module-establishment::service-get-required-licenses-by-isic4-activities,Get Required Licenses by Isic4 Activities,113,1
+module-establishment,module-establishment::service-get-subsequent-supervision-notification,Get Subsequent Supervision Notification,215,1
+module-establishment,module-establishment::service-get-unified-number-establishments-entities,Get Unified Number Establishments Entities,134,1
+module-establishment,module-establishment::service-get-workers-housing-licenses-scheduler,Get Workers Housing Licenses Scheduler,155,1
+module-establishment,module-establishment::service-grace-period-scheduler,Grace period Scheduler,228,1
+module-establishment,module-establishment::service-manage-establishment-license,Manage Establishment License,217,1
+module-establishment,module-establishment::service-manual-cr-swap,Manual CR Swap,184,1
+module-establishment,module-establishment::service-manual-cr-swap-v2,Manual CR Swap V2,205,1
+module-establishment,module-establishment::service-mci-push-cr-information-updates,MCI_Push CR Information Updates,170,1
+module-establishment,module-establishment::service-mci-push-cr-information-updates-v2,MCI_Push CR Information Updates V2,189,1
+module-establishment,module-establishment::service-mci-renew-cr,MCI_Renew CR,178,1
+module-establishment,module-establishment::service-mci-swap-cr,MCI_Swap CR,179,1
+module-establishment,module-establishment::service-mci-swap-cr-v2,MCI_Swap CR V2,203,1
+module-establishment,module-establishment::service-mci-transfer-ownership-individual,MCI_Transfer Ownership Individual,173,1
+module-establishment,module-establishment::service-mci-transfer-ownership-individualv2,MCI_Transfer Ownership IndividualV2,198,1
+module-establishment,module-establishment::service-mci-update-company-form,MCI_Update Company Form,195,1
+module-establishment,module-establishment::service-mci-update-cr-activities,MCI_Update CR Activities,174,1
+module-establishment,module-establishment::service-mci-update-cr-activitiesv2,MCI_Update CR ActivitiesV2,199,1
+module-establishment,module-establishment::service-mci-update-cr-capital,MCI_Update CR Capital,181,1
+module-establishment,module-establishment::service-mci-update-cr-capital-v2,MCI_Update CR Capital V2,190,1
+module-establishment,module-establishment::service-mci-update-cr-city,MCI_Update CR City,183,1
+module-establishment,module-establishment::service-mci-update-cr-cityv2,MCI_Update CR CityV2,196,1
+module-establishment,module-establishment::service-mci-update-cr-confirm-date,MCI_Update CR Confirm Date,193,1
+module-establishment,module-establishment::service-mci-update-cr-manager,MCI_Update CR Manager,177,1
+module-establishment,module-establishment::service-mci-update-cr-managerv2,MCI_Update CR ManagerV2,201,1
+module-establishment,module-establishment::service-mci-update-cr-name,MCI_Update CR Name,176,1
+module-establishment,module-establishment::service-mci-update-cr-namev2,MCI_Update CR NameV2,191,1
+module-establishment,module-establishment::service-mci-update-cr-status,MCI_Update CR Status,180,1
+module-establishment,module-establishment::service-mci-update-cr-statusv2,MCI_Update CR StatusV2,194,1
+module-establishment,module-establishment::service-mci-update-entity-type,MCI_Update Entity Type,207,1
+module-establishment,module-establishment::service-mci-update-owner-data,MCI_Update Owner Data,206,1
+module-establishment,module-establishment::service-mci-update-parties,MCI_Update Parties,175,1
+module-establishment,module-establishment::service-mci-update-partiesv2,MCI_Update PartiesV2,192,1
+module-establishment,module-establishment::service-mci-validate-establishment-and-cr,MCI_Validate Establishment and CR,172,1
+module-establishment,module-establishment::service-mci-validate-establishment-and-crv2,MCI_Validate Establishment and CRV2,188,1
+module-establishment,module-establishment::service-mci-validate-establishment-and-crv3,MCI_Validate Establishment and CRV3,208,1
+module-establishment,module-establishment::service-momra-auto-push-utility,MOMRA Auto Push Utility,158,1
+module-establishment,module-establishment::service-momra-push-license-update-requests,MOMRA Push License Update Requests,151,1
+module-establishment,module-establishment::service-momra-push-retry-scheduler,MOMRA Push Retry Scheduler,154,1
+module-establishment,module-establishment::service-open-default-establishment-by-sbc,Open Default Establishment by SBC,223,1
+module-establishment,module-establishment::service-open-establishment-by-other-licenses,Open Establishment by Other Licenses,114,1
+module-establishment,module-establishment::service-open-establishment-by-other-licenses-gsb,Open Establishment by Other Licenses GSB,115,1
+module-establishment,module-establishment::service-open-establishment-gosi,Open Establishment GOSI,91,1
+module-establishment,module-establishment::service-open-establishment-without-cr-nic,Open Establishment without CR NIC,93,1
+module-establishment,module-establishment::service-open-establishments-by-cr-hrsd,Open Establishments by CR HRSD,86,1
+module-establishment,module-establishment::service-open-establishments-nic,Open Establishments NIC,92,1
+module-establishment,module-establishment::service-open-establishments-without-cr-hrsd,Open Establishments without CR HRSD,87,1
+module-establishment,module-establishment::service-open-farming-establishment-file,Open Farming Establishment File,118,1
+module-establishment,module-establishment::service-open-unified-establishment-by-cr,Open Unified Establishment By CR,101,1
+module-establishment,module-establishment::service-open-unified-establishment-by-sbc,Open Unified Establishment by SBC,99,1
+module-establishment,module-establishment::service-open-unified-number-by-cr,Open Unified Number By CR,222,1
+module-establishment,module-establishment::service-punishment-system-services,Punishment System - Services,682,1
+module-establishment,module-establishment::service-push-labor-housing-license-details,Push Labor Housing License Details,212,1
+module-establishment,module-establishment::service-push-mecca-locations-changes-scheduler,Push Mecca Locations Changes Scheduler,159,1
+module-establishment,module-establishment::service-push-subsequent-supervision-license,Push Subsequent Supervision License,214,1
+module-establishment,module-establishment::service-qiwa-get-establishment-information,Qiwa_Get Establishment Information,138,1
+module-establishment,module-establishment::service-qiwa-worker-details-widdy,Qiwa Worker Details Widdy,97,1
+module-establishment,module-establishment::service-search-establishment-request-details,Search Establishment Request Details,133,1
+module-establishment,module-establishment::service-send-establishment-email-notification,Send Establishment Email Notification,161,1
+module-establishment,module-establishment::service-set-establishment-as-a-main-hrsd,Set Establishment as a Main HRSD,96,1
+module-establishment,module-establishment::service-submit-request-by-government-agent,Submit Request by Government Agent,107,1
+module-establishment,module-establishment::service-submit-unified-correction-request,Submit Unified Correction Request,220,1
+module-establishment,module-establishment::service-terminate-establishments-punishments-icd,Terminate Establishments Punishments ICD,683,1
+module-establishment,module-establishment::service-transfer-ownership-email-notification,Transfer Ownership Email Notification,187,1
+module-establishment,module-establishment::service-transfer-ownership-engine-schedular,Transfer Ownership Engine Schedular,182,1
+module-establishment,module-establishment::service-transfer-ownership-engine-schedularv2,Transfer Ownership Engine SchedularV2,200,1
+module-establishment,module-establishment::service-transfer-ownership-of-municipal-license,Transfer Ownership of Municipal License,157,1
+module-establishment,module-establishment::service-unassign-laborers-locations,Unassign Laborers Locations,146,1
+module-establishment,module-establishment::service-update-cr-details,Update CR Details,186,1
+module-establishment,module-establishment::service-update-cr-detailsv2,Update CR DetailsV2,202,1
+module-establishment,module-establishment::service-update-establishment-contact-address,Update Establishment Contact Address,144,1
+module-establishment,module-establishment::service-update-establishment-license-cr,Update Establishment License CR,210,1
+module-establishment,module-establishment::service-update-establishment-location-details,Update Establishment Location Details,145,1
+module-establishment,module-establishment::service-update-establishment-location-scheduler,Update Establishment Location Scheduler,150,1
+module-establishment,module-establishment::service-update-establishment-statement-hrsd,Update Establishment Statement HRSD,89,1
+module-establishment,module-establishment::service-update-establishment-status-hrsd,Update Establishment Status HRSD,88,1
+module-establishment,module-establishment::service-update-establishments-nic,Update Establishments NIC,94,1
+module-establishment,module-establishment::service-update-foreign-investor-details-scheduler,Update Foreign Investor Details Scheduler,102,1
+module-establishment,module-establishment::service-update-license-information-gsb,Update License Information GSB,110,1
+module-establishment,module-establishment::service-validate-change-activity-eligibility,Validate Change Activity Eligibility,127,1
+module-establishment,module-establishment::service-validate-close-establishment-activity-eligibility,Validate Close Establishment Activity Eligibility,122,1
+module-establishment,module-establishment::service-validate-cr-swap,Validate CR Swap,185,1
+module-establishment,module-establishment::service-validate-open-unified-establishment,Validate Open Unified Establishment,100,1
+module-establishment,module-establishment::service-validate-open-unified-number,Validate Open Unified Number,103,1
+module-establishment,module-establishment::service-validate-other-licenses,Validate Other Licenses,116,1
+module-establishment,module-establishment::service-validate-transfer-ownership,Validate Transfer Ownership,171,1
+module-establishment,module-establishment::service-validate-transfer-ownership-l2,Validate Transfer Ownership L2,204,1
+module-establishment,module-establishment::service-validate-transfer-ownership-v2,Validate Transfer Ownership V2,197,1
+module-establishment,module-establishment::service-validate-transfer-ownership-v3,Validate Transfer Ownership V3,209,1
+module-establishment,module-establishment::service-validate-unified-correction-request,Validate Unified Correction Request,219,1
+module-establishment,module-establishment::service-validate-workers-housing-license,Validate Workers Housing License,213,1
+module-establishment,module-establishment::service-verify-laborer-mecca-location,Verify Laborer Mecca Location,160,1
+module-establishment,module-establishment::service-violation-management-integration-control-document,Violation Management - Integration Control Document,844,1
+module-establishment,module-establishment::service-violation-management-interface-specification-documents,Violation Management - Interface Specification Documents,845,1
+module-external-entities-management,module-external-entities-management::service-eem-integration-specific-document,EEM - Integration Specific Document,837,1
+module-external-entities-management,module-external-entities-management::service-others,Others,838,1
+module-gosi,module-gosi::service-gosi-integration-control-documents,GOSI - Integration Control Documents,669,1
+module-government-sectors,module-government-sectors::service-add-update-governmental-agent-privileges,Add Update Governmental Agent Privileges,398,1
+module-government-sectors,module-government-sectors::service-assign-government-agent-role,Assign Government Agent Role,399,1
+module-government-sectors,module-government-sectors::service-check-governmental-agent-eligibility,Check Governmental Agent Eligibility,396,1
+module-government-sectors,module-government-sectors::service-get-governmental-endorsement-agent-details,Get Governmental Endorsement Agent Details,400,1
+module-government-sectors,module-government-sectors::service-get-governmental-sector-sources,Get Governmental Sector Sources,395,1
+module-government-sectors,module-government-sectors::service-get-governmental-sectors-for-governmental-agent,Get Governmental Sectors For Governmental Agent,401,1
+module-government-sectors,module-government-sectors::service-get-service-subservice-sectors-list,Get Service SubService Sectors List,397,1
+module-individual-profile,module-individual-profile::service-employee-profile-management-interface-specification-document,Employee Profile Management - Interface Specification Document,843,1
+module-individual-profile,module-individual-profile::service-mcs-employee-history-information,MCS - Employee History Information,953,1
+module-individual-profile,module-individual-profile::service-wh-integrated-control-documents-icd,WH - Integrated Control Documents (ICD),815,1
+module-individual-profile,module-individual-profile::service-wh-interface-service-document-isd,WH - Interface Service Document (ISD),816,1
+module-individual-profile,module-individual-profile::service-work-history,Work History,814,1
+module-labor-offices,module-labor-offices::service-activate-deactivate-location-status-lo,Activate/Deactivate Location Status LO,723,1
+module-labor-offices,module-labor-offices::service-add-establishment-location-lo,Add Establishment Location LO,724,1
+module-labor-offices,module-labor-offices::service-add-establishment-location-using-ml-lo,Add Establishment Location Using ML LO,725,1
+module-labor-offices,module-labor-offices::service-add-laborers-location-lo,Add Laborers Location LO,726,1
+module-labor-offices,module-labor-offices::service-add-lo-service-to-offices,Add LO Service to Offices,687,1
+module-labor-offices,module-labor-offices::service-add-new-labor-office-user,Add New Labor Office User,714,1
+module-labor-offices,module-labor-offices::service-add-update-appointment-attachments,Add Update Appointment Attachments,699,1
+module-labor-offices,module-labor-offices::service-add-update-lo-attachment,Add Update LO Attachment,700,1
+module-labor-offices,module-labor-offices::service-add-update-user-type-permissions,Add/Update User Type Permissions,719,1
+module-labor-offices,module-labor-offices::service-approve-reject-change-establishment-activity-request-by-lo-agent,Approve/Reject Change Establishment Activity Request By LO Agent,740,1
+module-labor-offices,module-labor-offices::service-approve-reject-change-sponsor-by-current-employer-in-lo,Approve Reject Change Sponsor by Current Employer In LO,747,1
+module-labor-offices,module-labor-offices::service-approve-reject-exception-request-by-admin,Approve Reject Exception Request by Admin,733,1
+module-labor-offices,module-labor-offices::service-approve-reject-tc-cancelation-by-employer-lo,Approve Reject TC Cancelation By Employer LO,761,1
+module-labor-offices,module-labor-offices::service-approve-reject-update-release-date-by-employer-lo,Approve Reject Update Release Date By Employer LO,762,1
+module-labor-offices,module-labor-offices::service-assign-change-activity-request-to-lo-agent,Assign Change  Activity Request To LO Agent,741,1
+module-labor-offices,module-labor-offices::service-assign-unassign-appointments,Assign Unassign Appointments,697,1
+module-labor-offices,module-labor-offices::service-calculate-available-exception-balance,Calculate Available Exception Balance,734,1
+module-labor-offices,module-labor-offices::service-cancel-appointment-request,Cancel Appointment Request,694,1
+module-labor-offices,module-labor-offices::service-cancel-change-occupation-request-lo,Cancel Change Occupation Request LO,758,1
+module-labor-offices,module-labor-offices::service-cancel-change-sponsor-request-lo,Cancel Change Sponsor Request LO,753,1
+module-labor-offices,module-labor-offices::service-cancel-issued-visa-lo,Cancel Issued Visa LO,767,1
+module-labor-offices,module-labor-offices::service-cancel-work-permit-request-lo,Cancel Work Permit Request LO,773,1
+module-labor-offices,module-labor-offices::service-check-appointment-expiry-scheduler,Check Appointment Expiry Scheduler,696,1
+module-labor-offices,module-labor-offices::service-check-appointments-availability,Check Appointments Availability,701,1
+module-labor-offices,module-labor-offices::service-check-auto-assign-appointments-availability,Check Auto Assign Appointments Availability,712,1
+module-labor-offices,module-labor-offices::service-create-new-appointment,Create New Appointment,691,1
+module-labor-offices,module-labor-offices::service-create-new-labor-office,Create New Labor Office,684,1
+module-labor-offices,module-labor-offices::service-create-saudization-certificate-lo,Create Saudization Certificate LO,739,1
+module-labor-offices,module-labor-offices::service-deactivate-office-regions,Deactivate Office Regions,685,1
+module-labor-offices,module-labor-offices::service-deactivate-office-service,Deactivate Office Service,689,1
+module-labor-offices,module-labor-offices::service-email-sms-for-virtual-offices-retry-scheduler,Email/SMS for Virtual Offices Retry Scheduler,709,1
+module-labor-offices,module-labor-offices::service-get-absent-request-details,Get Absent Request Details,688,1
+module-labor-offices,module-labor-offices::service-get-appointment-availability,Get Appointment Availability,692,1
+module-labor-offices,module-labor-offices::service-get-appointment-details,Get Appointment Details,693,1
+module-labor-offices,module-labor-offices::service-get-appointment-information,Get Appointment Information,704,1
+module-labor-offices,module-labor-offices::service-get-assigned-agent-requests,Get Assigned Agent Requests,744,1
+module-labor-offices,module-labor-offices::service-get-auto-assign-appointment-availability,Get Auto Assign Appointment Availability,711,1
+module-labor-offices,module-labor-offices::service-get-available-lo-agents-for-assign,Get Available LO Agents for Assign,702,1
+module-labor-offices,module-labor-offices::service-get-change-sponsor-establishments-list-lo,Get Change Sponsor Establishments List LO,751,1
+module-labor-offices,module-labor-offices::service-get-current-active-appointment-details,Get Current Active Appointment Details,703,1
+module-labor-offices,module-labor-offices::service-get-customer-profile,Get Customer Profile,722,1
+module-labor-offices,module-labor-offices::service-get-establishment-change-activity-requests-by-lo-agent,Get Establishment Change Activity Requests By LO Agent,742,1
+module-labor-offices,module-labor-offices::service-get-establishment-laborers-count-by-occupation,Get Establishment Laborers Count by Occupation,743,1
+module-labor-offices,module-labor-offices::service-get-establishment-locations-details-lo,Get Establishment Locations Details LO,727,1
+module-labor-offices,module-labor-offices::service-get-establishment-locations-laborers-list-lo,Get Establishment Locations Laborers List LO,728,1
+module-labor-offices,module-labor-offices::service-get-gosi-contracts-list-lo,Get Gosi Contracts List LO,763,1
+module-labor-offices,module-labor-offices::service-get-labor-office-appointment-statistics,Get labor Office Appointment Statistics,713,1
+module-labor-offices,module-labor-offices::service-get-labor-office-details,Get Labor Office Details,686,1
+module-labor-offices,module-labor-offices::service-get-labor-office-user-details,Get Labor Office User Details,715,1
+module-labor-offices,module-labor-offices::service-get-laborers-with-correction-occupation-lo,Get Laborers With Correction Occupation LO,754,1
+module-labor-offices,module-labor-offices::service-get-losubservice-attachments,Get LOSubService Attachments,698,1
+module-labor-offices,module-labor-offices::service-get-occupation-correction-request-lo,Get Occupation Correction Request LO,755,1
+module-labor-offices,module-labor-offices::service-get-occupation-percentage-for-change-activity-request,Get Occupation Percentage for Change Activity Request,745,1
+module-labor-offices,module-labor-offices::service-get-permission-workspace,Get Permission Workspace,716,1
+module-labor-offices,module-labor-offices::service-get-unassigned-agent-requests,Get Unassigned Agent Requests,746,1
+module-labor-offices,module-labor-offices::service-get-user-establishments-lo,Get User Establishments LO,718,1
+module-labor-offices,module-labor-offices::service-get-user-type-permissions,Get User Type Permissions,720,1
+module-labor-offices,module-labor-offices::service-get-work-permit-laborer-list-lo,Get Work Permit Laborer list LO,771,1
+module-labor-offices,module-labor-offices::service-hrsd-push-update-appointment-details,HRSD-Push Update Appointment Details,710,1
+module-labor-offices,module-labor-offices::service-issue-establishing-visas-lo,Issue Establishing Visas LO,768,1
+module-labor-offices,module-labor-offices::service-lo-sendsms-retry-scheduler,LO SendSMS Retry Scheduler,707,1
+module-labor-offices,module-labor-offices::service-push-update-appointment-details,Push Update Appointment Details,705,1
+module-labor-offices,module-labor-offices::service-request-establishing-visas-balance-lo,Request Establishing Visas Balance LO,764,1
+module-labor-offices,module-labor-offices::service-request-visit-visa-package-lo,Request Visit Visa Package LO,770,1
+module-labor-offices,module-labor-offices::service-search-exception-requests,Search Exception Requests,731,1
+module-labor-offices,module-labor-offices::service-search-exception-visa-requests,Search Exception Visa Requests,736,1
+module-labor-offices,module-labor-offices::service-search-work-permit-details-lo,Search Work Permit Details LO,772,1
+module-labor-offices,module-labor-offices::service-send-email-sms-for-virtual-offices-scheduler,Send Email/SMS for Virtual Offices Scheduler,708,1
+module-labor-offices,module-labor-offices::service-submit-change-occupation-by-employer-lo,Submit Change Occupation By Employer LO,757,1
+module-labor-offices,module-labor-offices::service-submit-change-sponsor-request-lo,Submit Change Sponsor Request LO,749,1
+module-labor-offices,module-labor-offices::service-submit-cs-requests-lo,Submit CS Requests LO,750,1
+module-labor-offices,module-labor-offices::service-submit-exception-request,Submit Exception Request,732,1
+module-labor-offices,module-labor-offices::service-submit-expansion-visa-request-lo,Submit Expansion Visa Request LO,765,1
+module-labor-offices,module-labor-offices::service-submit-occupation-correction-request-lo,Submit Occupation Correction Request LO,756,1
+module-labor-offices,module-labor-offices::service-submit-tc-cancelation-by-employer-lo,Submit TC Cancelation By Employer LO,760,1
+module-labor-offices,module-labor-offices::service-submit-tc-request-by-employer-lo,Submit TC Request By Employer LO,759,1
+module-labor-offices,module-labor-offices::service-submit-visa-exception-request,Submit Visa Exception Request,735,1
+module-labor-offices,module-labor-offices::service-submit-visit-visa-request-lo,Submit Visit Visa Request LO,766,1
+module-labor-offices,module-labor-offices::service-submit-work-permit-request-lo,Submit Work Permit Request LO,774,1
+module-labor-offices,module-labor-offices::service-terminate-establishing-period-lo,Terminate Establishing Period LO,769,1
+module-labor-offices,module-labor-offices::service-unassign-laborers-location-lo,Unassign Laborers Location LO,729,1
+module-labor-offices,module-labor-offices::service-update-appointment-details-scheduler,Update Appointment Details Scheduler,706,1
+module-labor-offices,module-labor-offices::service-update-appointment-status,Update Appointment Status,695,1
+module-labor-offices,module-labor-offices::service-update-establishment-location-details-lo,Update Establishment Location Details LO,730,1
+module-labor-offices,module-labor-offices::service-update-release-date-by-current-employer-lo,Update Release Date By Current Employer LO,752,1
+module-labor-offices,module-labor-offices::service-update-user-details,Update User Details,717,1
+module-labor-offices,module-labor-offices::service-update-user-permissions,Update User Permissions,721,1
+module-labor-offices,module-labor-offices::service-validate-change-sponsor-request-lo,Validate Change Sponsor Request LO,748,1
+module-labor-offices,module-labor-offices::service-validate-establishment-eligibility-for-appointments,Validate Establishment Eligibility for Appointments,690,1
+module-labor-offices,module-labor-offices::service-validate-establishment-in-rre-change-occupation,Validate Establishment In RRE Change Occupation,737,1
+module-labor-offices,module-labor-offices::service-validate-laborer-in-rre-change-occupation,Validate Laborer In RRE Change Occupation,738,1
+module-lmh,module-lmh::service-check-employee-professional-skills-classification,Check Employee Professional Skills Classification,386,1
+module-lmh,module-lmh::service-get-lmh-exceptional-universities,Get LMH Exceptional Universities,388,1
+module-lmh,module-lmh::service-get-lmh-occupations-list,Get LMH Occupations List,387,1
+module-lmh,module-lmh::service-lmh-engine,LMH Engine,385,1
+module-lmh,module-lmh::service-submit-job-offer,Submit Job Offer,389,1
+module-nic,module-nic::service-nic-oauth-mcs,NIC OAuth MCS,933,1
+module-nic,module-nic::service-nic-oauth-mol,NIC OAuth MOL,934,1
+module-nic,module-nic::service-nic-services,NIC Services,861,1
+module-nic-services,module-nic-services::service-authenticate-user-by-mobile-nic,Authenticate User By Mobile NIC,866,1
+module-nic-services,module-nic-services::service-cancel-run-away-report-in-nic,Cancel Run Away Report In NIC,881,1
+module-nic-services,module-nic-services::service-cancel-visa-nic,Cancel Visa NIC,867,1
+module-nic-services,module-nic-services::service-get-cancelled-visas-nic,Get Cancelled Visas NIC,878,1
+module-nic-services,module-nic-services::service-get-change-sponsor-details-nic,Get Change Sponsor Details NIC,865,1
+module-nic-services,module-nic-services::service-get-citizen-information-nic,Get Citizen Information NIC,863,1
+module-nic-services,module-nic-services::service-get-foreigner-all-data,Get Foreigner All Data,874,1
+module-nic-services,module-nic-services::service-get-foreigner-information-nic,Get Foreigner Information NIC,862,1
+module-nic-services,module-nic-services::service-get-labor-visa-list-nic,Get Labor Visa List NIC,872,1
+module-nic-services,module-nic-services::service-get-laborer-border-number-nic,Get Laborer Border Number NIC,873,1
+module-nic-services,module-nic-services::service-get-laborer-prison-status-nic,Get Laborer Prison Status NIC,875,1
+module-nic-services,module-nic-services::service-get-new-comers-details-nic,Get New Comers Details NIC,882,1
+module-nic-services,module-nic-services::service-get-nic-establishment-balance,Get NIC Establishment Balance,869,1
+module-nic-services,module-nic-services::service-get-nic-visas-details,Get NIC Visas Details,880,1
+module-nic-services,module-nic-services::service-issue-work-permit-nic,Issue Work Permit NIC,868,1
+module-nic-services,module-nic-services::service-nic-calculate-run-away-laborer-debts,NIC Calculate Run Away Laborer Debts,879,1
+module-nic-services,module-nic-services::service-submit-change-occupation-request-nic,Submit Change Occupation Request NIC,870,1
+module-nic-services,module-nic-services::service-submit-laborer-transfer-request-nic,Submit Laborer Transfer Request NIC,876,1
+module-nic-services,module-nic-services::service-submit-run-away-report-to-nic-icd,Submit Run Away Report To NIC ICD,877,1
+module-nic-services,module-nic-services::service-submit-visa-request-nic,Submit Visa Request NIC,871,1
+module-nic-services,module-nic-services::service-update-worker-occupation-nic,Update Worker Occupation NIC,864,1
+module-nitaqat,module-nitaqat::service-get-economic-and-isic4-activities,Get Economic and ISIC4 Activities,778,1
+module-nitaqat,module-nitaqat::service-get-nitaq-information,Get Nitaq Information,777,1
+module-nitaqat,module-nitaqat::service-nitaqat-calculator-private-calculator-shared-services,Nitaqat Calculator (private calculator - shared services),775,1
+module-nitaqat,module-nitaqat::service-nitaqat-public-calculator,Nitaqat Public Calculator,776,1
+module-nitaqat,module-nitaqat::service-wps,WPS,779,1
+module-occupations,module-occupations::service-add-occupation,Add Occupation,802,1
+module-occupations,module-occupations::service-add-occupation-group,Add Occupation Group,799,1
+module-occupations,module-occupations::service-add-update-nationalities,Add Update Nationalities,639,1
+module-occupations,module-occupations::service-add-update-occupation,Add Update Occupation,636,1
+module-occupations,module-occupations::service-add-update-occupation-group,Add Update Occupation Group,637,1
+module-occupations,module-occupations::service-approve-reject-change-occupation-by-laborer,Approve Reject Change Occupation By Laborer,621,1
+module-occupations,module-occupations::service-cancel-change-occupation-request,Cancel Change Occupation Request,622,1
+module-occupations,module-occupations::service-check-change-occupation-laborer-odm,Check Change Occupation Laborer ODM,616,1
+module-occupations,module-occupations::service-get-all-entities,Get All Entities,792,1
+module-occupations,module-occupations::service-get-change-details,Get Change Details,806,1
+module-occupations,module-occupations::service-get-change-occupation-counts,Get Change Occupation Counts,625,1
+module-occupations,module-occupations::service-get-change-occupation-laborers-list,Get Change Occupation Laborers List,617,1
+module-occupations,module-occupations::service-get-changes-history,Get Changes History,805,1
+module-occupations,module-occupations::service-get-entity-details,Get Entity  Details,791,1
+module-occupations,module-occupations::service-get-entity-values-for-a-service,Get Entity Values For a Service,795,1
+module-occupations,module-occupations::service-get-laborers-co-requests,Get Laborers CO Requests,624,1
+module-occupations,module-occupations::service-get-laborers-with-correction-occupation,Get Laborers With Correction Occupation,626,1
+module-occupations,module-occupations::service-get-matrix,Get Matrix,790,1
+module-occupations,module-occupations::service-get-matrix-historical-change-details,Get Matrix Historical Change Details,798,1
+module-occupations,module-occupations::service-get-matrix-historical-changes,Get Matrix Historical Changes,797,1
+module-occupations,module-occupations::service-get-occupation,Get Occupation,804,1
+module-occupations,module-occupations::service-get-occupation-correction-counts,Get Occupation Correction Counts,631,1
+module-occupations,module-occupations::service-get-occupation-correction-request,Get Occupation Correction Request,630,1
+module-occupations,module-occupations::service-get-occupation-group,Get Occupation Group,801,1
+module-occupations,module-occupations::service-get-occupation-group-list,Get Occupation Group List,638,1
+module-occupations,module-occupations::service-get-occupations-after-correction,Get Occupations After Correction,627,1
+module-occupations,module-occupations::service-get-occupations-list,Get Occupations List,634,1
+module-occupations,module-occupations::service-get-qiwa-nationalities-list,Get Qiwa Nationalities List,640,1
+module-occupations,module-occupations::service-get-services-details,Get Services' Details,793,1
+module-occupations,module-occupations::service-occupation-indicator,Occupation Indicator,641,1
+module-occupations,module-occupations::service-search-change-occupation,Search Change Occupation,623,1
+module-occupations,module-occupations::service-submit-change-occupation-by-employer,Submit Change Occupation By Employer,620,1
+module-occupations,module-occupations::service-submit-occupation-correction-request,Submit Occupation Correction Request,629,1
+module-occupations,module-occupations::service-unrelated-occupations-icds,Unrelated Occupations ICDs,931,1
+module-occupations,module-occupations::service-unrelated-occupations-isd,Unrelated Occupations-ISD,932,1
+module-occupations,module-occupations::service-update-entity-values-for-a-service,Update Entity Values For a Service,796,1
+module-occupations,module-occupations::service-update-matrix,Update Matrix,789,1
+module-occupations,module-occupations::service-update-occupation,Update Occupation,803,1
+module-occupations,module-occupations::service-update-occupation-group,Update Occupation Group,800,1
+module-occupations,module-occupations::service-update-service,Update Service,794,1
+module-occupations,module-occupations::service-validate-establishment-in-change-occupation,Validate Establishment In Change Occupation,618,1
+module-occupations,module-occupations::service-validate-laborer-in-change-occupation,Validate Laborer In Change Occupation,619,1
+module-occupations,module-occupations::service-validate-occupation,Validate Occupation,635,1
+module-occupations,module-occupations::service-validate-occupation-correction-request,Validate Occupation Correction Request,628,1
+module-payments,module-payments::service-amazon-payment-authorization,Amazon Payment Authorization,853,1
+module-payments,module-payments::service-amazon-payment-capture,Amazon Payment Capture,854,1
+module-payments,module-payments::service-amazon-void-authorization,Amazon Void Authorization,855,1
+module-payments,module-payments::service-amazon-webhook-notification,Amazon WebHook Notification,856,1
+module-payments,module-payments::service-check-amazon-payment-status,Check Amazon Payment Status,859,1
+module-payments,module-payments::service-check-update-pending-vat-requests-scheduler,Check Update Pending VAT Requests (Scheduler),821,1
+module-payments,module-payments::service-create-payment-checkout-copy-pay,Create Payment Checkout (copy & pay),645,1
+module-payments,module-payments::service-create-payment-widget-hypp-copy-pay,Create Payment Widget HYPP (copy & pay),646,1
+module-payments,module-payments::service-create-policies-invoices-scheduler,Create Policies Invoices Scheduler,828,1
+module-payments,module-payments::service-create-visas-invoices-scheduler,Create Visas Invoices Scheduler,826,1
+module-payments,module-payments::service-delete-payment-card-token,Delete Payment Card Token,662,1
+module-payments,module-payments::service-export-payments-list,Export Payments List,660,1
+module-payments,module-payments::service-generate-amazon-signature,Generate Amazon Signature,858,1
+module-payments,module-payments::service-generate-payment-card-token,Generate Payment Card Token,661,1
+module-payments,module-payments::service-get-and-update-establishmentaddress,Get and Update EstablishmentAddress,817,1
+module-payments,module-payments::service-get-and-update-vat-number,Get and Update VAT Number,818,1
+module-payments,module-payments::service-get-hyperpay-reconciliation,Get HyperPay Reconciliation,659,1
+module-payments,module-payments::service-get-payment-details,Get Payment Details,650,1
+module-payments,module-payments::service-get-payment-status-by-checkoutid-hypp-copy-pay,Get Payment Status By CheckOutId HYPP (copy & pay),649,1
+module-payments,module-payments::service-get-payment-status-copy-pay,Get Payment Status (copy & pay),647,1
+module-payments,module-payments::service-get-payment-status-v2,Get Payment Status V2,648,1
+module-payments,module-payments::service-get-payments-list,Get Payments List,656,1
+module-payments,module-payments::service-get-payments-statistics,Get Payments Statistics,658,1
+module-payments,module-payments::service-get-unified-invoice-details,Get Unified Invoice Details,824,1
+module-payments,module-payments::service-get-unified-invoices-list,Get Unified Invoices List,822,1
+module-payments,module-payments::service-insert-individual-unified-invoices-b2c,Insert Individual Unified Invoices (B2C),830,1
+module-payments,module-payments::service-insert-policies-invoices-replica,Insert Policies Invoices Replica,827,1
+module-payments,module-payments::service-insert-unified-invoices-from-external-parties-b2b,Insert Unified Invoices (from external parties - B2B),829,1
+module-payments,module-payments::service-list-payments-statuses,List Payments Statuses,657,1
+module-payments,module-payments::service-make-payment-copy-pay,Make Payment (copy & pay),643,1
+module-payments,module-payments::service-make-payment-v2,Make Payment V2,644,1
+module-payments,module-payments::service-payment-services,Payment - Services,642,1
+module-payments,module-payments::service-pdf-creator,PDF Creator,823,1
+module-payments,module-payments::service-refund-payment,Refund-Payment,655,1
+module-payments,module-payments::service-refund-payment-hypp,Refund Payment HYPP,652,1
+module-payments,module-payments::service-reset-bulk-invoices-failed-by-e-invoice,Reset Bulk Invoices failed by E-Invoice,831,1
+module-payments,module-payments::service-reset-invoice-failed-by-e-invoice,Reset Invoice failed by E-Invoice,832,1
+module-payments,module-payments::service-search-hyperpay-payment-transactions,Search Hyperpay Payment Transactions,653,1
+module-payments,module-payments::service-search-payment-refund-transactions,Search Payment Refund Transactions,654,1
+module-payments,module-payments::service-search-payment-transactions,Search Payment Transactions,651,1
+module-payments,module-payments::service-unified-e-invoices-reconsilidation-old,Unified E-Invoices Reconsilidation - old,834,1
+module-payments,module-payments::service-unified-e-invoices-reconsolidation-scheduler,Unified E-invoices Reconsolidation Scheduler,836,1
+module-payments,module-payments::service-unified-e-invoices-scheduler,Unified E-invoices Scheduler,835,1
+module-payments,module-payments::service-unified-e-invoices-scheduler-old,Unified E-Invoices Scheduler - old,833,1
+module-payments,module-payments::service-unified-invoices-scheduler,Unified Invoices Scheduler,825,1
+module-payments,module-payments::service-update-amazon-status,Update Amazon Status,857,1
+module-payments,module-payments::service-update-establishmentaddress,Update EstablishmentAddress,819,1
+module-payments,module-payments::service-update-vat-number,Update VAT Number,820,1
+module-services,module-services::service-end-of-service-reward,End Of Service Reward,927,1
+module-services,module-services::service-linking-unrelated-occupations-to-activities,Linking / Unrelated Occupations to Activities | ربط أنشطة نطاقات بالمهن,930,1
+module-services,module-services::service-nic,NIC,860,1
+module-termination-for-absence-expat-laborer,module-termination-for-absence-expat-laborer::service-ctfal-icds,CTFAL - ICDs,632,1
+module-termination-for-absence-expat-laborer,module-termination-for-absence-expat-laborer::service-ctfal-isds,CTFAL - ISDs,633,1
+module-training-indicators,module-training-indicators::service-notifications,Notifications,788,1
+module-training-indicators,module-training-indicators::service-qiwa-establishment-compliance-indicator-isd,Qiwa_Establishment Compliance Indicator-ISD,785,1
+module-training-indicators,module-training-indicators::service-training-indicators,Training Indicators,782,1
+module-training-indicators,module-training-indicators::service-training-indicators-integrated-control-document-icd,Training Indicators - Integrated Control Document (ICD),783,1
+module-training-indicators,module-training-indicators::service-training-indicators-interface-service-document-isd,Training Indicators - Interface Service Document (ISD),784,1
+module-training-indicators,module-training-indicators::service-trainings-disclosure-icds,Trainings Disclosure - ICDs,786,1
+module-training-indicators,module-training-indicators::service-trainings-disclosure-isds,Trainings Disclosure - ISDs,787,1
+module-user-management,module-user-management::service-add-establishment-user-subscription,Add Establishment User Subscription,915,1
+module-user-management,module-user-management::service-add-or-update-user-privileges,Add Or Update User Privileges,916,1
+module-user-management,module-user-management::service-add-update-user-favorite-establishments,Add Update User Favorite Establishments,908,1
+module-user-management,module-user-management::service-calculate-user-management-subscription-price,Calculate User Management Subscription Price,919,1
+module-user-management,module-user-management::service-check-added-user-eligibility,Check Added User Eligibility,925,1
+module-user-management,module-user-management::service-check-user-eligibility,Check User Eligibility,895,1
+module-user-management,module-user-management::service-check-user-establishments-eligibility,Check User Establishments Eligibility,893,1
+module-user-management,module-user-management::service-create-user,Create User,885,1
+module-user-management,module-user-management::service-delete-user,Delete User,886,1
+module-user-management,module-user-management::service-establishment-subscription-details,Establishment Subscription Details,906,1
+module-user-management,module-user-management::service-get-count-of-active-users,Get Count of Active Users,907,1
+module-user-management,module-user-management::service-get-establishment-authorized-user,Get Establishment Authorized User,922,1
+module-user-management,module-user-management::service-get-establishment-authorized-user-v-2,Get Establishment Authorized User v.2,901,1
+module-user-management,module-user-management::service-get-laborer-information-mlsd,Get Laborer Information MLSD,891,1
+module-user-management,module-user-management::service-get-nearly-subscriptions-to-be-expired,Get Nearly Subscriptions To Be Expired,926,1
+module-user-management,module-user-management::service-get-payments-without-user-subscription,Get Payments without User Subscription,921,1
+module-user-management,module-user-management::service-get-qiwa-workspace-dashboard,Get Qiwa Workspace Dashboard,887,1
+module-user-management,module-user-management::service-get-qiwa-workspace-establishments,Get Qiwa Workspace Establishments,888,1
+module-user-management,module-user-management::service-get-qiwa-workspace-v2,Get Qiwa Workspace V2,889,1
+module-user-management,module-user-management::service-get-subscriptions-configurations-odm,Get Subscriptions Configurations ODM,923,1
+module-user-management,module-user-management::service-get-um-services-for-non-subscribed-users,Get UM Services for Non Subscribed Users,902,1
+module-user-management,module-user-management::service-get-user-eligible-services,Get User Eligible Services,897,1
+module-user-management,module-user-management::service-get-user-establishments-mlsd,Get User Establishments MLSD,890,1
+module-user-management,module-user-management::service-get-user-estabs-groups,Get User Estabs Groups,904,1
+module-user-management,module-user-management::service-get-user-information,Get User information,892,1
+module-user-management,module-user-management::service-get-user-management-services-odm,Get User Management Services ODM,896,1
+module-user-management,module-user-management::service-get-user-ws-count,Get User WS Count,905,1
+module-user-management,module-user-management::service-mlsd-get-reowned-establishments,MLSD Get ReOwned Establishments,903,1
+module-user-management,module-user-management::service-qiwa-platform-in-numbers,Qiwa Platform in Numbers,909,1
+module-user-management,module-user-management::service-renew-user-subscription,Renew User Subscription,917,1
+module-user-management,module-user-management::service-sadad-notification,SADAD Notification,913,1
+module-user-management,module-user-management::service-search-user-subscriptions,Search User Subscriptions,894,1
+module-user-management,module-user-management::service-search-users-subscription-using-unified-number,Search Users Subscription Using Unified Number,924,1
+module-user-management,module-user-management::service-subscribe-user-to-establishments,Subscribe User to Establishments,914,1
+module-user-management,module-user-management::service-terminate-expired-user-subscriptions,Terminate Expired User Subscriptions,918,1
+module-user-management,module-user-management::service-terminate-or-transfer-subscription-when-change-establishment-type,Terminate or Transfer Subscription When Change Establishment Type,911,1
+module-user-management,module-user-management::service-terminate-subscription-for-excluded-activities,Terminate Subscription for Excluded Activities,912,1
+module-user-management,module-user-management::service-terminate-subscriptions-when-transfer-ownership-individual,Terminate Subscriptions when Transfer Ownership Individual,910,1
+module-user-management,module-user-management::service-update-or-confirm-mobile-number,Update Or Confirm Mobile Number,898,1
+module-user-management,module-user-management::service-update-or-terminate-user-subscription,Update Or Terminate User Subscription,920,1
+module-user-management,module-user-management::service-update-user-information,Update User Information,899,1
+module-user-management,module-user-management::service-validate-mobile-number,Validate Mobile Number,900,1
+module-utilities,module-utilities::service-lo-createcompliancecertificate,LO - CreateComplianceCertificate,839,1
+module-visa,module-visa::service-add-governmental-endorsement-agent,Add Governmental Endorsement Agent,352,1
+module-visa,module-visa::service-approve-reject-seasonal-endorsement,Approve Reject Seasonal Endorsement,354,1
+module-visa,module-visa::service-approve-reject-seasonal-endorsement-by-committee,Approve Reject Seasonal Endorsement by Committee,336,1
+module-visa,module-visa::service-approve-reject-seasonal-endorsement-by-hrsd,Approve Reject Seasonal Endorsement by HRSD,338,1
+module-visa,module-visa::service-calculate-available-visas,Calculate Available Visas,367,1
+module-visa,module-visa::service-calculate-balance-amount,Calculate Balance Amount,326,1
+module-visa,module-visa::service-calculate-establishment-quota,Calculate Establishment Quota,358,1
+module-visa,module-visa::service-calculate-seasonal-endorsement-balance,Calculate Seasonal Endorsement Balance,340,1
+module-visa,module-visa::service-calculate-total-endorsements-balance,Calculate Total Endorsements Balance,341,1
+module-visa,module-visa::service-calculate-visit-visa-balance,Calculate Visit Visa Balance,317,1
+module-visa,module-visa::service-cancel-seasonal-endorsement,Cancel Seasonal Endorsement,343,1
+module-visa,module-visa::service-cancel-visit-visa-package,Cancel Visit Visa Package,328,1
+module-visa,module-visa::service-check-and-return-absher-amount,Check And Return Absher Amount,348,1
+module-visa,module-visa::service-check-establishment-seasonal-visa-eligibility,Check Establishment Seasonal Visa Eligibility,347,1
+module-visa,module-visa::service-check-final-exit-re-entry-visas-requests,Check Final Exit Re-Entry Visas Requests,672,1
+module-visa,module-visa::service-check-laborer-and-unified-number-mlsd,Check Laborer And Unified Number MLSD,678,1
+module-visa,module-visa::service-check-seasonal-endorsement-establishment-eligibility-odm,Check Seasonal Endorsement Establishment Eligibility ODM,333,1
+module-visa,module-visa::service-check-update-inspection-visit-date,Check Update Inspection Visit Date,393,1
+module-visa,module-visa::service-check-visit-visa-package-payments,Check Visit Visa Package Payments,330,1
+module-visa,module-visa::service-create-update-seasonal-visa-draft,Create Update Seasonal Visa Draft,351,1
+module-visa,module-visa::service-establishing-visa-schedulers,Establishing Visa - Schedulers,380,1
+module-visa,module-visa::service-get-economic-activity-tiers,Get Economic Activity Tiers,368,1
+module-visa,module-visa::service-get-endorsement-stakeholders-information,Get Endorsement Stakeholders Information,331,1
+module-visa,module-visa::service-get-establishing-balance-details,Get Establishing Balance Details,377,1
+module-visa,module-visa::service-get-establishment-allowance-period,Get Establishment Allowance Period,369,1
+module-visa,module-visa::service-get-establishment-requested-balances-details,Get Establishment Requested Balances Details,360,1
+module-visa,module-visa::service-get-exceptional-establishment-balances-details,Get Exceptional Establishment Balances Details,364,1
+module-visa,module-visa::service-get-final-exit-re-entry-visas-list,Get Final Exit Re-Entry Visas List,673,1
+module-visa,module-visa::service-get-final-exit-re-entry-visas-requests-nic,Get Final Exit Re-Entry Visas Requests NIC,670,1
+module-visa,module-visa::service-get-government-sectors-list,Get Government Sectors List,350,1
+module-visa,module-visa::service-get-laborers-names-and-establishments,Get Laborers Names And Establishments,671,1
+module-visa,module-visa::service-get-last-active-tier-address,Get Last Active Tier Address,375,1
+module-visa,module-visa::service-get-person-details-for-endorsement,Get Person Details For Endorsement,332,1
+module-visa,module-visa::service-get-seasonal-establishment-location,Get Seasonal Establishment Location,342,1
+module-visa,module-visa::service-get-tier-invoice-details,Get Tier Invoice Details,376,1
+module-visa,module-visa::service-get-visit-visa-packages-odm,Get Visit Visa Packages ODM,318,1
+module-visa,module-visa::service-get-visit-visa-refundable-packages,Get Visit Visa Refundable Packages,319,1
+module-visa,module-visa::service-getestablishmeninspectionvisitslist,GetEstablishmenInspectionVisitsList,394,1
+module-visa,module-visa::service-issue-establishing-visas,Issue Establishing Visas,373,1
+module-visa,module-visa::service-issue-investor-visa,Issue Investor Visa,382,1
+module-visa,module-visa::service-manage-embassies-through-mofa,Manage Embassies Through MOFA,849,1
+module-visa,module-visa::service-manage-nationalities-through-mofa,Manage Nationalities Through MOFA,848,1
+module-visa,module-visa::service-mofa-services,MOFA - Services,846,1
+module-visa,module-visa::service-refund-establishing-visa-tier,Refund Establishing Visa Tier,372,1
+module-visa,module-visa::service-refund-expansion-exceptional-balance,Refund Expansion Exceptional Balance,363,1
+module-visa,module-visa::service-refund-visit-visa-package,Refund Visit Visa Package,321,1
+module-visa,module-visa::service-reject-objection-requests-scheduler,Reject Objection Requests (Scheduler),677,1
+module-visa,module-visa::service-request-establishing-visas-balance,Request Establishing Visas Balance,370,1
+module-visa,module-visa::service-request-expansion-exceptional-balance,Request Expansion Exceptional Balance,361,1
+module-visa,module-visa::service-request-visit-visa-package,Request Visit Visa Package,320,1
+module-visa,module-visa::service-search-available-sub-documents,Search Available Sub Documents,851,1
+module-visa,module-visa::service-search-establishing-visas,Search Establishing Visas,378,1
+module-visa,module-visa::service-search-expansion-visa-requests,Search Expansion Visa Requests,365,1
+module-visa,module-visa::service-search-investor-visa-request,Search Investor Visa Request,384,1
+module-visa,module-visa::service-search-objections-requests,Search Objections Requests,676,1
+module-visa,module-visa::service-search-seasonal-endorsement-request,Search Seasonal Endorsement Request,339,1
+module-visa,module-visa::service-search-seasonal-visa-requests,Search Seasonal Visa Requests,346,1
+module-visa,module-visa::service-search-visit-visa-packages,Search Visit Visa Packages,322,1
+module-visa,module-visa::service-search-visit-visa-requests,Search Visit Visa Requests,323,1
+module-visa,module-visa::service-seasonal-visa-schedulers,Seasonal Visa - Schedulers,349,1
+module-visa,module-visa::service-send-compliance-score-email-notifications,Send Compliance Score Email Notifications,381,1
+module-visa,module-visa::service-submit-expansion-visa-request,Submit Expansion Visa Request,357,1
+module-visa,module-visa::service-submit-expansion-visa-request-mlsd,Submit Expansion Visa Request MLSD,359,1
+module-visa,module-visa::service-submit-objection-request,Submit Objection Request,675,1
+module-visa,module-visa::service-submit-seasonal-endorsement,Submit Seasonal Endorsement,335,1
+module-visa,module-visa::service-submit-seasonal-visa-request,Submit Seasonal Visa Request.,344,1
+module-visa,module-visa::service-submit-visa-document-mofa,Submit Visa Document MOFA,850,1
+module-visa,module-visa::service-submit-visit-visa-request,Submit Visit Visa Request,327,1
+module-visa,module-visa::service-terminate-establishing-period,Terminate Establishing Period,374,1
+module-visa,module-visa::service-update-check-visit-result-details,Update Check Visit Result Details,390,1
+module-visa,module-visa::service-update-governmental-endorsement-agent-details,Update Governmental Endorsement Agent Details,353,1
+module-visa,module-visa::service-update-inspection-visit-date-by-owner,Update Inspection Visit Date By Owner,392,1
+module-visa,module-visa::service-update-inspector-visit-details-check,Update Inspector Visit Details_CHECK,391,1
+module-visa,module-visa::service-update-seasonal-endorsement-agent-request,Update Seasonal Endorsement Agent Request,337,1
+module-visa,module-visa::service-update-subdocument-status-through-mofa,Update SubDocument  Status Through MOFA,847,1
+module-visa,module-visa::service-update-visa-details-mofa,Update Visa Details MOFA,852,1
+module-visa,module-visa::service-validate-employee-eligibility-final-exit,Validate Employee Eligibility Final Exit,681,1
+module-visa,module-visa::service-validate-employee-eligibility-reentry,Validate Employee Eligibility Reentry,679,1
+module-visa,module-visa::service-validate-employer-eligibility-final-exit,Validate Employer Eligibility Final Exit,680,1
+module-visa,module-visa::service-validate-establishing-visas-eligibility-odm,Validate Establishing Visas Eligibility ODM,371,1
+module-visa,module-visa::service-validate-establishment-seasonal-endorsement,Validate Establishment Seasonal Endorsement,334,1
+module-visa,module-visa::service-validate-establishment-termination-eligibility,Validate Establishment Termination Eligibility,379,1
+module-visa,module-visa::service-validate-exceptional-balance-request,Validate Exceptional Balance Request,362,1
+module-visa,module-visa::service-validate-expansion-visa-eligibility-odm,Validate Expansion Visa Eligibility ODM,355,1
+module-visa,module-visa::service-validate-expansion-visa-request,Validate Expansion Visa Request,356,1
+module-visa,module-visa::service-validate-investor-visa-issuance,Validate Investor Visa Issuance,383,1
+module-visa,module-visa::service-validate-issue-establishing-visas,Validate Issue Establishing Visas,366,1
+module-visa,module-visa::service-validate-objection-request,Validate Objection Request,674,1
+module-visa,module-visa::service-validate-seasonal-visa-request,Validate Seasonal Visa Request,345,1
+module-visa,module-visa::service-validate-visit-visa-eligibility-odm,Validate Visit Visa Eligibility ODM,324,1
+module-visa,module-visa::service-validate-visit-visa-request,Validate Visit Visa Request,325,1
+module-visa,module-visa::service-visit-visa-schedulers,Visit Visa - schedulers,329,1
+module-wage-protection,module-wage-protection::service-wps-integrated-control-document-icd,WPS - Integrated control Document (ICD),780,1
+module-wage-protection,module-wage-protection::service-wps-interface-service-document-isd,WPS - Interface Service Document (ISD),781,1
+module-work-in-saudi,module-work-in-saudi::service-work-in-saudi-schedulers,Work in Saudi - Schedulers,952,1
+module-work-permit,module-work-permit::service-billing-push-notifications-retrial,Billing Push Notifications Retrial,446,1
+module-work-permit,module-work-permit::service-calculate-delayed-fees-subflow,Calculate Delayed Fees (Subflow),408,1
+module-work-permit,module-work-permit::service-calculate-establishment-debt,Calculate Establishment Debt,422,1
+module-work-permit,module-work-permit::service-calculate-last-delay-date-subflow,Calculate Last Delay Date (Subflow),405,1
+module-work-permit,module-work-permit::service-calculate-work-permit-fees,Calculate Work Permit Fees,410,1
+module-work-permit,module-work-permit::service-cancel-pending-wp-and-update-debt,Cancel Pending WP And Update Debt,416,1
+module-work-permit,module-work-permit::service-cancel-work-permit-request,Cancel Work Permit Request,413,1
+module-work-permit,module-work-permit::service-check-and-update-laborer-max-wp-details,Check And Update Laborer Max WP Details,439,1
+module-work-permit,module-work-permit::service-check-laborer-debt,Check Laborer Debt,420,1
+module-work-permit,module-work-permit::service-check-wp-status-scheduler,Check WP Status Scheduler,434,1
+module-work-permit,module-work-permit::service-close-under-processing-wp-requests-currently-db-job,Close Under Processing WP Requests ( currently DB job ),438,1
+module-work-permit,module-work-permit::service-create-and-update-scheduled-wp-invoices,Create and Update Scheduled WP Invoices,447,1
+module-work-permit,module-work-permit::service-create-barmawi-work-permit-requests,Create Barmawi Work Permit Requests,437,1
+module-work-permit,module-work-permit::service-create-billing-number,Create Billing Number,428,1
+module-work-permit,module-work-permit::service-create-premium-residency-wp-requests,Create Premium Residency WP Requests,436,1
+module-work-permit,module-work-permit::service-create-update-sadad-bill,Create Update Sadad Bill,425,1
+module-work-permit,module-work-permit::service-fawtarah-bill-debt-retrial,Fawtarah Bill Debt Retrial,445,1
+module-work-permit,module-work-permit::service-fawtarah-wp-notification-retrial,Fawtarah WP Notification Retrial,444,1
+module-work-permit,module-work-permit::service-generate-establishment-debt,Generate Establishment Debt,440,1
+module-work-permit,module-work-permit::service-get-establishment-debt,Get Establishment Debt,424,1
+module-work-permit,module-work-permit::service-get-expired-work-permits-hrsd,Get Expired Work Permits - HRSD,453,1
+module-work-permit,module-work-permit::service-get-expired-wp-laborers-details,Get Expired WP Laborers Details,403,1
+module-work-permit,module-work-permit::service-get-final-exit-debt,Get Final Exit Debt,423,1
+module-work-permit,module-work-permit::service-get-premium-residency-wp-requests,Get Premium Residency WP Requests,415,1
+module-work-permit,module-work-permit::service-get-scheduled-work-permit-invoices,Get Scheduled Work Permit Invoices,433,1
+module-work-permit,module-work-permit::service-get-unified-number-work-permit,Get Unified Number Work Permit,419,1
+module-work-permit,module-work-permit::service-get-work-permit-all-data,Get Work Permit All Data,409,1
+module-work-permit,module-work-permit::service-get-work-permit-debts-counts-hrsd,Get Work Permit Debts Counts - HRSD,454,1
+module-work-permit,module-work-permit::service-get-work-permit-exemptions,Get Work Permit Exemptions,407,1
+module-work-permit,module-work-permit::service-get-work-permit-invoice-data-hrsd,Get Work Permit Invoice Data - HRSD,455,1
+module-work-permit,module-work-permit::service-get-work-permit-invoice-details,Get Work Permit Invoice Details,414,1
+module-work-permit,module-work-permit::service-get-work-permit-laborer-list,Get Work Permit Laborer list,404,1
+module-work-permit,module-work-permit::service-get-work-permit-request-details-hrsd,Get Work Permit Request Details - HRSD,452,1
+module-work-permit,module-work-permit::service-get-work-permit-requests-hrsd,Get Work Permit Requests - HRSD,451,1
+module-work-permit,module-work-permit::service-get-wp-final-exit-debts-hrsd,Get WP Final Exit Debts - HRSD,456,1
+module-work-permit,module-work-permit::service-notify-billing-system-for-wp,Notify Billing System For WP,443,1
+module-work-permit,module-work-permit::service-public-work-permit-calculator,Public Work Permit Calculator,417,1
+module-work-permit,module-work-permit::service-push-billing-cancelled-notification,Push Billing Cancelled Notification,431,1
+module-work-permit,module-work-permit::service-push-billing-confirmed-notifications,Push Billing Confirmed Notifications,430,1
+module-work-permit,module-work-permit::service-push-billing-execution-notification,Push Billing Execution Notification,432,1
+module-work-permit,module-work-permit::service-push-sadad-payment-notification,Push Sadad Payment Notification,426,1
+module-work-permit,module-work-permit::service-search-work-permit-details,Search Work Permit Details,412,1
+module-work-permit,module-work-permit::service-submit-absent-request,Submit Absent Request,450,1
+module-work-permit,module-work-permit::service-submit-exceptional-work-permit-request,Submit Exceptional Work Permit Request,418,1
+module-work-permit,module-work-permit::service-submit-scheduled-wp-to-nic,Submit Scheduled WP To NIC,449,1
+module-work-permit,module-work-permit::service-submit-work-permit-request,Submit Work Permit Request,411,1
+module-work-permit,module-work-permit::service-submit-work-permit-to-nic,Submit Work Permit To NIC,435,1
+module-work-permit,module-work-permit::service-update-billing-sadad-number,Update Billing Sadad Number,429,1
+module-work-permit,module-work-permit::service-update-expired-sadad-payment,Update Expired Sadad Payment,441,1
+module-work-permit,module-work-permit::service-update-paid-sadad-payment,Update Paid Sadad Payment,427,1
+module-work-permit,module-work-permit::service-update-sadad-payment-notification,Update Sadad Payment Notification,442,1
+module-work-permit,module-work-permit::service-update-scheduled-wp-status,Update Scheduled WP Status,448,1
+module-work-permit,module-work-permit::service-validate-establishment-eligibility-work-permit,Validate Establishment Eligibility Work Permit,402,1
+module-work-permit,module-work-permit::service-validate-establishment-laborer-debt,Validate Establishment Laborer Debt,421,1
+module-work-permit,module-work-permit::service-validate-laborer-eligibility-work-permit,Validate Laborer Eligibility Work Permit,406,1
+module-work-policies,module-work-policies::service-polices-integration-specific-document,Polices _ Integration Specific Document,663,1

@@ -1,0 +1,33 @@
+module_key,module_name,source_row_count
+module-capptions,Capptions,5
+module-certifcates,Certifcates,8
+module-certificates,Certificates,10
+module-commmon,Commmon,6
+module-common,Common,116
+module-contracts,Contracts,171
+module-data-portal,Data Portal,2
+module-deceased-employee-entitlement,Deceased Employee Entitlement,2
+module-employee-transfer,Employee Transfer,50
+module-end-of-service-reward,End Of Service Reward,2
+module-establishment,Establishment,142
+module-external-entities-management,External_Entities_Management,2
+module-gosi,GOSI,1
+module-government-sectors,Government Sectors,7
+module-individual-profile,Individual Profile,5
+module-labor-offices,Labor Offices,91
+module-lmh,LMH,5
+module-nic,NIC,3
+module-nic-services,NIC Services,21
+module-nitaqat,Nitaqat,5
+module-occupations,Occupations,44
+module-payments,Payments,48
+module-services,Services,3
+module-termination-for-absence-expat-laborer,Termination for Absence Expat Laborer ✂️,2
+module-training-indicators,Training Indicators,7
+module-user-management,User Management,42
+module-utilities,Utilities,1
+module-visa,Visa,92
+module-wage-protection,Wage Protection,2
+module-work-in-saudi,Work in Saudi,1
+module-work-permit,Work Permit,55
+module-work-policies,Work Policies,1

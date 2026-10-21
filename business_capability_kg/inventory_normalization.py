@@ -24,6 +24,7 @@ EXPECTED_COLUMNS = ["Module", "Module Codex(Sub Module)", "Service", "ICD", "ISD
 PILOT_MODULE = "Common"
 SCHEMA_VERSION = "capability-kg-015a-v1"
 TASK019A_SCHEMA_VERSION = "phase6-task019a-consolidation-v1"
+TASK019B_SCHEMA_VERSION = "phase6-task019b-all-modules-v1"
 ACCEPTED_COUNTS = {
     "pilot_source_rows": 116,
     "services": 116,
@@ -33,6 +34,8 @@ BASELINE_INDEX_ROOT = Path("indexes/capability_kg/015a")
 TASK019A_INDEX_ROOT = Path("indexes/phase6/task019/019a")
 BASELINE_OUTPUT_ROOT = Path("outputs/capability_kg/015a")
 TASK019A_OUTPUT_ROOT = Path("outputs/phase6/task019/019a")
+TASK019B_INDEX_ROOT = Path("indexes/phase6/task019/019b")
+TASK019B_OUTPUT_ROOT = Path("outputs/phase6/task019/019b")
 CSV_FIELDS = {
     "modules.csv": ["module_key", "module_name", "source_row_count"],
     "services.csv": [
@@ -53,6 +56,18 @@ CSV_FIELDS = {
         "original_reference_pointer",
     ],
 }
+MODULE_COVERAGE_FIELDS = [
+    "module_key",
+    "module_name",
+    "source_row_count",
+    "service_count",
+    "icd_reference_occurrence_count",
+    "isd_reference_occurrence_count",
+    "total_reference_occurrence_count",
+    "unique_document_count",
+    "zero_document_service_count",
+    "exception_count",
+]
 
 
 def _sha256(data: bytes) -> str:
@@ -152,7 +167,7 @@ def _read_source(source: Path, pilot_module: str | None) -> tuple[str, list[dict
         for row_number, row in enumerate(reader, start=2):
             if None in row:
                 raise ValueError(f"Row {row_number} has more fields than the header")
-            if pilot_module is None or row["Module"].strip() == pilot_module:
+            if pilot_module is None or row["Module"] == pilot_module:
                 rows.append({**row, "_source_row_number": str(row_number)})
     return source_hash, rows
 
@@ -162,11 +177,11 @@ def _normalize(source: Path, pilot_module: str | None = PILOT_MODULE) -> dict[st
     if pilot_module is not None and not raw_rows:
         raise ValueError(f"Pilot module {pilot_module!r} has no source rows")
 
-    module_displays = [row["Module"].strip() for row in raw_rows]
+    module_displays = [row["Module"] for row in raw_rows]
     module_keys, module_collisions = _collision_keys(module_displays, "module")
     service_values_by_module: dict[str, list[str]] = defaultdict(list)
     for row in raw_rows:
-        service_values_by_module[row["Module"].strip()].append(row["Service"].strip())
+        service_values_by_module[row["Module"]].append(row["Service"].strip())
     service_keys: dict[tuple[str, str], str] = {}
     service_collisions: set[tuple[str, str]] = set()
     for module_name, services in service_values_by_module.items():
@@ -182,7 +197,7 @@ def _normalize(source: Path, pilot_module: str | None = PILOT_MODULE) -> dict[st
     source_rows: list[dict[str, object]] = []
     for row in raw_rows:
         row_number = int(row["_source_row_number"])
-        module_name, service_name = row["Module"].strip(), row["Service"].strip()
+        module_name, service_name = row["Module"], row["Service"].strip()
         module_key = module_keys[module_name]
         service_key = service_keys[(module_name, service_name)]
         service_rows[(module_name, service_name)].append(row_number)
@@ -232,7 +247,7 @@ def _normalize(source: Path, pilot_module: str | None = PILOT_MODULE) -> dict[st
     nonempty_before = rejected = 0
     for row in raw_rows:
         row_number = int(row["_source_row_number"])
-        module_name, service_name = row["Module"].strip(), row["Service"].strip()
+        module_name, service_name = row["Module"], row["Service"].strip()
         service_key = service_keys[(module_name, service_name)]
         for ref_type in ("ICD", "ISD"):
             cell = row[ref_type]
@@ -397,6 +412,225 @@ def build_common_inventory(
     (output_dir / "validation_summary.md").write_bytes(summary)
     (output_dir / "manifest.json").write_bytes(manifest_bytes)
     return {**first, "manifest": manifest, "deterministic": deterministic}
+
+
+def _common_projection(normalized: dict[str, object]) -> dict[str, list[dict[str, object]]]:
+    tables = normalized["tables"]
+    modules = [row for row in tables["modules.csv"] if row["module_name"] == PILOT_MODULE]
+    if len(modules) != 1:
+        raise ValueError(f"COMMON_BASELINE_REGRESSION: expected one Common module, found {len(modules)}")
+    module_key = modules[0]["module_key"]
+    services = [row for row in tables["services.csv"] if row["module_key"] == module_key]
+    edges = [row for row in tables["service_document_edges.csv"] if row["module_key"] == module_key]
+    source_rows = [row for row in tables["source_rows.csv"] if row["module_key"] == module_key]
+    source_row_numbers = {int(row["source_row_number"]) for row in source_rows}
+    exceptions = [
+        row for row in tables["exceptions.csv"] if int(row["source_row_number"]) in source_row_numbers
+    ]
+    document_keys = {row["document_key"] for row in edges}
+    documents = [row for row in tables["documents.csv"] if row["document_key"] in document_keys]
+    return {
+        "modules.csv": modules,
+        "services.csv": services,
+        "documents.csv": documents,
+        "service_document_edges.csv": edges,
+        "source_rows.csv": source_rows,
+        "exceptions.csv": exceptions,
+    }
+
+
+def _validate_common_regression(normalized: dict[str, object], repo_root: Path) -> dict[str, object]:
+    projection = _common_projection(normalized)
+    baseline_manifest_path = repo_root / BASELINE_OUTPUT_ROOT / "manifest.json"
+    baseline_manifest = json.loads(baseline_manifest_path.read_text(encoding="utf-8"))
+    file_results = {}
+    for name, fields in CSV_FIELDS.items():
+        baseline_relative = BASELINE_INDEX_ROOT / name
+        baseline_bytes = (repo_root / baseline_relative).read_bytes()
+        expected_hash = baseline_manifest["outputs"].get(baseline_relative.as_posix())
+        if _sha256(baseline_bytes) != expected_hash:
+            raise ValueError(f"COMMON_BASELINE_REGRESSION: historical baseline hash changed for {name}")
+        projected_bytes = _csv_bytes(projection[name], fields)
+        if projected_bytes != baseline_bytes:
+            raise ValueError(f"COMMON_BASELINE_REGRESSION: normalized mapping differs for {name}")
+        file_results[name] = {
+            "baseline_sha256": expected_hash,
+            "projected_sha256": _sha256(projected_bytes),
+            "byte_equal": True,
+        }
+    counts = {
+        "source_rows": len(projection["source_rows.csv"]),
+        "services": len(projection["services.csv"]),
+        "reference_occurrences": len(projection["service_document_edges.csv"]),
+    }
+    expected_counts = {"source_rows": 116, "services": 116, "reference_occurrences": 225}
+    if counts != expected_counts:
+        raise ValueError(f"COMMON_BASELINE_REGRESSION: counts {counts!r} differ from {expected_counts!r}")
+    return {"status": "PASS", "counts": counts, "files": file_results}
+
+
+def _module_coverage(normalized: dict[str, object]) -> list[dict[str, object]]:
+    tables = normalized["tables"]
+    services_by_module: dict[str, list[dict[str, object]]] = defaultdict(list)
+    edges_by_module: dict[str, list[dict[str, object]]] = defaultdict(list)
+    module_by_source_row = {
+        int(row["source_row_number"]): row["module_key"] for row in tables["source_rows.csv"]
+    }
+    exceptions_by_module: Counter[str] = Counter()
+    for row in tables["services.csv"]:
+        services_by_module[str(row["module_key"])].append(row)
+    for row in tables["service_document_edges.csv"]:
+        edges_by_module[str(row["module_key"])].append(row)
+    for row in tables["exceptions.csv"]:
+        exceptions_by_module[module_by_source_row[int(row["source_row_number"])]] += 1
+
+    coverage = []
+    for module in tables["modules.csv"]:
+        module_key = str(module["module_key"])
+        services = services_by_module[module_key]
+        edges = edges_by_module[module_key]
+        services_with_documents = {str(row["service_key"]) for row in edges}
+        type_counts = Counter(str(row["type"]) for row in edges)
+        coverage.append({
+            "module_key": module_key,
+            "module_name": module["module_name"],
+            "source_row_count": module["source_row_count"],
+            "service_count": len(services),
+            "icd_reference_occurrence_count": type_counts["ICD"],
+            "isd_reference_occurrence_count": type_counts["ISD"],
+            "total_reference_occurrence_count": len(edges),
+            "unique_document_count": len({str(row["document_key"]) for row in edges}),
+            "zero_document_service_count": sum(
+                str(service["service_key"]) not in services_with_documents for service in services
+            ),
+            "exception_count": exceptions_by_module[module_key],
+        })
+    return sorted(coverage, key=lambda row: str(row["module_key"]))
+
+
+def build_all_modules_inventory(
+    repo_root: Path,
+    source: Path | None = None,
+    index_dir: Path | None = None,
+    output_dir: Path | None = None,
+) -> dict[str, object]:
+    """Normalize every source row and literal Module for Task 019-B."""
+    repo_root = repo_root.resolve()
+    source = (source or repo_root / "outputs/services_icd_isd_inventory.csv").resolve()
+    index_dir = (index_dir or repo_root / TASK019B_INDEX_ROOT).resolve()
+    output_dir = (output_dir or repo_root / TASK019B_OUTPUT_ROOT).resolve()
+    normalized = _normalize(source, pilot_module=None)
+    rendered = _render_tables(normalized)
+    coverage = _module_coverage(normalized)
+    rendered["module_coverage.csv"] = _csv_bytes(coverage, MODULE_COVERAGE_FIELDS)
+    common_regression = _validate_common_regression(normalized, repo_root)
+
+    tables = normalized["tables"]
+    edges = tables["service_document_edges.csv"]
+    edge_types = Counter(str(row["type"]) for row in edges)
+    services_with_documents = {str(row["service_key"]) for row in edges}
+    exception_types = Counter(str(row["exception_type"]) for row in tables["exceptions.csv"])
+    counts = {
+        "source_data_rows": len(tables["source_rows.csv"]),
+        "processed_source_rows": len(tables["source_rows.csv"]),
+        "modules": len(tables["modules.csv"]),
+        "services": len(tables["services.csv"]),
+        "documents": len(tables["documents.csv"]),
+        "source_reference_occurrences": normalized["counts"]["reference_occurrences_before_normalization"],
+        "accepted_reference_occurrences": normalized["counts"]["accepted_reference_occurrences"],
+        "rejected_reference_occurrences": normalized["counts"]["rejected_reference_occurrences"],
+        "icd_reference_occurrences": edge_types["ICD"],
+        "isd_reference_occurrences": edge_types["ISD"],
+        "zero_document_services": sum(
+            str(row["service_key"]) not in services_with_documents for row in tables["services.csv"]
+        ),
+        "exceptions": len(tables["exceptions.csv"]),
+        "blank_reference": exception_types["blank_reference"],
+        "invalid_reference_format": exception_types["invalid_reference_format"],
+        "duplicate_reference_occurrence": exception_types["duplicate_reference_occurrence"],
+        "identity_collision": exception_types["identity_collision"],
+    }
+    reference_closure = (
+        counts["source_reference_occurrences"] ==
+        counts["accepted_reference_occurrences"] + counts["rejected_reference_occurrences"]
+    )
+    module_coverage_closure = (
+        sum(int(row["source_row_count"]) for row in coverage) == counts["processed_source_rows"] and
+        sum(int(row["service_count"]) for row in coverage) == counts["services"] and
+        sum(int(row["total_reference_occurrence_count"]) for row in coverage) ==
+        counts["accepted_reference_occurrences"]
+    )
+    if not reference_closure or not module_coverage_closure:
+        raise AssertionError("Task 019-B coverage reconciliation failed")
+
+    summary = (
+        "# Phase 6 Task 019-B validation summary\n\n"
+        "- Scope: all literal Modules and all source rows; Sub Module excluded from the working model.\n"
+        f"- Input SHA-256: `{normalized['source_hash']}`.\n"
+        f"- Coverage: {counts['processed_source_rows']}/{counts['source_data_rows']} rows; "
+        f"{counts['modules']} modules; {counts['services']} module-scoped services.\n"
+        f"- References: {counts['icd_reference_occurrences']} ICD + "
+        f"{counts['isd_reference_occurrences']} ISD = {counts['source_reference_occurrences']} source occurrences; "
+        f"{counts['accepted_reference_occurrences']} accepted + "
+        f"{counts['rejected_reference_occurrences']} rejected.\n"
+        f"- Documents: {counts['documents']} unique typed identities; "
+        f"zero-document services: {counts['zero_document_services']}.\n"
+        f"- Exceptions: {counts['exceptions']} (blank {counts['blank_reference']}; "
+        f"invalid {counts['invalid_reference_format']}; duplicate occurrence "
+        f"{counts['duplicate_reference_occurrence']}; identity collision {counts['identity_collision']}).\n"
+        "- Common regression: PASS; 116 source rows, 116 services, 225 occurrences, "
+        "and all six normalized CSV projections byte-match the frozen baseline.\n"
+        "- Per-module coverage: `indexes/phase6/task019/019b/module_coverage.csv`.\n"
+        "- No documents were fetched and no semantic, API, graph, runtime, or product inference was made.\n"
+        "- Next gate: `EA_REVIEW_TASK019B`.\n"
+    ).encode("utf-8")
+    output_hashes = {
+        (TASK019B_INDEX_ROOT / name).as_posix(): _sha256(content) for name, content in rendered.items()
+    }
+    output_hashes[(TASK019B_OUTPUT_ROOT / "validation_summary.md").as_posix()] = _sha256(summary)
+    manifest = {
+        "schema_version": TASK019B_SCHEMA_VERSION,
+        "parser_schema_version": SCHEMA_VERSION,
+        "task": "Phase 6 / Task 019-B",
+        "status": "EA_REVIEW_TASK019B",
+        "scope": {
+            "all_modules": True,
+            "pilot_filter": None,
+            "sub_module_used_for_identity_or_grouping": False,
+        },
+        "input": {
+            "path": "outputs/services_icd_isd_inventory.csv",
+            "sha256": normalized["source_hash"],
+            "committed": False,
+            "required_columns": EXPECTED_COLUMNS,
+            "parse_count": 1,
+        },
+        "counts": counts,
+        "exception_counts": dict(sorted(exception_types.items())),
+        "common_regression": common_regression,
+        "module_coverage_index": (TASK019B_INDEX_ROOT / "module_coverage.csv").as_posix(),
+        "validations": {
+            "full_row_coverage": counts["processed_source_rows"] == counts["source_data_rows"],
+            "all_literal_modules_represented": True,
+            "reference_closure": reference_closure,
+            "module_coverage_closure": module_coverage_closure,
+            "common_baseline_regression": True,
+            "deterministic_sorting": True,
+            "documents_fetched": False,
+            "network_required": False,
+            "semantic_work_performed": False,
+            "staging_scanned": False,
+        },
+        "outputs": output_hashes,
+    }
+    manifest_bytes = (json.dumps(manifest, indent=2, sort_keys=True) + "\n").encode("utf-8")
+    index_dir.mkdir(parents=True, exist_ok=True)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    for name, content in rendered.items():
+        (index_dir / name).write_bytes(content)
+    (output_dir / "validation_summary.md").write_bytes(summary)
+    (output_dir / "manifest.json").write_bytes(manifest_bytes)
+    return {**normalized, "coverage": coverage, "manifest": manifest, "summary": summary}
 
 
 def consolidate_accepted_baseline(

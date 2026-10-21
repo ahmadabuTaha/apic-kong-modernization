@@ -1,0 +1,108 @@
+{
+  "common_regression": {
+    "counts": {
+      "reference_occurrences": 225,
+      "services": 116,
+      "source_rows": 116
+    },
+    "files": {
+      "documents.csv": {
+        "baseline_sha256": "9601f84a11380d650a7355de1ccfc015ff9435a2aa3de3d37dec04ca9970d506",
+        "byte_equal": true,
+        "projected_sha256": "9601f84a11380d650a7355de1ccfc015ff9435a2aa3de3d37dec04ca9970d506"
+      },
+      "exceptions.csv": {
+        "baseline_sha256": "6ee630a67d693cb86376ecf92e53dcf54b4541a6eb06b5ff6f155763888a330b",
+        "byte_equal": true,
+        "projected_sha256": "6ee630a67d693cb86376ecf92e53dcf54b4541a6eb06b5ff6f155763888a330b"
+      },
+      "modules.csv": {
+        "baseline_sha256": "9c3b0fa9ed08db464892008b86cf9152186aa44961089b4ab16b683f8f3bb9fe",
+        "byte_equal": true,
+        "projected_sha256": "9c3b0fa9ed08db464892008b86cf9152186aa44961089b4ab16b683f8f3bb9fe"
+      },
+      "service_document_edges.csv": {
+        "baseline_sha256": "007b1917a28b4db7527451710263a0444273a07beb33eb4203ae0173b252769f",
+        "byte_equal": true,
+        "projected_sha256": "007b1917a28b4db7527451710263a0444273a07beb33eb4203ae0173b252769f"
+      },
+      "services.csv": {
+        "baseline_sha256": "94b50b242ab2e84e11ef38eebe4e237cd69a54d3b1ea945f0d4a6e1a04a767bc",
+        "byte_equal": true,
+        "projected_sha256": "94b50b242ab2e84e11ef38eebe4e237cd69a54d3b1ea945f0d4a6e1a04a767bc"
+      },
+      "source_rows.csv": {
+        "baseline_sha256": "e7bdc1ada43632838d9978d4ad34f737a4bafe34a5edaf8fbabc850bc5c2dfa8",
+        "byte_equal": true,
+        "projected_sha256": "e7bdc1ada43632838d9978d4ad34f737a4bafe34a5edaf8fbabc850bc5c2dfa8"
+      }
+    },
+    "status": "PASS"
+  },
+  "counts": {
+    "accepted_reference_occurrences": 1941,
+    "blank_reference": 182,
+    "documents": 1941,
+    "duplicate_reference_occurrence": 0,
+    "exceptions": 182,
+    "icd_reference_occurrences": 988,
+    "identity_collision": 0,
+    "invalid_reference_format": 0,
+    "isd_reference_occurrences": 953,
+    "modules": 32,
+    "processed_source_rows": 952,
+    "rejected_reference_occurrences": 0,
+    "services": 952,
+    "source_data_rows": 952,
+    "source_reference_occurrences": 1941,
+    "zero_document_services": 0
+  },
+  "exception_counts": {
+    "blank_reference": 182
+  },
+  "input": {
+    "committed": false,
+    "parse_count": 1,
+    "path": "outputs/services_icd_isd_inventory.csv",
+    "required_columns": [
+      "Module",
+      "Module Codex(Sub Module)",
+      "Service",
+      "ICD",
+      "ISD"
+    ],
+    "sha256": "5b1ea781534fbe595892263c69479b8ba01765a12486339be01b15d76b97cc9f"
+  },
+  "module_coverage_index": "indexes/phase6/task019/019b/module_coverage.csv",
+  "outputs": {
+    "indexes/phase6/task019/019b/documents.csv": "9a0b18d42b1256e755aaf2b99de0e31f1f0aa2b98c634481dcbedeb183b5c3d2",
+    "indexes/phase6/task019/019b/exceptions.csv": "22f91528a6e34dccd51bb803ccc0d4af64faaf7f46f9c1e1aaf725024c05976f",
+    "indexes/phase6/task019/019b/module_coverage.csv": "bb6160f8a6f976367ad343812b7580c6b08573e74bbf3000f516c3b50c99e781",
+    "indexes/phase6/task019/019b/modules.csv": "fc3ce14c71d0688ed85b6d3e8ca4a8af8bac5d1243004a5a816bf0117829823b",
+    "indexes/phase6/task019/019b/service_document_edges.csv": "68df12f647d07468d4970463af917e18e1d2211b22ce3be84a156e309d4e95c0",
+    "indexes/phase6/task019/019b/services.csv": "995080b479857468066ec429efa6277546d560dc86a522c3c43225b23a741781",
+    "indexes/phase6/task019/019b/source_rows.csv": "6e5a332ea12a53c209b931e25a20586b5d5ef192c3bca237744b65d7896262f1",
+    "outputs/phase6/task019/019b/validation_summary.md": "1edc96012e5a9db82f0518c3b5a1f1cc06d24dc4389903b5a860a90ec41308a7"
+  },
+  "parser_schema_version": "capability-kg-015a-v1",
+  "schema_version": "phase6-task019b-all-modules-v1",
+  "scope": {
+    "all_modules": true,
+    "pilot_filter": null,
+    "sub_module_used_for_identity_or_grouping": false
+  },
+  "status": "EA_REVIEW_TASK019B",
+  "task": "Phase 6 / Task 019-B",
+  "validations": {
+    "all_literal_modules_represented": true,
+    "common_baseline_regression": true,
+    "deterministic_sorting": true,
+    "documents_fetched": false,
+    "full_row_coverage": true,
+    "module_coverage_closure": true,
+    "network_required": false,
+    "reference_closure": true,
+    "semantic_work_performed": false,
+    "staging_scanned": false
+  }
+}

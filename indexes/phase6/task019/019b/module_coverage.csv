@@ -1,0 +1,33 @@
+module_key,module_name,source_row_count,service_count,icd_reference_occurrence_count,isd_reference_occurrence_count,total_reference_occurrence_count,unique_document_count,zero_document_service_count,exception_count
+module-capptions,Capptions,5,5,5,3,8,8,0,2
+module-certifcates,Certifcates,8,8,11,6,17,17,0,2
+module-certificates,Certificates,10,10,14,23,37,37,0,6
+module-commmon,Commmon,6,6,6,6,12,12,0,0
+module-common,Common,116,116,111,114,225,225,0,20
+module-contracts,Contracts,171,171,169,162,331,331,0,28
+module-data-portal,Data Portal,2,2,1,4,5,5,0,1
+module-deceased-employee-entitlement,Deceased Employee Entitlement,2,2,10,7,17,17,0,2
+module-employee-transfer,Employee Transfer,50,50,49,38,87,87,0,15
+module-end-of-service-reward,End Of Service Reward,2,2,2,2,4,4,0,2
+module-establishment,Establishment,142,142,149,124,273,273,0,29
+module-external-entities-management,External_Entities_Management,2,2,2,7,9,9,0,1
+module-gosi,GOSI,1,1,1,0,1,1,0,1
+module-government-sectors,Government Sectors,7,7,7,7,14,14,0,0
+module-individual-profile,Individual Profile,5,5,3,25,28,28,0,3
+module-labor-offices,Labor Offices,91,91,91,86,177,177,0,7
+module-lmh,LMH,5,5,6,4,10,10,0,1
+module-nic,NIC,3,3,3,2,5,5,0,1
+module-nic-services,NIC Services,21,21,16,21,37,37,0,5
+module-nitaqat,Nitaqat,5,5,5,5,10,10,0,0
+module-occupations,Occupations,44,44,45,43,88,88,0,2
+module-payments,Payments,48,48,48,36,84,84,0,14
+module-services,Services,3,3,3,3,6,6,0,1
+module-termination-for-absence-expat-laborer,Termination for Absence Expat Laborer ✂️,2,2,1,7,8,8,0,2
+module-training-indicators,Training Indicators,7,7,18,19,37,37,0,6
+module-user-management,User Management,42,42,47,41,88,88,0,1
+module-utilities,Utilities,1,1,1,1,2,2,0,0
+module-visa,Visa,92,92,94,87,181,181,0,11
+module-wage-protection,Wage Protection,2,2,8,8,16,16,0,2
+module-work-in-saudi,Work in Saudi,1,1,5,0,5,5,0,1
+module-work-permit,Work Permit,55,55,57,40,97,97,0,15
+module-work-policies,Work Policies,1,1,0,22,22,22,0,1
