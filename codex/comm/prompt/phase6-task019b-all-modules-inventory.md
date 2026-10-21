@@ -1,7 +1,7 @@
 # Phase 6 / Task 019-B — All-Modules ICD/ISD Inventory Normalization
 
-**Status:** PREPARED / PENDING — NOT AUTHORIZED FOR EXECUTION until Task 019-A is technically passed and EA accepts its checkpoint.
-**Stop gate once authorized:** `EA_REVIEW_TASK019B`
+**Status:** AUTHORIZED_FOR_CODEX — ALL MODULES, NOT COMMON-ONLY. EA directs expansion after Task 019-A technical PASS.
+**Stop gate:** `EA_REVIEW_TASK019B`
 
 ## Objective
 Extend the accepted Common pilot to **every literal Module** in the exact EA-supplied local file `outputs/services_icd_isd_inventory.csv`, using the frozen identity hierarchy:
@@ -12,12 +12,12 @@ Do not substitute `neo4j/csv/Qiwa_Modules_Services.csv`; the two inventories ser
 
 ## Preconditions — hard stop
 1. Read `AGENTS.md`, latest `codex/comm/CURRENT_TASKS.md`, and latest `codex/comm/HANSOFF.md`.
-2. **Do not execute** unless Task 019-A has an accepted handoff/EA authorization and the task is marked active in `CURRENT_TASKS.md`. If not, report `BLOCKED_PREVIOUS_CHECKPOINT_019A` without processing.
+2. Confirm Task 019-A technical PASS in latest HANSOFF and Task 019-B ACTIVE in CURRENT_TASKS. The EA has explicitly authorized all-module expansion in this turn. Do not treat the earlier Common-only pilot as a scope restriction for 019-B.
 3. Validate local exact source file presence, expected five CSV headers, source SHA-256 and accepted Common pilot baseline. Preserve input byte-for-byte; file is gitignored.
 4. Use Task 019-A's `business_capability_kg/` package and canonical namespaces; if missing, stop and explain, not recreate or bypass.
 
 ## Work — deterministic only
-- Apply the **existing accepted normalizer** over all literal Modules in the input, without sampling or semantic interpretation. Do not hardcode module count from the separate QIWA data source.
+- Apply the **existing accepted normalizer** over **ALL rows and ALL literal Modules** in the input, without sampling, Common-only filters or semantic interpretation. Common is a regression checkpoint only, **not** the output scope. Do not hardcode module count from the separate QIWA data source.
 - Preserve each input row including CSV row number, raw Module, raw Service, raw ICD/ISD cells, source SHA and separate reference occurrence order. Distinct Modules remain distinct even when service names are identical.
 - Parse ICD and ISD columns independently: split semicolon `;`, strip surrounding whitespace, preserve empty-cell/invalid-format cases in explicit diagnostics. 0..N documents per Service is valid. ICD-only schedulers and ISD-only collections must remain represented without inventing API/Job identities.
 - Deduplicate stable document *identities* when grounded by source reference/page ID, but preserve **all** occurrences and edges (including repeated document use by multiple services/modules).
