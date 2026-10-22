@@ -1,5 +1,31 @@
 # Codex Handoff
 
+## Current execution — Phase 6 / Task 019-E-R3 Contracts Main Capability → ICDs
+
+### Execution summary
+
+- Fast-forwarded `main` from `a1078c6` to authorization checkpoint `c134513`, reread `AGENTS.md`, `CURRENT_TASKS.md`, and the complete sole-active 019-E-R3 prompt, then executed only the literal `Contracts` Module.
+- Added `business_capability_kg.contracts_main_icd_mapping`, a bounded page-identity mapper that reuses R2's recovery validation, structured parser, sanitization, stable IDs and atomic output helpers. It reads every locally cached Contracts ICD body and emits direct Main Capability candidate→ICD links with service, occurrence, document, content-hash, source-version and block/character provenance.
+- No Business Function or Sub Capability entity or intermediary was produced. No network/Confluence request, catalog/cache mutation, old-stage replay, new parser/cache/database/framework, ISD body parsing, other Module, Canonical API/Operation matching, cross-module merge or Kong work occurred.
+
+### Results and evidence
+
+- Exact closure is **171 Services, 169 ICD occurrences and 169 unique ICD/page identities**. All **169/169** ICD bodies were integrity-read and parsed; all 169 identities have one direct evidence-backed Main candidate link. There are **10 Main candidates, 169 links and 0 unresolved ICDs**; page identity prevents duplicate coverage inflation.
+- Candidate distribution is: Contract Authentication and Compliance Monitoring 6; Contract External Authority Synchronization 12; Contract Reference Data Administration 11; Contract Template Management 9; Contract Validation and Eligibility Management 9; Contract Wage Management 15; Employment Contract Lifecycle Management 42; Employment Contract Termination Management 20; External Contract Lifecycle Management 9; Training Contract Lifecycle Management 36. These are candidates, not EA-approved boundaries.
+- Recovered Contracts page `6121750531` was explicitly validated and parsed from its **470,298-byte** blob, SHA-256 `6637b8bd1b1e12c731c106d30b7bc30fc122421a4e01fb4d0b19e5aff8591bdb`, source version `v:40`; no stale 198-byte placeholder was used. Its purpose evidence at `page:6121750531#b000040:5870-6115` supports Employment Contract Lifecycle Management.
+- `coverage_exceptions.csv` contains **19 explicit review rows**: 7 mapped source ambiguities and 12 ISD-only/no-ICD services. The mapped ambiguity pages are `5516591134` (admission journey does not name contract type), `6554517505` (`*IGNORE*` source title), `4837113943` (employment contracts created by external entities), `4461002753` and `4553605121` (Contract title versus “contact details” purpose wording), `6068469761` (`*OLD*` source title), and `4671242241` (no concise purpose/scope narrative; integration steps evidence GOSI resend). No retirement or runtime inference was made.
+- The 12 ISD-only/no-ICD services are `service-cancel-contract-request-old-design` / ISD `1159103579`; `service-create-contract-template-old-design` / `1159103479`; `service-delete-deactivate-contract-template-old-design` / `1159299974`; `service-get-contract-details-old-design` / `1159103864`; `service-get-contract-laborers-list-old-design` / `4271210561`; `service-get-contract-template-details-old-design` / `1173946473`; `service-get-contracts-list-old-design` / `1159103972`; `service-get-establishment-contract-templates-list-old-design` / `4103766262`; `service-get-individual-contracts-list-old-design` / `4056285185`; `service-get-sc-contract-details-old-design` / `4018208857`; `service-update-contract-template-details-old-design` / `1171816727`; and `service-validate-employment-contract-old-design` / `4404379649`. No ICD was invented for any of them.
+- Required outputs are exactly the three CSVs under `indexes/phase6/task019/019e_r3/` and `review_summary.md` under `outputs/phase6/task019/019e_r3/`. SHA-256 values: Main inventory `ffd5ecb690b9e0fdc01e9c6dfb1f8940ded344175c464e9781b9999df28e1a70`; links `9ad86fd4afb65dcb16720868da6c11f23ec23765468ace1c53a3f161bc282773`; exceptions `706ea8f8203b9e8e944c424442670d652af2cfa7b2a91b7d692bd2fb88abc81f`; review summary `2575d8b5b498ebd1a560a34702ba6859ba7c3ccbf43a6de83abab5c882d8b3c5`.
+- Repeated real-corpus builds were byte-identical. Focused validation passed exact source closure, referential integrity, evidence pointers, duplicate control, capability-name rules, recovered-page integrity, authorized-file-only scope and derived-output URL/credential-pattern checks. Recovery catalog SHA-256 remains `e975f22dd0c2b519086b3bd68b72ffc70467b205e6fff0a62c5361ba4fa13db8`.
+- Implementation commit: **`bc80ef5`** (`Map Contracts main capabilities to ICDs`). Generated source-derived outputs remain intentionally gitignored and local; implementation, tests and this required handoff are committed.
+
+### Tests, unresolved issues, and final status
+
+- Authorized focused regression: **11 passed** across the new Contracts mapper and reused Establishment R2 mapper. Coverage includes exact page closure, meaningful names, refusal of title-only evidence, stable narrative pointers, all-ICD and ISD-only closure, deterministic reruns, frozen-input protection, recovered page `6121750531`, and the exact four-artifact limit.
+- Python compilation and `git diff --check` passed. Per the explicit R3 prohibition, the full repository test suite was **not run**.
+- Unresolved ICD count is zero. Unresolved architecture decisions remain the 7 mapped source ambiguities, 12 ISD-only/no-ICD services, and all 10 Main candidate boundaries pending Enterprise Architect review.
+- Final status: **CANDIDATE_MAPPING_COMPLETE_WITH_REVIEW_EXCEPTIONS; STOP AT `EA_REVIEW_019E_R3`.** Do not begin another Module or any downstream task without explicit Enterprise Architect approval.
+
 ## Current execution — Phase 6 / Task 019-E-R2 Main Capability → ICD pilot
 
 ### Execution summary
