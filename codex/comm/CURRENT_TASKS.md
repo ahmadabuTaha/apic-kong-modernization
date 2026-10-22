@@ -1,20 +1,16 @@
 # CURRENT TASKS
 
-## ACTIVE TASK — Phase 6 / Task 019-E-FINAL
-**Title:** All Modules — Main Business Capability → ICD, then unpaired ISD
-**Status:** AUTHORIZED_FOR_CODEX — MODULE-BY-MODULE, COMPACT CHECKPOINTS
-**Sole execution prompt:** `codex/comm/prompt/phase6-task019e-final-main-capabilities.md`; follow ONLY this authorization. R1/R2/R3 remain historical pilots, not executable work.
-**Input:** Recovery effective catalog and cached ICD/ISD bodies. Reuse existing R2/R3 code; never refetch or mutate cache.
-**Per-Module order:** FIRST all active ICDs → Main Capabilities and direct ICD links; LAST inspect ISDs without evidenced ICD relationships individually using Service name, Introduction/Summary and meaningful Schema semantics → existing/new Main capabilities. No Business Functions/Sub Capabilities and no Canonical API matching yet.
-**EA decisions:** Contract lifecycles separate; Admission Journey in Compliance; externally-created contracts mapped by contract lifecycle; named GOSI/NIC/HRSD integration yields evidence-backed Integration Capability; OLD/NOT USED/IGNORE source designations excluded from active mapping but audited; Main names meaningful and no slash-joined labels; Logo/Notification allowed.
-**Coverage:** all 32 Modules reconciled one at a time, eligible/excluded/unresolved listed by exact source ID. Explicit gaps now, not discovered late. Incremental checkpoints; focused checks only. No full regression suite, re-acquisition, old-stage replay, unrelated infrastructure.
-**STOP:** `EA_REVIEW_019E_FINAL`. No API matching/consolidation/Kong or other downstream tasks without EA approval.
+## ACTIVE TASK — Phase 6 / Task 019-F
+**Title:** Cross-Module Enterprise Capability Consolidation — preserve Module [ICD + ISD] → Main → Enterprise
+**Status:** AUTHORIZED_FOR_CODEX — INDEX-ONLY CONSOLIDATION
+**Sole prompt:** `codex/comm/prompt/phase6-task019f-enterprise-capability-consolidation.md`. Execute ONLY 019-F; 019-E-FINAL is a provisionally accepted input, NOT work to rerun.
+**Input:** Existing `indexes/phase6/task019/019e_final/` six CSVs and existing summary only: 32 Modules, 136 Module-local Main Candidates, linked ICD/ISD sources, explicit exclusions and five unresolved document identities. No raw document or Confluence reads.
+**Output:** Enterprise Capability candidates plus auditable `Module → (ICD/ISD) → Module Main → Enterprise` lineage preserving original service/occurrence/source evidence and many-to-many links; full 136-Main closure, no automatic destructive merge, unresolved/ignored sources retained.
+**Prohibited:** No new acquisition, parsing, cache, legacy task replay, old index modification, API/Operation matching, Kong work, or full test suite. Focused tests only. Minimize token/resource usage.
+**STOP:** `EA_REVIEW_019F`. Do not start the next task without EA authorization.
 
-## PREVIOUS TASK — Phase 6 / Task 019-E-R3 (CONTRACTS CANDIDATE MAPPING COMPLETE; EA DIRECTIVES NOW CAPTURED)
-**Evidence:** latest `codex/comm/HANSOFF.md`, implementation commit `bc80ef5`. Contracts 169 ICDs linked to 10 Main candidates with 7 mapped ambiguities and 12 ISD-only/no-ICD services; interpret those with the EA resolutions and exclusion rule in 019-E-FINAL. Prior outputs remain untouched.
-
-## PREVIOUS TASK — Phase 6 / Task 019-E-R2 (ESTABLISHMENT CANDIDATE MAPPING COMPLETE; NOT AUTOMATICALLY APPROVED)
-**Evidence:** `codex/comm/HANSOFF.md`, commit `47d934a`. 149 ICDs mapped, 11 Main candidates and review exceptions. Re-evaluate under final naming/integration and ISD rules, preserve historical outputs.
+## PREVIOUS TASK — Phase 6 / Task 019-E-FINAL (EA ACCEPTED AS PROVISIONAL CONSOLIDATION BASELINE)
+**Evidence:** latest `codex/comm/HANSOFF.md`, implementation commit `1a70f6b`. 32 Modules, 136 local Main candidates, 978/981 active eligible unique ICDs linked, 123/125 eligible unpaired ISDs linked, five named source exceptions and 25 explicitly excluded source occurrences. Architectural acceptance of Enterprise boundaries remains pending; preserve source identities and review obligations.
 
 ## Accepted checkpoints and constraints
 - Phases 0–4 PASS/FROZEN; Task 014 2,036 canonical APIs and 2,414 accepted HTTP operations.
