@@ -1,16 +1,20 @@
 # CURRENT TASKS
 
-## ACTIVE TASK — Phase 6 / Task 019-E-R3
-**Title:** Contracts — Main Business Capability → linked ICDs
-**Status:** AUTHORIZED_FOR_CODEX — CONTRACTS ONLY
-**Sole execution prompt:** `codex/comm/prompt/phase6-task019e-r3-contracts-main-icd-mapping.md`; execute ONLY R3. All R1/R2 instructions are superseded for the next execution.
-**Inputs:** Recovery effective catalog and its cached Contracts ICD bodies. Reuse the R2 mapper where possible. No old-stage replay or new downloads.
-**Output:** Main Capability candidate → source ICD links with evidence. Clear, meaningful Capability names (no slash-separated labels); NO Business Function or Sub Capability intermediary. Each ICD accounted for; ISD-only/no-ICD classified separately.
-**Artifacts:** Four outputs only under `019e_r3/`. No other Module, ISD semantic parsing, Canonical API matching, new infrastructure, or full test suite.
-**STOP:** `EA_REVIEW_019E_R3`; disclose exact unresolved/ambiguous documents immediately.
+## ACTIVE TASK — Phase 6 / Task 019-E-FINAL
+**Title:** All Modules — Main Business Capability → ICD, then unpaired ISD
+**Status:** AUTHORIZED_FOR_CODEX — MODULE-BY-MODULE, COMPACT CHECKPOINTS
+**Sole execution prompt:** `codex/comm/prompt/phase6-task019e-final-main-capabilities.md`; follow ONLY this authorization. R1/R2/R3 remain historical pilots, not executable work.
+**Input:** Recovery effective catalog and cached ICD/ISD bodies. Reuse existing R2/R3 code; never refetch or mutate cache.
+**Per-Module order:** FIRST all active ICDs → Main Capabilities and direct ICD links; LAST inspect ISDs without evidenced ICD relationships individually using Service name, Introduction/Summary and meaningful Schema semantics → existing/new Main capabilities. No Business Functions/Sub Capabilities and no Canonical API matching yet.
+**EA decisions:** Contract lifecycles separate; Admission Journey in Compliance; externally-created contracts mapped by contract lifecycle; named GOSI/NIC/HRSD integration yields evidence-backed Integration Capability; OLD/NOT USED/IGNORE source designations excluded from active mapping but audited; Main names meaningful and no slash-joined labels; Logo/Notification allowed.
+**Coverage:** all 32 Modules reconciled one at a time, eligible/excluded/unresolved listed by exact source ID. Explicit gaps now, not discovered late. Incremental checkpoints; focused checks only. No full regression suite, re-acquisition, old-stage replay, unrelated infrastructure.
+**STOP:** `EA_REVIEW_019E_FINAL`. No API matching/consolidation/Kong or other downstream tasks without EA approval.
 
-## PREVIOUS TASK — Phase 6 / Task 019-E-R2 (CANDIDATE MAPPING COMPLETE WITH REVIEW EXCEPTIONS; EA REVIEW PENDING)
-**Evidence:** `codex/comm/HANSOFF.md`, implementation commit `47d934a`. Establishment: 149/149 ICDs linked, 11 Main candidates, 9 mapped source ambiguities plus 3 ISD-only/no-ICD flagged services. Preserve R2 outputs; do not silently treat any candidate boundary as EA approved.
+## PREVIOUS TASK — Phase 6 / Task 019-E-R3 (CONTRACTS CANDIDATE MAPPING COMPLETE; EA DIRECTIVES NOW CAPTURED)
+**Evidence:** latest `codex/comm/HANSOFF.md`, implementation commit `bc80ef5`. Contracts 169 ICDs linked to 10 Main candidates with 7 mapped ambiguities and 12 ISD-only/no-ICD services; interpret those with the EA resolutions and exclusion rule in 019-E-FINAL. Prior outputs remain untouched.
+
+## PREVIOUS TASK — Phase 6 / Task 019-E-R2 (ESTABLISHMENT CANDIDATE MAPPING COMPLETE; NOT AUTOMATICALLY APPROVED)
+**Evidence:** `codex/comm/HANSOFF.md`, commit `47d934a`. 149 ICDs mapped, 11 Main candidates and review exceptions. Re-evaluate under final naming/integration and ISD rules, preserve historical outputs.
 
 ## Accepted checkpoints and constraints
 - Phases 0–4 PASS/FROZEN; Task 014 2,036 canonical APIs and 2,414 accepted HTTP operations.
