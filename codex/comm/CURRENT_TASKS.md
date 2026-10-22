@@ -1,20 +1,16 @@
 # CURRENT TASKS
 
-## ACTIVE TASK — Phase 6 / Task 019-E-R2
-**Title:** Establishment Only — Main Business Capability → linked ICDs
-**Status:** AUTHORIZED_FOR_CODEX — BOUNDED SINGLE-MODULE PILOT ONLY
-**Instructions:** `codex/comm/prompt/phase6-task019e-r2-main-capability-icd-mapping.md` is the **sole active** instruction for the next execution; it replaces 019-E-R1 methods. Read it fully and execute ONLY 019-E-R2.
-**Scope:** Read recovered ICDs of Establishment from the recovery effective catalog; directly identify Main Business Capability candidates and map source ICD identities to them. The EA-provided flagged service list is mandatory for explicit inspection and reconciliation. Do not gate classification on R1's Business Function extraction results.
-**Prohibited:** No Business Function inventory or extraction; no Sub Capabilities; no new cache/acquisition/parsers/frameworks; no live Confluence; no old-stage rerun; no other Modules; no ISD parsing or Canonical API matching; no full repository regression suite.
-**Artifacts:** Only Main inventory, Main↔ICD links, coverage exceptions, short report in task-scoped `019e_r2` paths. Preserve all prior outputs.
-**Coverage gate:** Every ICD accounted for; exact unresolved cases must be visible and not declared architecturally accepted. Exceptions are not silent success.
-**STOP:** `EA_REVIEW_019E_R2`; no rollout without explicit EA approval.
+## ACTIVE TASK — Phase 6 / Task 019-E-R3
+**Title:** Contracts — Main Business Capability → linked ICDs
+**Status:** AUTHORIZED_FOR_CODEX — CONTRACTS ONLY
+**Sole execution prompt:** `codex/comm/prompt/phase6-task019e-r3-contracts-main-icd-mapping.md`; execute ONLY R3. All R1/R2 instructions are superseded for the next execution.
+**Inputs:** Recovery effective catalog and its cached Contracts ICD bodies. Reuse the R2 mapper where possible. No old-stage replay or new downloads.
+**Output:** Main Capability candidate → source ICD links with evidence. Clear, meaningful Capability names (no slash-separated labels); NO Business Function or Sub Capability intermediary. Each ICD accounted for; ISD-only/no-ICD classified separately.
+**Artifacts:** Four outputs only under `019e_r3/`. No other Module, ISD semantic parsing, Canonical API matching, new infrastructure, or full test suite.
+**STOP:** `EA_REVIEW_019E_R3`; disclose exact unresolved/ambiguous documents immediately.
 
-## PREVIOUS TASK — Phase 6 / Task 019-E-R1 (PILOT_COMPLETE_WITH_GAPS, NOT EA ACCEPTED)
-**Evidence:** `codex/comm/HANSOFF.md`, implementation commit `34dee03`; 149 Establishment ICD occurrences, 121 Functions, 11 Main candidates, 23 review records. Do not copy the R1 business-function qualification gate or treat its Main candidates as accepted.
-
-## PREVIOUS TASK — Phase 6 / Targeted ICD/ISD Recovery (TECHNICAL PASS WITH EXCEPTIONS)
-**Evidence:** `codex/comm/HANSOFF.md`, implementation commit `7aa5b19`. Reuse its effective retrieval catalog containing repaired ICD bodies. No new retrieval or reprocessing.
+## PREVIOUS TASK — Phase 6 / Task 019-E-R2 (CANDIDATE MAPPING COMPLETE WITH REVIEW EXCEPTIONS; EA REVIEW PENDING)
+**Evidence:** `codex/comm/HANSOFF.md`, implementation commit `47d934a`. Establishment: 149/149 ICDs linked, 11 Main candidates, 9 mapped source ambiguities plus 3 ISD-only/no-ICD flagged services. Preserve R2 outputs; do not silently treat any candidate boundary as EA approved.
 
 ## Accepted checkpoints and constraints
 - Phases 0–4 PASS/FROZEN; Task 014 2,036 canonical APIs and 2,414 accepted HTTP operations.
