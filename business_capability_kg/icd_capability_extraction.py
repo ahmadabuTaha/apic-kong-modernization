@@ -26,6 +26,7 @@ from .document_cache import CATALOG_NAME, DocumentCatalog
 
 SCHEMA_VERSION = "phase6-task019e-capability-v1"
 PARSER_VERSION = "structured-html-v1"
+ADF_PARSER_VERSION = "structured-adf-v1"
 EXTRACTOR_VERSION = "explicit-function-v1"
 RULES_VERSION = "module-local-capability-v3"
 INDEX_ROOT = Path("indexes/phase6/task019/019e")
@@ -251,6 +252,70 @@ def parse_html(content: bytes) -> dict[str, Any]:
     }
 
 
+def _adf_text(node: Any) -> str:
+    if not isinstance(node, dict):
+        return ""
+    if node.get("type") == "text":
+        return str(node.get("text") or "")
+    return " ".join(filter(None, (_adf_text(child) for child in node.get("content", []))))
+
+
+def parse_adf(content: bytes) -> dict[str, Any]:
+    """Parse canonical Atlassian Document Format into stable ordered blocks."""
+    try:
+        document = json.loads(content.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as error:
+        return {"parse_status": "MALFORMED", "gap_reason": f"adf_decode_error:{error}", "blocks": []}
+    if not isinstance(document, dict) or document.get("type") != "doc":
+        return {"parse_status": "UNSUPPORTED", "gap_reason": "not_an_adf_document", "blocks": []}
+
+    raw_blocks: list[dict[str, str]] = []
+
+    def visit(node: Any) -> None:
+        if not isinstance(node, dict):
+            return
+        node_type = str(node.get("type") or "")
+        kinds = {"heading": "heading", "paragraph": "paragraph", "listItem": "list_item"}
+        if node_type in kinds:
+            raw_blocks.append({"kind": kinds[node_type], "text": _sanitize_evidence(_adf_text(node))})
+            return
+        if node_type == "tableRow":
+            cells = [_sanitize_evidence(_adf_text(child)) for child in node.get("content", [])]
+            raw_blocks.append({"kind": "table_row", "text": " | ".join(cell for cell in cells if cell)})
+            return
+        for child in node.get("content", []):
+            visit(child)
+
+    visit(document)
+    blocks: list[dict[str, Any]] = []
+    cursor, section = 0, ""
+    for ordinal, raw in enumerate((row for row in raw_blocks if row["text"]), start=1):
+        text, kind = raw["text"], raw["kind"]
+        if kind == "heading":
+            section = text
+        start, end = cursor, cursor + len(text)
+        blocks.append({
+            "kind": kind, "section_heading": section, "text": text, "cells": [],
+            "block_id": f"b{ordinal:06d}", "char_start": start, "char_end": end,
+            "text_sha256": _sha256_bytes(text.encode("utf-8")),
+        })
+        cursor = end + 1
+    return {
+        "parse_status": "PARSED" if blocks else "EMPTY",
+        "gap_reason": "" if blocks else "no_supported_text_blocks",
+        "blocks": blocks,
+    }
+
+
+def parse_document(content: bytes, mime_type: str = "") -> dict[str, Any]:
+    compact_prefix = re.sub(rb"\s+", b"", content[:300])
+    if "atlassian.document" in mime_type or (
+        compact_prefix.startswith(b"{") and b'"type":"doc"' in compact_prefix
+    ):
+        return parse_adf(content)
+    return parse_html(content)
+
+
 def _sentences(text: str) -> list[str]:
     return [part.strip(" -–—:;") for part in re.split(r"(?<=[.!?])\s+|\s*[•·]\s*", text) if part.strip()]
 
@@ -380,8 +445,12 @@ def _validated_baseline(root: Path, catalog_path: Path | None = None) -> dict[st
     }
 
 
-def _parse_cache_path(index_root: Path, blob_sha256: str) -> Path:
-    cache_key = _stable_id("parse", blob_sha256, PARSER_VERSION, EXTRACTOR_VERSION, RULES_VERSION)
+def _document_parser_version(mime_type: str) -> str:
+    return ADF_PARSER_VERSION if "atlassian.document" in mime_type else PARSER_VERSION
+
+
+def _parse_cache_path(index_root: Path, blob_sha256: str, parser_version: str = PARSER_VERSION) -> Path:
+    cache_key = _stable_id("parse", blob_sha256, parser_version, EXTRACTOR_VERSION, RULES_VERSION)
     return index_root / "parse_cache" / f"{cache_key}.json"
 
 
@@ -391,9 +460,10 @@ def _parsed_document(
     index_root: Path,
     telemetry: Counter[str],
 ) -> dict[str, Any]:
-    path = _parse_cache_path(index_root, document["blob_sha256"])
+    parser_version = _document_parser_version(str(document.get("mime_type") or ""))
+    path = _parse_cache_path(index_root, document["blob_sha256"], parser_version)
     expected_key = _stable_id(
-        "parse", document["blob_sha256"], PARSER_VERSION, EXTRACTOR_VERSION, RULES_VERSION
+        "parse", document["blob_sha256"], parser_version, EXTRACTOR_VERSION, RULES_VERSION
     )
     if path.is_file():
         payload = json.loads(path.read_text(encoding="utf-8"))
@@ -410,11 +480,11 @@ def _parsed_document(
         }
     else:
         telemetry["blob_body_reads"] += 1
-        parsed = parse_html(content)
+        parsed = parse_document(content, str(document.get("mime_type") or ""))
         parsed["functions"] = extract_functions(parsed)
         payload = {
             "cache_key": expected_key, "blob_sha256": document["blob_sha256"],
-            "parser_version": PARSER_VERSION, "extractor_version": EXTRACTOR_VERSION,
+            "parser_version": parser_version, "extractor_version": EXTRACTOR_VERSION,
             "rules_version": RULES_VERSION, **parsed,
         }
     _atomic_write(path, _json_bytes(payload))
