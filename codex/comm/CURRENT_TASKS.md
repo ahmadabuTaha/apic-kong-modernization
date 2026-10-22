@@ -5,7 +5,7 @@
 **Status:** AUTHORIZED_FOR_CODEX — EVIDENCE_BACKED_CANDIDATES_ONLY
 **Instructions:** `codex/comm/prompt/phase6-task019e-icd-capability-extraction.md` is the complete authorization. Execute ONLY 019-E.
 **Accepted prerequisite:** Task 019-D TECHNICAL PASS in latest HANSOFF; 32 Modules, 952 Services, 1,941 references, 1,932 stored blobs, one missing ISD 404. Reuse the accepted 019-D SQLite retrieval catalog and previously fetched ICD bodies without network calls.
-**Required coverage:** ALL 32 Modules; ICD evidence only, track services without ICD; bounded module/document batches and low-token caches. No Common-only restriction.
+**Required execution — Module-First:** ALL 32 Modules, each processed completely and separately: inventory all ICDs → extract detailed business functions/evidence → consolidate Sub Capabilities within the Module → construct Main Capabilities within the Module → write a Module Completion Gate and persistent checkpoint → only then proceed to the next Module. No Common-only restriction. After all 32, produce cross-module review candidates ONLY, without merging. Future tasks separately consolidate Sub Capabilities, then Main Capabilities.
 **Business model:** Module → Main Business Capability → Sub Business Capability, each candidate supported by explicit ICD evidence linked to source Service(s) and ICD document(s). Sub Module excluded. Candidate does NOT mean approved.
 **Code owner:** `business_capability_kg/`. **Indexes:** `indexes/phase6/task019/019e/`. **Outputs:** `outputs/phase6/task019/019e/`.
 **Non-goals:** no ISD endpoint/request-response extraction, Canonical API or Operation matching, Knowledge Graph, scheduler inference, Productization, CI/CD or Kong.
