@@ -1,5 +1,31 @@
 # Codex Handoff
 
+## Current execution — Phase 6 / Task 019-E-R2 Main Capability → ICD pilot
+
+### Execution summary
+
+- Fast-forwarded `main` from `b65f3ce` to authorization checkpoint `d0e86e6`, reread `AGENTS.md`, `CURRENT_TASKS.md`, the complete sole-active 019-E-R2 prompt and prior handoff, then executed only the literal `Establishment` Module pilot.
+- Added `business_capability_kg.establishment_main_icd_mapping`, a bounded corpus-reviewed mapper that validates and reads the recovery effective catalog, opens every Establishment ICD body, reuses the existing structured HTML/ADF parser in memory, and emits only direct Main Capability candidate→ICD links. Page/document identities are the stable mapping keys; service edges, content hashes, source versions and block/character evidence pointers are preserved.
+- Classification used the full ICD narrative semantics and did not read or gate on R1 Function results. No Business Function or Sub Capability entity was derived, persisted, counted or used. No new cache/database/parser framework, live Confluence/network access, acquisition, ISD body parsing, Canonical API matching, other Module, historical-stage rerun, taxonomy consolidation or Kong work occurred.
+
+### Results and evidence
+
+- Exact closure is **142 Services, 149 ICD occurrences and 149 unique ICD/page identities**. All **149/149** recovered ICD bodies were directly read and parsed; all 149 identities have at least one evidence-backed Main candidate link. The result contains **11 Main candidates and 152 Main↔ICD links**; three pages have explicitly justified dual links, without inflating unique ICD coverage.
+- Candidate distribution by linked ICD document is: Activity and Classification 21; Closure 2; Compliance/Violation/Punishment 16; License 12; Location/Labor Assignment 16; Logo 3; Ownership/Legal Form/Representation 17; Record/Commercial Registration 39; Registration/Opening 18; Request/Government Agent 6; Stakeholder Notification 2. These are review candidates, not accepted business boundaries.
+- The mandatory EA list reconciles **22 input entries → 20 distinct service identifiers**, with `module-establishment::service-establishment-logo-icds` appearing three times (**2 repetitions beyond the first**). Seventeen distinct flagged services have ICDs that are mapped. Three are correctly disclosed as ISD-only/no-ICD and were not fabricated into ICD links: `service-terminate-establishments-punishments-icd` (ISD page `4564452578`), `service-violation-management-interface-specification-documents` (four ISD pages), and `service-establishment-logo-isds` (four ISD pages).
+- Direct inspection recovered semantics that R1's wording gate had not qualified, including Manual CR Swap V2 page `5315199059`, now linked to Record and Commercial Registration Management using block `b000020`. Other real examples include SBC establishment opening page `5518950691`, establishment-logo update page `4110549791`, Mecca location changes page `6286934017`, and subsequent-supervision licensing page `5450301441`; exact excerpts and pointers are in the required review summary.
+- **0 ICDs remain unresolved**, but this is not unconditional success or EA acceptance. `coverage_exceptions.csv` retains **12 review rows**: 3 ISD-only/no-ICD services and 9 mapped source ambiguities. The nine ambiguity pages are `3694166278`, `4306928194`, `5149458443`, `5213225041`, `5437718607`, `5213388805`, `5245502567`, `4904353793`, and `4151542188`; each row states the exact title/body/type conflict or dual semantic basis.
+- Required task-local outputs are exactly `main_capabilities.csv`, `main_icd_links.csv`, `coverage_exceptions.csv`, and `review_summary.md` under the authorized `019e_r2` paths. No extra report or cache was created. Output SHA-256 values: Main inventory `785f35cb0ba2975e822b1b6c0f42ac63dfc911d783971d86c77cb3318c33a2ff`; links `b337f2d6cdc3dc70b5b13a9719dc18551af5e80d407e28b1d2c2be997919076b`; exceptions `ef65dd9bc816647fa25397e8946265ac8c9f8caa7f4903b0621f8869561f6766`; review summary `3d9a33eb83127ee9126fbfa6ec4583684160801d9f1be1ab2123628d5a8d3cfd`.
+- Repeated real-corpus execution produced byte-identical outputs. Independent validation passed for exact catalog closure, real page/document/hash identity, Main/link referential integrity, nonempty evidence pointers/excerpts, duplicate-count control, flagged-service reconciliation, authorized-file-only scope and URL/credential redaction. Recovery catalog SHA-256 remains unchanged at `e975f22dd0c2b519086b3bd68b72ffc70467b205e6fff0a62c5361ba4fa13db8`.
+- Implementation commit: **`47d934a`** (`Map Establishment main capabilities to ICDs`). Generated source-derived indexes/review output remain intentionally gitignored and uncommitted; the implementation, tests and this evidence handoff are committed.
+
+### Tests, unresolved issues, and final status
+
+- Task 019-E-R2 focused suite: **5 passed**. It covers exact 149-page registry closure, three controlled multi-Main pages without duplicate inflation, refusal of title-only evidence, full-narrative evidence pointers, all-ICD/no-ICD closure, flagged duplicate reconciliation, deterministic reruns, untouched frozen evidence and exact authorized artifacts.
+- Python compilation and `git diff --check` passed. Per explicit task prohibition, the full repository regression suite was **not run**.
+- Unresolved ICD count is zero; unresolved architecture decisions remain the 9 mapped source ambiguities, 3 ISD-only/no-ICD services and all 11 candidate Main boundaries pending Enterprise Architect review.
+- Final status: **CANDIDATE_MAPPING_COMPLETE_WITH_REVIEW_EXCEPTIONS; STOP AT `EA_REVIEW_019E_R2`.** Do not roll out to another Module, parse ISDs, map Canonical APIs, introduce Functions/Sub Capabilities, consolidate taxonomy or begin downstream work without explicit EA approval.
+
 ## Current execution — Phase 6 / Task 019-E-R1 Establishment methodology pilot
 
 ### Execution summary
