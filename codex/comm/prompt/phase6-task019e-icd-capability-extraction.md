@@ -1,3 +1,40 @@
+# ACTIVE EA AMENDMENT — Task 019-E-R1, SINGLE-MODULE METHODOLOGY PILOT
+
+**This section supersedes the original 019-E instructions below for the NEXT execution.** Original Task 019-E is already executed (commit `85bce7e`) and its historical artifacts remain untouched. Execute the corrective **019-E-R1** pilot ONLY; do not rerun all 32 Modules or overwrite 019-E results.
+
+**EA-directed pilot Module: `Establishment`** (exact literal Module identity in accepted 019-D catalog, not a guessed plural alias). This pilot is selected for method validation; do not process Contracts or any other Module yet.
+
+## Strict model and scope
+`Module ICDs → Business Functions Inventory → Main Business Capabilities`.
+
+**NO Sub Capabilities whatsoever in this pilot**: do not create, infer, map, count, rename, aggregate or export Sub Capability entities. A Business Function is NOT automatically a Main Business Capability. A Main Capability is an evidence-supported cohesive business ability grouping related *multiple or one where justified* Business Functions; avoid one-to-one generic labels as defaults.
+
+**No ISD parsing or API/Canonical API matching now.** Preserve the existing ICD-to-Service relationship and original ISD reference identity/edge for **future** service / ICD ↔ ISD ↔ Canonical API / Operation ↔ Capability mapping, but do not claim functional API links yet. Exclude graph generation and cross-Module consolidation.
+
+## Required sequence (single Module only)
+1. Preflight accepted Task 019-D catalog and 019-C retrieved blobs/metadata. Enumerate all ICD occurrences and services for Establishment, including ICD-only, no-ICD and shared-document cases. Store deterministic input coverage.
+2. Document Integrity Gate FIRST: inspect and compare available content of suspected-empty Establishment ICD page IDs `6134169639`, `5315199059`, `5943951453`, `5518950691`, `5849382920`. HANSOFF 019-E reported 14 EMPTY records across modules and EA manual review says these pages are readable. Verify on-disk blob sizes, hash, actual raw bytes and representation before treating `no_supported_text_blocks` as genuinely empty. If fetched bytes appear to be placeholders/error responses or lack expected body, mark `acquisition_content_suspect` and STOP semantic acceptance for the affected documents. Do not silently mark complete or treat placeholder as business evidence. Use only existing authorized access for targeted comparisons where available; a separate targeted recovery workflow may be needed, with no wholesale re-download, and preserve 019-C frozen baseline.
+3. Process **all valid locally available ICDs of Establishment**. Extract granular, explicit Business Functions per source section/table row, with actor, action, business object, purpose/outcome, conditions/rules, page ID, document ID, stable offsets, content hash, service edge and source phrase/pointer. Capture business function detail without premature merging and without treating API names, technical actions, headings or endpoint paths alone as sufficient.
+4. Complete the Module's Business Function Inventory (dedupe only truly equivalent *within-Module functions* while preserving source variants and many-to-many evidence). Check unclassified/missing/unsupported source documents explicitly; no inventing missing functions.
+5. **Only after scanning all accessible ICDs**, build a bounded **Main Business Capabilities Inventory** using the *full* business function inventory for Establishment. Require a clear business ability definition, supported functions, rationale for grouping, source evidence, stable local ID and `candidate` or `needs_review`. No automatic Main=Function or Main=Service renaming, no generic buckets; allow multiple Main Capabilities per Module.
+6. As a *quality benchmark*, the EA-provided `Establishment Management System — High Level Design` lists main business areas including **Establishment Registration, Activity Management, Location Management, Certificate Services, Government Integration**. Consult this HLD only **if available in the local workspace** as a few-shot benchmark to flag omissions/contradictions, not as a substitute for ICD evidence or a requirement to emit exactly five capabilities; never claim to read it if not available.
+7. Run a review gate for this ONE module: reconcile ICD expected / validated / processed / empty / suspect counts; all functions with provenance; each Main related to functions; explicitly enumerate gaps and cases that resemble Function=Main 1:1 to verify they are justified. Classify status as `PILOT_COMPLETE_WITH_EVIDENCE`, `PILOT_COMPLETE_WITH_GAPS`, or `PILOT_BLOCKED_SOURCE_INTEGRITY` (do not give unconditional PASS if suspect pages undermine coverage).
+8. Write a short, human-readable sample showing **real extracted evidence** (2–3 Main Capabilities, several Functions each if supported) and what evidence supports grouping. No fabricated samples masquerading as actual extraction.
+
+## Artifacts / isolation
+- New additive code under `business_capability_kg/`; focused tests under `tests/business_capability_kg/`.
+- Task-owned indexes: `indexes/phase6/task019/019e_r1/`: `business_functions.csv`, `main_capabilities.csv`, `main_function_edges.csv`, `function_evidence.csv`, `icd_integrity_audit.csv`, `review_queue.csv`.
+- Reports: `outputs/phase6/task019/019e_r1/`: `pilot_manifest.json`, `pilot_validation_summary.md`, `sample_traceability.md`.
+- Historical `019e/` and original `019b/`, `019c/`, `019d/` evidence stay unchanged. New cache/version namespace for corrective extractor; use index-first and selected ICD reads, no unnecessary broad rescan.
+- No sub_capabilities output in the pilot.
+
+## Tests & handoff
+Focused tests: extraction from headings/tables and full business wording, functions with distinct semantics, repeated sources, exact evidence pointers, grouping from functions to Main, ambiguous cases to review, suspect/empty HTML detection, cold/warm cache and unaffected frozen data. Full repository failures/setup errors must be displayed separately rather than declared 'no errors'.
+
+HANSOFF should state pilot Module exact name, source integrity findings for five pages, actual ICD/services/functions/Main counts, evidence-backed examples, unresolved items, tests, and **STOP at `EA_REVIEW_019E_R1`**. No roll-out to other Modules until EA reviews pilot taxonomy and approves methodology.
+
+---
+
 # Phase 6 / Task 019-E — ICD Main/Sub Business Capability Discovery
 
 **Status:** AUTHORIZED_FOR_CODEX — ICD_CAPABILITY_CANDIDATES_ONLY
