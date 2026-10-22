@@ -1,16 +1,18 @@
 # CURRENT TASKS
 
-## ACTIVE TASK — Phase 6 / Task 019-F
-**Title:** Cross-Module Enterprise Capability Consolidation — preserve Module [ICD + ISD] → Main → Enterprise
-**Status:** AUTHORIZED_FOR_CODEX — INDEX-ONLY CONSOLIDATION
-**Sole prompt:** `codex/comm/prompt/phase6-task019f-enterprise-capability-consolidation.md`. Execute ONLY 019-F; 019-E-FINAL is a provisionally accepted input, NOT work to rerun.
-**Input:** Existing `indexes/phase6/task019/019e_final/` six CSVs and existing summary only: 32 Modules, 136 Module-local Main Candidates, linked ICD/ISD sources, explicit exclusions and five unresolved document identities. No raw document or Confluence reads.
-**Output:** Enterprise Capability candidates plus auditable `Module → (ICD/ISD) → Module Main → Enterprise` lineage preserving original service/occurrence/source evidence and many-to-many links; full 136-Main closure, no automatic destructive merge, unresolved/ignored sources retained.
-**Prohibited:** No new acquisition, parsing, cache, legacy task replay, old index modification, API/Operation matching, Kong work, or full test suite. Focused tests only. Minimize token/resource usage.
-**STOP:** `EA_REVIEW_019F`. Do not start the next task without EA authorization.
+## ACTIVE TASK — Phase 6 / Task 019-G
+**Title:** Qiwa API-HTTP Parent_Service → Module Main Capability, including direct Child_Service reuse
+**Status:** AUTHORIZED_FOR_CODEX — BOUNDED SERVICE ATTRIBUTION
+**Sole execution prompt:** `codex/comm/prompt/phase6-task019g-qiwa-api-service-main-capability-attribution.md`; execute ONLY 019-G.
+**Preflight:** Locate and inspect actual `neo4j/csv/Qiwa_Modules_Services.csv` schema in Codex workspace. If not available, STOP and report `BLOCKED_SOURCE_CSV`, without guessing relationships.
+**Inputs:** Existing 019-E-FINAL Main/ICD/ISD service-source links and recovery effective metadata. Read 019-F only to verify unchanged lineage, not to edit it.
+**Scope:** Type=API-HTTP Parent Services → direct Main relationships where documented; then one-hop lookups where same service is Child_Service of another Parent_Service, adding independently evidenced SUPPORTS links to the consumer Parent's Module Main Capability.
+**Immutable:** ALL existing Main and Enterprise Capability definitions, IDs and Main→Enterprise links, 019-E/F CSVs, source/cache. No re-extraction, no Neo4j import, no full repository suite, no Canonical API matching.
+**Output:** service inventory, PROVIDES/SUPPORTS Main links, explicit exceptions and short report in `019g/`.
+**STOP:** `EA_REVIEW_019G`; do not execute the next task.
 
-## PREVIOUS TASK — Phase 6 / Task 019-E-FINAL (EA ACCEPTED AS PROVISIONAL CONSOLIDATION BASELINE)
-**Evidence:** latest `codex/comm/HANSOFF.md`, implementation commit `1a70f6b`. 32 Modules, 136 local Main candidates, 978/981 active eligible unique ICDs linked, 123/125 eligible unpaired ISDs linked, five named source exceptions and 25 explicitly excluded source occurrences. Architectural acceptance of Enterprise boundaries remains pending; preserve source identities and review obligations.
+## PREVIOUS TASK — Phase 6 / Task 019-F (EA ACCEPTED AS PROVISIONAL LINKAGE INPUT)
+**Evidence:** latest `codex/comm/HANSOFF.md`, implementation commit `3bddcb2`. 136/136 Module Mains → 127 Enterprise candidates, 1,101 existing ICD/ISD source edges, 5 unresolved source gaps, 25 excluded source occurrences, 12 named EA boundary review decisions. Preserve all without rewriting or automatically approving boundary decisions.
 
 ## Accepted checkpoints and constraints
 - Phases 0–4 PASS/FROZEN; Task 014 2,036 canonical APIs and 2,414 accepted HTTP operations.
