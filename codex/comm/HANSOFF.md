@@ -1,5 +1,33 @@
 # Codex Handoff
 
+## Current execution — Targeted ICD/ISD Recovery & Cache Repair
+
+### Execution summary
+
+- Fast-forward check confirmed `main` was current at `8147c35`, reread the repository guardrails/current task, then followed the newer explicit targeted-recovery authorization only. Live Atlassian reads were bounded to the 14 named original pages, five source-linked ISD parent pages and their 55 discovered descendants; no unrelated traversal, staging scan or downstream work occurred.
+- Added `business_capability_kg.document_recovery`, an additive recovery overlay over accepted 019-C/019-D/019-E. It preserves frozen manifests/indexes and all old blob versions, captures exact HTML or canonical ADF source bodies in the existing content-addressed store, records parent-child/ownership provenance, builds an effective SQLite catalog and acquisition index, and replaces only the 11 impacted module capability models in the full effective capability overlay.
+- Added scoped Atlassian Document Format parsing to the 019-E extractor for the one oversized page whose primary HTML route returned 401 and whose authorized legacy ADF route succeeded. HTML parser/cache version remains unchanged, so untouched baseline Module checkpoints are not invalidated.
+- Applied the mandatory EA ownership correction as a versioned overlay: source row 779 and its original CSV cells remain unchanged, while effective service `module-nitaqat::service-wps` becomes `module-wage-protection::service-wps`. No unrelated service/module was renamed or reclassified.
+
+### Results and evidence
+
+- Investigated **74 pages** with exact live size/hash/version records: **8 corrected direct ICD pages**, **10 navigation parents**, **52 already-cached children linked with parent provenance**, **2 newly recovered scheduler ICD children**, **1 explicitly superseded/ignored child**, and **1 genuinely empty accessible Visa page**. No HTTP 429 occurred. The primary 401 for page `5518950691` was resolved through the accepted legacy ADF representation.
+- All eight direct ICDs had previously shared the incorrect **198-byte SHA-256 `16f33c6aa04292a48d36c8fb86be3baf31325cdd9edd19d08f15620f55415007`** placeholder. Their recovered bodies now range from **316,351 to 3,066,904 bytes**, have distinct hashes, parse successfully and are no longer `EMPTY`. The complete original/live/effective ledger is `indexes/phase6/task019/recovery/investigated_pages.csv`.
+- Parent discovery accepted **54 relationships: 28 ICD + 26 ISD**. Fifty-two child documents were already cached at matching source versions and were reused; new ICD pages `4314759169` (Training status scheduler) and `4314791942` (WPS expiry scheduler) were recovered after their content confirmed ICD structure. Page `3703504965` was excluded because its source title explicitly says “Ignore this document - To be deleted.”
+- Effective retrieval closure is **32 Modules, 952 Services and 1,985 occurrences: 1,011 ICD + 974 ISD**. It references **1,931 active fetched content hashes**. Additive physical storage is now **1,942 blob-version files / 200,730,128 bytes**, an increase of **10 files / 6,927,142 bytes**; no historical blob was deleted.
+- Exactly **11 capability Modules** were reprocessed: Contracts, Establishment, Individual Profile, Nitaqat, Occupations, Services, Training Indicators, Utilities, Visa, Wage Protection and Work Permit. The full effective overlay contains **674 Main candidates, 705 Sub candidates, 1,021 evidence spans, 1,022 Service/ICD edges, 351 review records and 12 no-merge cross-module observations**. Module status is **5 MODULE_COMPLETE_WITH_EVIDENCE + 27 MODULE_COMPLETE_WITH_GAPS + 0 MODULE_PARTIAL**.
+- Cold impacted-module execution: **11 checkpoint misses, 552 parser misses and 552 verified blob reads**. Warm execution: **11/11 checkpoint hits, 0 parser misses and 0 blob reads**. There are **552 versioned recovery parser-cache entries**. Repeated warm builds produced byte-identical catalog, acquisition ledger, investigated-page ledger, manifest and report hashes.
+- Required additive evidence is under `indexes/phase6/task019/recovery/` and `outputs/phase6/task019/recovery/`; the concise required report is `recovery_report.md`. Final hashes: effective catalog `e975f22dd0c2b519086b3bd68b72ffc70467b205e6fff0a62c5361ba4fa13db8`; acquisition ledger `3fe8beef3abb791634bf01babebde548a941fa2db29ff97aeebac346765c273c`; investigated-page ledger `46d253177c9b332d64308119459c0e612aa2b26ff5be97bde4c4ac832365d962`; manifest `46f1e4f4d6f671b3f6da0779b2ec3fd880f6d8144221a9e4963f92160497178c`; recovery report `7537a43d69344920e2f3f8d438644acc2d39ae9ec0c8a29347457ee9cb734cb7`.
+- Implementation commit: **`7aa5b19`** (`Repair targeted ICD and ISD recovery cache`). Generated source-derived evidence remains intentionally ignored/uncommitted; no private URL, credential or raw page body was added to Git.
+
+### Tests, unresolved issues, and final status
+
+- Recovery plus full `business_capability_kg` focused suite: **39 passed**. It covers HTML/ADF preservation and parsing, child classification from title/content, explicit obsolete-child exclusion, both Atlassian descendants envelope shapes, targeted scope and the WPS ownership rule. Compilation, diff checks, independent catalog/relationship/hash/storage/parse-status validation and redaction scans passed.
+- Full default-sandbox repository suite: **206 passed, 1 failed, 5 setup errors**. The inherited failure remains sandbox-denied localhost binding; its isolated permission-enabled rerun passed (**1 passed**). The five inherited setup errors remain the absent Phase 0 fixture directory `tests/fixtures/repository_profile/staging`.
+- Final-code clean available regression excluding only that missing-fixture module and deselecting the separately verified socket case: **204 passed, 1 deselected**.
+- Remaining evidence exceptions are explicit: Visa page `4237820100` is accessible/current but genuinely empty; child `3703504965` is explicitly obsolete; inherited ISD page `4939350056` remains 404 and was outside this recovery set. No recovery implementation blocker remains.
+- Final status: **TARGETED DOCUMENT RECOVERY TECHNICAL PASS WITH EXPLICIT EVIDENCE EXCEPTIONS; STOP AT `EA_REVIEW_DOCUMENT_RECOVERY`.** Do not restart Phase 6, begin 019-F, consolidate capabilities, perform API matching/graph work, or start any downstream modernization task without explicit Enterprise Architect approval.
+
 ## Current execution — Phase 6 / Task 019-E
 
 ### Execution summary
