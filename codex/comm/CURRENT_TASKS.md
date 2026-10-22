@@ -1,18 +1,17 @@
 # CURRENT TASKS
 
-## ACTIVE TASK — Phase 6 / Task 019-E
-**Title:** ICD Main/Sub Business Capability Discovery — ALL MODULES
-**Status:** AUTHORIZED_FOR_CODEX — EVIDENCE_BACKED_CANDIDATES_ONLY
-**Instructions:** `codex/comm/prompt/phase6-task019e-icd-capability-extraction.md` is the complete authorization. Execute ONLY 019-E.
-**Accepted prerequisite:** Task 019-D TECHNICAL PASS in latest HANSOFF; 32 Modules, 952 Services, 1,941 references, 1,932 stored blobs, one missing ISD 404. Reuse the accepted 019-D SQLite retrieval catalog and previously fetched ICD bodies without network calls.
-**Required execution — Module-First:** ALL 32 Modules, each processed completely and separately: inventory all ICDs → extract detailed business functions/evidence → consolidate Sub Capabilities within the Module → construct Main Capabilities within the Module → write a Module Completion Gate and persistent checkpoint → only then proceed to the next Module. No Common-only restriction. After all 32, produce cross-module review candidates ONLY, without merging. Future tasks separately consolidate Sub Capabilities, then Main Capabilities.
-**Business model:** Module → Main Business Capability → Sub Business Capability, each candidate supported by explicit ICD evidence linked to source Service(s) and ICD document(s). Sub Module excluded. Candidate does NOT mean approved.
-**Code owner:** `business_capability_kg/`. **Indexes:** `indexes/phase6/task019/019e/`. **Outputs:** `outputs/phase6/task019/019e/`.
-**Non-goals:** no ISD endpoint/request-response extraction, Canonical API or Operation matching, Knowledge Graph, scheduler inference, Productization, CI/CD or Kong.
-**STOP gate:** `EA_REVIEW_TASK019E`. No 019-F without explicit authorization.
+## ACTIVE TASK — Phase 6 / Task 019-E-R1
+**Title:** Single-Module Methodology Pilot — Establishment ICDs → Business Functions → Main Business Capabilities
+**Status:** AUTHORIZED_FOR_CODEX — SINGLE_MODULE_PILOT_ONLY
+**Instructions:** Read the **ACTIVE EA AMENDMENT** at the TOP of `codex/comm/prompt/phase6-task019e-icd-capability-extraction.md`. It supersedes earlier 019-E all-module/Main+Sub instructions for this next execution. Execute only 019-E-R1.
+**Scope:** Exactly literal `Establishment` Module from 019-D catalog; process ALL its available ICD documents before grouping. First validate five suspected-empty ICD page IDs. Build independent Business Function Inventory with explicit evidence, then Main Capability candidate Inventory with Function → Main links. **NO SUB CAPABILITIES**.
+**Integrity gate:** If retrieved document content is suspect, report the issue clearly and leave affected results unresolved, not inferred. Preserve prior 019-C/D/E outputs and frozen evidence. Do not force a successful completeness claim.
+**Later only:** ISD ↔ ICD/service association and Canonical API/Operation ↔ Capability linkage after separate EA authorization. No semantic ISD or API mapping in this task.
+**Ownership:** code `business_capability_kg/`; indexes `indexes/phase6/task019/019e_r1/`; reports `outputs/phase6/task019/019e_r1/`.
+**Stop gate:** `EA_REVIEW_019E_R1`. No other Module or rollout without EA approval.
 
-## PREVIOUS TASK — Phase 6 / Task 019-D (TECHNICAL PASS)
-**Evidence:** latest `codex/comm/HANSOFF.md`; commit `c81bd93`, 31 compatibility tests PASS. 019-D documented inherited repository test setup/environment issues separately; preserve and report them transparently. Retrieval catalog is locally indexed and fetched documents unchanged.
+## PREVIOUS TASK — Phase 6 / Task 019-E (TECHNICAL PASS WITH GAPS; TAXONOMY NOT EA-ACCEPTED)
+**Evidence:** latest `codex/comm/HANSOFF.md`, commit `85bce7e`, 32 Modules and original 669 Main/699 Sub candidates. Historical outputs remain intact as provisional discovery evidence, not approved capability taxonomy. This corrective pilot tests a new structure, not a blanket rewrite.
 
 ## Accepted checkpoints and constraints
 - Phases 0–4 PASS/FROZEN; Task 014 2,036 canonical APIs and 2,414 accepted HTTP operations.
