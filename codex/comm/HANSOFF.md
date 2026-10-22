@@ -1,5 +1,32 @@
 # Codex Handoff
 
+## Current execution — Phase 6 / Task 019-E-R1 Establishment methodology pilot
+
+### Execution summary
+
+- Confirmed `main` current at authorization checkpoint `b4c0efb`, reread `AGENTS.md`, `CURRENT_TASKS.md`, the complete active 019-E-R1 amendment and the latest recovery handoff, then executed only the literal `Establishment` Module pilot. No other Module was processed.
+- Added `business_capability_kg.establishment_pilot`, a deterministic function-first extractor over the accepted recovery catalog. It applies the document-integrity gate before semantics, parses all locally available Establishment ICDs, extracts explicit actor/action/object/outcome/condition evidence with exact page/block/character pointers, deduplicates only equivalent within-Module Functions while retaining all evidence variants, and groups Main candidates only after the complete Function inventory exists.
+- The implementation creates no Sub Capability entity/output. It preserves source Service→ICD evidence and related ISD document identities only as future service-inventory edges explicitly marked `NOT_SEMANTICALLY_PARSED_OR_MAPPED`; it performs no ISD parsing, API/Operation mapping, graph generation, cross-Module consolidation, staging scan or network retrieval.
+- The named `Establishment Management System — High Level Design` was not present in the local workspace, so it was neither claimed nor used as evidence. Frozen 019-C/D/E and recovery artifacts remained read-only.
+
+### Results and evidence
+
+- Exact pilot scope closes over **142 Services, 149 ICD occurrences / 149 unique ICD pages and 124 preserved ISD reference occurrences**. All 149 ICDs were integrity-validated and processed; **0 are content-suspect**.
+- The five suspected-empty pages were confirmed to have shared the old 198-byte placeholder hash and now resolve to distinct recovered bodies: `6134169639` 316,351-byte HTML / 1 Function; `5315199059` 603,696-byte HTML / 0 qualifying explicit Functions; `5943951453` 752,639-byte HTML / 1 Function; `5518950691` 3,066,904-byte ADF / 1 Function; `5849382920` 523,183-byte HTML / 1 Function. All parse `PARSED` and carry `VALIDATED_RECOVERED_SOURCE_BODY`; readable content is not confused with sufficient business-function wording.
+- Produced **121 Business Functions, 205 evidence spans, 11 Main Business Capability candidates and 139 Function→Main candidate links**. Main candidate/function counts are: Activity Management 26; Closure Management 2; Compliance and Violation Management 15; License Services 9; Location Management 13; Ownership and Representation Management 13; Record and Profile Management 14; Registration and Opening 15; Request and Agent Management 8; Stakeholder Notifications 3; Government Information Exchange 21. All remain `candidate` or `needs_review`; none is approved.
+- Real trace examples include `Open unified establishment using Saudi Business Center` (page `5518950691`, block `b000028`) under Registration and Opening; `Change establishment activity in HRSD` (page `3953229825`, block `b000023`) under Activity Management; and `Assign location for laborer or a list of laborers` (page `3555721311`, block `b000037`) under Location Management. The human-readable sample contains three Mains with five real Functions each.
+- Explicit gaps total **23 review records**: 3 services with no ICD reference, 19 parsed ICDs without qualifying explicit business-function wording, and one deliberately ungrouped Function (`Check whether the user has been issued an Iqama`) that lacks sufficient evidence for a bounded Establishment Main. There are **0 one-to-one Main=Function candidates** and no forced generic bucket.
+- Required local artifacts are under `indexes/phase6/task019/019e_r1/` (six CSV indexes plus versioned cache) and `outputs/phase6/task019/019e_r1/` (pilot manifest, validation summary and sample traceability). Generated/source-derived evidence remains intentionally gitignored and uncommitted. Deterministic core digest is `889d6fd959b7e72bfbc8113da8101250031447d664fc92ff45d8c580c094e7a8`; final manifest SHA-256 is `443f47a0fcdbde30d8c344e76542f3a80d78538d590db1389e2c33d1d5a4d670`.
+- Real isolated cold/warm verification produced byte-identical six CSV indexes and sample report: cold **149 cache misses / 149 verified blob reads**; warm **149 cache hits / 0 blob reads**. Independent row-count, hash, referential-integrity, exact-offset, no-Sub-output, source-integrity and URL/secret redaction checks passed.
+- Implementation commit: **`34dee03`** (`Implement Establishment function-first pilot`).
+
+### Tests, unresolved issues, and final status
+
+- Task 019-E-R1 focused suite: **7 passed**. It covers headings/tables/full wording, distinct compound semantics, repeated-source retention, exact evidence pointers, function-to-Main grouping, ambiguous refusal, placeholder/recovered-content integrity, cold/warm cache equality, and unchanged frozen evidence.
+- Full `business_capability_kg` suite: **46 passed**. Python compilation and `git diff --check` passed.
+- Full default-sandbox repository suite: **213 passed, 1 failed, 5 setup errors**. The inherited failure is sandbox-denied localhost binding; its isolated permission-enabled rerun passed (**1 passed**). The five inherited setup errors remain the absent Phase 0 fixture directory `tests/fixtures/repository_profile/staging`.
+- Final status: **PILOT_COMPLETE_WITH_GAPS; ESTABLISHMENT FUNCTION-FIRST CANDIDATES ONLY; STOP AT `EA_REVIEW_019E_R1`.** Do not process another Module, introduce Sub Capabilities, map ISDs/APIs/Operations, consolidate taxonomy or begin downstream work without explicit Enterprise Architect approval.
+
 ## Current execution — Targeted ICD/ISD Recovery & Cache Repair
 
 ### Execution summary
