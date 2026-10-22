@@ -1,17 +1,20 @@
 # CURRENT TASKS
 
-## ACTIVE TASK — Phase 6 / Task 019-E-R1
-**Title:** Single-Module Methodology Pilot — Establishment ICDs → Business Functions → Main Business Capabilities
-**Status:** AUTHORIZED_FOR_CODEX — SINGLE_MODULE_PILOT_ONLY
-**Instructions:** Read the **ACTIVE EA AMENDMENT** at the TOP of `codex/comm/prompt/phase6-task019e-icd-capability-extraction.md`. It supersedes earlier 019-E all-module/Main+Sub instructions for this next execution. Execute only 019-E-R1.
-**Scope:** Exactly literal `Establishment` Module from 019-D catalog; process ALL its available ICD documents before grouping. First validate five suspected-empty ICD page IDs. Build independent Business Function Inventory with explicit evidence, then Main Capability candidate Inventory with Function → Main links. **NO SUB CAPABILITIES**.
-**Integrity gate:** If retrieved document content is suspect, report the issue clearly and leave affected results unresolved, not inferred. Preserve prior 019-C/D/E outputs and frozen evidence. Do not force a successful completeness claim.
-**Later only:** ISD ↔ ICD/service association and Canonical API/Operation ↔ Capability linkage after separate EA authorization. No semantic ISD or API mapping in this task.
-**Ownership:** code `business_capability_kg/`; indexes `indexes/phase6/task019/019e_r1/`; reports `outputs/phase6/task019/019e_r1/`.
-**Stop gate:** `EA_REVIEW_019E_R1`. No other Module or rollout without EA approval.
+## ACTIVE TASK — Phase 6 / Task 019-E-R2
+**Title:** Establishment Only — Main Business Capability → linked ICDs
+**Status:** AUTHORIZED_FOR_CODEX — BOUNDED SINGLE-MODULE PILOT ONLY
+**Instructions:** `codex/comm/prompt/phase6-task019e-r2-main-capability-icd-mapping.md` is the **sole active** instruction for the next execution; it replaces 019-E-R1 methods. Read it fully and execute ONLY 019-E-R2.
+**Scope:** Read recovered ICDs of Establishment from the recovery effective catalog; directly identify Main Business Capability candidates and map source ICD identities to them. The EA-provided flagged service list is mandatory for explicit inspection and reconciliation. Do not gate classification on R1's Business Function extraction results.
+**Prohibited:** No Business Function inventory or extraction; no Sub Capabilities; no new cache/acquisition/parsers/frameworks; no live Confluence; no old-stage rerun; no other Modules; no ISD parsing or Canonical API matching; no full repository regression suite.
+**Artifacts:** Only Main inventory, Main↔ICD links, coverage exceptions, short report in task-scoped `019e_r2` paths. Preserve all prior outputs.
+**Coverage gate:** Every ICD accounted for; exact unresolved cases must be visible and not declared architecturally accepted. Exceptions are not silent success.
+**STOP:** `EA_REVIEW_019E_R2`; no rollout without explicit EA approval.
 
-## PREVIOUS TASK — Phase 6 / Task 019-E (TECHNICAL PASS WITH GAPS; TAXONOMY NOT EA-ACCEPTED)
-**Evidence:** latest `codex/comm/HANSOFF.md`, commit `85bce7e`, 32 Modules and original 669 Main/699 Sub candidates. Historical outputs remain intact as provisional discovery evidence, not approved capability taxonomy. This corrective pilot tests a new structure, not a blanket rewrite.
+## PREVIOUS TASK — Phase 6 / Task 019-E-R1 (PILOT_COMPLETE_WITH_GAPS, NOT EA ACCEPTED)
+**Evidence:** `codex/comm/HANSOFF.md`, implementation commit `34dee03`; 149 Establishment ICD occurrences, 121 Functions, 11 Main candidates, 23 review records. Do not copy the R1 business-function qualification gate or treat its Main candidates as accepted.
+
+## PREVIOUS TASK — Phase 6 / Targeted ICD/ISD Recovery (TECHNICAL PASS WITH EXCEPTIONS)
+**Evidence:** `codex/comm/HANSOFF.md`, implementation commit `7aa5b19`. Reuse its effective retrieval catalog containing repaired ICD bodies. No new retrieval or reprocessing.
 
 ## Accepted checkpoints and constraints
 - Phases 0–4 PASS/FROZEN; Task 014 2,036 canonical APIs and 2,414 accepted HTTP operations.
