@@ -1,5 +1,32 @@
 # Codex Handoff
 
+## Current execution — Phase 6 / Task 019-E
+
+### Execution summary
+
+- Fast-forwarded `main` from `cd16548` to authorization checkpoint `34e2d0e`, reread `AGENTS.md`, `CURRENT_TASKS.md`, the complete Task 019-E prompt and the accepted 019-D handoff, and executed only the authorized ICD Main/Sub Business Capability candidate task.
+- Added `business_capability_kg.icd_capability_extraction`, a deterministic module-first parser/extractor and CLI. It validates and opens the frozen 019-D SQLite catalog directly, reads ICD bodies only through verified selected-document access, parses ordered headings/paragraphs/lists/table rows with stable offsets, redacts sensitive values/private URLs, caches by content/parser/extractor/rules version, and checkpoints each completed Module.
+- The mandated order is explicit: all available ICDs for one Module are parsed before its Sub candidates are constructed; Main candidates are then assembled from the complete module-local Sub set. Only after all 32 checkpoints are complete is the no-merge cross-module comparison queue produced.
+- Candidate generation requires explicit business-function wording and rejects weak or technical endpoint/authentication text. All Main/Sub records remain `candidate` or `needs_review`; none is approved. No ISD semantics, API/operation matching, scheduler synthesis, graph work, cross-module merge, Productization, CI/CD, Kong work, network access, Confluence refetch, staging scan or frozen-phase regeneration occurred.
+
+### Results and evidence
+
+- Full closure is **32/32 Modules, 952/952 Services, 988/988 ICD occurrences and 981 distinct ICD blobs**. Parse disposition is **974 PARSED + 14 EMPTY = 988**, with every unavailable/weak case accounted for. Module status is **4 MODULE_COMPLETE_WITH_EVIDENCE + 28 MODULE_COMPLETE_WITH_GAPS + 0 MODULE_PARTIAL**; the four all-evidence-complete Modules are `module-capptions`, `module-certifcates`, `module-gosi` and `module-government-sectors`.
+- Produced **669 Main Capability candidates, 699 Sub Capability candidates, 1,015 evidence spans, 1,015 Sub→Service→ICD edges, 335 review/gap records, and 12 cross-module comparison observations**. The comparison queue performs no merge or approval.
+- The 335 explicit exceptions comprise **14 ICD_PARSE_GAP** records (empty parsed bodies), **269 NO_EXPLICIT_BUSINESS_FUNCTION** records (conservative refusal), and **52 NO_ICD_REFERENCE** services. Parse-gap Modules are Contracts, Establishment, Individual Profile, Nitaqat, Occupations, Services, Training Indicators, Utilities, Visa and Work Permit. No-ICD Modules are Certificates, Common, Contracts, Data Portal, Deceased Employee Entitlement, Employee Transfer, End of Service Reward, Establishment, External Entities Management, Individual Profile, NIC Services, Occupations, Payments, Services, Termination for Absence Expat Laborer, Training Indicators, Visa, Wage Protection and Work Policies. No-explicit-function Modules are Certificates, Commmon, Common, Contracts, Data Portal, Deceased Employee Entitlement, Employee Transfer, End of Service Reward, Establishment, External Entities Management, Individual Profile, Labor Offices, LMH, NIC, NIC Services, Occupations, Payments, Services, Training Indicators, User Management, Visa, Wage Protection, Work in Saudi and Work Permit. Exact per-Module counts/reason combinations are recorded in `validation_summary.md` and `module_completion.csv`.
+- Cold version-v3 execution performed **32 module checkpoint misses, 981 parse misses, 3 cross-Module parse-cache hits and 981 verified blob reads**. The unchanged warm execution performed **32/32 module checkpoint hits, 0 misses and 0 blob reads**.
+- Required local evidence is under `indexes/phase6/task019/019e/` and `outputs/phase6/task019/019e/`, including all eight requested indexes, 32 independent module models/manifests, retrieval examples, coverage, validation summary and global manifest. These generated/source-derived paths remain intentionally gitignored and uncommitted; no raw source passage was added to Git. Global manifest SHA-256 is `e555d27459f42ba2a5d83a779465c1a89b762358366e7efd0df0821e83425268`; validation summary SHA-256 is `61b39d53e1e910e6d644a8d5bbae0a9fe14c87afa7668d6edc9c63fc5ba75c6f`.
+- Independent validation passed for all global index hashes/row counts, all 32 module model/checkpoint hashes, Main/Sub/evidence/edge referential integrity, allowed candidate statuses, full service/ICD closure and absence of an unredacted URL/credential pattern in candidate/evidence/report outputs.
+- Implementation commit: **`85bce7e`** (`Implement Task 019-E ICD capability discovery`).
+
+### Tests, unresolved issues, and final status
+
+- Task 019-E focused suite: **9 passed**. Coverage includes headings, tables, mixed content, offsets, multiple capabilities, true shared-ICD reuse, no-ICD accounting, conservative low/technical-evidence refusal, malformed input, redaction, cache/version invalidation, checkpoint invalidation and no-merge cross-module observations.
+- Full `business_capability_kg` compatibility suite: **35 passed**. Python compilation and `git diff --check` passed. Clean available repository regression excluding the inherited missing-fixture module and separately tested socket case: **200 passed, 1 deselected**.
+- Full default-sandbox repository suite: **202 passed, 1 failed, 5 setup errors**. The inherited failure is sandbox-denied localhost binding; its isolated permission-enabled rerun passed (**1 passed**). The five inherited setup errors remain the absent Phase 0 fixture directory `tests/fixtures/repository_profile/staging` and are outside Task 019-E scope.
+- No Task 019-E implementation blocker remains. The 28 gap-bearing Modules and 335 review records are intentional evidence limitations requiring architect review, not hidden failures; there are no partial Modules.
+- Final status: **TASK 019-E TECHNICAL PASS WITH GAPS; ICD CAPABILITY CANDIDATES ONLY; STOP AT `EA_REVIEW_TASK019E`.** Do not begin Task 019-F, consolidation, API matching, graph construction or any downstream work without explicit Enterprise Architect approval.
+
 ## Current execution — Phase 6 / Task 019-D
 
 ### Execution summary
