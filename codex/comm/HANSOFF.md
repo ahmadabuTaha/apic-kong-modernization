@@ -1,5 +1,30 @@
 # Codex Handoff
 
+## Current execution — Phase 6 / Task 019-G Qiwa API-HTTP Service → Module Main attribution
+
+### Execution summary
+
+- Fast-forwarded `main` from `1e35bda` to authorization checkpoint `559a179`, reread `AGENTS.md`, `CURRENT_TASKS.md`, and the complete sole-active 019-G prompt, then executed only the bounded Qiwa service-to-Main attribution task.
+- Added `business_capability_kg.qiwa_service_main_attribution`, a deterministic, hash-gated join over the exact Qiwa relationship CSV, recovery Service metadata, and accepted 019-E-FINAL Main/source indexes. The 019-F Main→Enterprise index was used only to verify immutable lineage closure.
+- Confirmed the source schema from the CSV itself: `Type` classifies child `Service_Name`, while `Parent_Service` is the consuming/orchestrating parent. No raw ICD/ISD body, schema, Canonical API, APIC artifact, Neo4j server/import, Enterprise classification, runtime usage claim, or later-phase work was read or produced.
+
+### Results and evidence
+
+- Input closure is **4,437 Qiwa relationship rows**, including **633 child rows with `Type=API-HTTP`** and **289 distinct Module + normalized Parent_Service identities across 25 Qiwa Modules**. The source CSV SHA-256 is `85499b04989f0ea93214d277709ab265f718744ea21cbcd96f9a8b635a34d877`.
+- Direct attribution resolves **124/289 eligible API-HTTP parents** through a unique controlled within-Module recovery Service identity corroborated by an accepted ICD/ISD Service→Main edge, producing **124 `PROVIDES` links**. The other **165** remain explicit: 9 direct cross-Module identity conflicts are `AMBIGUOUS_SERVICE_IDENTITY`, and 156 have `NO_MATCHING_SOURCE_SERVICE`; no name-only assertion was made.
+- One-hop reuse found **209 direct child-use relationship rows** for eligible service names. Of these, 136 rows have an independently resolved consumer Parent→Main path and produce **135 deduplicated `SUPPORTS` links across 63 API service identities**; 73 rows remain unresolved exceptions. Every SUPPORTS record contains both the exact Qiwa relationship ID/pointer and the accepted consumer Service→Main evidence pointer. **210** eligible API parents have informational `NO_CHILD_USAGE_EVIDENCED` status in the inventory.
+- The final link index contains **259 candidate links**. Deduplication uses API service ID + Main ID + link type + consuming-parent identity, retains distinct consumer contexts, and performs no recursive traversal. All inventory/link rows explicitly set runtime usage proven to `false`.
+- The review index contains **268 rows**: 19 `AMBIGUOUS_SERVICE_IDENTITY`, 219 `NO_MATCHING_SOURCE_SERVICE`, all five accepted `SOURCE_DOCUMENT_UNRESOLVED` gaps, and all 25 accepted `SOURCE_EXCLUDED_OLD_IGNORE` occurrences. OLD/IGNORE remains source disposition only and is not treated as runtime retirement.
+- Existing **136 Module-local Mains** and **127 Enterprise candidates** remain byte-unchanged. Required local outputs are exactly three CSVs under `indexes/phase6/task019/019g/` and `outputs/phase6/task019/019g/review_summary.md`. SHA-256 values: API inventory `4036ba64aecdef6f32981301c03b3e260cd14055ac505d7c5ccbca1b2364b1c0`; service→Main links `9e576b99f26e07e26e418cc59638317e4a6eaa2f11a4b33c3ea9666da5f424c9`; review exceptions `411c1f69f7782e0906232056e13ca0d908715dda6541719a681977aa3a8a9364`; review summary `14bdccd699b7ed01877626caba3d7bb1e9592911ea2ecace5ce9e7bf68098e52`.
+- Two consecutive real builds were byte-identical. Independent validation passed exact artifact scope, eligible-parent closure, link referential integrity and deduplication, SUPPORTS two-evidence enforcement, five-gap/25-exclusion carry-forward, no runtime inference, input immutability, URL/credential-pattern scan, Python compilation, and `git diff --check`.
+- Implementation commit: **`d9145e5`** (`Attribute Qiwa API services to main capabilities`). Generated source-derived 019-G outputs remain intentionally gitignored and local; implementation, focused tests, and this required handoff are committed.
+
+### Tests, unresolved issues, and final status
+
+- Authorized focused regression: **14 passed** across the new 019-G attribution, accepted 019-E-FINAL mapper, and accepted 019-F consolidation. Coverage includes real column semantics, exact four-artifact scope, deterministic bytes, two independent SUPPORTS evidence paths, gap/exclusion separation, cross-Module conflict refusal, input hash rejection, and frozen Main/Enterprise controls. Per the prompt, the full repository suite was **not run**.
+- No implementation blocker remains. The 165 direct unresolved parents and 73 unresolved child-use rows are explicit evidence limits requiring Enterprise Architect review; candidate links do not prove runtime use or Canonical API coverage.
+- Final status: **QIWA_SERVICE_MAIN_ATTRIBUTION_COMPLETE_WITH_EXCEPTIONS; STOP AT `EA_REVIEW_019G`.** Do not begin Canonical API matching or any next task without explicit Enterprise Architect approval.
+
 ## Current execution — Phase 6 / Task 019-F Enterprise Capability consolidation
 
 ### Execution summary
